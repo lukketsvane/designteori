@@ -38,3 +38,21 @@ Råmetadata, rekonstruert identitet, fagleg relevans, fulltekst og
 dobbelkoda evidens blir rapporterte separat. Særleg P02 og P07
 krev lesing av den konkrete siteringsfunksjonen og verifisert
 fagleg vidareføring.
+
+## Samla søkbar eksport og identitetsrevisjon
+
+`python eksporter_korpus.py` byggjer
+`docs/data/korpus.csv` med alle kjeldelag, inkludert original
+kjeldeføring, type, DOI og status. Talet på rader må stemme med
+`docs/data/corpus_quality.json`. Eksporten inneheld berre metadata,
+ikkje verna samandrag eller ubekrefta rettar til fulltekst.
+
+`python lag_identitetsko.py` byggjer
+`results/identity_review_queue.csv` og ein teljingsmanifest med
+prioriterte manuelle kontrollar. Dette omfattar originaloppføringar
+frå dei nordiske og historiske kjeldene, samt alle identifiserte
+DOI-kollisjonar i utvalet. `UNREVIEWED` er ikkje ein negativ
+forskningsdom. Ei DOI-kopling seier noko om bibliografisk identitet,
+ikkje om fagleg relevans eller kvalitet. Revisjonsavgjerder skal
+registrerast etter kontroll av kjelda og vere sporbare til sidetal,
+ISBN/DOI, forfattarar og utgåve.
