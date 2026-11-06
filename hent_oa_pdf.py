@@ -1,0 +1,362 @@
+#!/usr/bin/env python3
+"""Open-access PDF harvest for the Nordic design bibliography.
+
+Offline (default): construct a complete retrieval queue and publish coverage stats.
+Opt-in --download: download freely accessible PDF files into a GITIGNORED PRIVATE
+cache. Do not publish a PDF unless its particular version is licence-reviewed.
+Never use paywall bypasses, shadow libraries or authentication workarounds.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import ipaddress
+import json
+import re
+import socket
+import time
+from datetime import datetime, timezone
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urljoin, urlsplit
+from urllib.request import Request, build_opener, HTTPRedirectHandler
+
+ROOT = Path(__file__).resolve().parent
+PRIVATE = ROOT / "data" / "oa_fulltexts_private"
+QUEUE = ROOT / "results" / "pdf_henteko.csv"
+STATS = ROOT / "docs" / "data" / "pdf_status.json"
+FOUND = ROOT / "docs" / "data" / "pdf_found.json"
+LOG = PRIVATE / "progress.json"
+USER_AGENT = "Designteori-OA-Index/1.0 (+https://github.com/lukketsvane/designteori)"
+FIELDS = ("id", "doi", "title", "year", "kind", "source", "oa_url", "scope",
+          "priority", "archived", "candidate_status")
+HOST_DENY = ("sci-hub", "libgen", "annas-archive", "z-library")
+MAX_REDIRECTS = 5
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def read_json(path, default=None):
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else default
+
+
+def write_json(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def allowed_url(link):
+    try:
+        u = urlsplit(str(link or ""))
+        host = (u.hostname or "").lower().strip(".")
+        if u.scheme != "https" or not host or u.username or u.password or u.port not in (None, 443):
+            return False
+        if host in ("localhost", "metadata.google.internal") or host.endswith((".local", ".internal", ".localhost")):
+            return False
+        if any(block in host for block in HOST_DENY):
+            return False
+        if not re.fullmatch(r"[a-z0-9.-]+", host) or "." not in host or ".." in host:
+            return False
+        try:
+            ipaddress.ip_address(host)
+            return False
+        except ValueError:
+            return True
+    except (ValueError, TypeError):
+        return False
+
+
+def public_dns(host):
+    """Reject private, reserved or unresolvable DNS targets before HTTP requests."""
+    try:
+        addresses = socket.getaddrinfo(host, 443, type=socket.SOCK_STREAM)
+        if not addresses:
+            return False
+        for entry in addresses:
+            ip = ipaddress.ip_address(entry[4][0])
+            if not ip.is_global:
+                return False
+        return True
+    except (socket.gaierror, ValueError, OSError):
+        return False
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+class PDFLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.urls = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "meta" and attrs.get("name", "").lower() in (
+                "citation_pdf_url", "dc.relation.ispartof", "eprints.document_url"):
+            self.urls.append(attrs.get("content", ""))
+        if tag == "a":
+            href = attrs.get("href", "")
+            if re.search(r"(?:\.pdf(?:[?#]|$)|/download(?:[/?#]|$)|/bitstream/)", href, re.I):
+                self.urls.append(href)
+
+
+def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):
+    """Fetch a public HTTPS resource, with each redirect checked and a strict size cap."""
+    opener = build_opener(NoRedirect)
+    visited = set()
+    for _ in range(MAX_REDIRECTS + 1):
+        if not allowed_url(url) or not public_dns(urlsplit(url).hostname) or url in visited:
+            raise ValueError("unsafe URL or redirect")
+        visited.add(url)
+        req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
+        response = None
+        try:
+            response = opener.open(req, timeout=25)
+        except HTTPError as error:
+            if error.code in (301, 302, 303, 307, 308):
+                target = error.headers.get("Location")
+                if not target:
+                    raise ValueError("redirect without Location") from error
+                url = urljoin(url, target)
+                error.close()
+                continue
+            raise
+        with response:
+            status = getattr(response, "status", 200)
+            if status != 200:
+                raise ValueError("HTTP " + str(status))
+            declared = response.headers.get("Content-Length")
+            if declared and declared.isdecimal() and int(declared) > limit:
+                raise ValueError("file exceeds size cap")
+            chunks = []
+            total = 0
+            while True:
+                chunk = response.read(min(65536, limit + 1 - total))
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > limit:
+                    raise ValueError("file exceeds size cap")
+                chunks.append(chunk)
+            return b"".join(chunks), url, response.headers.get("Content-Type", "")
+    raise ValueError("too many redirects")
+
+
+def pdf_data(data):
+    return len(data) > 500 and data.lstrip()[:4] == b"%PDF"
+
+
+def pdf_candidates_from_html(data, landing):
+    parser = PDFLinks()
+    try:
+        parser.feed(data[:1_000_000].decode("utf-8", "ignore"))
+    except Exception:
+        return []
+    urls = []
+    for value in parser.urls:
+        absolute = urljoin(landing, value)
+        if allowed_url(absolute) and absolute not in urls:
+            urls.append(absolute)
+    return urls[:5]
+
+
+def unpaywall_urls(doi, email):
+    """Optional legal OA discovery; requires an email supplied by the operator."""
+    if not email or "@" not in email or not doi:
+        return []
+    normal = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
+    url = "https://api.unpaywall.org/v2/" + quote(normal, safe="/") + "?email=" + quote(email, safe="@.")
+    payload, _, _ = safe_request(url, limit=1_000_000, accept="application/json")
+    data = json.loads(payload.decode("utf-8"))
+    if not data.get("is_oa"):
+        return []
+    locs = [data.get("best_oa_location")] + (data.get("oa_locations") or [])
+    result = []
+    for loc in locs:
+        if not isinstance(loc, dict):
+            continue
+        for candidate in (loc.get("url_for_pdf"), loc.get("url")):
+            if allowed_url(candidate) and candidate not in result:
+                result.append(candidate)
+    return result[:10]
+
+
+def queue_rows():
+    published = read_json(ROOT / "fulltekst" / "manifest.json", {"items": []})
+    archived = {entry["id"] for entry in published["items"]}
+    base = read_json(ROOT / "docs" / "data" / "publications.json", [])
+    additions = read_json(ROOT / "docs" / "data" / "nordic_additions.json", [])
+    all_rows = []
+    for w in base + additions:
+        ident = w.get("id")
+        if not ident:
+            continue
+        oa = w.get("oa_url") or ""
+        if not allowed_url(oa):
+            oa = ""
+        row = {
+            "id": ident,
+            "doi": w.get("doi") or "",
+            "title": w.get("title") or "",
+            "year": w.get("year") or "",
+            "kind": w.get("kind") or "",
+            "source": w.get("source") or "",
+            "oa_url": oa,
+            "scope": w.get("scope") or "",
+            "priority": w.get("review_priority") or "",
+            "archived": "yes" if ident in archived else "no",
+            "candidate_status": "archived" if ident in archived else (
+                "oa-link-unchecked" if oa else "doi-only" if w.get("doi") else "no-oa-link"),
+        }
+        all_rows.append(row)
+    # All records remain searchable; prioritize articles and known OA links.
+    rank = {"high": 0, "medium": 1, "low": 2}
+    all_rows.sort(key=lambda x: (
+        x["archived"] == "yes", x["kind"] not in ("article", "review", "proceedings-article"),
+        not bool(x["oa_url"]), rank.get(x["priority"], 3),
+        -(int(x["year"]) if str(x["year"]).isdigit() else 0), x["id"]))
+    return all_rows, published
+
+
+def load_progress():
+    raw = read_json(LOG, {})
+    return raw if isinstance(raw, dict) else {}
+
+
+def remote_links(progress, published):
+    originals = {
+        item["id"]: {"url": item.get("original_fulltext_url", ""),
+                     "status": "archived", "license": item.get("license", ""),
+                     "sha256": item.get("sha256", "")}
+        for item in published.get("items", [])
+    }
+    for ident, row in progress.items():
+        if row.get("status") == "pdf-confirmed" and allowed_url(row.get("url")):
+            originals.setdefault(ident, {
+                "url": row["url"], "status": "private-cache-only",
+                "sha256": row.get("sha256", ""), "license": "",
+            })
+    return originals
+
+
+def publish(rows, published, progress):
+    links = remote_links(progress, published)
+    summary = {
+        "openalex_and_nordic_candidates": len(rows),
+        "archived_licensed_pdfs": len(published["items"]),
+        "oa_links_unchecked": sum(r["candidate_status"] == "oa-link-unchecked" for r in rows),
+        "doi_without_oa_link": sum(r["candidate_status"] == "doi-only" for r in rows),
+        "without_doi_or_oa": sum(r["candidate_status"] == "no-oa-link" for r in rows),
+        "private_cached_pdfs": sum(x.get("status") == "pdf-confirmed" for x in progress.values()),
+        "public_verified_pdf_links": len(links),
+        "note": "Open access metadata is not proof of a readable PDF or a redistribution license.",
+    }
+    write_json(FOUND, links)
+    write_json(STATS, summary)
+    QUEUE.parent.mkdir(parents=True, exist_ok=True)
+    with QUEUE.open("w", newline="", encoding="utf-8") as fp:
+        writer = csv.DictWriter(fp, fieldnames=FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+    print("PDF_QUEUE", json.dumps(summary, ensure_ascii=False))
+    return summary
+
+
+def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed):
+    PRIVATE.mkdir(parents=True, exist_ok=True)
+    pdf_dir = PRIVATE / "pdf"
+    pdf_dir.mkdir(exist_ok=True)
+    tried = 0
+    last_request = 0.0
+    for row in rows:
+        ident = row["id"]
+        if row["archived"] == "yes" or progress.get(ident, {}).get("status") == "pdf-confirmed":
+            continue
+        if progress.get(ident, {}).get("status") == "failed" and not retry_failed:
+            continue
+        if tried >= limit:
+            break
+        if not row["oa_url"] and not (email and row["doi"]):
+            continue
+        tried += 1
+        candidates = [row["oa_url"]] if row["oa_url"] else []
+        if email and row["doi"]:
+            try:
+                candidates += unpaywall_urls(row["doi"], email)
+            except (ValueError, URLError, HTTPError, TimeoutError, OSError, json.JSONDecodeError) as exc:
+                print("OA_LOOKUP_FAIL", ident, type(exc).__name__, flush=True)
+        success = None
+        why = "No direct PDF at published OA links"
+        seen = set()
+        for target in candidates[:10]:
+            if target in seen or not allowed_url(target):
+                continue
+            seen.add(target)
+            time.sleep(max(0, pause - (time.monotonic() - last_request)))
+            last_request = time.monotonic()
+            try:
+                payload, landing, mime = safe_request(target, limit=max_bytes)
+                if pdf_data(payload):
+                    success = payload, landing
+                    break
+                if ("html" in mime.lower() or payload[:80].lower().find(b"<html") >= 0):
+                    derived = pdf_candidates_from_html(payload, landing)
+                    for destination in derived:
+                        if destination in seen:
+                            continue
+                        seen.add(destination)
+                        time.sleep(max(0, pause - (time.monotonic() - last_request)))
+                        last_request = time.monotonic()
+                        candidate, resolved, _ = safe_request(destination, limit=max_bytes)
+                        if pdf_data(candidate):
+                            success = candidate, resolved
+                            break
+                if success:
+                    break
+            except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                why = type(exc).__name__ + ": " + str(exc)[:140]
+        if success:
+            payload, url = success
+            sha = hashlib.sha256(payload).hexdigest()
+            pdf_path = pdf_dir / (hashlib.sha256(ident.encode()).hexdigest()[:24] + ".pdf")
+            pdf_path.write_bytes(payload)
+            progress[ident] = {"status": "pdf-confirmed", "url": url,
+                               "sha256": sha, "bytes": len(payload), "checked_at": now()}
+            print("PDF_OK", ident, len(payload), sha[:12], flush=True)
+        else:
+            progress[ident] = {"status": "failed", "reason": why, "checked_at": now()}
+            print("PDF_MISSING", ident, why, flush=True)
+        write_json(LOG, progress)
+    return tried
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--download", action="store_true",
+                        help="Explicitly fetch legitimate OA PDFs to gitignored private cache")
+    parser.add_argument("--limit", type=int, default=80)
+    parser.add_argument("--email", default="", help="Email for optional Unpaywall DOI lookup")
+    parser.add_argument("--delay", type=float, default=1.0)
+    parser.add_argument("--max-mb", type=int, default=25)
+    parser.add_argument("--retry-failed", action="store_true")
+    args = parser.parse_args()
+    if args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50:
+        parser.error("Invalid limit, delay or max-mb")
+    rows, published = queue_rows()
+    progress = load_progress()
+    if args.download:
+        tried = download(rows, progress, limit=args.limit, email=args.email,
+                         pause=args.delay, max_bytes=args.max_mb * 1_000_000,
+                         retry_failed=args.retry_failed)
+        print("ATTEMPTED", tried)
+    publish(rows, published, progress)
+
+
+if __name__ == "__main__":
+    main()
