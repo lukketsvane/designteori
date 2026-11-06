@@ -114,6 +114,12 @@ class PDFLinks(HTMLParser):
         if tag == "meta" and attrs.get("name", "").lower() in (
                 "citation_pdf_url", "dc.relation.ispartof", "eprints.document_url"):
             self.urls.append(attrs.get("content", ""))
+        if tag in ("iframe", "embed", "object"):
+            link = attrs.get("src") or attrs.get("data") or ""
+            mime = (attrs.get("type") or "").lower()
+            if link and (mime == "application/pdf" or re.search(
+                    r"(?:\.pdf(?:[?#]|$)|/bitstream/|/download(?:[/?#]|$))", link, re.I)):
+                self.urls.append(link)
         if tag == "a":
             href = attrs.get("href", "")
             if re.search(r"(?:\.pdf(?:[?#]|$)|/download(?:[/?#]|$)|/bitstream/)", href, re.I):

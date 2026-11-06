@@ -20,6 +20,12 @@ def audit(progress):
     records = harvest.read_json(harvest.ROOT / "docs/data/publications.json", [])
     additions = harvest.read_json(harvest.ROOT / "docs/data/nordic_additions.json", [])
     metadata = {r["id"]: r for r in records + additions}
+    # DOI-only works are indexed privately without changing the public corpus.
+    imported = harvest.read_json(harvest.PRIVATE / "doi_csv_metadata.json", {}) or {}
+    if isinstance(imported, dict):
+        for ident, row in imported.items():
+            if isinstance(row, dict):
+                metadata.setdefault(ident, row)
     verified, missing, failed, duplicates = [], [], [], defaultdict(list)
     for ident, item in sorted(progress.items()):
         status = item.get("status")

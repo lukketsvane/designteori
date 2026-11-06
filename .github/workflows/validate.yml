@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Syntaks
-        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py bygg_teoriregister.py test_teoriregister.py bygg_dekningsoversikt.py test_dekningsoversikt.py sok_korpus.py test_sok_korpus.py eksporter_korpus.py lag_identitetsko.py test_korpus_exports.py hent_oa_pdf.py test_oa_pdf.py sok.py sok_fulltekst.py pdf_archive_report.py test_pdf_archive_report.py
+        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py bygg_teoriregister.py test_teoriregister.py bygg_dekningsoversikt.py test_dekningsoversikt.py sok_korpus.py test_sok_korpus.py eksporter_korpus.py lag_identitetsko.py test_korpus_exports.py hent_oa_pdf.py test_oa_pdf.py hent_doi_csv.py test_doi_csv.py sok.py sok_fulltekst.py pdf_archive_report.py test_pdf_archive_report.py
       - name: Importer nye nordiske metadataeksportar
         run: python batch_import_norden.py
       - name: Avstem nordiske kjelder
@@ -42,6 +42,8 @@ jobs:
         run: python bygg_referansefrontier.py --limit 5000 --min-citing 2
       - name: Bygg PDF-kø utan nedlasting
         run: python hent_oa_pdf.py
+      - name: Test DOI-CSV import utan nettverk
+        run: python -m unittest -v test_doi_csv
       - name: Test PDF-kø og tilgangskontroll
         run: python -m unittest -v test_oa_pdf
       - name: Verifiser privat PDF-indeks utan nettverk

@@ -42,3 +42,14 @@ Manglande filer, avbrot og endra PDF-ar blir fanga opp ved kontroll av filstorle
 Privat lesetilgang, open tilgang og rett til offentleg vidarepublisering er forskjellige forhold. PDF-ar med ukjent distribusjonsrett blir **ikkje committa til GitHub**. Ein bestemt PDF med individuelt kontrollert CC-lisens kan publiserast manuelt via `publiser_lisensiert_pdf.py`. Dette krev kontroll av både identitet og lisens for akkurat den PDF-versjonen.
 
 `docs/data/pdf_found.json` og `docs/data/pdf_status.json` er metadata for søkekatalogen, ikkje PDF-filene. Prosjektet skal telje berre verifiserte nedlastingar som faktisk finst i privat cache, og berre individuelt lisensierte filer som ligg i det offentlege arkivet.
+
+## Importer eiga DOI-liste
+
+Ei CSV-fil kan innehalde kolonnen `doi` og valfritt `title` og `oa_url`. Tomme/ugyldige DOI-ar blir rapporterte, duplikatar blir hoppa over og DOI-ar med tvitydige katalogtreff får ein separat kontrollstatus. Inga nedlasting skjer ved berre å validere fila.
+
+```powershell
+python hent_doi_csv.py --input doi_liste.csv
+.\hent_tusen_pdfar.ps1 -DoiCsvPath doi_liste.csv -Limit 8000 -MaxCacheGB 60 -MinFreeGB 5
+```
+
+Sjølvstendig Linux/macOS: `DOI_CSV=doi_liste.csv bash hent_tusen_pdfar.sh`. For Unpaywall: legg til `-Email "kontakt@institusjon.no"` i PowerShell eller set `EMAIL` i shell. Resultata kjem som `doi_csv_report.csv`, `doi_csv_summary.json`, `doi_csv_metadata.json` og lokalt PDF-indeks i git-ignorert privat cache. DOI-ar utanfor OpenAlex-korpuset blir ikkje automatisk lagt til som kvalitetssikra designforsking. Ingen betalingsmurar blir omgått og ingen PDF får offentleg redistribusjonsrett utan kontroll av lisens og versjon.
