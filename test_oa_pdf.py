@@ -248,6 +248,24 @@ class PDFHarvestTest(unittest.TestCase):
             self.assertEqual(list(json.loads(target.read_text())), ["W2"])
             self.assertFalse(list(Path(td).glob("*.tmp")))
 
+    def test_interrupted_oa_attempt_is_checkpointed_before_network(self):
+        with tempfile.TemporaryDirectory() as td:
+            private = Path(td)
+            progress = {}
+            row = {"id": "WCRASH", "archived": "no",
+                   "oa_url": "https://repo.example.org/paper.pdf", "doi": ""}
+            with patch.multiple(pdf, PRIVATE=private, LOG=private / "progress.json"), \
+                 patch.object(pdf, "safe_request", side_effect=RuntimeError("unexpected parser crash")), \
+                 patch.object(pdf.time, "sleep"):
+                with self.assertRaises(RuntimeError):
+                    pdf.download([row], progress, limit=1, email="", pause=0.5,
+                                 max_bytes=1_000_000, retry_failed=False,
+                                 lookup_openalex=False)
+                saved = pdf.read_json(private / "progress.json")
+            self.assertEqual(saved["WCRASH"]["status"], "failed")
+            self.assertIn("interrupted", saved["WCRASH"]["reason"])
+            self.assertEqual(progress["WCRASH"], saved["WCRASH"])
+
     def test_storage_limit_prevents_download(self):
         from unittest.mock import Mock
         with tempfile.TemporaryDirectory() as td:
