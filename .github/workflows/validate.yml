@@ -56,6 +56,8 @@ jobs:
           python test_pdf_katalog.py
       - name: Verifiser privat PDF-indeks utan nettverk
         run: python -m unittest -v test_pdf_archive_report
+      - name: Test sidebevis og valfrie embeddingar utan nettverk
+        run: python -m unittest -v test_fulltekstkorpus test_embedding_google
       - name: Bygg SQLite med eigne kjeldelag
         run: python bygg_hovuddatabase.py
       - name: Kontroller databasen
