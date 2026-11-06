@@ -114,6 +114,13 @@ class PDFLinks(HTMLParser):
         if tag == "meta" and attrs.get("name", "").lower() in (
                 "citation_pdf_url", "dc.relation.ispartof", "eprints.document_url"):
             self.urls.append(attrs.get("content", ""))
+        if tag == "link":
+            href = attrs.get("href", "")
+            mime = (attrs.get("type") or "").lower()
+            rel = (attrs.get("rel") or "").lower()
+            if href and (mime == "application/pdf" or (
+                    "alternate" in rel and re.search(r"\.pdf(?:[?#]|$)", href, re.I))):
+                self.urls.append(href)
         if tag in ("iframe", "embed", "object"):
             link = attrs.get("src") or attrs.get("data") or ""
             mime = (attrs.get("type") or "").lower()
@@ -239,7 +246,7 @@ def openalex_urls(doi):
     url = "https://api.openalex.org/works/https://doi.org/" + quote(short, safe="/")
     payload, _, _ = safe_request(url, limit=1_500_000, accept="application/json")
     data = json.loads(payload.decode("utf-8"))
-    locs = [data.get("best_oa_location")] + list(data.get("locations") or [])
+    locs = [data.get("best_oa_location"), data.get("primary_location")] + list(data.get("locations") or [])
     urls = []
     for loc in locs:
         if not isinstance(loc, dict) or not loc.get("is_oa", False):
@@ -247,6 +254,11 @@ def openalex_urls(doi):
         for candidate in (loc.get("pdf_url"), loc.get("landing_page_url")):
             if allowed_url(candidate) and candidate not in urls:
                 urls.append(candidate)
+    # Some records expose an OA landing page only through open_access.oa_url.
+    oa = data.get("open_access") or {}
+    alternate = oa.get("oa_url") if oa.get("is_oa") else None
+    if allowed_url(alternate) and alternate not in urls:
+        urls.append(alternate)
     return urls[:12]
 
 
@@ -459,7 +471,9 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                     if pdf_data(payload):
                         success = (payload, landing)
                         break
-                    if "html" not in mime.lower() and b"<html" not in payload[:100].lower():
+                    prefix = payload[:4096].lstrip().lower()
+                    if ("html" not in mime.lower() and b"<html" not in prefix
+                            and b"<!doctype html" not in prefix):
                         continue
                     for destination in pdf_candidates_from_html(payload, landing):
                         if destination in seen:
