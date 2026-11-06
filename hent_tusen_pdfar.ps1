@@ -20,6 +20,19 @@ try {
     } else {
         throw "Python 3 manglar. Installer Python og køyr skriptet igjen."
     }
+    # Default to a private cache OUTSIDE the public Git repository. An
+    # existing DESIGNTEORI_PDF_CACHE environment variable takes precedence.
+    if (-not $env:DESIGNTEORI_PDF_CACHE) {
+        $env:DESIGNTEORI_PDF_CACHE = Join-Path $HOME 'Documents\designteori-pdf-cache'
+    }
+    Write-Host ("PDF-cache: " + $env:DESIGNTEORI_PDF_CACHE)
+    # On the user's original Windows machine, keep the 26 previously
+    # collected reading copies without downloading any of them again.
+    $older = Join-Path (Split-Path $PSScriptRoot -Parent) 'FORML-RE-datascience\research\nordisk-designforsking\data\oa_fulltexts_private'
+    if ((-not $DoiCsvPath) -and (Test-Path -LiteralPath $older)) {
+        & $python @prefix 'import_lokale_pdf.py' '--source' $older '--cache' $env:DESIGNTEORI_PDF_CACHE
+        if ($LASTEXITCODE -ne 0) { throw 'Import av tidlegare lokale PDF-ar feila.' }
+    }
     $inv = [System.Globalization.CultureInfo]::InvariantCulture
     $script = if ($DoiCsvPath) { "hent_doi_csv.py" } else { "hent_oa_pdf.py" }
     $arguments = @($script, "--download", "--limit", "$Limit",
