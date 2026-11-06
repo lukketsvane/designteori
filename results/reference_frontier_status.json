@@ -1,0 +1,13 @@
+{
+  "generated_utc": "2026-11-06T20:50:07.398191+00:00",
+  "method": "OpenAlex referenced_works IDs absent from the original works table",
+  "known_works": 7300,
+  "unresolved_reference_ids": 191234,
+  "unresolved_cited_by_at_least_2": 28815,
+  "unresolved_cited_by_at_least_10": 1157,
+  "minimum_citing_works": 2,
+  "max_export": 5000,
+  "exported_candidates": 5000,
+  "already_crosswalked_in_historical_bibliography": 0,
+  "warning": "Ingen nye unike, bibliografisk verifiserte publikasjonar vart etablerte. Ein referanse-ID seier ikkje noko sikkert om nordisk tilknyting, sjanger, sjølvstendig testing, replisering eller fagleg relevans. Føreset skeivt, avgrensa OpenAlex-uttrekk."
+}
