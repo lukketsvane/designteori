@@ -11,7 +11,7 @@ etterprøvbarheit skal kunne rapporterast kvar for seg.
 **Status 6. november 2026:** 7 300 metadataregistreringar, av dei 3 729
 automatisk tittelinkluderte og 3 571 i manuell vurderingskø. Ingen av desse
 tala dokumenterer eit fullstendig forskingsfelt. Fulltekstarkivet vart starta
-med 11 lisensgjennomgåtte PDF-filer og lenkjer til dei resterande OA-kandidatane.
+med 14 lisensgjennomgåtte PDF-filer og lenkjer til dei resterande OA-kandidatane.
 
 ## Definer populasjon før statistikk
 

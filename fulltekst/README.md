@@ -11,9 +11,10 @@ lisens. Rettane står i kvar PDF og i [manifest.json](manifest.json).
 
 ## Første arkivering, 6. november 2026
 
-11 PDF-ar vart kontrollerte mot CC-lisens på dei første sidene, med
-original kjeldelenkje, DOI, forfattarar og hash i manifestet.
-10 tekstuttrekk høyrer til lisensar som tillèt tilpassingar.
+14 PDF-ar vart kontrollerte mot eksplisitte CC-lisensar i sjølve dokumenta,
+nokre først på dei siste sidene, med original kjeldelenkje, DOI,
+forfattarar og hash i manifestet. 13 tekstuttrekk høyrer til
+lisensar som tillèt tilpassingar.
 Éin CC BY-NC-ND-fulltekst er publisert som uendra original PDF utan
 separat tekstutgåve. NC-lisensierte verk er berre delte her som del av
 eit ikkje-kommersielt forskingsarkiv. Lisensvilkåra følgjer kvar fil,

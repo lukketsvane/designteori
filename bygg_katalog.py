@@ -32,6 +32,7 @@ def main():
   for r in csv.DictReader(fp):themes[r["id"]]=r.get("theme","")
  manifest=json.loads((ROOT/"fulltekst"/"manifest.json").read_text(encoding="utf-8")) if (ROOT/"fulltekst"/"manifest.json").exists() else {"items":[]}
  fulltexts={r["id"]:r for r in manifest["items"]}
+ triage=json.loads((OUT/"triage.json").read_text(encoding="utf-8")) if (OUT/"triage.json").exists() else {}
  docs=[]
  countries=Counter();kind=Counter();years=Counter()
  for r in conn.execute("SELECT id,doi,title,year,kind,citations,source,countries,topic,oa_url,in_scope,language FROM works ORDER BY year DESC, citations DESC, id"):
@@ -53,6 +54,9 @@ def main():
     "pdf":("https://github.com/lukketsvane/designteori/blob/main/fulltekst/"+fulltexts[id]["pdf"]) if id in fulltexts else "",
     "text":("https://github.com/lukketsvane/designteori/blob/main/fulltekst/"+fulltexts[id]["text"]) if id in fulltexts and fulltexts[id]["text"] else "",
     "license":fulltexts[id]["license"] if id in fulltexts else "",
+    "review_priority":triage.get(id,{}).get("review_priority",""),
+    "review_score":triage.get(id,{}).get("priority_score",0),
+    "keyword_categories":triage.get(id,{}).get("keyword_categories",""),
   }
   docs.append(record)
  if len(docs)!=7300:raise SystemExit(f"Unexpected count {len(docs)}; check before publishing")
@@ -64,11 +68,12 @@ def main():
   "total":len(docs),"automatic_title_inclusion":sum(x["scope"]=="automatic-title-inclusion" for x in docs),
   "manual_review_queue":sum(x["scope"]=="awaiting-eligibility-review" for x in docs),
   "local_pdf":sum(bool(x["pdf"]) for x in docs),"local_fulltext_text":sum(bool(x["text"]) for x in docs),
+  "high_priority_for_manual_review":sum(x["review_priority"]=="high" for x in docs),
   "country_memberships":countries,"kinds":kind,"year":years,
   "warning":"Search result counts are not an estimate of the Nordic theory literature population."
  },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  with (OUT/"publications.csv").open("w",encoding="utf-8",newline="") as f:
-  w=csv.DictWriter(f,fieldnames=["id","doi","title","year","authors","source","countries","kind","citations","topic","theme","oa_url","scope","license","pdf","text"])
+  w=csv.DictWriter(f,fieldnames=["id","doi","title","year","authors","source","countries","kind","citations","topic","theme","oa_url","scope","license","pdf","text","review_priority","review_score","keyword_categories"])
   w.writeheader()
   for row in docs:w.writerow({k:", ".join(v) if isinstance(v,list) else v for k,v in row.items() if k in w.fieldnames})
  print("CATALOG_GENERATED",len(docs),"fulltext",len(fulltexts),"json_MB",round((OUT/"publications.json").stat().st_size/1e6,2))

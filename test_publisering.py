@@ -24,11 +24,15 @@ def run():
  docs=json.loads((ROOT/"docs/data/publications.json").read_text(encoding="utf-8"))
  check(len(docs)==works,"catalog count")
  check(len({d["id"] for d in docs})==works,"duplicate ID in catalog")
+ triage=json.loads((ROOT/"docs/data/triage.json").read_text(encoding="utf-8"))
+ check(len(triage)==works,"priority signal index count")
+ check(sum(d["review_priority"]=="high" for d in docs)>=150,"priority rules did not generate review list")
+ check(all(d["review_score"]==triage[d["id"]]["priority_score"] for d in docs),"review priority out of sync")
  check(stats["total"]==works and stats["automatic_title_inclusion"]==incl,"statistics are out of sync")
  check(sum(d["scope"]=="awaiting-eligibility-review" for d in docs)==3571,"unreviewed scope count")
  manifest=json.loads((ROOT/"fulltekst/manifest.json").read_text(encoding="utf-8"))
  check(manifest["count"]==len(manifest["items"]),"bad fulltext count")
- check(len(manifest["items"])>=11,"lost reviewed fulltexts")
+ check(len(manifest["items"])>=14,"lost reviewed fulltexts")
  lic={r["id"]:r for r in manifest["items"]}
  for r in manifest["items"]:
   pdf=ROOT/"fulltekst"/r["pdf"]
@@ -42,6 +46,17 @@ def run():
   else:check("ND" in r["license"],"missing text without ND restriction")
  check(sum(bool(d["pdf"]) for d in docs)==len(lic),"catalog lacks PDF links")
  check((ROOT/"docs/index.html").stat().st_size>5000,"website missing")
+ contexts=json.loads((ROOT/"docs/data/work_context.json").read_text(encoding="utf-8"))
+ check(len(contexts)==works,"context index missing works")
+ edge_count=sum(len(c["cites"]) for c in contexts.values())
+ check(edge_count>=5500,"internal citation graph incomplete")
+ check(edge_count==sum(len(c["cited_by"]) for c in contexts.values()),"internal graph direction mismatch")
+ for citing,c in contexts.items():
+  check(all(x in contexts for x in c["cites"]+c["cited_by"]),"internal citation to work outside sample")
+ authors=json.loads((ROOT/"docs/data/authors.json").read_text(encoding="utf-8"))
+ institutions=json.loads((ROOT/"docs/data/institutions.json").read_text(encoding="utf-8"))
+ check(authors["count"]==len(authors["items"])>=21000,"author register missing")
+ check(institutions["count"]==len(institutions["items"])>=3800,"institution register missing")
  with (ROOT/"bibliografi/avstemt_mot_openalex.csv").open(encoding="utf-8",newline="") as f:
   annotated=list(csv.DictReader(f))
  check(len(annotated)>=77,"curated bibliography missing")

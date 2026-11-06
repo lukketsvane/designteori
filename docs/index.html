@@ -28,7 +28,7 @@ h1{font-size:clamp(40px,6vw,82px);letter-spacing:-.075em;line-height:1.02;font-w
 .section{margin:50px 0 28px}
 h2{font-size:22px;letter-spacing:-.045em;font-weight:660;margin:0 0 14px}
 .section-intro{font-size:13px;color:var(--secondary);max-width:750px}
-.filters{display:grid;grid-template-columns:2fr repeat(4,minmax(100px,1fr));gap:10px;margin:24px 0 18px}
+.filters{display:grid;grid-template-columns:2fr repeat(5,minmax(100px,1fr));gap:10px;margin:24px 0 18px}
 .field{display:block}.field span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px}
 input,select,button{border-radius:0;border:1px solid var(--line);font:inherit;color:var(--ink);background:var(--bg);height:44px;padding:0 12px;width:100%}
 input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
@@ -38,6 +38,26 @@ input::placeholder{color:#898780}
 .record{display:grid;grid-template-columns:85px 1fr 130px;gap:18px;padding:20px 0 19px;border-top:1px solid var(--line)}
 .year{font-size:13px;color:var(--secondary);padding-top:4px}
 .title{font-size:18px;line-height:1.3;letter-spacing:-.017em;font-weight:610;margin:0 0 6px}
+.title-open{display:inline;text-align:left;border:none;padding:0;height:auto;width:auto;background:none;color:inherit;font:inherit;line-height:inherit;cursor:pointer;text-decoration:none}
+.title-open:hover{text-decoration:underline;text-underline-offset:3px}
+.dialog{width:min(880px,calc(100vw - 28px));max-height:90vh;overflow:auto;background:var(--bg);color:var(--ink);border:1px solid var(--ink);padding:clamp(20px,4vw,40px);box-shadow:0 20px 80px #0003}
+.dialog::backdrop{background:#131310a6}
+.dialog h2{font-size:clamp(25px,4vw,40px);line-height:1.12;margin:8px 0 17px;font-weight:620}
+.detail-close{display:block;margin:0 0 25px auto;border:1px solid var(--line);width:auto;padding:0 20px;cursor:pointer}
+.detail-columns{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.detail-section{padding-top:16px;border-top:1px solid var(--line)}
+.detail-subtitle{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin:0 0 13px}
+.detail-item{padding:8px 0;font-size:13px;border-bottom:1px solid var(--line);line-height:1.4}
+.detail-item button{width:auto;height:auto;text-align:left;display:inline;padding:0;border:none;text-decoration:underline;text-underline-offset:3px;background:none;cursor:pointer}
+.detail-note{font-size:12px;color:var(--secondary);margin-top:8px}
+.cluster-card{border-top:1px solid var(--line);padding:15px 0;display:grid;grid-template-columns:1fr 75px;gap:14px}
+.cluster-card button{background:none;border:0;padding:0;cursor:pointer;height:auto;text-align:left;font-size:14px;font-weight:600}
+.cluster-card button:hover{text-decoration:underline}
+.cluster-card p{font-size:11px;color:var(--secondary);margin:4px 0 0}
+.cluster-count{text-align:right;font-size:13px;color:var(--secondary)}
+.scholar-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.chip{display:inline-block;padding:3px 7px;margin:4px 5px 0 0;background:var(--soft);font-size:11px}
+@media(max-width:660px){.detail-columns,.scholar-grid{grid-template-columns:1fr}}
 .metadata{color:var(--secondary);font-size:12px;line-height:1.6}
 .metadata strong{color:var(--ink);font-weight:520}
 .meta-small{font-size:11px;color:var(--secondary);margin:10px 0 0}
@@ -69,6 +89,7 @@ footer p{max-width:540px}
 <nav>
 <a href="#katalog">Katalog</a>
 <a href="#bibliografiar">Bibliografiar</a>
+<a href="#forskarar">Forskarar</a>
 <a href="https://github.com/lukketsvane/designteori/tree/main/fulltekst">Fulltekst</a>
 <a href="https://github.com/lukketsvane/designteori">GitHub</a>
 </nav>
@@ -95,8 +116,10 @@ footer p{max-width:540px}
 <label class="field"><span>Periode</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
 <label class="field"><span>Vurderingsstatus</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Førehandsinkluderte</option><option value="awaiting-eligibility-review">Til manuell vurdering</option></select></label>
 <label class="field"><span>Fulltekst</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
+<label class="field"><span>Prioritet for vurdering</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
 </div>
 <div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><a href="./data/publications.csv">Last ned metadata (CSV)</a></div>
+<p class="section-intro">«Prioritet» er ei transparent maskinell leseliste basert på ord i titlar, faglege tidsskrift og bibliografitreff. Høg prioritet er ikkje det same som fagleg godkjenning. <a href="https://github.com/lukketsvane/designteori/blob/main/triager_kandidatar.py">Sjå reglane.</a></p>
 <div id="records"></div>
 <button class="more" type="button" id="more" hidden>Vis fleire publikasjonar</button>
 </section>
@@ -111,7 +134,33 @@ footer p{max-width:540px}
 <div id="bib-records"></div>
 <button class="more" type="button" id="bib-more" hidden>Vis fleire kjelder</button>
 </section>
+<section class="section" id="forskarar">
+<h2>Forskarar og institusjonar</h2>
+<p class="section-intro">Utforsk person- og institusjonskoplingar i den avgrensa OpenAlex-databasen. Ein forfattar sin publikasjonsfrekvens i dette utvalet er ikkje eit rangeringstal for det nordiske fagmiljøet som heilskap.</p>
+<div class="scholar-grid">
+<div>
+<label class="field"><span>Søk etter forskar</span><input id="author-search" type="search" placeholder="Namn eller OpenAlex-ID" autocomplete="off"></label>
+<div class="countline"><span id="author-count" aria-live="polite">Trykk for å laste forfattarindeksen</span><a href="./data/authors.json">Alle (JSON)</a></div>
+<div id="author-results"></div>
+<button class="more" id="author-more" type="button" hidden>Vis fleire forskarar</button>
+</div>
+<div>
+<label class="field"><span>Søk etter institusjon</span><input id="institution-search" type="search" placeholder="Universitet, designskule…" autocomplete="off"></label>
+<div class="countline"><span id="institution-count" aria-live="polite">Lastar institusjonar…</span><a href="./data/institutions.json">Alle (JSON)</a></div>
+<div id="institution-results"></div>
+<button class="more" id="institution-more" type="button" hidden>Vis fleire institusjonar</button>
+</div>
+</div>
+</section>
 </main>
+<dialog id="work-modal" class="dialog" aria-labelledby="detail-title">
+<button type="button" class="detail-close" id="work-close">Lukk ×</button>
+<div id="work-detail"></div>
+</dialog>
+<dialog id="scholar-modal" class="dialog" aria-labelledby="scholar-title">
+<button type="button" class="detail-close" id="scholar-close">Lukk ×</button>
+<div id="scholar-detail"></div>
+</dialog>
 <footer>
 <div><strong>Datagrunnlag</strong><p>OpenAlex-metadata, 31 søkjeuttrykk, 96 fullførte søkjesider per 2. november 2026. Siteringar og tekstlikskap er ikkje bevis for kumulativ vitskap. Ingen figur eller kategori er ein manuell fulltekstdom.</p></div>
 <div><strong>Open forsking</strong><p>Alle PDF-ar i arkivet har individuelle lisensar og oppgjevne originalkjelder. Program, metode, avgrensingar, kodebok og tabellar er tilgjengelege i <a href="https://github.com/lukketsvane/designteori">GitHub-repoet</a>.</p></div>
@@ -129,7 +178,8 @@ function renderRow(w){
  const root=make("article",undefined,"record");
  root.append(make("div",w.year || "UÅ","year"));
  const body=make("div");
- const h=make("h3",w.title,"title");body.append(h);
+ const h=make("h3",undefined,"title");
+ const open=make("button",w.title,"title-open");open.type="button";open.addEventListener("click",()=>{if(window.openDesignWork)window.openDesignWork(w.id)});h.append(open);body.append(h);
  const meta=make("div",undefined,"metadata");
  const authors=Array.isArray(w.authors)?w.authors:[];
  meta.append(make("div",authors.length>6 ? authors.slice(0,6).join(", ")+" mfl." : authors.join(", ") || "Ukjend forfattar"));
@@ -138,6 +188,7 @@ function renderRow(w){
  const small=make("p",undefined,"meta-small");
  for(const c of w.countries || [])small.append(make("span",countryNames[c]||c,"label"));
  if(w.license)small.append(make("span",w.license,"label licensed"));
+ if(w.review_priority==="high")small.append(make("span","Høg leseprioritet · automatisk","label"));
  if(w.theme)small.append(make("span",w.theme,"label"));
  else if(w.topic)small.append(make("span",w.topic,"label"));
  small.append(make("span"," "+fmt(w.citations)+" siteringar"));
@@ -164,12 +215,14 @@ function apply(){
  const period=$("period").value;
  const scope=$("scope").value;
  const fulltext=$("fulltext").value;
+ const priority=$("priority").value;
  selected=works.filter(w=>{
   if(country && !(w.countries||[]).includes(country))return false;
   if(period && !(w.year>=+period && w.year<+period+10))return false;
   if(scope && w.scope!==scope)return false;
   if(fulltext==="local"&&!w.pdf)return false;
   if(fulltext==="oa"&&!w.oa_url)return false;
+  if(priority && w.review_priority!==priority)return false;
   if(q&&!w._search.includes(q))return false;
   return true;
  });draw();
@@ -180,7 +233,7 @@ async function init(){
    fetch("./data/publications.json").then(x=>{if(!x.ok)throw Error("Metadata utilgjengeleg");return x.json()}),
    fetch("./data/stats.json").then(x=>x.json())
   ]);
-  works=raw;
+  works=raw.sort((a,b)=>(b.review_score||0)-(a.review_score||0)||(b.year||0)-(a.year||0));
   for(const w of works)w._search=[w.title,...(w.authors||[]),w.source,w.topic,w.theme,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
   $("stat-total").textContent=fmt(stats.total);
   $("stat-included").textContent=fmt(stats.automatic_title_inclusion);
@@ -189,7 +242,7 @@ async function init(){
   apply();
  }catch(e){$("count").textContent="Kunne ikkje laste katalogen. Opne sida via ein HTTP-tenar eller GitHub Pages.";console.error(e)}
 }
-for(const id of ["search","country","period","scope","fulltext"]){
+for(const id of ["search","country","period","scope","fulltext","priority"]){
  $(id).addEventListener(id==="search"?"input":"change",apply);
 }
 $("more").addEventListener("click",()=>{limit+=60;draw()});
@@ -243,5 +296,6 @@ $("bib-more").addEventListener("click",()=>{bibLimit+=45;renderBibliography()});
 init();
 initBibliography();
 </script>
+<script src="./atlas.js" defer></script>
 </body>
 </html>

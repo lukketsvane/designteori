@@ -1,0 +1,271 @@
+{
+  "work_count": 7300,
+  "author_ids": 21301,
+  "institution_ids": 3852,
+  "internal_citation_edges": 5502,
+  "author_top_20": [
+    {
+      "id": "A5034656359",
+      "name": "Rachel Charlotte Smith",
+      "works": 44,
+      "automatically_title_included": 34
+    },
+    {
+      "id": "A5064452976",
+      "name": "Ole Sejer Iversen",
+      "works": 42,
+      "automatically_title_included": 31
+    },
+    {
+      "id": "A5064745708",
+      "name": "Nicola Morelli",
+      "works": 30,
+      "automatically_title_included": 26
+    },
+    {
+      "id": "A5061795157",
+      "name": "Philip J. Cash",
+      "works": 31,
+      "automatically_title_included": 25
+    },
+    {
+      "id": "A5061766244",
+      "name": "Christian Dindler",
+      "works": 27,
+      "automatically_title_included": 22
+    },
+    {
+      "id": "A5003457474",
+      "name": "Luca Simeone",
+      "works": 27,
+      "automatically_title_included": 22
+    },
+    {
+      "id": "A5084521578",
+      "name": "Anja M. Maier",
+      "works": 23,
+      "automatically_title_included": 22
+    },
+    {
+      "id": "A5049590068",
+      "name": "Jesper Simonsen",
+      "works": 21,
+      "automatically_title_included": 21
+    },
+    {
+      "id": "A5034335447",
+      "name": "Pirita Seitamaa‐Hakkarainen",
+      "works": 25,
+      "automatically_title_included": 20
+    },
+    {
+      "id": "A5019869515",
+      "name": "Josina Vink",
+      "works": 23,
+      "automatically_title_included": 20
+    },
+    {
+      "id": "A5102773706",
+      "name": "Andrew Morrison",
+      "works": 21,
+      "automatically_title_included": 19
+    },
+    {
+      "id": "A5065949447",
+      "name": "Kim Halskov",
+      "works": 21,
+      "automatically_title_included": 19
+    },
+    {
+      "id": "A5043264159",
+      "name": "Susanne Bødker",
+      "works": 26,
+      "automatically_title_included": 18
+    },
+    {
+      "id": "A5028472704",
+      "name": "Rafiqul Gani A",
+      "works": 19,
+      "automatically_title_included": 18
+    },
+    {
+      "id": "A5025612542",
+      "name": "Ola Isaksson",
+      "works": 22,
+      "automatically_title_included": 17
+    },
+    {
+      "id": "A5086982806",
+      "name": "Stefan Holmlid",
+      "works": 20,
+      "automatically_title_included": 17
+    },
+    {
+      "id": "A5112035071",
+      "name": "André Liem",
+      "works": 21,
+      "automatically_title_included": 16
+    },
+    {
+      "id": "A5057372216",
+      "name": "Amalia DE GÖTZEN",
+      "works": 19,
+      "automatically_title_included": 16
+    },
+    {
+      "id": "A5039064160",
+      "name": "Roberto Verganti",
+      "works": 19,
+      "automatically_title_included": 16
+    },
+    {
+      "id": "A5064254164",
+      "name": "İdil Gaziulusoy",
+      "works": 18,
+      "automatically_title_included": 16
+    }
+  ],
+  "institution_top_20": [
+    {
+      "id": "I891191580",
+      "name": "Aalborg University",
+      "works": 507,
+      "automatically_title_included": 305,
+      "country": "DK"
+    },
+    {
+      "id": "I9927081",
+      "name": "Aalto University",
+      "works": 444,
+      "automatically_title_included": 256,
+      "country": "FI"
+    },
+    {
+      "id": "I96673099",
+      "name": "Technical University of Denmark",
+      "works": 380,
+      "automatically_title_included": 250,
+      "country": "DK"
+    },
+    {
+      "id": "I204337017",
+      "name": "Aarhus University",
+      "works": 457,
+      "automatically_title_included": 231,
+      "country": "DK"
+    },
+    {
+      "id": "I177969490",
+      "name": "University of Southern Denmark",
+      "works": 326,
+      "automatically_title_included": 188,
+      "country": "DK"
+    },
+    {
+      "id": "I66862912",
+      "name": "Chalmers University of Technology",
+      "works": 305,
+      "automatically_title_included": 173,
+      "country": "SE"
+    },
+    {
+      "id": "I86987016",
+      "name": "KTH Royal Institute of Technology",
+      "works": 327,
+      "automatically_title_included": 171,
+      "country": "SE"
+    },
+    {
+      "id": "I204778367",
+      "name": "Norwegian University of Science and Technology",
+      "works": 316,
+      "automatically_title_included": 161,
+      "country": "NO"
+    },
+    {
+      "id": "I102134673",
+      "name": "Linköping University",
+      "works": 266,
+      "automatically_title_included": 148,
+      "country": "SE"
+    },
+    {
+      "id": "I184942183",
+      "name": "University of Oslo",
+      "works": 219,
+      "automatically_title_included": 118,
+      "country": "NO"
+    },
+    {
+      "id": "I124055696",
+      "name": "University of Copenhagen",
+      "works": 295,
+      "automatically_title_included": 101,
+      "country": "DK"
+    },
+    {
+      "id": "I135606841",
+      "name": "Oslo School of Architecture and Design",
+      "works": 117,
+      "automatically_title_included": 96,
+      "country": "NO"
+    },
+    {
+      "id": "I187531555",
+      "name": "Lund University",
+      "works": 220,
+      "automatically_title_included": 90,
+      "country": "SE"
+    },
+    {
+      "id": "I123387679",
+      "name": "Uppsala University",
+      "works": 174,
+      "automatically_title_included": 90,
+      "country": "SE"
+    },
+    {
+      "id": "I881427289",
+      "name": "University of Gothenburg",
+      "works": 175,
+      "automatically_title_included": 89,
+      "country": "SE"
+    },
+    {
+      "id": "I98381234",
+      "name": "University of Oulu",
+      "works": 162,
+      "automatically_title_included": 89,
+      "country": "FI"
+    },
+    {
+      "id": "I893397424",
+      "name": "Design School Kolding",
+      "works": 122,
+      "automatically_title_included": 87,
+      "country": "DK"
+    },
+    {
+      "id": "I4210128030",
+      "name": "Royal Danish Academy – Architecture, Design, Conservation",
+      "works": 129,
+      "automatically_title_included": 86,
+      "country": "DK"
+    },
+    {
+      "id": "I133731052",
+      "name": "University of Helsinki",
+      "works": 190,
+      "automatically_title_included": 79,
+      "country": "FI"
+    },
+    {
+      "id": "I90267481",
+      "name": "Umeå University",
+      "works": 163,
+      "automatically_title_included": 76,
+      "country": "SE"
+    }
+  ],
+  "warning": "A bibliographic reference edge does not prove theoretical agreement, inheritance or replication; counts are restricted to sampled records."
+}

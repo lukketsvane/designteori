@@ -1,0 +1,1237 @@
+WORK: Designing learning technology collaboratively: Analysis of a chatbot co-design
+AUTHORS: Eva Durall, Ludmila Martins, Maite Fernández-Ferrer
+YEAR: 2022
+DOI: https://doi.org/10.1007/s10639-022-11162-w
+SOURCE: https://link.springer.com/content/pdf/10.1007/s10639-022-11162-w.pdf
+LICENSE: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+Education and Information Technologies (2023) 28:109–134
+https://doi.org/10.1007/s10639-022-11162-w
+
+
+
+Designing learning technology collaboratively: Analysis
+of a chatbot co‑design
+
+Eva Durall Gazulla1     · Ludmila Martins2 · Maite Fernández‑Ferrer3
+
+
+Received: 31 March 2022 / Accepted: 8 June 2022 / Published online: 24 June 2022
+© The Author(s) 2022
+
+
+Abstract
+Collaborative design approaches have been increasingly adopted in the design of
+learning technologies since they contribute to develop pedagogically inclusive and
+appropriate learning designs. Despite the positive reception of collaborative design
+strategies in technology-enhanced learning, little attention has been dedicated to
+analyzing the challenges faced in design processes using a collaborative approach. In
+this paper, we disclose the collaborative design of a chatbot for self-regulated learn-
+ing in higher education using an action research approach. We analyze the design
+process of EDUguia chatbot, which includes diverse evidence from questionnaires
+and workshops with students and lecturers, as well as intermediary design objects.
+Based on the qualitative analysis, we identify several challenges that are transversal
+to the co-design work, as well as specific to the design phases. We critically reflect
+on the strategies deployed to overcome these challenges and how they relate to deci-
+sion-making processes, highlighting the need to make stakeholders’ tacit knowledge
+explicit, cultivate trust-building and support democratic decision-making in technol-
+ogy design processes. We believe that the recommendations we present in this paper
+contribute to developing best practices in the collaborative design of chatbots for the
+self-regulation of learning, as well as learning technology in general.
+
+Keywords  Collaborative design · Learning technology · Technology-enhanced
+learning · Conversational interface · Chatbot · Action research
+
+
+
+* Eva Durall Gazulla
+    eva.durallgazulla@oulu.fi
+    Ludmila Martins
+    ludmila.martins@ub.edu
+    Maite Fernández‑Ferrer
+    mfernandezferrer@uoc.edu
+1  INTERACT Research Unit, University of Oulu, Oulu, Finland
+2   Learning, Media & Social Interactions, Universitat de Barcelona, Barcelona, Spain
+3   Learning, Media & Social Interactions, Universitat Oberta de Catalunya, Barcelona, Spain
+
+                                                                                    Vol.:(0123456789)1 3
+
+===== PAGE 2 =====
+110                                          Education and Information Technologies (2023) 28:109–134
+
+1  Introduction
+
+In recent years, scholars have advocated supporting student participation in the
+design process to develop learning designs that are pedagogically inclusive and
+appropriate (Villatoro & de Benito, 2021). In Technology-Enhanced Learn-
+ing (TEL), involving students during the design process has been also consid-
+ered beneficial for avoiding feelings of alienation, especially when exploring
+the potential of emerging technologies for teaching and learning such as auto-
+matic data collection systems and chatbots (Durall Gazulla et al., 2020; Durall &
+Kapros, 2020).
+  The democratization of educational technology design processes has been con-
+sidered a promising strategy to develop high-quality teaching and learning (Fleis-
+chmann, 2015). From a technology design perspective, it has been claimed that
+collaborative design processes lead to solutions that are more flexible and solid
+in use, accessible to a greater number of people, and more adaptable to changing
+situations over time (Gros & Durall, 2020). Designing technology in a collabo-
+rative way implies generating collective processes in which all the stakeholders
+involved have the possibility of influencing and controlling the process and the
+solutions generated through it (Ehn, 1988). For collaborative design to be suc-
+cessful, it is key to establish horizontal relationships of mutual learning in which
+stakeholders’ knowledge and contributions are valued (Druin, 2014). For this to
+happen, trust-building and supporting joint negotiation have been also recognised
+as important aspects to consider in collaborative design processes (Robinson &
+Simonsen, 2012; Stelzle et al., 2017).
+  While scholars have strived to open collaborative design processes, examin-
+ing aspects such as decision-making and power tensions, as well as how to reach
+agreements and support empowerment (Bønnelycke et  al., 2018; Bratteteig &
+Wagner, 2012; Ertner et al., 2010; Spiel et al., 2020), in learning technology
+design, little attention has been paid to how design decisions are taken in collabo-
+rative processes. We believe there is a need for evidence-informed debate on the
+challenges that appear at different stages of collaborative design processes and
+how these have an impact on major and minor decisions leading to the definition
+of design requirements. This is important because technologies are not value-neu-
+tral (Bucher, 2018; Feenberg, 2017) and thus design decisions have an impact on
+what aspects are prioritized in the final design.
+  This paper analyzes the collaborative design of a chatbot to be used in formal
+education contexts. Chatbots, also referred to as conversational interfaces, are
+programs designed to interact with users in a human-like way, answering ques-
+tions and performing tasks in a specific area (Griol et al., 2017; Winkler & Söll-
+ner, 2018). In the educational field, chatbots are increasingly adopted since they
+support immediate and personalized feedback (Kumar, 2021; Okonkwo & Ade-
+Ibijola, 2021; Winkler & Söllner, 2018). To date, most common uses of chatbots
+in education contexts have focused on supporting teaching and learning, admin-
+istrative tasks, student assessment, and research and development (Okonkwo &
+Ade-Ibijola, 2021). Despite the reported benefits of using chatbots in education
+
+
+1 3
+
+===== PAGE 3 =====
+Education and Information Technologies (2023) 28:109–134                                      111
+
+contexts, several challenges have been noticed. In particular, there have been
+calls for involving education stakeholders in chatbot design processes, avoid-
+ing top-down approaches (Durall Gazulla et al., 2020; Durall & Kapros, 2020;
+Fernández-Ferrer et al., 2021). To the best of our knowledge, there has been no
+debate around the diverse challenges that might hamper the collaborative design
+of learning technologies such as chatbots.
+   In this paper, we present an action research study on the collaborative design of
+a conversational interface (EDUguia chatbot) for supporting self-regulated learning
+(SRL) in higher education. We analyze the process, outlining different types of chal-
+lenges for collaboration that appear at various stages of the design process, as well
+as some strategies to overcome them. We continue by disclosing how this has had an
+impact on decision-making, the definition of design requirements and the shaping of
+the chatbot design. Finally, we discuss our findings, proposing recommendations for
+supporting collaborative design processes in TEL.
+
+2  Background
+
+2.1  Collaborative design of learning technology
+
+In recent decades, a growing number of authors have advocated the use of participa-
+tory techniques in learning design (Bonsignore et al., 2013; DiSalvo et al., 2017).
+Some of the reasons that explain the adoption of this approach in the educational
+field respond to the predominance of student-centered approaches, as well as the rec-
+ognition that students are experts of their own learning (Iversen et al., 2017). Influ-
+enced by these ideas, TEL scholars have understood collaborative design as part of
+innovation processes around learning environments and tools (Gros & López, 2016;
+Treasure-Jones & Joynes, 2018).
+  From a learning point of view, collaborative design has been linked to construc-
+tivist approaches. Both approaches pay attention to the process and the mutual learn-
+ing of those who participate. From these perspectives, the learning experience is a
+process that is built over time and in which interaction and dialogue play a funda-
+mental role (Gros & Durall, 2020).
+  From a technology design perspective, scholars have claimed that participatory and
+co-design methods are inclusive approaches (Treasure-Jones & Joynes, 2018) that con-
+tribute to ensuring that students’ needs are truly taken into consideration. As part of the
+implications for practice stemming from this work, authors have advocated that “co-
+design should ideally form part of an iterative, agile development approach” (Treasure-
+Jones & Joynes, 2018, p.283). Despite the increasing adoption of collaborative design
+approaches, practitioners have noted some challenges for implementation. Amongst the
+most prominent ones figure the difficulty for supporting trust-building and balancing
+tensions (Andersen & Mosleh, 2021; Clarke et al., 2021; Sanders, 2006).
+  To date, collaborative design has been used to involve teachers and students in
+technology design (Prieto-Alvarez et al., 2020; Cober et al., 2015; Bovill et al.,
+2011). The collaborative design of tools for learning has been oriented towards sup-
+porting key learning skills such as collaboration (Leinonen & Durall, 2014; Spikol
+
+                                          1 3
+
+===== PAGE 4 =====
+112                                          Education and Information Technologies (2023) 28:109–134
+
+et al., 2009; Tissenbaum & Slotta, 2019), assessment (Harrer & Lingnau, 2018;
+Penuel et al., 2007), reflection (Durall et al., 2017; Leinonen et al., 2016), self-reg-
+ulation (Treasure-Jones et al., 2018; Villatoro & de Benito, 2021), as well as self-
+directed learning (Laanpere et al., 2014).
+  The existing literature on participatory and co-design approaches in technology
+design has examined the role and agency of those taking part in collaborative design
+processes and several tools for analysing participation and involvement in decision-
+making have been produced (Bratteteig & Wagner, 2016; Koutamanis et al., 2017;
+Malinverni et al., 2016). However, to the best of our knowledge, none of these stud-
+ies have focused on the challenges faced in the collaborative design processes in
+higher education and how these challenges affect decision-making processes. We
+consider this as important area for further explore to ensure that design of TEL is
+rooted in democratic tradition.
+
+
+2.2  Supporting self‑regulation through chatbots
+
+From a pedagogical perspective, chatbots can scaffold students’ learning, helping them
+to address different topics and triggering reflection from the initial questions made by
+the program. However, chatbots targeting the self-regulation of learning and metacog-
+nitive strategies are scarce, which means that there is still potential for the use of chat-
+bots to be explored (Durall & Kapros, 2020; Calle et al., 2020; Scheu & Benke, 2022).
+  The Council recommendation on key competences for lifelong learning (2018)
+highlights that learning to learn is one of the key competences to support the train-
+ing, learning and participation in society in a lifelong perspective. According to the
+proposal, “Personal, social and learning to learn competence is the ability to reflect
+upon oneself, effectively manage time and information, work with others in a con-
+structive way, remain resilient and manage one’s own learning and career” (Council
+of the European Union, 2018, p.10). Deeply connected to the learning to learn com-
+petence is the idea that, to be successful, learners should develop a sense of owner-
+ship over their learning process (Durall Gazulla et al., 2020). This requires students
+to be able to self-regulate their learning.
+   Self-regulation can be defined as self-generated thoughts, feelings, and goal-ori-
+ented behaviors, and it is understood as a cyclical process composed of three phases:
+forethought, performance, and self-reflection (Zimmerman, 2001). Self-regulation
+of learning is fundamental for the development of lifelong learning skills, and this
+is one of the main reasons why education should contribute to their development
+(Zimmerman, 2002). Researchers have pointed out the potential of chatbot technolo-
+gies for supporting students to self-regulate their learning activity (Fernández-Fer-
+rer et al., 2021; Scheu & Benke, 2022). Recent studies have shown that the use of
+conversational agents could be useful to support students’ self-regulated learning in
+online environments (Scheu & Benke, 2022; Song & Kim, 2021).
+  The work that we present here is framed in a research and innovation project
+(e-FeedSkill). This research and innovation project builds on self-regulated learn-
+ing theories, concretely on Zimmerman’s model of SRL (2001), to design a chat-
+bot to be used in higher education environments. As chatbots are still an emerging
+
+1 3
+
+===== PAGE 5 =====
+Education and Information Technologies (2023) 28:109–134                                      113
+
+technology in education contexts, we have adopted a collaborative design approach
+to help students take ownership of the tool, ensuring that the design aligns with their
+needs and technology practices. The study reported in this paper aims to contribute
+to learning technology design practice by following an action research approach that
+addresses the following questions in the context of a chatbot design:
+
+1.  What type of challenges hinder collaborative approaches to the design of learning
+    technologies like chatbots?
+2. How to overcome the challenges faced in the collaborative design of a chatbot for
+    supporting SRL?
+
+   In order to answer these research questions, in this paper we disclose the col-
+laborative design of a chatbot for SRL, and we critically reflect on the challenges
+and the strategies we adopted during the design process. In line with research
+approaches acknowledging the socially situated nature of research (Zhou & Hall,
+2018) in this text we use the first person to highlight the authors’ involvement in
+the study as design practitioners and researchers. We believe that the insights we
+present in this paper contribute to advance knowledge and support the develop-
+ment of best practices for supporting collaboration and democratic decision-mak-
+ing in the design of chatbots for the self-regulation of learning.
+
+
+3  Methodology
+
+In human–computer interaction, action research has been considered a valuable
+approach to identifying issues of practice, providing insight on the needs and
+challenges faced by practitioners (Ogunyemi et al., 2019). Design practice has
+been connected to action research due to the strong resemblance between both
+processes. As several scholars have noted, design practice and action research are
+both oriented towards change and transformation to improve a particular situa-
+tion through the interplay of action and research moments in successive cycles
+(Blackler et al., 2018; Swann, 2002). In addition, both action and design research
+acknowledge the complex interrelations between humans and their context and
+thus embrace uncertainty and messiness as part of the process (Blackler et al.,
+2018). In this article, we inquire on the challenges faced by learning technol-
+ogy designers to implement democratic processes in their practice. We advance
+research on this issue by conducting a qualitative analysis of the collaborative
+design process of a chatbot for supporting the self-regulation of learning.
+  We reflect on our practice (Schön, 1983) with the aim of better supporting
+collaboration and democratic decision-making in learning technology design.
+For this purpose, we have systematically engaged in action research cycles of
+planning, observing, and reflecting (Kemmis et al., 2014) on each of the design
+phases of the EDUguia chatbot, which we have defined as Understanding, Defin-
+ing and Shaping in Fig. 1.
+
+                                          1 3
+
+===== PAGE 6 =====
+114                                          Education and Information Technologies (2023) 28:109–134
+
+
+
+
+
+Fig. 1   Action research cycles
+
+
+
+
+
+Fig. 2   Summary of actions and products
+
+  As is common in design processes, design phases are characterized for moving
+from a fuzzy phase (here referred as Understanding) to progressively narrowing the
+design space (Defining) until arriving at a crisp phase (Shaping) in an iterative fash-
+ion (Design Council, 2007; Tschimmel, 2012; Wolniak, 2017), as it is presented in
+Fig. 2. The initial phase (Understanding) of the EDUguia chatbot design comprised
+actions intended at providing a general comprehension of the context of use, iden-
+tifying the stakeholders’ needs and wishes regarding the conversational interface.
+Some of the actions conducted by researchers and designers during this phase con-
+sisted in a literature review on self-regulation and a benchmarking of chatbot tech-
+nologies, which were further discussed in the project meetings. In these sessions, 43
+articles on SRL and 24 on chatbot uses in education published during the five years
+were selected for close examination. The benchmarking of chatbot technologies led
+to the selection of five different approaches which were considered for the chatbot
+design.
+
+1 3
+
+===== PAGE 7 =====
+Education and Information Technologies (2023) 28:109–134                                      115
+
+   During this phase, the expected users, and stakeholders of the EDUguia chatbot
+were also involved through co-design workshops and questionnaires. In the context
+of the project e-FeedSkill, these stakeholders were in the first place, the students,
+and to a lesser extent, the lecturers, since the conversational interface would be
+piloted during their courses, as an aid for the students’ self-regulation of their aca-
+demic activity. The insights stemming from Understanding were used as the start-
+ing point of the Defining phase, which focused on the identification of the obsta-
+cles faced by students and lecturers for using the chatbot in a learning environment.
+Parallel to the identification of obstacles, during this phase it was also important
+to generate and assess potential solutions to overcome the obstacles. The co-design
+sessions conducted with students and lecturers, as well as the questionnaires pro-
+vided information that helped to define the design of the conversational interface
+and identify a list of design requirements. As indicated in Fig. 2, during this phase,
+intermediate design objects such as a rubric on self-regulated learning and a chatbot
+style guide were also produced.
+  The Shaping phase can be characterized as a crisp moment, in which the informa-
+tion collected during Understanding and Defining needs to be translated into design
+decisions that shape the final product, which in this case was the EDUguia chatbot.
+Building on the intermediate design objects, a collaborative flowchart to work on
+the chatbot script was produced. While there is a strong interconnection between the
+phases, the process of shaping cannot be understood as linear. Before a design deci-
+sion could be formalized, several adjustments and iterations were conducted. During
+this phase, a first functional version of the EDUguia chatbot was launched and iter-
+ated based on the feedback received through an online questionnaire.
+
+
+3.1  Participants and context
+
+The study presented in this paper is part of a research and innovation project focus-
+ing on the analysis of the effects of feedback supported by digital monitoring tech-
+nologies on transversal skills (e-FeedSkill). The e-FeedSkill project studies how
+feedback strategies focused on self-regulation can support learners develop soft
+skills such as learn to learn and autonomous learning. In the project, the role of tech-
+nology as a tool for monitoring and supporting learners’ activity is also examined
+through the development and piloting of a chatbot in various university courses.
+  The chatbot follows a collaborative design approach in which the following stake-
+holders have been involved:
+
+•  Students: 12 undergraduate students from a Spanish university. The selection cri-
+    teria were based on the studies (at least one student from six different bachelor
+   degrees: Biotechnology, Management and Public Administration, Primary Edu-
+    cation, Computer Engineering, Pharmacy and History), course level (with repre-
+    sentation of different educational levels), academic record (intermediate perfor-
+   mance) and gender.
+
+
+                                          1 3
+
+===== PAGE 8 =====
+116                                          Education and Information Technologies (2023) 28:109–134
+
+Table 1   Research instruments
+Instrument                                      Participants involved                Data format
+
+Pre-workshop questionnaire                    students, lecturers                        text
+Online workshops                              students, lecturers                     audio, text inputs
+Post-workshop questionnaire                    students, lecturers                        text
+
+
+
+Table 2   Chatbot intermediate design objects
+Intermediate design objects                Participants involved                         Data format
+
+Chatbot drafts based on a rubric on Self-  students, lecturers, researchers, designers          text
+  Regulated Learning (SRL)
+Chatbot design requirements               students, lecturers, designers, developers          text
+Chatbot style guide                      designers                                            text
+Chatbot flowchart                         designers, developers                             visual
+Chatbot script change log                 designers                                            text
+
+•  Lecturers: Seven lecturers from the six different bachelor’s degrees in which the
+   chatbot would be piloted (Biotechnology, Management and Public Administra-
+    tion, Primary Education, Computer Engineering, Pharmacy and History). In the
+    selection criteria, aspects such as course level, years of teaching experience and
+   gender were considered.
+•  Researchers: 22 researchers and lecturers from two Spanish universities and with
+   diverse backgrounds (education, biological sciences, IT, administration, social
+   sciences).
+
+3.2  Data collection and analysis
+
+In this study, we have collected diverse data from students and lecturers through
+questionnaires and online workshops (Table 1).
+   Since the study is framed as action research, we have extended our analysis by
+examining project communications such as internal team notes, meetings’ minutes,
+and intermediate design materials such as chatbot drafts, design requirements, the
+chatbot style guide and the change control document of the chatbot script (Table 2).
+  The project followed a collaborative design approach and thus, it was considered
+important to capture the ideas, needs and interests of the chatbot’s expected beneficiar-
+ies. To this end, two online workshops1 were organized with students (n = 12) and lec-
+turers (n = 7) from the studies in which the chatbot was intended to be implemented.
+Due to Covid-19 restrictions for holding face-to-face sessions, the workshops were run
+online using visual tools for supporting synchronous participation such as the padlet. At
+the workshops, students and lecturers were invited to contribute to the padlet boards,
+
+
+1  See Fernández-Ferrer et al. (2021) for more detailed information on the co-design workshops.
+
+1 3
+
+===== PAGE 9 =====
+Education and Information Technologies (2023) 28:109–134                                      117
+
+
+
+
+
+Fig. 3   Lecturers’ contributions during the co-design workshop
+
+
+
+by writing their opinions, voting, and expressing their preferences towards the chatbot
+draft script and contributing to the definition of chatbot opportunities and challenges at
+different stages of the learning process as shown in Fig. 3.
+   In the case of the students, the tasks focused on providing insight on their technology
+preferences, study habits, as well as their wishes, expectations, and concerns regarding
+the introduction of chatbot tools in their academic activity (Table 3). In the case of
+lecturers, the workshop tasks oriented at defining the timeline of student-chatbot inter-
+actions in the courses in which the chatbot would be implemented and identifying the
+aspects requiring specific adaptation depending on the knowledge area (Table 3). In
+both workshops, it was also important to manage expectations regarding the chatbot
+functionalities.
+   For the purposes of this study, we conducted a thematic analysis of the chatbot col-
+laborative design process. Thematic analysis has been described as “a method for iden-
+tifying, analyzing and reporting patterns within data’’ (Braun & Clarke, 2006, p.79).
+In this study, three researchers have been involved in the phases identified by Braun
+and Clarke (2006) which include familiarizing with the data, generating initial codes,
+searching for themes, reviewing themes, defining, and naming themes, and producing
+a report based on the results. In the following section, we present the findings of the
+analyses.
+
+
+
+
+                                          1 3
+
+===== PAGE 10 =====
+118                                          Education and Information Technologies (2023) 28:109–134
+
+Table 3   Co-design workshops tasks and outputs
+Co-design workshop par-     Tasks                              Outputs
+ticipants
+
+Students                      -Icebreaker on technology prefer-     -Improved understanding of stu-
+                              ences                                  dents’ habits, challenges in their
+                               -Definition of challenges for develop-   academic activity, and when
+                               ing academic assignments             using technology for learning
+                             -Discussion on risks and challenges    -Identification of students’ expec-
+                                of using chatbots in education          tations and concerns regarding
+                               -Definition of preferences on the         chatbot technology in academic
+                        EDUguia chatbot conversation style   environments
+                                                                      -Selection of the conversation
+                                                                              style for the EDUguia chatbot
+Lecturers                      -Definition of the timeline of student-  -Identification of challenges and
+                               chatbot interactions during the         opportunities linked to each of
+                              course                                the assignment development
+                          -Review of a fragment of the chatbot    phases
+                                   script                            -Feedback on the chatbot script
+                                                            and generation of self-regulation
+                                                                             strategies to be included in the
+                                                                      chatbot
+
+
+4  Findings
+
+In this section we identify several challenges arising throughout the collaborative
+design process of a learning technology, focusing on each of the phases (Under-
+standing, Defining, and Shaping), as well as strategies to support the stakehold-
+ers’ understanding and decision-making (Table 4). The evidence presented stems
+from the EDUguia chatbot collaborative design process, which includes the co-
+design workshops organized with students and lecturers, the project meetings’
+minutes, and intermediate design objects, as well as our reflections as designers
+and researchers involved in the project.
+
+
+4.1  Challenges and strategies for transversal collaboration
+
+The challenges for collaboration vary across the design phases since they are
+closely related to the objectives of the phase and the tasks at hand. During the
+design process of EDUguia, and in addition to the phase-related challenges, we
+also noticed transversal challenges. By using the term transversal, we refer to
+persistent difficulties and obstacles for collaboration that while manifesting in
+diverse ways, responded to the same challenge. In this case, we want to highlight
+two transversal design challenges: the first one being the challenge for address-
+ing diverse needs, while ensuring the relevance of the solutions envisioned,
+and the second one referring to the challenges for the stakeholders’ continuous
+involvement.
+
+1 3
+
+===== PAGE 11 =====
+Education and Information Technologies (2023) 28:109–134                                      119
+
+                                              support  for                                 them                        through                                                            stake-                                                                                                                                                         generate                    and                                        show
+                                      to             is      moments  from                                                     and                           feedback                                                                                                                                                                                                       alternatives
+                          need  and                                                                                                                                                                                           stakeholders                                                                                                            sessions                                                                                                                           options                                          input                                                                                                                    discuss                                                                                                                                                                                                                                      stakeholdersexpertise             dislike                                                                              among and                                                                  particular                                     and design                                                                    and                                                               the stakeholders’       a                                                                                                                                                                (micro-feedback)                                                                                                                                        debriefing                           visualize   among          like                                                                         look     practices guide                                                                                                                                                     conflicts                                                                                                                                                          request                                                     critical                                                                                           they                                                                                                             stakeholders’                                      stakeholders                dilemmas                                          to                                                                                         stakeholders                                                                                feedback                                                                                               through                                                                                                                                                                     clarificationswith                                               and face    mightpractices                    how                                                           require              to participants           existing   and                                                                                                                                                  objects                                                  short                                                                             best                                                    diverse                                                                                                                                                                                      elements                                        on                                                                              needs    help                                      of                                  that                                        assess                              for      request                                                                                                                                                                                                     solutions                                                                                                                                        collection                                   to             to                                                                                                    build                                                                                                                                                                                        approaches                                                                                                                    examples                                                                                                                                                       vocabularies                                                    between issues                                                      data                                                                                                                                                               marking                                                                                                                                                                                                       stakeholders                                                                                                                                      sharing                                                                                that                                                                                                                            opposing                                                            moment  and                           of                                                                                                                                                                                                                                                           intermediary concrete                         key                                                                                       visual                                                                    and                                                                           shared                                                                                                                                                                     different                                                                                                                                                                                                 prototyping                                                                         information                                     questions                                                                                 negotiation          collaboration    holders                    how     solutions           voting                                         Strategy  -Get       -Identify     -Schedule   -Ask-Build -Analyses -Provide -Highlight -Encourage -Use      -Encourage      -Develop -Propose
+
+                                 solu-
+                    the             of                                                                                   stakeholders
+                                                            relevance                                   among
+                    the                                                                                                                    literacy                                                                                            involvement                                                 explicit                                                                                                                                                     solutions                                                     ensuring                                                                                concrete                                                                              needs                                                                                                                    finding                                                                                                                                                                                             technological                                 while                              the                                                                                    continuous                                   to                   practice                             of                                                  and                                                          decision-making                                                                                    into
+            for                                        needs,                                   level                abstract                                                                                                                                 assumptions                                    stakeholders’                                                     the                                              diverse          stakeholders’                                 meanings certain          discussion                           research                                                           tacit  a                                                                agreements                                                                                                             diverse    from                                       strategies                         envisioned
+            and
+                                     tions                                              Challenge      -Addressing         -Supporting                        -Unveiling          -Interpreting -Ensuring -Making -Supporting -Moving                            -Translating -Reaching
+                                       challenges
+        of
+                                                                                      collaboration          collaboration                               understanding          understanding understanding                     tool tool                                                                                                                                                                                           requirements requirements requirements       the the                                Summary
+                                          Table 4  Type      Transversal         Transversal                        Supporting        Supporting Supporting Defining Defining Defining                 Shaping Shaping
+
+                                          1 3
+
+===== PAGE 12 =====
+120                                          Education and Information Technologies (2023) 28:109–134
+
+  While we acknowledge the importance of listening to diverse stakeholders’
+needs during the design process, sometimes it is not possible to address all of
+them in the design solution. The challenges for prioritizing among diverse needs
+relate to various aspects such as assessing the impact that addressing a particular
+need might have for the rest of the stakeholders. For instance, during the chatbot
+co-design workshops, some participants expressed very concrete wishes such as
+using the chatbot to remind them of general information about the course. This
+expectation conflicted with other approaches based on using the chatbot for skills’
+development. Collaboratively assessing to what extent this was a widely shared
+expectation, as well as the relevance of this approach for other stakeholders was
+key. In our role as designers, we strived to get information and support negotia-
+tion between diverse stakeholders’ needs throughout the design process.
+  Another challenge for sustaining collaboration throughout the design process
+related to the stakeholders’ availability to participate in the workshops and provide
+feedback. This was particularly acute in the case of students since the collabora-
+tive activities needed to be scheduled during the academic term without overlapping
+with their academic activities. Although this challenge refers to logistics, it was a
+significant obstacle for the stakeholders’ participation throughout the project. We
+worked around this limitation by identifying the key issues that required stakehold-
+ers’ input and arranging opportunities for obtaining short feedback.
+
+
+4.2  Challenges and strategies for supporting understanding
+
+During the early stages of the EDUguia design (Understanding), we noticed sev-
+eral challenges for supporting the stakeholders’ mutual understanding and therefore,
+collaboration. Such challenges related to unveiling tacit assumptions, interpreting
+meanings, and ensuring a certain technological literacy among stakeholders.
+   Tacit assumptions refer to implied meanings that are taken for granted and thus,
+they are not openly mentioned during conversations. While the reasons why these
+ideas remain unspoken are diverse, making the stakeholders’ tacit assumptions
+explicit in collaborative design is key to ensure that the chatbot design supports the
+goals and needs of those who are expected to use the tool.
+  During the co-design workshops of the EDUguia chatbot, we noticed that some
+of these assumptions related to fears about technology. For instance, as one of the
+students involved in the sessions expressed:
+   “I think it’s a double-edged sword depending on how you approach it [the chat-
+   bot]. Because if you do it as participant 1 has said, it is fine, but as participant
+  2 has said, it can remove some of the necessary skills from today’s society as it
+   is having a research aptitude. Or we may encourage more shyness or introspec-
+   tion. That is, we may be fostering a very unsocial character, and we may be
+  moving away from people with very negative implications.”
+   In the online co-design sessions, we were able to create a safe space for students
+and teachers’ open expression towards technology. The creation of such a space ena-
+bled us to ask questions and request clarifications whenever it was needed. As a
+
+1 3
+
+===== PAGE 13 =====
+Education and Information Technologies (2023) 28:109–134                                      121
+
+result of this, we were able to spot the need to develop shared vocabularies with
+stakeholders. However, these conversations only appeared by the end of the discus-
+sion sessions since it took time to understand what the technology could do and how
+one felt about its potential uses. It is also worth mentioning that some of these fears
+were closely related to discourses popularized through media (usually movies) about
+technology.
+  As designers and researchers, we were in constant need of interpreting the stake-
+holders’ inputs. The interpretation work happened on-the-go during the synchronous
+sessions with stakeholders, but also through dedicated moments for analysis such as
+debriefing sessions with the research and design team. In a way, we might say that
+during the first phase of the design process, reading between the lines was a key skill
+for us. Thanks to this interpretative work we were able to gain deeper insights on the
+students’ strategies for finding support in academic tasks and detecting “patterns”
+such as the preference for immediate and informal feedback usually through peers,
+instead of asking the teacher.
+   Successful communication in collaborative design is also mediated by the stake-
+holders’ background and their technological knowledge. In this regard, it is impor-
+tant to be aware that previous experiences with a particular technology have a strong
+impact on potential users’ expectations. During the co-design sessions, it was notice-
+able that many stakeholders viewed chatbots as personal assistants. For instance, as
+one of the students shared:
+   “It [the chatbot] would be especially useful to be more practical and to shorten
+   the procedure when it comes to knowing a formal or normative information, or
+   a recurring doubt. For example, on campus, you could tell us what activities
+  we have to deliver.”
+  From this perspective, the chatbot benefits consist in supporting efficient access
+to information, rather than skills’ development. While the assistant metaphor was
+present among students and lecturers, the last ones pondered and discussed vari-
+ous chatbot approaches with deeper elaboration than the students. Lecturers’ broader
+imaginaries might be related to their awareness of different chatbot technologies in
+learning environments, as these had been introduced and discussed in previous pro-
+ject meetings. In this regard, we considered that the uneven awareness of the chatbot
+possibilities was a challenge for the collaborative design process. During the design
+of the EDUguia chatbot, we tried to overcome this limitation by using analogies and
+providing visual examples to stakeholders.
+
+
+4.3  Challenges and strategies for defining requirements
+
+Before the design requirements are identified there is a progressive process of
+narrowing down options and identifying alternatives. Even if subtle, the action
+of defining involves decision-making. During the definition of the EDUguia chat-
+bot design requirements we observed the following challenges for collaboration:
+making evident for each of the stakeholder groups the needs of other interested
+
+                                          1 3
+
+===== PAGE 14 =====
+122                                          Education and Information Technologies (2023) 28:109–134
+
+stakeholders, supporting stakeholders to discuss alternatives and helping them
+move from the abstract to the concrete.
+   In the EDUguia design process, we decided to arrange separate co-design
+workshops with students and lecturers to ensure students were able to freely
+express  their views without feeling judged by  their teachers. Although  this
+approach had benefits such as the obtention of rich feedback about students’ views
+enabling a more empathic understanding by the design researchers, it also posed
+some challenges. One of these challenges dealt with the reconciling of oppos-
+ing needs between stakeholders. For instance, students at the workshop expressed
+their concerns regarding the constant monitoring of their activity in social and
+education contexts:
+   “In the society we live in, we are all under control (...) and that made us a little
+   nervous and uncomfortable. Then we talked about control through the campus
+  and that they can see how many hours you have been there, what documents
+  you work or not, and this was also a bit like constantly monitoring us.”
+  As the students noted, such a level of monitoring had increased during the covid-
+19 pandemic during which higher education was moved online. When discussing
+about using the chatbot in academic activities, the students also showed reluctance
+to automatic personal data collection and raised questions regarding who would
+have access to their data. The students’ need for privacy and not being under con-
+stant monitoring clashed with researchers’ need to collect data to assess the tool,
+as well as lecturers’ usage of the chatbot to follow-up students’ individual activity.
+Making evident for all stakeholders the diversity of needs was challenging due to
+their limited availability and because these needs opposed each other. From a design
+perspective, an important challenge consisted in defining whose needs should pre-
+vail and finding middle grounds that could accommodate different positions.
+  At several moments of the collaborative design process, we encouraged stake-
+holders to face conflicts and discuss alternatives by pointing at opposing needs
+and dilemmas. While this strategy helped to channel the conversation to address
+hot topics, moving away from dualistic thinking was hard. For instance, a recur-
+ring dilemma throughout the design process was whether the chatbot should include
+information specific to a particular course or whether it should focus on transversal
+aspects such as learning to learn skills. As one of the lecturers involved in the co-
+design workshops expressed:
+   “I think the content of each subject is very specific and it is difficult to make a
+   chatbot that can cover all this content. I think it should be more about learning.
+  About, for example, how to make a plan, how to make a reflection.”
+  Moving from the abstract to the concrete is also part of defining. In the co-design
+sessions, we used prototyping to help participants visualize options and show them
+how different approaches to the chatbot might look like. As one of the students
+acknowledged:
+   “I knew what a chatbot was, but I couldn’t imagine exactly what it would be
+   like. And now, looking at it the way it is: asking a question and giving you
+
+1 3
+
+===== PAGE 15 =====
+Education and Information Technologies (2023) 28:109–134                                      123
+
+  some options seems pretty good to me. I liked the options and found them to
+   be quite useful.”
+   In the co-design sessions with lecturers, participants were encouraged to share
+best practices regarding how to integrate the chatbot in their courses through for
+instance scheduling dedicated moments to introduce the chatbot and discuss stu-
+dents’ experiences on self-regulation. Building on lecturers’ existing practices and
+expertise was a valuable strategy to move from the abstract to the concrete, enabling
+lecturers develop ownership of the chatbot and envision how this new tool would
+integrate in their teaching.
+  The analysis of the discussions with students and lecturers taking place dur-
+ing the co-design workshops, as well as of other stakeholders’ wishes and needs
+informed the definition of the key requirements for the chatbot design. Specifically,
+the chatbot design requirements consisted in: use across disciplines, theory-based,
+immediate feedback, easy to understand, brief and smooth interactions, adaptation
+to existing technology habits, accessible and inclusive, limited personal data collec-
+tion, data transparency (Table 5).
+
+4.4  Challenges and strategies for shaping the tool
+
+In the EDUguia design process, shaping was grounded on a solid understanding of
+the socio-cultural context and informed by a careful definition of the stakeholders’
+diverse needs and wishes. The key challenges that arose during this phase are related
+to translating research into practice and reaching agreements.
+  The EDUguia chatbot was meant to be integrated in a learning environment
+and thus, it was informed by pedagogical theory. The collaborative design process
+involved translating theory on self-regulated learning into a tool that connected to
+the stakeholders’ practices. The development of intermediary documents to guide
+the design such as rubrics and a chatbot style guide supported communication with
+researchers while helping to shape the chatbot design. For instance, the chatbot style
+guide included specific guidelines such as the suggested length of the messages,
+tone and type of questions, use of emojis and links for writing gender-neutral texts.
+The guide also included aspects to be avoided such as complex phrasing, academic
+jargon or questions that might be interpreted by the students for control or evalua-
+tion purposes.
+  The intermediary objects were the basis for the design of the EDUguia chatbot
+functional prototypes, which were shared for feedback and revised accordingly. The
+decisions made throughout the collaborative design process have led to the EDU-
+guia chatbot, which is a conversational interface for supporting the self-regulation
+of learning in student-led academic tasks. The tool targets higher education students
+from all fields of knowledge and is meant as an aid for developing learning to learn
+skills.
+  As designers, ensuring progress in the shaping of the EDUguia chatbot was part
+of our duties. To accomplish this task, we looked for ways to foster decision-making
+and support consensus. Thus, at given moments we aimed to close open debates by
+proposing a specific solution and requesting feedback from stakeholders. In some
+
+                                          1 3
+
+===== PAGE 16 =====
+124                                          Education and Information Technologies (2023) 28:109–134
+
+
+                           the                  self-     by             type                                                 consid-                     to  anof                  to      students                         chatbot
+                                                                the                                              the   used                            were                                                                                                                                                                         necessary      consent,                                  be                                   them    which             support                                                                                                                                              language                            they     in    To     access                                                                           script                  could                     informedspecifying                                   since       tailoring    cycle           texts.                               minimum                                                                            would              inclusive                                                                                                                       chatbot                                                                                       chatbot                                      to                                                                                                                      tested students’script,                                                                                     points they                                                 skills,       learning,                           the                                                   theensure                                     the
+                                       be                                   learn         in predefined                 accordingly  to                                                                                                                                                      chatbot              to                                       self-regulation                           on                                                                                                    certain                                                                       paid                                                                the                                                                                                                                                                                            collection                                                                                                                                                                                         guarantee                                                                                                  would                                                                                                                                        ensuring                            at considered                                the                                           of                                       it                                         to                                                     was                                                                   based                     of                                                                                                                                designed                                                                           data                                                         learningknowledge self-regulated                was                                                                                                                                                     infographics                              it              inof                                                                                                  which                                                                                                    enabled                                                                were                                                     phase                                                                                                                                                         followed,                  onstyle                                     and mostly                                       in providedbeginning                                                                                                                                                                attention reduce                                                         also                                the                                                                                         used                                      to                                               fields                                                                    were          thebe                        all    on                               visuals
+                                           at                                                         were                                                                                                                                         courses                                                                           team                                              tool                                                                                                                                                                                       preferences,                to                                                                                                                             Special                                                                                                                                      structure,                                                and                                                                              emphasizing                                                                                                                language,                                                                                                          interaction based                                                           the                                  the                                                                                                               would                                                                                                                            micro-contents                                                                                                                                                                                                                                   information                                                                                                           added                                                      tree                                            it                                                                                texts standards                  of                                                              plain                                                                                                    answers                                                                                                           needs.                                                                                                                                                      research
+                                                the                                                                                                                      during  washow                                                                                      transversal                                                                   chatbot content          text technology                                                        the                                                                                                                                                                     research                                                                                                       accessing                             the                                                           use                                                                   and                                the                                                                                                                             diverse                                                                                     development,                        and                                                                                Thus,                   of                                                              the                                                                           with                                                                                         collection                                                                                                                                                                          technology                     of                                                                                                                            sentences, hierarchical                                                                                                                                                      message                                                                              tool         a             a                                         to                                              when                                                                       with                                                         open students’                                          skills                  of                           of                                                           the                       be              onrelevant                  short    onlaptop.           agreed                     collected                               ered          specificities    might of         expression, avia      students wasassess additionadditionaldata                                                             Description   Focus      Creation         Organization  Use Election    Based          Accessibility  It  In
+                                       request
+                 the                                                                              researchers
+                          design                                 making                                                                       lecturers,         researchers       lecturers                                                           researchers                              chatbot
+                                                                  Stakeholders     Students,        Lecturers,       Students,      Students Students      Students        Lecturers,      Students         Researchers                              EDUguia
+             the
+             for                                                           habits
+                                                                                                                                                                                            collection                                                    requirements                                                                                                   technology                                                                                                                                                                 interactions                 data             key                                                                                                         inclusive                                                                                                                          existing
+         of                                                                              disciplines                     feedback       to  and                                                                                 smooth                                   personal                       List                                                                       understand                         to and                                                                          transparency                                          across                                               Table 5     Requirement  Use         Theory-based       Immediate   Easy Brief        Adaptation        Accessible      Limited   Data
+
+1 3
+
+===== PAGE 17 =====
+Education and Information Technologies (2023) 28:109–134                                      125
+
+
+
+
+
+Fig. 4   Padlet of the EDUguia chatbot conversation styles
+
+cases, we invited participants to vote between different options as shown in Fig. 4,
+asking them to indicate their preferences towards the chatbot draft script.
+  Based on the data collected during the co-design workshops, it was decided that
+the chatbot would accompany all the phases of the self-regulated learning cycle: the
+establishment of goals, the understanding of the criteria, the reflection on how the
+task is carried out, the redirection of strategies, the search for efficiency in the devel-
+opment of the activity and the assessment of the result achieved. At the beginning
+of each EDUguia session, students would indicate the phase they considered they
+were at regarding an academic task. Depending on the phase, students could access
+resources for supporting goal setting, reflecting on the task progress, and assessing
+the results achieved. For instance, when planning an activity, students could use the
+chatbot to find information about how to define objectives and set learning goals,
+organize their work, cope with obstacles, manage time and avoid distractions. Dur-
+ing the task execution, the chatbot would include resources to help students moni-
+tor their progress, managing their time and emotions, as well as gaining awareness
+about key skills for learning. During this phase, special attention would be also paid
+to stress management and sustaining interest and motivation. Once students final-
+ized the academic task, the EDUguia would encourage them to self-assess their
+performance, reflect, and learn from their mistakes, as well as carefully consider
+their emotions, feelings and think about how these reflections might impact further
+learning endeavors. These resources were expected to have effects on the cognitive
+components (memory, attention, problem solving) and, especially, the metacognitive
+(understanding of the learning process itself and thought processes) and affective
+(emotions, feelings, etc.) dimensions of learning.
+  The students would access the EDUguia chatbot through the university online cam-
+pus and interact with it by answering questions. In order to support brief and smooth
+interactions, students would answer the chatbot questions by selecting from a range of
+
+                                          1 3
+
+===== PAGE 18 =====
+126                                          Education and Information Technologies (2023) 28:109–134
+
+
+
+
+
+Fig. 5   Infographic embedded in the EDUguia chatbot
+
+
+
+predefined options. To support richer expression, in some cases it was also considered
+desirable to enable free text answers. The interface dialogue style aims to foster reflec-
+tion on the part of the user and, at a certain point, suggests various tips in the form of
+infographic resources, as shown in Fig. 5. These resources were specially designed to
+accompany the development of learning self-regulation skills.
+   After the shaping of the chatbot into a functional prototype, lecturers were positive
+about the chatbot’s potential for supporting the students’ learning process, improv-
+ing their performance and their abilities to manage time, reflect and ask for support to
+manage their academic activity. In the lecturers’ view, the chatbot provided valuable
+resources, and the tool interface and language were friendly and easy to understand.
+When possible, the suggestions for improvement were incorporated before the pilot
+tests. In the cases of more complex requests, such as translating the tool into another
+language, they were listed as iterations to perform after the first round of pilot tests. Stu-
+dents’ early feedback after using the tool reflected their appreciation for the advice and
+the additional resources provided through the chatbot. Some of the students’ comments
+confirmed the need to schedule synchronous sessions to discuss their experiences using
+the chatbot for supporting self-regulation, and to revise the chatbot contents based on
+the students’ background and field of knowledge. While further evaluation of the chat-
+bot will be performed after the first round of pilot tests in eight courses from diverse
+bachelor studies, we consider this feedback can be taken as a sign of the collaborative
+design worth for aligning the tool with the expected beneficiaries’ needs and values, as
+well as to open the design process.
+
+
+
+
+1 3
+
+===== PAGE 19 =====
+Education and Information Technologies (2023) 28:109–134                                      127
+
+5  Discussion
+
+This section discusses the challenges that hinder chatbot collaboration and the
+strategies used to overcome those challenges in relation to the design and technol-
+ogy research literature. Based on this, we indicate several implications for prac-
+tice when co-designing learning environments mediated by technology.
+   Like other research studies, we distinguished different phases in the collabora-
+tive design process (Barberá et al., 2017; Cober et al., 2015). While the differen-
+tiation between three moments (Understanding, Defining, and Shaping) helped
+us to analyze and reflect on the challenges, it is worth noting that the boundaries
+between phases are blurry, and it is not possible to understand them as separate,
+linear tasks. As designers, we were responsible for leading a process that has
+been often described as messy (Akama, 2009; Blackler et al., 2018; Sanders &
+Stappers, 2008). Such messiness has an impact on collaboration since it makes
+communication and tracking decisions harder.
+   Traditionally, supporting mutual understanding between different stakeholders
+has been one of the key missions of participatory processes (Sanoff, 2011). Navi-
+gating stakeholders’ diverse and even opposing needs and creating consensus is
+not easy and requires participants to creatively explore their differences through
+shared discovery (Atlee, 2003; Sanoff, 2021). For this to happen, it is critical to
+find strategies that help reveal stakeholders’ tacit knowledge. As participatory
+design scholars have noted, some of these strategies might consist, for instance,
+of the conversation analysis of users’ dialogue (Luck, 2003) or asking partici-
+pants to express their ideas by doing and enacting (Akach et al., 2021; Sanders
+et al., 2010; Spinuzzi, 2005). While these strategies have been widely adopted in
+participatory and co-design processes, it is worth noting that the level of analysis
+required for unveiling implicit meanings takes time and a certain distance to criti-
+cally reflect on it. As designers and researchers involved in the EDUguia chat-
+bot design, we were attentive to the dialogues that arose during the workshops,
+as well as their phrasings when providing textual feedback. However, undertak-
+ing such a thorough examination of the participants’ expressions was very chal-
+lenging during the design process, and we only could do it when analyzing the
+session’s documentation. Considering this circumstance to be quite common
+in research and innovation projects, we advocate the adoption of strategies that
+actively engage participants in making explicit the ideas and knowledge they take
+for granted. Developing shared vocabularies between designers and stakehold-
+ers can help to share meanings and create mutual understanding (Luck, 2003;
+Martin-Hammond et al., 2018). Based on our experience in technology-enhanced
+learning, we believe that the identification of specific strategies that contribute to
+support mutual understanding about learning and technology among education
+stakeholders would contribute to making learning technology design processes
+more open and democratic.
+  While mutual understanding is key in collaborative decision making, it does
+not impede conflicts from occurring. Participatory design scholars have devoted
+attention to conflicts and disagreements in design processes, outlining various
+
+
+                                          1 3
+
+===== PAGE 20 =====
+128                                          Education and Information Technologies (2023) 28:109–134
+
+mechanisms to guide decision-making in these situations (Bratteteig & Wagner,
+2012; Hendriks et al., 2018; Pedersen, 2020). Among these mechanisms, building
+trust has been pointed out to support equitable collaborations and power sharing
+(Clarke et al., 2021; Hillgrenet al., 2011; Pirinen, 2016; Warwick, 2017). Inter-
+personal relations have been considered key for trust-building and there have
+been calls for supporting informal exchanges and spending time with stakehold-
+ers, beyond the project-focused activities. In the context of EDUguia, we found it
+challenging to build strong interpersonal relations with students, since we were
+not able to have the same level of regular interaction as with other stakeholders,
+like, for instance, the lecturers, throughout the design process. Our trust-building
+actions with students were limited to the online co-design workshops, in which
+informal conversations were harder than in face-to-face interactions. Given these
+circumstances, our efforts for building trust consisted in being open about the
+project goals and process, explicitly recognizing them as experts of their learning
+processes, showing appreciation for their insights and inviting them to give feed-
+back at later stages of the project.
+  Because of time and resource constraints, we could not involve all stakeholders
+in all decisions, as we would have wished. Since this may be a common situation
+in design, we want to open a discussion on democratic decision-making in learning
+technology design since this has significant implications for practice. To this end,
+we consider it crucial to distinguish between different types of decisions and how to
+support trust in the decision-making process that leads to each of them. Following
+Bratteteig and Wagner, design decisions can be classified “big decisions and small
+decisions, decisions internal to the project and related to the outside world, and deci-
+sions that might be called non-decisions.” (Bratteteig & Wagner, 2012, p.41). In
+this paper, we have discussed the big and small decisions that were taken based on
+the requirements identified for the EDUguia chatbot design. We acknowledge that
+many more decisions were taken, but we think the ones presented are representative
+enough to highlight the complexities that arise in this type of process.
+  According to Bratteteig and Wagner, big design decisions relate to values and
+concepts which reflect in the visions guiding the project, as well as in the ways about
+how such visions are implemented (2012). In the design of EDUguia, the big deci-
+sions stemmed from the requirements identified through the co-design workshops
+were Use across disciplines, Theory-based, Immediate feedback, Adaptation to
+existing technology habits, Accessible and inclusive, Limited personal data collec-
+tion and Data transparency. These decisions were made by consensus. In the cases in
+which we noticed different views among the stakeholders, we made them explicit to
+open a negotiation and better understand their priorities.
+  Small decisions in the EDUguia design were Ease of understanding and Brief
+and smooth interactions. As Bratteteig and Wagner note (2012), users are frequently
+involved in small decisions regarding formal aspects to ensure the final solution
+is familiar and easy to make sense of. Considering that the EDUguia chatbot was
+addressed to students, we prioritized their views for these decisions, which were
+made by asking them to vote between different options. After the voting, we opened
+a discussion about the reasons for selecting a particular option to ensure we were
+able to understand the rationale of their choices. Based on these criteria, we created
+
+1 3
+
+===== PAGE 21 =====
+Education and Information Technologies (2023) 28:109–134                                      129
+
+a chatbot style guide that we use as reference during the writing of the chatbot script.
+The creation of an intermediate material such as the EDUguia style guide reflects
+the idea that design decisions are interrelated in diverse ways (Bratteteig & Wagner,
+2012). From this perspective, the creation of intermediary objects can help to build
+trust in the design process by making explicit the rationale that guides further design
+decisions.
+
+
+6  Implications for practice and concluding remarks
+
+In this paper we have presented diverse challenges faced in the collaborative design
+of the EDUguia chatbot, and we have discussed how they affected the decisions that
+led to the definition of the chatbot design requirements and the shaping of the tool.
+We consider the differentiation between big and small decisions relevant, because
+not all decisions have the same importance. When the stakeholders’ participation is
+limited, as designers we need to identify which are the important decisions in which
+it is crucial that stakeholders are involved. For this to occur, opening a discussion
+with stakeholders on which are the key aspects on which big decisions need to be
+taken, distinguishing them from less relevant issues is necessary. The differentiation
+between big and small decisions is also valuable to assess when we need to ensure a
+consensus is reached. From our perspective, big design decisions require consensus
+and thus the decision stream needs to stop until an agreement is reached. This might
+require developing strategies to support communication, mutual understanding, and
+collaboration. In contrast, for small decisions we consider that asking for feedback at
+certain points might be enough. As described in this paper, the use of intermediate
+objects can help open the design process documenting agreements and scaffolding
+decision-making.
+  While the study presented in this paper is limited in terms of the number of par-
+ticipants and the technologies examined, we believe the implications for practice
+outlined in this study are valuable for designers and researchers developing learning
+technologies such as chatbots for education contexts. With this piece of work, we
+seek to nurture further research and innovation work using collaborative design and
+democratic participation in learning technology design. In this regard, we advocate
+that researchers, designers and developers engage in a collective reflection on big
+and small decisions in collaborative design, and co-create strategies to overcome the
+obstacles that hinder collaboration and mutual understanding when designing learn-
+ing technologies.
+
+Supplementary Information  The online version contains supplementary material available at https://​doi.​
+org/​10.​1007/​s10639-​022-​11162-w.
+
+Acknowledgements  We want to thank the students, lecturers and researchers who took part in the col-
+laborative design process.
+
+Funding  This contribution has been supported by Project “Análisis de los efectos de la provisión de feed-
+back soportado por tecnologias digitales de monitoreo sobre las competencias transversales (Referencia
+
+                                          1 3
+
+===== PAGE 22 =====
+130                                          Education and Information Technologies (2023) 28:109–134
+
+PID2019-104285GB-I00). Ministerio de Ciencia e Innovación (MICINN). Agencia Estatal de Investi-
+gación. The writing of this research paper has been conducted in the context of the GenZ project, a stra-
+tegic profiling project in human sciences at the University of Oulu. The project is supported by the Acad-
+emy of Finland (grant agreement No. 318930, Profi4) and the University of Oulu. Open Access funding
+provided by University of Oulu including Oulu University Hospital.
+
+Availability of data and materials  The datasets used and/or analyzed during the current study are avail-
+able from the corresponding author on reasonable request.
+
+Declarations 
+
+Ethics approval and consent to participate  Informed consent was obtained from all participants for being
+included in the study.
+
+Open Access  This article is licensed under a Creative Commons Attribution 4.0 International License,
+which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as
+you give appropriate credit to the original author(s) and the source, provide a link to the Creative Com-
+mons licence, and indicate if changes were made. The images or other third party material in this article
+are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the
+material. If material is not included in the article’s Creative Commons licence and your intended use is
+not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission
+directly from the copyright holder. To view a copy of this licence, visit http://​creat​iveco​mmons.​org/​licen​
+ses/​by/4.​0/.
+
+
+
+References
+
+Akach, J. A., Osanjo, L., & Maina, S. (2021). Co-Design: Tools, Methods and Techniques for Design-
+     ing with Users. Africa Habitat Review Journal, 15(1), 2145–2156. Retrieved June 6, 2022, from:
+      http://​uonjo​urnals.​uonbi.​ac.​ke/​ojs/​index.​php/​ahr
+Akama, Y. (2009). Politics makes strange bedfellows: addressing the ‘messy’power dynamics in
+     design practice. In Undisciplined! Design Research Society Conference 2008 (pp. 1–12). Shef-
+      field Hallam University. Retrieved June 6, 2022, from: http://​shura.​shu.​ac.​uk/​451/1/​fullt​ext.​pdf
+Andersen, P. V. K., & Mosleh, W. S. (2021). Conflicts in co-design: Engaging with tangible artefacts
+     in multi-stakeholder collaboration. CoDesign, 17(4), 473–492.  https://​doi.​org/​10.​1080/​15710​
+     882.​2020.​17402​79
+Atlee, T. (2003). The Tao of Democracy: Using Co-Intelligence to Create a World that Works for All.
+    The Writers Collective.
+Barberá, E., Garcia, I., & Fuertes-Alpiste, M. (2017). A Co-Design Process Microanalysis: Stages
+    and Facilitators of an Inquiry-Based and Technology-Enhanced Learning Scenario. International
+    Review of Research in Open & Distance Learning, 18(6), 104–126. https://​doi.​org/​10.​19173/​
+      irrodl.​v18i6.​2805
+Blackler, A., Zelenko, O., Chamorro-Koc, M., Rittenbruch, M., & Sade, G. (2018). Design research:
+     Methodological innovation through messiness. In New Directions in Third Wave Human-Com-
+     puter Interaction: Volume 2-Methodologies (pp. 131–154). Springer, Cham. Retrieved June 6,
+     2022, from: https://​eprin​ts.​qut.​edu.​au/​117558/​8/​33303​862.​pdf
+Bonsignore, E., Ahn, J., Clegg, T., Guha, M. L., Hourcade, J. P., Yip, J. C., & Druin, A. (2013).
+    Embedding Participatory Design into Designs for Learning: An Untapped Interdisciplinary
+     Resource?. In N. Rummel, M. Kapur, M.J. Nathan, S. Puntambekar (Eds.), Proceedings of
+     10th International Conference on Computer-Supported Collaborative Learning (pp. 549–556).
+      https://​doi.​org/​10.​22318/​cscl2​013.1.​549
+Bovill, C., Cook-Sather, A., & Felten, P. (2011). Students as co-creators of teaching approaches,
+     course design, and curricula: Implications for academic developers. International Journal for
+    Academic Development, 16(2), 133–145. https://​doi.​org/​10.​1080/​13601​44X.​2011.​568690
+
+1 3
+
+===== PAGE 23 =====
+Education and Information Technologies (2023) 28:109–134                                      131
+
+Bratteteig, T., & Wagner, I. (2012). Disentangling power and decision-making in participatory design.
+     In Proceedings of the 12th Participatory Design Conference (pp. 41–50). ACM. https://​doi.​org/​
+      10.​1145/​23476​35.​23476​42
+Bratteteig,  T., & Wagner,  I.  (2016). Unpacking  the  notion  of  participation  in  participatory
+     design. Computer  Supported  Cooperative  Work,  25(6),  425–475.  https://​doi.​org/​10.​1007/​
+     s10606-​016-​9259-4
+Braun, V., & Clarke, V. (2006). Using thematic analysis in psychology. Qualitative Research in Psychol-
+     ogy, 3(2), 77–101. https://​doi.​org/​10.​1191/​14780​88706​qp063​oa
+Bucher, T. (2018). If... then: Algorithmic power and politics. Oxford University Press. https://​doi.​org/​10.​
+      1093/​oso/​97801​90493​028.​001.​0001
+Bønnelycke, J., Sandholdt, C. T., & Jespersen, A. P. (2018). Co-designing health promotion at a sci-
+     ence centre: Distributing expertise and granting modes of participation. CoDesign, 15(2), 128–141.
+      https://​doi.​org/​10.​1080/​15710​882.​2018.​14345​47
+Calle, M., Narváez, E., & Maldonado-Mahauad, J. (2020). Proposal for the Design and Implementation
+     of Miranda: A Chatbot-Type Recommender for Supporting Self-Regulated Learning in Online Envi-
+     ronments. Retrieved June 6, 2022, from: http://​ceur-​ws.​org/​Vol-​3059/​paper2.​pdf
+Clarke, R. E., Briggs, J., Armstrong, A., MacDonald, A., Vines, J., Flynn, E., & Salt, K. (2021). Socio-
+      materiality of trust: Co-design with a resource limited community organisation. CoDesign, 17(3),
+     258–277. https://​doi.​org/​10.​1080/​15710​882.​2019.​16313​49
+Cober, R., Tan, E., Slotta, J., So, H. S., & Könings, K. D. (2015). Teachers as participatory designers:
+    Two case studies with technology-enhanced learning environments. Instructional Science, 43(2),
+     203–228. https://​doi.​org/​10.​1007/​s11251-​014-​9339-0
+Council of the European Union. (2018). Council Recommendation of 22 May 2018 on Key Competences
+      for Lifelong Learning. Official Journal of the European Union. Accessed 6 March 2022. Retrieved
+     from: https://​eurlex.​europa.​eu/​legal​conte​nt/​EN/​TXT/?​uri=​CELEX:​32018​H0604​(01)
+Design Council. (2007). Eleven lessons: Managing design in eleven global companies-desk research
+      report. Design Council.
+DiSalvo, B., Yip, J., Bonsignore, E., & DiSalvo, C. (Eds.). (2017). Participatory Design for Learning:
+     Perspectives from Practice and Research. Abingdon: Routledge.  https://​doi.​org/​10.​4324/​97813​
+     15630​830
+Druin, A. (2014). Inclusive ownership of participatory learning. Instructional Science, 42(1), 123–126.
+      https://​doi.​org/​10.​1007/​s11251-​014-​9339-0
+Durall, E., & Kapros, E. (2020). Co-design for a competency self-assessment chatbot and survey in sci-
+     ence education. In International conference on human-computer interaction (pp. 13–24). Cham:
+     Springer.
+Durall, E., Leinonen, T., Gros, B., & Rodriguez-Kaarto, T. (2017). Reflection in learning through a self-
+     monitoring device: Design research on EEG self-monitoring during a study session. Designs for
+     Learning, 9(1), 10–20. https://​doi.​org/​10.​16993/​dfl.​75
+Durall Gazulla, E., Virnes, M., Leinonen, T., & Gros, B. (2020). Ownership of learning in monitor-
+     ing technology: Design case of self-monitoring tech in independent study. Interaction Design and
+      Architecture(s), (45), 133–154. https://​doi.​org/​10.​55612/s-​5002-​045-​006
+Ehn, P. (1988). Work-Oriented Design of Computer Artefacts. Lawrence Erlbaum Associates.
+Ertner, M., Kragelund, A. M., & Malmborg, L. (2010). Five enunciations of empowerment in participa-
+     tory design. In Proceedings of the 11th Biennial Participatory Design Conference (pp. 191–194).
+      https://​doi.​org/​10.​1145/​19004​41.​19004​75
+Feenberg, A. (2017). Critical theory of technology and STS. Thesis Eleven, 138(1), 3–12. https://​doi.​org/​
+     10.​1177/​07255​13616​689388
+Fernández-Ferrer, M., Durall, E., Cano, M. E. (2021). Chatbot for self-regulation in complex tasks: Co-
+     designing feedback in learning processes. Edulearn21 Proceedings, 9433–9438. https://​doi.​org/​10.​
+      21125/​edule​arn.​2021.​1902
+Fleischmann, K. (2015). The democratisation of design and design learning–how do we educate the next–
+     generation designer. International Journal of Arts & Sciences, 8, 101–108. Retrieved June 6, 2022,
+     from: http://​www.​unive​rsity​publi​catio​ns.​net/​ijas/​0806/​pdf/​B5R188.​pdf
+Griol, D., Molina, J. M., & Callejas, Z. (2017). Incorporating android conversational agents in mlearning
+     apps. Expert Systems, 34(4). https://​doi.​org/​10.​1111/​exsy.​12156
+Gros, B., & López, M. (2016). Students as co-creators of technology-rich learning activities in higher
+     education. International Journal of Educational Technology in Higher Education, 13(1), 1–13.
+      https://​doi.​org/​10.​1186/​s41239-​016-​0026-x
+
+                                          1 3
+
+===== PAGE 24 =====
+132                                          Education and Information Technologies (2023) 28:109–134
+
+Gros, B., & Durall, E. (2020). Retos y oportunidades del diseño participativo en tecnología educativa
+     Edutec. Revista Electrónica De Tecnología Educativa, (74), 12–24. https://​doi.​org/​10.​21556/​edutec.​
+     2020.​74.​1761
+Harrer, A., & Lingnau, A. (2018, July). Designing TEL-Tools for Thinking Skills: Learning to Learn
+     Together in a CSCL Environment. In 2018 IEEE 18th International Conference on Advanced
+     Learning Technologies (ICALT) (pp. 301–303). IEEE. https://​doi.​org/​10.​1109/​ICALT.​2018.​00076
+Hendriks, N., Huybrechts, L., Slegers, K., & Wilkinson, A. (2018). Valuing implicit decision-making in
+     participatory design: A relational approach in design with people with dementia. Design Studies, 59,
+     58–76. https://​doi.​org/​10.​1016/j.​destud.​2018.​06.​001
+Hillgren, P. A., Seravalli, A., & Emilson, A. (2011). Prototyping and infrastructuring in design for social
+     innovation. CoDesign, 7(3–4), 169–183. https://​doi.​org/​10.​1080/​15710​882.​2011.​630474
+Iversen, O., S., Smith, R. C., & Dindler, C. (2017). Child as Protagonist: Expanding the Role of Children
+     in Participatory Design. In Proceedings of the 2017 conference on interaction design and children
+     (pp. 27–37). https://​doi.​org/​10.​1145/​30780​72.​30797​25
+Kemmis, S., McTaggart, R., & Nixon, R. (2014). The action research planner: Doing critical participa-
+     tory action research. Springer. https://​doi.​org/​10.​1007/​978-​981-​4560-​67-2
+Koutamanis, A., Heuer, J., & Könings, K. D. (2017). A visual information tool for user participation dur-
+     ing the lifecycle of school building design: BIM. European Journal of Education, 52(3), 295–305.
+      https://​doi.​org/​10.​1111/​ejed.​12226
+Kumar, J. A. (2021). Educational chatbots for project-based learning: Investigating learning outcomes for
+     a team-based design course. International Journal of Educational Technology in Higher Education,
+     18(1), 1–28. https://​doi.​org/​10.​1186/​s41239-​021-​00302-w
+Laanpere, M., Pata, K., Normak, P., & Põldoja, H. (2014). Pedagogy-driven design of digital learning
+     ecosystems. Computer Science and Information Systems, 11(1), 419–442. Retrieved June 6, 2022,
+     from: http://​www.​doise​rbia.​nb.​rs/​img/​doi/​1820-​0214/​2014/​1820-​02141​40001​5L.​pdf
+Leinonen, T., & Durall, E. (2014). Design thinking and collaborative learning. Comunicar Media Educa-
+     tion Research Journal, 22(1). https://​doi.​org/​10.​3916/​C42-​2014-​10
+Leinonen, T., Keune, A., Veermans, M., & Toikkanen, T. (2016). Mobile apps for reflection in learning:
+   A design research in K-12 education. British Journal of Educational Technology, 47(1), 184–202.
+      https://​doi.​org/​10.​1111/​bjet.​12224
+Luck, R. (2003). Dialogue in Participatory Design. Design Studies, 24(6), 523–535. https://​doi.​org/​10.​
+     1016/​S0142-​694X(03)​00040-1
+Malinverni, L., Mora-Guiard, J., & Pares, N. (2016). Towards methods for evaluating and communicating
+     participatory design: A multimodal approach. International Journal of Human-Computer Studies,
+     94, 53–63. https://​doi.​org/​10.​1016/j.​ijhcs.​2016.​03.​004
+Martin-Hammond, A., Vemireddy, S., & Rao, K. (2018). Engaging older adults in the participatory
+     design of intelligent health search tools. In Proceedings of the 12th EAI International Conference
+    on Pervasive Computing Technologies for Healthcare (pp. 280–284). https://​doi.​org/​10.​1145/​32409​
+     25.​32409​72
+Okonkwo, C. W., & Ade-Ibijola, A. (2021). Chatbots applications in education: A systematic review.
+    Computers and Education: Artificial Intelligence, 2, 100033. https://​doi.​org/​10.​1016/j.​caeai.​2021.​
+    100033
+Ogunyemi, A. A., Lamas, D., Lárusdóttir, M. K., & Loizides, F. (2019). A systematic mapping study of
+    HCI practice research. International Journal of Human-Computer Interaction, 35(16), 1461–1486.
+      https://​doi.​org/​10.​1080/​10447​318.​2018.​15415​44
+Pedersen, S. (2020). Staging negotiation spaces: A co-design framework. Design Studies, 68, 58–81.
+      https://​doi.​org/​10.​1016/j.​destud.​2020.​02.​002
+Penuel, W. R., Roschelle, J., & Shechtman, N. (2007). Designing Formative Assessment Software with
+     Teachers: An Analysis of the Co-Design Process. Research and Practice in Technology Enhanced
+     Learning, 2(1), 51–74. https://​doi.​org/​10.​1142/​S1793​20680​70003​00
+Pirinen, A. (2016). The barriers and enablers of co-design for services. International Journal of Design,
+     10(3), 27–42. Retrieved June 6, 2022, from: http://​www.​ijdes​ign.​org/​index.​php/​IJDes​ign/​artic​le/​
+      viewF​ile/​2575/​749
+Prieto-Alvarez, C., Martinez-Maldonado, R., & Buckingham Shum, S. (2020). LA-DECK: A card-
+     based learning analytics codesign tool. Proceedings of the 10th International Learning Analytics
+    and Knowledge Conference (LAK ’20), 23–27 March 2020, Frankfurt, Germany (pp. 63–72). New
+     York: ACM. https://​doi.​org/​10.​1145/​33754​62.​33754​76
+
+
+1 3
+
+===== PAGE 25 =====
+Education and Information Technologies (2023) 28:109–134                                      133
+
+Robinson, T., & Simonsen,  J. (2012). Routledge International Handbook of Participatory Design.
+     Routledge.
+Sanders, E. B. N., Brandt, E., & Binder, T. (2010). A framework for organizing the tools and techniques
+     of participatory design. In Proceedings of the 11th biennial participatory design conference (pp.
+     195–198). https://​doi.​org/​10.​1145/​19004​41.​19004​76
+Sanders, E .B. N. (2006). “Design serving people”. In Cumulus Working Papers, Edited by: Salmi, E.
+     and Anusionwu, L. 28–33. Helsinki, Finland: Copenhagen, University of Art and Design.
+Sanders, E. B. N., & Stappers, P. J. (2008). Co-creation and the new landscapes of design. CoDesign,
+      4(1), 5–18. https://​doi.​org/​10.​1080/​15710​88070​18750​68
+Sanoff, H. (2011). Multiple views of participatory design. Focus, 8(1), 7. https://​doi.​org/​10.​15368/​focus.​
+     2011v​8n1.1
+Sanoff, H. (2021). Participatory Design: a Historical Perspective. Journal of Arts & Architecture Research
+      Studies, 2(3), 12–21. Retrieved June 6, 2022, from: https://​jaars.​journ​als.​ekb.​eg/​artic​le_​177154.​html
+Scheu, S., & Benke, I. (2022). Digital Assistants for Self-Regulated Learning: Towards a State-Of-The-
+     Art Overview. ECIS 2022 Research-in-Progress Papers, 46. Retrieved June 6, 2022, from: https://​
+       aisel.​aisnet.​org/​ecis2​022_​rip/​46
+Schön, D. A. (1983). The reflective practitioner: How professionals think in action. Basic books.
+Song, D., & Kim, D. (2021). Effects of self-regulation scaffolding on online participation and learning
+     outcomes. Journal of Research on Technology in Education, 53(3), 249–263. https://​doi.​org/​10.​
+      1080/​15391​523.​2020.​17675​25
+Spiel, K., Brulé, E., Frauenberger, C., Bailley, G., & Fitzpatrick, G. (2020). In the details: The micro-
+      ethics of negotiations and in-situ judgements in participatory design with marginalised children.
+     CoDesign, 16(1), 45–65. https://​doi.​org/​10.​1080/​15710​882.​2020.​17221​74
+Spikol, D., Milrad, M., Maldonado, H., & Pea, R. (2009). Integrating co-design practices into the devel-
+    opment of mobile science collaboratories. In Ninth IEEE International Conference on Advanced
+     Learning Technologies (pp.393–397). IEEE. https://​doi.​org/​10.​1109/​ICALT.​2012.​22
+Spinuzzi, C. (2005). The methodology of  participatory design. Technical Communication, 52(2),
+     163–174.
+Stelzle, B., Jannack, A., & Noennig, J. R. (2017). Co-design and co-decision: Decision making on col-
+      laborative design platforms. Procedia Computer Science, 112, 2435–2444. https://​doi.​org/​10.​1016/j.​
+      procs.​2017.​08.​095
+Swann, C. (2002). Action research and the practice of design. Design Issues, 18(1), 49–61. https://​doi.​
+      org/​10.​1162/​07479​36025​27562​87
+Tissenbaum, M., & Slotta, J. D. (2019). Developing a smart classroom infrastructure to support real-time
+     student collaboration and inquiry: A 4-year design study. Instructional Science, 47(4), 423–462.
+      https://​doi.​org/​10.​1007/​s11251-​019-​09486-1
+Treasure-Jones, T., & Joynes, V. (2018). Co-design of technology-enhanced learning resources. The Clin-
+      ical Teacher, 15(4), 281–286. https://​doi.​org/​10.​1111/​tct.​12733
+Treasure-Jones, T., Dent-Spargo, R., & Dharmaratne, S. (2018). How do students want their workplace-
+     based feedback visualized in order to support self-regulated learning? Initial results & reflections
+     from a co-design study in medical education. In CEUR Workshop Proceedings (Vol. 2193). CEUR
+    Workshop Proceedings. Retrieved June 6, 2022, from: https://​eprin​ts.​white​rose.​ac.​uk/​136454/
+Tschimmel, K. (2012). Design Thinking as an effective Toolkit for Innovation. In The International Soci-
+      ety for Professional Innovation Management Conference Proceedings (p. 1–20).
+Villatoro, S., & de Benito, B. (2021). An Approach to Co-Design and Self-Regulated Learning in Tech-
+     nological Environments. Systematic Review. Journal of New Approaches in Educational Research,
+     10(2). https://​doi.​org/​10.​7821/​naer.​2021.7.​646
+Warwick, L. (2017). Designing Trust: The importance of relationships in social contexts. The Design
+     Journal, 20(sup1), S3096–S3105. https://​doi.​org/​10.​1080/​14606​925.​2017.​13528​17
+Winkler, R., & Söllner, M. (2018). Unleashing the potential of chatbots in education: A state-of-the-art
+      analysis. In Academy of Management Annual Meeting (AOM). Retrieved June 6, 2022, from: https://​
+      www.​alexa​ndria.​unisg.​ch/​254848/
+Wolniak, R. (2017). The Design Thinking method and its stages. Systemy Wspomagania w Inżynierii
+     Produkcji, 6. Retrieved June 6, 2022, from:  https://​yadda.​icm.​edu.​pl/​bazte​ch/​eleme​nt/​bwmet​a1.​
+      eleme​nt.​bazte​ch-​81d70​0a1-​e4ea-​4257-​87cf-​d0b79​0873b​c8/c/​wolni​ak2_​SWwIP_​2017_6.​pdf
+Zhou, X., & Hall, J. N. (2018). Mixed methods papers in first-person and third-person: Writing voices in
+     dialogue. Journal of Mixed Methods Research, 12(3), 344–357. https://​doi.​org/​10.​1177/​15586​89816​
+    652755
+
+                                          1 3
+
+===== PAGE 26 =====
+134                                          Education and Information Technologies (2023) 28:109–134
+
+Zimmerman, B. J. (2001). Theories of self-regulated learning and academic achievement: An overview
+    and analysis. In B. J. Zimmerman & D. H. Schunk (Eds.), Self-regulated Learning and Academic
+     Achievement: Theoretical Perspectives (pp. 1–37). Lawrence Erlbaum.
+Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. Theory into Practice, 41(2),
+     64–70. https://​doi.​org/​10.​1207/​s1543​0421t​ip4102_2
+
+Publisher’s Note  Springer Nature remains neutral with regard to jurisdictional claims in published
+maps and institutional affiliations.
+
+
+
+
+
+1 3

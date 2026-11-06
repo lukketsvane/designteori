@@ -1,11 +1,12 @@
 {
-  "generated_at": "2026-11-06T19:09:46.612528+00:00",
+  "generated_at": "2026-11-06T19:44:44.411957+00:00",
   "metadata_source": "OpenAlex, 2026-11-02 partial search extract",
   "total": 7300,
   "automatic_title_inclusion": 3729,
   "manual_review_queue": 3571,
-  "local_pdf": 11,
-  "local_fulltext_text": 10,
+  "local_pdf": 14,
+  "local_fulltext_text": 13,
+  "high_priority_for_manual_review": 207,
   "country_memberships": {
     "SE": 2472,
     "FI": 1534,

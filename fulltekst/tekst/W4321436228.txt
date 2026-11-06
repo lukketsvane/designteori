@@ -1,0 +1,1820 @@
+WORK: Supporting and understanding students’ collaborative reflection-in-action during design-based learning
+AUTHORS: Zhongya Zhang, Tilde M. Bekker, Panos Markopoulos, Helle Marie Skovbjerg
+YEAR: 2023
+DOI: https://doi.org/10.1007/s10798-023-09814-0
+SOURCE: https://link.springer.com/content/pdf/10.1007/s10798-023-09814-0.pdf
+LICENSE: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+International Journal of Technology and Design Education (2024) 34:307–343
+https://doi.org/10.1007/s10798-023-09814-0
+
+
+
+Supporting and understanding students’ collaborative
+reflection‑in‑action during design‑based learning
+
+Zhongya Zhang1     · Tilde Bekker1 · Panos Markopoulos1 · Helle Marie Skovbjerg2
+
+
+Accepted: 30 January 2023 / Published online: 21 February 2023
+© The Author(s) 2023
+
+
+Abstract
+Design-Based Learning (DBL) is a pedagogical approach where learning is situated in the
+context of design activities that are typically carried out in groups. During collaborative
+design inquiry, reflection is of vital importance for learning from design experience. The
+paper presents a research-through-design study with the intention to generate knowledge
+on how to design for supporting reflection-in-action during design-based learning. This
+study addresses the research question: how can a media tool support a group of students in
+externalizing reflection while they are engaging in DBL? This paper describes the design
+and evaluation of ReflectionSchema, a tool intended to support reflection-in-action in such
+a learning environment. The tool offers visualized guidance for coordinating a group of
+students’ understanding of how they can combine reflecting with making design represen-
+tations. The tool was trialed by 13 groups of students aged 12 to 13, who used the tool to
+record short reflection videos along their whole DBL process. We analyzed the efficacy of
+ReflectionSchema in terms of supporting collaborative reflection-in-action. Furthermore,
+we investigated the process of reflection-in-action during Design-based learning processes
+by examining the collaborative reflection patterns in the reflection videos that include the
+actions, roles, recording preference/style, and strategies employed. We discussed how these
+findings can inform the design of other reflection tools for similar settings.
+
+Keywords  Reflection-in-action · Collaboration · Design-based learning · Technological
+support reflection · K-12 education
+
+Introduction
+
+In this study, we designed and examined a new reflection support technique and present a
+framework for understanding the collaborative process of externalizing reflection through
+recording video in the design-based learning setting. Design-based learning (DBL) is a
+collaborative and self-directed learning approach that situates learning in a sequence of
+design activities (Brown et al., 1989; de Vries, 2006). In k-12 settings, design activities
+
+* Zhongya Zhang
+    z.zhang@tue.nl
+1   Eindhoven University of Technology, Eindhoven, Netherlands
+2   Design School Kolding, Kolding, Denmark
+
+
+                                                                                      Vol.:(0123456789)                                           1 3
+
+===== PAGE 2 =====
+308                                                                                                        Z. Zhang et al.
+
+have been used as projects for learning conceptual knowledge, cultivating engineering lit-
+eracy (Crismond & Adams, 2012), fostering 21st-century skills (Coşkun & Deniz, 2021),
+and so on. It can enhance students’ engagement and achievement in the learning (Mehalik
+et al., 2008). Reflection is vitally important for learning from the design experience for the
+purpose of improvement in future learning of similar learning situations (Gómez Puente
+et al., 2013; Kolb, 2014; Lousberg et al., 2020). Informed designers are involved in con-
+tinual learning while designing that stimulates the interplay between reflecting and making
+(Schön, 2017).
+   In design-based learning, students learn from engaging in a process of making design
+representations (such as drawings, sketches, and 3D models). However, novice learners
+often focus on making and are less likely to reflect. Therefore, it is essential to support
+students to draw back from immersing in the making and reflect during the making, i.e.
+reflection-in-action as defined by Schön. As we have learned from related literature, written
+reflections with prompts are a common combination to support reflection-in-action exter-
+nalization. Written reflections rely on language skills that might disadvantage young stu-
+dents with limited language skills (Coulson & Harvey, 2013). In practice, young students
+might tend to drop out of reflection-in-action practice while designing. Sometimes, they
+make fake reflections or compensatory reflections at the end of the design process. Using
+videos for capturing reflection seems more inclusive for children. Therefore, in this study,
+we explore a video-based way of supporting reflection externalization. While prompts are
+the trigger of reflection, little attention has been paid to improving recording acts and the
+reflection representations (such as video, and audio reflection) created after triggering. We
+contend that in our setting, design-based learning, supporting externalization of reflection-
+in-action for students during design-based learning processes should promote the interac-
+tion between reflecting and making.
+  As reflection takes place in a collaborative learning environment, a shift from indi-
+vidual to social processes in reflection research can be seen (Iiskala et al., 2011; Järvelä
+& Hadwin, 2013). Some researchers’ perspective on reflection is based on Boud’s con-
+struct of reflection activity which emphasizes deliberate thinking back to the learning
+process and striving for improvement and knowledge transformation (Boud, 2001). In the
+research based on the above construct, collaborative reflection is interpreted as a collabo-
+rative reviewing experience and learning from them (Prilla, 2014), wherein collaborative
+reflection requires an exchange of perspectives and a critical discourse about the different
+participants’ perspectives. This can be seen as collaborative reflection-on-action. It is an
+independent learning activity that takes place after the learning activities, which can ben-
+efit from designing process display and reflective social discourse to enhance the exchange
+of perspectives in the reflection (Lin et al., 1999). In our research, we consider that col-
+laborative reflection also takes place during the making design process based on Schön’s
+construct of reflection-in-action in the design domain (Schön, 1987).
+   According to our previous work, there seems to be a positive relationship between
+children’s continual endeavor in reflection-in-action and their final learning outcomes (Z.
+Zhang, Bekker, Skovbjerg, & Markopoulos, 2020). Therefore, a tool aiming at scaffold-
+ing reflection-in-action should enable young students’ continual reflection-in-action and
+prevent them from the phenomena of fake reflection-in-action mentioned earlier. For a
+group of students to effectively leverage video media to externalize reflection-in-action,
+the tool should guide the shared understanding of the expected manner of externalizing
+reflection. That means helping children to coordinate the behaviors of individuals within
+a group towards a common objective (Bittner & Leimeister, 2013), such as, in this study,
+reflection-in-action tasks. Therefore, a tool should deliver explicit reflection-in-action tasks
+
+1 3
+
+===== PAGE 3 =====
+Supporting and understanding students’ collaborative…                                          309
+
+that enable a group of students to build their shared understanding of the reflection-in-
+action task.
+   This study employed the research-through-design method (Zimmerman, Forlizzi, &
+Evenson, 2007). We designed a research prototype named ReflectionSchema which is a
+video-based reflection tool that embodies the design requirements we have argued. In this
+study, we addressed the research question:
+  How can a video-recording tool support a group of students externalizing reflection-in-
+action while they are engaging in DBL?
+  To answer this research question, we deploy ReflectionSchema in a collaborative
+design-based learning classroom. We use two types of data that are quantitative and quali-
+tative to demonstrate how this tool can support a group of students (aged 12–13) external-
+izing their reflection-in-action.
+   This paper makes the following contributions: (1) a framework that offers an under-
+standing of collaborative reflection and what children think when designing. (2) a design
+exemplar and related implications for helping designers and other design-based learning
+practitioners on how to design for reflection externalization to enhance students’ (aged
+12–13) capacity to reflect-in-action in similar learning contexts.
+   In the next sections, we first discuss related literature focusing on reflection-in-action
+in collaborative learning environments like DBL and tools that can support it. Next, we
+present the design of the ReflectionSchema, the method of our field trial, and the results.
+We conclude with a discussion of why children can get involved in reflection-in-action, and
+these findings can promote an understanding of children’s externalizing reflection during
+DBL and the related design implications.
+
+
+Related work
+
+Reflection in the collaborative learning setting
+
+Supporting reflection-in-action for young students such as middle school students is essen-
+tial for enhancing the awareness of what they are doing and promoting reflective learn-
+ing (Kyza, 2004). The construct of reflection-in-action describes that while students are
+doing their design project, students’ actions are driven by their tacit knowledge. External-
+izing reflection-in-action can make the tacit knowledge consistent through documentation,
+which can resolve the tension of retaining the tacit knowledge they have applied during the
+design-based learning process (Dix & Gongora, 2011). Meanwhile, for the learning pursu-
+ing the knowledge transformation from learning experiences, supporting students’ periodic
+recording during the design process contributes to the final reflection suggested by Boud
+and Kolb (Boud et al., 1996; Kolb, 2014). Because the process of documenting offers more
+resources which enables students to review the experiences.
+   Reflection takes place both in an individual setting and in social learning contexts. A
+lot of technology-enhanced reflection examples are embedded in groups and collaborative
+learning settings (P. Gourlet, Eveillard, & Dervieux, 2016; Hook, Hjermitslev, Iversen,
+& Olivier, 2013; Leinonen et al., 2016). One strand of technology-supported reflection
+is based on Boud’s construct of reflection activity which emphasizes deliberate thinking
+back to the learning experience and striving for improvement and knowledge transforma-
+tion (Boud, 2001; Prilla, 2014). Collaborative reflection is interpreted as collaboratively
+going back to experience and learning from them (Lin et al., 1999; Prilla, Nolte, Blunk,
+Liedtke, & Renner, 2015). It is consistent with what Schön defined as reflection-on-action.
+
+                                           1 3
+
+===== PAGE 4 =====
+310                                                                                                        Z. Zhang et al.
+
+The reflection practice is seen as a session after the learning activities. In this part of the
+research, collaborative reflection needs support for retrieving learning experiences and
+communication to exchange perspectives on these experiences. This strand of research has
+been extensively studied. Our interest is in the other strand of research.
+  The other strand of research focuses on reflection which is the synchronous activ-
+ity during the learning processes. This reflection practice can be defined as collaborative
+reflection-in-action or reflection-in-making (Chu, Garcia, & Nam, 2019; P. Gourlet et al.,
+2016a,;b Hook et al., 2013; Schoffelen et al., 2013). In those studies, the reflection practice
+happens during the collaborative learning process.
+
+
+Tools that support reflection‑in‑action in the collaborative learning setting
+
+For  a  face-to-face,  collaborative  design-based  or  project-based  learning  classroom,
+researchers have developed simple and dedicated media recording tools for supporting
+young students’ reflection in collaborative learning configurations. We review a few of
+these below (see Table 1 for an overview of the main characteristics of the different tools).
+Media tools with prompts are a typical combination of reflection support through prompt-
+ing students to keep track of the learning process or externalizing reflection-in-action
+through recording.
+  Teamup (Leinonen et al., 2016) is an app designed for a group of students to record the
+audio-visual reflection after a group session. Students sitting in front of the camera respond
+to the prompts: “what we did”, “what we will do”, and “any problems?”. The researchers
+analyzed the qualitative data including participatory design, observation of students’ usage
+of the tool, and evaluated students’ reflection content based on reflective levels. Research-
+ers found that students created shallow reflections. But the use of audio-visual as a media
+for reflection encourages more words than written-ups. The study found that the apps alone
+did not encourage students’ higher levels of reflection. Teachers’ in-situ guidance was
+needed in the classroom.
+   Research Diary is a composite photography tool attached to a design documenting plat-
+form. It is designed for a workshop environment in which the visibility of the tool reminds
+children to document the making process (P. Gourlet et al., 2016a, 2016b). It forms a col-
+lective mini photography studio space in the learning environment. Children’s behaviors
+were video recorded for analyzing the interaction while they were using the tool. The
+results of children’s interaction were presented in a narrative way. The researchers showed
+that the tool is beneficial for children to be reflective collectively. Because there is only one
+reflection space where children gathered and discuss their designs or new ideas that bring
+them to reconsider their design project.
+  The ReflecTable (Hook et al., 2013) is a digital learning environment that integrates
+video-based reflection with face-to-face design practice. Students went through a con-
+densed design process. The tool enables a group of students to capture short video clips
+(15 s) of noteworthy moments with a fixed camera toward the table during the design pro-
+cess. Later on, students will reflect on these video clips and formulate a research question.
+To evaluate students’ learning outcomes, researchers then conducted a semi-structured
+interview regarding the relationship between their experience of using ReflecTable and
+the theory of reflective thinking. They gave a descriptive overview so that the student can
+make the connection between design practice and reflective thinking. From the tool design
+perspective, the button is the stimulus for triggering reflection during the designing process
+and promoting a perspective change on what is the noteworthy moment.
+
+1 3
+
+===== PAGE 5 =====
+Supporting and understanding students’ collaborative…                                          311
+
+                                                                 learn-
+                                 the                                                                                                                                 importantdesign                                                                                                                                           documenting                                                                                                                                                                                          documentingthoughts
+                                             the
+                                     foci          of                                                                                                             monitoring     process       recording           process                                                                                  process                                                  underlying
+                                   ing                                                                                                          momentsprocess                                                     and                                                                                             Reflection    Support                                                                                         Support     Support                                                                                                                      Support
+
+
+                             as
+                                                                                                  question:done          Button         theabout                                                                                                                                       invitingarticulate                                                                           approach     have             forto   image                                                                                                     prompt:                                                                 promptwe                                              thoughts                                                                                           prompt
+                                               What                                             the                                                                                            theircaptured                                                                                    Prompting    Textual                                                   none      Tangible                                                                                                                                                        Questionsstudents
+
+
+              s
+                             15
+                             of
+                                     used                    clips                                               Media       Audio-visual    Photo    Video                          Photo-sound-bites
+                                                          with                                                   with                                                   PDA
+                                                                                      systemgroup   with                                                                                                     platformtool   each                                                                 camera                                             for                                                                                                                                                        portfolio                                                                                                                                 recording                                            with                                                                                                                                                    photography     buttonsmember                                        tools   Technology  App        Documenting    Video           Digital
+                                                        support
+                                                                                                                   activity
+                                                                                reflection               learning                                        learning                of     context/activity                        design                                                                                                     workshop
+                                                                                                         classroom                                                                           Learning       Project-based     Design      Condense                  Design-based                                                                                                                        characteristics    13  11 18
+                                  15                        the  group
+                of Age   Around     Around    Around      Aged
+                                                                         Overview                                               tools                                                                                      Table 1   Media   Teamup           Research-Diary        ReflecTable           E-scape
+
+                                           1 3
+
+===== PAGE 6 =====
+312                                                                                                        Z. Zhang et al.
+
+   E-scape is a digital portfolio system that enables students to use multiple media to cap-
+ture the real-time design process. It is designed for freeing students from the burdens of
+presenting a tided-up portfolio. The rationale behind this is to make the portfolio a direct
+record of the design process in real time. For supporting reflection-in-action, the system
+asks students to audio-record their articulation regarding what is going well or what is not
+going well about the captured image during the design process. The system allows the team
+member to enrich the early ideas and give feedback (Kimbell, 2016).
+  From reviewing the related studies, we distill attention points for supporting reflection-
+in-action based on a design-based or a project-based activity. These studies are mainly
+focusing on supporting students’ reflection-in-action regarding:
+
+•  Metacognitive prompts with audio as the media to help capture the reflective thinking
+    periodically; (Teamup, e-scape)
+•  document the development of their artifacts periodically and promote spontaneous stu-
+   dents’ discussion; (Researchdiary, ReflecTable)
+
+   In light of the reflection-in-action support techniques, textual-based questions as the
+prompts are dominating in supporting reflection externalization (Chu et al., 2019; Davis,
+2003). The function of questions is to give a cognitive focus on reflection during the learn-
+ing process. Media plays a core role in documenting. Video recording can be used to record
+the verbal articulation of thinking (Leinonen et al., 2016) or the developmental point of
+creating process representations (P. Gourlet et al., 2016a, 2016b).
+   In design-based learning, students make multiple process representations that design-
+based learning activities are differentiated from other learning activities. Students’ thoughts
+are embodied in the outcome of design representations. Students are taught to intertwine
+their reflecting and making during the design process (Schoffelen et al., 2013). Few studies
+were found on how to give appropriate technological guidance for enhancing the exter-
+nalization of interaction between reflecting and making (reflection-in-action). The related
+works choose video media, where verbal modality and visual modality were employed sep-
+arately in supporting students externalizing their reflection-in-action.
+   Regarding the prompts used in reflection, the related works used metacognitive prompts
+such as what is going well? what we have done? According to a study regarding the effect
+of metacognitive prompts on cognitive prompts in supporting students’ learning, cognitive
+prompts are more effective (Berthold et al., 2007). A cognitive prompt is related to the
+learning content which includes organization and elaboration strategies. For example, “can
+you create any links between the contents of the reading materials and your knowledge
+from your experience” is a cognitive prompt. However, we have not read related reflec-
+tion support and have used cognitive prompts in supporting reflection-in-action. We can
+foresee the difficulty of applying cognitive prompts in the design-based learning process, it
+requires more effort devoted to the choreography of the reflection-in-action task that needs
+to match with the different design-based learning activities.
+   Meanwhile, younger students collaborate in doing design projects. When they receive
+a reflection task during the process, how would they respond to the reflection task in this
+collaborative setting? Specifically, in Teamup, researchers have not presented how students
+create the reflection media collaboratively or collectively. The research diary is a dedicated
+toolset for the design workshop environment. The authors have found its potential to fos-
+ter reflection-in-action which is enhanced by children’s interaction. Children change their
+perspectives and discuss what they are making which promotes reflection. But they have
+not explored more information regarding this finding. ReflecTable enabled each student to
+
+1 3
+
+===== PAGE 7 =====
+Supporting and understanding students’ collaborative…                                          313
+
+have a button to capture 15 s video clips of the designing process. But deciding when the
+important moment of the design process is to be captured is an individual decision and the
+setting is a condensed design activity for adult students. While in a Design-based learn-
+ing classroom in secondary school, the design project normally lasts multiple weeks or
+months. The way of interaction of ReflecTable may lead to a large number of video clips. It
+is difficult to use for revisiting. In this case, the tool might inhibit the efficiency of the vid-
+eos for reflection. The lack of empirical work inhibits us from understanding how technol-
+ogy supports reflection-in-action happens in the collaborative learning environment.
+  To overcome some of the deficiencies mentioned above, we designed a prototype named
+ReflectionSchema. The purpose of our study is to explore how can a video tool supports
+reflection-in-action in learning environments where secondary school students collaborate
+to create multiple design representations. Our study extends this existing body of research
+on designing video-based reflection tools. Based on video as the externalization, we pro-
+pose a new prompting technique that suits the context of collaborative design-based learn-
+ing. Based on the outcomes, we construct a framework for the understanding of how reflec-
+tion-in-action happens when mediated by a video recording tool.
+
+
+Methods
+
+Research through design is a research method that reinterprets and reframes a problem
+space by making a solution and producing knowledge for the design (Zimmerman et al.,
+2007). Pursuing the research through design methodology, we first determine what design
+qualities are required, then we create a prototype to embody the qualities we proposed.
+Second, the prototype will be tested in the field to collect the related data of the users.
+Finally, the tested results show the efficiency of our designed tools. More importantly, the
+understanding can be built from the data and organized in a framework. Our reflection on
+this study is also discussed to generate design implications. In this way, our knowledge
+created from this study allows future designers to have multiple views of the processes of
+reflection-in-action.
+   Hereby, we designed a tool that embodies our support method and tested it in the field.
+In this section, firstly, we introduce our research prototype and its design rationale. Sec-
+ondly, we give a detailed description of how we conduct our study in an authentic design-
+based learning classroom.
+
+Research through design: designing ReflectionSchema
+
+ReflectionSchema is similar to the tools in related works in which researchers designed
+an easy-to-use recording system (Pauline Gourlet, Garcin, Eveillard, & Dervieux, 2016;
+Leinonen et al., 2016).
+   ReflectionSchema was designed to assign preset visualized reflection guidance to stu-
+dent groups along with the design activity sequence, stimulating groups of students to
+record reflection while they are collaboratively making a specific design representation.
+ReflectionSchema contains the following features to form a joint reflection space (refer to
+Fig. 1):
+
+•  Collective device
+•  Pre-set critical reflection moments corresponding to each DBL phase
+
+                                           1 3
+
+===== PAGE 8 =====
+314                                                                                                        Z. Zhang et al.
+
+
+
+
+
+Fig. 1   Picture (1). shows the joint space for two groups of students. Picture (2). (3). (4). is one example
+of reflection moments that shows the design features of ReflectionSchema recording interface. Picture (5).
+shows the example on the real screen when students were using the recording interface
+
+•  Every reflection moment has a reflective question
+•  Every reflective question accompanies visual guidance which shows an explicit struc-
+    ture to help students construct an understanding of how they interact with their visual
+   representation while recording.
+
+
+The design process of ReflectionSchema
+
+The rationale of ReflectionSchema is to engage a group of students actively involved in
+the interaction of reflecting and making. We try to use cognitive prompts (Berthold et al.,
+2007) which are closely related to their design content to challenge students’ ideas, actions,
+and decision-making during their designing process. The text-based prompts were further
+reinforced by a visual structure (refer to Fig. 1).
+   In a collaborative design-based learning setting, students are faced with reflection as a
+group task. Their perception of a task needs to be translated and negotiated into a shared
+understanding. Related research has shown that groups of students can successfully negoti-
+ate the explicit features of a task and fail on the implicit (Järvelä & Hadwin, 2013). For a
+group of students, technology can take the role of external mediation which can explic-
+itly scaffold shared understanding of a reflection activity (Roschelle & Teasley, 1995).
+The most common form of external mediation is language. Based on language frames, in
+educational settings, a question is widely used as a prompt for varied purposeful cogni-
+tive actions. In supporting reflection, giving reflective questions aims to support a shared
+understanding of what is the cognitive focus of reflecting. Back to our setting, most of
+the design activities generate visual representation. Combined with our scaffolding goal
+of enhancing the interaction between reflecting and making an externalized reflection, the
+
+1 3
+
+===== PAGE 9 =====
+Supporting and understanding students’ collaborative…                                          315
+
+shared understanding of the operational level of externalizing reflection needs to be sup-
+ported by the tool, to guide how students interact with their design representations while
+recording.
+   In response to this requirement of building a shared understanding of the reflection-in-
+action task, we design visual guidance which utilizes simple shapes and lines to inform
+students how they can include their design representations in a recording. According to
+knowledge visualization theory, the use of visual representations such as a graphic can
+improve the transfer of knowledge between groups of people and facilitate conversations
+(Jermann & Dillenbourg, 2008; J. Zhang, 1996). By transferring the text-based reflective
+question into a graphic form that represents the content of the question, our technique gives
+students explicit visual guidance of what needs to be included in the reflection videos:
+thinking and related real-world design representations. For example, in Table 3, RS 2, the
+question asks students to analyze how they get their group ideas by combining each indi-
+vidual’s ideas. While designing the visual guidance we use a combination of two hexagons
+to inform students that they can show their ideas to help articulate (refer to Fig. 1, picture 5
+to check how it is shown in students’ devices). In this way, ReflectionSchema seeks to sup-
+port the externalization of the relationship between reflecting and making while recording
+reflection-in-action videos. ReflectionSchema is an idea regarding the reflection-in-action
+support technique. As ReflectionSchema is currently a research prototype, the researcher
+collaborated with the teacher to co-create the specific interfaces tailored to his DBL class
+(refer to Table 3). Thereby, we can conduct a study in a real design-based learning class-
+room to involve students in using the tool in their real design projects. We argue that
+our scaffolding technique based on video technology can play the role of a mediational
+resource for collaborative reflection-in-action. It supports cognitive focus by presenting
+reflective questions; it supports the operational level of how to involve the design represen-
+tations by presenting visual guidance.
+
+Aim of this study
+
+We will answer our research question in a twofold manner. Firstly, we examine the tool’s
+efficacy in supporting reflection externalization by presenting the quantitative aspect of the
+data source. Second, we construct a framework for understanding collaborative reflection-
+in-action by analyzing the content of student-created videos which is the qualitative aspect
+of the data source.
+
+Participants
+
+A whole class of students (n = 28, 1 boy quit the study, 14 girls, 13 boys, aged 12, Dutch-
+spoken) participated in this study. All of the students spoke Dutch in the class. They were
+assigned to 13 groups (1 group of 4 students, and the other 12 groups of 2 students). Except
+for group 13, the other groups shared a device between the 2 groups. The demographic
+information refers to Table 2.
+
+Entry into the field: an authentic DBL classroom
+
+Our field trial took place in the technology class where the teacher employed design-based
+learning pedagogy. The teacher has more than two-year experience of in Design-based
+
+                                           1 3
+
+===== PAGE 10 =====
+316                                                                                                        Z. Zhang et al.
+
+Table 2   Overview of the                             Group #   Participants (student code-name)                Interviewparticipants
+                             Group 1  Two girls (G1-A, G1-B)                YES
+                             Group2  Two boys (G2-A, G2-B missed the first lesson)  NO
+                             Group3  Two boys (G3-A, G3-B)              NO
+                             Group4  Two girls (G4-A, G4-B)              NO
+                             Group5  Two girls (G5-A, G5-B)              NO
+                             Group6  Two boys (G6-A, G6-B)              NO
+                             Group7  Two girls (G7-A, G7-B)              NO
+                             Group8  Two boys (quit the study) (G8-A, G8-B)     NO
+                             Group9  Two girls (G9-A, G9-B)                YES
+                             Group10  Two boys (G10-A, G10-B)               YES
+                             Group11  Two girls (G11-A, G11-B)               YES
+                             Group12  Two boys (G12-A, G12-B)             NO
+                             Group13  Two girls and two boys (one boy was absent   NO
+                                          most of the time) (G13-A, G13-B, G13-C,
+                                       G13-D)
+
+
+learning pedagogy. In this case, students are in the first year of secondary school. Before
+this project, they have experience in using design-related techniques and tools such as
+3D modeling. In this project, the teacher aimed at applying design fabrication techniques
+(handcraft, laser cuts, and 3D printer) during the design project. The project is “designing
+an insect robot” through a process including four phases: research phase, ideation phase,
+fabrication-CAD phase, and fabrication phase. In this case, the DBL class lasted for more
+than two months and occurred once a week. Students created multiple process representa-
+tions in different DBL phases. To be specific, at the outset of the DBL process, students
+searched on the internet to get related knowledge and inspiration. When they finished the
+desk research, they employed paper-based media to organize their knowledge, inspiration,
+or ideas, such as drawing mindmaps and sketches. Students needed to incorporate their
+interests and translate these into design requirements. When students moved to the fabrica-
+tion phase, they employed computer-aided modeling. In this case, students used the Tink-
+ercad platform to make a 3D model. Later on, they materialized their models. Their design
+ideas became tangible. Groups of students worked together to do one project.
+   Contextual information regarding the technology class includes the following: 1) The
+technology class employed DBL pedagogy. 2) It follows a long-term collaborative Design-
+based learning approach 3) It is a formal education setting with a final evaluation. 4) The
+classroom is equipped with video technology intervention: ReflectionSchema. In this class,
+previous ways of documenting process reflection were keeping a process journal by using
+a PowerPoint template. Students needed to text their answers to the reflective questions.
+According to the teacher’s experience, the children tend to do it afterward the whole design
+process.
+
+Scenario, materials, and procedure
+
+The technology class lasted for 6 lessons (each lesson lasted 90 min) that span over two
+months. In 5 lessons students were equipped with ReflectionSchema. At the end of the
+sixth lesson, four groups of students (8 students, 6 girls, and 2 boys) participated in the
+
+1 3
+
+===== PAGE 11 =====
+Supporting and understanding students’ collaborative…                                          317
+
+Table 3   The corresponding ReflectionSchema interfaces (reflective questions in Dutch of each phase of
+DBL were defined by the teacher. The visual guidance was co-designed with the teacher.)
+ DBL phase   Week 1-lesson 1, Research phase to ideation phase
+  Reflective      Interface 1                                    Interface 2
+  questions    RS1 –                            RS2 —
+              What have you researched that constitutes  How do you combine group members’ ideas
+                your ideas: at least three aspects?             into group ideas ?
+  Visual
+  guidance
+
+
+
+
+
+ DBL phase   Week 2-lesson 2, Ideation phase
+  Reflective      Interface 3                                    Interface 4
+  questions    RS 3 –                           RS4 –
+           How do you evaluate the ideas (at least  How do you make the final decision (at least
+               two dimensions)?                      two reasons)?
+  Visual
+  guidance
+
+
+
+
+
+ DBL phase   Week 3-lesson 3, Fabrication- CAD modeling
+  Reflective    RS 5 –                         RS 6 – Fabrication
+  questions     What is the unexpected from paper-based  How do you separate their fabrication works?
+                 sketching to 3d modeling?                 (prompt  student  to  reflect on  the  different
+                (prompt student to reflect on the 2D to 3D   fabrication   techniques   available   in   the
+               model and the modification of the original   classroom)
+                 design)
+  Visual
+  guidance
+
+
+
+
+
+ DBL phase   Week 4 and 5-lesson 4&5, Fabrication
+  Reflective    RS 7 –
+  questions     What is the stumbling moment while making, and how to solve the stumbling moment?
+                (prompt students to identify what is difficult while making and how they iterate based on it)
+  Visual
+  guidance
+
+
+
+
+
+                                           1 3
+
+===== PAGE 12 =====
+318                                                                                                        Z. Zhang et al.
+
+
+
+
+
+Fig. 2   The arrangement of the tool in a DBL classroom
+
+
+
+
+
+Fig. 3   The setting and usage of ReflectionSchema
+
+co-creation session. The 13 groups of children sat at 7 tables: each table was equipped
+with one device which means two groups shared one device (refer to Fig. 2). In this
+case, there were 7 interfaces designed beforehand (refer to Table 3). The time frame
+within the class was from November to the beginning of January of the next year (6 les-
+sons in total, five lessons with ReflectionSchema).
+  The overall scenario of the use of ReflectionSchema is as follows:
+
+•  At the outset, the teacher gave a brief introduction about the design-based learning
+    activity and the use of ReflectionSchema. He told the students that they need to use
+    the device on their table to record reflections according to the requirements on the
+    screen.
+•  When a class would begin, students began to do the first activity, and the corresponding
+   ReflectionSchema interface would appear in their collective devices. When the class
+   would proceed to the next activity, the next ReflectionSchema interface popped up and
+    stayed until they moved to a new activity. Students could use it whenever they wanted.
+   The change in the interface was linked to the teacher’s plan. In this trial, the teacher
+   monitored the whole class’s progress and controlled the change of ReflectionSchema’s
+    interfaces. Students could not go back to the previous one by themselves. The setting
+   and usage can be seen in Fig. 3.
+•  After finishing the 6 lessons, 8 students volunteered to take part in a co-creation inter-
+   view session. They were asked to select interfaces from what they have used and mod-
+    ify them. After that, students explained how and why they made these changes based on
+    their experience of using ReflectionSchema. Through this co-creating activity, the aim
+    is to prompt students to talk about something concrete about their experience of using
+   ReflectionSchema, thereby, we can understand the actions and contents that emerged in
+   the videos.
+
+1 3
+
+===== PAGE 13 =====
+Supporting and understanding students’ collaborative…                                          319
+
+  The researcher met weekly with the teacher. The researcher and the teacher watched the
+videos collected from the last class to fully understand students’ learning situations. Based
+on this observation, the teacher modified the interfaces for the next phase. The researcher
+met weekly with the research assistant to transcribe the videos based on the understanding
+of the videos and then translated them into English.
+
+Data collection
+
+The main data source is the videos children created by using ReflectionSchema. The field
+notes and co-creation interviews are the resources to help researchers understand children’s
+recordings and behaviors shown in the videos. Regarding the videos, there are two aspects
+we are concerned about: (1) have children responded to every ReflectionSchema interface;
+(2) what were their behaviors in each short video they have created. Two researchers were
+present in the classroom, they observed the children’s design process and make some notes.
+We also recorded the co-creation interview. The purpose of this in-situ observation and
+co-creation is to help researchers gain a better understanding of the contextual issues and
+children’s learning process that helps understand children’s reflection short videos.
+   There were 204 videos created by 13 groups of children through the two-months DBL
+class. We retained 134 videos (leaving out ones including poor operation and repeated
+recording). These videos were between 20 s to 1 min 30 s. 116 videos contain both verbal
+and nonverbal actions. 18 of the videos contain exclusively nonverbal actions. They belong
+to group 1, group 9, and group 10 from Research Phase (lesson 1). We transcribed the
+other 106 verbatim, together with a description of the relevant context and nonverbal inter-
+action (e.g. changing the focus of the camera). Nonverbal interaction was used to confirm
+specific observations made from the transcripts. The corresponding videos were attached
+to the transcripts to ensure access to the videos to check the context and each group inter-
+acting in situ. Nonverbal actions are as important as verbal actions because they contain
+contextual information about how student act in the environment.
+
+Ethical considerations of conducting this study.
+
+We have conducted the study according to the ethical procedures of our organization. The
+teachers, students, and guardians were given information about the project. The setup of
+the study was discussed with the teacher. The teacher was present during the activities of
+the children. Furthermore, written consent was organized through the teacher, according to
+the rules of the participating school. Students who did not want to participate were posi-
+tioned outside the view of the camera.
+
+Data Analysis
+
+Efficacy of the tool
+
+ReflectionSchema engages students in periodic reflection by delivering to students’ devices
+different reflection recording interfaces that relate to their making in situ. The objectives
+of ReflectionSchema are to promote real-time reflection-in-action and prevent students to
+make fake or compensatory reflections afterward. Meanwhile, students are encouraged
+to respond to the guidance delivered by ReflectionSchema. The mechanism of Reflec-
+tionSchema determines that children cannot go back to the last interface. Therefore, we
+
+                                           1 3
+
+===== PAGE 14 =====
+320                                                                                                        Z. Zhang et al.
+
+first take count of the videos that children created during the process: whether a group of
+students had responded to each ReflectionSchema interface or not. Secondly, we check if
+these videos are of good quality. Whether a video is considered to be of good quality or not
+is determined by whether the content of the video answers the reflective question presented
+by the interface. For example, RS1 ask the student to reflect on what inspired their idea.
+In a good video, a student presents the different three aspects which inspire their idea. In a
+bad-quality video, students only elaborate on the details of their idea. Two researchers who
+took the field observation discussed and decided on the videos based on the above criteria.
+The two aspects demonstrate the tool’s efficacy in promoting students to reflect in action.
+
+
+Construct an understanding
+
+For building this understanding, we employed the data analysis approach derived from the
+grounded theory. It is a systematic inductive process for analyzing data to build theoreti-
+cal frameworks for interpreting the collected data (Glaser et al., 1968; Straus & Corbin,
+1990). We followed a classical approach to the grounded theory to analyze the children-
+created reflection videos. Our analysis was based on a prolonged engagement and observa-
+tion of the videos collected from ReflectionSchema. To be specific, the analysis and the
+construction of the framework were based on the transcriptions of the language and actions
+that emerged in the student-created videos. We provide a thick description so that other
+researchers can have enough information to duplicate the research and reach their own con-
+clusion. We offer examples of the raw data and the coding intertwined with the article that
+enables other researchers who were interested in this study to go through the contextual
+information.
+   Specifically, the analysis started with open coding of the video transcripts (refer to
+Fig. 4). In the initial coding phase, the aim is to abstract the raw data line-by-line into
+open codes. The coding process was conducted using the MAXQDA software that enables
+researchers to check the multiple-media data sources and label the selected unit (here is the
+line of video transcript and a screenshot of the video). We went back and forth between the
+transcripts and the corresponding videos to help us understand the contexts of the videos.
+The researchers stand on a neutral point and question the data: who was doing what (refer
+to Table 4). When a new code emerged, it was compared with the existing codes until the
+codes saturate. After this phase, 405 open codes are generated.
+   Focused coding is more directed. Through constant comparison of the open codes, the
+aim is to differentiate the codes of highly frequent emergencies, the codes with interests,
+and the general codes. Researchers went back and forth between the important codes and
+the raw data to check if the data support the initial conceptualization. After figuring out
+the important codes, these codes are getting into core categories. In the axial coding phase,
+the aim is to make connections between a core category and the general categories. There-
+fore, the core categories have subcategories. The properties and dimensions of a core cat-
+egory can be defined. For example (refer to Table 5), in this phase, we found out in the
+video, a large number of elaborate details appear. But in different cases, there is a slight
+difference. Some children try to respond to the reflective guidance, therefore they referred
+to the guidance and talk about the related design details. While others just talk about the
+design details and ignore the requirements of the guidance, those are the unqualified vid-
+eos. Therefore, we went back to the raw data to further check the difference between these
+two types of elaboration on the details, the result is that we identify the codes that verbally
+interact with the guidance and elaborate on the design details.
+
+1 3
+
+===== PAGE 15 =====
+Supporting and understanding students’ collaborative…                                          321
+
+
+
+
+
+Fig. 4   Coding process, this flowchart was adapted from Jia and Heng’s work (Xudong & Liang, 2020)
+
+   In selective coding, the aim is to further present the difference between the core cat-
+egory and the general category and form a coherent and theoretical representation. Glaser
+proposed coding families and Strauss proposed the causal-condition model to guide the
+theory-framing (Böhm, Glaser, & Strauss, 2004). Analytic memos were written during the
+coding process to help formulate the initial connection or conceptual relationship between
+different codes.
+
+
+Results
+
+We examined the efficacy of the tool in terms of how it supports students in reflecting on
+their work by quantifying the video. Next, an understanding of how students use the tool
+collaboratively during their Design-based learning process is obtained through the data
+analysis method of grounded theory.
+
+Efficacy of the tool
+
+The efficacy of the tool for supporting collaborative reflection in DBL was explored
+through two steps of analysis of the video transcripts: the first step is to figure out
+whether a group has used every recording interface, which means whether they respond
+to every reflection moment or not. Not every group of students used every interface to
+record. Most groups of students chose to record at least one video for each interface.
+
+                                           1 3
+
+===== PAGE 16 =====
+322                                                                                                        Z. Zhang et al.
+
+                          indi-unquali-                                                          team                          their
+            an                                                                                                                                                details            is                                                                        other
+                        this                                           the                                                                                                                           design                                         combined
+                                                              the                              Note:                   idea                                                             involve                     they                                                                                             details     talking                         details                 details
+                              is               howstamp.                            design                                                                                                                                                Explainaction:          on                                           design                                design               design                        time              new          what            a  the                theaction:                                    reflectthe                                                the          toare                                                                                                                                                Non-verbalmember                                                                                     GreetingUpdate     Explain       Targeting                         ExplainVerbal           Explain
+                          askedrow
+                        each                     were
+                                   before                                         Students
+          2.                                         numbers          RS
+          toThe
+                              clip.
+                                                   respondingvideo                   actions                                                                      member)
+                                                                                                                point)    team                          whileeach
+                  for                                                                                                Non-verbal                                                        (finger        (tapping                          phase
+                                               verbatim         of                                        the                                                                              legs            other                                         ideationof                           of                                              kind                                                                                          cannot           his               the                                                                                                                                                                    minutia,      take                        form              the   bite                                       in          in                                             you                                                              and     can     6the              and to            in               idea     use  But                     pistol                          groupis                                                                                                                                                bullets         insect                                                          armor  can    here.              tank                                          good
+                           he                                                              all                     fromdata                                an                                             see       of                  the                           is                                                     superwhole   that*                                        that,
+
+
+                    a                                                                                                       here,                          videoof    a          can              kind                                   the                                                                                            with
+     a                       is    teeth  you                                                           has          is                  with                                                               well                                                                     and                                       hehangs                                         example                       there    sharp     but                          (This                           actions) again,                    *RAWRGH!which                  The                                are         super                               which           magnet,                                                                                 beetle,               taser,                                clever a                     weof  hasinsectsofproperly,                                   handy                                    sample.ideas.                   (verbal                                it                                 camouflaged,bubble,very                                                                                                                                                                 there’s                                                     therekind                                               see      is                                                                                                                       super
+               a            a    courseotherofkind                                       he                               codinggroup
+                                   it,                           of                                                                                                       waterbelow,    well,                                                Coding     transcript hello                        into                       is                           it   here                                                                                  thisand            insects,                                          Initial                               thing    heads      actually                        idea    Open   Video Wellthis  and  and                            further,in      uhm,                                        video)
+                                                        Table 4 vidualfied Data  Time 1”8”  18”  22”           30”43”     50”
+
+1 3
+
+===== PAGE 17 =====
+Supporting and understanding students’ collaborative…                                          323
+
+Table 5   An example of the                                 Axial coding                        Open codesconceptualizing process in axial
+coding                                   Elaborate on the design details            Update a new idea/design
+                                                                          Explain the idea/design
+                                   Verbally interact with the guidance         Referring to the guidance
+                                                                                       to update the working
+                                                                               progress
+                                                                             Referring to the guid-
+                                                                         ance elements to help
+                                                                                          articulate
+
+
+Groups 3, 4, 9, and 11 have completed all the reflection moments. Groups 2, 7, 10, and
+13 have missed one reflection moment. Groups 1, 5, 6, and 12 have missed two reflection
+moments. 3 groups missed RS 2 and RS 3. RS 2 is the reflection moment placed when
+a group needs to reflect on how they integrate their individual ideas into the group’s
+ideas. RS 3 is the reflection moment when a group needs to reflect on how they evalu-
+ate multiple ideas. It seems that children had trouble integrating individual ideas into
+group ideas and generating multiple group ideas. When they proceeded to RS 4 where
+they need to analyze their decision-making on their final group idea, the completion is
+getting better. The effect of the tool’s support is determined by students’ design-based
+learning status. In previous research on young students’ problems in design-based learn-
+ing, the researchers pointed out that students tend to stick to their initial idea (Crismond
+& Adams, 2012; Huybrechts, Schoffelen, Schepers, & Braspenning, 2012). In this study,
+this kind of problem also appeared in groups 2 and 5.
+   Secondly, we checked if these videos are good-quality or not. The video was consid-
+ered to be of good quality if the content of the video answered the reflective question
+presented by the interface. The result showed that 93 videos of the 134 videos (69.4%)
+fulfilled the requirements given by the guidance on screen. Good quality means that
+through responding to the reflection-in-action guidance given by the tool, students give
+a simple analysis of their ideas and design actions in situ. In unqualified videos, stu-
+dents did not answer the question, they give free recordings. These parts of the good-
+quality videos were recorded based on students’ shared understanding of the reflection
+task: respond to the guidance. 7 out of 134 videos were individual ones, and the others
+(127 video clips, 94.8%) were collaborative ones. Table 6 shows the qualified videos of
+each group.
+   Apart from some minor usability issues of the interfaces, such as whether they can fit
+enough detail in the provided guidance, the redesigned interfaces did not really contain
+any major improvements to the original designs, so we do not discuss them further in
+the paper.
+   Thus, we can only conclude that the tool can support students (aged 12–13) continu-
+ously reflect in action and create reflection videos with good quality, but it also depends
+on what is the students’ real learning status which means if the students do not have the
+related process representations, they are unable to reflect-in-action with the guidance
+asking to involve those design representations. For example, in the first lesson, a student
+of group 2 was absent, so the group could not answer the RS2 which asks students to
+combine their individual ideas into group ideas. ReflectionSchema can present the truth
+of how children approach their final solution.
+
+
+                                           1 3
+
+===== PAGE 18 =====
+324                                                                                                        Z. Zhang et al.
+
+Table 6   An overview of children-created videos and qualified videos
+Group #  RS 1  RS 2  RS 3  RS 4  RS 5  RS 6  RS 7  In total  Comple-     Quali-    Qualified
+                                                                            tion Ratio    fied       Ratio
+                                                               (%)         videos    (%)
+
+Group 1   3     3     1     1         /          /     1      9       71.4        9       100
+Group2   1         /     1     1     1     2         /      6       71.4        4        66.7
+Group3   5     2     1     1     1     1     1     12      100        10        83.3
+Group4   4     2     1     1     1     1     1     11      100         8        72.7
+Group5      /          /     1     1     1     2     1      6       71.4        4        66.7
+Group6   4     2     1     1     1         /          /      9       71.4        5        55.6
+Group7   2     1         /     1     2     1     1      8       85.7        4        50.0
+Group9   4     2     3     2     2     2     2     17      100        14        82.4
+Group10  4     2     3         /     1     4     2     16       85.7       15        93.8
+Group11  3     2     1     1     1     1     1     10      100         8        80.0
+Group12  3         /          /     1     2     1     1      8       71.4        5        62.5
+Group13  9     5         /     4     2     1     1     22       85.7        7        31.8
+
+
+
+Build an understanding of collaborative Reflection‑in‑action
+
+As a consequence of the tool’s intervention, most of the students can use the tool to exter-
+nalize reflection-in-action (refer to the above section of the descriptive data of students’
+videos). In this section, we will build a framework based on constant comparison and cod-
+ing of both the qualified and unqualified videos created by the students. This framework
+describes students’ externalized reflection-in-action by using a media tool in the collabora-
+tive design-based learning setting the strategies developed, the corresponding contexts, and
+the consequences from a qualitative perspective.
+  The ReflectionSchema is designed to be a collocated collaboration device, that two
+groups of students share one device. The device provides a public reflection space. When
+reflection practice happens by using ReflectionSchema during the collaborative learning
+processes, from the field observation, little interaction happened between two groups of
+students who shared one device. As each group worked at their own tempo, they did not
+need to wait for the other group of students when they wanted to use ReflectionSchema.
+  As shown in Fig. 5, the framework depicts the process of the use of the video recording
+tool in a collaborative design-based learning classroom: (1) how students would respond to
+it and (2) what would they create.
+  A central category concerned the focus of this research namely, collaboratively exter-
+nalizing reflection-in-action with video technology. It has four overarching characteristics:
+   (1) Audience awareness;
+   (2) Interactive design analysis and structured documenting;
+   (3) Informal role-playing;
+   (4) Descriptive design elaboration and showing.
+   Strategies are the actions and behaviors which students have shown in their reflection
+videos. The strategies are the clusters of the open codes which emerged from the students’
+reflection video by using our tool. We constantly compared children’s verbal and non-ver-
+bal actions in both the qualified videos and unqualified videos. In the subsequent sections,
+we will explain the elements that are described in Fig. 5.
+
+1 3
+
+===== PAGE 19 =====
+Supporting and understanding students’ collaborative…                                          325
+
+
+
+
+
+Fig. 5   The framework of externalizing collaborative reflection-in-action with video technology (ECRVT)
+
+Characteristic 1. Audience awareness
+
+Based on the students’ videos, the first emerged phenomenon is that students showed audi-
+ence awareness. Students recorded with the expectation of recording for an external audience.
+This characteristic illustrates the styles in which children externalize their reflection-in-action
+when using a video recording tool. This dimension consisted of two verbal action compo-
+nents or strategies: “Opener” (greeting or introduction of themselves) and “contextualizing”
+(positioning and introducing the context). Students have the intention of sharing experiences
+(see Table 7 for coding and examples). While students were recording their reflection videos,
+some groups started with greeting openers such as “Hello all”, and “Hi”. Other groups started
+by introducing themselves. It delivers a message that students were talking to the “audience”
+in their minds. The audience might be someone who would watch their videos later, such as
+the teacher, classmates, or even the researcher. Therefore, students showed the actions such as
+
+
+Table 7   Conceptualizing process of audience awareness
+Theoretical codes    Axial codes     Open codes           Examples
+
+Audience awareness  Opener          Greeting               “Hello all, to this great idea, this is
+                                                                Despacito, the learning spider, he
+                                                                 teaches you math” –from Group 1
+                                      Introduce who they are  “I am Doris and this is Mary” –from
+                                                     Group 11
+                     Contextualizing  Introduce           “We work together, we said that last time
+                                                                       too, okay”— from Group 11 “This is
+                                                        what we have done on Thinkercad (the
+                                                               platform for making 3d models). I’ll
+                                                    show it to you. After that, Max will
+                                                                 explain a little what he can do”. – from
+                                                     Group 6
+
+                                           1 3
+
+===== PAGE 20 =====
+326                                                                                                        Z. Zhang et al.
+
+greeting or self-introduction. The “navigation” emerged in the videos serving for directing the
+“audience” to understand the situation and context of their video.
+
+Characteristic 2. Interactive design analysis and structured documenting
+
+This category describes how children try to respond to the reflection guidance. It implies chil-
+dren’s sensitivity to the support mechanism delivered by a tool and their shared understanding
+built for responding to the given guidance. Table 8 shows the process of conceptualizing this
+characteristic with brief examples of children’s actions that emerged in their reflection videos.
+  While in this study, we found that by using ReflectionSchema, students developed two dif-
+ferent preferences of how to develop their contextualized reflection while doing design pro-
+jects. These two preferences comprise different strategies that students employed for docu-
+menting their learning experience/process artifacts/products periodically in structured ways.
+
+The first strategy is: verbally interact with the guidance
+
+The overarching feature of this category is that children try to respond to the guidance given
+by the tool through verbal articulations. We can identify the guided awareness of a certain
+moment during the design-based learning process. Within this category, the code referring to
+the guidance elements to articulate is saturated by 32 codes that emerged in children’s reflec-
+tive videos.
+
+Referring to the visual guidance to update the working progress
+
+This category depicts that when a new ReflectionSchema interface appears on children’s
+devices, they tend to start recording the reflection by explaining their perceived requirements.
+It indicates children’s guided in-situ awareness of a certain aspect. For example, when group
+12 was responding to RS 6, they start with “We are now at the part that you have to do some-
+thing by hand, something has to be 3D printing and laser cuts”.
+
+Referring to the visual guidance elements to help articulate
+
+As structured visual guidance intervened, students’ verbal articulation tends to be structured
+and this kind of “structure” was affected by the visual guidance. Within this strategy for
+recording, the visual guidance affects the structure of elaboration. We also present an example
+in Table 9 to help understand this strategy. The highlighted part belongs to this strategy. An
+example is that group 11 was responding to RS4. They need to analyze the reasons behind
+the final idea they have selected. Student use “reason 1 and reason 2” which is the overlaying
+visual elements for helping them articulate.
+   Given video as the media for them to externalize their reflection, the tool helps students
+make these implicit thoughts become explicit.
+
+The second strategy is visually structured organizing and documenting the learning
+process
+
+This category includes the actions which students have taken to follow the visual structure
+for documenting. The overarching characteristic is that students strived to manage their
+
+1 3
+
+===== PAGE 21 =====
+Supporting and understanding students’ collaborative…                                          327
+
+
+                                       4.”
+                             you   12 box    withthat
+                          in                2                                                    hand,                                                                                          printingGroup                                                                           helps                                                 where          is                                       not                     by                       3D     he     beautiful”                                       part befrom and          reason                                                 and            –             3                                                            that                       to                             the                                               and                              is
+              3                                       box                                                                  cool13(2)67                                  has                   atsomething                              he                                                                        cuts”.                          in
+                          it                             nowdo                                                                          Fig.Fig.                                                                      Group                              1:   superGroup                     to                                                            laser           toto                             are       put     is                                          havesomethingand    fromReasonmathematics,hefrom                                                         Example  “We       “We–“  –ReferRefer
+
+                                                                              progress
+                                                                                                                                  articulate                                                                    working                                              blanks                                                    help                             the     to                                           guidance                                                                                                               visual      blanks
+                                                          update                       thevisual                   to                  elements         inthe                                                                          fillfitmultiple                                                                                                  actions       totoin
+                                                                                  fill                                                                              guidance                  guidance
+                                         to
+                             the       the                                                                                                                              recording                               artifactsartifacts                   to     to             the     video                                         codes                               new                                                                           documenting                                 Open     Referring                     ReferringCorrecting                        OperateCreateSeparate
+                                                                     structured
+                     and                                                                              guidance                                                              guidance
+                                                       analysis      the                       the
+                                         design       with                               with
+                                                                              interact                                                              interact                                         codes                                                                           interactive              of  Axial    Verbally                                                              Visually
+
+                             and                                                process
+                                                                              analysis
+                                         codes                                                          design                                                                                                               Conceptualizing                             documenting
+                                                                                                         structured                                                                          Table 8      Theoretical      Interactive
+
+                                           1 3
+
+===== PAGE 22 =====
+328                                                                                                        Z. Zhang et al.
+
+                                                                                           sketch                                                                                                                                                Non-verbal                                              the                                                                                                                                                                                   articulate
+                                    to                                                                                                                   progressholding
+                                           theis                                                                                                                                                                            progress                                                                                                 action      elements                                                                                      Updatemember                                                                                                           visual                   working
+                                                      the        the                                                                                                     action:teamrecording
+                                                                                                          action:   to                                                                                      Verbal     Correct    Refer      QuestionAnswerUpdate
+
+                                                the is     weare                              final                  in it       we                                                                 how                                                      is,                        your                                                             then                                                                 and            is                                                      two
+                                           it                                                                                                                 hexagon                                                                   and
+                        What                                                                 reason           make                                                                                                 orange      idea                                           to                                                                                                                                                                                   reasons.                                     an                                                                                         most.                                                                 (The                  wanttwo                                                                   screenshot:                                thehave                                           two     it     wethe
+                  the                                           had    orange                                                                        like            in                                                                 howwere                                                                                                                                  already                                                the
+                        text                             only     wewe                                                       reasons)                                                                                                            aboutthose                             we                                                                                                 inside                                                                                  easy                                                        and                                                                     now                                             So                           (two                                                                                      idea                                              it                              Dutch                                be                                                                                                                             because                                                              not                                                                        idea,            of                                           an                                to                                    is                                                                                                                roll.                                                                           make                                                                     use                             an
+                                             it                                                                                                  make?                           why?     4                                              to                                                has                                                      oneto                                                                                Coding                                                                   let                                       tomaybehave                                it          RS                     and                                                                        chose            do                                                                                                                                                                                          screenshot)    easier        cangoing                                                                   Translationidea                      Open we    wait,    reason    easierokay,we
+                                           recording
+                   were
+                                      students
+              the
+              11,
+                        Group
+                   from         A11-                 11-BA11-
+                                                                                                                                                   Transcripts Group                     GroupGroup                                 example
+               An                                      Agent
+                                                    Table 9                                Time 16”  25”  40”  55”58”62”
+
+1 3
+
+===== PAGE 23 =====
+Supporting and understanding students’ collaborative…                                          329
+
+real-world artifacts to align with the structure of the visual guidance and fill in the blanks
+of the visual guidance. The sub-strategies they have employed include: (1) operating the
+artifacts to fill in the visual blanks, (2) creating new artifacts to fit the visual guidance,
+and (3) separating the video into several for clear articulation. In similar studies which
+employ visual media, young students normally conduct a loose way of visually document-
+ing (image capturing video recording) the learning process (Leinonen et al., 2016). While
+in this study, students were devoted to a structured way of visually documenting.
+
+Operate the process artifacts to fill in the visual blanks
+
+Situations occurred where students moved the flexible camera in their hands. In that
+case, some students move the process artifacts until they can make their artifacts (such
+as sketches, CAD models, and so on) to fill in the visual blanks overlaid on the record-
+ing interface (refer to Fig. 6 (2)). This action happened in two conditions. First, when stu-
+dents wanted to record the artifacts which are in different media. For example, when they
+have paper-based sketches, and information on their laptop screen, students from group 1
+recorded the sketches and then move to the laptop screen to record the picture they had
+found on the internet. The other situation is that some students fix the position of the cam-
+era, and only operate their process artifacts (Fig. 7).
+
+Create new artifacts to fit the visual blanks
+
+In some groups, new artifacts were created to better fit the visual guidance for the video
+recording. Take Fig. 8 as an example, the RS 1 interface asks children to deconstruct their
+ideas. Group 10 drew a new type of sketch and depict the three sources of the idea. In this
+style of recording, the visualized structure is influential to students’ recording actions. It is
+of vital importance for them to organize their artifacts to match the visual structure of the
+interface. In the interview session, Student G10-A expressed that he perceived the visual
+structure to represent the requirement, he tended to fill in the “box”, but he had trouble with
+filling in the box by using the flexible camera within the fixed visualized elements. There-
+fore, group 9 and group 10 drew a new form of sketches dedicated to the video recording.
+
+Separate one video into several ones for clear articulation
+
+When the interfaces have several elements to capture, to fill in the blanks clearly, students
+sometimes record the content for one blank element at a time. That means students choose
+to separate the video recording intended to be one integrated video into several short ones.
+A typical example is when children were recording RS 6, children were asked to ana-
+lyze the crafting techniques that they would use for making their model. Children made
+exploded models and record three short videos to fit the three different parts of the visual
+guidance.
+   Students employed varied strategies to record reflection videos. It shows their adap-
+tion to the given guidance. At one end, in what we can characterize as the ‘visually struc-
+tured documenting’, the visual guidance had a major impact on the recording behaviors
+in the research phase of DBL. Students (such as groups 1, 9, and 10) struggled to put the
+contents in the visual blanks. They created new artifacts to fit the visual guidance. These
+actions were done before their recording. Meanwhile, they added little verbal explanation
+in the video. On the other hand, some groups (such as group 11, and group 12) followed a
+
+                                           1 3
+
+===== PAGE 24 =====
+330                                                                                                        Z. Zhang et al.
+
+
+
+
+
+Fig. 6   Examples of process artifacts/representations and the screenshot of a video created by Group 1
+
+Fig. 7   This screenshot is from
+Group 10, the research phase of
+DBL processes. The reflection
+prompt: “What has led you to
+this idea?’
+
+
+
+
+
+narrative way of recording, talking about various aspects of their design; not limited to the
+contents asked by the interfaces, but also other contents they wanted to record. They only
+referred to visual guidance to help them map their verbal elaboration. That is to point out
+what they were talking about corresponded to which part of the visual guidance. In most
+of the videos, students employed mixed strategies that involved the physical artifacts with
+
+1 3
+
+===== PAGE 25 =====
+Supporting and understanding students’ collaborative…                                          331
+
+Fig. 8   Group 13, the girl on the
+right (G13-A) took the role of
+reflection leader
+
+
+
+
+
+detailed elaboration. This characteristic shows that students record with their perceived cri-
+teria regarding how to record reflection videos. i.e. they need to respond to the given guid-
+ance. They also developed varied preferences regarding how to respond to the guidance.
+
+Characteristic 3. Informal role‑playing
+
+In the initial coding phase, we take the neutral standpoint to question the data. One of
+the questions is: who was doing what in the videos? Through conceptualizing the “whose
+actions”, we have generated this characteristic regarding collaboration in recording reflec-
+tion videos. The core phenomenon that emerged was that students developed roles sponta-
+neously for cooperated recording.
+   Three categories of actions regarding recording collaborative reflection videos were
+observed: (1) co-explaining, (2) cooperating on recording, and 3 showing the collabora-
+tion). Table 10 is the list of all the action codes that are convergent for this category. This
+dimension demonstrates the strategies students employed to cooperate mediated by the
+video-based tool. Co-explaining means that every group member takes part of the respon-
+sibility to talk in their reflection videos. Cooperating on recording means that a team mem-
+ber only helps operate the tool or organize the artifacts they want to show in the videos.
+Showing collaboration means that only one child talks in the video that he or she tries
+to show the videos are their shared work. A role is created by students interacting with
+their peers throughout the class period and it comprises patterns of behaviors (Herrmann &
+Jahnke, 2012). We have found that the roles developed informally through communicative
+interactions with peers and mediated by the designed reflection mechanism technology.
+Role-playing here is a temporal and dynamic process dedicated to recording reflection vid-
+eos. In this section, we conclude four informal role-playing and corresponding patterns of
+actions shown in the videos. Not every group showed all of the four roles and students did
+not necessarily stick to one role but took on different roles in different DBL phases. Some
+students took on two roles at the same time.
+
+Reflection leader (a responsible student who engages group members)
+
+When one student shows more initiative or dominates in making reflection videos than the
+others in the group, he or she takes on a leadership role to engage and guide the others’
+actions. The overarching action conducted by a reflection leader role is: engaging other
+group members. Group 13 is a typical group in which one girl took on the role of the
+
+                                           1 3
+
+===== PAGE 26 =====
+332                                                                                                        Z. Zhang et al.
+
+                                                           cam-             that,                                          the
+                            ofthe           like
+                                                           uses                                                       him
+                                                                         hold                                                                                                                                                         perspectivespeaker   I
+                                                                                                                                           individualthevideo,                Should                                                                                design?”         thethemember                                                                                                                                                   present!
+          a       in
+                                     to                                                       only                            is   groupdesign.”                                        such                                                                                        others           have
+                                                                     theretheotherouron          that?”                                                            become             the           really
+                                   11                                                                            like13                    it 13
+                                                       you                                                       Whenengage                                                                                                                   working                             tocapture                              did Group                                 isGroupnowhimGroup                              why         to           hold                                                           Example  “But from–                     Non-verbal:video,era“Maryfrom–“Okayorfrom–
+                                                                                                              videos
+                                                                                                                                                                                       reflection                                                                                                                    artifacts                                                                                                                                                                      contribution            group
+                                                                             design          the                                                tool                                       the                                        recording                                    the        member’s       in                                                                                                                                                            represent                                                                                question             topart                                                                     group                                        asks complementoperatesorganizes            video                                                                                       “our”take                                                 the  to
+                                          Codes   member membermembermember     inupor                                                                     “we”others                                  Open  Team TeamTeamTeamIntroduce/clarify      ShowUseAsk                                                                                     role-playing
+                                                                                                           recording                                                         informal
+                        on
+              of                                                                                                                                                                                    collaboration
+                                          codes                                                  process                                          Axial       Co-explaining           Cooperating       Showing
+
+                                          codes                                                                                                                   Conceptualizing                      role-playing
+                                                                                      Table 10      Theoretical    Informal
+
+1 3
+
+===== PAGE 27 =====
+Supporting and understanding students’ collaborative…                                          333
+
+leader. She was engaging every group member to take part in the video, such as asking
+group members to hold the camera, helping the speaker show the sketch, and so on. While
+another group member was speaking, she asked questions to help others to construct the
+content of the reflection (refer to Fig. 8). She always introduced their group collaboration
+at the beginning of their group reflection videos. When in the field, the researcher asked
+student G13-D why he participated in recording in this way (showing up in the video), he
+said G13-A (Reflection leader) asked him to take part in recording, without student G13-
+A’s invitation/request, he would not do it.
+
+Speaker: explanatory speaker and assisting speaker
+
+When all the students cooperate in recording and all of them speak in the video, there is
+often one student who speaks more than the other ones, while the other student speaks to
+complement the information. Students of group 12 cooperated in the videos in this manner.
+One held the sketch and explained, and the other held the camera (refer to Fig. 9). They co-
+explain but G12-B (the boy on the right side) talked more.
+   In the extract from group 13, when the explanatory speaker was focusing on talking
+about the design feature, the assisting speaker was asking questions to facilitate the major
+speaker to talk further. In this sense, regarding these two roles, “explanatory” or “assist-
+ing” are employed to illustrate the functions regarding giving a verbal explanation, not the
+importance of the role.
+   Operator describes the role of who contributes physically to creating reflection videos.
+To optimize their reflection video recording, in some groups, one student took on the role
+of operator. He or she may help the explanatory speaker to operate the tool such as hold-
+ing the camera, pressing the start button, and helping organize the sketches to show the
+dynamic of their thinking. The group member improvised appropriate actions to fit the vis-
+ualized guidance overlaid on the screen. Although the operator does not speak during the
+video recording process, their non-verbal actions show their contributions. For instance,
+when group 4 record a certain video, one student took on the role of explanatory speaker,
+the other took on the role of operator, and she helped to press the start button (refer to
+Table 11).
+   Participant For some groups, the video is mainly recorded by one student. The rest of
+the group might be busy with the design work. They show up in the video but would not
+contribute information explicitly. The other situation is that the students take turns record-
+ing videos, to show it is their group reflection, they simply capture the member’s face or
+introduce the group member briefly. As shown in the extract from Group 11, Mary took
+
+
+Fig. 9   In Group 12, the left boy
+(G12-A) took the role of major
+speaker, and the right boy (G12-
+B) took the role of operator and
+normal speaker
+
+
+
+
+
+                                           1 3
+
+===== PAGE 28 =====
+334                                                                                                        Z. Zhang et al.
+
+Table 11   A video from group 4, phase CAD
+Time          Student ID       Transcripts                                              Role-playing
+
+1”           Group 4-A       (one student pressed the recording button) GO!            Operator
+2 s” 21”      Group 4-B       (change to the other student) well our idea, a ladybug,      Speaker
+                              and this is the head of a ladybug, and the wings are of a
+                                 ladybug, and the body has the color of butterfly wings. It
+                             becomes very colorful
+
+
+Table 12   A video from group 11, CAD phase
+Time           Student ID        Transcripts                             Role-playing
+
+1”           Group 11-A     Mary is working on our design          Explanatory Speaker (leader)
+16”          Group 11-A    We just made our design, so we have
+                            made bb-8. we did not really have
+                                   anything unexpected, we thought
+                                        that would come, but we did not
+                            know how, so we want to let him roll
+                                         like that. and then that, tall boy (the
+                                         assistant) from a different class helped
+                                  us with that
+50″-1′18”      Group 11-A     And now we know how we are going    Mary (Group 11-B) was
+                                       to do it. Mary is constantly new with     playing the role of Par-
+                                  “Tinkercad” (the software for 3d          ticipant
+                                   modeling). Yes, never mind
+
+
+on the role of a participant; the major speaker was introducing what task Mary was doing
+(Table 12).
+   After clarifying the actions and the roles that emerged in the videos, two types of reflec-
+tion videos can be differentiated. They were caused by two types of collaboration strategies
+which were employed by a group of students to cope with the reflection task in a collabora-
+tive Design-based learning setting. Some groups of students took turns taking charge of
+recording videos. We name this kind of video shared reflection to represent the reflection
+videos in which only one student takes charge of making the group’s videos. It seems like
+the video is an individual one, but it is the division of labor among them. For a group of
+students, this result turns out to be the consensus decision regarding recording reflection
+videos. Their reflection videos present reflections of the groups. The role-playing showed
+that only one type of role emerged in shared reflection videos (refer to Table 13).
+  The other groups of students cooperated in recording reflection videos and developed
+different functional roles for recording. Collaborative reflection refers to multiple mem-
+bers’ participation in making one reflection video. Cooperation is built on team mem-
+bers’ mutual engagement and their awareness of each other’s goals and progress regarding
+the shared task (Järvelä & Hadwin, 2013). We contend that our supporting approach can
+support the standards for a team member to check the goals and progress. The interac-
+tion between group members is mediated by the technology and it shapes the role-playing
+during the reflection recording process (refer to Table 13). The integrated table (refer to
+Table 13) gives an overview of how students collaborate in completing reflection tasks in
+different phases of a Design-based learning process. In the research phase, groups 2, 6, 7,
+
+1 3
+
+===== PAGE 29 =====
+Supporting and understanding students’ collaborative…                                          335
+
+Table 13   Overview of group role-playing in different DBL phases. (Note: (-) means the other group mem-
+ber has not been shown in this video. The highlighted parts represent the videos are shared reflection vid-
+eos)
+Group no        Research          Ideation         CAD                      Fabrication
+
+Group 1         Operator          Speaker              Speaker                 Speaker
+                 Operator          Operator              Operator                       (-)
+Group 2         Speaker          Speaker               Operator                Speaker
+                      (-)                     (-)                   Speaker                        (-)
+Group 3         Speaker          Speaker              Speaker                 Speaker
+                      (-)                  Participant                (-)                              (-)
+Group 4         Speaker          Speaker              Speaker                 Speaker
+                 Operator             (-)                     Operator + speaker           (-)
+Group 5            (-)               Speaker              Speaker                 Speaker
+                                   Operator              Operator                 Operator
+Group 6         Speaker          Speaker              Speaker                        (-)
+                      (-)               Speaker               Operator
+Group 7         Speaker          Speaker              Speaker                 Speaker
+                      (-)                Operator                Participant               Operator
+Group 9         Operator          Speaker              Speaker                 Speaker
+                      (-)                     (-)                          (-)                              (-)
+Group 10        Operator          Speaker              Speaker                 Speaker
+                      (-)                     (-)                          (-)                              (-)
+Group 11        Speaker          Leader Speaker        Speaker                 Speaker
+                   Participant        Speaker                 Participant                    (-)
+Group 12        Speaker              (-)                   Speaker                 Speaker
+                      (-)                                     Speaker                    Participant
+Group 13        Speaker          Leader               Speaker                  Leader + Speaker
+                      (-)               Speaker                    (-)                          Participant
+                                       Participant
+
+
+9, 10, 12, and 13 created shared reflection videos. In the fabrication phase, groups 1, 2, 3,
+4, 9, 10, and 11 created shared reflection videos.
+  As we can see in Table 13, only groups 9 and 10 stick to one type of reflection video.
+The other groups keep mixed styles throughout the whole design process. Based on our
+field observation, two factors affected students’ outcomes of creating shared reflection or
+collaborative reflection. they are (1) feature of design task; (2) group dynamic and related
+spatial arrangement. In the ideation phase and CAD modeling phase, most of the groups
+created collaborative reflection videos. The nature of the DBL tasks would affect the
+reflection recording. Overall, DBL is a collaborative process, but in different phases, the
+related learning tasks incline more individual or more collaborative work. Individual work
+and collaborative work sometimes will overlap ( Zhang, Markopoulos, Bekker, Paule-
+Ruíz, & Schüll, 2020). In this case, in the research phase, the task such as mind-mapping
+is more individual, and the videos created tended to be shared reflection videos (refer to
+Table 13, research phase). When students moved to the other phases when the tasks are
+more collaborative, accordingly, the reflection videos tended to be collaborative reflection
+videos. Group dynamics and different spatial arrangements of participants might affect the
+
+                                           1 3
+
+===== PAGE 30 =====
+336                                                                                                        Z. Zhang et al.
+
+collaborative reflection around using a technology tool (Prilla, 2014). When people are
+working in different spaces, they work for their team but are spatially separated. Before
+the fabrication phase, student groups were sitting around a table. When the learning pro-
+ceeded to the fabrication phase, students divided their labor and went to different areas of
+the classroom to use the related tools to make. The student groups created more shared
+reflection videos (refer to Table 13, Fabrication phase).
+
+Characteristic 4. Descriptive design elaboration and showing
+
+The last characteristic is descriptive design elaboration and showing
+
+It includes two important clusters (1) share positive feelings, and (2) elaborate on the
+design details (refer to Table 14). Through constant comparison between the codes that
+emerged in qualified videos and the unqualified videos, we find that children purely
+descriptively revisit their ideas or design in the unqualified videos. In those qualified vid-
+eos, children record their reflections by referring to the guidance to analyze their ideas or
+organize their recordings. In this way, children were able to be aware of what they needed
+to think; how they can decompose their current idea and design; and analyze how they
+come to the current ideas or designs. In the unqualified videos, children have not responded
+to the given guidance. What they have shown can be categorized as the descriptive level
+of reflection (Fleck & Fitzpatrick, 2010). In practice, without scaffolding, most of the stu-
+dents’ externalized reflection would spontaneously fit this descriptive level of reflection.
+When students did not respond to the guidance, they also tend to show positive feelings
+about their ideas, design, and collaboration. That is aligned with what other researchers
+have found that children doing design projects, sometimes they are too optimistic about
+their work ( Crismond & Adams, 2012). Even though, the students who record qualified
+videos also have this characteristic in their videos. The difference between them is the stu-
+dents who have not responded to the guidance have this characteristic only.
+
+
+Discussion
+
+Video for reflection has been used in varied learning contexts as a medium for retaining
+learning experiences (Hook et al., 2013; Leinonen et al., 2016; Smith, 2016). For inform-
+ing design and practice, we designed a research prototype named ReflectionSchema and
+conducted a long-term trial of the tool in an authentic design-based learning classroom.
+We present a framework and detailed analysis regarding the actions, roles, recording pref-
+erence/style, and strategies employed that give an image of what was happening while
+students were using the tool. Our study can help other researchers get inspiration on how
+to design for supporting reflection-in-action in similar learning environments and gain an
+understanding of the collaborative process of externalizing reflection-in-action through
+recording videos.
+  Our study explored a new video-based reflection-in-action support technique in the col-
+laborative design-based learning setting. For capturing reflection-in-action, written reflec-
+tion may alienate young students with limited language skills (Coulson & Harvey, 2013)
+since written reflection requires fine language skills. Making videos is a more inclusive
+way for engaging students. When students work collaboratively, it is essential to scaffold
+groups of students’ shared understanding of a specific learning task (Järvelä & Hadwin,
+
+1 3
+
+===== PAGE 31 =====
+Supporting and understanding students’ collaborative…                                          337
+
+Table 14   Conceptualizing process of descriptive design elaboration and showing
+Theoretical coding   Axial coding     Open codes            Example
+
+Descriptive design   Share positive      Brief positive evaluation  “finally I am happy with the end result.
+  elaboration and       feelings            of an idea/design/col-     that was it” -Group 12
+  showing                                 laboration
+                                        Self-confidence toward   “we can work very well together”
+                                           the idea/design/col-      -Group 13
+                                           laboration
+                     Elaborate on the   Update a new idea/      “he has four pretty thick strong legs, he
+                      design details      design                 can run away quite quickly” -Group 6
+                                      Explain the idea/design
+
+
+2013; Volet, Summers, & Thurman, 2009). ReflectionSchema presents a way of construct-
+ing the shared understanding of the reflection-in-action task during the Design-based
+learning process. ReflectionSchema delivers visual guidance periodically in  different
+design-based learning phases. We explored the function of visual guidance as a means for
+scaffolding students in externalizing reflection-in-action in a collaborative setting. The effi-
+cacy of supporting collaborative reflection-in-action was proved. Students were able to stop
+and record reflection-in-action videos when they were immersed in making. Most of the
+videos were recorded collaboratively in a qualified manner. Prompts in text form are the
+traditional ways of supporting students to externalize their internal thinking through lan-
+guage by giving a cognitive focus (Davis, 2003; Thillmann et al., 2009). Visual guidance
+gave a group of students not only the cognitive focus at right time to promote articulation,
+but also the operational level of support which helps students interact with their design
+representations while they are recording. This is the extension of the current prompt tech-
+nique. Especially for younger students who are engaged in design-based learning, the new
+technique improves the interaction between thinking and making when children external-
+ized their reflection, since supporting the interplay between thinking and making is one of
+the supporting goals in the design-based learning (de Vries, 2006; Schoffelen et al., 2013).
+Our design addressed and materialized the spirit of this scaffolding goal for fostering
+reflective thinking in a design-based setting. As most of the making are visual activities, a
+simple text-based prompt is hard to reach the goal. In examining students’ reflection vid-
+eos, we observed that students developed interactive ways to record their reflections during
+the learning process that can show the externalized interplay between thinking and making.
+   In this study, we used a research-through-design method to conduct the exploration and
+generate design knowledge. ReflectionSchema is not only a designed tool but also a means
+of obtaining data. It is similar to the think-out-loud protocol. However, the thinking-out-
+loud is a data collection means to assess students’ cognition process (Kelley et al., 2015),
+without specific guidance on what to reflect on. As for ReflectionSchema, what research-
+ers are concerned about is how students’ thinking was explicitly supported by the reflec-
+tion guidance of the tool, and what they externalized in their reflection videos. Thereby,
+researchers can generalize knowledge regarding how to design reflection-in-action sup-
+port in a similar learning setting. Based on students-created videos, our study constructed
+a framework that contains four characteristics for understanding the collaborative process
+of externalizing reflection-in-action through video recording. This framework can help
+designers or educational practitioners to gain an additional understanding of how stu-
+dents aged 12–13 think when they are engaged in design-based learning. To inform design
+
+                                           1 3
+
+===== PAGE 32 =====
+338                                                                                                        Z. Zhang et al.
+
+practice, we discussed why the designed tool can support continual reflection-in-action and
+the implication for designing in the collaborative learning environment with the knowledge
+transfer from our built framework.
+
+
+Implications for design researchers
+
+Regarding characteristic 1. In our study, video recording drives the emergence of audi-
+ence awareness that somehow motivates students (aged 12–13) to optimize their video
+recordings. Audience awareness means students record with the perception that there will
+be viewers who watch their videos. Students act differently in front of a camera (Lamberty
+& Kolodner, 2005) to behave in a good manner. They record in a way of interacting with
+their artifacts and telling someone about what they are thinking. We contend that audi-
+ence awareness, to a certain extent, can motivate students in externalizing reflection-in-
+action in a more structured and contextualized way. Using video as the media for capturing
+reflection has the intrinsic feature of arousing students’ audience awareness. Meanwhile,
+characteristic 4 shows that students tend to highlight the positive aspects of their design,
+for example, their good collaboration. Therefore, we can see that by using video as the
+media for capturing reflection, students are hard to be critical or honest with their real per-
+formance. We suggest that the audience definition should also need to be built as part of
+the shared understanding in preparing students to reflect in action. It would help students
+develop an appropriate style of externalization.
+
+
+Regarding characteristic 2
+
+In a learning setting with a high degree of student autonomy, extensive scaffolding and
+guidance are required to facilitate young student learning (Hmelo-Silver et  al., 2007).
+ReflectionSchema is based on an argument that to make a mechanism works appropriately
+in our setting, it should support the shared understanding of a reflection-in-action task.
+ReflectionSchema can help build a shared understanding of the reflection-in-action tasks.
+Students know that they need to respond to the given guidance periodically, even though
+there are no mandatory acts given by the teacher. The reflective question was further rein-
+forced by a visual structure. From the perspective of promoting create the content of the
+videos, a group of students does not need to spend too much effort on negotiating how
+to record. It gives explicit cognitive prompts to challenge students’ emergence of an idea
+and decision-making. The visual guidance is designed to invite students to actively involve
+their artifacts while recording their verbal reflections. In related work with general guid-
+ance such as “what we have done”, students tend to present shallow reflections (Leinonen
+et al., 2016). In our study, with a carefully designed scaffolding mechanism of Reflection-
+Schema, most of the students would have more chances to present analysis explanations
+of their ideas or actions that interact with their artifacts in situ. Students who ignore the
+given guidance in those unqualified videos highlighted the positive aspects of collabora-
+tion and elaborated on their design details only when they record their reflections peri-
+odically. Students will develop their capabilities along with their continuous learning. Even
+though related work thought it might limit students’ thinking (Davis, 2003), we contend
+when students have little experience with design-based learning, extensive scaffolding is
+still required for students to reflect appropriately so that they can have more chances to
+approach the designer’s way of thinking. The scaffolding can be faded when students are
+
+1 3
+
+===== PAGE 33 =====
+Supporting and understanding students’ collaborative…                                          339
+
+getting more mature. A more flexible scripting platform is required for teachers to further
+explore the structure of the reflection-in-action guidance in practice.
+   Visual guidance as a way of explicit guidance representation can benefit the collabora-
+tion in reflection-in-action. As dyads are doing a task, one of them is the doer, and the other
+one keeps monitoring. Monitoring is based on external criteria. When a group of students
+reacts to a learning task, each student’s internal criteria will gradually get external through
+the negotiation between students (Shirouzu et al., 2002). In our study, a group of students
+reflected with the ReflectionSchema interface, its clear visual structure can help them
+develop external criteria for monitoring the way of recording. These perceived standards
+were also used by students themselves for monitoring group members’ actions (Järvelä &
+Hadwin, 2013). The standards led students to show actions of detecting the deviation com-
+pared with their perceived standards while recording and rectifying their recording actions.
+In the line-by-line coding, we can see several correcting actions emerge in the children’s
+video. The screen plays the role of public space to present visual guidance while enabling
+group members’ monitoring based on their perceived standards from the visual guidance.
+   Characteristic 2 of our framework demonstrates how students adaptively respond to
+the given guidance based on their built shared understanding of coping with the reflec-
+tion-in-action tasks. Students respond to the reflection guidance by developing visual or
+verbal strategies. Students may have different attitudes toward a camera. Some students
+may feel uncomfortable when talking in front of a camera; others may feel free and happy
+to talk. These different attitudes will lead to different preferences for creating reflection
+videos. This study indicates that students have different preferences towards externalizing
+reflection through recording video. Even though a tool defines the way of externalization,
+designers also need to respect and enable students to fit their ways of externalizing in the
+designed reflection support mechanism. When designing reflection guidance to help young
+students externalize their inner thinking, one needs to consider the reflection purpose and
+turn it into explicit guidance in a way that matches the feature of the media for capturing
+reflection-in-action.
+
+Regarding characteristic 3
+
+The tangible part also plays important role in initiating collaboration. The tool physically
+gives the joint reflection task space and enables collaboration in externalizing reflection-
+in-action. The physical parts of the tool contain a screen, a camera, and a button. From
+the characteristic of informal role-playing, we observed the button and the camera initi-
+ate students into role-playing. The collaborative reflection has formed accordingly. What
+kind of function the tangible part can play depends on the design of the tangible parts of
+the tool. Specifically, it is depended on how many buttons or cameras are available for a
+group of students. While in our setting, each device contains only one recording button and
+one camera, so that the tangible part of the tool can split the labor of students and initiate
+the role-playing in creating interactive reflection-in-action videos. In a related study, every
+student who had a button to capture a noteworthy moment found that the tangible part, the
+button, of the system played a functional role in the stimulus (Hook et al., 2013). For the
+kind of role should a student play in recording reflection, the tangible parts of the tool can
+determine role-playing in a collaborative design-based learning classroom. For designing
+video tools for supporting reflection, the function of the tool’s tangible parts should be
+considered.
+
+
+                                           1 3
+
+===== PAGE 34 =====
+340                                                                                                        Z. Zhang et al.
+
+Regarding characteristic 4
+
+Externalizing reflection needs an open mind and a safe environment. In characteristic 4,
+we present that students tend to pose their positive aspects in the videos. Being critical and
+honest for reflection is often hard for students aged 12–13 (Crismond & Adams, 2012).
+Future studies may focus on how to design to help students build an environment where
+students may feel at ease to present negative aspects of their learning in the externalized
+reflection.
+   Additionally, we hope children can create decent videos which can be viewed properly.
+What also consider that a tool cannot be a total interruption to the making process. This
+spirit of designing is consistent with the concept of “peripheral technology” (Kimbell,
+2016). We keep children’s operation on the tool simple with affordance. The tool draws
+students’ attention when the predetermined reflection moment appears on their devices.
+When they finish the recording, the guidance disappears, releasing students’ attention back
+to their design activities.
+   Currently, ReflectionSchema is a research prototype, the interfaces in this study are
+created through a long-term co-design with the teacher who takes part in this study. A
+more integrated platform would be the next step to connect the teacher’s role of scaffold-
+ing reflection-in-action. We hope it can inspire the teacher to adjust their traditional way
+of supporting reflection from giving reflective questions to giving visualized recording
+interfaces.
+  We want to illuminate that the cases of this study are within one local school. The class
+setting did not have a set of mature standards which enable students to evaluate their work
+against the given standards. This is the limit regarding the transfer of our results. Even
+though, we still believe, with this thick description, this study can still be a typical case for
+constructing the understanding.
+
+
+Conclusion
+
+Engaging students in reflection-in-action can enhance their awareness of what they are
+doing and improve their learning outcomes. With the intervention of our tool, a group of
+students can have some micro breaks with guidance to help them reflect and manipulate
+related design representations based on a shared understanding of the reflection guidance.
+Our study suggests a new reflection support technique in learning environments such as
+design-based learning where students create multiple design representations. Giving visual
+guidance to accompany the video recording system can provide a joint reflection-in-action
+space during the learning process. We embodied the scaffolding techniques in a tool named
+ReflectionSchema, evaluated its efficacy, and gave a detailed analysis of students’ collabo-
+rative actions taken in situ. Furthermore, we offer explicit and thick descriptions regarding
+how the tool supports reflection-in-action. The tool can affect the perception towards the
+reflection tasks: students have audience awareness, and they tend to record with the stand-
+ards perceived from the given reflection tasks. The tool can promote students to develop
+visually structured or narratively structured ways to record reflection and document the
+learning process. Initiated by the tool, students played varied roles when they collaborated
+in recording reflections, and the role-playing was informal and dynamic. As the outcome
+of their collaborative reflection, they created shared reflection videos (where one student
+
+1 3
+
+===== PAGE 35 =====
+Supporting and understanding students’ collaborative…                                          341
+
+presents the group’s work) or collaborative reflection videos (where multiple students pre-
+sent the group’s work) to represent their group’s reflection-in-action. Structured documen-
+tation is beneficial to reflection and learning in collaborative learning environments like
+DBL with students of varied abilities or preferences of articulation. Based on this analysis,
+we present a framework that unfolds the collaborative process of externalizing reflection-
+in-action in a design-based learning setting. It demonstrates the actions, roles, recording
+preferences, and strategies employed by students who were using the tool. The framework
+can help researchers and teachers to understand the strategies for reflection tasks initiated
+by a video recording tool.
+   Ethical considerations
+  The authors declare to have no conflict of interest. We have conducted the study accord-
+ing to the ethical procedures of our organization. The teachers, students, and guardians
+were given information about the project.
+  The setup of the study was discussed with the teacher. The teacher was present during
+the activities of the children. Written consent was organized through the teacher, according
+to the rules of the participating school.
+   Students who did not want to participate were positioned outside the view of the camera.
+
+Open Access  This article is licensed under a Creative Commons Attribution 4.0 International License,
+which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long
+as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Com-
+mons licence, and indicate if changes were made. The images or other third party material in this article
+are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the
+material. If material is not included in the article’s Creative Commons licence and your intended use is not
+permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly
+from the copyright holder. To view a copy of this licence, visit http://​creat​iveco​mmons.​org/​licen​ses/​by/4.​0/.
+
+
+References
+
+Berthold, K., Nückles, M., & Renkl, A. (2007). Do learning protocols support learning strategies and out-
+    comes? The role of cognitive and metacognitive prompts. Learning and Instruction, 17(5), 564–577.
+      https://​doi.​org/​10.​1016/j.​learn​instr​uc.​2007.​09.​007
+Bittner, E. A. C., & Leimeister, J. M. (2013). Why shared understanding matters - Engineering a collabora-
+     tion process for shared understanding to improve collaboration effectiveness in heterogeneous teams.
+     In Proceedings of the Annual Hawaii International Conference on System Sciences, pp. 106–114.
+      https://​doi.​org/​10.​1109/​HICSS.​2013.​608
+Böhm, A., Glaser, B., & Strauss, A. (2004). Theoretical Coding: Text Analysis in Grounded Theory. A Com-
+     panion to Qualitative Research, (January 2004), pp. 270–275.
+Boud, D. (2001). Using journal writing to enhance reflective practice. New Directions for Adult and Con-
+     tinuing Education, 2001(90), 9. https://​doi.​org/​10.​1002/​ace.​16
+Boud, D., Keogh, R., & Walker, D. (1996). Promoting reflection in learning: A model. Boundaries of Adult
+     Learning, 1, 32–56.
+Brown, J. S., Collins, A., & Duguid, P. (1989). Situated cognition and the culture of learning. Educational
+     Researcher, 18(1), 32–42.
+Chu, S. L., Garcia, B., & Nam, B. (2019). Understanding context in children’s use of Smartwatches for
+     everyday science reflections Full Paper. Proceedings of the 18th ACM International Conference on
+     Interaction Design and Children, IDC 2019, 83–93. https://​doi.​org/​10.​1145/​33119​27.​33231​44
+Coşkun, T. K., & Deniz, G. F. (2021). The contribution of 3D computer modeling education to twenty-first
+     century skills: self-assessment of secondary school students. International Journal of Technology and
+     Design Education. https://​doi.​org/​10.​1007/​s10798-​021-​09660-y
+Coulson, D., & Harvey, M. (2013). Scaffolding student reflection for experience-based learning: A frame-
+     work. Teaching in Higher Education, 18(4), 401–413. https://​doi.​org/​10.​1080/​13562​517.​2012.​752726
+
+                                           1 3
+
+===== PAGE 36 =====
+342                                                                                                        Z. Zhang et al.
+
+Crismond, D. P., & Adams, R. S. (2012). The informed design teaching and learning matrix. Journal of
+     Engineering Education, 101(4), 738–797. https://​doi.​org/​10.​1002/j.​2168-​9830.​2012.​tb011​27.x
+Davis, E. A. (2003). Prompting middle school science students for productive reflection: Generic and
+     directed prompts. Journal of the Learning Sciences, 12(1), 91–142. https://​doi.​org/​10.​1207/​S1532​
+     7809J​LS1201_4
+de Vries, E. (2006). Students’ construction of external representations in design-based learning situations.
+     Learning and Instruction, 16(3), 213–227. https://​doi.​org/​10.​1016/j.​learn​instr​uc.​2006.​03.​006
+Dix, A., & Gongora, L. (2011). Externalisation and design. Proceedings of the DESIRE’11 Conference on
+     Creativity and Innovation in Design, pp. 31–42. https://​doi.​org/​10.​1145/​20792​16.​20792​20
+Fleck, R., & Fitzpatrick, G. (2010). Reflecting on reflection: Framing a design landscape. ACM Interna-
+     tional Conference Proceeding Series.
+Glaser, B. G., Strauss, A. L., & Strutzel, E. (1968). The discovery of grounded theory; strategies for qualita-
+      tive research. Nursing Research, 17(4), 364.
+Gómez Puente, S. M., Van Eijck, M., & Jochems, W. (2013). A sampled literature review of design-based
+     learning approaches: A search for key characteristics. International Journal of Technology and Design
+     Education, 23(3), 717–732. https://​doi.​org/​10.​1007/​s10798-​012-​9212-x
+Gourlet, P., Eveillard, L., & Dervieux, F. (2016a). The Research Diary, supporting pupils’ reflective think-
+     ing during design activities. In Proceedings of IDC 2016a - The 15th International Conference on
+     Interaction Design and Children (pp. 206–217). https://​doi.​org/​10.​1145/​29306​74.​29307​02
+Gourlet, Pauline, Garcin, S., Eveillard, L., & Dervieux, F. (2016b). DoDoc: A Composite interface that sup-
+     ports reflection-in-action. TEI 2016b - Proceedings of the 10th Anniversary Conference on Tangible
+    Embedded and Embodied Interaction, 316–323. https://​doi.​org/​10.​1145/​28394​62.​28395​06
+Herrmann, T., & Jahnke, I. (2012). Encyclopedia of the Sciences of Learning. Encyclopedia of the Sciences
+     of Learning. https://​doi.​org/​10.​1007/​978-1-​4419-​1428-6
+Hmelo-Silver, C. E., Duncan, R. G., & Chinn, C. A. (2007). Scaffolding and achievement in problem-based
+    and inquiry learning: A response to Kirschner, Sweller, and Clark (2006). Educational Psychologist,
+     42(2), 99–107. https://​doi.​org/​10.​1080/​00461​52070​12633​68
+Hook, J., Hjermitslev, T., Iversen, O. S., & Olivier, P. (2013). Human-Computer Interaction - {INTER-
+   ACT} 2013 - 14th {IFIP} {TC} 13 International Conference, Cape Town, South Africa, September
+     2–6, 2013, Proceedings, Part {II}, 8118(September). https://​doi.​org/​10.​1007/​978-3-​642-​40480-1
+Huybrechts, L., Schoffelen, J., Schepers, S., & Braspenning, L. (2012). Design Representations. Con-
+     necting, Making and Reflecting in Design Research Education.
+Iiskala, T., Vauras, M., Lehtinen, E., & Salonen, P. (2011). Socially shared metacognition of dyads of
+     pupils in collaborative mathematical problem-solving processes. Learning and Instruction, 21(3),
+    379–393. https://​doi.​org/​10.​1016/j.​learn​instr​uc.​2010.​05.​002
+Järvelä, S., & Hadwin, A. F. (2013). New Frontiers: Regulating Learning in CSCL. Educational Psy-
+     chologist, 48(1), 25–39. https://​doi.​org/​10.​1080/​00461​520.​2012.​748006
+Jermann, P., & Dillenbourg, P. (2008). Group mirrors to support interaction regulation in collaborative
+    problem solving. Computers and Education, 51(1), 279–296. https://​doi.​org/​10.​1016/j.​compe​du.​
+     2007.​05.​012
+Kelley, T. R., Capobianco, B. M., & Kaluf, K. J. (2015). Concurrent think-aloud protocols to assess
+     elementary design students. International Journal of Technology and Design Education, 25(4),
+    521–540. https://​doi.​org/​10.​1007/​s10798-​014-​9291-y
+Kimbell, R. (2016). e-scape underpin INTERNATIONAL JOURNAL OF DESIGN AND TECHNOL-
+   OGY EDUCATION SPECIAL EDITION : e-scape Introduction : the origins and underpinning
+     principles of e-scape, (August).
+Kolb, D. A. (2014). Experiential learning: Experience as the source of learning and development. FT
+     press.
+Kyza, E. A. (2004). Understanding reflection-in-action: An investigation into middle-school students’
+      reflective inquiry practices in science and the role that software scaffolding can play. Northwestern
+     University.
+Lamberty, K. K., & Kolodner, J. L. (2005). Camera talk. Proceedings of the SIGCHI Conference on
+    Human Factors in Computing Systems - CHI ’05, 839. https://​doi.​org/​10.​1145/​10549​72.​10550​90
+Leinonen, T., Keune, A., Veermans, M., & Toikkanen, T. (2016). Mobile apps for reflection in learning:
+   A design research in K-12 education. British Journal of Educational Technology, 47(1), 184–202.
+      https://​doi.​org/​10.​1111/​bjet.​12224
+Lin, X., Hmelo, C., Kinzer, C. K., & Secules, T. J. (1999). Designing technology to support reflection.
+     Educational Technology Research and Development, 47(3), 43–62. https://​doi.​org/​10.​1007/​BF022​
+    99633
+
+
+1 3
+
+===== PAGE 37 =====
+Supporting and understanding students’ collaborative…                                          343
+
+Lousberg, L., Rooij, R., Jansen, S., van Dooren, E., Heintz, J., & van der Zaag, E. (2020). Reflection
+     in design education. International Journal of Technology and Design Education, 30(5), 885–897.
+      https://​doi.​org/​10.​1007/​s10798-​019-​09532-6
+Mehalik, M. M., Doppelt, Y., & Schuun, C. D. (2008). Middle-school science through design-based learn-
+     ing versus scripted inquiry: Better overall science concept learning and equity gap reduction. Journal
+     of Engineering Education, 97(1), 71–85. https://​doi.​org/​10.​1002/j.​2168-​9830.​2008.​tb009​55.x
+Prilla, M. (2014). User and Group Behavior in Computer Support for Collaborative Reflection in Prac-
+      tice: An Explorative Data Analysis. In C. Rossitto, L. Ciolfi, D. Martin, & B. Conein (Eds.), COOP
+    2014 - Proceedings of the 11th International Conference on the Design of Cooperative Systems,
+    27–30 May 2014, Nice (France) (pp. 293–309). Cham: Springer International Publishing.
+Prilla, M., Nolte, A., Blunk, O., Liedtke, D., & Renner, B. (2015). Analyzing Collaborative Reflection
+     Support: A Content Analysis Approach. ECSCW 2015: Proceedings of the 14th European Confer-
+     ence on Computer Supported Cooperative Work, 19–23 September 2015, Oslo, Norway, 1, 123–
+     142. https://​doi.​org/​10.​1007/​978-3-​319-​20499-4_7
+Roschelle, J., & Teasley, S. (1995). Computer Supported Collaborative Learning. Computer Supported
+     Collaborative Learning. https://​doi.​org/​10.​1007/​978-3-​642-​85098-1
+Schoffelen, J., Schepers, S., Huybrechts, L., & Braspenning, L. (2013). Making design representations as
+      catalysts for reflective making in a collaborative design research process. FormAkademisk - Forskn-
+      ingstidsskrift for Design Og Designdidaktikk, 6(2), 1–14. https://​doi.​org/​10.​7577/​forma​kadem​isk.​711
+Schön, D. A. (1987). Educating the reflective practitioner. Jossey-Bass San Francisco.
+Schön, D. A. (2017). The reflective practitioner: How professionals think in action. Routledge.
+Shirouzu, H., Miyake, N., & Masukawa, H. (2002). Cognitively active externalization for situated reflec-
+      tion. Cognitive Science, 26(4), 469–501. https://​doi.​org/​10.​1207/​s1551​6709c​og2604_3
+Smith, S. (2016). (Re) counting meaningful learning experiences: Using student-created reflective vid-
+     eos to make invisible learning visible during PjBL experiences. Interdisciplinary Journal of Prob-
+    lem-Based Learning, 10(1), 4.
+Straus, A., & Corbin, J. (1990). Basics of qualitative research: Grounded theory procedures and tech-
+     niques. Sage.
+Thillmann, H., Künsting, J., Wirth, J., & Leutner, D. (2009). Is it merely a question of “what” to prompt or
+     also “when” to prompt? The role of point of presentation time of prompts in self-regulated learning.
+      Zeitschrift Für Pädagogische Psychologie, 23(2), 105–115.
+Volet, S., Summers, M., & Thurman, J. (2009). High-level co-regulation in collaborative learning: How
+     does it emerge and how is it sustained? Learning and Instruction, 19, 128–143. https://​doi.​org/​10.​
+      1016/j.​learn​instr​uc.​2008.​03.​001
+Xudong, J., & Liang, H. (2020). The" jungle", history, and approach road of the grounded theory. Science
+     Research Management, 41(5), 151.
+Zhang, F., Markopoulos, P., Bekker, T., Paule-Ruíz, M., & Schüll, M. (2020a). Understanding design-based
+     learning context and the associated emotional experience. International Journal of Technology and
+     Design Education. Springer. https://​doi.​org/​10.​1007/​s10798-​020-​09630-w
+Zhang, J. (1996). of Relational Information Displays. International Journal, 1–16.
+Zhang, Z., Bekker, T., Skovbjerg, H. M., & Markopoulos, P. (2020b). ReflectionScope: Scaffold students
+     to articulate reflection during design-based learning processes. In CSEDU 2020b - Proceedings of the
+     12th International Conference on Computer Supported Education (Vol. 2, pp. 169–179).
+Zimmerman, J., Forlizzi, J., & Evenson, S. (2007). Research through design as a method for interaction
+     design research in HCI. In Proceedings of the SIGCHI conference on Human factors in computing
+     systems (pp. 493–502). ACM.
+
+Publisher’s Note  Springer Nature remains neutral with regard to jurisdictional claims in published maps and
+institutional affiliations.
+
+
+
+
+
+                                           1 3

@@ -22,8 +22,9 @@ LICENCES = {
  "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/",
  "CC BY-NC-ND 4.0": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
 }
-# These IDs and the matching first-page licence notices were manually checked
-# against the actual local PDF on 2026-11-06. Do not auto-approve from OA URLs.
+# These IDs and their exact licence assertions were reviewed against the actual
+# local PDFs on 2026-11-06. They may appear on later pages; never auto-approve
+# from Open Access metadata, or merely from a generic licence mentioned in citations.
 APPROVED = {
  "W2126722450": ("CC BY 2.0", "Creative Commons Attribution License"),
  "W2739167865": ("CC BY 4.0", "CC BY 4.0"),
@@ -36,6 +37,9 @@ APPROVED = {
  "W2986925238": ("CC BY-NC 4.0", "CC BY-NC 4.0"),
  "W2995635751": ("CC BY-NC 4.0", "CC BY-NC 4.0"),
  "W4307994144": ("CC BY-NC-ND 4.0", "CC BY-NC-ND 4.0"),
+ "W4283392104": ("CC BY 4.0", "This article is licensed under a Creative Commons Attribution 4.0 International License"),
+ "W4321436228": ("CC BY 4.0", "This article is licensed under a Creative Commons Attribution 4.0 International License"),
+ "W4322492190": ("CC BY 4.0", "This article is licensed under a Creative Commons Attribution 4.0 International License"),
 }
 def main():
  ap = argparse.ArgumentParser()
@@ -66,12 +70,12 @@ def main():
   authors=[r[0] for r in db.execute("SELECT DISTINCT author_name FROM authorships WHERE work_id=? ORDER BY CASE author_position WHEN 'first' THEN 0 WHEN 'middle' THEN 1 ELSE 2 END, rowid",(id,))]
   with fitz.open(original) as doc:
    if len(doc)==0: raise SystemExit("EMPTY_PDF: "+id)
-   beginning=" ".join(doc[i].get_text() for i in range(min(3,len(doc))))
-   # Check first-pages license assertion, not merely a metadata "open access" flag.
-   if ' '.join(check.casefold().split()) not in ' '.join(beginning.casefold().split()): raise SystemExit("NO_DOCUMENT_LICENSE: "+id+" "+check)
-   if not re.search(r"\b(?:creative commons|cc[- ]by)\b|creativecommons[.]org/licenses/by/",beginning,re.I):
-    raise SystemExit("MISSING_RIGHTS_STATEMENT: "+id)
    pages = [page.get_text(sort=True) for page in doc]
+   license_text=" ".join(pages)
+   # Check the article-specific licence assertion across the actual PDF pages.
+   if ' '.join(check.casefold().split()) not in ' '.join(license_text.casefold().split()): raise SystemExit("NO_DOCUMENT_LICENSE: "+id+" "+check)
+   if not re.search(r"\b(?:creative commons|cc[- ]by)\b|creativecommons[.]org/licenses/by/",license_text,re.I):
+    raise SystemExit("MISSING_RIGHTS_STATEMENT: "+id)
    if sum(map(len,pages))<400: raise SystemExit("NO_EXTRACTABLE_TEXT: "+id)
   sha=hashlib.sha256(original.read_bytes()).hexdigest()
   pdf_path=Path("pdf")/(id+".pdf")
@@ -87,7 +91,7 @@ def main():
    "id":id,"title":record[2],"authors":authors,"year":record[3],
    "doi":record[1],"journal_or_source":record[4],"original_fulltext_url":record[5],
    "license":licence,"license_url":LICENCES[licence],
-   "rights_basis":"Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+   "rights_basis":"Explicit work-specific Creative Commons statement in original PDF, verified on first or later pages; reviewed 2026-11-06",
    "pdf":(pdf_path.as_posix()),"text":(text_path.as_posix() if text_path else None),
    "sha256":sha,"bytes":original.stat().st_size,
    "verification_status":"checked-document-licence","reviewed_on":"2026-11-06",
