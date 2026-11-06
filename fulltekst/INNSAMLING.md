@@ -1,47 +1,44 @@
-# PDF-innsamling
+# Hent tusenvis av PDF-ar
 
-**Mål:** Finn så mange lovleg tilgjengelege fulltekstar som mogleg. Bibliografisk identitet, lesetilgang og rett til vidarepublisering er tre ulike forhold.
+Korpuset har 7 354 registreringar. Hentekøen har 4 565 OA-lenkjer, der 1 707 ser ut som direkte PDF-adresser. Dette er **kandidatar**, ikkje ferdig nedlasta eller fagleg godkjende dokument. Dei 14 lisenskontrollerte PDF-ane i `fulltekst/` blir bevarte.
 
-Køen omfattar OpenAlex-postane og dei nordiske kjeldekandidatane. `results/pdf_henteko.csv` og `docs/data/pdf_status.json` blir genererte automatisk ved push. Køa er sortert slik at artiklar, direkte PDF-liknande OA-lenkjer og høg leserangering kjem først.
+## Start innsamlinga
 
-## Hent PDF-ar
+På Windows, frå repository-mappa:
 
-Køyr på ei datamaskin med internettilgang:
-
-```bash
-python hent_oa_pdf.py --download --limit 500 --lookup-openalex
+```powershell
+.\hent_tusen_pdfar.ps1 -Limit 8000
 ```
 
-For fleire lovlege OA-versjonar via Unpaywall:
+På Linux/macOS:
 
 ```bash
-python hent_oa_pdf.py --download --limit 8000 --lookup-openalex --email DI_EPOST
+bash hent_tusen_pdfar.sh
 ```
 
-Fortsett frå førre runde:
+Med Unpaywall (valfritt, krev ein ekte e-postadresse):
 
-```bash
-python hent_oa_pdf.py --download --limit 8000 --lookup-openalex --email DI_EPOST --retry-failed
+```powershell
+.\hent_tusen_pdfar.ps1 -Limit 8000 -Email "din.epost@ditt.domene"
 ```
 
-Skriptet sjekkar OA-lenkjer og valfrie Unpaywall/OpenAlex-lokasjonar, følgjer berre offentlege HTTPS-omdirigeringar, avgrensar filstorleik, sjekkar PDF-signatur, ventar mellom førespurnader og tek vare på framdrifta. Ved HTTP 401/403, betalingsmur, HTML i staden for PDF eller manglande tilgang blir dokumentet ikkje henta. Inga kringgåing av tilgangen.
+Skriptet hentar berre direkte tilgjengelege PDF-ar frå offentlege OA-lenkjer, arkiv og eventuelt OpenAlex/Unpaywall. Det gjenopptar samlinga, lagrar SHA-256 og stansar ved plassmangel eller API-grenser. Det prøver ikkje å omgå betalingsmurar.
 
-Nedlasta PDF-ar ligg i **`data/oa_fulltexts_private/pdf/`**, utanfor Git-historikken. Framdriftsfila `data/oa_fulltexts_private/progress.json` gjer vidareføring mogleg. Del ikkje private eller uklårt lisensierte filer gjennom repoet.
+**Kva du faktisk får:** PDF-filene blir lagra i `data/oa_fulltexts_private/pdf/` som private filer, med `progress.json` og ein etterkontrollert `pdf_local_index.csv` med tittel, DOI, forfattar, filsti, kjelde og checksum. Etter kvar køyring viser `pdf_archive_report.py` faktiske, kontrollerte PDF-filer på disk, ikkje berre nettlenkjer. Kjør `python pdf_archive_report.py --failed` for feila hentingar.
 
-Den offentlege søkekatalogen får berre bibliografiske metadata, kjeldelenkjer og status. Etter ei lokal innsamling kan du committe `docs/data/pdf_found.json` og `docs/data/pdf_status.json`, men ikkje dei private PDF-ane.
+For store samlingar bør du bruke ein eigen disk:
 
-## Offentleg arkivering av enkeltverk
-
-Dersom den konkrete PDF-en har eksplisitt, dokumentert løyve til vidarefordeling, undersøk lisens og rett dokumentversjon manuelt. Døme:
-
-```bash
-python publiser_lisensiert_pdf.py --id W1234567890 --license "CC BY 4.0" --evidence "CC BY 4.0, sida 1 i original-PDF" --confirm-rights
-python bygg_katalog.py
-python bygg_fulltekstsok.py
-python bygg_hovuddatabase.py
-python test_database.py
+```powershell
+$env:DESIGNTEORI_PDF_CACHE = "D:\\Forsking\\designteori-pdf"
+.\hent_tusen_pdfar.ps1 -MaxCacheGB 100 -MinFreeGB 10 -Limit 8000
 ```
 
-Dette kopierer berre éin kontrollert PDF til `fulltekst/pdf/`, oppdaterer manifestet med SHA-256 og endrar **ikkje** dei tidlegare godkjende filene. Prosessen krev aktiv stadfesting av løyvet. Ei OA-lenkje aleine gjev ikkje lov til å leggje fullteksten i det offentlege arkivet.
+Med standardinnstillingane stoppar innsamlinga ved 30 GB i cache eller når det er mindre enn 2 GB ledig diskplass. Du kan dele inn køen i sekvensielle delar: `-Shards 4 -Shard 0`, deretter shard 1, 2 og 3. Ikkje køyr fleire shard-prosessar parallelt mot den same framdriftsfila.
 
-Merk: Dei eksisterande 14 lisensierte PDF-ane er bevarte. Også NVA, DiVA, Aalto, Chalmers og andre arkiv kan levere OA-kjelder gjennom metadataimporten, men inga tilgjengelegheits- eller lisenskontroll blir automatisk utleidd frå namnet på arkivet.
+Manglande filer, avbrot og endra PDF-ar blir fanga opp ved kontroll av filstorleik, PDF-format og SHA-256. Mislykka forsøk blir ikkje prøvde igjen i kvar køyring med mindre du brukar `-RetryFailed`. Eit HTTP 429-svar stoppar batchen, slik at tenesta får kvile.
+
+## Publisering
+
+Privat lesetilgang, open tilgang og rett til offentleg vidarepublisering er forskjellige forhold. PDF-ar med ukjent distribusjonsrett blir **ikkje committa til GitHub**. Ein bestemt PDF med individuelt kontrollert CC-lisens kan publiserast manuelt via `publiser_lisensiert_pdf.py`. Dette krev kontroll av både identitet og lisens for akkurat den PDF-versjonen.
+
+`docs/data/pdf_found.json` og `docs/data/pdf_status.json` er metadata for søkekatalogen, ikkje PDF-filene. Prosjektet skal telje berre verifiserte nedlastingar som faktisk finst i privat cache, og berre individuelt lisensierte filer som ligg i det offentlege arkivet.
