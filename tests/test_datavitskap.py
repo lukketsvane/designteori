@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from database import DB,GZ,ensure_database
-R=Path(__file__).resolve().parent
+R=Path(__file__).resolve().parents[1]
 O=R/"results"
 
 class Reproducibility(unittest.TestCase):
