@@ -29,6 +29,8 @@ def run():
  check(sum(d["review_priority"]=="high" for d in docs)>=150,"priority rules did not generate review list")
  check(all(d["review_score"]==triage[d["id"]]["priority_score"] for d in docs),"review priority out of sync")
  check(stats["total"]==works and stats["automatic_title_inclusion"]==incl,"statistics are out of sync")
+ check(stats["article_records"]==stats["kinds"]["article"]==sum(d["kind"]=="article" for d in docs),"article count inconsistent")
+ check(stats["review_records"]==stats["kinds"]["review"]==sum(d["kind"]=="review" for d in docs),"review count inconsistent")
  check(sum(d["scope"]=="awaiting-eligibility-review" for d in docs)==3571,"unreviewed scope count")
  manifest=json.loads((ROOT/"fulltekst/manifest.json").read_text(encoding="utf-8"))
  check(manifest["count"]==len(manifest["items"]),"bad fulltext count")
@@ -80,6 +82,8 @@ def run():
  check(len(historic)>=430,"historic bibliographies missing")
  public_bibs=json.loads((ROOT/"docs/data/bibliografiar.json").read_text(encoding="utf-8"))
  check(len(public_bibs["items"])==len(historic)+len(annotated),"public bibliography index out of sync")
+ check(sum(r["origin"]=="editorial" for r in public_bibs["items"])==len(annotated),"editorial sources missing")
+ check(sum(r["origin"]=="historical" for r in public_bibs["items"])==len(historic),"historical sources missing")
  with tempfile.TemporaryDirectory() as td:
   path=Path(td)/"search.sqlite"
   with gzip.open(ROOT/"data/fulltekst_sok.sqlite.gz","rb") as src,path.open("wb") as out:
