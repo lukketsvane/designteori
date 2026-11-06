@@ -47,6 +47,9 @@ def audit(progress):
             "sha256": item["sha256"], "source_url": item.get("url", ""),
             "downloaded_at": item.get("checked_at", ""),
             "license_status": "not-reviewed-for-republication",
+            "source_ids_from_input": ";".join(work.get("source_ids_from_input", [])),
+            "catalogue_ids": ";".join(work.get("catalogue_ids", [])),
+            "bibliography_review_status": work.get("source_review_status_from_input", ""),
         })
         duplicates[item["sha256"]].append(ident)
     return verified, missing, failed, {sha: ids for sha, ids in duplicates.items()
@@ -60,7 +63,8 @@ def write_report(verified, missing, failed, duplicates, *, base=None):
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
         columns = ["id", "title", "authors", "year", "doi",
                    "file", "bytes", "sha256", "source_url",
-                   "downloaded_at", "license_status"]
+                   "downloaded_at", "license_status",
+                   "source_ids_from_input", "catalogue_ids", "bibliography_review_status"]
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         writer.writerows(verified)

@@ -13,7 +13,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from hent_doi_csv import normalize_doi
-from hent_oa_pdf import allowed_url, direct_pdf_hint
+from hent_oa_pdf import allowed_url, direct_pdf_hint, safe_public_link
 
 ROOT = Path(__file__).resolve().parent
 EXPORT = ROOT / "results" / "doi_eksport.csv"
@@ -53,7 +53,7 @@ def make_export(base: list[dict], nordic: list[dict],
             if not url and w.get("origin") == "external":
                 # Institutional repository landing pages are leads, not PDFs.
                 url = w.get("source_url") or ""
-            if not allowed_url(url):
+            if not safe_public_link(url):
                 url = ""
             grouped[short].append({
                 "id": work_id, "layer": layer, "title": w.get("title") or "",
