@@ -52,5 +52,36 @@ class PrivateArchiveReportTests(unittest.TestCase):
                 self.assertNotIn("W999", (private / "pdf_local_index.csv").read_text())
 
 
+    def test_local_cache_merge_is_offline_verified_and_idempotent(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            source, dest = base / "source", base / "destination"
+            (source / "pdf").mkdir(parents=True)
+            (dest / "pdf").mkdir(parents=True)
+            original = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
+            good_sha = hashlib.sha256(original).hexdigest()
+            name = hashlib.sha256("W1".encode()).hexdigest()[:24] + ".pdf"
+            (source / "pdf" / name).write_bytes(original)
+            fake_name = hashlib.sha256("W2".encode()).hexdigest()[:24] + ".pdf"
+            (source / "pdf" / fake_name).write_bytes(b"%PDF BAD")
+            (source / "progress.json").write_text(json.dumps({
+                "W1": {"status": "pdf-confirmed", "sha256": good_sha,
+                       "bytes": len(original), "url": "https://example.org/1.pdf"},
+                "W2": {"status": "pdf-confirmed", "sha256": "a" * 64,
+                       "bytes": len(original)},
+                "W3": {"status": "failed", "reason": "HTTP 404"},
+            }), encoding="utf-8")
+            with patch.multiple(report.harvest, PRIVATE=dest, LOG=dest/"progress.json"):
+                first = report.merge_local_cache(source)
+                self.assertEqual(first["imported"], 1)
+                self.assertEqual(len(first["errors"]), 1)
+                self.assertTrue(report.harvest.cached_pdf_ok(
+                    "W1", report.harvest.load_progress()["W1"]))
+                second = report.merge_local_cache(source)
+                self.assertEqual(second["imported"], 0)
+                self.assertEqual(second["already_present"], 1)
+                self.assertEqual(set(report.harvest.load_progress()), {"W1"})
+
+
 if __name__ == "__main__":
     unittest.main()
