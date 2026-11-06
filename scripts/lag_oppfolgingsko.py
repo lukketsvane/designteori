@@ -6,7 +6,7 @@ independent testing or cumulativity.
 """
 from pathlib import Path
 import csv, sqlite3
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 def main():
  db=sqlite3.connect(ROOT/"data"/"nordic_design_research.sqlite")
  with (ROOT/"forsking"/"KJELDESPOR_PILOT.csv").open(newline="",encoding="utf-8") as f:

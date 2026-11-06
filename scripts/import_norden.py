@@ -18,7 +18,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import unquote
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "data" / "nordic_imports.json"
 SOURCES = {
     "nva": ("Nasjonalt vitenarkiv", "NO"),

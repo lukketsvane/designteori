@@ -26,7 +26,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urljoin, urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 PRIVATE = Path(os.environ.get("DESIGNTEORI_PDF_CACHE", str(ROOT / "data" / "oa_fulltexts_private"))).expanduser().resolve()
 QUEUE = ROOT / "results" / "pdf_henteko.csv"
 STATS = ROOT / "docs" / "data" / "pdf_status.json"

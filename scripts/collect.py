@@ -5,7 +5,7 @@ from pathlib import Path
 import requests
 from urllib.parse import urlencode
 
-BASE=Path(__file__).resolve().parent
+BASE=Path(__file__).resolve().parents[1]
 DB=BASE/"data"/"nordic_design_research.sqlite"
 API="https://api.openalex.org/works"
 NORDIC={"NO","SE","DK","FI","IS"}

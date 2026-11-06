@@ -8,7 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 from collections import defaultdict, Counter
 import csv, json, sqlite3
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"docs"/"data"
 def dump(name,obj):
  (OUT/name).write_text(json.dumps(obj,ensure_ascii=False,separators=(",",":")),encoding="utf-8")

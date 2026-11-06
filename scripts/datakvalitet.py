@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 from database import ensure_database
 
-HERE=Path(__file__).resolve().parent
+HERE=Path(__file__).resolve().parents[1]
 OUT=HERE/"results"
 
 def main():

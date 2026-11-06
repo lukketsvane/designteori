@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-HERE=Path(__file__).resolve().parent
+HERE=Path(__file__).resolve().parents[1]
 DEFAULT=HERE/"results"/"probability_sample_600_double_coder.csv"
 CODES=["H1","H2","H3","E1","E2","E3","C1","C2","C3","C4","C5"]
 
