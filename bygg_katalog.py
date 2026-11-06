@@ -67,6 +67,7 @@ def main():
   "metadata_source":"OpenAlex, 2026-11-02 partial search extract",
   "total":len(docs),"automatic_title_inclusion":sum(x["scope"]=="automatic-title-inclusion" for x in docs),
   "manual_review_queue":sum(x["scope"]=="awaiting-eligibility-review" for x in docs),
+  "article_records":kind.get("article",0),"review_records":kind.get("review",0),
   "local_pdf":sum(bool(x["pdf"]) for x in docs),"local_fulltext_text":sum(bool(x["text"]) for x in docs),
   "high_priority_for_manual_review":sum(x["review_priority"]=="high" for x in docs),
   "country_memberships":countries,"kinds":kind,"year":years,
