@@ -1,7 +1,7 @@
 """Expose editorial and historical references without merging them into OpenAlex counts."""
 from pathlib import Path
 import csv,json
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 def readcsv(path):
  with path.open(newline="",encoding="utf-8") as f:
   return list(csv.DictReader(f))

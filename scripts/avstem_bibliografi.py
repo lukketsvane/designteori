@@ -8,7 +8,7 @@ import re
 import sqlite3
 from pathlib import Path
 from urllib.parse import unquote
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 md=ROOT/"bibliografi"/"norden-2000-2026.md"
 DB=ROOT/"data"/"nordic_design_research.sqlite"
 OUT=ROOT/"bibliografi"/"avstemt_mot_openalex.csv"

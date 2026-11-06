@@ -11,7 +11,7 @@ import re
 import sqlite3
 from collections import Counter
 from datetime import datetime, timezone
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT/"forsking"
 OUT = ROOT/"docs"/"data"
 REPORT = ROOT/"results"/"HYPOTESETEST_STATUS.md"
