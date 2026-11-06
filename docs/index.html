@@ -68,6 +68,7 @@ footer p{max-width:540px}
 <a class="mark" href="./">DESIGNTEORI</a>
 <nav>
 <a href="#katalog">Katalog</a>
+<a href="#bibliografiar">Bibliografiar</a>
 <a href="https://github.com/lukketsvane/designteori/tree/main/fulltekst">Fulltekst</a>
 <a href="https://github.com/lukketsvane/designteori">GitHub</a>
 </nav>
@@ -98,6 +99,17 @@ footer p{max-width:540px}
 <div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><a href="./data/publications.csv">Last ned metadata (CSV)</a></div>
 <div id="records"></div>
 <button class="more" type="button" id="more" hidden>Vis fleire publikasjonar</button>
+</section>
+<section class="section" id="bibliografiar">
+<h2>Teoriar, bøker og historiske kjelder</h2>
+<p class="section-intro">Ei eiga samling av 77 redaksjonelle nordiske bibliografipostar og 430 historiske og internasjonale teorioppføringar frå FORMLÆRE og GRUNNLAUST. Desse er <strong>ikkje</strong> 507 nye, unike eller stadfesta nordiske arbeid, og blir difor haldne skilde frå forskingsuttrekket.</p>
+<div class="filters" style="grid-template-columns:2fr 1fr">
+<label class="field"><span>Søk i bibliografiane</span><input id="bib-search" type="search" placeholder="Forfattar, boktittel, omgrep, år..." autocomplete="off"></label>
+<label class="field"><span>Kjeldesamling</span><select id="bib-collection"><option value="">Alle tre</option><option value="Nordisk redaksjonell bibliografi">Nordisk, redaksjonell</option><option value="GRUNNLAUST">GRUNNLAUST</option><option value="FORMLÆRE akademisk">FORMLÆRE akademisk</option></select></label>
+</div>
+<div class="countline"><span id="bib-count" aria-live="polite">Lastar bibliografiane…</span><a href="https://github.com/lukketsvane/designteori/tree/main/bibliografi">Sjå originalkjeldene</a></div>
+<div id="bib-records"></div>
+<button class="more" type="button" id="bib-more" hidden>Vis fleire kjelder</button>
 </section>
 </main>
 <footer>
@@ -181,7 +193,55 @@ for(const id of ["search","country","period","scope","fulltext"]){
  $(id).addEventListener(id==="search"?"input":"change",apply);
 }
 $("more").addEventListener("click",()=>{limit+=60;draw()});
+let bibliography=[],bibSelected=[],bibLimit=45;
+function renderBibliography(){
+ const box=$("bib-records");box.replaceChildren();
+ const fragment=document.createDocumentFragment();
+ for(const r of bibSelected.slice(0,bibLimit)){
+  const item=make("article",undefined,"record");
+  item.append(make("div",r.year||"UÅ","year"));
+  const body=make("div");
+  body.append(make("h3",r.title||r.id,"title"));
+  body.append(make("div",r.authors||"Forfattar manglar","metadata"));
+  const meta=make("p",undefined,"meta-small");
+  meta.append(make("span",r.collection,"label"));
+  if(r.type)meta.append(make("span",r.type,"label"));
+  if(r.source_id)meta.append(make("span","Kopla til OpenAlex","label"));
+  body.append(meta);
+  item.append(body);
+  const links=make("div",undefined,"links");
+  for(const [url,label] of [[r.doi,"DOI"],[r.url,"Kjelde"]]){
+   const a=link(url,label);if(a)links.append(a);
+  }
+  item.append(links);fragment.append(item);
+ }
+ box.append(fragment);
+ if(!bibSelected.length)box.append(make("p","Ingen treff i bibliografiane.","empty"));
+ $("bib-count").textContent=fmt(bibSelected.length)+" bibliografipostar · "+fmt(Math.min(bibLimit,bibSelected.length))+" viste";
+ $("bib-more").hidden=bibSelected.length<=bibLimit;
+}
+function filterBibliography(){
+ bibLimit=45;
+ const q=$("bib-search").value.trim().toLocaleLowerCase();
+ const source=$("bib-collection").value;
+ bibSelected=bibliography.filter(r=>(!source||r.collection===source)&&(!q||r._search.includes(q)));
+ renderBibliography();
+}
+async function initBibliography(){
+ try{
+  const response=await fetch("./data/bibliografiar.json");
+  if(!response.ok)throw Error("Kjeldefil utilgjengeleg");
+  const data=await response.json();
+  bibliography=data.items||[];
+  for(const r of bibliography)r._search=[r.title,r.authors,r.year,r.doi,r.collection,r.section].filter(Boolean).join(" ").toLocaleLowerCase();
+  filterBibliography();
+ }catch(err){$("bib-count").textContent="Klarte ikkje laste bibliografiane.";console.error(err)}
+}
+for(const id of ["bib-search","bib-collection"])
+ $(id).addEventListener(id==="bib-search"?"input":"change",filterBibliography);
+$("bib-more").addEventListener("click",()=>{bibLimit+=45;renderBibliography()});
 init();
+initBibliography();
 </script>
 </body>
 </html>

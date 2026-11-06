@@ -48,6 +48,8 @@ def run():
  with (ROOT/"bibliografi/historiske_referansar.csv").open(encoding="utf-8",newline="") as f:
   historic=list(csv.DictReader(f))
  check(len(historic)>=430,"historic bibliographies missing")
+ public_bibs=json.loads((ROOT/"docs/data/bibliografiar.json").read_text(encoding="utf-8"))
+ check(len(public_bibs["items"])==len(historic)+len(annotated),"public bibliography index out of sync")
  with tempfile.TemporaryDirectory() as td:
   path=Path(td)/"search.sqlite"
   with gzip.open(ROOT/"data/fulltekst_sok.sqlite.gz","rb") as src,path.open("wb") as out:

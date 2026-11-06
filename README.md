@@ -4,7 +4,7 @@
 
 **Status:** Bibliografisk metadatauttrekk frå 2. november 2026, ikkje ein fullstendig forskingspopulasjon eller ferdig fulltekstbasert vurdering. Resultata må ikkje brukast som bevis for at designteori ikkje er kumulativ.
 
-Start med [søkekatalogen](docs/index.html), [dashboard](results/DASHBOARD.md), [den samanslåtte forskingsdatabasen](data/designteori_hovuddatabase.sqlite.gz), [det originale metadatauttrekket](data/nordic_design_research.sqlite.gz), [kuratert bibliografi](bibliografi/norden-2000-2026.md), [kodeboka](CODEBOOK.md) og [vidare arbeidsplan](VIDARE_ARBEID.md).
+Start med [søkekatalogen på nett](https://lukketsvane.github.io/designteori/), [dashboard](results/DASHBOARD.md), [den samanslåtte forskingsdatabasen](data/designteori_hovuddatabase.sqlite.gz), [det originale metadatauttrekket](data/nordic_design_research.sqlite.gz), [kuratert bibliografi](bibliografi/norden-2000-2026.md), [kodeboka](CODEBOOK.md) og [vidare arbeidsplan](VIDARE_ARBEID.md).
 
 ## Tilført etter flyttinga, 6. november 2026
 
@@ -13,7 +13,7 @@ Start med [søkekatalogen](docs/index.html), [dashboard](results/DASHBOARD.md), 
 - **430** historiske og internasjonale teorioppføringar frå [GRUNNLAUST](bibliografi/grunnlaust_referansar.bib) og [FORMLÆRE akademisk](bibliografi/formlaere_akademisk.bib), med [samla CSV og identitetsstatus](bibliografi/historiske_referansar.csv). Det er **405** grupper av moglege verk etter enkel deduplisering, ikkje 405 stadfesta nye nordiske arbeid. Kjeldene er integrerte i hovuddatabasen med eiga proveniens.
 - **11 PDF-ar** med dokumentert Creative Commons-lisens, individuelt attribuerte og arkiverte offentleg under [fulltekst/](fulltekst/). **10** har fulltekstdump for vidare søk. **15** OA-kandidatar har berre original-URL inntil redistribusjonsrett er klarlagd.
 - [Fulltekstsøk (SQLite FTS5)](data/fulltekst_sok.sqlite.gz), med dokument-ID, DOI og tekstutdrag.
-- [Nettlesarkatalog](docs/index.html) med filtre og [CSV-eksport](docs/data/publications.csv), klar til GitHub Pages.
+- [Offentleg søkekatalog på GitHub Pages](https://lukketsvane.github.io/designteori/) med filter for 7 300 OpenAlex-registreringar og separat søk i 507 bibliografipostar, samt [CSV-eksport](docs/data/publications.csv).
 - [Automatisk publiseringskontroll](test_publisering.py) og GitHub Actions for dataintegritet.
 
 ### Lokal bruk
