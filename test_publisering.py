@@ -45,6 +45,9 @@ def run():
  with (ROOT/"bibliografi/avstemt_mot_openalex.csv").open(encoding="utf-8",newline="") as f:
   annotated=list(csv.DictReader(f))
  check(len(annotated)>=77,"curated bibliography missing")
+ with (ROOT/"bibliografi/historiske_referansar.csv").open(encoding="utf-8",newline="") as f:
+  historic=list(csv.DictReader(f))
+ check(len(historic)>=430,"historic bibliographies missing")
  with tempfile.TemporaryDirectory() as td:
   path=Path(td)/"search.sqlite"
   with gzip.open(ROOT/"data/fulltekst_sok.sqlite.gz","rb") as src,path.open("wb") as out:
@@ -60,6 +63,7 @@ def run():
   warehouse=sqlite3.connect(path)
   check(warehouse.execute("SELECT count(*) FROM works").fetchone()[0]==works,"warehouse base works")
   check(warehouse.execute("SELECT count(*) FROM editorial_bibliography").fetchone()[0]==len(annotated),"warehouse bibliography")
+  check(warehouse.execute("SELECT count(*) FROM historical_bibliography").fetchone()[0]==len(historic),"warehouse historic bibliography")
   check(warehouse.execute("SELECT count(*) FROM uncrossmatched_editorial").fetchone()[0]==sum(not x["openalex_id"] for x in annotated),"warehouse identity queue")
   check(warehouse.execute("SELECT count(*) FROM fulltext_versions").fetchone()[0]==len(lic),"warehouse fulltexts")
   check(warehouse.execute("SELECT count(*) FROM theory_claims").fetchone()[0]==0,"unreviewed claims wrongly populated")

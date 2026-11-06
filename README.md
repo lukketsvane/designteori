@@ -10,6 +10,7 @@ Start med [søkekatalogen](docs/index.html), [dashboard](results/DASHBOARD.md), 
 
 - **7 300** registrerte OpenAlex-kandidatar, **35 508** forfattar-/institusjonstilknytingar og **269 305** referansekantar i metadataarkivet (ikkje like mange unike teoriarbeid).
 - **77** redaksjonelle bibliografipostar kryssjekka mot det store uttrekket: **22** automatiske identitetsmatchar og **55** oppføringar som må kontrollerast vidare. [Avstemt liste](bibliografi/avstemt_mot_openalex.csv).
+- **430** historiske og internasjonale teorioppføringar frå [GRUNNLAUST](bibliografi/grunnlaust_referansar.bib) og [FORMLÆRE akademisk](bibliografi/formlaere_akademisk.bib), med [samla CSV og identitetsstatus](bibliografi/historiske_referansar.csv). Det er **405** grupper av moglege verk etter enkel deduplisering, ikkje 405 stadfesta nye nordiske arbeid. Kjeldene er integrerte i hovuddatabasen med eiga proveniens.
 - **11 PDF-ar** med dokumentert Creative Commons-lisens, individuelt attribuerte og arkiverte offentleg under [fulltekst/](fulltekst/). **10** har fulltekstdump for vidare søk. **15** OA-kandidatar har berre original-URL inntil redistribusjonsrett er klarlagd.
 - [Fulltekstsøk (SQLite FTS5)](data/fulltekst_sok.sqlite.gz), med dokument-ID, DOI og tekstutdrag.
 - [Nettlesarkatalog](docs/index.html) med filtre og [CSV-eksport](docs/data/publications.csv), klar til GitHub Pages.

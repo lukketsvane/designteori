@@ -1,0 +1,14 @@
+{
+  "source_counts": {
+    "grunnlaust": 281,
+    "formlaere-akademisk": 149
+  },
+  "total_entries": 430,
+  "source_openalex_matches": {
+    "requires-identity-check": 425,
+    "title-year-normalized": 5
+  },
+  "duplicate_bibtex_groups": 25,
+  "unique_identity_candidates_within_bibliographies": 405,
+  "description": "Historical/theoretical reference bibliographies, including global works, not a Nordic scholarly publication population."
+}
