@@ -111,7 +111,7 @@ footer p{max-width:540px}
 <label class="field"><span>Land</span><select id="country"><option value="">Alle land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
 </div><details class="advanced"><summary>Fleire filter</summary><div class="filters"><label class="field"><span>År</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
 <label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Bibliografi</option><option value="repository-candidate">Arkivimport</option></select></label>
-<label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
+<label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="pdf">PDF</option><option value="local">I arkivet</option><option value="oa">OA</option></select></label>
 <label class="field"><span>Prioritet</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
 </div></details>
 <div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><div class="export-links"><button type="button" id="export-visible">Eksporter treff (CSV)</button><a href="./data/publications.csv">OpenAlex (CSV)</a></div></div>
@@ -175,7 +175,7 @@ function renderRow(w){
  if(w.citations!==null&&w.citations!==undefined)small.append(make("span"," "+fmt(w.citations)+" siteringar"));
  body.append(small);root.append(body);
  const links=make("div",undefined,"links");
- for(const [url,label] of [[w.doi,"DOI"],[w.pdf,"PDF i arkivet"],[w.text,"Fulltekst (TXT)"],[w.oa_url,"Open access"],[w.source_url,"Bibliografikjelde"]]){
+ for(const [url,label] of [[w.doi,"DOI"],[w.pdf,"PDF"],[w.remote_pdf,"PDF (kjelde)"],[w.oa_url,"OA"],[w.source_url,"Kjelde"]]){
   const a=link(url,label);if(a)links.append(a);
  }
  root.append(links);return root;
@@ -205,6 +205,7 @@ function apply(){
   if(period && !(w.year>=+period && w.year<+period+10))return false;
   if(scope && w.scope!==scope)return false;
   if(fulltext==="local"&&!w.pdf)return false;
+   if(fulltext==="pdf"&&!w.pdf&&!w.remote_pdf)return false;
   if(fulltext==="oa"&&!w.oa_url)return false;
   if(priority && w.review_priority!==priority)return false;
   if(q&&!w._search.includes(q))return false;
@@ -229,13 +230,20 @@ for(const id of ["search","kind","country","period","scope","fulltext","priority
  $(id).addEventListener(id==="search"?"input":"change",apply);
 }
 $("more").addEventListener("click",()=>{limit+=60;draw()});
-let additions=[],nordicStatus={};
+let additions=[],nordicStatus={},pdfFound={},pdfStatus={};
 async function initNordic(){
  const [r,st]=await Promise.all([
   fetch("./data/nordic_additions.json"),fetch("./data/nordic_status.json")
  ]);
  if(!r.ok||!st.ok)throw Error("Nordiske kjelder kan ikkje lastast");
  additions=await r.json();nordicStatus=await st.json();
+}
+async function initPDF(){
+ const [f,s]=await Promise.all([
+  fetch("./data/pdf_found.json"),fetch("./data/pdf_status.json")
+ ]);
+ if(f.ok)pdfFound=await f.json();
+ if(s.ok)pdfStatus=await s.json();
 }
 function integrateNordic(){
  const existing=new Set(works.map(w=>w.id));
@@ -245,6 +253,14 @@ function integrateNordic(){
   works.push(w);existing.add(w.id);
  }
  $("stat-editorial").textContent=fmt(nordicStatus.editorial_records||0);
+ for(const w of works){
+  const record=pdfFound[w.id];
+  if(record&&record.status==="private-cache-only"&&record.url&&safe(record.url)){
+   w.remote_pdf=record.url;
+  }
+ }
+ if(pdfStatus.public_verified_pdf_links!==undefined)
+  $("stat-pdfs").textContent=fmt(pdfStatus.public_verified_pdf_links);
  works.sort((a,b)=>(b.review_score||0)-(a.review_score||0)||(b.year||0)-(a.year||0));
  apply();
 }
@@ -263,7 +279,7 @@ function exportSelected(){
 }
 $("export-visible").addEventListener("click",exportSelected);
 
-Promise.all([init(),initNordic()]).then(integrateNordic).catch(e=>{console.error(e);$("stat-editorial").textContent="–"});
+Promise.all([init(),initNordic(),initPDF()]).then(integrateNordic).catch(e=>{console.error(e);$("stat-editorial").textContent="–"});
 </script>
 <script src="./atlas.js" defer></script>
 </body>
