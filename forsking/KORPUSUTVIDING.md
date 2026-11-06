@@ -1,39 +1,40 @@
-# Utviding av publikasjonskorpuset
+# Utviding av korpuset
 
-Målet er å oppdage **fleire reelle publikasjonar** og prøve forskingskritikken
-med eit korpus der identitet, tilknyting og evidensgrad kan ettergåast.
+Nordisk hovudkorpus: 7 300 OpenAlex-postar frå eit avgrensa uttrekk.
+Redaksjonell nordisk bibliografi: 77 kjeldeoppføringar, der 54 tidlegare
+ikkje hadde eksakt identitetskopling til OpenAlex-katalogen.
 
-## Referansefrontier (nettverksfri kø)
+## Historisk og internasjonalt register
+
+`python bygg_teoriregister.py` grupperer dei 430 bibliografiske
+referansane etter identitetsreglar. Kvar kjeldeoppføring står att i
+`results/theory_source_audit.csv`, med moglege matchar og dokumentert
+grunnlag. DOI kan gje eksakt kopling til katalogen; ei lik tittel/år-
+kombinasjon er berre ein kandidat for manuell vurdering.
+
+Søkbare, men **uavklara** referansar ligg i
+`docs/data/theory_additions.json`; teljingane i
+`docs/data/theory_status.json`. Dette laget er skilt frå
+nordiske primærpostar. Det omfattar internasjonale bøker, eldre
+verk og andre referansar som ikkje er verifiserte nordiske designverk.
+Ein provisorisk dublettgruppe er ikkje eit stadfesta kanonisk verk.
+
+I søkjegrensesnittet finst desse under «Historiske / internasjonale».
+Dei blir ikkje rekna som nordiske artiklar.
+
+## Manglande metadata for refererte verk
 
 `python bygg_referansefrontier.py --limit 5000 --min-citing 2`
+produserer ei separat prioritert kø av OpenAlex-ID-ar som er siterte,
+men manglar i det lokale uttrekket. Køa dokumenterer referansar,
+ikkje nye publikasjonar. Relevans, forfattarar, DOI, institusjonstilknyting,
+verkstilhøve og dokumentrettar må validerast før full inkludering.
 
-Finn refererte OpenAlex-ID-ar som **ikkje** finst i `works`-tabellen,
-rangert etter kor mange kjende publikasjonar som siterer dei. Utgangen
-`results/reference_frontier_priority.csv` har ID, siteringsgrunnlag,
-døme på siterande verk og eventuelle koplingar til historisk bibliografi.
-`results/reference_frontier_status.json` gjev fullstendige teljingar.
-`python -m unittest test_reference_frontier` testar vilkåra utan nettverk.
+## Utvalskritikk
 
-Desse ID-ane kan vere artiklar, bøker, arbeid utan nordisk tilknyting,
-feiltilskrivingar eller dublettar. Dei er **ikkje nye verifiserte
-publikasjonar**. Verifisering av tittel, DOI, forfattar, år, nordisk
-institusjonstilknyting og fagleg relevans må skje ved kjelda før ein
-kan slå fast kor mange nye unike verk som er oppdaga.
-
-## Metodologisk samanlikningslitteratur
-
-`forsking/EKSTERNE_METODESTUDIAR.csv` inneheld seks publiserte/omtala
-metodologiske forskingsarbeid med kjeldelenkjer for den pågåande
-prøvinga av P01–P10. Desse er eit **eksternt samanlikningskorpus**,
-ikkje seks nye nordiske designteoriartiklar. Metadata og årstal er
-utgangspunkt for vidare verifikasjon, ikkje fulltekstlesne kodingsfunn.
-
-## Neste import med nye verk
-
-Nordiske metadataeksportar går framleis i
-`imports/<kjelde>/`, og vert avstemde med `batch_import_norden.py`
-og `samkoyr_norden.py`. I dette steget er ikkje nye metadata henta
-frå NVA/DiVA/OpenAlex fordi kjeldetilgang ikkje var tilgjengeleg.
-Kandidatane må handsamast utan å løfte usikre DOI-/tittelmatchar til
-verifisert status. Sjølv ein omfattande referansefrontier må ikkje
-forvekslast med representativ dekning av forskingsfeltet.
+Verken OpenAlex-uttrekket eller historiebibliografien er eit
+representativt eller fullstendig register over designforsking.
+Råmetadata, rekonstruert identitet, fagleg relevans, fulltekst og
+dobbelkoda evidens blir rapporterte separat. Særleg P02 og P07
+krev lesing av den konkrete siteringsfunksjonen og verifisert
+fagleg vidareføring.

@@ -17,11 +17,15 @@ jobs:
         with:
           python-version: '3.11'
       - name: Syntaks
-        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py hent_oa_pdf.py test_oa_pdf.py pdf_archive_report.py test_pdf_archive_report.py
+        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py hent_oa_pdf.py test_oa_pdf.py bygg_teoriregister.py test_teoriregister.py pdf_archive_report.py test_pdf_archive_report.py
       - name: Importer nye nordiske metadataeksportar
         run: python batch_import_norden.py
       - name: Avstem nordiske kjelder
         run: python samkoyr_norden.py
+      - name: Bygg avstemt historisk teoriindeks
+        run: python bygg_teoriregister.py
+      - name: Test avstemt teoriindeks
+        run: python -m unittest -v test_teoriregister
       - name: Test import og DOI-identitet
         run: python -m unittest -v test_nordic_import
       - name: Test utvidingskø utan nettverk
@@ -39,7 +43,7 @@ jobs:
       - name: Publiser kjeldeavstemming
         if: github.event_name == 'push'
         run: |
-          git add results/reference_frontier_priority.csv results/reference_frontier_status.json data/nordic_imports.json docs/data/nordic_additions.json docs/data/nordic_status.json docs/data/source_links.json results/nordic_source_audit.csv docs/data/pdf_found.json docs/data/pdf_status.json results/pdf_henteko.csv
+          git add docs/data/theory_additions.json docs/data/theory_status.json results/theory_source_audit.csv results/reference_frontier_priority.csv results/reference_frontier_status.json data/nordic_imports.json docs/data/nordic_additions.json docs/data/nordic_status.json docs/data/source_links.json results/nordic_source_audit.csv docs/data/pdf_found.json docs/data/pdf_status.json results/pdf_henteko.csv
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

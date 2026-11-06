@@ -1,9 +1,9 @@
 # DESIGNTEORI
 
-Ei open, søkbar samling av **nordisk designteori**. Målet er å byggje det definitive bibliografiske registeret over publiserte designteoretiske artiklar frå Noreg, Sverige, Danmark, Finland og Island, samla på éin stad.
+Open, søkbar database over publisert nordisk designforsking, med historiske og internasjonale teorireferansar i eit eige lag.
 
-**Status:** 6 060 artikkelregistreringar av 7 300 OpenAlex-postar (2000–2026), i tillegg til 77 redaksjonelle nordiske bibliografipostar. Desse tala viser registreringar, ikkje manuelt verifiserte designteoriartiklar. Kjelder kan overlappe. 430 historiske og internasjonale teorioppføringar er haldne i ei eiga referansesamling.
+**Korpus:** 7 300 OpenAlex-registreringar frå Norden (2000–2026), 77 redaksjonelle bibliografipostar og 430 historiske/internasjonale referanseoppføringar. Dublettar og overlapp skal avstemmast. Ingen av tala er ei teljing av manuelt verifiserte designforskingartiklar.
 
-**[Søk i databasen](https://lukketsvane.github.io/designteori/)** · [Metadata (CSV)](docs/data/publications.csv) · [Database (SQLite)](data/designteori_hovuddatabase.sqlite.gz) · [Kjeldeliste](bibliografi/norden-2000-2026.md)
+**[Søk i databasen](https://lukketsvane.github.io/designteori/)** · [Metadata (CSV)](docs/data/publications.csv) · [SQLite](data/designteori_hovuddatabase.sqlite.gz) · [Revisjonsspor](results/theory_source_audit.csv)
 
-Kvar post skal kunne sporast til ei kjelde, med DOI, forfattarar, publikasjonsår, type og verifikasjonsstatus der opplysningane finst. Dublettar skal avstemmast, ikkje teljast som nye arbeid.
+Sporbar kjelde, DOI, forfattar, publikasjonsår, tilkomst og verifikasjonsstatus. [Metode og avgrensingar](forsking/KORPUSUTVIDING.md).

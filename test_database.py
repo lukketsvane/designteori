@@ -121,6 +121,23 @@ def main() -> None:
             sum(r["status"] in ("matched-id", "matched-doi") for r in source_audit),
             "Exact source matches are inconsistent")
 
+    # Det historiske registeret er ein separat, urevidert kandidatpopulasjon.
+    theory = load("docs/data/theory_additions.json")
+    theory_status = load("docs/data/theory_status.json")
+    theory_audit = read_csv("results/theory_source_audit.csv")
+    require(len(theory) == theory_status["unique_provisional_candidate_records"],
+            "historical theory register count out of sync")
+    require(len(theory_audit) == theory_status["raw_historical_references"],
+            "historical source audit incomplete")
+    require(len({w["id"] for w in theory}) == len(theory),
+            "duplicate theory candidate IDs")
+    require(not set(w["id"] for w in theory).intersection(ids),
+            "historical candidates masquerading as OpenAlex works")
+    require(all(w.get("scope") == "historical-reference"
+                and w.get("review_status") == "metadata-unreviewed"
+                and not w.get("countries") for w in theory),
+            "historical candidates promoted to verified Nordic research")
+
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     pdf_queue = read_csv("results/pdf_henteko.csv")
