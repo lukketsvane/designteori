@@ -67,5 +67,50 @@ class PDFHarvestTest(unittest.TestCase):
         self.assertEqual(links["W1"]["license"], "")
 
 
+
+    def test_archive_landing_pages_are_queued(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            for folder in ("docs/data", "fulltekst"):
+                (root / folder).mkdir(parents=True)
+            (root / "docs/data/publications.json").write_text("[]", encoding="utf-8")
+            (root / "docs/data/nordic_additions.json").write_text(json.dumps([{
+                "id": "nordic:nva:1", "title": "Nordic research", "origin": "external",
+                "scope": "repository-candidate",
+                "source_url": "https://nva.example.org/record/1"
+            }, {
+                "id": "nordic:editorial:2", "title": "Reference", "origin": "editorial",
+                "source_url": "https://github.com/lukketsvane/designteori"
+            }]), encoding="utf-8")
+            (root / "fulltekst/manifest.json").write_text('{"items":[]}', encoding="utf-8")
+            with patch.object(pdf, "ROOT", root):
+                rows, _ = pdf.queue_rows()
+            self.assertEqual(len(rows), 2)
+            self.assertEqual(next(r for r in rows if r["id"] == "nordic:nva:1")["oa_url"],
+                             "https://nva.example.org/record/1")
+            self.assertEqual(next(r for r in rows if r["id"] == "nordic:editorial:2")["oa_url"], "")
+
+    def test_successful_direct_pdf_skips_discovery_apis(self):
+        payload = b"%PDF-1.7\n" + b" " * 800 + b"%%EOF"
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "private"
+            progress = {}
+            rows = [{"id": "Wxyz", "title": "Example", "doi": "https://doi.org/10.1/test",
+                     "oa_url": "https://repository.example.org/example.pdf", "archived": "no"}]
+            with patch.multiple(pdf, PRIVATE=root, LOG=root / "progress.json"), \
+                 patch.object(pdf, "safe_request", return_value=(payload,
+                     "https://repository.example.org/example.pdf", "application/pdf")), \
+                 patch.object(pdf, "unpaywall_urls") as unpaywall, \
+                 patch.object(pdf, "openalex_urls") as openalex, \
+                 patch.object(pdf.time, "sleep"):
+                n = pdf.download(rows, progress, limit=1, email="contact@example.org",
+                                 pause=1, max_bytes=100000, retry_failed=False,
+                                 lookup_openalex=True)
+            self.assertEqual(n, 1)
+            self.assertEqual(progress["Wxyz"]["status"], "pdf-confirmed")
+            unpaywall.assert_not_called()
+            openalex.assert_not_called()
+            self.assertEqual(len(list((root / "pdf").glob("*.pdf"))), 1)
+
 if __name__ == "__main__":
     unittest.main()
