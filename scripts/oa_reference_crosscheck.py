@@ -9,7 +9,7 @@ from __future__ import annotations
 import csv,datetime as dt,json,re,sqlite3,unicodedata
 from pathlib import Path
 import fitz
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 IN=ROOT/"results"/"oa_citation_locator_audit.csv"
 OUT=ROOT/"results"
 CONN=ROOT/"data"/"nordic_design_research.sqlite"
