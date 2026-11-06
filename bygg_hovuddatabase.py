@@ -63,7 +63,7 @@ def build():
   db.executemany("INSERT OR REPLACE INTO database_info VALUES(?,?)",[
     ("schema","designteori-hovuddatabase-v1"),
     ("original_opalex_snapshot","2026-11-02"),
-    ("original_works_count","7300"),
+    ("original_works_count",str(db.execute("SELECT count(*) FROM works").fetchone()[0])),
     ("source_original_sqlite_gz","data/nordic_design_research.sqlite.gz"),
     ("bibliography_scope","editorial candidates; manual identity verification pending"),
     ("claim_coding","none, manual-only tables have no rows")
