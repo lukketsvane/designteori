@@ -225,6 +225,9 @@ def queue_rows():
         if not ident:
             continue
         oa = w.get("oa_url") or ""
+        repository_source = w.get("origin") == "external"
+        if not oa and repository_source:
+            oa = w.get("source_url") or ""
         if not allowed_url(oa):
             oa = ""
         row = {
@@ -279,6 +282,7 @@ def publish(rows, published, progress):
         "archived_licensed_pdfs": len(published["items"]),
         "oa_links_unchecked": sum(r["candidate_status"] == "oa-link-unchecked" for r in rows),
         "direct_pdf_shaped_urls_unchecked": sum(r["candidate_status"] == "oa-link-unchecked" and direct_pdf_hint(r["oa_url"]) for r in rows),
+        "repository_page_candidates": sum(r["scope"] == "repository-candidate" and bool(r["oa_url"]) for r in rows),
         "doi_without_oa_link": sum(r["candidate_status"] == "doi-only" for r in rows),
         "without_doi_or_oa": sum(r["candidate_status"] == "no-oa-link" for r in rows),
         "private_cached_pdfs": sum(x.get("status") == "pdf-confirmed" for x in progress.values()),
