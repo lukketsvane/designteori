@@ -2,6 +2,8 @@
 
 **Kanonisk repo:** `lukketsvane/designteori`. Dette forskingsprosjektet er flytta frå `FORML-RE/research/nordisk-designforsking` utan å endre det opphavlege datasettet. Den gamle kopien er bevart som historikk.
 
+**Forskingsspørsmål:** Kan designforskinga vise til eit samordna forskingsprogram, testbare påstandar, kumulativ kunnskapsutvikling, overførbar vitskap og faktisk institusjonelt ansvar? Den radikale kritikken av fagets legitimering og metodar er **utgangspunktet for motprøver**, ikkje ein førehandsbestemt fasit. [Sjå ti testbare påstandar og dei første kjeldespora](https://lukketsvane.github.io/designteori/forsking.html) og [den daterte prøvingsprotokollen](forsking/PROTOKOLL.md).
+
 **Status:** Bibliografisk metadatauttrekk frå 2. november 2026, ikkje ein fullstendig forskingspopulasjon eller ferdig fulltekstbasert vurdering. Resultata må ikkje brukast som bevis for at designteori ikkje er kumulativ.
 
 Start med [søkekatalogen på nett](https://lukketsvane.github.io/designteori/), [dashboard](results/DASHBOARD.md), [den samanslåtte forskingsdatabasen](data/designteori_hovuddatabase.sqlite.gz), [det originale metadatauttrekket](data/nordic_design_research.sqlite.gz), [kuratert bibliografi](bibliografi/norden-2000-2026.md), [kodeboka](CODEBOOK.md) og [vidare arbeidsplan](VIDARE_ARBEID.md).

@@ -1,0 +1,26 @@
+{
+  "dataset": "Frozen 2026-11-02 OpenAlex candidate corpus",
+  "sampling_seed": 20261106,
+  "random_draw_n": 120,
+  "eligible_internal_pairs": 5502,
+  "random_selection_probability": 0.021810250817884406,
+  "legacy_candidate_count_raw": 150,
+  "legacy_candidates_eligible": 150,
+  "licensed_citing_pairs": 71,
+  "unique_review_pairs": 336,
+  "provenance_memberships": {
+    "random_internal_control": 120,
+    "preexisting_counterexample_candidate": 150,
+    "licensed_citing_pdf": 71
+  },
+  "both_pdfs_in_public_archive": 0,
+  "some_pdf_in_public_archive": 74,
+  "manually_double_coded": 0,
+  "notes": [
+    "The 120 random controls are drawn uniformly from all sample-internal citation pairs, independent of keyword ranking.",
+    "Purposive candidates and local-PDF pairs are not a probability sample and cannot estimate prevalence.",
+    "No observed citation link, irrespective of text similarity, is classified as validation, replication, refutation or theory inheritance.",
+    "The two coding sheets are intentionally independent; reviewers must save distinct responses before any reconciliation.",
+    "Screening/eligibility and source PDF versions must be checked before citation function coding."
+  ]
+}

@@ -46,6 +46,21 @@ def run():
   else:check("ND" in r["license"],"missing text without ND restriction")
  check(sum(bool(d["pdf"]) for d in docs)==len(lic),"catalog lacks PDF links")
  check((ROOT/"docs/index.html").stat().st_size>5000,"website missing")
+ check((ROOT/"docs/forsking.html").stat().st_size>5000,"hypothesis test portal missing")
+ hypothesis=json.loads((ROOT/"forsking/PASTANDAR.json").read_text(encoding="utf-8"))
+ claim_ids={c["id"] for c in hypothesis["claims"]}
+ check(len(claim_ids)==len(hypothesis["claims"])==10,"hypothesis matrix malformed")
+ web_hyp=json.loads((ROOT/"docs/data/forskingssporsmal.json").read_text(encoding="utf-8"))
+ check({c["id"] for c in web_hyp["claims"]}==claim_ids,"public hypotheses out of sync")
+ with (ROOT/"forsking/KJELDESPOR_PILOT.csv").open(encoding="utf-8",newline="") as fh:
+  leads=list(csv.DictReader(fh))
+ check(len(leads)==web_hyp["pilot_source_count"]==5,"pilot evidence count")
+ check(all(set(r["claims"].split(";")).issubset(claim_ids) for r in leads),"pilot references invalid claim")
+ check(all(r["human_coded"]=="false" and r["independent_replication_verified"]=="false" and r["grade"].startswith("E1_") for r in leads),"unvalidated evidence elevated to human-verified")
+ with (ROOT/"forsking/OPPFOLGJANDE_SITERINGAR.csv").open(encoding="utf-8",newline="") as fh:
+  next_links=list(csv.DictReader(fh))
+ check(len(next_links)>=5,"followup citation queue missing")
+ check(all(r["citation_function"]=="LNA" and r["citation_status"]=="metadata_link_only" for r in next_links),"unread citations falsely classified" )
  contexts=json.loads((ROOT/"docs/data/work_context.json").read_text(encoding="utf-8"))
  check(len(contexts)==works,"context index missing works")
  edge_count=sum(len(c["cites"]) for c in contexts.values())
