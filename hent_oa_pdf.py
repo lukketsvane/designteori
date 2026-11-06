@@ -301,6 +301,15 @@ def remote_links(progress, published):
                      "sha256": item.get("sha256", "")}
         for item in published.get("items", [])
     }
+    # GitHub CI has no access to the private PDF cache. Retain source links
+    # previously confirmed locally rather than resetting them on each push.
+    previous = read_json(FOUND, {}) or {}
+    if isinstance(previous, dict):
+        for ident, row in previous.items():
+            if (isinstance(row, dict) and row.get("status") == "private-cache-only"
+                    and allowed_url(row.get("url"))
+                    and re.fullmatch(r"[a-f0-9]{64}", str(row.get("sha256", "")))):
+                originals.setdefault(ident, row)
     for ident, row in progress.items():
         if row.get("status") == "pdf-confirmed" and allowed_url(row.get("url")):
             originals.setdefault(ident, {
