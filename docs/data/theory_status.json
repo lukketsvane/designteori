@@ -1,0 +1,17 @@
+{
+  "raw_historical_references": 430,
+  "unique_provisional_candidate_records": 407,
+  "source_references_collapsed": 23,
+  "matched_openalex_exact_doi": 0,
+  "matched_nordic_editorial_exact_doi": 0,
+  "possible_existing_title_or_id": 20,
+  "ambiguous_doi_records": 0,
+  "audit_rows": 430,
+  "status_counts": {
+    "candidate-new": 391,
+    "possible-editorial-title-year": 15,
+    "possible-openalex-id": 5,
+    "provisionally-grouped": 19
+  },
+  "warning": "Provisoriske søkjepostar frå historiske og globale bibliografiar. Verken nordisk tilknyting, identitet eller fagleg relevans er verifisert. Tittel/forfattar/år-gruppering er ikkje sikker deduplisering."
+}
