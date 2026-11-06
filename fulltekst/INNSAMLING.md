@@ -1,6 +1,6 @@
 # Hent tusenvis av PDF-ar
 
-Korpuset har 7 354 registreringar. Hentekøen har 4 565 OA-lenkjer, der 1 707 ser ut som direkte PDF-adresser. Dette er **kandidatar**, ikkje ferdig nedlasta eller fagleg godkjende dokument. Dei 15 lisenskontrollerte PDF-utgåvene i `fulltekst/` blir bevarte.
+Korpuset har 7 354 registreringar. Hentekøen har 4 564 OA-lenkjer, der 1 706 ser ut som direkte PDF-adresser. Dette er **kandidatar**, ikkje ferdig nedlasta eller fagleg godkjende dokument. Dei 15 lisenskontrollerte PDF-utgåvene i `fulltekst/` blir bevarte.
 
 ## Start innsamlinga
 

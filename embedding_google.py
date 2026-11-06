@@ -220,7 +220,7 @@ def hybrid(query, *, model=DEFAULT_MODEL,dims=DEFAULT_DIM,limit=10,
                  (model,dims)).fetchone()[0]
     if n:
         vec=query_embedding(query,model,dims)
-        dense=dense_hits(db,vec,model=model,dims,limit=max(100,limit*8))
+        dense=dense_hits(db,vec,model=model,dims=dims,limit=max(100,limit*8))
     scores={}
     for group,scale in [(lexical,1.0),(dense,weight_dense)]:
         for rank,cid in enumerate(group):
