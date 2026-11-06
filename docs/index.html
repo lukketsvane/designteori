@@ -28,7 +28,7 @@ h1{font-size:clamp(34px,5vw,64px);letter-spacing:-.065em;line-height:1.04;font-w
 .section{margin:24px 0 22px}
 h2{font-size:22px;letter-spacing:-.045em;font-weight:660;margin:0 0 14px}
 .section-intro{font-size:13px;color:var(--secondary);max-width:750px}
-.filters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(100px,1fr));gap:10px;margin:16px 0}.advanced .filters{grid-template-columns:repeat(4,minmax(100px,1fr));margin:12px 0}.advanced summary{cursor:pointer;font-size:12px;color:var(--secondary)}
+.filters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(100px,1fr));gap:10px;margin:16px 0}.advanced .filters{grid-template-columns:repeat(4,minmax(100px,1fr));margin:12px 0}.advanced summary,.explorer summary{cursor:pointer;font-size:12px;color:var(--secondary)}.explorer{padding-top:12px;border-top:1px solid var(--line)}.explorer>summary{font-size:14px;font-weight:600}.explorer>section{padding-top:20px}
 .field{display:block}.field span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px}
 input,select,button{border-radius:0;border:1px solid var(--line);font:inherit;color:var(--ink);background:var(--bg);height:44px;padding:0 12px;width:100%}
 input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
@@ -90,7 +90,6 @@ footer p{max-width:540px}
 <a class="mark" href="./">DESIGNTEORI</a>
 <nav>
 
-<a href="#forskarar">Forskarar</a>
 <a href="https://github.com/lukketsvane/designteori">GitHub</a>
 </nav>
 </header>
@@ -108,10 +107,10 @@ footer p{max-width:540px}
 <h2>Publikasjonar</h2>
 <div class="filters">
 <label class="field"><span>Søk</span><input id="search" type="search" placeholder="Tittel, forfattar, DOI" autocomplete="off" autofocus></label>
-<label class="field"><span>Type</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle</option><option value="review">Oversyn</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="editorial-candidate">Uavklara</option></select></label>
+<label class="field"><span>Type</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle</option><option value="review">Oversyn</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="unverified">Kandidatar</option></select></label>
 <label class="field"><span>Land</span><select id="country"><option value="">Alle land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
 </div><details class="advanced"><summary>Fleire filter</summary><div class="filters"><label class="field"><span>År</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
-<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Kjeldekandidatar</option></select></label>
+<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Bibliografi</option><option value="repository-candidate">Arkivimport</option></select></label>
 <label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
 <label class="field"><span>Prioritet</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
 </div></details>
@@ -119,8 +118,7 @@ footer p{max-width:540px}
 <div id="records"></div>
 <button class="more" type="button" id="more" hidden>Vis fleire</button>
 </section>
-<section class="section" id="forskarar">
-<h2>Forskarar og institusjonar</h2>
+<details class="section explorer" id="forskarar"><summary>Forskarar / institusjonar</summary><section>
 <div class="scholar-grid">
 <div>
 <label class="field"><span>Søk etter forskar</span><input id="author-search" type="search" placeholder="Namn eller OpenAlex-ID" autocomplete="off"></label>
@@ -135,7 +133,7 @@ footer p{max-width:540px}
 <button class="more" id="institution-more" type="button" hidden>Vis fleire institusjonar</button>
 </div>
 </div>
-</section>
+</section></details>
 </main>
 <dialog id="work-modal" class="dialog" aria-labelledby="detail-title">
 <button type="button" class="detail-close" id="work-close">Lukk ×</button>
@@ -171,7 +169,7 @@ function renderRow(w){
  const small=make("p",undefined,"meta-small");
  for(const c of w.countries || [])small.append(make("span",countryNames[c]||c,"label"));
  if(w.license)small.append(make("span",w.license,"label licensed"));
- if(w.origin==="editorial")small.append(make("span","Uavklart","label"));
+ if(w.origin)small.append(make("span",w.duplicate_status==="possible-duplicate"?"Mogleg dublett":"Uavklart","label"));
  if(w.theme)small.append(make("span",w.theme,"label"));
  else if(w.topic)small.append(make("span",w.topic,"label"));
  if(w.citations!==null&&w.citations!==undefined)small.append(make("span"," "+fmt(w.citations)+" siteringar"));
@@ -201,7 +199,8 @@ function apply(){
  const fulltext=$("fulltext").value;
  const priority=$("priority").value;
  selected=works.filter(w=>{
-  if(kind && w.kind!==kind)return false;
+  if(kind==="unverified" && !w.origin)return false;
+   if(kind && kind!=="unverified" && w.kind!==kind)return false;
    if(country && !(w.countries||[]).includes(country))return false;
   if(period && !(w.year>=+period && w.year<+period+10))return false;
   if(scope && w.scope!==scope)return false;
@@ -230,31 +229,22 @@ for(const id of ["search","kind","country","period","scope","fulltext","priority
  $(id).addEventListener(id==="search"?"input":"change",apply);
 }
 $("more").addEventListener("click",()=>{limit+=60;draw()});
-let bibliography=[];
-async function initBibliography(){
- try{
-  const response=await fetch("./data/bibliografiar.json");
-  if(!response.ok)throw Error("Bibliografien er utilgjengeleg");
-  const data=await response.json();bibliography=(data.items||[]).filter(x=>x.origin==="editorial");
-  $("stat-editorial").textContent=fmt(bibliography.length);
- }catch(err){$("stat-editorial").textContent="0";console.error(err)}
+let additions=[],nordicStatus={};
+async function initNordic(){
+ const [r,st]=await Promise.all([
+  fetch("./data/nordic_additions.json"),fetch("./data/nordic_status.json")
+ ]);
+ if(!r.ok||!st.ok)throw Error("Nordiske kjelder kan ikkje lastast");
+ additions=await r.json();nordicStatus=await st.json();
 }
-function integrateEditorial(){
- if(!works.length||!bibliography.length)return;
- const ids=new Set(works.map(w=>w.id));
- const dois=new Set(works.map(w=>doiKey(w.doi)).filter(Boolean));
- const titles=new Set(works.map(w=>titleKey(w.title)+"|"+String(w.year)));
- for(const r of bibliography){
-  if(r.origin!=="editorial"||!r.title||!r.year)continue;
-  const year=Number(r.year),doi=doiKey(r.doi),titleYear=titleKey(r.title)+"|"+String(year);
-  if((r.source_id&&ids.has(r.source_id))||(doi&&dois.has(doi))||titles.has(titleYear))continue;
-  const w={id:r.id,title:r.title,year,doi:r.doi||"",authors:[r.authors||"Ukjend forfattar"],
-   source:"Nordisk redaksjonell bibliografi",source_url:r.url||"",countries:[],kind:"editorial-candidate",
-   citations:null,topic:"",theme:"",oa_url:"",language:"",scope:"editorial-candidate",
-   review_priority:"",review_score:0,origin:"editorial",pdf:"",text:"",license:""};
-  w._search=[w.title,...w.authors,w.source,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
-  works.push(w);ids.add(w.id);if(doi)dois.add(doi);titles.add(titleYear);
+function integrateNordic(){
+ const existing=new Set(works.map(w=>w.id));
+ for(const w of additions){
+  if(!w.title||existing.has(w.id))continue;
+  w._search=[w.title,...(w.authors||[]),w.source,w.venue,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
+  works.push(w);existing.add(w.id);
  }
+ $("stat-editorial").textContent=fmt(nordicStatus.editorial_records||0);
  works.sort((a,b)=>(b.review_score||0)-(a.review_score||0)||(b.year||0)-(a.year||0));
  apply();
 }
@@ -273,7 +263,7 @@ function exportSelected(){
 }
 $("export-visible").addEventListener("click",exportSelected);
 
-Promise.all([init(),initBibliography()]).then(integrateEditorial);
+Promise.all([init(),initNordic()]).then(integrateNordic).catch(e=>{console.error(e);$("stat-editorial").textContent="–"});
 </script>
 <script src="./atlas.js" defer></script>
 </body>
