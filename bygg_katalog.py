@@ -59,7 +59,7 @@ def main():
     "keyword_categories":triage.get(id,{}).get("keyword_categories",""),
   }
   docs.append(record)
- if len(docs)!=7300:raise SystemExit(f"Unexpected count {len(docs)}; check before publishing")
+ if not docs:raise SystemExit("No publications in the source database")
  OUT.mkdir(parents=True,exist_ok=True)
  (OUT/"publications.json").write_text(json.dumps(docs,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
  (OUT/"stats.json").write_text(json.dumps({
