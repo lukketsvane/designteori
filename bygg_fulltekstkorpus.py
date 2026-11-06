@@ -221,10 +221,16 @@ def index_document(db, wid, path, expected_hash, origin, info, license_name,
                 db.execute("DELETE FROM embeddings WHERE chunk_id IN (SELECT chunk_id FROM chunks WHERE sha256=?)", (digest,))
                 db.execute("DELETE FROM chunks WHERE sha256=?", (digest,))
                 db.execute("DELETE FROM pages WHERE sha256=?", (digest,))
-            db.execute("""INSERT OR REPLACE INTO documents
+            db.execute("""INSERT INTO documents
                 (sha256,file_path,bytes,pages,extracted_pages,char_count,
                  extractor,chunk_version,quality,processed_at)
-                VALUES(?,?,?,?,?,?,?,?,?,?)""",
+                VALUES(?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(sha256) DO UPDATE SET
+                  file_path=excluded.file_path,bytes=excluded.bytes,
+                  pages=excluded.pages,extracted_pages=excluded.extracted_pages,
+                  char_count=excluded.char_count,extractor=excluded.extractor,
+                  chunk_version=excluded.chunk_version,quality=excluded.quality,
+                  processed_at=excluded.processed_at""",
                 (digest,str(path),path.stat().st_size,len(pages),n_text,
                  count,extractor,CHUNK_VERSION,quality,timestamp()))
             for p, text in enumerate(pages,1):
