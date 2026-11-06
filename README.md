@@ -46,9 +46,4 @@ python designteori.py build
 ## Testar
 
 ```bash
-python -m unittest discover -s tests -v
-```
-
-## Lisens
-
-Kode og samanstilte metadata/analyseskript er lisensierte under MIT (`LICENSE`); enkeltverk og PDF-dokument følgjer opphavsretten og Open Access-vilkåra frå kjeldene sine.
+python -m unittest discover -s tests -
