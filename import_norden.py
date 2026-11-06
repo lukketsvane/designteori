@@ -116,7 +116,7 @@ def record_authors(raw):
 
 
 def kind(value):
-    t = key(value)
+    t = key(re.sub(r"([a-z])([A-Z])", r"\1 \2", str(value or "")))
     if not t:
         return "unknown"
     if any(x in t for x in ("review article", "review paper", "review")):
