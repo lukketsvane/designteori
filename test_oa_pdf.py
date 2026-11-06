@@ -121,7 +121,8 @@ class PDFHarvestTest(unittest.TestCase):
                     max_bytes=1_000_000, retry_failed=False,
                     lookup_openalex=True, lookup_semantic_scholar=True)
             self.assertEqual(count, 1)
-            self.assertTrue(pdf.cached_pdf_ok("W987", progress["W987"]))
+            with patch.object(pdf, "PRIVATE", private):
+                self.assertTrue(pdf.cached_pdf_ok("W987", progress["W987"]))
 
     def test_queue_keeps_all_works_and_separates_archived(self):
         with tempfile.TemporaryDirectory() as td:
