@@ -142,8 +142,7 @@ def safely_encoded_url(link):
     value = str(link or "")
     if any(ord(char) < 32 or ord(char) == 127 for char in value):
         raise ValueError("control characters in URL")
-    return quote(value, safe=":/?#[]@!def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):'()*+,;=%-._~")
-
+    return quote(value, safe=":/?#[]@!$&'()*+,;=%-._~")
 
 def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):
     """Fetch a public HTTPS resource, with each redirect checked and a strict size cap."""
