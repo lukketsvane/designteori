@@ -1,0 +1,1833 @@
+WORK: Reshaping Higher Education Designs and Futures: Postdigital Co-design with Generative Artificial Intelligence
+AUTHORS: Sandris Zeivots, Alison Casey, Tiffany Winchester, Jack Webster, Xin Wang, Linus Tan, Wina Smeenk, Frank Paul Schulte, Antonia Scholkmann, Belinda Paulovich, Diego Muñoz, Joanne Mignone, Lilia Mantai, Stefan Hrastinski, Rebecca Godwin, Olov Engwall, Henrik Dindas, Marieke van Dijk, Laura Ann Chubb, Chrysi Rapanta, Jimmy Jaldemark, Sarah Hayes
+YEAR: 2025
+DOI: https://doi.org/10.1007/s42438-025-00595-4
+SOURCE: https://link.springer.com/content/pdf/10.1007/s42438-025-00595-4.pdf
+LICENSE: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+Postdigital Science and Education (2025) 7:1334–1374
+https://doi.org/10.1007/s42438-025-00595-4
+
+ FORUM
+
+Reshaping Higher Education Designs and Futures:
+Postdigital Co‑design with Generative Artificial Intelligence
+
+Sandris Zeivots1 · Alison Casey1 · Tiffany Winchester2 · Jack Webster3 ·
+Xin Wang4 · Linus Tan5 · Wina Smeenk6 · Frank P. Schulte7 ·
+Antonia Scholkmann8 · Belinda Paulovich9 · Diego Muñoz9 ·
+Joanne Mignone10 · Lilia Mantai1 · Stefan Hrastinski11 · Rebecca Godwin12 ·
+Olov Engwall13 · Henrik Dindas7 · Marieke van Dijk14 · Laura Ann Chubb3 ·
+Chrysi Rapanta15 · Jimmy Jaldemark16 · Sarah Hayes17
+
+
+Received: 2 October 2025 / Revised: 6 October 2025 / Accepted: 8 October 2025 /
+Published online: 15 November 2025
+© The Author(s) 2025
+
+
+Abstract
+This article examines how collaborative design practices in higher education are
+reshaped through postdigital entanglement with generative  artificial intelligence
+(GenAI). We collectively explore how co-design, an inclusive, iterative, and rela-
+tional approach to educational design and transformation, expands in meaning, prac-
+tice, and ontology when GenAI is approached as a collaborator. The article brings
+together 19 authors and three open reviewers to engage with postdigital inquiry,
+structured in three parts: (1) a review of literature on co-design, GenAI, and postdig-
+ital theory; (2) 11 situated contributions from educators, researchers, and designers
+worldwide, each offering practice-based accounts of co-design with GenAI; and (3)
+an explorative discussion of implications for higher education designs and futures.
+Across these sections, we show how GenAI unsettles assumptions of collaboration,
+knowing, and agency, foregrounding co-design as a site of ongoing material, ethical,
+and epistemic negotiation. We argue that postdigital co-design with GenAI reframes
+educational design as a collective practice of imagining, contesting, and shaping
+futures that extend beyond human knowing.
+
+Keywords  Co-design · Generative artificial intelligence (AI) · Higher education ·
+Postdigital futures · Collaborative design
+
+
+
+
+
+Extended author information available on the last page of the article
+
+  Vol:.(1234567890)
+
+===== PAGE 2 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1335
+
+Introduction (Sandris Zeivots)
+
+  The way you engage – with this text, with AI... – offers clues about your
+   relationship with complexity,  uncertainty, and the unknown. (Tea and
+   Andreotti 2024: 103)
+   Generative artificial intelligence (GenAI) is rapidly reshaping higher educa-
+tion, provoking both enthusiasm and concern. While much of the debate has cen-
+tred on questions of plagiarism, efficiency, and productivity (Al-Zahrani 2024;
+Bond et al. 2024), less attention has been paid to its implications for the design
+processes that shape educational futures. This article focuses on co-design (or
+collaborative design) practices and examines how they are reconfigured through
+postdigital entanglement with GenAI.
+  Co-design has been understood  as an  inclusive,  iterative, and  relational
+approach to educational design and transformation, which is rooted in partici-
+patory design, democratic engagement, and distributed decision-making (Sand-
+ers and Stappers 2008; Manzini 2015). In higher education, co-design has been
+mobilised to reimagine curricula, redesign learning environments, and support
+institutional change in response to shifting technological, social, and political
+conditions (Abegglen et al. 2023; Wilson et al. 2021; Örnekoğlu-Selçuk et al.
+2024; Zeivots et al. 2025). Co-design in higher education is necessarily postdigi-
+tal, involving a network of technology-mediated communication, design media,
+and educational technologies that connect people and facilitate co-design pro-
+cesses (Wardak et al. 2024). Postdigital inquiry emphasises the exploration of
+entanglement rather than separation between digital and non-digital, human and
+non-human (Fawns 2023; Jandrić and Knox 2022).
+  The involvement of GenAI as a non-human collaborator raises questions about
+agency, authorship, and the ethics of participation (Vartiainen et al. 2025; Wil-
+liamson 2024; Adewumi 2025). From this perspective, co-design with GenAI is
+not a matter of incorporating a new technological tool but of reconceptualising
+co-design as a practice shaped by and shaping complex assemblages of humans,
+technologies, and cultural contexts. This shift is methodological as much as it is
+ontological: co-design itself is refigured when GenAI is viewed as a collabora-
+tor, raising questions of what counts as knowledge, creativity, and participation in
+designing educational futures (Dell’Acqua et al. 2025; Mattioli and Tessier 2025;
+Vartiainen et al. 2025).
+  The article brings together 19 authors and three reviewers across continents and
+disciplines to collectively examine how co-design is being reconfigured in relation to
+GenAI. Our collective inquiry is structured in three parts: (1) a review of literature;
+(2) 11 situated contributions from educators, researchers, and designers worldwide,
+each offering practice-based accounts of co-design with GenAI; and (3) an explora-
+tive discussion of implications for higher education designs and futures. Through
+this structure, we show how postdigital co-design with GenAI unsettles both epis-
+temology and ontology, foregrounding it as a contested, negotiated, and collective
+practice of imagining futures that extend beyond human knowing and designing.
+
+===== PAGE 3 =====
+1336                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+Co‑design in Higher Education
+
+Co-design has roots in user-centred design, participatory design, and design
+thinking.  It values the plurality of stakeholder contributions as essential to
+knowledge creation through shared understanding, cooperation, and negotiation
+(Kleinsmann and Valkenburg 2008; Sanders and Stappers 2008). It maintains a
+distinct focus on design as an intentional, iterative, and experimental process that
+shapes educational systems, practices, and environments (Abbonizio et al. 2024;
+Sanders and Stappers 2008; Wardak et al. 2024; Zeivots and Shalavin 2024).
+Co-design is underpinned by a mindset of mutual respect, shared purpose, and
+epistemic openness. It encompasses structured and emergent activities in which
+participants contribute ideas and negotiate meanings, practices, and outcomes in
+ways that enable pedagogical and systemic transformation (Zamenopoulos et al.
+2018; Gachago et al. 2024; Smeenk et al. 2025).
+  The ‘co-’ in co-design highlights  its collaborative ethos that fosters inclu-
+sive engagement and distributed decision-making (Abegglen et al. 2023). In co-
+design, stakeholders work together toward a shared purpose and collaboratively
+decide what their journey will look like (Lee et al. 2018; Smeenk 2023). It invites
+meaningful engagement across roles, disciplines, and sectors, emphasising demo-
+cratic knowledge-in-use of those affected by design decisions over hierarchical
+expertise (Higgins et al. 2019; Sanoff 1990).
+   In higher education, co-design of educational experiences can address power imbal-
+ances by inviting diverse stakeholders like students, educators, learning designers,
+industry partners, and communities to participate as co-creators of learning environ-
+ments, curricula, and institutional futures (Abbonizio et al. 2024; Suliman et al. 2022;
+Wardak et al. 2024). In doing so, co-design is valued for its capacity to make higher
+education more inclusive, democratic, and responsive to diverse lived experiences.
+   Co-design, in a postdigital sense, is not confined to human or technical actors,
+but emerges in their relational entanglements. The postdigital pushes against bina-
+ries such as analogue/digital, human/non-human, and online/offline, insisting instead
+on a nuanced appreciation of the assemblages through which designs unfold (Fawns
+et al. 2023). This orientation expands traditions of co-design that have focused pri-
+marily on human collaboration by explicitly recognising the generative capacities of
+technologies, including GenAI, as active participants in design practices.
+   Inspired by McGilchrist’s (2021) relational ontology, we argue that co-design
+is no longer a standalone concept or discrete method. Rather, it is a dynamic,
+evolving process that is always in relation with people, values, technologies,
+spaces, and systems. Co-design is shaped by and in turn shapes the relational
+fields in which  it is embedded (Zeivots et al. 2023). It appears in and around
+higher education where collaborative efforts and everyday practices are intention-
+ally attuned to design processes, whether structured or emergent. Through this
+lens, design’s impact extends beyond produced artefacts or implemented curric-
+ula to include social dynamics, environments, and impacted societies.
+   In this way, co-design becomes a site where future ontologies and epistemologies
+are  negotiated,  as  actors  become  together  through  engagement,  collective
+
+===== PAGE 4 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1337
+
+sense-making and imagining (Akama 2015; Arthars 2021). This reconceptualisation
+provides a critical foundation for the following section, which explores how the
+engagement with GenAI challenges and extends these understandings of co-design.
+
+Co‑design with Generative AI
+
+As GenAI becomes integrated into educational design, its influence extends beyond
+content generation and automation. It disrupts conventional notions of collabora-
+tion, knowledge production, and creativity, posing critical questions for co-design
+in higher education. In particular, it invites educators and researchers to consider the
+evolving notion of co-intelligence: a collective, relational process of knowledge con-
+struction between human and non-human actors (Banihashem et al. 2025; Mollick
+2024). Framed this way, co-design encounters GenAI no longer as a peripheral add-
+on but as a participant that can mediate, prompt and reshape inquiry, with effects
+that are methodological, epistemic and ethical.
+   In this paper, a postdigital lens allows us to explore GenAI as an integral part of
+socio-material assemblages that co-produce the designs of educational realities and
+futures (Jandrić et al. 2023; Buch et al. 2024). This perspective shifts attention away
+from isolated functions of GenAI and towards how its presence reconstitutes rela-
+tionships, agency, and knowledge flows (Rapanta et al. 2025).
+  Co-design with GenAI represents an ontological shift that alters the structure,
+rhythm, and agency dynamics of the design process. The shift from ‘AI-as-tool’ to
+‘AI-as-co-designer’ reflects a broader reconfiguration of authorship, agency, and
+meaning-making (Jiang et al. 2024; Tea and Andreotti 2024). In some educational
+projects, GenAI is described as a meaning-making partner or co-actor, an entity
+with whom the design process unfolds in dialogue rather than control (Rapanta et al.
+2025).
+  The notion of co-intelligence usefully shifts attention away from individual
+expertise towards hybrid, distributed, and relational forms of knowing shaped by
+both human sense-making and GenAI’s pattern recognition capacities (Banihashem
+et al. 2025; Mollick 2024). However, intelligence itself is also highly contested, and
+GenAI represents a narrow definition of intelligence (see Farrell et al. 2025; van Der
+Maas et al. 2021). This can amplify certain ways of thinking and marginalise others.
+  For example, language often serves as the primary medium through which parties
+articulate experiences, construct shared understanding, and co-produce educational
+artefacts and knowledge (Holman et al. 1997; Vygotsky 1978), while it also condi-
+tions how agency, responsibility, and collaboration are framed in practice and pol-
+icy through terms such as ‘co-intelligence’, ‘cognitive offloading’, and ‘augmented
+intelligence’ (Petricini 2025). Yet, there is strong evidence that knowing is also
+embodied and beyond words, which has implications for design decisions (Blackie
+and Luckett 2025; Ewenstein and Whyte 2007).
+  We explore whether knowing and designing are capacities humans exclusively
+own, or if they are practices in which we participate. Together with GenAI and the
+rest of life, it becomes plausible to wonder if GenAI can complement, not compete
+
+===== PAGE 5 =====
+1338                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+with, human and other forms of knowing. Relational ways of knowing, sense-mak-
+ing, and learning can be approached as the art of ‘coming to practise differently’
+(Kemmis et al. 2021: 282) working with tensions, paradoxes, and complexities with-
+out looking away. This aligns with calls for hybrid ways of knowing, where educa-
+tors and other human and non-human stakeholders, including GenAI, collaborate to
+navigate complexity, uncertainty, and design futures (Rapanta et al. 2025). From this
+perspective, the task is not to decide whether GenAI ‘knows’, but how we can know
+with it.
+  The contributions below are the result of an international call for practice exam-
+ples of how educators, researchers, and designers are integrating GenAI in co-design
+processes in higher education. They reflect a wide range of educational roles, disci-
+plines, and geographies. The collected work represents collaborative sense-making
+and captures the current experimentation with the possibilities and problems of inte-
+grating GenAI into co-design practices. This approach highlights the multiplicity
+and plurality of practices, visual traces and ontologies that offered a collaborative
+inquiry and exploration. Each contribution offers a unique and situated account of
+postdigital co-design with GenAI.
+
+Provoking Critical Engagement with an Unreliable AI Collaborator
+(Jack Webster and Laura Ann Chubb)
+
+Co-design brings together different perspectives to envision possibilities difficult to
+achieve alone, inviting multiple voices, ways of knowing, and worldviews into learn-
+ing (Nocek 2023). Teachers have often relied on fictional scenarios, role-plays, and
+hypothetical case studies to pluralise perspectives that support affective and imagi-
+native learning in co-design (Paracha et al. 2019). GenAI contributes to these prac-
+tices not by offering solutions but by generating incomplete, unreliable, or unex-
+pected material that becomes the basis for collaborative critique and re-framing.
+  However, AI-generated content remains grounded in data produced from text,
+images, and conversations aggregated from human experiences. The opaqueness of
+GenAI creates challenges where those involved in the co-design process—educa-
+tors, students, and other (human) stakeholders—must learn to critically assess how
+knowledge is selected, framed, and contextualised. This raises a critical question: if
+co-design aims to expand imaginative possibilities, how might GenAI support stake-
+holders to co-produce knowledge, assessments, and artefacts by working with its
+limitations as design material?
+  We argue that GenAI can be employed in the collaborative co-design process as
+an unreliable collaborator—one whose limitations become learning opportunities.
+This framing surfaces the sociotechnical entanglements at play. While GenAI may
+appear to provide alternative worldviews, it can simultaneously homogenise imagi-
+nation through normative training patterns (Räisä and Stocchetti 2024). By treating
+unreliability as a resource, co-design participants can leverage GenAI’s errors and
+inconsistencies as objects for critical engagement that drive cycles of questioning,
+revision, and reframing to design and shape knowledge and learning outcomes.
+
+===== PAGE 6 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1339
+
+  We propose a three-phase approach in which GenAI is engaged in co-design pro-
+cesses as a provocateur, pluraliser, and facilitator. The approach is intended to facilitate
+co-design practices that centre distributed agency, sociotechnical critique, and iterative
+meaning-making. Although presented here as successive phases, we encourage educa-
+tors, educational developers, designers, and students to work flexibly with the approach.
+
+Phase 1: Provocateur
+
+Co-design groups collaboratively frame initial (wicked) problems and scenarios, with
+GenAI outputs introduced as provocations. These outputs serve as raw materials that
+should be interrogated, contested, and reshaped. For example, a group might explore
+a scenario on Indigenous land rights that presents multiple stakeholder perspectives
+(e.g. government officials, environmental activists, Indigenous communities, and
+developers). The outputs might introduce multiple, even contradictory viewpoints
+and challenge students’ assumptions. From there, groups can engage in dialogue to
+explore what the AI has generated and why. Whose voices are included or omitted?
+What ideologies are being reinforced? GenAI outputs serve as provocations for par-
+ticipants to share their diverse interpretations, assumptions, and knowledge in the
+process of negotiating how to reframe the scenario to reflect shared priorities.
+
+Phase 2: Pluraliser
+
+Participants co-design artefacts that capture different framings (by culture, class,
+gender) of the same issue. Working iteratively with GenAI, they can generate alter-
+native viewpoints or counter-narratives, with the freedom to choose which voices or
+ideas they want to explore, amplify, or reframe. For example, they might ask how a
+climate refugee or Indigenous elder would respond to a proposed policy. This phase
+draws attention to the perspectives GenAI defaults to and those that remain under-
+represented or require more deliberate prompting to uncover. In this way, the cri-
+tique of omissions becomes part of the co-design process.
+
+Phase 3: Facilitator
+
+Co-design groups reflect collectively on the process, evaluating both the content and
+their relationship to the GenAI system to better understand how human and non-
+human contributions (through their agency) shaped the design process and outcomes.
+Together, participants co-design evaluative criteria for assessing collective knowledge
+construction, asking questions such as: How did GenAI shape our thinking? What
+assumptions did it introduce? How did my own input influence the design outcome?
+   This three-phase approach (Fig. 1) demonstrates how GenAI can help create ‘third
+spaces’—liminal zones where dominant knowledge systems can be questioned and
+alternative perspectives explored (Cho 2018). In these third spaces, GenAI becomes a
+subject of critique, where its omissions, biases, and default framings can be examined
+as part of the co-design process. In this sense, GenAI, as an unreliable collaborator,
+also becomes a ‘third agent’ that enables teachers to model critical inquiry as
+
+===== PAGE 7 =====
+1340                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+
+
+
+
+Fig. 1   Three-phase approach to engage GenAI as an unreliable collaborator
+
+investigators (rather than knowledge authorities) alongside their students and other
+collaborators, co-designing both learning outputs and the processes that shape them.
+  Engaging GenAI as an unreliable collaborator can create opportunities to scruti-
+nise power dynamics in the postdigital condition, of which GenAI is transforming.
+The very flaws of GenAI systems become the conditions for participants to design
+with greater attentiveness to power, perspective, and possibility. When unreliability
+becomes part of the process, designing knowledge outputs is no longer about set-
+tling on stable answers but about questioning how knowledge is constructed, whose
+perspectives are included or omitted, and how power operates within both GenAI
+systems and collaborative design processes.
+
+
+Reimagining Chinese Literature Through Postdigital Co‑design (Xin
+Wang)
+
+Tang poetry is considered an essential component of Chinese literary tradition,
+renowned for its linguistic elegance, philosophical resonance, and imagistic subtlety.
+However, teaching Tang poems to English-speaking students, especially those unfa-
+miliar with Chinese history, language, or aesthetics, often presents significant chal-
+lenges. These poems, written over 1300 years ago, can appear opaque, distant, or
+culturally inaccessible. In teaching selected Tang poems to 150–200 students in a
+large-group World Cultures class at a North American university, I am frequently
+tasked with helping students move beyond surface impressions to engage with the
+poems’ layered meanings and artistic complexity.
+  To bridge this cultural and temporal distance, I draw on multimodal strategies. I
+introduce Tang poems as songs and lyrical compositions, inviting students to hear
+them as songs. I present poems with Chinese calligraphy and traditional landscape
+paintings to demonstrate the classical triad of poetry, painting, and calligraphy. In
+
+===== PAGE 8 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1341
+
+smaller group activities, I ask students to use poster paper and coloured markers to
+interpret a poem’s imagery and philosophical underpinnings visually, which helps
+them grasp how Tang poets shaped and framed time, space, and meaning within the
+tightly constrained quatrain form.
+   I have started experimenting with using GenAI in my teaching practice, not as
+replacements for human instruction, but as co-designers that participate in the learn-
+ing process (Jiang et al. 2024). This shift marks a movement toward a postdigital
+pedagogy, in which human and non-human actants collaboratively shape educa-
+tional experience and knowledge production.
+   In one recent module, students worked with ChatGPT to co-translate poems
+by Li Bai and Wang Wei, add annotations, and render a Chinese painting (Fig. 2).
+For example, students crafted prompts to instruct the GenAI to conduct both literal
+and literary translations of a quatrain ‘Quiet Night Thoughts’ by Li Bai, sparking
+
+
+
+
+
+Fig. 2   A student’s annotated ChatGPT translation of Li Bai’s ‘Thoughts on a Quiet Night’
+
+===== PAGE 9 =====
+1342                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+student discussions about word choices, meter, images, tone, and authenticity in
+both translations. I asked students to think if an AI-assisted translation could still
+be considered their own interpretation, and how GenAI shapes or obscures cultural
+nuance.
+  We extended the activity to prompt the AI to re-interpret the poems through dif-
+ferent philosophical lenses (Daoist, Confucian, and Buddhist), and literary styles
+(Romanticism, Imagism). This enabled students to see how meaning shifts based
+on interpretive frameworks, underscoring the multi-layered nature of Tang poetry. I
+also asked students to find out spatial and temporal dimensions first and then com-
+pared with findings by GenAI, adding much more depth to their understanding of
+the poem.
+   Students revised and annotated their chosen translations, adding footnotes, inter-
+textual references, cultural commentary, and interpretive commentary. When asked
+to reflect upon this learning between human and AI, several described AI as ‘a
+second reader’ which provides new perspectives to their own reading. Rather than
+replacing their labour, AI became a collaborative peer that provoked creative and
+critical reflections. Learning is not to find the direct answer, but to discover more.
+   In another session, students used DALL·E and similar image-generation tools to
+visualise poetic scenes with Chinese poems on the painting. These images sparked
+discussions about symbolism in Tang poetry and aesthetic biases embedded in
+GenAI training data.
+  Such practices illustrate postdigital co-design in action: students, educators, and
+GenAI models collaboratively construct knowledge and meaning. Prompt engi-
+neering becomes a metacognitive skill that teaches students how to ask questions,
+evaluate representations, and translate between media and epistemologies. In this
+distributed agency model, students become active participants in shaping their own
+interpretive paths.
+  However, these interventions raise critical concerns. Can a GenAI trained largely
+on English-language data accurately ‘understand’ and reflect subtleties of Chinese
+poetics? What cultural assumptions are embedded in the responses? One student
+noted that ChatGPT’s translations often defaulted to romantic or pastoral readings.
+In addition, students questioned why AI-generated images resembled comic pictures
+or collages of cultural symbols rather than Chinese ink-wash paintings, prompting
+discussions about cultural flattening and aesthetic erasure. I also pointed out that the
+poems on AI-generated images were fake and made-up Chinese characters, similar
+to the fake Chinese characters created by Chinese artist Xu Bing, featured in his art-
+work ‘Book from the Sky’.
+   Despite these limitations, these activities reflect a deeper, more participatory ped-
+agogy. GenAI does not simply augment instruction—it becomes a generative inter-
+locutor that challenges students to think critically about voice, tradition, and transla-
+tion. The classroom becomes a co-designed site of inquiry, aligned with postdigital
+values of entanglement, iteration, and reflexivity (Zeivots et al. 2025). For future
+modules, I plan to explore musical interpretations of Tang poetry using tools like
+Suno AI to set verses to melody and rhythm, reanimating ancient texts for the digital
+age with multimodal learning and cross-disciplinary engagement.
+
+===== PAGE 10 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1343
+
+Eight Pictures on My Board: Is This GenAI Speaking? (Antonia
+Scholkmann)
+
+Eight pictures are pinned on the board across my desk, chosen by four students—
+‘Tobias’, ‘Signe’, ‘Karen’, and ‘Marie’—during a focus group interview to visualise
+their attitudes towards GenAI.
+  We held this focus group in January 2024, after a semester where we, as a design
+experiment, invited a cohort of students from one of our pedagogical programs to
+explore GenAI as part of their learning processes. ChatGPT was fairly new and, to be
+honest, my colleagues and I struggled with how to integrate it in a meaningful way.
+But we felt that we had to do it, if only not to buy into the overly enthusiastic narra-
+tive about GenAI’s potential for learning. We decided to make learning with GenAI
+a topic of open exploration. Invited our students to observe how they themselves and
+their peers were engaging with GenAI as part of their learning practices. Asked them
+to reflect and write about what they saw and reflected and wrote parallelly with them.
+  We originally framed the activity as a design experiment, but the more I look at
+the pictures, the more I think: wasn’t it actually co-design? ‘To unpack the complex-
+ity of relationships and actions in co-design, we need a holistic approach, one that
+acknowledges the role of human and non-human actants’ (Wardak et al. 2024: 206).
+Further, ‘the main tenet of [co-design] is that a range of actors, each having a stake
+or interest in the outcome, come together to design an output or product’ (Brown
+et al. 2024: 5). So, what stake did GenAI have in this?
+  The pictures (Fig. 3) visualise how the four students experienced GenAI at the
+beginning of the semester (left column) and after one semester of exploration (right
+column). In the focus group they talked about how GenAI spoke to them through
+the pictures. There was talk about wanting to hide from it (Tobias, first picture left
+column) or to close one’s eyes to it (Karen, third picture, left column). Also, feeling
+like a ‘sad clown’ because one had not engaged with it as much as might be expected
+(Signe, second picture, left column) or experiencing the GenAI phenomenon as a
+‘soap bubble that will burst’ (Marie, fourth picture, left column).
+   Referring to Latour, Wardak et al. (2024: 196) write: ‘Matters of concern … invite
+debate and discussion around uncertainties [as opposed to] matters of fact’ that close
+up for further discussion. So, what uncertainty are we invited to debate here? Maybe an
+ambivalence between the seductive power of GenAI and the hesitation those four stu-
+dents feel, rightfully? An uncertainty on the side of us teachers, when we, maybe naively,
+had hoped that what the students would bring to us would solve our own uncertainties?
+  The right column shows how the four students felt about GenAI after a semester
+of open exploration and reflection. They tell how Tobias had built a community with
+other students to ‘dance around’ GenAI (first picture, right column); how Signe felt
+that she needed to continuously inspect GenAI high up from a crane, safely from a
+distance (second picture, right column); that for Karen exploring GenAI in learning
+remained work in progress like a roof not yet finished (third picture, right column);
+and finally, how GenAI somehow still was ‘hot air’, wrapped in colourful balloons
+this time, so a bit more stable, that Marie felt she needed to keep ‘on a long leash’
+(last picture, right column).
+
+===== PAGE 11 =====
+1344                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+
+
+
+
+Fig. 3   Eight pictures on my board (Scholkmann, Spring 2025)
+
+  ‘The engineer asks scientific questions and creates optimal solutions. The brico-
+leur in contrast pulls together what is at hand, ready or half made to make something
+new, regardless of what it is.’ (Matthews 2019: 421) Pulling together and half-made
+as it is, GenAI in the pictures seems to ask to be scrutinised and challenged. To also
+maybe be kept at arm’s length and to be inspected from a safe distance. It plays a
+role—because how can it not?—but neither one of almighty power nor one of servi-
+tude. Maybe the role of being taken seriously.
+
+===== PAGE 12 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1345
+
+Humans and GenAI as Co‑tutors (Stefan Hrastinski and Olov Engwall)
+
+Postdigital research emphasises the entanglement of the analogue and the digital, the
+technological and the non-technological, and the biological and the informational. It
+rejects binary thinking and technological determinism (Jandrić 2023). In this research tra-
+dition, co-tutoring, where humans and AI are entangled, is a relevant concept. Tutors have
+always been co-tutors in a sense, as they rely on support from other tutors, textbooks, or
+online resources. What is new is that GenAI now plays a role in this network of support.
+  Maths Coach Online is a free, anonymous, chat-based service in which univer-
+sity students help primary and secondary school students with their math studies.
+Founded in 2009, it is available Monday to Thursday evenings during school semes-
+ters. The service is staffed by students who study mathematics education or math-
+ematics and have completed a course in online tutoring. The platform includes a
+shared text-based chat and drawing space used by both students and tutors to discuss
+the problem. With the rapid development of GenAI, we see a value in exploring the
+potential of this technology for math tutoring, however we still believe that human
+tutors remain essential. Therefore, our research investigates how GenAI can support
+human tutors in the tutoring process (Jansson et al. 2024).
+  GenAI can, first, offload human tutors by handling the more routine aspects of
+tutoring when demand is high and, second, support tutors to stay focused on student-
+centred guidance rather than direct instruction. To this end, GenAI support has been
+integrated into the Maths Coach tutoring software using a ChatGPT API to provide
+tutors with suggested responses to each student input based on the previous chat
+interaction (see Fig. 4). The tutor can choose to directly use, edit, or disregard the AI
+suggestion. A detailed prompt was developed to try to ensure that tutoring suggested
+by ChatGPT is focused on guidance rather than being answer-driven.
+   Traditionally, human control and computer automation have been viewed as
+mutually exclusive: either a task  is controlled by a human or automated by a
+
+
+
+
+
+Fig. 4   Maths Coach Online with GenAI support
+
+===== PAGE 13 =====
+1346                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+machine. Shneiderman (2020) instead proposes a two-dimensional view, allowing
+for high levels of both human involvement and automation. This means that tutors
+and GenAI can co-design tutoring without the latter replacing the former. From this
+perspective, adaptivity is not solely a trait of AI systems—it is co-designed by tutors
+and AI in their interaction, with each other, and with students. Yet, we still know lit-
+tle about how this co-tutoring should be designed to support high-quality tutoring.
+   So, how can GenAI contribute to the tutoring process? While it often provides
+correct mathematical calculations for primary and secondary school problems,  it
+sometimes makes mistakes. More commonly, unless the prompt very explicitly con-
+strains the GenAI to not give the answer, it directly provides every step of the solu-
+tion, counter-acting the pedagogical foundation that tutors should guide students to
+help them solve the problem themselves. When a suggestion is correct and peda-
+gogically adequate, tutors can quickly send it to the student. When it is incorrect or
+provides too much of the solution, the tutor functions as a gatekeeper, ensuring that
+only mathematically and pedagogically appropriate messages are sent to the student.
+   In our experience, AI-generated tutor messages often have quality issues, rang-
+ing from mathematical errors to a lack of adaptation to individual student needs,
+highlighting the importance of keeping human tutors in control. In many cases,
+tutors choose to write all messages themselves, as involving GenAI can take time
+and complicate communication. The involvement of AI highlights the importance
+of ethics and transparency. Students should be aware of whether they are interacting
+with a human tutor or with GenAI. However, in co-tutoring settings, it may become
+increasingly difficult to distinguish between human- and AI-generated interaction.
+  The future we envision is one where every student has the right to engage deeply
+with human tutors, supported when appropriate by AI. While there are potential
+benefits in combining human and AI capacities, our focus remains on the quality
+of tutoring. Rather than merely asking how automation can save teacher resources,
+we ask: How can we improve the quality of tutoring through human-AI co-tutoring?
+And how does human-AI co-tutoring affect the interaction with the students, from
+the tutors’ and the students’ perspective?
+
+
+Including GenAI in Co‑designing a Postgraduate Program (Lilia
+Mantai and Alison Casey)
+
+Designing a new postgraduate program is a large and complex undertaking. In
+this case, the program had a focus on strategic use of technology, so a wide and
+entangled (Fawns 2019) variety of personnel and technological affordances came
+into play. The dramatis personae were subject matter expert academics, educa-
+tional development academics, learning design professionals, media professionals,
+technologists, and a suite of executive academics. The program design principles
+encouraged purposeful and innovative use of technologies and as such provided a
+strong stimulus for integrating and considering GenAI affordances in the course
+design processes. Two loosely related sets of technology were engaged: technologies
+used for teaching delivery (e.g., online collaborative tools, videoconferencing), and
+
+===== PAGE 14 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1347
+
+those used in the design process (e.g., curriculum mapping, content development)
+which is the subject of this discussion. Both sets included forms of GenAI.
+  Each course in the program was developed by a subgroup of the team consist-
+ing of an educational developer, a learning designer, a media professional and one
+or two subject matter experts using co-design principles (Wardak et al. 2024). In
+keeping with these principles, the use of technology in each team’s planning and
+development was emergent, drawing primarily on the technology familiarity of team
+members. Each team had their own journey with discovering ways to use GenAI
+productively and ethically in the process.
+  One emergent role of GenAI in the co-design process was to facilitate the develop-
+ment of subject matter into educational resources. Some subject matter experts worked
+with GenAI and educational developers to produce video scripts, to summarise technical
+documents and subject literature. GenAI operated as more than a tool in these processes,
+more as a mediator through which the expertise of both humans was blended as each
+brought the results of individual conversations with GenAI into shaping the resources.
+  GenAI was also key in developing the visual aspects of the program, with ini-
+tial concept diagrams generated by a graphic designer with text input from the sub-
+ject matter experts in a GenAI program. These diagrams were refined with feedback
+from the co-design team and with further input from GenAI, informing the final
+diagrams that were created by the graphic designer.
+  Many of the courses incorporated GenAI chatbots and avatars. For instance, the
+realistic avatar shown in Fig. 5 was based on the course coordinator’s appearance
+and voice. The chatbots and avatars were custom-built for each course. Some avatar
+generation engines that were initially considered for educational support had to be
+ruled out as we could not be assured that student or educator data—including facial,
+voice, and location data—could be secured, or that conversations they had with
+students would present no risk to the student. During testing, some of the subject
+
+
+
+
+
+Fig. 5   Image of the course coordinator’s digital interactive avatar interface
+
+===== PAGE 15 =====
+1348                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+matter experts found themselves in conversation with the chatbots, which changed
+their approach to assessment design and to case study activities. They ended up
+using these chatbots as sounding boards or even as test students in co-developing
+educational activities.
+  The integration of GenAI raises important questions about  its agency in the
+co-design network (Wardak et al. 2024), and about ethics and pedagogical design
+(Bozkurt and Sharma 2023). Human designers retained oversight and guidance, but
+GenAI contributed meaningfully in ideation, content creation, design decisions, and
+learner engagement choices. This set of practices challenges traditional notions of
+designer and teacher agency, prompts us to rethink human and machine intellectual
+contribution, and importantly forces us to consider ethics and data safety associated
+with using GenAI.
+  Our team’s experiences in using GenAI in co-design urged us to reflect on where
+and when in the co-design process human-AI augmented collaboration, and collec-
+tive sense-making (Vallis et al. 2023) should be purposefully pursued and where
+actively resisted (Bearman and Ajjawi 2023). To illustrate with the example of build-
+ing interactive avatars, it raises at least two questions: how do we balance tangible
+learning benefits with student safety, and what do we delegate and keep ownership
+of in teaching? Moving into AI-augmented co-design in higher education futures we
+must address such questions through individual critical reflection and institutional or
+sector-wide debate.
+
+
+Cognitive Entanglements: Designing Assessment Frameworks
+with GenAI (Tiffany Winchester)
+
+In late 2022, I began researching how GenAI might reshape our work as educators,
+particularly in the realm of assessment design (see Winchester and Garvey 2023).
+We wanted to move beyond fear and restriction and instead explore its possible inte-
+gration. Yet, many conversations in academia were dominated by concerns about
+plagiarism, academic integrity, and existential risk, not pedagogical potential.
+   In early 2025, I was tasked with designing professional development on GenAI in
+assessment. I was excited but also daunted. Understanding something conceptually
+is different from translating it into structured learning for others. Then, one morn-
+ing, it clicked. I grabbed a pencil and sketched out a framework that I hoped could
+guide staff through the complexity of GenAI in assessment: an early version of what
+would become the Two Prisms framework (Winchester 2025).
+  When I first shared this draft with colleagues (Fig. 6), the feedback was clear:
+it was too complex. That was when I returned to ChatGPT. What followed was
+an unexpected and deeply dialogic process:  I brought the pedagogical  intent,
+the theoretical grounding, and the disciplinary nuance. GenAI offered structure,
+language, and challenge. Together, we began co-designing something new.
+  Working with ChatGPT required ongoing negotiation. The model was eager, so I
+often prompted ChatGPT to ask clarifying questions before responding, rather than
+
+===== PAGE 16 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1349
+
+
+
+
+
+Fig. 6   The original pencil and paper drawing of the framework pre-co-design
+
+defaulting to lengthy, unsolicited text generation. This was not just about managing
+output; it was about protecting my cognitive bandwidth.
+   In many ways, ChatGPT was a great assistant: fast when I needed speed, patient
+when I needed space, and always able to recall previous conversations without
+requiring me to re-establish context. That continuity was particularly useful in hold-
+ing a thread over the weeks and months it took to clarify and shape the framework’s
+structure.
+  While attending a webinar on GenAI and group work, I was struck by a compari-
+son made with traditional student group assessments, when students are often asked
+to self-attribute their contributions, identifying what they brought to the collabora-
+tion. It prompted a moment of reflection for me: why not ask the same of ChatGPT?
+   So, mid-webinar, I returned to our ongoing conversation and prompted: ‘Can
+you analyse the contribution you made to this discussion, and what you think
+I contributed?’ ChatGPT  listed  its contributions (structuring, refining, offering
+language, and analogies) and mine (providing direction, conceptual leadership,
+pedagogical goals, and critical framing). The exchange itself (see Fig. 7) stands
+as a snapshot of negotiated authorship: not simply a record of use, but an artefact
+of co-design. This moment of self-attribution spotlights the distributed nature of
+knowledge production in human–GenAI partnerships, where agency  is not just
+assigned but continually negotiated.
+   This experience has not only complicated my understanding of authorship, but it
+has also disrupted it entirely. What began as a process of developing a framework
+
+===== PAGE 17 =====
+1350                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+
+
+
+
+Fig. 7   Screenshot of ChatGPT-4o illustrating the co-design
+
+quickly evolved into a deeper questioning of where thought originates and how ideas
+are shaped in collaboration. The ambiguity of where a thought came from, be it me
+or the interplay between us, could blur traditional academic expectations around
+attribution: it becomes increasingly difficult to say with certainty who ‘authored’
+what, especially at the level of ideation or structure.
+   In this postdigital landscape, co-design with GenAI could reconfigure how we
+imagine intellectual labour, positioning machines as partners in, not threats to,
+knowledge creation. But it also leaves unresolved tensions around intellectual own-
+ership, the future of academic labour, and the epistemic shifts underway as we enter
+this new era of postdigital scholarship. Does the use of GenAI in scholarship dilute
+originality, or does it elevate clarity and creativity through collaboration? We must
+also ask: who gets to decide what counts as legitimate contribution in AI-mediated
+work, and how might existing academic structures need to adapt? This dilemma
+extends beyond co-writing papers. I have found it surfaces acutely when redesign-
+ing research units, where GenAI supports not just the articulation of ideas, but the
+architecture of learning itself.
+  There may never be a clear answer to the question of authorship in these contexts,
+and perhaps there should not be. What matters more is our willingness to attempt
+to reflect, disclose, and renegotiate how knowledge is produced, shared, and under-
+stood in a world where we no longer design alone.
+
+===== PAGE 18 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1351
+
+Learning Safari into the AI Jungle: Rethinking Faculty Development
+Through Reflective AI Literacy (Henrik Dindas and Frank P. Schulte)
+
+As GenAI tools rapidly find their way into educational practice, questions emerge
+not only about how to use them, but about the pedagogical frameworks that make
+such use meaningful (Reinmann 2024). While much attention has been paid to
+GenAI’s technical capabilities, less is said about the underlying educational values
+shaping its integration (Dindas and Schulte 2025).
+   In Germany and Europe, the discourse on future skills (Ehlers and Eigbrecht
+2024) often promotes an overly technocratic view of educational transformation.
+Prompting has recently been hailed as a ‘super future skill’ (Kindt 2023), but crit-
+ics argue that this perspective risks reducing complex pedagogical tasks to tem-
+plate-based workflows (Kalz and Reinmann 2024). Hence, GenAI literacy should
+be aligned with constructivist principles that emphasise metacognitive engagement,
+critical reflection, and context-sensitive adaptability, rather than the acquisition of
+fixed procedural knowledge.
+  The EU AI Act (European Union 2024) introduced new responsibilities for edu-
+cators using AI, emphasising oversight, ethical awareness, and adaptability. The
+rationale behind this legislative development reinforces our premise: AI competence
+in education cannot be reduced to software tutorials, it must be embedded in ongo-
+ing reflective practice.
+  The ‘Learning Safari’ (Dindas and Schulte 2025) is an experiential workshop,
+designed as a structured yet flexible format that combines AI exploration with
+guided self-reflection. Rather than teaching ‘recipes’ or static methods, participants
+were invited to actively experience and navigate the affordances and limits of AI
+tools through carefully staged learning stations. The core didactic feature of this
+approach lay in the deliberate and even exaggerated use of AI avatars—not human
+instructors—to deliver content and pose reflection prompts (see Fig. 8). This setup
+created a didactic double layer (Glade 2019), distancing the facilitator from direct
+instruction to stimulate deeper self-reflection. In the spirit of Rousseau’s (2009)
+‘negative education’, the format encouraged participants to confront expectations,
+question assumptions, and construct personal meaning from interactions with AI.
+This design fostered a learning environment where educators engaged with GenAI
+both as a tool and as a subject of critical inquiry, thereby cultivating adaptive
+competencies that extend beyond technical proficiency.
+  Within this logic, the ‘Learning Safari’ workshop embodies the principles
+of postdigital co-design. It is not merely a training session, but a shared design
+space where human educators, non-human agents (AI avatars), and socio-tech-
+nical infrastructures interact in dynamic, situated, and often unpredictable ways.
+Rather than positioning GenAI as a tool to be mastered, the workshop treats it as
+a co-participant in the design of learning experiences. This shift resonates with
+postdigital perspectives (Knox 2019) that view educational design not as linear
+implementation, but as an ongoing negotiation of epistemic, material, and ethical
+entanglements.
+
+===== PAGE 19 =====
+1352                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+
+
+
+
+Fig. 8   Facilitators presenting their AI avatars as part of the ‘Learning Safari’ workshop setting (Dindas
+and Schulte 2025)
+
+  The workshop was structured around four key phases of teaching: preparation
+of teaching, active teaching, assessing student performance, and giving feedback.
+Each station was introduced via AI-generated video avatars (produced with
+HeyGen and ChatGPT), which posed  provocative  questions and  scenarios.
+Participants then collaborated in small groups using Miro boards to  reflect,
+document, and discuss (see Fig. 9). The goal was to foster critical awareness of
+the pedagogical roles of AI, to encourage context-sensitive application of GenAI
+tools, and to promote a metacognitive orientation toward the continuous and
+dynamic nature of AI-related developments in higher education.
+  The workshop was conducted across various settings, and participant feed-
+back—not unexpectedly—differed significantly depending on the context. While
+some participants embraced the open-ended, reflective structure, others expressed
+clear frustration, particularly when expectations for concrete tools, prompt tem-
+plates, or ready-made solutions were not met. Rather than indicating a shortcom-
+ing, this divergence can be interpreted as an intended pedagogical effect, aligned
+with Rousseau’s (2009) idea that meaningful insight often arises through discom-
+fort and disruption. In this sense, the irritation provoked by the format supported
+its core educational objective: to challenge habitual expectations and promote
+deeper self-reflection.
+   This contrast reveals a tension in faculty development—between immediate
+applicability and transformative, reflective learning. Sustainable competence must
+
+===== PAGE 20 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1353
+
+
+
+
+
+Fig. 9   Collaborative Miro board used during the ‘Learning  Safari’, showing station overview and
+participant reflections (in German) (Dindas and Schulte 2025)
+
+go beyond  static models and encourage ongoing, self-directed adaptation. The
+‘Learning Safari’ reframes faculty development by shifting focus from learning spe-
+cific GenAI tools to cultivating critical ways of thinking with and about GenAI in
+academic practice and curriculum design.
+
+GenAI as Co‑actor in Empathic Co‑design (Wina Smeenk and Marieke
+van Dijk)
+
+Business succession within agricultural families is a financially complex and emo-
+tionally charged process. It involves the transfer of both explicit and tacit knowl-
+edge shaped by socio-cultural and intergenerational dynamics. Our research con-
+sortium—comprising Dutch Universities of Applied Sciences (UAS) in agriculture,
+(creative)business, and finance—aims to improve these transitions by fostering trust
+among stakeholders through the development of knowledge products (van Turnhout
+et al. 2026). The Societal Impact Design research group at Inholland UAS contrib-
+uted with an empathic co-design approach focusing on lived experiences of aspiring
+successors and predecessors to build mutual understanding.
+  Empathy in co-design refers to understanding other’s feelings (Kouprie and
+Visser 2009), enabling stakeholders to shift between first-, second-, and third-per-
+son perspectives. This supports trust-building in sensitive contexts. The Empathy
+Compass (Smeenk et al. 2019, 2025) builds on this by distinguishing empathy
+across cognitive-affective and self-other axes. It guides people to reflect on their
+
+===== PAGE 21 =====
+1354                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+empathic stance and adapt roles and contributions throughout co-design -particu-
+larly useful in emotionally complex family farm transitions.
+  To explore stakeholder dynamics, we interviewed students as future farm suc-
+cessors. Initially, we employed the Empathy Compass manually to map their
+quotes. However, due to the time-intensive nature of this work, we began experi-
+menting with GenAI as a co-analyst in a postdigital co-design approach aiming
+not to replace human judgment, but to provoke and support reflection. Our hybrid
+approach involved three phases (see Table 1).
+  GenAI produced a visual mapping of quotes within the Compass quadrants
+(Fig. 10, left) quickly and effectively. Unlike the human researchers, who debated
+the quote placement, GenAI was  unaffected by  interpretive disagreements,
+offering a seemingly less biased analysis. However, during synthesis, it became
+clear that GenAI lacked contextual knowledge. Human researchers had deeper
+insights from interacting with students—observing tone, emotion, and body
+language—whereas GenAI relied solely on transcripts.
+  One researcher proposed the Bronfenbrenner’s model (1994) which distinguishes
+microsystem (family dynamics), mesosystem (interaction between home and work),
+exo-system (interactions with agricultural policy, financial institutions), macrosys-
+tem (cultural and societal values), and bio-ecosystem (physical environment, cli-
+mate change). GenAI was asked to integrate it with the Compass, and it generated
+a refined visualization (Fig. 10, right) that more accurately reflected the contextual
+positioning of quotes. This would have taken researchers more time to produce man-
+ually. This enriched the original Compass by adding ecosystem layers deepening
+insight into how systemic forces influence co-design and succession experiences.
+   This case illustrates how GenAI can function as a reflective co-actor in co-design
+analysis. The enhanced Compass emerged through iterative human–AI interaction.
+A key insight was that GenAI did not simply automate human labour, but acted as
+a reflective provocateur. For example, it revealed gaps in contextual grounding that
+humans noticed but GenAI could not, raising ethical considerations about represen-
+tation. Embodied and emotional nuance embedded in tone, gesture or culture was
+easily lost in transcript-based AI analysis.
+  The researcher’s role thus shifted toward orchestrating human–AI collaboration:
+designing  prompts,  interpreting  AI-outputs,  and  bridging  between  design
+language and machine logic. Meaning-making became distributed across human
+and non-human actors. Pedagogically, the enhanced Empathy Compass fostered
+
+
+Table 1   Hybrid research approach
+Phase               Activities
+
+1. Data collection  Five video interviews conducted by one researcher via Microsoft Teams, transcribed
+                  and anonymised.
+2. Analysis      Two researchers manually mapped quotes on Empathy Compasses in Miro. A third
+                   used Claude, prompted it with the Empathy Compass article (Smeenk et al. 2019).
+3. Synthesis      Human and GenAI analyses were compared and discussed collaboratively by all
+                      three researchers.
+
+===== PAGE 22 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1355
+
+
+
+
+
+Fig. 10   Left: Initial plotting on existing Empathy Compass by Claude. Right: Plotting on Empathy
+Compass with ecosystem layers by Claude
+
+systemic–empathic awareness, which supported successors understanding  their
+positions within relational, institutional, and ecological systems.
+   This project reflects a postdigital co-design mode grounded in human-GenAI
+interplay, not merely designing with GenAI, but through it. This exploratory and
+playful process, which involved learning by doing and being open to surprise, aligns
+well with the design mindset. It may particularly resonate with co-design research-
+ers who prefer intuitive, creative engagement over analytical rigor as long as critical
+human interpretation remains present.
+  While GenAI may evolve to detect affective cues more precisely, contextual and
+cultural understanding remains a human strength. This case demonstrates how GenAI
+can provoke, expand and even redirect human thinking, marking a new co-design par-
+adigm, where humans and GenAI mutually shape tools, frameworks, and futures.
+
+GenAI as Objects‑to‑Think‑With in Postdigital Design Education
+(Linus Tan)
+
+Design students often struggle to articulate the temporal, atmospheric, and experien-
+tial qualities of their projects, as these are difficult to capture through conventional
+drawings or models alone. To address this, I developed a GenAI workflow to sup-
+port postgraduate design students in speculating future scenarios through storytell-
+ing and visualisation. The workflow consists of three stages: (1) use GenAI to create
+a short experiential narrative, (2) transform the narrative into visuals using text-to-
+image GenAI, and (3) use the outputs to refine the concepts by quickly iterating
+variations with GenAI.
+  This approach builds on Tan’s and Luke’s (2024) work on future scenarios, by
+adding text-to-image AI prototypes. Narratives scaffold temporal, affective, and
+contextual dimensions (Rasmussen 2005), while images support visual-spatial
+thinking, helping students see and work with spatial, material, and atmospheric
+
+===== PAGE 23 =====
+1356                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+qualities  as  clear  mental  pictures.  These  story-image  prototypes  quickly
+concretise  abstract concepts  into  multisensorial  experiences, allowing them
+to understand their designs in context with greater detail. The workflow offers
+a scaffolded process that helps design students explore future scenarios through
+repeated cycles of reflection and development.
+  To familiarise students with GenAI, I demonstrated the process in class as they
+followed along. In practice, this meant drafting a short vignette in ChatGPT, then
+using Midjourney to visualise it. Students compared the narrative and image out-
+puts, then refined their prompts to sharpen their design concepts. Below I share
+the resulting narrative and images of my demonstration, set in a green economy
+future:
+   I stepped out onto the sun-drenched walkway, the soft hum of algae-glass
+   panels adjusting to the morning light above me. The scent of citrus trees
+   drifted through the air, blending with the earthy warmth of the moss-lined
+  pavement beneath my feet. My fingertips brushed against the textured bark
+   of a building’s living façade as I passed, a gentle pulse of moisture signal-
+   ling it had just exhaled. In the distance, the wind turbines turned silently
+  above the canopy. I was heading to the community design commons, where
+  we were prototyping a shelter structure grown from local mycelium.
+  This  vignette conveyed atmosphere, emotions, and sensory  stimulations,
+qualities students often struggle to articulate in concept design. The workflow
+scaffolded this by first asking students to identify descriptive words capturing
+sensory and affective dimensions. Then, they prompted ChatGPT with these
+words to create a narrative enriched with atmospheric details. Next, students
+asked ChatGPT to extract spatial descriptors suitable for Midjourney, which they
+then used as prompts to visualise the scenes (Fig. 11). In this way, the co-design
+process unfolded  across  multiple  tools:  text  generation  articulated sensory
+qualities, and image generation illustrated the scene with greater detail.
+   Together, the AI-generated experiential narratives and images acted as objects-
+to-think-with (see Papert 1980; Ross 2022). Students described amorphous ideas as
+prompts, reflected on GenAI outputs, then iteratively refined their concepts through
+
+
+
+
+
+Fig. 11   Images generated using Midjourney, as prompted by the GenAI narrative
+
+===== PAGE 24 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1357
+
+dialogue with GenAI. This moved exploration beyond traditional sketches, allowing
+them to develop ideas through atmosphere, experience, and narrative.
+  While I provided a structured GenAI workflow, learning was not evaluated on
+workflow adherence. This decision reflects a deliberate move away from approaches
+that rely on predefined outcomes as measures of success, approaches which have
+been critiqued for limiting the scope of learning and design (Costello et al. 2024).
+Instead, the value lies in the opportunities for students to co-design with GenAI
+through multiple iterations, reflect on its outputs, and refine their ideas in dialogue
+with the GenAI tool. Because dialogues were on-demand, students could also gener-
+ate unlimited outputs at any time. Additionally, they exchanged output interpreta-
+tions with peers, comparing how prompts and responses shaped their design direc-
+tions. Both interactions are central to their development as designers.
+   In this context, the design studio becomes a space of co-design. While students
+followed the same structure, personalisation emerged through the descriptive words
+they chose and how they iterated with GenAI. In other words, the fixed structure
+was a shared starting point, and the evolving relationships between their ideas, the
+GenAI’s outputs, and peer feedback shaped unique design scenarios for each student.
+  By co-designing scenarios with GenAI, students engaged in relational practices
+through iterative interactions. The workflow provided a shared scaffold, whereas
+students’ choices and iterations made each outcome distinct. Thus, this case shows
+how co-design shifted practice from fixed outputs to dialogic processes of experi-
+mentation and meaning-making.
+
+
+GenAI as a Proxy Participant in Student Co‑design Projects (Belinda
+Paulovich and Diego Muñoz)
+
+How might we create and use GenAI personas in student co-design projects where
+access to target participants is limited? In a semester-long participatory design unit,
+students run several co-design workshops following an iterative process, creating a
+solution for an industry partner. The unit’s limited timeframe poses challenges in
+recruiting representative participants. Students typically rely on convenience sam-
+pling, inviting friends or family, which can skew design outcomes and limit exposure
+to diverse participant expertise and lived experience. Student feedback consistently
+underscores the need for participant representation that enhances the authenticity
+and effectiveness of the co-design process and learning experience.
+  The recurring issue of meaningful participant representation motivated us, from
+a postdigital perspective, to trial how GenAI can be used as an active participant in
+a co-design workshop. Here, we use a topic where a student group identified a prob-
+lem with recruiting a suitable target audience: How might we connect habitats to aid
+with the preservation of the Southern Brown Bandicoot?1
+
+
+
+1  The Southern Brown Bandicoot is an endangered native Australian marsupial.
+
+===== PAGE 25 =====
+1358                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+  The students of this group stated they struggled to develop co-design activities
+because they could only engage with the general public, not with experts. Moreover,
+participants themselves emphasised that ecologists, urban planners, engineers and
+council representatives would be the most relevant to inform a solution.
+  Using Microsoft Copilot, we generated three personas relevant to the topic and
+setting: an ecologist, an environmental policy expert, and a typical Melbourne resi-
+dent. We prompted Copilot to generate a visual representation of the personas and a
+background story that included their personality and career goals.
+  We created a protocol for an interactive workshop based on the activities devel-
+oped by the students. The activities included open-ended questions that aimed to
+generate text outcomes and sketching a green corridor layout on a map. Then, we
+created separate conversations in Copilot where we asked the three personas to com-
+plete the co-design activities. Next, we trialled the prompts without using a persona.
+  There was little variation in the generated text responses of the three personas.
+Similar information was presented by each persona in slightly different ways, e.g.
+using a casual tone for the average Melbourne resident persona. This observation
+prompted us to  trial the co-design activity prompts without using a persona.
+Again, there was little difference in the generated information. Copilot’s ability
+to generate an accurate green corridor on a map was limited and extremely
+inaccurate. Figure 12 shows the image outputs of the four conversations.
+  Our trial demonstrated that Copilot could not represent the expertise of the perso-
+nas when responding to the co-design workshop prompts. While the language used
+by the personas had some variation that represented their expertise, the main con-
+tent of the answers was the same for all cases. This result shows that it is difficult
+for GenAI to generate useful outputs in contexts with such specific and embodied
+knowledge requirements.
+
+
+
+
+
+Fig. 12   Images of green corridors generated by Copilot
+
+===== PAGE 26 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1359
+
+  We see the potential for students to use GenAI to learn specific vocabulary related
+to their topic and how to consider approaches for participants involved in co-design
+activities. Previous research shows that students use GenAI tools to conceptualise
+designs (Kee et al. 2024) and find them useful for writing, reading, and grammar
+(Liu et al. 2024). Using GenAI tools in student design projects ‘may require design-
+ers to improve their verbal creativity’ (Tan and Luhrs 2024: 692). The iterative pro-
+cess of refining prompts and negotiation of expected user representation could be
+helpful when planning co-design activities, enabling students to explore language
+options before conversing with human participants.
+  Following this trial, we propose that students experiment with GenAI in the co-
+design workshop development process and test early ideas prior to conducting work-
+shops with human participants. Future research could examine the value of learn-
+ing opportunities including comparing the responses from human participants and
+GenAI, determining the types of activities GenAI is suited to participating in, and
+advancing prompting to learn about the target audience. GenAI proxy participants
+could be used in other contexts, with more advanced prompting, clearer communi-
+cation of expected outcomes and newer GenAI tools. This further exploration can
+help researchers understand the role of GenAI in postdigital participation and high-
+light the value of human participation by defining what remains uniquely human in
+co-design.
+
+Future‑Focused Learning with GenAI in Digital Graphics Courses
+(Joanne Mignone and Rebecca Godwin)
+
+GenAI is becoming increasingly integrated within creative practice, emerging as
+both a ‘catalyst for collaboration’ (Amankwah-Amoah et al. 2024) and a powerful
+co-creator (Yang and Xu 2025). In 2024, we re-developed ‘Digital Graphics and
+Imaging’, a first-year digital graphics course at the University of South Australia
+Online, in response to GenAI’s growing influence on creative industries. Using a co-
+design approach, we revised assessments to incorporate GenAI with clear academic
+integrity guidelines, aiming to maintain teaching and learning quality while prepar-
+ing students for contemporary industry practice.
+   Historically, the course emphasised process-driven digital skills using Adobe
+Creative Suite software. The first assignment focused on traditional photo-editing
+techniques in Photoshop, such as selection and masking, that had long been central
+to professional practice. Initially, the use of GenAI had been deemed unacceptable
+as staff grappled with academic integrity concerns. However, students reported that
+this limited their ability to engage with emerging tools and left them underprepared
+for changes in professional practice. In response, staff integrated Photoshop’s GenAI
+tools—such as Generative Fill—into weekly activities and assessments, recognising
+AI as an increasingly integral component of current digital graphics production
+(Figs. 13 and 14). Using a ‘postdigital turn’ (Jandrić and Knox 2022), GenAI was
+no longer deemed unacceptable, but legitimate and necessary as part of preparing
+students for professional practice.
+
+===== PAGE 27 =====
+1360                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+  Course redevelopment was guided by a co-design approach, informed by
+Kemmis et al.’s (2014) theory of practice architectures. We reflected on student
+feedback (sayings), advances in GenAI practices (doings), and the online learning
+
+
+
+
+
+Fig. 13   The original photograph supplied to students. From ‘Green Grass on Forest’. © 2017 R. Jakkel.
+Reproduced with Pexels license
+
+
+
+
+
+Fig. 14   A student’s adaptation of the original photograph, using Adobe Photoshop Generative Fill tool
+to generate animals and a built structure. © 2024 Kaeleigh Baxter, reproduced with author’s permission
+
+===== PAGE 28 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1361
+
+environment (relatings), with attention to equity of access and critical engagement.
+Weekly  activities were redesigned  to introduce students  to GenAI  tools, and
+assessments were updated to include reflective components. Staff provided clear
+guidelines for acceptable AI use and processes to clarify assignment design and
+form boundaries (Corbin et al. 2025). Students were asked to compare conventional
+digital results with GenAI processes and outputs, and to consider the ethical
+implications of GenAI use in creative work. This approach positioned GenAI as a
+collaborative partner whose design processes and outputs require human expertise,
+artistic judgment, and ethical consideration.
+   Student reflections revealed complex negotiations of agency and authorship, with
+emerging legal and ethical concerns. While some students appreciated the efficiency
+and creative potential of GenAI, many expressed discomfort with its opacity and the
+ambiguity of ownership. One student noted that they felt uncomfortable using the
+tool as they did not know the source of the generated images. Another raised broader
+questions of authorship, asking who the rightful owner would be of any co-created
+digital graphics: the person using the tool, the company that trained or owned the
+AI, or the GenAI itself? These reflections helped students see themselves not as pas-
+sive users of GenAI, but as active co-designers of their learning and creative works.
+  The redevelopment of ‘Digital Graphics and Imaging’ highlights the entangle-
+ment of human and non-human actants in postdigital co-design, where agency is
+shared and negotiated. In this course, it was not simply a matter of staff design-
+ing the course and students doing the work, but a dynamic, collaborative process
+where humans and GenAI tools influence one another. In doing so, GenAI disrupted
+established pedagogical models, challenging educators to rethink assessments, origi-
+nality, and the teacher’s role as the primary source of knowledge. This supports a
+shift toward more distributed, participatory forms of knowledge production. Simul-
+taneously, the course demonstrated how co-design with GenAI could foster a future-
+oriented, critical pedagogy where students are proficient in emerging tools and criti-
+cally literate in their use. The course redesign foregrounded its collaborative, though
+contested, nature to prepare learners for creative industry practices that blend human
+and machine agency.
+
+Conclusion (Sandris Zeivots)
+
+This article has traced how co-design in higher education is being transformed
+through its entanglement with GenAI, viewed through a postdigital lens. Across
+the literature and authored contributions, we see that a postdigital conception of co-
+design needs to be extended. Thinking about and with practice requires not only
+a ‘catch-up’, but also the exploration and adaptation of its use and ontologies for
+research and practice. Postdigital co-design becomes a space where multiple ways of
+knowing, doing, and relating—human and machine, emotional and computational,
+situated and systemic—meet, collaborate, and evolve.
+   Postdigital co-design foregrounds the relational nature of educational design,
+where knowledge production, values, and practices emerge through ongoing human-
+technology interactions (Jandrić et al. 2023; Gachago et al. 2024). Co-designing
+
+===== PAGE 29 =====
+1362                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+educational futures involves more than developing tools or curricula. It engages
+with how knowledge is produced, valued, and shared within localised, yet entangled
+higher education contexts. Co-design processes that incorporate GenAI as a part-
+ner that participates in idea formation, narrative construction, and iterative reflection
+(Vartiainen et al. 2025; Guo et al. 2025) often continue to prioritise human con-
+trol, with some contributions to this article illustrating this dynamic. A postdigital
+perspective opens a space for exploring ‘postdigital agency’ (Thomas 2024), where
+agency is complex, distributed, and contested across human and non-human actors
+in shaping design practices and educational futures. This reframing shifts focus
+from what an entity possesses to what it does, and from individual authorship to
+co-agency.
+  From this view, co-design is approached as an ontological practice of entangled
+sense-making, designing, and coming to practise differently (Kemmis 2021). Rather
+than focusing on the production of fixed artefacts, postdigital co-design emphasises
+the cultivation of dialogic spaces for uncertainty, emergence, and transformation
+(Mollick 2024; Wardak et al. 2024). These spaces are inherently speculative and
+situated, yet they hold the potential to reshape how we imagine higher education
+futures (Buch et al. 2024). A postdigital approach engages directly with the risks
+and limitations of GenAI, while seeking new educational possibilities through co-
+inquiry and collective becoming (Rapanta et al. 2025; Brailas 2024).
+  Co-design with GenAI also surfaces ethical, power, and ecological tensions. The
+entanglement of cultural representation, lived experience, and ecological responsi-
+bility suggests that co-design must move beyond technical optimisation to become
+a space of critical engagement and relational accountability (Blackie and Luckett
+2025; Wong et al. 2025). While GenAI outputs pluralise collaborations by introduc-
+ing alternative perspectives that disrupt established ways of knowing, GenAI might
+simultaneously defer to normative views and dominant ways of knowing. Recognis-
+ing these tensions helps avoid equating language fluency with breadth of knowing.
+Importantly, GenAI’s involvement does not erase the need for human interpretation,
+judgement, and care—it intensifies them, highlighting the situated nature of co-
+design as a practice of becoming-with technologies.
+   Crucially, the move to postdigital co-design does not abandon criticality. Instead,
+it deepens it. It requires educators to remain vigilant about power asymmetries, rep-
+resentation of multiple knowings, emotional labour, and ecological harm—issues
+often obscured in technologically mediated collaboration. For example, Scholk-
+mann’s point that ‘we felt that we had to’ engage with GenAI acknowledges the
+expectations on educators and the struggles associated with integrating something
+that we are still making sense of. Or, Wang’s emphasis on cultural flattening, aes-
+thetic erasure and fake cultural creations almost re-invites humans as essential par-
+ticipants in co-design processes. Postdigital co-design therefore asks not only what
+is possible with GenAI, but what is desirable, ethical and sustainable.
+  The contributions also suggest that co-design is a continual process of endlessly
+encountering and becoming—a becoming-in-relation. Co-design foregrounds the rela-
+tionship as the primary focus instead of leaving it in the background. In this way, it
+becomes a generative site where the boundaries of knowing, meaning-making, and
+authorship are not only disrupted but redrawn. Winchester critically invites us to
+
+===== PAGE 30 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1363
+
+renegotiate how knowledge is produced, shared, and understood in a world where we
+no longer design alone. For example, many discussions emphasise acknowledgement
+of human labour, yet there is limited recognition of GenAI’s contribution. Contribu-
+tions to co-design should not be seen only as a record of use, but perhaps as an artefact
+of co-design that offers transparency. Rather than signalling a loss of human agency,
+this is an invitation to reimagine how we design, learn and practice collaboratively in
+higher education.
+  From this perspective, GenAI contributes by complementing, amplifying, or deepen-
+ing design capacities. Bringing this relationality into play opens ontological questions,
+for example: does GenAI need to pass as a ‘good human imitation’ to contribute to co-
+design, or is it worth expanding how we relate to co-design itself? Here, GenAI is seen
+less as another human and more as a participant that invites us to question the human-
+exclusive filtering of participation. The inquiry in this article requires a broader under-
+standing of how we might engage with transparent, relational, and ethical co-design.
+The question then becomes how to scaffold the critical GenAI literacies (Rapanta et al.
+2025) that make these relations visible and discussable. The contributions in this article
+capture this collective sense-making as an accomplishment that is exploratory and still-
+becoming. At the same time, some contributors argue that GenAI may need to be kept
+at arm’s length, inspected from a safe distance, as a way to safeguard ethical reflection
+and preserve spaces for human judgement.
+  As GenAI continues to evolve, so too must our practices and theories of design.
+This article invites researchers, educators, and students to engage with co-design
+as an open, relational, and ontologically extended practice. In this way, we move
+beyond ‘limit cases’ and bring relationality itself to the front of attention (McGil-
+christ 2021), part of the ecology of practices (Kemmis et al. 2014). The contribu-
+tions demonstrate this shift through their varied emphases on ‘co-…’, for example,
+co-explore (see Dindas and Schulte), co-tutoring (Hrastinski and Engwall) and co-
+analysis (Smeenk and van Dijk), which highlight collective attunement through
+practices. These illuminate distributed practices, connective enactments and col-
+lective accomplishments as the underlying mechanisms of co-design (Zeivots et al.
+2025).
+  We hold the potential to witness and reshape higher education designs and futures
+as reciprocal, creative and more-than-human. To co-design with GenAI extends the
+processes of curiosity and care about the higher education futures, without turning
+away from the complexity and multiplicity of our postdigital configurations.
+
+Open Review 1: Reshaping Universities as Civic Partners
+in Postdigital Co‑design with the Community (Sarah Hayes)
+
+Amid  an  overwhelming  torrent  of  (often  superficial)  higher  education
+responses to GenAI, as if it were one item, thing, or a new unstoppable ‘master
+narrative’ (Fuller and Jandrić 2019: 215), it is refreshing to read a deeper call
+to reconceptualise the dynamic practice of GenAI co-design, as a complex
+postdigital assemblage. This recognises the deep immersion of all of us in this
+fast-moving, data-driven context (Hayes et al. 2023; Buch et al. 2024), where,
+
+===== PAGE 31 =====
+1364                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+as Zeivots observes, humans, technologies, and cultural contexts intermingle.
+This  has  implications  for  positionality  (Hayes  2023),  our  individual and
+collective sense of self, agency, and an urgency to be creative co-creators (and
+not bystanders) in our new social reality (Thomas 2021). Such nuance moves
+us away from either a dominant human focus on plagiarism, where ‘cheating is
+only the start of the problem’ (Kourkoulou et al. 2024), or indeed too starry-eyed
+a technocratic focus, on GenAI as simply ‘driving educational transformation’,
+with little mention of a human being in tow (Hayes 2019).
+  Within this collective response, dialogic and empathetic implications of GenAI
+are surfaced, via engaging examples of rethinking educational practices, whilst
+also keeping critical human interpretation as central. Tan emphasises a shift from
+fixed outputs to dialogic processes of meaning making, which is valuable amid
+uncertainty (Rapanta 2019). This then is a hopeful, inspiring collective piece
+that also, importantly, urges vigilance concerning power asymmetries, emotional
+labour, and ecological damage.
+   I would though like to see this body of work extend further, to inform radi-
+cal reviews of higher education institutional policy, language, cross-sector stake-
+holder inclusion, public engagement, co-created dialogue, and shared purpose
+(National Co-ordinating Centre for Public Engagement 2025). How academic
+structures need to adapt is only briefly touched upon in the article by Winchester,
+but this shift is crucial, if the sector is to strengthen its postdigital social contract
+to address ever-deepening inequities of opportunity and societal disadvantage
+(Hayes et al. 2024). It is my sense that a critical co-design movement is needed
+across all higher education institutions, with inclusive input from local and global
+partners. There are probing questions to ask, such as from whose human experi-
+ences and which global locations is GenAI aggregating its knowledge? How might
+more critical contextual responses to GenAI better inform what gets aggregated?
+  Higher education institutions should not build GenAI into existing institutional
+structures that are flawed, with a tendency to extract data from the wider world
+yet retain knowledge within. This one-way model excludes marginalised groups
+and citizen researchers from inclusive co-creativity with the community (Hayes
+et al. 2025). Foregrounding co-design to critically explore together how GenAI
+shapes or obscures cultural nuance and reinforces certain interpretive frame-
+works, or even racist depictions, thus compounding existing inequalities, is key.
+So let us extend this approach to co-design our research questions/projects with
+cross-sector partners who are immersed in the pressing concerns arising in the
+wider community.
+   I agree with these authors in questioning who owns the capacities of ‘knowing
+and designing’. This is a pressing question concerning who, or what, gets to partici-
+pate? It is also an opportunity for universities to both support more inclusive citi-
+zen led research on how we ‘come to know’ with GenAI, but also to confront what
+needs to change about the existing inequities in our current higher education institu-
+tions and the regions where they are based.
+
+===== PAGE 32 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1365
+
+Open Review 2: Agency as Endelecheia in Postdigital Co‑design
+(Chrysi Rapanta)
+
+The exploration of postdigital co-design with GenAI presented by Zeivots et al.
+raises pressing philosophical questions regarding the nature of agency, the dynam-
+ics of collaboration, and the production of knowledge within higher education.
+Their work provides innovative pedagogical approaches and demonstrates a vari-
+ety of thoughtful engagement with the affordances and limitations of GenAI tech-
+nologies when perceived as collaborators or co-actors. Yet, the theoretical treat-
+ment of agency—a key concept in hybrid, algorithmically mediated learning space
+(Code 2025)—remains underdeveloped. To fully grapple with the implications of
+human–AI assemblages for co-design, I propose reconceptualizing agency through
+the lens of endelecheia—an Aristotelian notion of actuality as a dynamic and purpo-
+sive unfolding toward fulfillment.
+  Derived from en (in), telos (end), and echein (to have), endelecheia refers to a dis-
+tinctive mode of being where an entity actualises its potential through activity that
+contains its own completion (Mitchell 1891). To further clarify what is at stake, it
+is helpful to turn to Aristotle’s (384–322 B.C.E./2014) Nicomachean Ethics, where
+he distinguishes between kinesis (mere movement or change) and praxis (deliberate
+action oriented toward intrinsic goods). Kinesis may be externally caused or merely
+mechanical, whereas praxis is intrinsically purposive and guided by phronesis (prac-
+tical wisdom) and prohairesis (deliberative choice) directed toward eudaimonia
+(human flourishing).
+  The distinction suggests that not all apparently goal-directed activity counts as
+genuine action. Praxis, unlike mere motion, is a teleological phenomenon: it is an
+expression of an agent’s striving toward an end that is valued for its own sake. If we
+apply this Aristotelian framework to AI, it becomes clear that current systems, how-
+ever sophisticated, are engaged in something closer to kinesis than praxis. They may
+execute complex operations, but they do not deliberate about intrinsic goods, they
+do not possess practical wisdom, and they cannot orient their activity toward eudai-
+monia. Their ‘decisions’ are not chosen in light of a reflective conception of the
+good life; they are outputs of statistical pattern-matching or optimisation procedures.
+   Consider Webster and Chubb’s three-phase framing of GenAI as ‘provocateur,
+pluraliser, and facilitator’. Their model is pedagogically valuable precisely because
+it positions GenAI as a generative interlocutor whose outputs stimulate human
+reflection rather than as a fully autonomous co-creator. In endelecheic terms, the
+AI extends human capacity for inquiry but does not itself instantiate agency; it fur-
+nishes materials for deliberation, while human participants engage in the purposive
+act of determining meaning, value, and direction.
+   This perspective also resolves the authors’ concerns about responsibility and
+authorship. If agency as endelecheia entails the reflective endorsement of one’s
+actions and their ends, then moral and epistemic responsibility cannot be distrib-
+uted to entities lacking this capacity. GenAI may contribute to outcomes but can-
+not bear responsibility for them, as  it does not possess a standpoint from which
+to deliberate about or justify its outputs. This clarification reframes debates about
+
+===== PAGE 33 =====
+1366                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+‘shared authorship’ and ‘ownership’ of co-created knowledge: human actors remain
+accountable because they alone are capable of aligning action with reasons and
+values.
+  The adoption of endelecheia as a guiding framework, or philosophical compass,
+has significant pedagogical implications. Rather than positioning GenAI as a co-
+designer, educators might more productively frame it as an amplifier of their own
+capacity for reflective praxis—an instrument that amplifies the capacity for reflective
+praxis. This reframing strengthens the call, articulated throughout the collection, for
+developing critical AI literacy. If authentic agency involves not just technical com-
+petence but also the ability to evaluate whether one’s ends are worth pursuing, then
+education must cultivate phronesis—the capacity for practical wisdom that orients
+technological engagement toward ethically and epistemically sound purposes.
+
+
+Open Review 3: Co‑design Approaches and the Purpose of Education
+(Jimmy Jaldemark)
+
+This timely collection may inform the practice of designing and implementing
+GenAI in education. One of the paper’s strengths is its practical approach, which
+includes 11 contributions showing how humans and non-humans are involved in the
+co-design of educational settings. Readers have the opportunity to learn about the
+educational ideas behind these co-designs. The contributions offer a broad perspec-
+tive on the concept of co-design and how it may be explored.
+  To enable further theoretical development,  it would be of interest to make a
+deeper aggregated analysis of the eleven contributions. Such an analysis can be
+guided by critical questions like: What is absent in the contributions? What educa-
+tional potential does co-design with GenAI offer? I believe the authors’ collective
+knowledge has the potential to explore this further in a future study.
+   In line with this critique, readers may benefit from the inclusion of challenges and
+setbacks within the concept of co-design and its implementation in higher education
+(see, for example, Örnekoğlu-Selçuk et al. 2024). The authors argue that co-design
+involving GenAI enables the integration of analogue and digital, human and non-
+human, and offline and online, by emphasising holistic epistemologies and ontolo-
+gies. This contributes to the creation of more democratic and inclusive designs in
+higher education that respond to the lived experiences of students and teachers.
+Such an approach is reasonable from a postdigital perspective and aligns well with
+the article’s contribution. However, I feel that the concept of co-design is taken for
+granted as inherently positive. This may not necessarily be the case in general with
+regard to GenAI, and perhaps not even from a postdigital perspective.
+  To add  further  theoretical  value,  the  discussion  could  also  explore how
+these co-designs align with Biesta’s (2020) three main purposes of education:
+qualification, socialisation, and subjectification. This would explore how co-design
+in terms of qualification can help people to find their place in society by equipping
+them with the knowledge, skills, and dispositions they need; how it can contribute
+
+===== PAGE 34 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1367
+
+to socialisation by shaping individuals who are able to navigate the cultures and
+traditions of society; and how it can contribute to the subjectification of individuals
+(i.e. helping them to become the best they can be).
+  Reading this article is well worth the investment, as readers encounter a move
+away from conventional applications of the concept of co-design by exploring an
+interesting catalogue of ideas on how co-design with GenAI can play out in higher
+education. Just as importantly, the article also builds a good stepping stone for fur-
+ther theoretical development.
+Acknowledgements  Antonia Scholkmann thanks their colleagues Maja Højslet Schurer and Cecilie
+Hviid for thinking together on this topic, and to ‘Tobias’, ‘Signe’, ‘Karen’, and ‘Marie’ for partnering up
+in co-design. Stefan Hrastinski and Olov Engwall thank their colleagues Malin Jansson (who also created
+the visual artefact), Pablo Gonzalez Oliveras, and Kathy Tian for their significant contributions to the
+project ‘Semi-automated math tutoring’, funded by Digital Futures. Wina Smeenk and Marieke van Dijk
+thank Claudia Mayer and the students involved. Lilia Mantai and Alison Casey thank their colleagues in
+co-design. Linus Tan acknowledges the Wurundjeri People of the Kulin Nation, who are the Traditional
+Owners of the land (Naarm) on which a part of this research was conducted. These lands have always
+been places of teaching, learning, research, and design.
+
+Author Contribution  SZ conceived and led the project, issued the open call for contributions, coordinated
+the writing process, and prepared the initial draft of the manuscript. AC provided feedback on contribu-
+tions and assisted the editorial process with SZ. TW, JW, XW, LT, WS, FS, AS, BP, DM, JM, LM, SHr,
+RG, OE, HD, MD, and LC authored a situated practice-based contribution, providing text and visual arte-
+facts from their educational contexts. All contributing authors (SZ, AC, TW, JW, XW, LT, WS, FS, AS,
+BP, DM, JM, LM, SHr, RG, OE, HD, MD, LC) reviewed and commented on the evolving manuscript,
+participated in collective sense-making, and contributed to revisions. CR, JJ, and SHa provided open peer
+review contributions that were integrated into the final manuscript. All authors reviewed and approved
+the final version of the manuscript.
+
+Funding  Open access funding provided by Royal Institute of Technology. The overall project did not
+receive any funding for this research. The contribution by Stefan Hrastinski and Olov Engwall draws on
+insights from the project ‘Semi-automated math tutoring’, funded by Digital Futures.
+
+Data Availability  No datasets were generated or analysed during the current study.
+
+Declarations: 
+
+Ethics approval  Not applicable.
+
+Competing Interests  The authors declare no competing interests.
+
+Open Access  This article is licensed under a Creative Commons Attribution 4.0 International License,
+which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long
+as you give appropriate credit to the original author(s) and the source, provide a link to the Creative
+Commons licence, and indicate if changes were made. The images or other third party material in this
+article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line
+to the material. If material is not included in the article’s Creative Commons licence and your intended
+use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permis-
+sion directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/
+licenses/by/4.0/.
+
+===== PAGE 35 =====
+1368                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+References
+
+Abbonizio, J., Palermo, C., Brand, G., Buus, N., Fossey, E., & Dart, J. (2024). Co-Designing Formal
+      Health Professions Curriculum in Partnership with Students: A Scoping Review. Medical Teacher,
+      47(3), 413–424. https://​doi.​org/​10.​1080/​01421​59X.​2024.​23394​03.
+Abegglen, S., Sinfield, S., & Burns, T. (2023). Collaboration in Higher Education. London: Bloomsbury
+     Academic.
+Adewumi, T., Alkhaled, L., Imbert, F., Han, H., Habib, N., & Löwenmark, K. (2025). AI Must Not Be
+      Fully Autonomous. arXiv:​2507.​23330. https://​doi.​org/​10.​48550/​arXiv.​2507.​23330.
+Akama, Y. (2015). Being Awake to Ma: Designing In-Between-Ness as a Way of Becoming With. CoDe-
+       sign, 11(3-4), 262–274. https://​doi.​org/​10.​1080/​15710​882.​2015.​10812​43.
+Al-Zahrani, A. M. (2024). The Impact of Generative AI Tools on Researchers and Research: Implications
+       for Academia in Higher Education. Innovations in Education and Teaching International, 61(5),
+      1029-1043. https://​doi.​org/​10.​1080/​14703​297.​2023.​22714​45.
+Amankwah-Amoah, J., Abdalla, S., Mogaji, E., Elbanna, A., & Dwivedi, Y. K. (2024). The Impend-
+      ing Disruption of Creative Industries by Generative AI: Opportunities, Challenges, and Research
+     Agenda. International Journal of Information Management, 79. https://​doi.​org/​10.​1016/j.​ijinf​omgt.​
+      2024.​102759.
+Aristotle. (2014). Nicomachean Ethics. Trans. R. Crisp. Cambridge: Cambridge University Press.
+Arthars, N. (2021). Co-constructing epistemic environments: An ecological inquiry into complex problem
+      solving in higher education. Sydney: University of Sydney.
+Banihashem, S. K., Noroozi, O., Khosravi, H., Schunn, C. D., & Drachsler, H. (2025). Pedagogical
+     Framework for Hybrid Intelligent Feedback. Innovations in Education and Teaching International.
+       https://​doi.​org/​10.​1080/​14703​297.​2025.​24991​74.
+Bearman, M., & Ajjawi, R. (2023). Learning to Work with the Black Box: Pedagogy for a World With
+       Artificial Intelligence. British Journal of Educational Technology, 54(5), 1160–1173. https://​doi.​
+       org/​10.​1111/​bjet.​13337.
+Biesta, G. (2020). Educational research: An unorthodox introduction. New York: Bloomsbury.
+Blackie, M., & Luckett, K. (2025). Embodiment Matters in Knowledge Building. Science & Education,
+      34(2), 717-730. https://​doi.​org/​10.​1007/​s11191-​024-​00506-2.
+Bond, M., Khosravi, H., De Laat, M., Bergdahl, N., Negrea, V., Oxley, E., ... & Siemens, G. (2024). A
+     Meta Systematic Review of Artificial Intelligence in Higher Education: A Call for Increased Eth-
+        ics, Collaboration, and Rigour. International Journal of Educational Technology in Higher Educa-
+       tion, 21(4). https://​doi.​org/​10.​1186/​s41239-​023-​00436-z.
+Bozkurt, A., & Sharma, R. C. (2023). Challenging the Status Quo and Exploring the New Boundaries in
+      the Age of Algorithms: Reimagining the Role of Generative AI in Distance Education and Online
+      Learning. Asian Journal of Distance Education, 18(1).
+Brailas, A. (2024). Postdigital Duoethnography: An Inquiry Into Human–Artificial Intelligence Synergies.
+       Postdigital Science and Education, 6(2), 486-515. https://​doi.​org/​10.​1007/​s42438-​024-​00455-7.
+Bronfenbrenner, U. (1994). The Ecology of Human Development: Experiments by Nature and Design.
+     Cambridge, MA: Harvard University Press.
+Brown, C., Huber, E., Bone, E., Gribble, L., Lys, I., Dickson-Deane, C., Yu, P., Markauskaite, L., &
+      Campbell, C. (2024). Academic Women Co-designing Education Futures in a Postdigital World.
+       Postdigital Science and Education, 6(1), 300–320. https://​doi.​org/​10.​1007/​s42438-​023-​00410-y.
+Buch, A., Lindberg, Y., & Cerratto Pargman, T. (Eds.). (2024). Framing Futures in Postdigital Educa-
+       tion:  Critical Concepts  for Data-Driven  Practices. Cham:  Springer.  https://​doi.​org/​10.​1007/​
+      978-3-​031-​58622-4.
+Cho, H. (2018). Crafting a Third Space: Integrative Strategies for Implementing Critical Citizenship Edu-
+      cation in a Standards-Based Classroom. The Journal of Social Studies Research, 42(3), 273-285.
+        https://​doi.​org/​10.​1016/j.​jssr.​2017.​07.​001.
+Code, J. (2025). The Entangled Learner: Critical Agency for the Postdigital Era. Postdigital Science and
+      Education, 7(2), 336-358. https://​doi.​org/​10.​1007/​s42438-​025-​00544-1.
+Corbin, T., Dawson, P., Nicola-Richmond, K., & Partridge, H. (2025). ‘Where’s the Line? It’s an Absurd
+      Line’: Towards a Framework for Acceptable Uses of AI in Assessment. Assessment & Evaluation
+       in Higher Education. https://​doi.​org/​10.​1080/​02602​938.​2025.​24562​07.
+
+===== PAGE 36 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1369
+
+Costello, E., McDonald, J., Macgilchrist, F., Jandrić, P., Carbonel, H., Crighton, S., Buch, A., & Peters,
+     M. A. (2024). Speculative Practicescapes of Learning Design and Dreaming. Postdigital Science
+     and Education, 7(2), 560-588. https://​doi.​org/​10.​1007/​s42438-​024-​00465-5.
+Dell’Acqua, F., Ayoubi, C., Lifshitz, H., Sadun, R., Mollick, E., Mollick, L., Han, Y., Goldman, J., Naur,
+      H., Taub, S., & Lakhani, K. (2025). The Cybernetic Teammate: A Field Experiment on Genera-
+       tive AI Reshaping Teamwork and Expertise. Harvard Business School Working Paper, No. 25-043,
+     March 2025. https://​www.​hbs.​edu/​facul​ty/​Pages/​item.​aspx?​num=​67197. Accessed 6 November
+      2025.
+Dindas, H. & Schulte, F.P. (2025). Die Zukunft (v)erlernen: Kritische Perspektiven auf Künstliche Intel-
+      ligenz und Future Skills in der hochschuldidaktischen Weiterbildung. In K. Keller, T. Heupel, C.
+      Hohoff, & J. Heuwing-Eckerland (Eds.). Digitale Kompetenzentwicklung im Bildungsprozess und
+      Konzepte digitalisierter Bildung. Impulse des European Year of Digital Citizenship Education
+      2025. Berlin: Springer Gabler.
+Ehlers, U. D., & Eigbrecht, L. (2024). Creating the University of the Future. A Global View on
+      Future  Skills and  Future Higher  Education.  Wiesbaden:  Springer.  https://​doi.​org/​10.​1007/​
+      978-3-​658-​42948-5.
+European Union. (2024). Regulation (EU) 2024/1689 of the European Parliament and of the Council of
+     13 June 2024 (Artificial Intelligence Act). Official Journal of the European Union, L 2024/1689.
+        https://​eur-​lex.​europa.​eu/​eli/​reg/​2024/​1689/​oj. Accessed 12 July 2025.
+Ewenstein, B., & Whyte, J. (2007). Beyond Words: Aesthetic Knowledge and Knowing in Organizations.
+      Organization Studies, 28(5), 689-708. https://​doi.​org/​10.​1177/​01708​40607​078080.
+Farrell, H., Gopnik, A., Shalizi, C., & Evans, J. (2025). Large AI Models are Cultural and Social Tech-
+      nologies. Science, 387(6739), 1153–1156. https://​doi.​org/​10.​1126/​scien​ce.​adt98​19.
+Fawns, T. (2019). Postdigital Education in Design and Practice. Postdigital Science and Education, 1(1),
+      132-145. https://​doi.​org/​10.​1007/​s42438-​018-​0021-8.
+Fawns, T., Ross, J., Carbonel, H., Noteboom, J., Finnegan-Dehn, S., & Raver, M. (2023). Mapping and
+      Tracing the Postdigital: Approaches and Parameters of Postdigital Research. Postdigital Science
+     and Education, 5(3), 623-642. https://​doi.​org/​10.​1007/​s42438-​023-​00391-y.
+Fuller, S., & Jandrić, P. (2019). The Postdigital Human: Making the history of the future. Postdigital Sci-
+      ence and Education, 1(1), 190-217. https://​doi.​org/​10.​1007/​s42438-​018-​0003-x.
+Gachago, D., Bali, M., & Pallitt, N. (2024). Equity-Oriented Learning Design: An Entangled Future.
+       Postdigital Science and Education, 6(1), 173–193. https://​doi.​org/​10.​1007/​s42438-​023-​00420-w.
+Glade, E.-M. (2019). Wissenschaftliche Weiterbildung als pädagogischer Doppeldecker für die Wis-
+       sensgesellschaft. In J. Hafer, M. Mauch & M. Schumann (Eds.). Teilhabe in der Digitalen Bildung-
+      swelt (pp. 227-238). Münster: Waxmann. https://​doi.​org/​10.​25656/​01:​18027.
+Guo, C., Borghini, A., Goucher-Lambert, K., & Baudoux, G. (2025). Human-Gen AI Co-Design: Explor-
+      ing Factors Impacting Trust Calibration. In ASME 2025 International Design Engineering Techni-
+      cal Conferences and Computers and Information in Engineering Conference-37th International
+      Conference on Design Theory and Methodology. ASME.  https://​codes​ign.​berke​ley.​edu/​pdfs/​
+       papers/​guo-​trust-​idetc.​pdf. Accessed 12 August 2025.
+Hayes, S. (2019). The Labour of Words in Higher Education: Is It Time to Reoccupy Policy? Leiden:
+       Brill.
+Hayes, S. (2023). Positionality in Postdigital Research: The Power to Effect Change. In P. Jandrić, A.
+     MacKenzie, &  J. Knox  (Eds.), Constructing  Postdigital Research. Method and Emancipa-
+       tion (pp. 3–21). Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​031-​35411-3_1.
+Hayes, S., Jopling, M., Connor, S., & Johnson, M. (Eds.). (2023). Human Data Interaction, Disadvan-
+      tage and Skills in the Community: Enabling Cross-Sector Environments for Postdigital Inclusion.
+     Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​031-​31875-7.
+Hayes, S., Jandrić, P., & Green, B.J. (2024). Towards a Postdigital Social Contract for Higher Education
+       in the Age of Artificial Intelligence. Postdigital Science and Education, 6(2), 467–485 https://​doi.​
+       org/​10.​1007/​s42438-​024-​00459-3.
+Hayes, S., Jandrić, P., la Velle, L., Earle, S., Šrajer, F., Dragić, Z., Kubat, S., Peraica, A., Švraka, D.,
+      Popović, S., Mumelaš, D., Pospiš, D., Vujanović, B., Lugović, S., Jopling, M., Tolbert, S., & Water-
+      meyer, R. (2025). Postdigital Citizen Science and Humanities: Dialogue from the Ground. Postdig-
+        ital Science and Education, 7(1), 188–223. https://​doi.​org/​10.​1007/​s42438-​024-​00514-z.
+Higgins, D., Dennis, A., Stoddard, A., Maier, A. G., & Howitt, S. (2019). ‘Power to Empower’: Con-
+      ceptions of Teaching and Learning in a Pedagogical Co-design Partnership. Higher Education
+      Research & Development, 38(6), 1154–1167. https://​doi.​org/​10.​1080/​07294​360.​2019.​16212​70.
+
+===== PAGE 37 =====
+1370                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+Holman, D., Pavlica, K., & Thorpe, R. (1997). Rethinking Kolb’s Theory of Experiential Learning in
+     Management Education: The Contribution of Social Constructionism and Activity Theory. Man-
+     agement Learning, 28(2), 135-148. https://​doi.​org/​10.​1177/​13505​07697​282003.
+Jakkel, R. (2017). Green Grass on Forest [Photograph]. Pexels, 20 May. https://​www.​pexels.​com/​photo/​
+       green-​grass-​on-​forest-​418831. Accessed 12 July 2025.
+Jandrić, P., & Knox, J. (2022). The Postdigital Turn: Philosophy, Education, Research. Policy Futures in
+      Education, 20(7), 780-795. https://​doi.​org/​10.​1177%​2F147​82103​21106​2713.
+Jandrić, P. (2023). Postdigital. In P. Jandrić (Ed.), Encyclopedia of Postdigital Science and Education.
+     Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​031-​35469-4_​23-2
+Jandrić, P., MacKenzie, A., & Knox, J. (Eds.). (2023).Postdigital Research: Genealogies, Challenges,
+     and Future Perspectives. Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​031-​31299-1.
+Jansson, M., Tian, K., Hrastinski, S., & Engwall, O. (2024). An initial exploration of semi-automated
+       tutoring: How AI could be used as support for online human tutors. Proceedings of the Interna-
+       tional Conference on Networked Learning, 14(1). https://​doi.​org/​10.​54337/​nlc.​v14i1.​8070.
+Jiang,  J., Vetter, M., & Lucia, B. (2024). Toward a ‘More-Than-Digital’ AI Literacy: Reimagining
+     Agency and Authorship in the Postdigital Era with ChatGPT. Postdigital Science and Education,
+       6(3), 922–939. https://​doi.​org/​10.​1007/​s42438-​024-​00477-1.
+Kalz, M., & Reinmann, G. (2024). Erneuerung der Hochschule von Außen nach Innen oder Umgekehrt?
+      Kritische Diskussion und Alternativen zur Future-Skills Bewegung. Impact Free 57.
+Kee, T., Kuys, B., & King, R. (2024). Generative Artificial Intelligence to Enhance Architecture Edu-
+      cation to Develop Digital Literacy and Holistic Competency. Journal of Artificial Intelligence in
+      Architecture, 3(1), 24–41. https://​doi.​org/​10.​24002/​jarina.​v3i1.​8347.
+Kemmis,  S., Wilkinson,  J., Edwards-Groves, C., Hardy,  I., Grootenboer,  P., & Bristol, L. (2014).
+     Changing  Education,  Changing  Practices.  Singapore:  Springer.   https://​doi.​org/​10.​1007/​
+       978-​981-​4560-​47-4.
+Kemmis, S. (2021). A Practice Theory Perspective on Learning: Beyond a ‘Standard’ View. Studies in
+      Continuing Education, 43(3), 280–295. https://​doi.​org/​10.​1080/​01580​37X.​2021.​19203​84.
+Kindt, M. (2023). Ist “Prompting” nun ein Future Skill? https://​www.​unidi​gital.​news/​ist-​promp​ten-​nun-​
+        ein-​future-​skill. Accessed 15 April 2025.
+Kleinsmann, M., & Valkenburg, R. (2008). Barriers and Enablers for Creating Shared Understanding in
+      Co-design Projects. Design Studies, 29(4), 369-386. https://​doi.​org/​10.​1016/j.​destud.​2008.​03.​003.
+Knox, J. (2019). What Does the ‘Postdigital’ Mean for Education? Three Critical Perspectives on the
+       Digital, with Implications for Educational Research and Practice. Postdigital Science and Educa-
+       tion, 1(2), 357–370. https://​doi.​org/​10.​1007/​s42438-​019-​00045-y.
+Kouprie M., & Visser, F. S. (2009). A Framework for Empathy in Design: Stepping into and out of the
+      User’s Life. Journal of Engineering Design, 20(5), 437–448. https://​doi.​org/​10.​1080/​09544​82090​
+      28750​33.
+Kourkoulou, D., Tzirides, A. O. O., Cope, B., & Kalantzis, M. (Eds.). (2024). Trust and Inclusion in AI-
+     Mediated Education: Where Human Learning Meets Learning Machines. Cham: Springer. https://​
+       doi.​org/​10.​1007/​978-3-​031-​64487-0.
+Lee, J.-J., Jaatinen, M., Salmi, A., Mattelmäki, T., Smeds, R., & Holopainen, M. (2018). Design Choices
+     Framework for Co-creation Projects. International Journal of Design, 12(2), 15-31.
+Liu Y., Park J., & McMinn S. (2024). Using Generative Artificial Intelligence/ChatGPT for Academic
+     Communication: Students’ Perspectives. International Journal of Applied Linguistics, 34, 1437–
+      1461. https://​doi.​org/​10.​1111/​ijal.​12574.
+Manzini, E. (2015). Design, when Everybody Designs: An Introduction to Design for Social Innovation.
+     Cambridge, MA: The MIT Press.
+Matthews, A. (2019). Design as a Discipline for Postdigital Learning and Teaching: Bricolage and Actor-
+     Network Theory.  Postdigital Science and Education,  1(2), 413–426.  https://​doi.​org/​10.​1007/​
+      s42438-​019-​00036-z.
+Mattioli, F., & Tessier, V. (2025). Disentangling Collaborative Design for Sustainability. CoDesign.
+       https://​doi.​org/​10.​1080/​15710​882.​2025.​25244​13.
+McGilchrist, I. (2021). The Matter with Things: Our Brains, Our Delusions, and the Unmaking of the
+      World. London: Perspectiva Press.
+Mitchell, E. M. (1891). Aristotle’s Metaphysics. In E. M. Mitchell, A study of Greek philosophy (pp.
+      182–196). S. C. Griggs and Company. https://​doi.​org/​10.​1037/​12973-​026.
+Mollick, E. (2024). Co-intelligence: Living and Working with AI. New York: Penguin.
+
+===== PAGE 38 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1371
+
+National Co-ordinating Centre for Public Engagement. (2025). Engaged Futures - Pathways to an engaged
+      future for higher education. https://​www.​publi​cenga​gement.​ac.​uk/​engag​ed-​futur​es-​pathw​ays-​engag​
+       ed-​future-​higher-​educa​tion. Accessed 22 September 2025.
+Nocek, A. (2023). Redesigning Design: On Pluralizing Design. In P. A. Rodgers & J. Yee (Eds.), The
+      Routledge Companion to Design Research (pp. 52-63). London: Routledge. https://​doi.​org/​10.​
+      4324/​97810​03182​443-6.
+Örnekoğlu-Selçuk, M., Emmanouil, M., Hasirci, D., Grizioti, M., & Van Langenhove L. (2024). A Sys-
+      tematic Literature Review on Co-design Education and Preparing Future Designers for their Role
+       in Co-design. CoDesign, 20(2), 351–366. https://​doi.​org/​10.​1080/​15710​882.​2023.​22428​40.
+Papert, S. (1980). Mindstorms: Children, Computers, and Powerful Ideas. New York: Basic Books.
+Paracha, S., Hall, L., Clawson, K., Mitsche, N., & Jamil, F. (2019). Co-design with Children: Using
+      Participatory Design for Design Thinking and Social and Emotional Learning. Open Education
+      Studies, 1(1), 267-280. https://​doi.​org/​10.​1515/​edu-​2019-​0021.
+Petricini, T. (2025). The Power of Language: Framing AI as an Assistant, Collaborator, or Transform-
+      ative Force in Cultural Discourse. AI & Society. https://​doi.​org/​10.​1007/​s00146-​025-​02586-2.
+Räisä, T., & Stocchetti, M. (2024). Epistemic Injustice and Education in the Digital Age. Journal of
+      Digital Social Research, 6(3), 1-9. https://​doi.​org/​10.​33621/​jdsr.​v6i3.​33235.
+Rapanta, C. (2019). Argumentation as Critically Oriented Pedagogical Dialogue. Informal Logic,
+      39(1), 1–31. https://​doi.​org/​10.​22329/​il.​v39i1.​5116.
+Rapanta, C., Bhatt, I., Bozkurt, A., Chubb, L. A., Erb, C., Forsler, I., Gravett, K., Koole, M., Lint-
+       ner, T., Örtegren, A., Petricini, T., Rodgers, B., Webster,  J., Xu, X., Christensen, I.-M. F.,
+     Dohn, N. B., Christensen, L. L. W., Zeivots, S., & Jandrić, P. (2025). Critical GenAI Liter-
+      acy: Postdigital Configurations. Postdigital Science and Education.  https://​doi.​org/​10.​1007/​
+      s42438-​025-​00573-w.
+Rasmussen, L. B. (2005). The Narrative Aspect of Scenario Building – How Story Telling may
+     Give People a Memory of the Future. AI & Society, 19(3), 229–249. https://​doi.​org/​10.​1007/​
+      s00146-​005-​0337-2.
+Reinmann, G. (2024). Generative Künstliche Intelligenz in der Hochschullehre: Ein Interview. Impact
+      Free 60.
+Ross, J. (2022). Digital Futures for Learning: Speculative Methods and Pedagogies. Abingdon: Rout-
+      ledge. https://​doi.​org/​10.​4324/​97810​03202​134.
+Rousseau, J.-J. (2009). Emile, or On Education. Trans. A. Bloom. New York: Basic Books.
+Sanders, E. B. N., & Stappers, P. J. (2008). Co-creation and the New Landscapes of Design. Co-
+      design, 4(1), 5-18. https://​doi.​org/​10.​1080/​15710​88070​18750​68.
+Sanoff, H. (1990). Participatory Design: Theory & Techniques. Ithaca, NY: Cornell University Press.
+Shneiderman, B. (2020). Human-Centered Artificial Intelligence: Reliable, Safe & Trustworthy. Inter-
+      national Journal of Human–Computer Interaction, 36(6), 495–504.  https://​doi.​org/​10.​1080/​
+      10447​318.​2020.​17411​18.
+Smeenk, W., Sturm, J., & Eggen, B. (2019). A Comparison of Existing Frameworks Leading to an
+     Empathic Formation Compass for Co-design. International Journal of Design, 13(3), 53–68.
+Smeenk, W. (2023). The Empathic Co-Design Canvas: A Tool for Supporting Multi-stakeholder Co-
+      design Processes. International Journal of Design, 17(2), 81-98.
+Smeenk, W., Mayer, C., & James, E. (2025). The Empathy Compass for Addressing Societal Chal-
+      lenges in Education. A Tool for Higher Education to Stimulate, Facilitate and Assess Empathic
+     Awareness in Multistakeholder Collaborations. Higher Education Research & Development.
+       https://​doi.​org/​10.​1080/​07294​360.​2025.​25106​70.
+Suliman, S., Könings, K. D., Allen, M., Al-Moslih, A., Carr, A., & Koopmans, R. P. (2022). Sailing
+      the Boat Together: Co-creation of a Model for Learning During Transition. Medical Teacher,
+      45(2), 193–202. https://​doi.​org/​10.​1080/​01421​59X.​2022.​21180​37.
+Tan, L., & Luke, T. (2024). Accelerating Future Scenario Development for Concept Design with Text-
+     based GenAI (ChatGPT). In Proceedings of the 29th International Conference on Computer-
+     Aided Architectural Design Research in Asia (CAADRIA 2024) (pp. 39–48). https://​doi.​org/​10.​
+       52842/​conf.​caadr​ia.​2024.1.​039.
+Tan, L., & Luhrs, M. (2024). Using Generative AI Midjourney to Enhance Divergent and Conver-
+      gent Thinking in an Architect’s Creative Design Process. The Design Journal, 27(4), 677–699.
+       https://​doi.​org/​10.​1080/​14606​925.​2024.​23534​79.
+Tea, A. C., & Andreotti, V. D. O. (2024). Burnout from Humans. GTDF.
+
+===== PAGE 39 =====
+1372                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+Thomas, A. (2021). Transcendent Conformity: The Question of Agency for Postdigital Humans. In M.
+     Savin-Baden (Ed.), Postdigital Humans: Transitions, Transformations and Transcendence (pp.
+      169–185). Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​030-​65592-1_​11.
+Thomas, A. (2024). Postdigital agency. In P. Jandrić (Ed.), Encyclopedia of Postdigital Science and
+      Education. Cham: Springer. https://​doi.​org/​10.​1007/​978-3-​031-​35469-4_​76-1.
+Vallis, C., Taleo, W., Wheeler, P., Casey, A., Tucker, S., Luu, J., & Zeivots, S. (2023). Collabora-
+       tive Sensemaking with Generative AI: A Muse, Amuse, Muse. In T. Cochrane, V. Narayan,
+      C. Brown, K. MacCallum, E. Bone, C. Deneen, R. Vanderburg, & B. Hurren (Eds.), People,
+      Partnerships and Pedagogies. Proceedings ASCILITE 2023 (pp. 573 - 577). https://​doi.​org/​10.​
+      14742/​apubs.​2023.​514.
+van Der Maas, H. L. J., Snoek, L., & Stevenson, C. E. (2021). How Much Intelligence is There in Arti-
+        ficial Intelligence? A 2020 Update. Intelligence, 87, 101548. https://​doi.​org/​10.​1016/j.​intell.​2021.​
+      101548.
+van Turnhout, K., Losse, M., Smeenk, W. & Andriessen, A. (2026). Handboek Kennisproducten. Amster-
+     dam: Boom.
+Vartiainen, H., Liukkonen, P., & Tedre, M. (2025). Emerging Human-Technology Relationships in a Co-
+      design Process with Generative AI. Thinking Skills and Creativity, 56, 101742. https://​doi.​org/​10.​
+       1016/j.​tsc.​2024.​101742.
+Vygotsky, L. S. (1978). Mind in Society: The Development of Higher Psychological Processes. London:
+     Harvard University Press.
+Wardak, D., Wilson, S., & Zeivots, S. (2024). Co-Design as a Networked Approach to Designing Edu-
+      cational Futures.  Postdigital Science and Education,  6(1), 194–210.  https://​doi.​org/​10.​1007/​
+      s42438-​023-​00425-5.
+Williamson, B. (2024). The Social Life of AI in Education. International Journal of Artificial Intelligence
+       in Education, 34(1), 97-104. https://​doi.​org/​10.​1007/​s40593-​023-​00342-5.
+Wilson, S., Huber, E., & Bryant, P. (2021). Using Co-design Processes to Support Strategic Pedagogical
+     Change in Business Education. In T. U. Thomsen, A. Lindgreen, A. Kjærgaard, E. Rosier, & A.
+     Tuncdogan (Eds.), Handbook of Teaching and Learning at Business Schools (pp. 20–35). Chelten-
+     ham: Edward Elgar Publishing.
+Winchester, T. (2025). Reframing Assessment in the Age of GenAI (again). Lifestyles of an Innovator. 3
+     May.   https://​lifes​tyles​ofani​nnova​tor.​wordp​ress.​com/​2025/​05/​13/​refra​ming-​asses​sment-​in-​the-​age-​
+       of-​genai-​again. Accessed 12 July 2025.
+Winchester, T., & Garvey, L. (2023). Designing Authentic Assessments to Address the use of ChatGPT
+       in Higher Education. In ICICTE Conference Proceedings (pp. 55-68). https://​www.​icicte.​org/​
+       assets/​06-​icict​e2023​–proce​eding​s–winch​ester.​pdf. Accessed 12 July 2025.
+Wong, W., Aristidou, A., & Scheuermann, K. (2025). The Future of Learning or the Future of Dividing?
+      Exploring the Impact of General Artificial Intelligence on Higher Education. Data & Policy, 7,
+      e44. https://​doi.​org/​10.​1017/​dap.​2025.​10011.
+Yang, Y., & Xu, H. (2025). Perception of AI Creativity: Dimensional Exploration and Scale Develop-
+      ment. Journal of Creative Behavior, 59(2), e70028. https://​doi.​org/​10.​1002/​jocb.​70028.
+Zamenopoulos, T., & Alexiou, K. (2018). Co-design as Collaborative Research. AHRC Connected Com-
+      munities Programme.
+Zeivots, S., Cram, A., & Wardak, D. (2023). Developing Project Management Principles by Examining
+     Codesign Practices in Innovative Contexts. Project Management Journal, 54(6), 651-664. https://​
+       doi.​org/​10.​1177/​87569​72823​11769​24.
+Zeivots, S., Hopwood, N., Wardak, D., & Cram, A. (2025). Co-Design Practice in Higher Education:
+      Practice Theory Insights into Collaborative Curriculum Development. Higher Education Research
+   & Development, 44(3), 769-783. https://​doi.​org/​10.​1080/​07294​360.​2024.​24102​69.
+Zeivots, S., & Shalavin, C. A. (2024). Codesigning Meaningful Engagement with Online Course Read-
+       ings: Implications for Teaching Management Courses. Academy of Management Learning & Edu-
+       cation, 23(2), 284–303. https://​doi.​org/​10.​5465/​amle.​2022.​0364.
+
+Publisher’s Note  Springer Nature remains neutral with regard to jurisdictional claims in published maps
+and institutional affiliations.
+
+===== PAGE 40 =====
+Postdigital Science and Education (2025) 7:1334–1374                                         1373
+
+Authors and Affiliations
+
+Sandris Zeivots1 · Alison Casey1 · Tiffany Winchester2 · Jack Webster3 ·
+Xin Wang4 · Linus Tan5 · Wina Smeenk6 · Frank P. Schulte7 ·
+Antonia Scholkmann8 · Belinda Paulovich9 · Diego Muñoz9 ·
+Joanne Mignone10 · Lilia Mantai1 · Stefan Hrastinski11 · Rebecca Godwin12 ·
+Olov Engwall13 · Henrik Dindas7 · Marieke van Dijk14 · Laura Ann Chubb3 ·
+Chrysi Rapanta15 · Jimmy Jaldemark16 · Sarah Hayes17
+
+*  Stefan Hrastinski
+    stefanhr@kth.se
+    Sandris Zeivots
+    sandris.zeivots@sydney.edu.au
+    Alison Casey
+    alison.casey@sydney.edu.au
+    Tiffany Winchester
+    t.winchester@federation.edu.au
+    Jack Webster
+    jack.webster@auckland.ac.nz
+    Xin Wang
+    xin_wang@baylor.edu
+    Linus Tan
+    linustan@swin.edu.au
+   Wina Smeenk
+    wina.smeenk@inholland.nl
+    Frank P. Schulte
+    frank.schulte@fom.de
+    Antonia Scholkmann
+    ansc@ikl.aau.dk
+    Belinda Paulovich
+    bpaulovich@swin.edu.au
+    Diego Muñoz
+    dmunoz@swin.edu.au
+    Joanne Mignone
+    jo.mignone@unisa.edu.au
+     Lilia Mantai
+    lilia.mantai@sydney.edu.au
+    Rebecca Godwin
+    rebecca.godwin@unisa.edu.au
+    Olov Engwall
+    engwall@kth.se
+    Henrik Dindas
+    henrik.dindas@fom.de
+    Marieke van Dijk
+    marieke@idiotes.nl
+
+===== PAGE 41 =====
+1374                                                     Postdigital Science and Education (2025) 7:1334–1374
+
+    Laura Ann Chubb
+    l.chubb@auckland.ac.nz
+    Chrysi Rapanta
+    crapanta@fcsh.unl.pt
+   Jimmy Jaldemark
+    jimmy.jaldemark@miun.se
+    Sarah Hayes
+    s.hayes@bathspa.ac.uk
+1   Business School, The University of Sydney, Sydney, Australia
+2    Institute of Health and Wellbeing, Federation University, Ballarat, Australia
+3   School of Education and Social Practice, University of Auckland, Auckland, New Zealand
+4   Department of Modern Languages and Cultures, Baylor University, Waco, United States
+5   Department of Architectural and Industrial Design, Swinburne University of Technology,
+    Melbourne, Australia
+6    Societal Impact Design, Inholland University of Applied Sciences, Amsterdam, Netherlands
+7   KompetenzCentrum für Didaktik, FOM University of Applied Sciences, Essen, Germany
+8   Department of Culture and Learning, Aalborg University, Aalborg, Denmark
+9   Department of Communication Design, Swinburne University of Technology, Melbourne,
+    Australia
+10  UniSA Creative, University of South Australia, Adelaide, Australia
+11   Digital Learning, KTH Royal Institute of Technology, Stockholm, Sweden
+12  UniSA Online, University of South Australia, Adelaide, Australia
+13   Intelligent Systems, KTH Royal Institute of Technology, Stockholm, Sweden
+14  Studio idiotēs — Design Research, Amsterdam, Netherlands
+15   Faculty of Social Sciences and Humanities, Universidade Nova de Lisboa, Lisbon, Portugal
+16  Department of Education, Mid Sweden University, Sundsvall, Sweden
+17  School of Education, Bath Spa University, Bath, United Kingdom
