@@ -58,7 +58,7 @@ class ImportTests(unittest.TestCase):
             <metadata><dc:collection><dc:title>Participatory Design</dc:title>
             <dc:creator>Else Andersen</dc:creator><dc:date>2020</dc:date>
             <dc:identifier>https://doi.org/10.4321/test</dc:identifier>
-            <dc:type>journal article</dc:type></dc:record></metadata>
+            <dc:type>journal article</dc:type></dc:collection></metadata>
           </record></ListRecords>
         </OAI-PMH>"""
         with tempfile.TemporaryDirectory() as tmp:
