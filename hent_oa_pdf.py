@@ -133,11 +133,24 @@ class PDFLinks(HTMLParser):
                 self.urls.append(href)
 
 
+def safely_encoded_url(link):
+    """Encode spaces/non-ASCII in public URLs and reject control characters.
+
+    A relative PDF href can contain spaces. Keep already percent-escaped
+    URLs intact, but never permit raw control characters or weaken HTTPS.
+    """
+    value = str(link or "")
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        raise ValueError("control characters in URL")
+    return quote(value, safe=":/?#[]@!def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):'()*+,;=%-._~")
+
+
 def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):
     """Fetch a public HTTPS resource, with each redirect checked and a strict size cap."""
     opener = build_opener(NoRedirect)
     visited = set()
     for _ in range(MAX_REDIRECTS + 1):
+        url = safely_encoded_url(url)
         if not allowed_url(url) or not public_dns(urlsplit(url).hostname) or url in visited:
             raise ValueError("unsafe URL or redirect")
         visited.add(url)
