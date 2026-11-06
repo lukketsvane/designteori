@@ -1,13 +1,13 @@
 name: Nordisk database · kvalitet
 on:
   push:
-    branches: [main, "korpus/**"]
+    branches: [main]
   pull_request:
 permissions:
   contents: write
 concurrency:
   group: nordic-database-reconciliation-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   validate:
     runs-on: ubuntu-latest
