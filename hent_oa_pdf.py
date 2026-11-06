@@ -21,6 +21,7 @@ import tempfile
 import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+from http.client import HTTPException
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urljoin, urlsplit
@@ -445,7 +446,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             continue
         if tried >= limit:
             break
-        if not row["oa_url"] and not ((email or lookup_openalex) and row["doi"]):
+        if not row["oa_url"] and not ((email or lookup_openalex or lookup_semantic_scholar) and row["doi"]):
             continue
         used = sum(int(r.get("bytes", 0)) for r in progress.values()
                    if r.get("status") == "pdf-confirmed")
@@ -457,6 +458,13 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             write_json(LOG, progress)
             break
         tried += 1
+        # Durable crash guard: a malformed third-party response must not trap
+        # hourly restarts on the same DOI. Manual second-pass retries remain.
+        progress[ident] = {"status": "failed",
+                           "reason": "attempt interrupted before result",
+                           "checked_at": now()}
+        write_json(LOG, progress)
+        print("PDF_START", ident, flush=True)
         success = None
         deferred = False
         why = "No direct PDF at public OA sources"
@@ -477,7 +485,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 try:
                     pace()
                     candidates = unpaywall_urls(row["doi"], email)
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
                         json.JSONDecodeError) as exc:
                     print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
@@ -492,7 +500,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 try:
                     pace()
                     candidates = openalex_urls(row["doi"])
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
                         json.JSONDecodeError) as exc:
                     print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
@@ -507,7 +515,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 try:
                     pace()
                     candidates = semantic_scholar_urls(row["doi"])
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
                         json.JSONDecodeError) as exc:
                     if not isinstance(exc, HTTPError) or exc.code != 404:
                         print("SEMANTIC_SCHOLAR_FAIL", ident, type(exc).__name__, flush=True)
@@ -549,7 +557,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                             if pdf_data(candidate):
                                 success = (candidate, resolved)
                                 break
-                        except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                        except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError) as exc:
                             why = type(exc).__name__ + ": " + str(exc)[:140]
                             if isinstance(exc, HTTPError) and exc.code == 429:
                                 blocked_hosts.add(destination_host)
@@ -557,7 +565,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                                 print("RATE_LIMIT", destination_host, "defer host", flush=True)
                     if success:
                         break
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError) as exc:
                     why = type(exc).__name__ + ": " + str(exc)[:140]
                     if isinstance(exc, HTTPError) and exc.code == 429:
                         blocked_hosts.add(host)
