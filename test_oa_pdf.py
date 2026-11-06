@@ -20,6 +20,25 @@ class PDFHarvestTest(unittest.TestCase):
         self.assertFalse(pdf.allowed_url("file:///etc/passwd"))
         self.assertFalse(pdf.allowed_url("https://192.168.0.1/a.pdf"))
 
+    def test_spaces_in_public_pdf_url_cannot_crash_downloader(self):
+        import io
+        original = "https://repo.example.org/id/eprint/123/Oral storytelling v11 CAMERA READY.pdf"
+        expected = "https://repo.example.org/id/eprint/123/Oral%20storytelling%20v11%20CAMERA%20READY.pdf"
+        self.assertEqual(pdf.safely_encoded_url(original), expected)
+        with self.assertRaises(ValueError):
+            pdf.safely_encoded_url("https://repo.example.org/paper\r\n.pdf")
+        raw = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
+        reply = io.BytesIO(raw)
+        reply.headers = {"Content-Type": "application/pdf", "Content-Length": str(len(raw))}
+        with patch.object(pdf, "public_dns", return_value=True):
+            with patch.object(pdf, "build_opener") as opener:
+                opener.return_value.open.return_value = reply
+                result, resolved, mime = pdf.safe_request(original)
+                requested = opener.return_value.open.call_args.args[0].full_url
+        self.assertEqual(requested, expected)
+        self.assertEqual(resolved, expected)
+        self.assertTrue(pdf.pdf_data(result))
+
     def test_pdf_detection(self):
         self.assertFalse(pdf.pdf_data(b"<html>paywall</html>"))
         self.assertTrue(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600 + b"%%EOF"))
@@ -43,6 +62,87 @@ class PDFHarvestTest(unittest.TestCase):
         self.assertEqual(result[0], "https://journals.example.org/media/item.pdf")
         self.assertEqual(len(result), 2)
 
+    def test_pdf_alternate_link_and_html_doctype(self):
+        html = (b'<!doctype html><html><head>'
+                b'<link rel="alternate" type="application/pdf" href="/files/paper.pdf">'
+                b'<link rel="stylesheet" href="/app.css">'
+                b'</head></html>')
+        matches = pdf.pdf_candidates_from_html(html, "https://repo.example.org/work/1")
+        self.assertEqual(matches, ["https://repo.example.org/files/paper.pdf"])
+
+    def test_openalex_oa_fallback_sources(self):
+        data = {
+            "best_oa_location": None,
+            "primary_location": {"is_oa": True, "pdf_url":
+                                 "https://archive.example.org/paper.pdf"},
+            "locations": [{"is_oa": False, "pdf_url":
+                           "https://publisher.example.org/paywalled.pdf"}],
+            "open_access": {"is_oa": True, "oa_url":
+                            "https://archive.example.org/record/123"},
+        }
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(data).encode("utf-8"),
+                "https://api.openalex.org/works/x", "application/json")):
+            urls = pdf.openalex_urls("https://doi.org/10.1234/example")
+        self.assertEqual(urls, [
+            "https://archive.example.org/paper.pdf",
+            "https://archive.example.org/record/123",
+        ])
+        self.assertFalse(any("paywalled" in url for url in urls))
+
+    def test_openalex_prefers_repository_pdf_over_publisher(self):
+        data = {
+            "best_oa_location": {"is_oa": True, "source": {"type": "journal"},
+                                 "pdf_url": "https://publisher.example.org/a.pdf"},
+            "locations": [{"is_oa": True, "source": {"type": "repository"},
+                           "pdf_url": "https://institution.example.org/a.pdf"}],
+        }
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(data).encode(), "https://api.openalex.org/works/x",
+                "application/json")):
+            urls = pdf.openalex_urls("10.1234/a")
+        self.assertEqual(urls[0], "https://institution.example.org/a.pdf")
+        self.assertEqual(urls[1], "https://publisher.example.org/a.pdf")
+
+    def test_semantic_scholar_returns_only_public_oa_pdf(self):
+        payload = {"isOpenAccess": True, "openAccessPdf":
+                   {"url": "https://archive.example.org/design.pdf"}}
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(payload).encode(), "https://api.semanticscholar.org/x",
+                "application/json")):
+            self.assertEqual(
+                pdf.semantic_scholar_urls("https://doi.org/10.1234/a"),
+                ["https://archive.example.org/design.pdf"]
+            )
+        payload["openAccessPdf"]["url"] = "https://127.0.0.1/private.pdf"
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(payload).encode(), "https://api.semanticscholar.org/x",
+                "application/json")):
+            self.assertEqual(pdf.semantic_scholar_urls("10.1234/a"), [])
+        self.assertEqual(pdf.semantic_scholar_urls("not-a-doi"), [])
+
+    def test_semantic_scholar_fallback_downloads_verified_pdf(self):
+        raw = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
+        entry = [{"id": "W987", "title": "Fallback", "doi": "10.1234/fallback",
+                  "oa_url": "", "archived": "no"}]
+        with tempfile.TemporaryDirectory() as td:
+            private = Path(td)
+            progress = {}
+            with patch.multiple(pdf, PRIVATE=private, LOG=private / "progress.json"), \
+                 patch.object(pdf, "openalex_urls", return_value=[]), \
+                 patch.object(pdf, "semantic_scholar_urls",
+                              return_value=["https://repo.example.org/a.pdf"]), \
+                 patch.object(pdf, "safe_request", return_value=(
+                     raw, "https://repo.example.org/a.pdf", "application/pdf")), \
+                 patch.object(pdf.time, "sleep"):
+                count = pdf.download(
+                    entry, progress, limit=1, email="", pause=0.5,
+                    max_bytes=1_000_000, retry_failed=False,
+                    lookup_openalex=True, lookup_semantic_scholar=True)
+            self.assertEqual(count, 1)
+            with patch.object(pdf, "PRIVATE", private):
+                self.assertTrue(pdf.cached_pdf_ok("W987", progress["W987"]))
+
     def test_queue_keeps_all_works_and_separates_archived(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
@@ -61,13 +161,14 @@ class PDFHarvestTest(unittest.TestCase):
                 json.dumps({"items": [{"id": "W1", "original_fulltext_url":
                           "https://repo.example.org/a.pdf", "sha256": "abc", "license": "CC BY 4.0"}]}),
                 encoding="utf-8")
-            with patch.object(pdf, "ROOT", root):
+            with patch.multiple(pdf, ROOT=root, FOUND=root / "docs/data/pdf_found.json"):
                 rows, published = pdf.queue_rows()
+                links = pdf.remote_links({}, published)
             self.assertEqual(len(rows), 3)
             self.assertEqual(sum(x["archived"] == "yes" for x in rows), 1)
             self.assertEqual({r["candidate_status"] for r in rows},
                              {"archived", "doi-only", "no-oa-link"})
-            self.assertEqual(len(pdf.remote_links({}, published)), 1)
+            self.assertEqual(len(links), 1)
 
     def test_successful_links_are_not_republication_grants(self):
         links = pdf.remote_links({"W1": {"status": "pdf-confirmed",
@@ -147,6 +248,24 @@ class PDFHarvestTest(unittest.TestCase):
             pdf.write_json(target, {"W2": {"status": "failed"}})
             self.assertEqual(list(json.loads(target.read_text())), ["W2"])
             self.assertFalse(list(Path(td).glob("*.tmp")))
+
+    def test_interrupted_oa_attempt_is_checkpointed_before_network(self):
+        with tempfile.TemporaryDirectory() as td:
+            private = Path(td)
+            progress = {}
+            row = {"id": "WCRASH", "archived": "no",
+                   "oa_url": "https://repo.example.org/paper.pdf", "doi": ""}
+            with patch.multiple(pdf, PRIVATE=private, LOG=private / "progress.json"), \
+                 patch.object(pdf, "safe_request", side_effect=RuntimeError("unexpected parser crash")), \
+                 patch.object(pdf.time, "sleep"):
+                with self.assertRaises(RuntimeError):
+                    pdf.download([row], progress, limit=1, email="", pause=0.5,
+                                 max_bytes=1_000_000, retry_failed=False,
+                                 lookup_openalex=False)
+                saved = pdf.read_json(private / "progress.json")
+            self.assertEqual(saved["WCRASH"]["status"], "failed")
+            self.assertIn("interrupted", saved["WCRASH"]["reason"])
+            self.assertEqual(progress["WCRASH"], saved["WCRASH"])
 
     def test_storage_limit_prevents_download(self):
         from unittest.mock import Mock

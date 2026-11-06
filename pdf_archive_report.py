@@ -9,11 +9,91 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
+import os
+import re
+import shutil
 from collections import defaultdict
 from pathlib import Path
 
 import hent_oa_pdf as harvest
+
+
+def merge_local_cache(source: Path):
+    """Consolidate an already-local PDF cache, without making network requests.
+
+    The source may be written by a separate downloader; only fully saved and
+    hash-confirmed files are imported. Never copy its failed/pending statuses.
+    """
+    source = Path(source).expanduser().resolve()
+    dest = harvest.PRIVATE
+    if source == dest:
+        raise ValueError("Source and destination caches are the same")
+    log = source / "progress.json"
+    if not log.is_file():
+        raise ValueError("Missing source progress.json: " + str(log))
+    raw = harvest.read_json(log)
+    if not isinstance(raw, dict):
+        raise ValueError("Source progress must be a dictionary")
+    progress = harvest.load_progress()
+    directory = dest / "pdf"
+    directory.mkdir(parents=True, exist_ok=True)
+    imported, skipped, errors, conflicts = [], 0, [], []
+    for ident, row in sorted(raw.items()):
+        if not isinstance(ident, str) or not isinstance(row, dict):
+            continue
+        if row.get("status") != "pdf-confirmed":
+            continue
+        digest = row.get("sha256")
+        size = row.get("bytes")
+        if not isinstance(digest, str) or re.fullmatch(r"[a-f0-9]{64}", digest) is None:
+            errors.append([ident, "invalid sha256"]);continue
+        if not isinstance(size, int) or not 500 <= size <= 50_000_000:
+            errors.append([ident, "invalid PDF size"]);continue
+        name = hashlib.sha256(ident.encode()).hexdigest()[:24] + ".pdf"
+        old = source / "pdf" / name
+        destfile = directory / name
+        if not old.is_file() or old.stat().st_size != size:
+            errors.append([ident, "source absent or incomplete"]);continue
+        if not harvest.cached_pdf_ok(ident, progress.get(ident)):
+            if progress.get(ident, {}).get("status") == "pdf-confirmed":
+                conflicts.append([ident, "existing record does not match disk"]);continue
+        else:
+            if progress[ident]["sha256"] != digest:
+                conflicts.append([ident, "same work ID, different PDF"]);continue
+            skipped += 1
+            continue
+        with old.open("rb") as stream:
+            blob = stream.read()
+        if len(blob) != size or hashlib.sha256(blob).hexdigest() != digest or not harvest.pdf_data(blob):
+            errors.append([ident, "source checksum or PDF structure mismatch"]);continue
+        if destfile.exists():
+            conflicts.append([ident, "destination file already exists"]);continue
+        try:
+            try:
+                os.link(old, destfile)
+            except OSError:
+                shutil.copy2(old, destfile)
+            if not destfile.is_file() or destfile.stat().st_size != size:
+                raise OSError("destination changed size")
+            with destfile.open("rb") as stream:
+                if hashlib.file_digest(stream, "sha256").hexdigest() != digest:
+                    raise OSError("destination changed checksum")
+        except OSError as error:
+            destfile.unlink(missing_ok=True)
+            errors.append([ident, type(error).__name__]);continue
+        progress[ident] = {**row, "status": "pdf-confirmed", "source": "imported-local-cache",
+                           "license_status": "not_reviewed"}
+        imported.append(ident)
+    if imported:
+        # The live downloader must not write to the same destination simultaneously.
+        harvest.write_json(harvest.LOG, progress)
+    result = {"imported": len(imported), "already_present": skipped,
+              "errors": errors, "conflicts": conflicts, "new_ids": imported,
+              "all_statuses_in_destination": len(progress), "source": str(source)}
+    print("LOCAL_CACHE_MERGE", json.dumps(result, ensure_ascii=False), flush=True)
+    return result
 
 
 def audit(progress):
@@ -89,7 +169,10 @@ def write_report(verified, missing, failed, duplicates, *, base=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--failed", action="store_true", help="Print failed retrieval IDs")
+    parser.add_argument("--merge-local", type=Path, help="Import valid PDFs from another local private cache (no network)")
     args = parser.parse_args()
+    if args.merge_local:
+        merge_local_cache(args.merge_local)
     progress = harvest.load_progress()
     verified, missing, failed, duplicates = audit(progress)
     summary = write_report(verified, missing, failed, duplicates)

@@ -1,11 +1,12 @@
 {
   "total_visible_entries": 4579,
   "mirrored_licensed_pdf_count": 15,
+  "verified_oa_pdf_count": 189,
   "original_oa_location_links": 4579,
   "original_oa_location_links_only": 4564,
   "rights_unreviewed_count": 4564,
   "text_only_adapted_pdf_count": 1,
-  "metadata_sample": "OpenAlex partial snapshot 2026-11-02",
-  "generated_utc": "2026-11-06T21:43:21.976868+00:00",
-  "disclaimer": "OA URL is a metadata hint, not proof of an accessible PDF or permission to republish. Only manifest-listed, licensed files are mirrored."
+  "metadata_sample": "OpenAlex + Nordic repository corpus",
+  "generated_utc": "2026-11-06T22:43:04.758717+00:00",
+  "disclaimer": "OA URL is a metadata hint unless marked verified_oa_pdf (SHA-256 checked at retrieval time), and does not imply permission to republish. Only manifest-listed, licensed files are mirrored."
 }

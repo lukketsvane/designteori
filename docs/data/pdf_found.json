@@ -88,5 +88,1049 @@
     "status": "archived",
     "license": "CC BY 4.0",
     "sha256": "9173146e78f14d3673e4a8dd85705fe94bc4118c5946f4f4eeb518241d8b141b"
+  },
+  "W1877690414": {
+    "url": "https://openjournals.ljmu.ac.uk/DesignTechnologyEducation/article/download/1605/798",
+    "status": "private-cache-only",
+    "sha256": "31d48f49e89297f24c03007730967fd8512ea721d9d7c29eace7d1d3aa232b1e",
+    "license": ""
+  },
+  "W2051653603": {
+    "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/4045/19737",
+    "status": "private-cache-only",
+    "sha256": "59e4e7a0dd369b9866659fcefc81a49d14494d4c1651737214e8ffe6d9ae2c71",
+    "license": ""
+  },
+  "W2098856852": {
+    "url": "https://www.qip-journal.eu/index.php/QIP/article/download/65/50",
+    "status": "private-cache-only",
+    "sha256": "5df3e06afc1f9fa70443ee918966654b334c4aa8dc0a38fbcdd84aa69d23e858",
+    "license": ""
+  },
+  "W2508439609": {
+    "url": "https://journals.hioa.no/index.php/formakademisk/article/download/1481/1584",
+    "status": "private-cache-only",
+    "sha256": "d91077c24550a6820fa6530d55c7baa01652341661848c0a15613025a8e946f5",
+    "license": ""
+  },
+  "W2587513898": {
+    "url": "https://journals.openedition.org/tc/pdf/7855",
+    "status": "private-cache-only",
+    "sha256": "816e0bbc759ead4ce4b44664bb650866d7390d08bd9afb1331c76ed75a26f524",
+    "license": ""
+  },
+  "W2899361681": {
+    "url": "https://www.jstage.jst.go.jp/article/mer/6/1/6_18-00184/_pdf",
+    "status": "private-cache-only",
+    "sha256": "8f7b051bfcf7a7c9ec0323608812a152f4c7e62af4a1e2048f5d2a8a2e7488be",
+    "license": ""
+  },
+  "W2908349601": {
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/1856/3038",
+    "status": "private-cache-only",
+    "sha256": "bfa89dfc1c288d9aa73e8e4a54ad76089ae752e08a579ebe6d2a5d3cea25ec1c",
+    "license": ""
+  },
+  "W3002900903": {
+    "url": "https://findresearcher.sdu.dk/ws/files/168994944/Breunig_Kallestrup_Translating_hygge.pdf",
+    "status": "private-cache-only",
+    "sha256": "3723078d86bc4a4a96c5ab1b76b7af79ee6f9ed546f3380b004de79924dcfbe0",
+    "license": ""
+  },
+  "W3191732044": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/04233F8CCBE054E66628738D948D18C1/S2732527X21000225a.pdf/div-class-title-a-robust-design-research-landscape-review-on-the-importance-of-design-research-for-achieving-product-robustness-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7ff3c4397002b11183967a2a8cd280a309777e0c53390292c5052d26077b43c2",
+    "license": ""
+  },
+  "W4389099516": {
+    "url": "https://ecp.ep.liu.se/index.php/servdes/article/download/868/773",
+    "status": "private-cache-only",
+    "sha256": "59346ec7bc0d71d359133a857a59a4492a3c818507a3364ff1da048dc5bf622c",
+    "license": ""
+  },
+  "W4390366251": {
+    "url": "https://doi.org/10.24295/cpsstpea.2023.00026",
+    "status": "private-cache-only",
+    "sha256": "a66218f03b1996ae57553a9262288c181edd595aeb049ae36b57a469d788f0bf",
+    "license": ""
+  },
+  "W2075211175": {
+    "url": "https://purehost.bath.ac.uk/ws/files/59185441/Cash_Snider_2014_latent_manifest.pdf",
+    "status": "private-cache-only",
+    "sha256": "f6da56c42d0ea651be74f62a19eb21f600573a954352a8c6fe1adbc473b882b6",
+    "license": ""
+  },
+  "W2620380205": {
+    "url": "https://erepo.uef.fi/server/api/core/bitstreams/5a12c26d-61fe-46fc-b30c-6b8bd006619f/content",
+    "status": "private-cache-only",
+    "sha256": "d7d6b09ba49d14d28d68d14523e3802e1955ef26b05f203876448b7e8f6222d4",
+    "license": ""
+  },
+  "W2741496364": {
+    "url": "https://jyx.jyu.fi/bitstreams/aaeb0457-875c-424d-abb3-51715fcf6f07/download",
+    "status": "private-cache-only",
+    "sha256": "8f2d70f3d5344e5bee65c11f276b6409f345e9d2d739592346fb62f527ce0c24",
+    "license": ""
+  },
+  "W2741710022": {
+    "url": "https://researchmgt.monash.edu/ws/files/242141826/52953384_oa.pdf",
+    "status": "private-cache-only",
+    "sha256": "d2fa3bfb4163960eeea15fcb4b3d9d78cb0203de7d6a235cc20694b2c831628a",
+    "license": ""
+  },
+  "W2897047081": {
+    "url": "https://vbn.aau.dk/ws/files/288339784/manuscript_EA_EA18_3894.pdf",
+    "status": "private-cache-only",
+    "sha256": "1736a51bd918884bdf8182b1c355977c75daadcf77575f7abe8e876ceacd5b7c",
+    "license": ""
+  },
+  "W2945549908": {
+    "url": "https://opinvisindi.is/server/api/core/bitstreams/a364a247-6337-43c9-819c-7ab5948737ab/content",
+    "status": "private-cache-only",
+    "sha256": "320de8b0c61235333d589b4fafab7e5cd59f6ba1d4e9b757d2615e082be52316",
+    "license": ""
+  },
+  "W3127636710": {
+    "url": "https://strathprints.strath.ac.uk/78286/1/Cash_Maier_DS_2021_Understanding_representation_contrasting_gesture.pdf",
+    "status": "private-cache-only",
+    "sha256": "6711a120f6ac41baa439b46156ddd225be407ba1cf4965c340fc6d9af1b08196",
+    "license": ""
+  },
+  "W3158488123": {
+    "url": "https://erepo.uef.fi/server/api/core/bitstreams/6cc19033-2f16-48b9-96d2-dc503125cf78/content",
+    "status": "private-cache-only",
+    "sha256": "3fbaab8c16aee1ce55837e93d2e8c9a5472aa360f3e0003945311d9b5268eef2",
+    "license": ""
+  },
+  "W3200386096": {
+    "url": "https://pure.ulster.ac.uk/ws/files/92526084/Potts2021_Article_ChatbotsToSupportMentalWellbei.pdf",
+    "status": "private-cache-only",
+    "sha256": "855f753978c2b89aac6e5412b7e34baae0685883bde63c75fc4005a6cbffdc25",
+    "license": ""
+  },
+  "W3203364544": {
+    "url": "https://umu.diva-portal.org/smash/get/diva2:1600936/FULLTEXT02",
+    "status": "private-cache-only",
+    "sha256": "4ddef944572652bbb04cacca71e081c46d70a6533a22b7ec0ab157a9fe8724d4",
+    "license": ""
+  },
+  "W4220658188": {
+    "url": "https://strathprints.strath.ac.uk/79991/1/Wynn_Maier_RED_2022_Feedback_systems_in_the_design_and_development_process.pdf",
+    "status": "private-cache-only",
+    "sha256": "341f1d6bf02dc8a7f93a539051b0df10add9e9f96da3eee3f9d8684d24233d70",
+    "license": ""
+  },
+  "W4294252783": {
+    "url": "https://research.chalmers.se/publication/532073/file/532073_Fulltext.pdf",
+    "status": "private-cache-only",
+    "sha256": "613479c4a3236205817c9541c59980e83592fdc2495fc5735f018e9fa881d948",
+    "license": ""
+  },
+  "W4316193852": {
+    "url": "https://macau.uni-kiel.de/servlets/MCRFileNodeServlet/macau_derivate_00007682/s42438-022-00389-y.pdf",
+    "status": "private-cache-only",
+    "sha256": "9bd2330e69b7229d90732944d2503d29287770885ec0d30894b591741b7606f2",
+    "license": ""
+  },
+  "W4319791276": {
+    "url": "https://www.econstor.eu/bitstream/10419/312279/1/s10660-022-09634-9.pdf",
+    "status": "private-cache-only",
+    "sha256": "3d9362fe6ba372aa3b9fb267d5277348f394c82691a5ef998e3e4f258cc902c5",
+    "license": ""
+  },
+  "W4386441712": {
+    "url": "https://liu.diva-portal.org/smash/get/diva2:1794883/FULLTEXT02",
+    "status": "private-cache-only",
+    "sha256": "1516555811b7d14ddcd3fd7bdce13aa2ab9d69aeec0586abd58610f2bfec7372",
+    "license": ""
+  },
+  "W4387048863": {
+    "url": "https://kth.diva-portal.org/smash/get/diva2:1807187/FULLTEXT01",
+    "status": "private-cache-only",
+    "sha256": "8778648e970b2a0f0e3dd02aaf1a55cf041da0f0ec5680637d7224b7cf4cbfc5",
+    "license": ""
+  },
+  "W4388551365": {
+    "url": "https://umu.diva-portal.org/smash/get/diva2:1818704/FULLTEXT02",
+    "status": "private-cache-only",
+    "sha256": "4d89eda8793323ac16e4288dd9751c1ce92636a0ae1259dae3ab9901fe81bbac",
+    "license": ""
+  },
+  "W4391531884": {
+    "url": "https://kau.diva-portal.org/smash/get/diva2:1841039/FULLTEXT02",
+    "status": "private-cache-only",
+    "sha256": "bb01b4c81d9c4fdfe55a9738c840b3b7e904d618468b3d57db4de5985d8a3769",
+    "license": ""
+  },
+  "W4392860474": {
+    "url": "https://liu.diva-portal.org/smash/get/diva2:1845720/FULLTEXT01",
+    "status": "private-cache-only",
+    "sha256": "b58908565969f93c0fa3ebf10c3c0a948af5e19b23bcc072b8c29cc088debb73",
+    "license": ""
+  },
+  "W4393196558": {
+    "url": "https://doras.dcu.ie/30170/1/s42438-024-00465-5%20%289%29.pdf",
+    "status": "private-cache-only",
+    "sha256": "984c3672a257f866d639b3de2e996d413e1a8c3cba91da842ab00819b26083b2",
+    "license": ""
+  },
+  "W4401046767": {
+    "url": "https://assets-eu.researchsquare.com/files/rs-3242947/v1_covered_d644aec2-750c-4128-8044-e9c0f49d18c6.pdf?c=1722533206",
+    "status": "private-cache-only",
+    "sha256": "aec4fb30719d7de63546d4619293973bd6e1ce90c703692985f069d0871ee4f1",
+    "license": ""
+  },
+  "W4405380308": {
+    "url": "https://assets-eu.researchsquare.com/files/rs-3245435/v1_covered_19e25da3-096f-452a-b6c3-f89624f35c76.pdf?c=1734365217",
+    "status": "private-cache-only",
+    "sha256": "902a122ae02f0003b7a7ceee9c57a8b1f8606cdedec2f3b0981988a66a9c67b9",
+    "license": ""
+  },
+  "W4411370260": {
+    "url": "https://liu.diva-portal.org/smash/get/diva2:1974931/FULLTEXT01",
+    "status": "private-cache-only",
+    "sha256": "e07830c6066a6bbab3eaef68fa3ab7918503f3b892a0ca4959b7c5cff07d44f7",
+    "license": ""
+  },
+  "W4412941033": {
+    "url": "https://dspace.library.uu.nl/server/api/core/bitstreams/9e8dd133-4e14-456f-a47c-6640b9084b05/content",
+    "status": "private-cache-only",
+    "sha256": "b3b4ef24f4a460cfd0af0144521a72710191b87a1ba89198cedb52bd029fe901",
+    "license": ""
+  },
+  "W4412989253": {
+    "url": "https://discovery.ucl.ac.uk/id/eprint/10215692/1/Besevli_FinalforDistribution_Revised_Version_ITDE-D-25-00076.pdf",
+    "status": "private-cache-only",
+    "sha256": "896a64ee05403145cfab31028db3226671d7fa99de3d8f96fe435add17f10245",
+    "license": ""
+  },
+  "W4416509676": {
+    "url": "https://assets-eu.researchsquare.com/files/rs-7101379/v1_covered_d6211d9c-60c2-41b7-a988-9a41ea80a9d3.pdf?c=1764000139",
+    "status": "private-cache-only",
+    "sha256": "68527031071ce742a6d011daa188cb075af1ea4c1e7585c84fbf93c252c58013",
+    "license": ""
+  },
+  "W7126037757": {
+    "url": "https://api.repository.cam.ac.uk/server/api/core/bitstreams/8c011e8f-6601-431f-b8bb-a551b516721a/content",
+    "status": "private-cache-only",
+    "sha256": "d5d23e088b64bc4f7806c85183375a4557156288ddf2ac1e23ec282813d068a9",
+    "license": ""
+  },
+  "W7159665492": {
+    "url": "https://edepot.wur.nl/717036",
+    "status": "private-cache-only",
+    "sha256": "ec7d90bf4ccbc7f21c77dae65fb025b5bd811684c591c7edf087a780a7d98b1d",
+    "license": ""
+  },
+  "W7168350604": {
+    "url": "https://research.abo.fi/ws/files/79110162/s43681-026-01212-1.pdf",
+    "status": "private-cache-only",
+    "sha256": "4adf9aaca73145d681a2a0176d7563b77ec525a137e49384f3fab82669f78aef",
+    "license": ""
+  },
+  "W7170191120": {
+    "url": "https://eprints.gla.ac.uk/390890/1/390890.pdf",
+    "status": "private-cache-only",
+    "sha256": "762b077f4e2ed51462c36ffa9a9ee9fdaf2dd4813f9eec8578710769dae50d92",
+    "license": ""
+  },
+  "W2011130167": {
+    "url": "https://jyx.jyu.fi/bitstreams/feb85087-b5c2-48a5-b3ed-484e0842c1cf/download",
+    "status": "private-cache-only",
+    "sha256": "f4700ab1714435cd48e325395ea103fc798c0b3c0b96997906f75d1f6902539a",
+    "license": ""
+  },
+  "W2018631893": {
+    "url": "https://vbn.aau.dk/ws/files/222695114/A_Rotating_Speed_Controller_Design_Method_for_copyRight_Pure.pdf",
+    "status": "private-cache-only",
+    "sha256": "34b9d960d1c4b21aaeb2b29669eb385c0ff937dec1a7fdbfdee98d400f0973f7",
+    "license": ""
+  },
+  "W2064187772": {
+    "url": "https://pure.au.dk/ws/files/19032173/Article.pdf",
+    "status": "private-cache-only",
+    "sha256": "ba2309ceabf759425f51eb1e784aefdcb128b8d315bfc64b767c6e389d0f2954",
+    "license": ""
+  },
+  "W2065873703": {
+    "url": "https://lup.lub.lu.se/search/files/3536943/1951155.pdf",
+    "status": "private-cache-only",
+    "sha256": "d690aba300a48daac2c2a39786b1a89565fd622d3023ad597b5d2d1d5d1ca9b6",
+    "license": ""
+  },
+  "W2100581223": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/54290658B0D50D2EB80B9181658FF4B0/S1743921306001074a.pdf/div-class-title-a-european-elt-design-study-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "f912307d86600eb0cf1dc9a5386aacb8e1089849980dc0b13e1e00aee49203d8",
+    "license": ""
+  },
+  "W2105911331": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/EF717442E487CD37C547021DEB7C81E8/S0890060413000139a.pdf/div-class-title-studying-and-supporting-design-communication-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "fe6784ca79915d6c581ddb9ed3da2f4206fbc7dc13907f7618e201c76e212f26",
+    "license": ""
+  },
+  "W2115306233": {
+    "url": "https://pure.au.dk/ws/files/52688274/hansenKozel_embodiedImagination_authorVersion.pdf",
+    "status": "private-cache-only",
+    "sha256": "74ad5bbd394b41133c4ba73787d6cfad3899069cd4e1fb353acace4bcfc6ac49",
+    "license": ""
+  },
+  "W2153437929": {
+    "url": "https://summit.sfu.ca/_flysystem/fedora/sfu_migrate/15163/2004_DC_Experience_Wakkary_vy-edited.pdf",
+    "status": "private-cache-only",
+    "sha256": "a62ffbbae7a576cf750319eb082b4d6bdbab705086d8a93c9d19dadb46546e51",
+    "license": ""
+  },
+  "W2338366465": {
+    "url": "https://eprints.lancs.ac.uk/id/eprint/79324/1/A_to_Z_of_ContemporaryDesign_PureVersion.pdf",
+    "status": "private-cache-only",
+    "sha256": "1942c5465be6a0c28bded196ff49cb35d4929cece3d31fea35a292fe151ecdad",
+    "license": ""
+  },
+  "W2354069731": {
+    "url": "https://hal.science/hal-01328167v2/file/doc00024952.pdf",
+    "status": "private-cache-only",
+    "sha256": "8d76b741046c17c60b87ae4a8d70b15287397e465601da192608bfaac6d89795",
+    "license": ""
+  },
+  "W2742669564": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/560B306A5E799AEE54D30E0D2C1B7063/S2053470117000105a.pdf/div-class-title-design-prototyping-methods-state-of-the-art-in-strategies-techniques-and-guidelines-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2f84cdcea513a1d283fe0a867f039597b6ef3cf4eb6820c54d41dee7f0c998df",
+    "license": ""
+  },
+  "W2744739440": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/10B13C6901E51E7F6337250A9CA36E17/S2053470117000130a.pdf/div-class-title-relative-impact-of-early-versus-late-design-decisions-in-systems-development-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7bf6514e6470599c394aae0daca58f40b234b663e1443201b31a09fc782c2326",
+    "license": ""
+  },
+  "W2794258710": {
+    "url": "https://pure.au.dk/ws/files/139095939/Participatory_Design_that_Matters_Facing_the_Big_Issues_accepted_manuscript_2018.pdf",
+    "status": "private-cache-only",
+    "sha256": "b830ce2b4c02e01b5bac4193957c4b83db6d151cff2f2a572ffbde8f843b6a86",
+    "license": ""
+  },
+  "W2803094405": {
+    "url": "https://researchonline.rca.ac.uk/3666/1/Ahmed-Kristensen_accepted_manuscript.pdf",
+    "status": "private-cache-only",
+    "sha256": "4f5d1fb468a698fa85255282f8fe83e03f4a44e075d972f57683c5968d2eae54",
+    "license": ""
+  },
+  "W2810761604": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5D5296D64C901A97AB0061D7D80F2907/S2053470118000094a.pdf/div-class-title-designing-for-social-experiences-with-and-within-autonomous-vehicles-exploring-methodological-directions-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "591db938ccfb07618ca8253655cd5bedb29bec7c0b1196573f47fea02d4ca0af",
+    "license": ""
+  },
+  "W2906559886": {
+    "url": "https://vbn.aau.dk/ws/files/292023211/A_holistic_analysis_of_a_BIM_mediated_building_design_process_using_activity_theory.pdf",
+    "status": "private-cache-only",
+    "sha256": "77054420af8e58fde2e534d5afd71cee4215105fde8b1e33ac157b2865c22527",
+    "license": ""
+  },
+  "W2913210181": {
+    "url": "https://findresearcher.sdu.dk/ws/files/158746263/PostRef.pdf",
+    "status": "private-cache-only",
+    "sha256": "f8300119c766ea1ac0b3321f828b8c158eeac7403b717c47a6e8b2d2b74637e2",
+    "license": ""
+  },
+  "W2921788686": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/473908AA5ED751C8A0D1313503271CF0/S0047279419000126a.pdf/div-class-title-varieties-of-employment-subsidy-design-theory-and-evidence-from-across-europe-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2cb9c5a60cd1acf11a8a975219f04f8b687ea343dccfa94620db67e2cab60630",
+    "license": ""
+  },
+  "W2945193414": {
+    "url": "https://jyx.jyu.fi/bitstreams/508c8b1c-3b22-42d2-b1b1-5c5e2b9c58a2/download",
+    "status": "private-cache-only",
+    "sha256": "dbccd51f3340e6f73963c7e7e5b4dbf734d7d9bbbe5ff1a1f8e37e7995322952",
+    "license": ""
+  },
+  "W2960506857": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/186061805/Eriksen_et_al._2019_ORBIT.pdf",
+    "status": "private-cache-only",
+    "sha256": "d4b208711e059557be5228dac82e11f68f9b97ea980f61f766b42586a04c582c",
+    "license": ""
+  },
+  "W2969858282": {
+    "url": "https://vbn.aau.dk/ws/files/330408121/Stepwise_Design_Methodology_and_Heterogeneous_Integration_Routine_of_Air_Cooled_SiC_Inverter_for_Electric_Vehicle.pdf",
+    "status": "private-cache-only",
+    "sha256": "eac256c86e7bc8ec634dbf5d02ec879439dc190004e38c5eeb14f0a0d54a4ec6",
+    "license": ""
+  },
+  "W2979906295": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DA70513CCF3B187DAF99FD22BC127724/S0890060419000271a.pdf/div-class-title-enhanced-function-means-modeling-supporting-design-space-exploration-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "e914415bc34dde32cda3fd77b6de7a33ed79c391dd46062a8c27da2f7c63c594",
+    "license": ""
+  },
+  "W3022657387": {
+    "url": "https://vbn.aau.dk/ws/files/334327680/Characterizing_strategic_design_processes_Simeone.pdf",
+    "status": "private-cache-only",
+    "sha256": "19e526cdd5a0196ce5797ff24000d0da88bf9bbccb7c6e494d8c9ec28199eef2",
+    "license": ""
+  },
+  "W3027977553": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/EBC9558269C81C3863005F4165F17A68/S2053470120000116a.pdf/div-class-title-evaluating-design-uncertainties-in-additive-manufacturing-using-design-artefacts-examples-from-space-industry-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ef66f8aa401ad7fe1f6587b96913418bb2235899078e41c80bdb5a46e1fa84e5",
+    "license": ""
+  },
+  "W3035254258": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/FE9973C789C8153CCE03BCB0965089E9/S2633776220000047a.pdf/div-class-title-data-driven-design-in-concept-development-systematic-review-and-missed-opportunities-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "9b93cfe834894a84d6411049ba1906bd9d9bf77bc9d4df6144c6cf0cda1d68a6",
+    "license": ""
+  },
+  "W3080486077": {
+    "url": "https://ieeexplore.ieee.org/ielx7/4620076/9298488/09173738.pdf",
+    "status": "private-cache-only",
+    "sha256": "91c4abd98ad7d1f03eb32320ad28aa2e7148e36113deb5362e638a0d7198976a",
+    "license": ""
+  },
+  "W3089299813": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/626E78A4E59E5D779BB5FC3F6009244B/S0890060420000414a.pdf/div-class-title-protobooth-gathering-and-analyzing-data-on-prototyping-in-early-stage-engineering-design-projects-by-digitally-capturing-physical-prototypes-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "4400257e8c373cbd6050975cbc7d1422d63983577530b62cf428c3d0fc7148e5",
+    "license": ""
+  },
+  "W3094330626": {
+    "url": "https://repository.essex.ac.uk/29127/1/s41746-020-00339-7.pdf",
+    "status": "private-cache-only",
+    "sha256": "38d8b59de2711854625d2c1a00a2a9e2d686edf6c059f040210e50d39bdddb13",
+    "license": ""
+  },
+  "W3095463613": {
+    "url": "https://vbn.aau.dk/ws/files/439555189/MD_post_print.pdf",
+    "status": "private-cache-only",
+    "sha256": "e74dc0ea0729b0ed40c08b1d1a71b72d3a462630a8869736de7e0fb494feb0b3",
+    "license": ""
+  },
+  "W3095945440": {
+    "url": "https://discovery.ucl.ac.uk/id/eprint/10115621/1/Oralstorytelling%20v11_submitted%20CAMERA%20READY.pdf",
+    "status": "private-cache-only",
+    "sha256": "6847d1bcec3bf88691f998757aaecd23204cf96dbc6914fd1b15a6ad5a9f86f9",
+    "license": ""
+  },
+  "W3100816594": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/770F822E3B27BB067D30F61ACD84F984/S2053470120000190a.pdf/div-class-title-design-margins-in-industrial-practice-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "8741f531653ae5eecbe3425f0367d5a4cdca2aec375f2dbf5e1fa0ee2fbfeeab",
+    "license": ""
+  },
+  "W3111837814": {
+    "url": "https://ieeexplore.ieee.org/ielx7/9670/9434387/09294071.pdf",
+    "status": "private-cache-only",
+    "sha256": "420c6695d70e8b712ba9c801f62df5456c0bf73d2bd86b3cb72f87494010037d",
+    "license": ""
+  },
+  "W3134275020": {
+    "url": "https://lutpub.lut.fi/bitstream/handle/10024/162317/freire_challenges_of_open_design_aam.pdf;jsessionid=171FAD56A8D9D2478D93565BE6E52D42?sequence=1",
+    "status": "private-cache-only",
+    "sha256": "ed9dd1f04cfd6682d3fa259d717afe1a6e96c8db3fbf1836544bc1fbfa519611",
+    "license": ""
+  },
+  "W3153491799": {
+    "url": "https://vbn.aau.dk/ws/files/475877929/An_Optimal_Damping_Design_of_Virtual_Synchronous_Generators_for_Transient_Stability_Enhancement.pdf",
+    "status": "private-cache-only",
+    "sha256": "100017918fb946e1f739da932c6ee1ccf190d8132bacd7d243f0c439214f993e",
+    "license": ""
+  },
+  "W3163991489": {
+    "url": "https://ieeexplore.ieee.org/ielx7/28/9625853/09442295.pdf",
+    "status": "private-cache-only",
+    "sha256": "0b43fd1184e89770db5b8c41894e2b08b368600344b00f172011a7c1b900df46",
+    "license": ""
+  },
+  "W3168477041": {
+    "url": "https://arxiv.org/pdf/2106.07390",
+    "status": "private-cache-only",
+    "sha256": "02428600be1196c68b388557c5229c36f88e9a4c793ba6b127f4182eb5a9e549",
+    "license": ""
+  },
+  "W3183223782": {
+    "url": "https://strathprints.strath.ac.uk/77875/1/Maeir_etal_JED_2021_Factors_influencing_communication_in_collaborative_design.pdf",
+    "status": "private-cache-only",
+    "sha256": "be06f36bfeef728dd659fbc48546d02f5d5b2150f6bdaeb95bcfc97b8c97a149",
+    "license": ""
+  },
+  "W3184085333": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/FEFD9004F66891668ED6010EBA748446/S2732527X21000687a.pdf/div-class-title-comparing-life-cycle-impact-assessment-circularity-and-sustainability-indicators-for-sustainable-design-results-from-a-hands-on-project-with-87-engineering-students-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "c67b9c99170dee0b171df9ed694459876535430dc5359fe593ea42f5ce68392d",
+    "license": ""
+  },
+  "W3184773388": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/AB5FD433ABD11D62E16120C98C4E681C/S2732527X21001036a.pdf/div-class-title-design-for-sustainable-behaviour-in-product-service-systems-a-systematic-review-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "c455bf7e23671b9e1b556ecb502e48e023457d673d9d5ec64b15ccbee87d27e3",
+    "license": ""
+  },
+  "W3184892074": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F4F79F5DB55E394B1BA24BAFDA3F085B/S2732527X21005216a.pdf/div-class-title-seeing-from-the-users-eyes-an-outlook-to-virtual-reality-based-empathic-design-research-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "d51f69f3fe6701b23316c830c64e0385d25e9dab298acd31ffbd4f00827e67c2",
+    "license": ""
+  },
+  "W3186924788": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/EC155B8A2890F926D5C1956DD0303FED/S2732527X21000559a.pdf/div-class-title-barriers-and-opportunities-of-implementing-design-thinking-in-product-development-process-of-a-business-to-business-company-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "66c4f9bb56ef98b79d813863760e8fcdbdcc8497bf0dd544a0d0dba74b09ca5c",
+    "license": ""
+  },
+  "W3187574220": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/BD8305E7F9648C0934CB06EA0B7417A1/S2732527X21001085a.pdf/div-class-title-design-students-take-on-co-design-in-health-reflections-from-learning-and-education-perspectives-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2fe5223a42b352d75905beb05c5dcb985509b6142e45855635ffc4bed4920f46",
+    "license": ""
+  },
+  "W3187597099": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/6E02746D1C5F2458CE49DFEDCE813A65/S2732527X21004119a.pdf/div-class-title-exploring-systemic-forces-that-influence-sustainable-design-transitions-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "cc3e64756af5a08adeae20a5b261cea352021df8de6b641f2b52a87016c7fdb4",
+    "license": ""
+  },
+  "W3187995328": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/444646A900A7C1AD8800AA7A0DC7F171/S2732527X21005022a.pdf/div-class-title-peer-designers-as-strong-influencers-on-the-design-process-of-food-startups-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "fd573a3f597767ed9191bd4c9acf1a0994c4d7f185a93b2093c1e33643679748",
+    "license": ""
+  },
+  "W3188248116": {
+    "url": "https://eprints.whiterose.ac.uk/id/eprint/242442/1/MM%20tool_%20authors%20version.pdf",
+    "status": "private-cache-only",
+    "sha256": "51bdeaf3b06d00f152402640ffe0106a307e6a4fd65868b65afc25368bdd0fa4",
+    "license": ""
+  },
+  "W3191117362": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/81B4450A35C175D680334D1BF701580B/S2732527X21004338a.pdf/div-class-title-how-design-proposals-are-evaluated-a-pilot-study-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7bde26787979e3a7845412b05cca8f08342e595d499a5d2355571e46edf492bc",
+    "license": ""
+  },
+  "W3191384223": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/C17196AA60D3D6115720FD8394E5441D/S2732527X21005617a.pdf/div-class-title-the-dark-side-of-methods-an-exploration-of-the-negative-effects-of-method-use-and-method-reflection-in-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "761999ef0298f41dac82849f082042915623af31fce85645666941f4734c385e",
+    "license": ""
+  },
+  "W3191750637": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/4DE7AACFE0B83DDBEE6A31B2BA861B6D/S2732527X21004065a.pdf/div-class-title-experiences-from-starting-and-running-a-software-company-within-the-context-of-design-research-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "54aa84680a21abc162078d428c9a88a48ef18c523edd74f0655dbebcc8076f19",
+    "license": ""
+  },
+  "W3192215464": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/997BB5E7F0C0504181D8E06B5182446C/S2732527X21005186a.pdf/div-class-title-review-of-design-heuristics-and-design-principles-in-design-for-additive-manufacturing-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "c57119bee7253a4354295cfc0f5674ea027eaa90058567fa911f21a8fe565581",
+    "license": ""
+  },
+  "W3194687285": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/57A1716E4000378D0980C3380F2FD68C/S0373463321000606a.pdf/div-class-title-optimising-aircraft-taxi-speed-design-and-evaluation-of-new-means-to-present-information-on-a-head-up-display-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "39f24e9637f74db6a5e3d5f0f9575d9fb3908b684f45b6860c3bc39c3805ca32",
+    "license": ""
+  },
+  "W3202782380": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0422B52D206DE9D865E9601712076F06/S2053470121000172a.pdf/div-class-title-a-meta-synthesis-of-the-use-of-activity-theory-in-design-for-sustainable-behaviour-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "e23eebf07fc17132ac25b90fd9fdc2ab4aa20d72b4e59885f53e44aa63b0a29a",
+    "license": ""
+  },
+  "W3204617962": {
+    "url": "https://jyx.jyu.fi/bitstreams/0aaecba7-7186-4964-b11f-4cb8b18bc7ad/download",
+    "status": "private-cache-only",
+    "sha256": "a064e747ede73410fba2c1106c9013c26adbea4552ee6642809580843a16203b",
+    "license": ""
+  },
+  "W3205957706": {
+    "url": "https://eprints.gla.ac.uk/257701/1/257701.pdf",
+    "status": "private-cache-only",
+    "sha256": "133419edc10157ce46d331ea172a7965c3c7c991b8fd8ea21800eeee0194f45b",
+    "license": ""
+  },
+  "W3211095618": {
+    "url": "https://digital.csic.es/bitstream/10261/336907/1/gatetftpost.pdf",
+    "status": "private-cache-only",
+    "sha256": "f5c358c442b1390fd11b69718e2a71b1708817d370626e62a11cf7c73dfe9466",
+    "license": ""
+  },
+  "W4200157703": {
+    "url": "https://hal.science/hal-01575288/file/SchnellEtAl%20-ismir2017-%20pipo.pdf",
+    "status": "private-cache-only",
+    "sha256": "f6add9b98df1c8ae7f5c6698e503e3853bab7b9c3edc7eef876246f4da524987",
+    "license": ""
+  },
+  "W4213256177": {
+    "url": "https://ieeexplore.ieee.org/ielx7/46/9840856/09712441.pdf",
+    "status": "private-cache-only",
+    "sha256": "861af73b38c7ca24ceed3b9ea41f194ac673c4b3c5ba2d5b57f2550e1118a737",
+    "license": ""
+  },
+  "W4281551430": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/C1A1856EC71F9B57ABA0CC128799AE3D/S2732527X22000116a.pdf/div-class-title-co-designing-with-ai-in-sight-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7c9ab300f50568b7148219610c8b8dfebc17766e66677e68d939aa136480ccaf",
+    "license": ""
+  },
+  "W4281552341": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/260D38BA0AFC674FA02D538155555FFC/S2732527X22002267a.pdf/div-class-title-exploring-the-role-of-shame-in-design-strategies-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7794c46494a891d4a8925987d99b0cd8c1373fb6f1ea7bb698dc9f788dd59691",
+    "license": ""
+  },
+  "W4281555144": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/390E10DECC8CD253F9352C9E20C83F4F/S2732527X22001092a.pdf/div-class-title-challenges-and-opportunities-for-enabling-mutual-learning-and-collaboration-in-design-and-innovation-for-sustainable-development-in-africa-and-beyond-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "9848a61bd31209d82e4588f8ea0c7ec87cbc06299061b86d4c784bc5e5a0dff5",
+    "license": ""
+  },
+  "W4281555207": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1F5472B470CD72A307509E851950F547/S2732527X22001870a.pdf/div-class-title-harnessing-the-complexity-for-vehicle-system-design-at-the-concept-design-phase-of-an-aircraft-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "625ac81417774537d5bb6b697a1f803a8873355079d30d1a6c0e5bb6c59013ac",
+    "license": ""
+  },
+  "W4281556085": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E16D8C6B8F3C0614A434C36C107E74F0/S2732527X22001286a.pdf/div-class-title-driving-change-in-complex-social-systems-how-to-design-healthcare-pathways-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "c17dfbb151847a6376d5cfb1ad9d825ddae1dab6c2bb250c7d28430dee38367f",
+    "license": ""
+  },
+  "W4281558958": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A6CCE46D9AEAAC5CBB763E4749150E0D/S2732527X22000037a.pdf/div-class-title-virtually-hosted-hackathons-for-design-research-lessons-learned-from-the-international-design-engineering-annual-idea-challenge-2021-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "d4bcc2152a1f612e4c6e9fece6a28c12a6eca8d95a1220cb9edb5746be74f517",
+    "license": ""
+  },
+  "W4281560467": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/59736DAA23FF9D9991CA8C9D938E7C53/S2732527X22000980a.pdf/div-class-title-designing-long-lasting-interior-products-emotional-attachment-product-positioning-and-uniqueness-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "43bd9e5d27cb58f190b379a245f7e8beb2276b7039e01c07142552014de5b9cd",
+    "license": ""
+  },
+  "W4281561356": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7A283D1DB935E8A3E5BEFCF18E7C4CEB/S2732527X22001213a.pdf/div-class-title-to-what-extent-is-circular-product-design-supporting-carbon-reduction-strategies-an-analysis-of-nordic-manufacturing-firms-within-the-science-based-targets-initiative-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "d3896ef9efc1bf8a4ee3fb5020d64373ba1f769e87f66ae518ae9c222a09b82b",
+    "license": ""
+  },
+  "W4281561565": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/3FA74204411BA254AA08CE8453CEBB03/S2732527X22000189a.pdf/div-class-title-user-centred-co-design-in-the-pandemic-a-reindeer-case-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ac4d9b28c243c64d91fd9b690174a905aaf54586d75270a36e58b2e542a4699b",
+    "license": ""
+  },
+  "W4281563081": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1E74AA9DA053E0678B9306BDD1396A0E/S2732527X22001080a.pdf/div-class-title-relational-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "a603a447679911bc68a3c064de517b916cd54a233964f48cc1eff83b16f76ede",
+    "license": ""
+  },
+  "W4281565069": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0A1BB3B91972E0C9BAF2BE7E77002457/S2732527X22001079a.pdf/div-class-title-proposal-of-a-dual-circularity-concept-for-sustainable-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2464e3da0cb9babd151b4a0544eee3913b4612dfa34cd92fffea34cca5ef4631",
+    "license": ""
+  },
+  "W4281568969": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/254ADAE351423466F705584F4D60737E/S2732527X22001043a.pdf/div-class-title-designing-innovation-the-role-of-engineering-design-to-realise-sustainability-challenges-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "a065204e52773ec87ad176f58fdfea48938cbf9e7268d27f15dd9dc6ef00e1b9",
+    "license": ""
+  },
+  "W4281570722": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/97358280C06D26EF80BB9ADFE83992D0/S2732527X22001985a.pdf/div-class-title-avoid-service-design-trap-by-guiding-product-service-system-design-with-product-service-dependency-knowledge-base-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ab7ff47d9b1ce1ec6d0c1896ccdad0056df8c71da0d815c971813feb5fd39ec8",
+    "license": ""
+  },
+  "W4283522490": {
+    "url": "https://ueaeprints.uea.ac.uk/id/eprint/85660/1/WD_19535_R3.pdf",
+    "status": "private-cache-only",
+    "sha256": "d7fdc91c557dd8ddcb49b6ae3675295e9d7d2f56cfba8b9e2aa8f4731064a306",
+    "license": ""
+  },
+  "W4289209329": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/9D116D27DEB4E0CD5E219C48502B83A4/S2053470122000130a.pdf/div-class-title-under-the-umbrella-components-of-empathy-in-psychology-and-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "7cfb8b548b624a27ae4c33e40a78a6b2e8b2885fd4ba5948e3279c0e42b98a8f",
+    "license": ""
+  },
+  "W4292826087": {
+    "url": "https://hal.science/hal-03968840/document",
+    "status": "private-cache-only",
+    "sha256": "248f0e49ec7622db65417d0fbd15db15bc4f7c7d208e707afd50146649746dff",
+    "license": ""
+  },
+  "W4309623106": {
+    "url": "https://findresearcher.sdu.dk/ws/files/201879489/KayganEtAl_GenderedInteractions_AM_verMar22.pdf",
+    "status": "private-cache-only",
+    "sha256": "733fcb266f592fb11ab11d3f9a348caebf21b6c5a1e22e3c3031e22f9924b83a",
+    "license": ""
+  },
+  "W4310112997": {
+    "url": "https://jyx.jyu.fi/bitstreams/143ab219-3145-4b8f-9ce9-0eb61b584580/download",
+    "status": "private-cache-only",
+    "sha256": "7c580e20cfbc42f63bf1a7e9563b010ea7443677bb18c912a38507cdedfe3fb8",
+    "license": ""
+  },
+  "W4365811446": {
+    "url": "https://backoffice.biblio.ugent.be/download/01HJ0NTVGH2YJRJ7QW1GT7YYD5/01HJ0NX513JZTVC61G6DGNEZMK",
+    "status": "private-cache-only",
+    "sha256": "f088c26af84918702cc4294226bbd895f5d6a24d50969c2eb88a52e551c7cdd9",
+    "license": ""
+  },
+  "W4366963324": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/25D1373257E4CCD170DEF081DFB2BA00/S2053470123000070a.pdf/div-class-title-idea-evaluation-as-a-design-process-understanding-how-experts-develop-ideas-and-manage-fixations-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ea82a01b13f3032805c9f7dce75a89116da784a481e0236f494cb7eb105c19b3",
+    "license": ""
+  },
+  "W4378231632": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/4ED4E614AAEC9007B9748BA253EF2452/S2053470123000112a.pdf/div-class-title-redesigning-design-thinking-for-codesign-with-nondesigners-a-method-efficiency-perspective-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "4933d1e119613d8e5a0fee43be7413485819a6ad188ecb796fce4e905ec5e417",
+    "license": ""
+  },
+  "W4381165123": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/CD8815C50A5EC9FE97EFF27B8C0BEAF7/S2732527X2300336Xa.pdf/div-class-title-the-design-mindset-inventory-d-mindset0-a-preliminary-instrument-for-measuring-design-mindset-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "3a239e193ac0e2aba23d580fb211592e6b833bcd6209a1d6a423f02023ac042e",
+    "license": ""
+  },
+  "W4381165193": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/63F0D84EB523D44FEFB6AFEF32ADEAD5/S2732527X23003759a.pdf/div-class-title-using-design-methods-to-explore-the-context-of-complex-behavioral-design-problems-in-the-early-stages-of-behavioural-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "b56979ef3973ad28a854aa3fa7b9ec0f91f404bd8d04a2bfa6a38e9b365de99d",
+    "license": ""
+  },
+  "W4381185187": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/85AB4D9113BD6CB745C5061B0FCCB041/S2732527X23003826a.pdf/div-class-title-virtually-hosted-hackathons-for-design-research-lessons-learned-from-the-international-design-engineering-annual-idea-challenge-2022-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "cd1de46287919a4c17af0affc35a59857ea9d4c0aa44d5bb763dfd15b216ee5d",
+    "license": ""
+  },
+  "W4381185314": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DAA21504A87D7E6CDB115521628AC24D/S2732527X23001748a.pdf/div-class-title-examining-the-role-and-future-potential-of-design-for-disassembly-methods-to-support-circular-product-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "97674cc85b0d01d4f34c1487097b3527ea8f8f84ca44359af50117c72b62f9e2",
+    "license": ""
+  },
+  "W4381185315": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/34FF345738D4E985862EC00B85E0522D/S2732527X23001384a.pdf/div-class-title-designing-for-legal-practitioners-lessons-learned-from-legal-tech-development-and-implementation-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "d073d582136e8ced027637ddfcf08b573bed4cbef715daa9985e562a9c4828e4",
+    "license": ""
+  },
+  "W4381185424": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/EF2BE23413A98D5BFA09737553AC19BA/S2732527X23000962a.pdf/div-class-title-co-designing-technological-explorations-in-developing-futures-literacy-through-speculative-design-and-an-artistic-intervention-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "b80586a60b9d8258ed9ca190a4a6c566172aa8e394df10902460ff765ff300e4",
+    "license": ""
+  },
+  "W4381185534": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/C4082F2CDF8E85764E12A367DEA1B97C/S2732527X23002894a.pdf/div-class-title-perspectives-on-robust-design-an-overview-of-challenges-and-research-areas-across-industry-fields-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "786e50f5d8672d56db4caf5589ab0b399edbd90602fdf70a55b32d8b1420dd8a",
+    "license": ""
+  },
+  "W4381185547": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A5FC1A99DE58A60AC4A6E5F279368676/S2732527X23001244a.pdf/div-class-title-design-expertise-a-structured-literature-review-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "52b064df26842a5b0e767081d9edc98c2e943c43970e7295ee3a2319a52680ca",
+    "license": ""
+  },
+  "W4381185565": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/CB381EFDD834AB3D3EC074E573B0CD50/S2732527X23003565a.pdf/div-class-title-toward-a-framework-for-sustainable-experience-design-education-and-an-illustrative-case-of-a-service-design-thinking-course-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "fd589ca488de87256d558c98d85d5792cba8c6127ae80b3deded88cf41cc5254",
+    "license": ""
+  },
+  "W4381185578": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1B7F1696F5A2F6EAEA37096DD4013CEA/S2732527X23000974a.pdf/div-class-title-collaborative-teamwork-prototyping-and-creativity-in-digital-fabrication-design-education-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "deb465573e5e2ea3fc6ca1f905823fc6407ea217a11c09a96b20f399224935b5",
+    "license": ""
+  },
+  "W4381185581": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/001FFB3786C1E917DC29FF88506C964A/S2732527X23002146a.pdf/div-class-title-hvlv-engineering-with-module-system-s-eto-and-lean-design-study-on-practitioner-information-needs-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "06a2492f886d85cec88f06e704b1bbecaedb71fe5850b7387d89d958824be16f",
+    "license": ""
+  },
+  "W4381185603": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DC14CE230D6652FDC940DDD42F0A55B5/S2732527X23000809a.pdf/div-class-title-bridging-designer-user-gap-with-a-virtual-reality-based-empathic-design-approach-contextual-information-details-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "8a7f2e781f2d29168331fc7068e26658a55671f619091e687ac4754970254906",
+    "license": ""
+  },
+  "W4381185609": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/CD9C4831905AE41A5056C9A24FBB8BF3/S2732527X23002286a.pdf/div-class-title-incorporating-field-effects-into-the-design-of-modular-product-families-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "1dcf9a67a36ea1a713388ddf00bfbd1eed408cd64af22156652cebde7e66723e",
+    "license": ""
+  },
+  "W4381185657": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E07E3148385E364E1550789EF176096B/S2732527X23003103a.pdf/div-class-title-re-thinking-design-representations-in-design-education-an-interview-study-with-professional-designers-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "46e130ec2ec053f57ee5f07e3eb7ce30ed4d33db48dac0894be792d719556b61",
+    "license": ""
+  },
+  "W4384912907": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1F9F72C74A3D9A7AE86FFEA9ECE653F6/S2053470123000148a.pdf/div-class-title-recognizing-non-designers-contribution-in-the-process-of-designing-information-on-visual-management-boards-a-metaphorical-approach-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "a7ddf452e170335c7ca51506bd3f6b9411a237d0c9d4109c53f2442bb5d1403c",
+    "license": ""
+  },
+  "W4387447805": {
+    "url": "https://ieeexplore.ieee.org/ielx7/92/4359553/10274667.pdf",
+    "status": "private-cache-only",
+    "sha256": "a6aef003ccf030efed63e4cc7e18e917721bbd2711d07f830979ead47913dcdb",
+    "license": ""
+  },
+  "W4388240284": {
+    "url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/10305577.pdf",
+    "status": "private-cache-only",
+    "sha256": "f16c207f040978f27fb755d71b71a243fd72b4dba0623092dd3fd48287dd7c5e",
+    "license": ""
+  },
+  "W4388593572": {
+    "url": "https://vbn.aau.dk/ws/files/751788753/Peruccon_Simeone_2023_-_DMI_Journal._Designing_Systems_ina_fine-grained_and_inclusive_way_by_integrating_Service_Design_within_Future_Studies_and_Foresight..pdf",
+    "status": "private-cache-only",
+    "sha256": "44498deee359360c50605cf9e8d98f7200f10f41f9735a5eb15b0d3ff44b4dfc",
+    "license": ""
+  },
+  "W4389673551": {
+    "url": "https://pure.au.dk/ws/files/449424318/Sonic_placemaking_facilitating_listening_behaviour_through_design_Accepted_manuscript.pdf",
+    "status": "private-cache-only",
+    "sha256": "bc9db1eec67e6a2b2b17f96a5db75ab4df06fe317351da534e150bcb502f4a1e",
+    "license": ""
+  },
+  "W4394576718": {
+    "url": "https://orbi.uliege.be/bitstream/2268/316076/1/JAN_R%c3%a9fComp%c3%a9tencesIPA.pdf",
+    "status": "private-cache-only",
+    "sha256": "a3287df9f60fd8e71fe14acdf3b4618879b0688f024810a167be456087b3465e",
+    "license": ""
+  },
+  "W4398160621": {
+    "url": "https://pure.au.dk/ws/files/445431109/Vernacular_Classicism_and_the_Mausoleum_of_Halicarnassus_-_The_Architectural_Imaginary_of_a_Danish_Interwar_Crematorium_Accepted_Manuscript.pdf",
+    "status": "private-cache-only",
+    "sha256": "b96c49c700f7059cfd15beacc48904bc703f184108d542d266f8825b06e2bc81",
+    "license": ""
+  },
+  "W4404620318": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/B7698152B87670532F86E21A44B23030/S2053470124000398a.pdf/div-class-title-design-thinking-catalysing-change-in-the-educational-ecosystem-a-framework-for-future-challenges-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "e8d22974507d31167979d7450e96dd8eb1cea439c0b26ac3f3de9f8d8d21e0ec",
+    "license": ""
+  },
+  "W4405079648": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/35B834F92BE7A180D864FDA0441E980B/S2053470124000325a.pdf/div-class-title-reboundless-design-towards-the-prevention-of-rebound-effects-by-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "69f0a10d8faa7312dd194a9b739cc53397c70bcc97841245d17194e2e807cf65",
+    "license": ""
+  },
+  "W4405641826": {
+    "url": "https://centaur.reading.ac.uk/120133/1/Learning%20Satisfaction%20in%20Virtual%20Reality-%20The%20Role%20of%20Persuasive%20Design..pdf",
+    "status": "private-cache-only",
+    "sha256": "86432f83a798907f64102277ac4373a1d994dec90220a7e8d0b45843d4948196",
+    "license": ""
+  },
+  "W4409869075": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/AEE9AE1490B16882EC7F3109DAB54A60/S205347012500006Xa.pdf/div-class-title-tolerancing-in-product-design-a-holistic-description-scheme-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "e50410b045571ac09cc4b63203da3b68b25d7fba81ba273989b43a263131e40d",
+    "license": ""
+  },
+  "W4410321820": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DF9B22E158BCA9CFBEF66F07B268D05E/S2053470125000113a.pdf/div-class-title-designing-value-robust-circular-systems-through-changeability-a-framework-with-case-studies-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2807a410e857276bbad1e4833f0aef7890053d814d1ba15a6f21e5547d1138b3",
+    "license": ""
+  },
+  "W4410558724": {
+    "url": "https://www.dora.lib4ri.ch/eawag/dload/eawag:34987/PDF/view",
+    "status": "private-cache-only",
+    "sha256": "b096e4c3290ca9c62f18aafe613d9778369d3fd1d5a7b59dc3466e72659d0a2b",
+    "license": ""
+  },
+  "W4411114230": {
+    "url": "https://findresearcher.sdu.dk/ws/files/310581315/Liquid_Forms-prepublication-060325.pdf",
+    "status": "private-cache-only",
+    "sha256": "869fd7dbd92b867811dccbca5e1685688d0ea80c31ab20a12f3c6ee90680b976",
+    "license": ""
+  },
+  "W4413737578": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/00A340805FB71CE3ACFD4BFADC49668E/S2732527X25103210a.pdf/div-class-title-the-pioneering-role-of-stanford-designx-and-legacy-of-larry-leifer-on-the-field-of-engineering-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ae0145a720f1042a6c72d34a27a22449c13d52555250236c518e65fed0b7a355",
+    "license": ""
+  },
+  "W4413737701": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/6550D0F70F676BB2D8FE1489BAB9A5FF/S2732527X25101466a.pdf/div-class-title-designing-an-embodiment-a-design-methodology-perspective-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "adec09e64cf7032fad8d2f42796e7b6b29686abbe3d2803c0f53a7406d8f702c",
+    "license": ""
+  },
+  "W4413738046": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/6CFD4CDA44B033016EA41DD2765838DC/S2732527X25101442a.pdf/div-class-title-designing-a-compatibility-evaluation-framework-for-integration-of-3pl-warehouse-clients-in-warehouse-systems-an-action-design-research-study-in-a-danish-3pl-company-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "abe7b0751e593caa4a87770d04b321a28e49ab024bd51a11748fc3dedb826e5a",
+    "license": ""
+  },
+  "W4413738055": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/70935698A0D5631F27CCC2BE0CE79810/S2732527X25103258a.pdf/div-class-title-the-use-of-configurators-to-support-warehouse-service-design-a-case-study-of-a-logistics-service-provider-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "79933d86dd3630417c127de47228b826651c5349ddf3cfacf073723a263072c7",
+    "license": ""
+  },
+  "W4413739330": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/BFDFEA825915982531BA4E7296A4633C/S2732527X25102964a.pdf/div-class-title-robust-design-as-a-team-sport-mastering-upcoming-challenges-in-modern-product-development-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "54219d6ac1049ba162fd499ba530d102a523eecf98cee524b875280882bff71e",
+    "license": ""
+  },
+  "W4413739341": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8773175BBDBE339971998E93ABD4D31B/S2732527X25101557a.pdf/div-class-title-early-engagement-in-co-designing-mixed-reality-assembly-instructions-in-manufacturing-industry-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "419a463b524f407e0fd9ddd663892f4c0a6ee86e9cdb2c88cace471b1e5aeeff",
+    "license": ""
+  },
+  "W4415784902": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/626E64258BEB729C7676ECC184871B73/S2053470125100346a.pdf/div-class-title-in-search-of-the-ideal-design-systematic-trade-off-mitigation-and-constraint-management-in-optimal-design-synthesis-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "9b8d5486f025f393f532f7702bd35d5b746a712653e04e8a4f06af6b11b418ff",
+    "license": ""
+  },
+  "W7125511917": {
+    "url": "https://www.medrxiv.org/content/medrxiv/early/2025/09/07/2025.09.05.25335089.full.pdf",
+    "status": "private-cache-only",
+    "sha256": "d75aeb28b7b75adc7ced349f264946d219c9dc6907ae90b9a202f9b0f22b658c",
+    "license": ""
+  },
+  "W7125836905": {
+    "url": "https://lirias.kuleuven.be/retrieve/863e3913-ef47-4523-95b1-589ceab850e3",
+    "status": "private-cache-only",
+    "sha256": "e88b45ee359f5b16833cf2b93300b6ef3ad6cd80e87d411ede91f9c695c8d446",
+    "license": ""
+  },
+  "W7129646458": {
+    "url": "https://findresearcher.sdu.dk/ws/files/305255739/e108168.full.pdf",
+    "status": "private-cache-only",
+    "sha256": "c2a293a42f5c2187bf45076ca5aef3400e892f5c6e9bbcac33f0085220d261fb",
+    "license": ""
+  },
+  "W7134055039": {
+    "url": "https://findresearcher.sdu.dk/ws/files/305918840/e114457.full.pdf",
+    "status": "private-cache-only",
+    "sha256": "aa0ab73b139fe215f571077c5d7ab5092394eb153b6dad27571a844bd6e8bf20",
+    "license": ""
+  },
+  "W7163873985": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/29BE35D995A05DB07821438562D42E3D/S2053470126100584a.pdf/div-class-title-inclusive-mindset-in-design-unpacking-concepts-and-implications-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "5c14961ed2e538c2300636c5ebe4096f93a823fb96c0230ad75ee35234b9e9e2",
+    "license": ""
+  },
+  "W7165128494": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/76999C19787582DA6E7B42935A55D22B/S2977905726100262a.pdf/div-class-title-designing-with-decay-from-environmental-transformation-to-programmed-degradation-in-a-yeast-cellulose-biohydrogel-for-circular-architectural-applications-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "f579fd41d48b4b85b493b10576885e95afe3bf1b8f0f4afa90b0b9ae3cb66ac1",
+    "license": ""
+  },
+  "W7166043121": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/02EAC6953733747CDDB6D1ACCC8A50BA/S2977905726100249a.pdf/div-class-title-designing-with-bio-based-ph-sensing-materials-for-everyday-intimate-care-in-matrescence-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "3ac40354063c449b5eb38eb2350a694a79dc63a48f1009daa01f6eeda72ecd3f",
+    "license": ""
+  },
+  "W7167014194": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/D079AEF38A7A1D933F322A07C2862E51/S2732527X26104180a.pdf/div-class-title-virtual-reality-supported-empathy-in-design-experimental-evidence-on-problem-framing-and-ideation-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "69548e32342700c5a395e6dbe5cac4733c67ec4629cf9694909617275e077d52",
+    "license": ""
+  },
+  "W7167014468": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E3043B5982BED233039D8A3D4F8383FF/S2732527X26106634a.pdf/div-class-title-developing-design-method-as-teaching-tools-the-dual-role-of-design-methods-in-practice-and-pedagogy-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ed493e954ca563ce62b400fbe002cd2c42ba4821ff4a03cd3f9ca62c13fab75e",
+    "license": ""
+  },
+  "W7167030003": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F409D635016A506DE6D0AB76830A44D2/S2732527X26104854a.pdf/div-class-title-retrofit-as-ecological-citizenship-towards-participatory-resilient-and-regenerative-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "ff0efa5b2eca24455c2fe133f93c9d360dd72948e2373255cb368ceee87b2fb5",
+    "license": ""
+  },
+  "W7167034660": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/509DE3514B0801C4C85F391C6AE174B8/S2732527X26106762a.pdf/div-class-title-the-impact-of-semantic-feedback-on-functional-connectivity-during-design-ideation-a-preliminary-study-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "88cdbdad74990751ab0abb7c0f90b5452f6d1d6f0e1f6729947b45fea8388ada",
+    "license": ""
+  },
+  "W7167043179": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/AD63367BEEA72A6626EB8FEDC38B4A50/S2732527X26106889a.pdf/div-class-title-iterative-industrial-prototyping-for-industry-4-0-data-collection-for-factory-design-simulation-in-seafood-processing-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "07177f6b9ae2c4d89d5e12c30f5652afab7203d85d62a2b035a58e5b8180c13f",
+    "license": ""
+  },
+  "W7167051469": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/49990F19278A4F3123CE78FE8B61F8EC/S2732527X26105379a.pdf/div-class-title-relational-design-experiments-for-improved-health-care-access-for-persons-who-sell-sexual-services-in-trondheim-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2a703cad86f422308d2e4789a327c4ab2b9ab34cd777cc485043394545b3ae0d",
+    "license": ""
+  },
+  "W7167052543": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/E324EB39C1CB0A95F95727681FF5B942/S2732527X26104714a.pdf/div-class-title-towards-a-framework-for-stimuli-in-interpreting-and-envisioning-society-in-collaborative-design-futuring-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "2218028181adcddee6cd7d6c2722f4da8dfbccf4dbce04ca0cecaba70471b02f",
+    "license": ""
+  },
+  "W7167081507": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/25BF469866E21D4F8D2A4C89202ACB98/S2977905726100213a.pdf/div-class-title-life-affirming-design-pedagogies-the-case-of-the-master-s-programme-design-ecologies-at-konstfack-sweden-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "632834c8bfdc20d1e98457b21024aa332e1ed23892c96963c6064dc52117dbe1",
+    "license": ""
+  },
+  "W7167092645": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A30F9B5CFFAF66B9C18B21123ECC6877/S2732527X26104763a.pdf/div-class-title-understanding-and-preventing-behavioural-rebound-effects-a-design-tool-for-sustainable-design-across-contexts-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "8f9d54b7712ea13d072fd19cd7ffaafd97dc24130b2ad5c8ba0ccf751bd23284",
+    "license": ""
+  },
+  "W7167093199": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/5CEA8E0C5B7E579A475746D29F47BF2D/S2732527X26106154a.pdf/div-class-title-what-designers-need-from-agentic-ai-case-of-circularity-and-cmf-design-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "8ec51557cf0c9a2692aacf18638b640a354730de27a1817cd7e0938bea490946",
+    "license": ""
+  },
+  "W7167102892": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F45AC7BFDE387556429134B8FF7527C5/S2732527X26106579a.pdf/div-class-title-food-for-thought-exploring-the-future-of-food-through-ai-supported-design-fictions-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "f385d7680c965eb3a3f579669e1cd7df8b9108a87dcf9c2bc825ba8ba0c339eb",
+    "license": ""
+  },
+  "W7171853635": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/925AC45B8257A437B58AA5987EC1E591/S2977905726100912a.pdf/div-class-title-from-design-to-co-nature-ing-toward-a-metabolic-epistemology-of-design-in-the-age-of-human-nature-intelligence-ecologies-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "0c3b0e5506a70182b44ff5d2e43c1d16dcb38adfb16eaee85f9949d3aab7e27e",
+    "license": ""
+  },
+  "W7223143333": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/66060F2B82610CD2EF2E498B63EB076F/S2977905726101024a.pdf/div-class-title-interdisciplinary-paradigms-with-mycelium-submerged-liquid-fermentation-as-a-space-for-design-inquiry-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "0bce39d29ffa411b89250992ca9dcd5f136028d88ae379512675d0c5d7c5ad6a",
+    "license": ""
+  },
+  "W7223678457": {
+    "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/24E49F360CCCD5D9FFEBB086BC0C7B1B/S2053470126100869a.pdf/div-class-title-structured-reflection-to-support-design-method-validation-and-adaptation-in-product-architecture-design-a-case-study-div.pdf",
+    "status": "private-cache-only",
+    "sha256": "af34f81c2fab051d5987a45504fed8eabb05a8bc6a3359c78169c29ed787a4f8",
+    "license": ""
   }
 }

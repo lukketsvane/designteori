@@ -6,6 +6,7 @@ ARGS=(--download --limit "${LIMIT:-8000}" --lookup-openalex --delay 1.0
       --max-cache-gb "${MAX_CACHE_GB:-30}" --min-free-gb "${MIN_FREE_GB:-2}")
 if [[ -n "${EMAIL:-}" ]]; then ARGS+=(--email "$EMAIL"); fi
 if [[ "${RETRY_FAILED:-0}" == "1" ]]; then ARGS+=(--retry-failed); fi
+if [[ "${SEMANTIC_SCHOLAR:-0}" == "1" ]]; then ARGS+=(--lookup-semantic-scholar); fi
 if [[ -n "${DOI_CSV:-}" ]]; then
   # The DOI importer performs the final private index audit itself.
   DOI_ARGS=(--input "$DOI_CSV" --download --limit "${LIMIT:-8000}"
@@ -13,6 +14,7 @@ if [[ -n "${DOI_CSV:-}" ]]; then
     --max-cache-gb "${MAX_CACHE_GB:-30}" --min-free-gb "${MIN_FREE_GB:-2}")
   if [[ -n "${EMAIL:-}" ]]; then DOI_ARGS+=(--email "$EMAIL"); fi
   if [[ "${RETRY_FAILED:-0}" == "1" ]]; then DOI_ARGS+=(--retry-failed); fi
+  if [[ "${SEMANTIC_SCHOLAR:-0}" == "1" ]]; then DOI_ARGS+=(--lookup-semantic-scholar); fi
   python3 hent_doi_csv.py "${DOI_ARGS[@]}"
 else
   python3 hent_oa_pdf.py "${ARGS[@]}"
