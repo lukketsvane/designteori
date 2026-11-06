@@ -237,7 +237,7 @@ def unpaywall_urls(doi, email):
 
 
 def openalex_urls(doi):
-    """Optional OA-location fallback. URLs returned are leads, not licensing claims."""
+    """Find diverse OA locations. Prefer repository PDFs over landing pages."""
     if not doi:
         return []
     short = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
@@ -246,20 +246,52 @@ def openalex_urls(doi):
     url = "https://api.openalex.org/works/https://doi.org/" + quote(short, safe="/")
     payload, _, _ = safe_request(url, limit=1_500_000, accept="application/json")
     data = json.loads(payload.decode("utf-8"))
-    locs = [data.get("best_oa_location"), data.get("primary_location")] + list(data.get("locations") or [])
-    urls = []
-    for loc in locs:
+    locs = [data.get("best_oa_location"), data.get("primary_location")]
+    locs.extend(data.get("locations") or [])
+    candidates = {}
+    for pos, loc in enumerate(locs):
         if not isinstance(loc, dict) or not loc.get("is_oa", False):
             continue
-        for candidate in (loc.get("pdf_url"), loc.get("landing_page_url")):
-            if allowed_url(candidate) and candidate not in urls:
-                urls.append(candidate)
-    # Some records expose an OA landing page only through open_access.oa_url.
+        source = loc.get("source") or {}
+        repository = isinstance(source, dict) and source.get("type") == "repository"
+        for link in (loc.get("pdf_url"), loc.get("landing_page_url")):
+            if not allowed_url(link):
+                continue
+            pdf_shaped = direct_pdf_hint(link)
+            rank = (0 if pdf_shaped and repository else
+                    1 if pdf_shaped else
+                    2 if repository else 3)
+            key = (rank, pos)
+            if link not in candidates or key < candidates[link]:
+                candidates[link] = key
     oa = data.get("open_access") or {}
     alternate = oa.get("oa_url") if oa.get("is_oa") else None
-    if allowed_url(alternate) and alternate not in urls:
-        urls.append(alternate)
-    return urls[:12]
+    if allowed_url(alternate) and alternate not in candidates:
+        candidates[alternate] = (4, len(locs))
+    return [url for url, _ in sorted(candidates.items(), key=lambda item: item[1])][:12]
+
+
+def semantic_scholar_urls(doi):
+    """Optional public OA PDF location from Semantic Scholar's bibliographic API.
+
+    A returned link is only a discovery lead. No licensing rights inferred.
+    """
+    if not doi:
+        return []
+    short = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
+    if not re.fullmatch(r"10\.\d{4,9}/\S+", short, flags=re.I):
+        return []
+    endpoint = ("https://api.semanticscholar.org/graph/v1/paper/DOI:"
+                + quote(short, safe="") + "?fields=openAccessPdf,isOpenAccess")
+    payload, _, _ = safe_request(endpoint, limit=750_000, accept="application/json")
+    data = json.loads(payload.decode("utf-8"))
+    if not isinstance(data, dict):
+        return []
+    oa_pdf = data.get("openAccessPdf") or {}
+    if not isinstance(oa_pdf, dict):
+        return []
+    url = oa_pdf.get("url")
+    return [url] if allowed_url(url) else []
 
 
 def direct_pdf_hint(link):
@@ -374,7 +406,7 @@ def publish(rows, published, progress):
 
 
 def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lookup_openalex,
-             max_cache_bytes=None, min_free_bytes=0):
+             lookup_semantic_scholar=False, max_cache_bytes=None, min_free_bytes=0):
     PRIVATE.mkdir(parents=True, exist_ok=True)
     pdf_dir = PRIVATE / "pdf"
     pdf_dir.mkdir(exist_ok=True)
@@ -419,7 +451,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
         seen = set()
         # Search the registered OA link first, and only then call outside APIs.
         # This greatly reduces traffic against OA discovery services.
-        for source in ("registered", "unpaywall", "openalex"):
+        for source in ("registered", "unpaywall", "openalex", "semantic_scholar"):
             if success:
                 break
             if source in blocked_sources:
@@ -442,7 +474,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         deferred = True
                         why = "rate-limited API: " + source
                     continue
-            else:
+            elif source == "openalex":
                 if not lookup_openalex or not row["doi"]:
                     continue
                 try:
@@ -456,6 +488,22 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         blocked_sources.add(source)
                         deferred = True
                         why = "rate-limited API: " + source
+                    continue
+            else:
+                if not lookup_semantic_scholar or not row["doi"]:
+                    continue
+                try:
+                    pace()
+                    candidates = semantic_scholar_urls(row["doi"])
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                        json.JSONDecodeError) as exc:
+                    if not isinstance(exc, HTTPError) or exc.code != 404:
+                        print("SEMANTIC_SCHOLAR_FAIL", ident, type(exc).__name__, flush=True)
+                    if isinstance(exc, HTTPError) and exc.code in (403, 429):
+                        print("API_UNAVAILABLE", source, "skip this API for this batch", flush=True)
+                        blocked_sources.add(source)
+                        deferred = True
+                        why = "rate-limited or restricted API: " + source
                     continue
             for target in candidates[:10]:
                 if not allowed_url(target) or target in seen:
@@ -538,6 +586,8 @@ def main():
     parser.add_argument("--min-free-gb", type=float, default=2.0,
                         help="Free disk space to reserve")
     parser.add_argument("--lookup-openalex", action="store_true", help="Consult OpenAlex for additional legal OA locations")
+    parser.add_argument("--lookup-semantic-scholar", action="store_true",
+                        help="Optional Semantic Scholar openAccessPdf fallback")
     args = parser.parse_args()
     if (args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50
             or args.shards < 1 or not 0 <= args.shard < args.shards
@@ -552,6 +602,7 @@ def main():
         tried = download(selected, progress, limit=args.limit, email=args.email,
                          pause=args.delay, max_bytes=args.max_mb * 1_000_000,
                          retry_failed=args.retry_failed, lookup_openalex=args.lookup_openalex,
+                         lookup_semantic_scholar=args.lookup_semantic_scholar,
                          max_cache_bytes=int(args.max_cache_gb * 1_000_000_000),
                          min_free_bytes=int(args.min_free_gb * 1_000_000_000))
         print("ATTEMPTED", tried)

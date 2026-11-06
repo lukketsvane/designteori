@@ -71,6 +71,58 @@ class PDFHarvestTest(unittest.TestCase):
         ])
         self.assertFalse(any("paywalled" in url for url in urls))
 
+    def test_openalex_prefers_repository_pdf_over_publisher(self):
+        data = {
+            "best_oa_location": {"is_oa": True, "source": {"type": "journal"},
+                                 "pdf_url": "https://publisher.example.org/a.pdf"},
+            "locations": [{"is_oa": True, "source": {"type": "repository"},
+                           "pdf_url": "https://institution.example.org/a.pdf"}],
+        }
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(data).encode(), "https://api.openalex.org/works/x",
+                "application/json")):
+            urls = pdf.openalex_urls("10.1234/a")
+        self.assertEqual(urls[0], "https://institution.example.org/a.pdf")
+        self.assertEqual(urls[1], "https://publisher.example.org/a.pdf")
+
+    def test_semantic_scholar_returns_only_public_oa_pdf(self):
+        payload = {"isOpenAccess": True, "openAccessPdf":
+                   {"url": "https://archive.example.org/design.pdf"}}
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(payload).encode(), "https://api.semanticscholar.org/x",
+                "application/json")):
+            self.assertEqual(
+                pdf.semantic_scholar_urls("https://doi.org/10.1234/a"),
+                ["https://archive.example.org/design.pdf"]
+            )
+        payload["openAccessPdf"]["url"] = "https://127.0.0.1/private.pdf"
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(payload).encode(), "https://api.semanticscholar.org/x",
+                "application/json")):
+            self.assertEqual(pdf.semantic_scholar_urls("10.1234/a"), [])
+        self.assertEqual(pdf.semantic_scholar_urls("not-a-doi"), [])
+
+    def test_semantic_scholar_fallback_downloads_verified_pdf(self):
+        raw = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
+        entry = [{"id": "W987", "title": "Fallback", "doi": "10.1234/fallback",
+                  "oa_url": "", "archived": "no"}]
+        with tempfile.TemporaryDirectory() as td:
+            private = Path(td)
+            progress = {}
+            with patch.multiple(pdf, PRIVATE=private, LOG=private / "progress.json"), \
+                 patch.object(pdf, "openalex_urls", return_value=[]), \
+                 patch.object(pdf, "semantic_scholar_urls",
+                              return_value=["https://repo.example.org/a.pdf"]), \
+                 patch.object(pdf, "safe_request", return_value=(
+                     raw, "https://repo.example.org/a.pdf", "application/pdf")), \
+                 patch.object(pdf.time, "sleep"):
+                count = pdf.download(
+                    entry, progress, limit=1, email="", pause=0.5,
+                    max_bytes=1_000_000, retry_failed=False,
+                    lookup_openalex=True, lookup_semantic_scholar=True)
+            self.assertEqual(count, 1)
+            self.assertTrue(pdf.cached_pdf_ok("W987", progress["W987"]))
+
     def test_queue_keeps_all_works_and_separates_archived(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

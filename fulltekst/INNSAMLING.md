@@ -73,3 +73,13 @@ For Linux/macOS: `DOI_CSV=results/doi_eksport.csv bash hent_tusen_pdfar.sh`.
 Du kan kontrollere tala i `results/doi_eksport_status.json`. Det er eit
 metadatauttrekk; faktisk lagra PDF-ar må kontrollerast i den private
 `pdf_local_report.json`-fila.
+
+## Ekstra OA-kjelder
+
+Innsamlaren prøver registrerte OA-lenkjer og OpenAlex-lokasjonar. OpenAlex-lenkjer som peikar direkte til PDF i institusjonsarkiv får forrang framfor landingssider. Valfritt kan Semantic Scholar sitt `openAccessPdf`-felt leggjast til som ekstra kjelde etter dei andre oppslaga:
+
+```powershell
+.\hent_tusen_pdfar.ps1 -DoiCsvPath results/doi_eksport.csv -SemanticScholar -Limit 8000
+```
+
+Eit slikt metadataoppslag er **ikkje** ein stadfesta PDF eller ei redistribusjonsløyve. Ved HTTP 403/429 frå den eksterne API-tenesta blir ho hoppa over for resten av den aktuelle køyringa. Ingen CAPTCHA eller betalingsmur blir omgått.
