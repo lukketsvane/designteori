@@ -22,7 +22,8 @@ class PDFHarvestTest(unittest.TestCase):
 
     def test_pdf_detection(self):
         self.assertFalse(pdf.pdf_data(b"<html>paywall</html>"))
-        self.assertTrue(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600))
+        self.assertTrue(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600 + b"%%EOF"))
+        self.assertFalse(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600))
 
     def test_html_discovery(self):
         html = (b'<html><head><meta name="citation_pdf_url" '
@@ -111,6 +112,46 @@ class PDFHarvestTest(unittest.TestCase):
             unpaywall.assert_not_called()
             openalex.assert_not_called()
             self.assertEqual(len(list((root / "pdf").glob("*.pdf"))), 1)
+
+    def test_verified_cache_requires_real_bytes(self):
+        import hashlib
+        raw = b"%PDF-1.7\n" + b" " * 600 + b"%%EOF"
+        with tempfile.TemporaryDirectory() as td:
+            with patch.object(pdf, "PRIVATE", Path(td)):
+                target = pdf.cache_path("W500")
+                target.parent.mkdir(parents=True)
+                target.write_bytes(raw)
+                entry = {"status": "pdf-confirmed", "bytes": len(raw),
+                         "sha256": hashlib.sha256(raw).hexdigest()}
+                self.assertTrue(pdf.cached_pdf_ok("W500", entry))
+                target.write_bytes(b"%PDF-1.7 broken")
+                self.assertFalse(pdf.cached_pdf_ok("W500", entry))
+                target.unlink()
+                self.assertFalse(pdf.cached_pdf_ok("W500", entry))
+
+    def test_atomic_progress_writes(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "progress.json"
+            pdf.write_json(target, {"W1": {"status": "pdf-confirmed"}})
+            self.assertEqual(json.loads(target.read_text())["W1"]["status"], "pdf-confirmed")
+            pdf.write_json(target, {"W2": {"status": "failed"}})
+            self.assertEqual(list(json.loads(target.read_text())), ["W2"])
+            self.assertFalse(list(Path(td).glob("*.tmp")))
+
+    def test_storage_limit_prevents_download(self):
+        from unittest.mock import Mock
+        with tempfile.TemporaryDirectory() as td:
+            with patch.multiple(pdf, PRIVATE=Path(td), LOG=Path(td) / "progress.json"), \
+                 patch.object(pdf, "safe_request") as request:
+                result = pdf.download([
+                    {"id": "W123", "archived": "no", "oa_url": "https://example.org/file.pdf",
+                     "doi": "", "kind": "article"}
+                ], {}, limit=1, email="", pause=1.0, max_bytes=1_000_000,
+                   retry_failed=False, lookup_openalex=False,
+                   max_cache_bytes=100, min_free_bytes=0)
+            self.assertEqual(result, 0)
+            request.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
