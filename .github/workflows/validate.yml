@@ -1,4 +1,4 @@
-name: Kontroll av forskingsarkivet
+name: Datakvalitet · nordisk designteori
 on:
   push:
     branches: [main]
@@ -13,9 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Kontroller metadata, kjeldekonsistens, lisensar og SHA-256
-        run: python test_publisering.py
-      - name: Kontroller hypotesar, representativ kontrollkø og blanke kodingsark
-        run: python forsking/test_protokoll.py
-      - name: Kontroller sidestader og filhashar for piloten
-        run: python forsking/verifiser_pilot.py
+      - name: Sjekk Python-kode for katalog og innsamling
+        run: python -m py_compile collect.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py
+      - name: Kontroller metadata, kjelder, dublett-ID-ar, teljingar og lisensar
+        run: python test_database.py
