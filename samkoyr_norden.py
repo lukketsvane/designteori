@@ -80,7 +80,14 @@ def reconcile():
         ids.add(cid)
         title = str(raw.get("title") or "").strip()
         if not title:
-            raise ValueError("Empty title: " + cid)
+            audit.append({
+                "id": cid, "source": raw.get("source", "editorial"), "title": "",
+                "year": str(raw.get("year") or ""), "doi": raw.get("doi", ""),
+                "matched_openalex_id": "", "status": "missing-title",
+                "reason": "Source entry has no title; requires bibliographic correction",
+                "source_url": raw.get("source_url", ""),
+            })
+            continue
         year = str(raw.get("year") or "").strip()
         d = normalized_doi(raw.get("doi"))
         typed_id = raw.get("source_id", "")
