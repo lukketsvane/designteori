@@ -1,11 +1,4 @@
 {
-  "cautions": [
-    "This is a relevance-ranked, incomplete OpenAlex sample, not a census.",
-    "Metadata matching is not independent peer review or a study of replicability.",
-    "DOI can link identity candidates but does not establish research validity.",
-    "Historical references and Nordic archival records are not automatically in scope.",
-    "Citations alone do not prove that an older result was tested or extended."
-  ],
   "coverage_by_layer": {
     "historical_global_theory_candidates": {
       "decades": {
@@ -48,111 +41,121 @@
     "nordic_editorial_and_repository_candidates": {
       "decades": {
         "1890s": 1,
+        "1900s": 1,
         "1910s": 1,
-        "1960s": 2,
-        "1970s": 1,
-        "1980s": 1,
-        "2000s": 11,
-        "2010s": 22,
-        "2020s": 15
+        "1960s": 4,
+        "1970s": 7,
+        "1980s": 13,
+        "1990s": 114,
+        "2000s": 892,
+        "2010s": 2619,
+        "2020s": 5933
       },
       "kinds": {
-        "editorial-candidate": 54
+        "article": 1030,
+        "book": 70,
+        "book-chapter": 74,
+        "editorial-candidate": 44,
+        "proceedings-article": 1156,
+        "review": 66,
+        "thesis": 1620,
+        "unknown": 5525
       },
-      "searchable_registrations": 54,
-      "with_authors": 54,
-      "with_doi": 24,
+      "searchable_registrations": 9585,
+      "with_authors": 9524,
+      "with_doi": 2430,
       "with_local_pdf": 0,
       "with_open_access_url": 0,
-      "with_year": 54
+      "with_year": 9585
     },
-    "openalex_partial_2000_2026": {
+    "openalex_primary_1900_2026": {
       "decades": {
-        "2000s": 721,
-        "2010s": 2858,
-        "2020s": 3721
+        "1930s": 2,
+        "1940s": 1,
+        "1950s": 4,
+        "1960s": 31,
+        "1970s": 154,
+        "1980s": 517,
+        "1990s": 2090,
+        "2000s": 1198,
+        "2010s": 5745,
+        "2020s": 6943
       },
       "kinds": {
-        "article": 6060,
-        "book": 182,
-        "book-chapter": 903,
-        "review": 155
+        "article": 11375,
+        "book": 527,
+        "book-chapter": 1751,
+        "book-review": 6,
+        "conference-abstract": 5,
+        "conference-paper": 2746,
+        "dissertation": 52,
+        "editorial": 8,
+        "letter": 1,
+        "other": 1,
+        "paratext": 2,
+        "reference-entry": 1,
+        "review": 210
       },
-      "searchable_registrations": 7300,
-      "with_authors": 7300,
-      "with_doi": 6514,
+      "searchable_registrations": 16685,
+      "with_authors": 16685,
+      "with_doi": 13500,
       "with_local_pdf": 15,
-      "with_open_access_url": 4579,
-      "with_year": 7300
+      "with_open_access_url": 9292,
+      "with_year": 16685
     }
   },
   "cross_layer_or_within_layer_possible_doi_duplicates": {
-    "all_groups": [
-      {
-        "doi": "10.1007/978-3-030-37896-7",
-        "records": [
-          {
-            "id": "W4231005248",
-            "layer": "openalex_partial_2000_2026"
-          },
-          {
-            "id": "W3011884411",
-            "layer": "openalex_partial_2000_2026"
-          }
-        ]
-      },
-      {
-        "doi": "10.1097/cin.0000000000000917",
-        "records": [
-          {
-            "id": "W4226056745",
-            "layer": "openalex_partial_2000_2026"
-          },
-          {
-            "id": "W4224988969",
-            "layer": "openalex_partial_2000_2026"
-          }
-        ]
-      },
-      {
-        "doi": "10.1109/ms.2019.2957715",
-        "records": [
-          {
-            "id": "W2993382791",
-            "layer": "openalex_partial_2000_2026"
-          },
-          {
-            "id": "W2969810688",
-            "layer": "openalex_partial_2000_2026"
-          }
-        ]
-      },
-      {
-        "doi": "10.17705/1thci.00117",
-        "records": [
-          {
-            "id": "W2976561343",
-            "layer": "openalex_partial_2000_2026"
-          },
-          {
-            "id": "W2953204552",
-            "layer": "openalex_partial_2000_2026"
-          }
-        ]
-      }
-    ],
-    "duplicate_doi_keys": 4,
+    "duplicate_doi_keys": 9,
     "example_groups": [
       {
+        "doi": "10.1002/(sici)1097-0134(19990501)35:2",
+        "records": [
+          {
+            "id": "W2010262693",
+            "layer": "openalex_primary_1900_2026"
+          },
+          {
+            "id": "W2083615624",
+            "layer": "openalex_primary_1900_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1002/(sici)1097-0134(19990815)36:3",
+        "records": [
+          {
+            "id": "W2059737849",
+            "layer": "openalex_primary_1900_2026"
+          },
+          {
+            "id": "W4243155513",
+            "layer": "openalex_primary_1900_2026"
+          }
+        ]
+      },
+      {
         "doi": "10.1007/978-3-030-37896-7",
         "records": [
           {
             "id": "W4231005248",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           },
           {
             "id": "W3011884411",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1088/1755-1315/297/1/012015",
+        "records": [
+          {
+            "id": "W2972257176",
+            "layer": "openalex_primary_1900_2026"
+          },
+          {
+            "id": "W2943564855",
+            "layer": "openalex_primary_1900_2026"
           }
         ]
       },
@@ -161,11 +164,11 @@
         "records": [
           {
             "id": "W4226056745",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           },
           {
             "id": "W4224988969",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           }
         ]
       },
@@ -174,11 +177,11 @@
         "records": [
           {
             "id": "W2993382791",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           },
           {
             "id": "W2969810688",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           }
         ]
       },
@@ -187,27 +190,53 @@
         "records": [
           {
             "id": "W2976561343",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
           },
           {
             "id": "W2953204552",
-            "layer": "openalex_partial_2000_2026"
+            "layer": "openalex_primary_1900_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.3384/svid.2000-964x.14134",
+        "records": [
+          {
+            "id": "W996723382",
+            "layer": "openalex_primary_1900_2026"
+          },
+          {
+            "id": "W4242994823",
+            "layer": "openalex_primary_1900_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.7577/formakademisk.4513",
+        "records": [
+          {
+            "id": "W4307544888",
+            "layer": "openalex_primary_1900_2026"
+          },
+          {
+            "id": "W4307989480",
+            "layer": "openalex_primary_1900_2026"
           }
         ]
       }
     ],
-    "registrations": 8
+    "registrations": 18
   },
   "historical_global_provisional_groups": 407,
   "historical_original_bibliography_entries": 430,
   "manual_article_eligibility_checks_completed": 0,
   "measurement_unit": "source registrations; NOT vetted unique research works",
-  "nordic_unlinked_candidates": 54,
-  "openalex_partial_search": 7300,
+  "nordic_unlinked_candidates": 9585,
+  "openalex_partial_search": 16685,
   "openalex_title_gate": {
-    "automatic-title-inclusion": 3729,
-    "awaiting-eligibility-review": 3571
+    "automatic-title-inclusion": 8305,
+    "awaiting-eligibility-review": 8380
   },
-  "schema_version": 1,
-  "total_searchable_rows_all_layers": 7761
+  "schema_version": 2,
+  "total_searchable_rows_all_layers": 26677
 }

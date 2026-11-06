@@ -1,0 +1,520 @@
+[
+  {
+    "id": "10.1002/mmce.20539",
+    "title": "Reliable design optimization of microwave structures using multipoint-response-correction space mapping and trust regions",
+    "authors": [
+      "Slawomir Koziel"
+    ],
+    "year": 2011,
+    "doi": "https://doi.org/10.1002/mmce.20539",
+    "kind": "journal-article",
+    "venue": "International Journal of RF and Microwave Computer-Aided Engineering",
+    "url": "https://doi.org/10.1002/mmce.20539"
+  },
+  {
+    "id": "10.1002/mmce.20579",
+    "title": "Robust microwave design optimization using adjoint sensitivity and trust regions",
+    "authors": [
+      "Slawomir Koziel",
+      "Frank Mosler",
+      "Stefan Reitzinger",
+      "Peter Thoma"
+    ],
+    "year": 2012,
+    "doi": "https://doi.org/10.1002/mmce.20579",
+    "kind": "journal-article",
+    "venue": "International Journal of RF and Microwave Computer-Aided Engineering",
+    "url": "https://doi.org/10.1002/mmce.20579"
+  },
+  {
+    "id": "10.1002/mop.25355",
+    "title": "Computationally efficient simulation‐driven design of a printed 2.45 GHz Yagi antenna",
+    "authors": [
+      "Slawomir Koziel",
+      "Stanislav Ogurtsov"
+    ],
+    "year": 2010,
+    "doi": "https://doi.org/10.1002/mop.25355",
+    "kind": "journal-article",
+    "venue": "Microwave and Optical Technology Letters",
+    "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/mop.25355"
+  },
+  {
+    "id": "10.1002/mop.27763",
+    "title": "Decomposition, Response Surface Approximations, and Space Mapping for EM‐Driven Design of Microwave Filters",
+    "authors": [
+      "Slawomir Koziel",
+      "Stanislav Ogurtsov"
+    ],
+    "year": 2013,
+    "doi": "https://doi.org/10.1002/mop.27763",
+    "kind": "journal-article",
+    "venue": "Microwave and Optical Technology Letters",
+    "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/mop.27763"
+  },
+  {
+    "id": "10.1016/0375-6505(92)90034-7",
+    "title": "Design of geothermal steam supply systems in Iceland",
+    "authors": [
+      "Claus Ballzus",
+      "Thorbjörn Karlsson",
+      "Runólfur Maack"
+    ],
+    "year": 1992,
+    "doi": "https://doi.org/10.1016/0375-6505(92)90034-7",
+    "kind": "journal-article",
+    "venue": "Geothermics",
+    "url": "https://doi.org/10.1016/0375-6505(92)90034-7"
+  },
+  {
+    "id": "10.1016/j.frl.2023.103721",
+    "title": "Design of a self-adaptive model for leverage",
+    "authors": [
+      "Maxime Segal",
+      "Sverrir Ólafsson"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1016/j.frl.2023.103721",
+    "kind": "journal-article",
+    "venue": "Finance Research Letters",
+    "url": "https://doi.org/10.1016/j.frl.2023.103721"
+  },
+  {
+    "id": "10.1016/j.technovation.2016.05.004",
+    "title": "Contributions of design emphasis, design resources and design excellence to market performance in technology-based service innovation",
+    "authors": [
+      "Marina Candi"
+    ],
+    "year": 2016,
+    "doi": "https://doi.org/10.1016/j.technovation.2016.05.004",
+    "kind": "journal-article",
+    "venue": "Technovation",
+    "url": "https://doi.org/10.1016/j.technovation.2016.05.004"
+  },
+  {
+    "id": "10.1021/acs.joc.2c01515",
+    "title": "Asymmetric Synthesis of Methoxylated Ether Lipids: A Glyceryl Glycidyl Ether Key Building Block Design, Preparation, and Synthetic Application",
+    "authors": [
+      "Svanur Sigurjónsson",
+      "Einar Lúthersson",
+      "Haraldur G. Gudmundsson",
+      "Hafdís Haraldsdóttir",
+      "Lilja Kristinsdóttir",
+      "Gudmundur G. Haraldsson"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1021/acs.joc.2c01515",
+    "kind": "journal-article",
+    "venue": "The Journal of Organic Chemistry",
+    "url": "https://pubs.acs.org/doi/pdf/10.1021/acs.joc.2c01515"
+  },
+  {
+    "id": "10.1038/s41598-024-53723-8",
+    "title": "Design and optimization of metamaterial-based highly-isolated MIMO antenna with high gain and beam tilting ability for 5G millimeter wave applications",
+    "authors": [
+      "Bashar A. F. Esmail",
+      "Slawomir Koziel"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1038/s41598-024-53723-8",
+    "kind": "journal-article",
+    "venue": "Scientific Reports",
+    "url": "https://www.nature.com/articles/s41598-024-53723-8.pdf"
+  },
+  {
+    "id": "10.1038/s41598-024-80319-z",
+    "title": "Versatile unsupervised design of antennas using flexible parameterization and computational intelligence methods",
+    "authors": [
+      "Slawomir Koziel",
+      "Anna Pietrenko-Dabrowska",
+      "Stanislaw Szczepanski"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1038/s41598-024-80319-z",
+    "kind": "journal-article",
+    "venue": "Scientific Reports",
+    "url": "https://www.nature.com/articles/s41598-024-80319-z.pdf"
+  },
+  {
+    "id": "10.1038/s41598-025-96253-7",
+    "title": "Rapid global antenna design by simplex regressors and multi-resolution simulations",
+    "authors": [
+      "Slawomir Koziel",
+      "Anna Pietrenko-Dabrowska",
+      "Stanislaw Szczepanski",
+      "Leifur Leiffson"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1038/s41598-025-96253-7",
+    "kind": "journal-article",
+    "venue": "Scientific Reports",
+    "url": "https://www.nature.com/articles/s41598-025-96253-7.pdf"
+  },
+  {
+    "id": "10.1049/iet-map.2013.0023",
+    "title": "Design optimisation of antennas using electromagnetic simulations and adaptive response correction technique",
+    "authors": [
+      "Slawomir Koziel",
+      "Stanislav Ogurtsov"
+    ],
+    "year": 2014,
+    "doi": "https://doi.org/10.1049/iet-map.2013.0023",
+    "kind": "journal-article",
+    "venue": "IET Microwaves, Antennas &amp; Propagation",
+    "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1049/iet-map.2013.0023"
+  },
+  {
+    "id": "10.1049/iet-map.2013.0276",
+    "title": "Rapid optimisation of omnidirectional antennas using adaptively adjusted design specifications and kriging surrogates",
+    "authors": [
+      "Slawomir Koziel",
+      "Stanislav Ogurtsov"
+    ],
+    "year": 2013,
+    "doi": "https://doi.org/10.1049/iet-map.2013.0276",
+    "kind": "journal-article",
+    "venue": "IET Microwaves, Antennas &amp; Propagation",
+    "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1049/iet-map.2013.0276"
+  },
+  {
+    "id": "10.1109/access.2023.3254204",
+    "title": "Rapid Design of 3D Reflectarray Antennas by Inverse Surrogate Modeling and Regularization",
+    "authors": [
+      "Slawomir Koziel",
+      "Mehmet Ali Belen",
+      "Alper Çalişkan",
+      "Peyman Mahouti"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1109/access.2023.3254204",
+    "kind": "journal-article",
+    "venue": "IEEE Access",
+    "url": "https://doi.org/10.1109/access.2023.3254204"
+  },
+  {
+    "id": "10.1515/9781501514142-002",
+    "title": "Chapter 1 Manuscript Variation in the Design and Contents of Maríu saga",
+    "authors": [],
+    "year": 2021,
+    "doi": "https://doi.org/10.1515/9781501514142-002",
+    "kind": "book-chapter",
+    "venue": "Reading the Old Norse-Icelandic “Maríu saga” in Its Manuscript Contexts",
+    "url": "https://www.degruyterbrill.com/document/doi/10.1515/9781501514142-002/xml"
+  },
+  {
+    "id": "10.1680/dob.13513.0016",
+    "title": "12. The development of a design for a breakwater at Keflavik, Iceland",
+    "authors": [
+      "W. F. Baird",
+      "K. W. Woodrow"
+    ],
+    "year": 1988,
+    "doi": "https://doi.org/10.1680/dob.13513.0016",
+    "kind": "book-chapter",
+    "venue": "Design of Breakwaters",
+    "url": "https://doi.org/10.1680/dob.13513.0016"
+  },
+  {
+    "id": "10.17705/1cais.05641",
+    "title": "VALID Care Pathways: A Framework for Meaningful Digital Platform Design",
+    "authors": [
+      "Reykjavik University",
+      "Lisa Schmitz",
+      "Elena Richert",
+      "Reykjavik University",
+      "Kamilla R. Jóhannsdóttir",
+      "Reykjavik University",
+      "Erna S. Arnardottir",
+      "Reykjavik University",
+      "Anna S. Islind",
+      "Reykjavik University"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.17705/1cais.05641",
+    "kind": "journal-article",
+    "venue": "Communications of the Association for Information Systems",
+    "url": "https://doi.org/10.17705/1cais.05641"
+  },
+  {
+    "id": "10.1787/730618174512",
+    "title": "Design Down Process",
+    "authors": [],
+    "year": 2002,
+    "doi": "https://doi.org/10.1787/730618174512",
+    "kind": "report",
+    "venue": "PEB Exchange, Programme on Educational Building",
+    "url": "https://doi.org/10.1787/730618174512"
+  },
+  {
+    "id": "10.18130/v3bt3t",
+    "title": "Centering Reykjavik, Imperializing Morris: The Viability of Travel Narratives in Architectural and Urban History",
+    "authors": [
+      "Olivia Houck"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.18130/v3bt3t",
+    "kind": "dissertation",
+    "venue": "University of Virginia",
+    "url": "https://doi.org/10.18130/v3bt3t"
+  },
+  {
+    "id": "10.22495/cgiop9",
+    "title": "Sustainability as institutional design: Governance, culture, and strategy in Icelandic banks",
+    "authors": [
+      "Throstur Olaf Sigurjonsson",
+      "Svala Gudmundsdottir"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.22495/cgiop9",
+    "kind": "proceedings-article",
+    "venue": "Corporate governance: International outlook",
+    "url": "https://virtusinterpress.org/IMG/pdf/cgiop9.pdf"
+  },
+  {
+    "id": "10.23919/ursi48707.2020.9254063",
+    "title": "Low-Cost Design Optimization of Antennas with Peripheral Components",
+    "authors": [
+      "Adrian Bekasiewicz",
+      "Slawomir Koziel"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.23919/ursi48707.2020.9254063",
+    "kind": "proceedings-article",
+    "venue": "2020 Baltic URSI Symposium (URSI)",
+    "url": "https://doi.org/10.23919/ursi48707.2020.9254063"
+  },
+  {
+    "id": "10.24122/tve.a.2019.16.1.7",
+    "title": "Hönnun starfa og starfsánægja í sérfræðistörfum hjúkrunarfræðinga, verkfræðinga og stjórnenda",
+    "authors": [
+      "Arney Einarsdóttir",
+      "Sigrún Gunnarsdóttir",
+      "Ingi Rúnar Eðvarðsson",
+      "Ásta Dís Óladóttir",
+      "Inga Minelgaite",
+      "Svala Guðmundsdóttir"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.24122/tve.a.2019.16.1.7",
+    "kind": "journal-article",
+    "venue": "Tímarit um viðskipti og efnahagsmál",
+    "url": "https://ojs.hi.is/index.php/efnahagsmal/article/download/a.2019.16.1.7/pdf"
+  },
+  {
+    "id": "10.24193/ed21.2017.15.02",
+    "title": "Teaching creativity across the curriculum through design education. Case studies",
+    "authors": [
+      "University of Iceland, v/Stakkahlid, 105 Reykjavik, Iceland, cdt@hi.is",
+      "Gisli Thorsteinsson",
+      "Tom Page",
+      "Loughborough University, Epinal Way, Loughborough LE11 3TU, England"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.24193/ed21.2017.15.02",
+    "kind": "journal-article",
+    "venue": "Educatia 21",
+    "url": "https://doi.org/10.24193/ed21.2017.15.02"
+  },
+  {
+    "id": "10.24270/netla.2013/17",
+    "title": "Viðhorf kennara til ákvarðanatöku nemenda í hönnun og smíði",
+    "authors": [
+      "Gísli Þorsteinsson",
+      "Brynjar Ólafsson"
+    ],
+    "year": 2013,
+    "doi": "https://doi.org/10.24270/netla.2013/17",
+    "kind": "journal-article",
+    "venue": "Netla",
+    "url": "https://ojs.hi.is/index.php/netla/article/download/2407/1293"
+  },
+  {
+    "id": "10.24270/netla.2016.6",
+    "title": "Nýsköpunarmennt í leikskólastarfi - Hugmyndir barna um hönnun leikskólalóðar",
+    "authors": [
+      "Sara Margrét Ólafsdóttir",
+      "Svanborg Rannveig Jónsdóttir"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.24270/netla.2016.6",
+    "kind": "journal-article",
+    "venue": "Netla",
+    "url": "https://www.ejournals.is/index.php/netla/article/download/2388/1273"
+  },
+  {
+    "id": "10.24270/tuuom.2021.30.10",
+    "title": "Algild hönnun: Leiðarljós að jafnræði og tækifærum til samfélagsþátttöku",
+    "authors": [
+      "Snæfríður Þóra Egilson",
+      "Sigrún Kristín Jónasdóttir"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.24270/tuuom.2021.30.10",
+    "kind": "journal-article",
+    "venue": "Tímarit um uppeldi og menntun",
+    "url": "https://ojs.hi.is/index.php/tuuom/article/download/3458/2087"
+  },
+  {
+    "id": "10.33112/ije.24.3",
+    "title": "Hönnun og virkni léttra gróðurþaka við íslenskar aðstæður",
+    "authors": [
+      "Halla Einarsdóttir",
+      "Ágúst Elí Ágústsson",
+      "Hrund Ólöf Andradóttir",
+      "Magnús Bjarklind",
+      "Reynir Sævarsson"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.33112/ije.24.3",
+    "kind": "journal-article",
+    "venue": "Icelandic Journal of Engineering",
+    "url": "https://doi.org/10.33112/ije.24.3"
+  },
+  {
+    "id": "10.3384/ecp17138280",
+    "title": "Covering the Gap Between Advanced Control Theory Design and Real Time Implementation Using Simulink",
+    "authors": [
+      "Carlos F. Pfeiffer",
+      "Roshan Sharma"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.3384/ecp17138280",
+    "kind": "proceedings-article",
+    "venue": "Linköping Electronic Conference Proceedings",
+    "url": "https://doi.org/10.3384/ecp17138280"
+  },
+  {
+    "id": "10.3384/ecp17138332",
+    "title": "A multi-period optimization model for the design of new LNG supply chains",
+    "authors": [
+      "Alice Bittante",
+      "Frank Pettersson",
+      "Henrik Saxén"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.3384/ecp17138332",
+    "kind": "proceedings-article",
+    "venue": "Linköping Electronic Conference Proceedings",
+    "url": "https://doi.org/10.3384/ecp17138332"
+  },
+  {
+    "id": "10.3384/ecp17138398",
+    "title": "Modeling and simulation in the design process of a prosthetic foot",
+    "authors": [
+      "Heimir Tryggvason",
+      "Felix Starker",
+      "Christophe Lecompte",
+      "Fjóla Jónsdóttir"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.3384/ecp17138398",
+    "kind": "proceedings-article",
+    "venue": "Linköping Electronic Conference Proceedings",
+    "url": "https://doi.org/10.3384/ecp17138398"
+  },
+  {
+    "id": "10.3390/educsci14050470",
+    "title": "Experiments on the Efficacy of Drawing for Memorization among Adults and Children with Varying Written Word Memory Capacities: A Two-Way Crossover Design",
+    "authors": [
+      "Unnur Guðrún Óttarsdóttir"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.3390/educsci14050470",
+    "kind": "journal-article",
+    "venue": "Education Sciences",
+    "url": "https://www.mdpi.com/2227-7102/14/5/470/pdf"
+  },
+  {
+    "id": "10.3390/electronics13020383",
+    "title": "On Accelerated Metaheuristic-Based Electromagnetic-Driven Design Optimization of Antenna Structures Using Response Features",
+    "authors": [
+      "Slawomir Koziel",
+      "Anna Pietrenko-Dabrowska",
+      "Bogdan Pankiewicz"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.3390/electronics13020383",
+    "kind": "journal-article",
+    "venue": "Electronics",
+    "url": "https://www.mdpi.com/2079-9292/13/2/383/pdf"
+  },
+  {
+    "id": "10.3390/gels10090584",
+    "title": "Designing Stimuli-Responsive Supramolecular Gels by Tuning the Non-Covalent Interactions of the Functional Groups",
+    "authors": [
+      "Geethanjali Kuppadakkath",
+      "Ira Volkova",
+      "Krishna K. Damodaran"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.3390/gels10090584",
+    "kind": "journal-article",
+    "venue": "Gels",
+    "url": "https://www.mdpi.com/2310-2861/10/9/584/pdf"
+  },
+  {
+    "id": "10.4000/cybergeo.29108",
+    "title": "Valsson T., 2017, Shaping the Future. Ideas-Planning-Design, Reykjavik, Fjölvi, 216 p.",
+    "authors": [
+      "Harpa Stefansdottir"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.4000/cybergeo.29108",
+    "kind": "journal-article",
+    "venue": "Cybergeo",
+    "url": "https://doi.org/10.4000/cybergeo.29108"
+  },
+  {
+    "id": "10.5117/9789462981188/ngbi1t56ncixomoguduyriyt",
+    "title": "Dress, design : Icelandic",
+    "authors": [
+      "Aspelund Karl"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.5117/9789462981188/ngbi1t56ncixomoguduyriyt",
+    "kind": "book-chapter",
+    "venue": "Encyclopedia of Romantic Nationalism in Europe",
+    "url": "https://doi.org/10.5117/9789462981188/ngbi1t56ncixomoguduyriyt"
+  },
+  {
+    "id": "10.5151/despro-icdhs2014-0027",
+    "title": "Iceland on the periphery of the Scandinavian−design movement",
+    "authors": [
+      "Arndís S. Árnadóttir"
+    ],
+    "year": 2014,
+    "doi": "https://doi.org/10.5151/despro-icdhs2014-0027",
+    "kind": "proceedings-article",
+    "venue": "Proceedings of the 9th Conference of the International Committee for Design History and Design Studies",
+    "url": "https://doi.org/10.5151/despro-icdhs2014-0027"
+  },
+  {
+    "id": "10.7146/dpb.v39i593.7183",
+    "title": "Proceedings of Therapeutic Strategies A Challenge for User Involvement in Design Workshop in conjunction with NORDICHI 2010 17. October 2010, Reykjavik, Iceland",
+    "authors": [
+      "Olav Bertelsen",
+      "Geraldine Fitzpatrick",
+      "Kristina Höök",
+      "Madeline Balaam",
+      "Erik Grönvall"
+    ],
+    "year": 2010,
+    "doi": "https://doi.org/10.7146/dpb.v39i593.7183",
+    "kind": "journal-article",
+    "venue": "DAIMI Report Series",
+    "url": "https://doi.org/10.7146/dpb.v39i593.7183"
+  },
+  {
+    "id": "10.7577/formakademisk.110",
+    "title": "Examining Design and Craft Education in Iceland. Curriculum development and present situation",
+    "authors": [
+      "Brynjar Olafsson",
+      "Gisli Thorsteinsson"
+    ],
+    "year": 2010,
+    "doi": "https://doi.org/10.7577/formakademisk.110",
+    "kind": "journal-article",
+    "venue": "FormAkademisk - forskningstidsskrift for design og designdidaktikk",
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/110/96"
+  }
+]

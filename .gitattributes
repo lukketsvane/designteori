@@ -1,0 +1,4 @@
+*.pdf binary -delta -diff -merge
+*.gz binary -delta -diff -merge
+*.bin binary -delta -diff -merge
+

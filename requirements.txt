@@ -1,1 +1,4 @@
-requests>=2.32,<3
+numpy>=1.26
+onnxruntime>=1.19
+tokenizers>=0.20
+pymupdf>=1.24

@@ -1,74 +1,32 @@
-name: Nordisk database · kvalitet
+name: DESIGNTEORI · verifisering
 on:
   push:
     branches: [main]
   pull_request:
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: nordic-database-reconciliation-${{ github.ref }}
+  group: designteori-verify-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  validate:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /*
+            !pdf/
+            pdf/manifest.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Syntaks
-        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py bygg_teoriregister.py test_teoriregister.py bygg_dekningsoversikt.py test_dekningsoversikt.py sok_korpus.py test_sok_korpus.py eksporter_korpus.py lag_identitetsko.py test_korpus_exports.py hent_oa_pdf.py test_oa_pdf.py hent_doi_csv.py test_doi_csv.py bygg_doi_eksport.py test_bygg_doi_eksport.py sok.py sok_fulltekst.py pdf_archive_report.py test_pdf_archive_report.py bygg_pdf_katalog.py test_pdf_katalog.py import_lokale_pdf.py bygg_fulltekstkorpus.py test_fulltekstkorpus.py embedding_google.py test_embedding_google.py
-      - name: Importer nye nordiske metadataeksportar
-        run: python batch_import_norden.py
-      - name: Avstem nordiske kjelder
-        run: python samkoyr_norden.py
-      - name: Bygg historisk teoriindeks
-        run: python bygg_teoriregister.py
-      - name: Bygg kvalitets- og dekningsoversikt
-        run: python bygg_dekningsoversikt.py
-      - name: Eksporter heile korpuset og identitetsrevisjon
-        run: |
-          python eksporter_korpus.py
-          python lag_identitetsko.py
-      - name: Test korpuseksport og identitet
-        run: python -m unittest -v test_korpus_exports
-      - name: Test register og dekningsoversikt
-        run: python -m unittest -v test_teoriregister test_dekningsoversikt test_sok_korpus
-      - name: Test import og DOI-identitet
-        run: python -m unittest -v test_nordic_import
-      - name: Test utvidingskø utan nettverk
-        run: python -m unittest -v test_reference_frontier
-      - name: Bygg prioritert referansefrontier
-        run: python bygg_referansefrontier.py --limit 5000 --min-citing 2
-      - name: Bygg prioritert DOI-liste frå alle kjeldelag
-        run: python bygg_doi_eksport.py
-      - name: Test DOI-korpus og deterministisk export
-        run: python -m unittest -v test_bygg_doi_eksport
-      - name: Bygg PDF-kø utan nedlasting
-        run: python hent_oa_pdf.py
-      - name: Test DOI-CSV import utan nettverk
-        run: python -m unittest -v test_doi_csv
-      - name: Test PDF-kø og tilgangskontroll
-        run: python -m unittest -v test_oa_pdf
-      - name: Publiser rettsmedviten fulltekstindeks
-        run: |
-          python bygg_pdf_katalog.py
-          python test_pdf_katalog.py
-      - name: Verifiser privat PDF-indeks utan nettverk
-        run: python -m unittest -v test_pdf_archive_report
-      - name: Bygg SQLite med eigne kjeldelag
-        run: python bygg_hovuddatabase.py
-      - name: Test lokal fulltekst og Google-embedding utan eksterne API-kall
-        run: python -m unittest -v test_fulltekstkorpus test_embedding_google
-      - name: Kontroller databasen
-        run: python test_database.py
-      - name: Publiser kjeldeavstemming
-        if: github.event_name == 'push'
-        run: |
-          git add results/doi_eksport.csv results/doi_eksport_status.json docs/data/korpus.csv results/identity_review_queue.csv results/identity_review_status.json data/designteori_hovuddatabase.sqlite.gz docs/data/theory_additions.json docs/data/theory_status.json docs/data/corpus_quality.json results/theory_source_audit.csv results/reference_frontier_priority.csv results/reference_frontier_status.json data/nordic_imports.json docs/data/nordic_additions.json docs/data/nordic_status.json docs/data/source_links.json results/nordic_source_audit.csv docs/data/pdf_found.json docs/data/pdf_status.json results/pdf_henteko.csv docs/data/pdf_katalog.csv docs/data/pdf_katalog.json results/PDF_KATALOG_STATUS.json
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Reconcile Nordic bibliography and repository sources [skip ci]"
-            git push origin HEAD:${{ github.ref_name }}
-          fi
+      - name: Installer kjernepakkar for verifisering
+        run: python -m pip install --upgrade pip numpy
+      - name: Syntakskontroll
+        run: python -m compileall -q designteori.py designteori tests
+      - name: Køyr einings- og integrasjonstestar
+        run: python -m unittest discover -s tests -v
+      - name: Verifiser database, sjekksummar, kjeldelag og Google-embeddingar
+        run: python designteori.py verify
