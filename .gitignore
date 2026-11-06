@@ -9,3 +9,7 @@ data/*.sqlite
 data/*.sqlite-shm
 data/*.sqlite-wal
 data/oa_fulltexts_private/
+
+# Local DOI input and PDF output are not public repository artifacts
+doi_liste.csv
+pdf/

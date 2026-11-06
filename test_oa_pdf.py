@@ -25,6 +25,16 @@ class PDFHarvestTest(unittest.TestCase):
         self.assertTrue(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600 + b"%%EOF"))
         self.assertFalse(pdf.pdf_data(b"%PDF-1.7\n" + b"a" * 600))
 
+    def test_embedded_pdf_candidates_only(self):
+        html = (b'<html><iframe src="/paper.pdf"></iframe>'
+                b'<embed src="/viewer" type="application/pdf"></embed>'
+                b'<iframe src="/analytics.html"></iframe></html>')
+        links = pdf.pdf_candidates_from_html(html, "https://archive.example.org/work/1")
+        self.assertEqual(links, [
+            "https://archive.example.org/paper.pdf",
+            "https://archive.example.org/viewer",
+        ])
+
     def test_html_discovery(self):
         html = (b'<html><head><meta name="citation_pdf_url" '
                 b'content="/media/item.pdf"></head><body>'
