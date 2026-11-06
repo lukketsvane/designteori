@@ -2,7 +2,7 @@
 """Restore/pack the SQLite research archive with deterministic gzip metadata."""
 import argparse, gzip, os, shutil, sqlite3
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 DB=ROOT/"data"/"nordic_design_research.sqlite"
 GZ=DB.with_suffix(".sqlite.gz")
 def ensure_database(path=DB):

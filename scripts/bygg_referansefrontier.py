@@ -15,7 +15,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "results"
 BIB = ROOT / "bibliografi" / "historiske_referansar.csv"
 WORK_ID = re.compile(r"^W[0-9]+$")

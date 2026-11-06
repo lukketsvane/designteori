@@ -11,7 +11,7 @@ import math
 from collections import defaultdict
 from pathlib import Path
 
-HERE=Path(__file__).resolve().parent
+HERE=Path(__file__).resolve().parents[1]
 OUT=HERE/"results"
 MASK=(1<<32)-1
 SEED=20261102
