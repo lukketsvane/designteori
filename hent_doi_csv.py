@@ -188,6 +188,8 @@ def main():
     parser.add_argument("--shards", type=int, default=1)
     parser.add_argument("--shard", type=int, default=0)
     parser.add_argument("--no-openalex", action="store_false", dest="lookup_openalex")
+    parser.add_argument("--lookup-semantic-scholar", action="store_true",
+                        help="Try Semantic Scholar's public OA PDF field after other sources")
     parser.set_defaults(lookup_openalex=True)
     args = parser.parse_args()
     if (args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50
@@ -217,6 +219,7 @@ def main():
         chosen, progress, limit=args.limit, email=args.email, pause=args.delay,
         max_bytes=args.max_mb * 1_000_000, retry_failed=args.retry_failed,
         lookup_openalex=args.lookup_openalex,
+        lookup_semantic_scholar=args.lookup_semantic_scholar,
         max_cache_bytes=int(args.max_cache_gb * 1_000_000_000),
         min_free_bytes=int(args.min_free_gb * 1_000_000_000))
     report = write_report(rows, progress, stats)
