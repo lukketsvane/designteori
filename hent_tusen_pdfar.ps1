@@ -6,6 +6,7 @@ param(
     [double]$MinFreeGB = 2,
     [string]$Email = "",
     [switch]$RetryFailed,
+    [switch]$SemanticScholar,
     [string]$DoiCsvPath = ""
 )
 $ErrorActionPreference = "Stop"
@@ -44,6 +45,7 @@ try {
     else { $arguments += "--lookup-openalex" }
     if ($Email) { $arguments += @("--email", $Email) }
     if ($RetryFailed) { $arguments += "--retry-failed" }
+    if ($SemanticScholar) { $arguments += "--lookup-semantic-scholar" }
     & $python @prefix @arguments
     if ($LASTEXITCODE -ne 0) { throw "PDF-innsamlinga stoppa med feil $LASTEXITCODE" }
     if (-not $DoiCsvPath) { & $python @prefix "pdf_archive_report.py" }

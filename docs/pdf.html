@@ -66,8 +66,8 @@ footer{border-top:1px solid var(--ink);margin-top:66px;padding-top:25px;padding-
 <nav>
 <a href="./">Katalog</a>
 <a href="./pdf.html">PDF</a>
-<a href="./oppdaging.html">Innsamling</a>
-<a href="./forsking.html">Prøving</a>
+<a href="./data/korpus.csv">CSV</a>
+<a href="https://github.com/lukketsvane/designteori">GitHub</a>
 </nav>
 </header>
 <main>
@@ -79,8 +79,8 @@ footer{border-top:1px solid var(--ink);margin-top:66px;padding-top:25px;padding-
 </section>
 <div class="metrics">
 <div class="metric"><div class="num" id="mirrored">...</div><div class="label">Lisensierte PDF-ar i repoet</div></div>
+<div class="metric"><div class="num" id="verified-oa">...</div><div class="label">Verifiserte OA-PDF-kjelder (SHA-256)</div></div>
 <div class="metric"><div class="num" id="links">...</div><div class="label">Registrerte OA-originalkjelder</div></div>
-<div class="metric"><div class="num" id="adapted">...</div><div class="label">Tekstbaserte utgåver utan figurar</div></div>
 </div>
 <section>
 <h2>Finn dokument</h2>
@@ -89,15 +89,16 @@ footer{border-top:1px solid var(--ink);margin-top:66px;padding-top:25px;padding-
 <label class="field"><span>Tilgang</span>
 <select id="access">
 <option value="">Alle</option>
-<option value="mirror">PDF i repoet</option>
-<option value="original">Originalkjelde</option>
+<option value="mirror">PDF i repoet (CC)</option>
+<option value="verified">Verifisert OA-PDF</option>
+<option value="original">Alle OA-lenkjer</option>
 </select></label>
 <label class="field"><span>Landstilknyting</span>
 <select id="country">
 <option value="">Alle</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option>
 </select></label>
 <label class="field"><span>Periode</span>
-<select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
+<select id="period"><option value="">Alle år</option><option value="pre2000">Før 2000</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
 </div>
 <div class="resultline">
 <span id="count" aria-live="polite">Lastar publikasjonsindeksen …</span>
@@ -127,11 +128,12 @@ function item(w){
  main.append(el("p",[w.source,w.doi].filter(Boolean).join(" · "),"source"));
  const tags=el("div",undefined,"tags");
  if(w.pdf_in_repo)tags.append(el("span",w.license||"Dokumentlisens kontrollert","tag checked"));
+ else if(w.verified_oa_pdf)tags.append(el("span","Verifisert OA-PDF · SHA-256","tag checked"));
+ else tags.append(el("span","OA-lenkje, rettar uavklarte","tag"));
  if(w.adapted_text_only)tags.append(el("span","Tekstutgåve, illustrasjonar utelatne","tag"));
- if(!w.pdf_in_repo)tags.append(el("span","OA-lenkje, rettar uavklarte","tag"));
  main.append(tags);card.append(main);
  const links=el("div",undefined,"links");
- for(const [href,label] of [[w.public_pdf_url,"PDF i arkivet"],[w.public_text_url,"TXT"],[w.oa_location_unverified,"Originalkjelde"],[w.doi,"DOI"]]){
+ for(const [href,label] of [[w.public_pdf_url,"PDF i arkivet"],[w.public_text_url,"TXT"],[w.oa_location_unverified,w.verified_oa_pdf?"Verifisert OA-PDF":"Originalkjelde"],[w.doi,"DOI"]]){
   const anchor=link(href,label);if(anchor)links.append(anchor);
  }
  card.append(links);
@@ -153,9 +155,11 @@ function filter(){
  limit=60;
  matches=works.filter(w=>{
   if(access==="mirror"&&!w.pdf_in_repo)return false;
+  if(access==="verified"&&!w.verified_oa_pdf)return false;
   if(access==="original"&&!w.oa_location_unverified)return false;
   if(country&&!(w.country_affiliations||[]).includes(country))return false;
-  if(period&&!(Number(w.year)>=Number(period)&&Number(w.year)<Number(period)+10))return false;
+  if(period==="pre2000"&&!(Number(w.year)>0&&Number(w.year)<2000))return false;
+  if(period&&period!=="pre2000"&&!(Number(w.year)>=Number(period)&&Number(w.year)<Number(period)+10))return false;
   if(query&&!w._search.includes(query))return false;
   return true;
  });
@@ -168,8 +172,8 @@ fetch("./data/pdf_katalog.json")
  .then(response=>{if(!response.ok)throw Error("Katalogfil manglar");return response.json()})
  .then(data=>{
   $("mirrored").textContent=numeric(data.stats.mirrored_licensed_pdf_count);
+  $("verified-oa").textContent=numeric(data.stats.verified_oa_pdf_count||data.stats.mirrored_licensed_pdf_count);
   $("links").textContent=numeric(data.stats.original_oa_location_links);
-  $("adapted").textContent=numeric(data.stats.text_only_adapted_pdf_count);
   works=data.items;
   for(const w of works)w._search=[w.title,...(w.authors||[]),w.source,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
   filter();

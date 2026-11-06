@@ -21,6 +21,7 @@ import tempfile
 import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+from http.client import HTTPException
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urljoin, urlsplit
@@ -114,6 +115,13 @@ class PDFLinks(HTMLParser):
         if tag == "meta" and attrs.get("name", "").lower() in (
                 "citation_pdf_url", "dc.relation.ispartof", "eprints.document_url"):
             self.urls.append(attrs.get("content", ""))
+        if tag == "link":
+            href = attrs.get("href", "")
+            mime = (attrs.get("type") or "").lower()
+            rel = (attrs.get("rel") or "").lower()
+            if href and (mime == "application/pdf" or (
+                    "alternate" in rel and re.search(r"\.pdf(?:[?#]|$)", href, re.I))):
+                self.urls.append(href)
         if tag in ("iframe", "embed", "object"):
             link = attrs.get("src") or attrs.get("data") or ""
             mime = (attrs.get("type") or "").lower()
@@ -126,11 +134,23 @@ class PDFLinks(HTMLParser):
                 self.urls.append(href)
 
 
+def safely_encoded_url(link):
+    """Encode spaces/non-ASCII in public URLs and reject control characters.
+
+    A relative PDF href can contain spaces. Keep already percent-escaped
+    URLs intact, but never permit raw control characters or weaken HTTPS.
+    """
+    value = str(link or "")
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        raise ValueError("control characters in URL")
+    return quote(value, safe=":/?#[]@!$&'()*+,;=%-._~")
+
 def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):
     """Fetch a public HTTPS resource, with each redirect checked and a strict size cap."""
     opener = build_opener(NoRedirect)
     visited = set()
     for _ in range(MAX_REDIRECTS + 1):
+        url = safely_encoded_url(url)
         if not allowed_url(url) or not public_dns(urlsplit(url).hostname) or url in visited:
             raise ValueError("unsafe URL or redirect")
         visited.add(url)
@@ -230,7 +250,7 @@ def unpaywall_urls(doi, email):
 
 
 def openalex_urls(doi):
-    """Optional OA-location fallback. URLs returned are leads, not licensing claims."""
+    """Find diverse OA locations. Prefer repository PDFs over landing pages."""
     if not doi:
         return []
     short = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
@@ -239,15 +259,52 @@ def openalex_urls(doi):
     url = "https://api.openalex.org/works/https://doi.org/" + quote(short, safe="/")
     payload, _, _ = safe_request(url, limit=1_500_000, accept="application/json")
     data = json.loads(payload.decode("utf-8"))
-    locs = [data.get("best_oa_location")] + list(data.get("locations") or [])
-    urls = []
-    for loc in locs:
+    locs = [data.get("best_oa_location"), data.get("primary_location")]
+    locs.extend(data.get("locations") or [])
+    candidates = {}
+    for pos, loc in enumerate(locs):
         if not isinstance(loc, dict) or not loc.get("is_oa", False):
             continue
-        for candidate in (loc.get("pdf_url"), loc.get("landing_page_url")):
-            if allowed_url(candidate) and candidate not in urls:
-                urls.append(candidate)
-    return urls[:12]
+        source = loc.get("source") or {}
+        repository = isinstance(source, dict) and source.get("type") == "repository"
+        for link in (loc.get("pdf_url"), loc.get("landing_page_url")):
+            if not allowed_url(link):
+                continue
+            pdf_shaped = direct_pdf_hint(link)
+            rank = (0 if pdf_shaped and repository else
+                    1 if pdf_shaped else
+                    2 if repository else 3)
+            key = (rank, pos)
+            if link not in candidates or key < candidates[link]:
+                candidates[link] = key
+    oa = data.get("open_access") or {}
+    alternate = oa.get("oa_url") if oa.get("is_oa") else None
+    if allowed_url(alternate) and alternate not in candidates:
+        candidates[alternate] = (4, len(locs))
+    return [url for url, _ in sorted(candidates.items(), key=lambda item: item[1])][:12]
+
+
+def semantic_scholar_urls(doi):
+    """Optional public OA PDF location from Semantic Scholar's bibliographic API.
+
+    A returned link is only a discovery lead. No licensing rights inferred.
+    """
+    if not doi:
+        return []
+    short = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
+    if not re.fullmatch(r"10\.\d{4,9}/\S+", short, flags=re.I):
+        return []
+    endpoint = ("https://api.semanticscholar.org/graph/v1/paper/DOI:"
+                + quote(short, safe="") + "?fields=openAccessPdf,isOpenAccess")
+    payload, _, _ = safe_request(endpoint, limit=750_000, accept="application/json")
+    data = json.loads(payload.decode("utf-8"))
+    if not isinstance(data, dict):
+        return []
+    oa_pdf = data.get("openAccessPdf") or {}
+    if not isinstance(oa_pdf, dict):
+        return []
+    url = oa_pdf.get("url")
+    return [url] if allowed_url(url) else []
 
 
 def direct_pdf_hint(link):
@@ -362,7 +419,7 @@ def publish(rows, published, progress):
 
 
 def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lookup_openalex,
-             max_cache_bytes=None, min_free_bytes=0):
+             lookup_semantic_scholar=False, max_cache_bytes=None, min_free_bytes=0):
     PRIVATE.mkdir(parents=True, exist_ok=True)
     pdf_dir = PRIVATE / "pdf"
     pdf_dir.mkdir(exist_ok=True)
@@ -389,7 +446,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             continue
         if tried >= limit:
             break
-        if not row["oa_url"] and not ((email or lookup_openalex) and row["doi"]):
+        if not row["oa_url"] and not ((email or lookup_openalex or lookup_semantic_scholar) and row["doi"]):
             continue
         used = sum(int(r.get("bytes", 0)) for r in progress.values()
                    if r.get("status") == "pdf-confirmed")
@@ -401,13 +458,20 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             write_json(LOG, progress)
             break
         tried += 1
+        # Durable crash guard: a malformed third-party response must not trap
+        # hourly restarts on the same DOI. Manual second-pass retries remain.
+        progress[ident] = {"status": "failed",
+                           "reason": "attempt interrupted before result",
+                           "checked_at": now()}
+        write_json(LOG, progress)
+        print("PDF_START", ident, flush=True)
         success = None
         deferred = False
         why = "No direct PDF at public OA sources"
         seen = set()
         # Search the registered OA link first, and only then call outside APIs.
         # This greatly reduces traffic against OA discovery services.
-        for source in ("registered", "unpaywall", "openalex"):
+        for source in ("registered", "unpaywall", "openalex", "semantic_scholar"):
             if success:
                 break
             if source in blocked_sources:
@@ -421,7 +485,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 try:
                     pace()
                     candidates = unpaywall_urls(row["doi"], email)
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
                         json.JSONDecodeError) as exc:
                     print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
@@ -430,13 +494,13 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         deferred = True
                         why = "rate-limited API: " + source
                     continue
-            else:
+            elif source == "openalex":
                 if not lookup_openalex or not row["doi"]:
                     continue
                 try:
                     pace()
                     candidates = openalex_urls(row["doi"])
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
                         json.JSONDecodeError) as exc:
                     print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
@@ -444,6 +508,22 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         blocked_sources.add(source)
                         deferred = True
                         why = "rate-limited API: " + source
+                    continue
+            else:
+                if not lookup_semantic_scholar or not row["doi"]:
+                    continue
+                try:
+                    pace()
+                    candidates = semantic_scholar_urls(row["doi"])
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError,
+                        json.JSONDecodeError) as exc:
+                    if not isinstance(exc, HTTPError) or exc.code != 404:
+                        print("SEMANTIC_SCHOLAR_FAIL", ident, type(exc).__name__, flush=True)
+                    if isinstance(exc, HTTPError) and exc.code in (403, 429):
+                        print("API_UNAVAILABLE", source, "skip this API for this batch", flush=True)
+                        blocked_sources.add(source)
+                        deferred = True
+                        why = "rate-limited or restricted API: " + source
                     continue
             for target in candidates[:10]:
                 if not allowed_url(target) or target in seen:
@@ -459,7 +539,9 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                     if pdf_data(payload):
                         success = (payload, landing)
                         break
-                    if "html" not in mime.lower() and b"<html" not in payload[:100].lower():
+                    prefix = payload[:4096].lstrip().lower()
+                    if ("html" not in mime.lower() and b"<html" not in prefix
+                            and b"<!doctype html" not in prefix):
                         continue
                     for destination in pdf_candidates_from_html(payload, landing):
                         if destination in seen:
@@ -475,7 +557,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                             if pdf_data(candidate):
                                 success = (candidate, resolved)
                                 break
-                        except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                        except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError) as exc:
                             why = type(exc).__name__ + ": " + str(exc)[:140]
                             if isinstance(exc, HTTPError) and exc.code == 429:
                                 blocked_hosts.add(destination_host)
@@ -483,7 +565,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                                 print("RATE_LIMIT", destination_host, "defer host", flush=True)
                     if success:
                         break
-                except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError, HTTPException, UnicodeError) as exc:
                     why = type(exc).__name__ + ": " + str(exc)[:140]
                     if isinstance(exc, HTTPError) and exc.code == 429:
                         blocked_hosts.add(host)
@@ -524,6 +606,8 @@ def main():
     parser.add_argument("--min-free-gb", type=float, default=2.0,
                         help="Free disk space to reserve")
     parser.add_argument("--lookup-openalex", action="store_true", help="Consult OpenAlex for additional legal OA locations")
+    parser.add_argument("--lookup-semantic-scholar", action="store_true",
+                        help="Optional Semantic Scholar openAccessPdf fallback")
     args = parser.parse_args()
     if (args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50
             or args.shards < 1 or not 0 <= args.shard < args.shards
@@ -538,6 +622,7 @@ def main():
         tried = download(selected, progress, limit=args.limit, email=args.email,
                          pause=args.delay, max_bytes=args.max_mb * 1_000_000,
                          retry_failed=args.retry_failed, lookup_openalex=args.lookup_openalex,
+                         lookup_semantic_scholar=args.lookup_semantic_scholar,
                          max_cache_bytes=int(args.max_cache_gb * 1_000_000_000),
                          min_free_bytes=int(args.min_free_gb * 1_000_000_000))
         print("ATTEMPTED", tried)
