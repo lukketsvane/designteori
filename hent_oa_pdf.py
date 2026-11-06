@@ -13,8 +13,11 @@ import csv
 import hashlib
 import ipaddress
 import json
+import os
 import re
+import shutil
 import socket
+import tempfile
 import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
@@ -45,8 +48,19 @@ def read_json(path, default=None):
 
 
 def write_json(path, value):
+    """Atomic progress writes: interruptions must not destroy harvested results."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    descriptor, name = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            json.dump(value, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(name, path)
+    finally:
+        if os.path.exists(name):
+            os.unlink(name)
 
 
 def allowed_url(link):
@@ -149,7 +163,28 @@ def safe_request(url, limit=26_000_000, accept="application/pdf,*/*;q=0.5"):
 
 
 def pdf_data(data):
-    return len(data) > 500 and data.lstrip()[:4] == b"%PDF"
+    """Reject HTML and visibly incomplete PDF bodies."""
+    return len(data) > 500 and data.lstrip()[:4] == b"%PDF" and b"%%EOF" in data[-4096:]
+
+
+def cache_path(ident):
+    return PRIVATE / "pdf" / (hashlib.sha256(ident.encode()).hexdigest()[:24] + ".pdf")
+
+
+def cached_pdf_ok(ident, entry):
+    if not entry or entry.get("status") != "pdf-confirmed":
+        return False
+    file = cache_path(ident)
+    if not file.is_file() or file.stat().st_size != entry.get("bytes"):
+        return False
+    raw = file.read_bytes()
+    return pdf_data(raw) and hashlib.sha256(raw).hexdigest() == entry.get("sha256")
+
+
+def cache_summary(progress):
+    found = [r for r in progress.values() if r.get("status") == "pdf-confirmed"]
+    return {"cached": len(found), "bytes": sum(r.get("bytes", 0) for r in found),
+            "failed": sum(r.get("status") == "failed" for r in progress.values())}
 
 
 def pdf_candidates_from_html(data, landing):
@@ -300,7 +335,8 @@ def publish(rows, published, progress):
     return summary
 
 
-def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lookup_openalex):
+def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lookup_openalex,
+             max_cache_bytes=None, min_free_bytes=0):
     PRIVATE.mkdir(parents=True, exist_ok=True)
     pdf_dir = PRIVATE / "pdf"
     pdf_dir.mkdir(exist_ok=True)
@@ -314,14 +350,28 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
 
     for row in rows:
         ident = row["id"]
-        if row["archived"] == "yes" or progress.get(ident, {}).get("status") == "pdf-confirmed":
+        if row["archived"] == "yes":
             continue
+        if progress.get(ident, {}).get("status") == "pdf-confirmed":
+            if cached_pdf_ok(ident, progress[ident]):
+                continue
+            print("RETRY_MISSING_OR_CORRUPT_CACHE", ident, flush=True)
+            progress.pop(ident)
         if progress.get(ident, {}).get("status") == "failed" and not retry_failed:
             continue
         if tried >= limit:
             break
         if not row["oa_url"] and not ((email or lookup_openalex) and row["doi"]):
             continue
+        used = sum(int(r.get("bytes", 0)) for r in progress.values()
+                   if r.get("status") == "pdf-confirmed")
+        available = shutil.disk_usage(PRIVATE).free
+        if ((max_cache_bytes is not None and used + max_bytes > max_cache_bytes)
+                or available - max_bytes < min_free_bytes):
+            print("STORAGE_LIMIT", json.dumps({"cached_bytes": used,
+                  "free_bytes": available, "max_bytes": max_cache_bytes}), flush=True)
+            write_json(LOG, progress)
+            break
         tried += 1
         success = None
         why = "No direct PDF at public OA sources"
@@ -343,7 +393,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         json.JSONDecodeError) as exc:
                     print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
-                        print("RATE_LIMIT", label, "stopping batch", flush=True)
+                        print("RATE_LIMIT", source, "stopping batch", flush=True)
                         write_json(LOG, progress)
                         return tried
                     continue
@@ -357,7 +407,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         json.JSONDecodeError) as exc:
                     print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
-                        print("RATE_LIMIT", label, "stopping batch", flush=True)
+                        print("RATE_LIMIT", source, "stopping batch", flush=True)
                         write_json(LOG, progress)
                         return tried
                     continue
@@ -400,8 +450,10 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
         if success:
             payload, url = success
             sha = hashlib.sha256(payload).hexdigest()
-            pdf_path = pdf_dir / (hashlib.sha256(ident.encode()).hexdigest()[:24] + ".pdf")
-            pdf_path.write_bytes(payload)
+            pdf_path = cache_path(ident)
+            tmp = pdf_path.with_suffix(".pdf.partial")
+            tmp.write_bytes(payload)
+            os.replace(tmp, pdf_path)
             progress[ident] = {"status": "pdf-confirmed", "url": url,
                                "sha256": sha, "bytes": len(payload), "checked_at": now()}
             print("PDF_OK", ident, len(payload), sha[:12], flush=True)
@@ -409,6 +461,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             progress[ident] = {"status": "failed", "reason": why, "checked_at": now()}
             print("PDF_MISSING", ident, why, flush=True)
         write_json(LOG, progress)
+    print("CACHE_SUMMARY", json.dumps(cache_summary(progress)), flush=True)
     return tried
 
 
@@ -421,16 +474,29 @@ def main():
     parser.add_argument("--delay", type=float, default=1.0)
     parser.add_argument("--max-mb", type=int, default=25)
     parser.add_argument("--retry-failed", action="store_true")
+    parser.add_argument("--shards", type=int, default=1, help="Number of stable queue partitions")
+    parser.add_argument("--shard", type=int, default=0, help="Zero-based partition to process")
+    parser.add_argument("--max-cache-gb", type=float, default=30.0,
+                        help="Private PDF storage budget in decimal gigabytes")
+    parser.add_argument("--min-free-gb", type=float, default=2.0,
+                        help="Free disk space to reserve")
     parser.add_argument("--lookup-openalex", action="store_true", help="Consult OpenAlex for additional legal OA locations")
     args = parser.parse_args()
-    if args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50:
-        parser.error("Invalid limit, delay or max-mb")
+    if (args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50
+            or args.shards < 1 or not 0 <= args.shard < args.shards
+            or args.max_cache_gb < 0.1 or args.min_free_gb < 0):
+        parser.error("Invalid limit, delay, max-mb, shards or storage limits")
     rows, published = queue_rows()
     progress = load_progress()
     if args.download:
-        tried = download(rows, progress, limit=args.limit, email=args.email,
+        selected = [r for r in rows if
+            int(hashlib.sha256(r["id"].encode()).hexdigest()[:12], 16) % args.shards == args.shard]
+        print("SHARD", args.shard, "/", args.shards, "eligible", len(selected))
+        tried = download(selected, progress, limit=args.limit, email=args.email,
                          pause=args.delay, max_bytes=args.max_mb * 1_000_000,
-                         retry_failed=args.retry_failed, lookup_openalex=args.lookup_openalex)
+                         retry_failed=args.retry_failed, lookup_openalex=args.lookup_openalex,
+                         max_cache_bytes=int(args.max_cache_gb * 1_000_000_000),
+                         min_free_bytes=int(args.min_free_gb * 1_000_000_000))
         print("ATTEMPTED", tried)
     publish(rows, published, progress)
 
