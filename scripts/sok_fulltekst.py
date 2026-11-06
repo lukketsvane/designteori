@@ -8,7 +8,7 @@ import argparse
 import gzip
 import shutil
 import sqlite3
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 def run():
  p=argparse.ArgumentParser()
  p.add_argument("phrase",help="SQLite FTS5 search expression")

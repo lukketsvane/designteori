@@ -1,7 +1,7 @@
 """Offline release validation for the public research atlas (stdlib-only)."""
 from pathlib import Path
 import csv,gzip,hashlib,json,sqlite3,tempfile
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 def check(cond,msg):
  if not cond:raise SystemExit("FAIL: "+msg)
 def run():

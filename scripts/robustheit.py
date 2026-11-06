@@ -15,7 +15,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score
 from database import ensure_database
 
-HERE=Path(__file__).resolve().parent
+HERE=Path(__file__).resolve().parents[1]
 OUT=HERE/"results"
 FIG=OUT/"figures"
 RNG=np.random.default_rng(20261102)

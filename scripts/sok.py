@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 from joblib import load
 from sklearn.preprocessing import normalize
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 DB=ROOT/"data"/"nordic_design_research.sqlite"
 OUT=ROOT/"results"
 def main():

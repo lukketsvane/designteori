@@ -15,7 +15,7 @@ import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "docs" / "data"
 AUDIT = ROOT / "results" / "nordic_source_audit.csv"
 OUTPUT = PUBLIC / "nordic_additions.json"
