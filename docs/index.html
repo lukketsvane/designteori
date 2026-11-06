@@ -110,7 +110,7 @@ footer p{max-width:540px}
 <label class="field"><span>Type</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle</option><option value="review">Oversyn</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="unverified">Kandidatar</option><option value="historical">Historiske / internasjonale</option></select></label>
 <label class="field"><span>Land</span><select id="country"><option value="">Alle land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
 </div><details class="advanced"><summary>Fleire filter</summary><div class="filters"><label class="field"><span>År</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
-<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Bibliografi</option><option value="repository-candidate">Arkivimport</option></select></label>
+<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Bibliografi</option><option value="repository-candidate">Arkivimport</option><option value="historical-reference">Teorireferanse</option></select></label>
 <label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="pdf">PDF</option><option value="local">I arkivet</option><option value="oa">OA</option></select></label>
 <label class="field"><span>Prioritet</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
 </div></details>
@@ -143,7 +143,7 @@ footer p{max-width:540px}
 <button type="button" class="detail-close" id="scholar-close">Lukk ×</button>
 <div id="scholar-detail"></div>
 </dialog>
-<footer><div>OpenAlex · nordiske kjelder · <a href="https://github.com/lukketsvane/designteori">GitHub</a></div></footer>
+<footer><div>OpenAlex · nordiske kjelder · <a href="./data/corpus_quality.json">Datakvalitet</a> · <a href="https://github.com/lukketsvane/designteori">GitHub</a></div></footer>
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
@@ -191,7 +191,7 @@ function apply(){
  const fulltext=$("fulltext").value;
  const priority=$("priority").value;
  selected=works.filter(w=>{
-  if(w.origin==="historical" && kind!=="historical")return false;
+  if(w.origin==="historical" && kind!=="" && kind!=="historical" && kind!=="unverified")return false;
   if(kind==="historical" && w.origin!=="historical")return false;
   if(kind==="unverified" && !w.origin)return false;
    if(kind && kind!=="unverified" && kind!=="historical" && w.kind!==kind)return false;
@@ -285,7 +285,12 @@ function exportSelected(){
 }
 $("export-visible").addEventListener("click",exportSelected);
 
-Promise.all([init(),initNordic(),initPDF(),initTheory()]).then(integrateNordic).catch(e=>{console.error(e);$("stat-editorial").textContent="–"});
+Promise.all([init(),Promise.allSettled([initNordic(),initPDF(),initTheory()])])
+ .then(([,results])=>{
+  for(const r of results)if(r.status==="rejected")console.warn("Valfri datakjelde manglar",r.reason);
+  if(works.length)integrateNordic();
+ })
+ .catch(e=>console.error("Katalogen kunne ikkje lastast",e));
 </script>
 <script src="./atlas.js" defer></script>
 </body>
