@@ -11,7 +11,7 @@ import json
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 COLUMNS = (
     "id", "source_layer", "title", "year", "authors", "type",
     "doi", "source", "countries", "status", "source_url", "oa_url", "pdf"

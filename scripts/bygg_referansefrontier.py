@@ -15,7 +15,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "results"
 BIB = ROOT / "bibliografi" / "historiske_referansar.csv"
 WORK_ID = re.compile(r"^W[0-9]+$")
@@ -116,7 +116,7 @@ def main() -> None:
     with (OUT / "reference_frontier_priority.csv").open(
         "w", newline="", encoding="utf-8"
     ) as handle:
-        writer = csv.DictWriter(handle, fieldnames=COLUMNS)
+        writer = csv.DictWriter(handle, fieldnames=COLUMNS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     (OUT / "reference_frontier_status.json").write_text(

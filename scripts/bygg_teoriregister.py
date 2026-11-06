@@ -16,7 +16,7 @@ from pathlib import Path
 
 from samkoyr_norden import normalized_doi, normalized_title
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "docs" / "data"
 SOURCE = ROOT / "bibliografi" / "historiske_referansar.csv"
 OUTPUT = PUBLIC / "theory_additions.json"

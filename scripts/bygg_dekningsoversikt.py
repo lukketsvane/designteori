@@ -11,7 +11,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def doi_key(value: str) -> str:

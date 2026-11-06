@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Nettverksfritt SQLite-søk i både primærkorpus og uavklarte kjeldelag.
 
-Bruk: python sok_korpus.py "participatory design" --layer all --limit 20
+Bruk: python scripts/sok_korpus.py "participatory design" --layer all --limit 20
 Resultata er bibliografiske registreringar, ikkje verifiserte funn.
 """
 from __future__ import annotations
@@ -14,7 +14,7 @@ import sqlite3
 import tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "data" / "designteori_hovuddatabase.sqlite.gz"
 VALID_LAYERS = ("all", "openalex", "nordic", "historical")
 

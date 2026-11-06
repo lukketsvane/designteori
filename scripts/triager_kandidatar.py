@@ -7,7 +7,7 @@ The current corpus was ranked by search phrase, with known topic contamination.
 from pathlib import Path
 from collections import Counter,defaultdict
 import csv,json,re,sqlite3,unicodedata
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"results"/"kandidatar_triage.csv"
 POSITIVE={
  "design-theory":r"\b(?:design theory|theor(?:y|ies) of design|foundational design|design philosophy|design epistemology|designerly ways|design knowledge|design inquiry)\b",

@@ -1,14 +1,14 @@
 """Search fulltext across licensed public papers, with contextual FTS5 snippets.
 
-  python sok_fulltekst.py "design theory"
-  python sok_fulltekst.py '"participatory design"' --limit 20
+  python scripts/sok_fulltekst.py "design theory"
+  python scripts/sok_fulltekst.py '"participatory design"' --limit 20
 """
 from pathlib import Path
 import argparse
 import gzip
 import shutil
 import sqlite3
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 def run():
  p=argparse.ArgumentParser()
  p.add_argument("phrase",help="SQLite FTS5 search expression")

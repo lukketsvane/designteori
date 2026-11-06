@@ -24,7 +24,7 @@ Med Unpaywall (valfritt, krev ein ekte e-postadresse):
 
 Skriptet hentar berre direkte tilgjengelege PDF-ar frå offentlege OA-lenkjer, arkiv og eventuelt OpenAlex/Unpaywall. Det gjenopptar samlinga, lagrar SHA-256 og stansar ved plassmangel eller API-grenser. Det prøver ikkje å omgå betalingsmurar.
 
-**Kva du faktisk får:** PDF-filene blir lagra i `data/oa_fulltexts_private/pdf/` som private filer, med `progress.json` og ein etterkontrollert `pdf_local_index.csv` med tittel, DOI, forfattar, filsti, kjelde og checksum. Etter kvar køyring viser `pdf_archive_report.py` faktiske, kontrollerte PDF-filer på disk, ikkje berre nettlenkjer. Kjør `python pdf_archive_report.py --failed` for feila hentingar.
+**Kva du faktisk får:** PDF-filene blir lagra i `data/oa_fulltexts_private/pdf/` som private filer, med `progress.json` og ein etterkontrollert `pdf_local_index.csv` med tittel, DOI, forfattar, filsti, kjelde og checksum. Etter kvar køyring viser `pdf_archive_report.py` faktiske, kontrollerte PDF-filer på disk, ikkje berre nettlenkjer. Kjør `python scripts/pdf_archive_report.py --failed` for feila hentingar.
 
 For store samlingar bør du bruke ein eigen disk:
 
@@ -48,7 +48,7 @@ Privat lesetilgang, open tilgang og rett til offentleg vidarepublisering er fors
 Ei CSV-fil kan innehalde kolonnen `doi` og valfritt `title` og `oa_url`. Tomme/ugyldige DOI-ar blir rapporterte, duplikatar blir hoppa over og DOI-ar med tvitydige katalogtreff får ein separat kontrollstatus. Inga nedlasting skjer ved berre å validere fila.
 
 ```powershell
-python hent_doi_csv.py --input doi_liste.csv
+python scripts/hent_doi_csv.py --input doi_liste.csv
 .\hent_tusen_pdfar.ps1 -DoiCsvPath doi_liste.csv -Limit 8000 -MaxCacheGB 60 -MinFreeGB 5
 ```
 

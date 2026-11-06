@@ -7,7 +7,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 COLUMNS = (
     "queue_id", "priority", "source_layer", "source_record_id",
     "matched_or_candidate_id", "title", "year", "doi", "source_url",

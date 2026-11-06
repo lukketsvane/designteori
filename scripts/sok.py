@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "docs/data/publications.json"
 ADDITIONS = ROOT / "docs/data/nordic_additions.json"
 

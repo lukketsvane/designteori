@@ -21,7 +21,7 @@ try {
         throw "Python 3 manglar. Installer Python og køyr skriptet igjen."
     }
     $inv = [System.Globalization.CultureInfo]::InvariantCulture
-    $script = if ($DoiCsvPath) { "hent_doi_csv.py" } else { "hent_oa_pdf.py" }
+    $script = if ($DoiCsvPath) { "scripts/hent_doi_csv.py" } else { "scripts/hent_oa_pdf.py" }
     $arguments = @($script, "--download", "--limit", "$Limit",
         "--delay", $(if ($DoiCsvPath) { "3.0" } else { "1.0" }),
         "--shards", "$Shards", "--shard", "$Shard",
@@ -33,7 +33,7 @@ try {
     if ($RetryFailed) { $arguments += "--retry-failed" }
     & $python @prefix @arguments
     if ($LASTEXITCODE -ne 0) { throw "PDF-innsamlinga stoppa med feil $LASTEXITCODE" }
-    if (-not $DoiCsvPath) { & $python @prefix "pdf_archive_report.py" }
+    if (-not $DoiCsvPath) { & $python @prefix "scripts/pdf_archive_report.py" }
     if ($LASTEXITCODE -ne 0) { throw "Kontrollen av PDF-arkivet feila" }
 } finally {
     Pop-Location

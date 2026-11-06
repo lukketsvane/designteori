@@ -6,7 +6,7 @@ eligibility and duplicate identities stay unresolved, rather than being invented
 from pathlib import Path
 from collections import Counter,defaultdict
 import csv,json,re,sqlite3,unicodedata
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 SOURCES=[
  ("grunnlaust","bibliografi/grunnlaust_referansar.bib"),
  ("formlaere-akademisk","bibliografi/formlaere_akademisk.bib"),

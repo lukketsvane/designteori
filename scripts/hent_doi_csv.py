@@ -15,7 +15,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import hent_oa_pdf as oa
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 DOI_PATTERN = re.compile(r"10\.\d{4,9}/[^\s<>\"']+", re.I)
 
 
