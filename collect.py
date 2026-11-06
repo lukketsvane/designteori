@@ -19,7 +19,7 @@ QUERIES=[
 "product design","design education","design practice","sustainable design",
 "design anthropology","design studies","design processes","design and innovation"
 ]
-FILTER="publication_year:2000-2026,authorships.countries:NO|SE|DK|FI|IS,type:article|book|book-chapter|proceedings-article|review"
+FILTER_BASE="authorships.countries:NO|SE|DK|FI|IS,type:article|book|book-chapter|proceedings-article|review"
 FIELDS="id,doi,display_name,publication_year,publication_date,type,cited_by_count,authorships,abstract_inverted_index,referenced_works,primary_topic,keywords,primary_location,open_access,language"
 TITLE_TERMS=re.compile(r"\b(?:design|designer|designing|formgiving|formgjeving|gestaltning|arkitektur|architecture|architectural)\b",re.I)
 CLINICAL=re.compile(r"\b(?:trial design|study design|design of (?:a|the) (?:cohort|trial|study)|clinical trial protocol|randomi[sz]ed controlled trial)\b",re.I)
@@ -95,7 +95,15 @@ def ingest(conn, w, query, page):
 def main():
     p=argparse.ArgumentParser();p.add_argument("--pages",type=int,default=2)
     p.add_argument("--limit-queries",type=int,default=0);p.add_argument("--force",action="store_true")
-    args=p.parse_args();DB.parent.mkdir(exist_ok=True,parents=True)
+    p.add_argument("--start-year",type=int,default=2000)
+    p.add_argument("--end-year",type=int,default=dt.datetime.now(dt.timezone.utc).year)
+    p.add_argument("--refresh-days",type=int,default=30,
+                   help="Refresh successful query pages after this many days (0=always)")
+    args=p.parse_args()
+    if args.pages<1 or args.start_year<1800 or args.end_year<args.start_year or args.refresh_days<0:
+        p.error("Invalid pages, year range or refresh-days")
+    filter_text=f"publication_year:{args.start_year}-{args.end_year},"+FILTER_BASE
+    DB.parent.mkdir(exist_ok=True,parents=True)
     from database import ensure_database
     ensure_database(DB)
     c=sqlite3.connect(DB);setup(c)
@@ -105,11 +113,20 @@ def main():
     fail=0;halt=False
     for ix,q in enumerate(queries,1):
         for page in range(1,args.pages+1):
-            if not args.force and c.execute(
-                  "SELECT error FROM query_log WHERE query=? AND page=?",(q,page)).fetchone()==(None,):
-                print("SKIP",q,page,flush=True);continue
-            params={"filter":FILTER,"search":'"'+q+'"',"per_page":100,"page":page,"select":FIELDS}
+            params={"filter":filter_text,"search":'"'+q+'"',"per_page":100,"page":page,"select":FIELDS}
             url=API+"?"+urlencode(params)
+            previous=c.execute(
+                "SELECT error,url,fetched_at FROM query_log WHERE query=? AND page=?",(q,page)
+            ).fetchone()
+            if previous and not args.force and previous[0] is None and previous[1]==url:
+                try:
+                    fetched=dt.datetime.fromisoformat(previous[2])
+                    if fetched.tzinfo is None:fetched=fetched.replace(tzinfo=dt.timezone.utc)
+                    fresh=fetched>=dt.datetime.now(dt.timezone.utc)-dt.timedelta(days=args.refresh_days)
+                except (TypeError,ValueError):
+                    fresh=False
+                if fresh:
+                    print("SKIP_FRESH",q,page,flush=True);continue
             error=None; works=[]; total=0
             for attempt in range(3):
                 try:
