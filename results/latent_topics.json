@@ -1,0 +1,128 @@
+[
+  {
+    "cluster": 0,
+    "count": 252,
+    "descriptive_top_terms": [
+      "participatory",
+      "participatory design",
+      "pd",
+      "participation",
+      "research",
+      "design pd",
+      "process",
+      "project"
+    ]
+  },
+  {
+    "cluster": 1,
+    "count": 215,
+    "descriptive_top_terms": [
+      "design thinking",
+      "thinking",
+      "innovation",
+      "dt",
+      "education",
+      "approach",
+      "learning",
+      "research"
+    ]
+  },
+  {
+    "cluster": 2,
+    "count": 191,
+    "descriptive_top_terms": [
+      "service",
+      "service design",
+      "services",
+      "innovation",
+      "customer",
+      "approach",
+      "research",
+      "development"
+    ]
+  },
+  {
+    "cluster": 3,
+    "count": 172,
+    "descriptive_top_terms": [
+      "method",
+      "design method",
+      "based",
+      "proposed",
+      "control",
+      "optimal",
+      "parameters",
+      "filter"
+    ]
+  },
+  {
+    "cluster": 4,
+    "count": 1200,
+    "descriptive_top_terms": [
+      "interaction",
+      "interaction design",
+      "designing",
+      "process",
+      "practice",
+      "research",
+      "new",
+      "human"
+    ]
+  },
+  {
+    "cluster": 5,
+    "count": 427,
+    "descriptive_top_terms": [
+      "product",
+      "product design",
+      "sustainable",
+      "products",
+      "process",
+      "development",
+      "sustainability",
+      "paper"
+    ]
+  },
+  {
+    "cluster": 6,
+    "count": 343,
+    "descriptive_top_terms": [
+      "methodology",
+      "design methodology",
+      "optimization",
+      "based",
+      "systems",
+      "performance",
+      "high",
+      "energy"
+    ]
+  },
+  {
+    "cluster": 7,
+    "count": 375,
+    "descriptive_top_terms": [
+      "health",
+      "study",
+      "care",
+      "patients",
+      "results",
+      "intervention",
+      "participants",
+      "design study"
+    ]
+  },
+  {
+    "cluster": 8,
+    "count": 554,
+    "descriptive_top_terms": [
+      "research",
+      "design research",
+      "education",
+      "learning",
+      "students",
+      "design education",
+      "teaching",
+      "based"
+    ]
+  }
+]
