@@ -1,0 +1,90 @@
+{
+  "generated_on": "2026-11-06",
+  "coverage": {
+    "works_in_frozen_openalex_extract": 7300,
+    "original_title_gate_included": 3729,
+    "document_pdf_in_open_repo": 14,
+    "document_pdf_in_open_repo_pct": 0.2,
+    "review_pairs": 336,
+    "review_pairs_both_fulltext_pdf_public": 0,
+    "review_pairs_at_least_one_fulltext_pdf_public": 74,
+    "review_pairs_neither_fulltext_pdf_public": 262,
+    "review_pairs_both_oa_metadata_url": 141
+  },
+  "group_stats": {
+    "all_sample_internal_citations": {
+      "n": 5502,
+      "both_original_title_gate": 3159,
+      "both_original_title_gate_pct": 57.4,
+      "both_doi": 5176,
+      "both_doi_pct": 94.1,
+      "both_oa_metadata_url": 2427,
+      "both_oa_metadata_url_pct": 44.1,
+      "nonnegative_citation_year_gap": 5474,
+      "citing_year_before_cited_year": 28,
+      "same_year": 237,
+      "median_year_gap": 5.0
+    },
+    "uniform_random_120": {
+      "n": 120,
+      "both_original_title_gate": 72,
+      "both_original_title_gate_pct": 60.0,
+      "both_doi": 111,
+      "both_doi_pct": 92.5,
+      "both_oa_metadata_url": 44,
+      "both_oa_metadata_url_pct": 36.7,
+      "nonnegative_citation_year_gap": 118,
+      "citing_year_before_cited_year": 2,
+      "same_year": 3,
+      "median_year_gap": 4.0
+    },
+    "preexisting_purposive_150": {
+      "n": 150,
+      "both_original_title_gate": 150,
+      "both_original_title_gate_pct": 100.0,
+      "both_doi": 142,
+      "both_doi_pct": 94.7,
+      "both_oa_metadata_url": 69,
+      "both_oa_metadata_url_pct": 46.0,
+      "nonnegative_citation_year_gap": 150,
+      "citing_year_before_cited_year": 0,
+      "same_year": 4,
+      "median_year_gap": 5.0
+    },
+    "licensed_citing_pdf_71": {
+      "n": 71,
+      "both_original_title_gate": 61,
+      "both_original_title_gate_pct": 85.9,
+      "both_doi": 68,
+      "both_doi_pct": 95.8,
+      "both_oa_metadata_url": 31,
+      "both_oa_metadata_url_pct": 43.7,
+      "nonnegative_citation_year_gap": 71,
+      "citing_year_before_cited_year": 0,
+      "same_year": 3,
+      "median_year_gap": 5
+    },
+    "combined_review_queue_336": {
+      "n": 336,
+      "both_original_title_gate": 278,
+      "both_original_title_gate_pct": 82.7,
+      "both_doi": 317,
+      "both_doi_pct": 94.3,
+      "both_oa_metadata_url": 141,
+      "both_oa_metadata_url_pct": 42.0,
+      "nonnegative_citation_year_gap": 334,
+      "citing_year_before_cited_year": 2,
+      "same_year": 9,
+      "median_year_gap": 5.0
+    }
+  },
+  "citation_year_anomalies": 28,
+  "limitations": [
+    "OpenAlex-rangsortert, delvis søkt korpus; ikkje representativ populasjon.",
+    "Eit DOI-felt viser identitet, ikkje kvalitet eller fullteksttilgang.",
+    "OA-lenkje er ikkje automatisk eit redistribusjonsløyve.",
+    "Ingen offentleg revisjonssitering i det valde pilotutvalet har PDF for begge endar.",
+    "Fagleg gjenbruk, kumulativitet og replikasjon kan ikkje avleiast frå metadata.",
+    "Den tilfeldig trekte kontrollgruppa er berre representativ for interne bibliografiske kantar i det frosne uttrekket."
+  ]
+}

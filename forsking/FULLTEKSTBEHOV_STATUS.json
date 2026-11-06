@@ -1,0 +1,10 @@
+{
+  "study_frame": "336 review citation pairs, all unclassified",
+  "pairs": 336,
+  "both_pdfs_public_ready": 0,
+  "pairs_with_both_oa_metadata_urls": 141,
+  "unique_works_to_obtain": 388,
+  "unique_works_to_obtain_with_openalex_oa_url": 252,
+  "unique_works_needed_by_random_controls": 213,
+  "summary": "OA metadata links are not licences; outputs are acquisition tasks, not accessible/redistributable PDF claims."
+}

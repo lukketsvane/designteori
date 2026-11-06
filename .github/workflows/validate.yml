@@ -15,3 +15,7 @@ jobs:
           python-version: '3.11'
       - name: Kontroller metadata, kjeldekonsistens, lisensar og SHA-256
         run: python test_publisering.py
+      - name: Kontroller hypotesar, representativ kontrollkø og blanke kodingsark
+        run: python forsking/test_protokoll.py
+      - name: Kontroller sidestader og filhashar for piloten
+        run: python forsking/verifiser_pilot.py
