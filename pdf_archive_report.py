@@ -9,16 +9,17 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 
 import hent_oa_pdf as harvest
 
 
-def audit(progress, *, cache_path=None):
-    cache_path = cache_path or harvest.cache_path
+def audit(progress):
+    records = harvest.read_json(harvest.ROOT / "docs/data/publications.json", [])
+    additions = harvest.read_json(harvest.ROOT / "docs/data/nordic_additions.json", [])
+    metadata = {r["id"]: r for r in records + additions}
     verified, missing, failed, duplicates = [], [], [], defaultdict(list)
     for ident, item in sorted(progress.items()):
         status = item.get("status")
@@ -30,9 +31,13 @@ def audit(progress, *, cache_path=None):
         if not harvest.cached_pdf_ok(ident, item):
             missing.append(ident)
             continue
-        pdf = cache_path(ident)
+        pdf = harvest.cache_path(ident)
+        work = metadata.get(ident, {})
         verified.append({
-            "id": ident, "file": str(pdf), "bytes": pdf.stat().st_size,
+            "id": ident, "title": work.get("title", ""),
+            "authors": "; ".join(work.get("authors", [])),
+            "year": work.get("year", ""), "doi": work.get("doi", ""),
+            "file": str(pdf), "bytes": pdf.stat().st_size,
             "sha256": item["sha256"], "source_url": item.get("url", ""),
             "downloaded_at": item.get("checked_at", ""),
             "license_status": "not-reviewed-for-republication",
@@ -47,7 +52,8 @@ def write_report(verified, missing, failed, duplicates, *, base=None):
     base.mkdir(parents=True, exist_ok=True)
     csv_path = base / "pdf_local_index.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
-        columns = ["id", "file", "bytes", "sha256", "source_url",
+        columns = ["id", "title", "authors", "year", "doi",
+                   "file", "bytes", "sha256", "source_url",
                    "downloaded_at", "license_status"]
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
