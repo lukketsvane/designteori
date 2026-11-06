@@ -121,6 +121,36 @@ def main() -> None:
             sum(r["status"] in ("matched-id", "matched-doi") for r in source_audit),
             "Exact source matches are inconsistent")
 
+    # Det historiske registeret er ein separat, urevidert kandidatpopulasjon.
+    theory = load("docs/data/theory_additions.json")
+    theory_status = load("docs/data/theory_status.json")
+    theory_audit = read_csv("results/theory_source_audit.csv")
+    require(len(theory) == theory_status["unique_provisional_candidate_records"],
+            "historical theory register count out of sync")
+    require(len(theory_audit) == theory_status["raw_historical_references"],
+            "historical source audit incomplete")
+    require(len({w["id"] for w in theory}) == len(theory),
+            "duplicate theory candidate IDs")
+    require(not set(w["id"] for w in theory).intersection(ids),
+            "historical candidates masquerading as OpenAlex works")
+    require(all(w.get("scope") == "historical-reference"
+                and w.get("review_status") == "metadata-unreviewed"
+                and not w.get("countries") for w in theory),
+            "historical candidates promoted to verified Nordic research")
+
+    quality = load("docs/data/corpus_quality.json")
+    require(quality.get("openalex_partial_search") == len(records),
+            "OpenAlex coverage denominator does not match the base catalog")
+    require(quality.get("nordic_unlinked_candidates") == len(additions),
+            "Nordic candidate coverage is stale")
+    require(quality.get("historical_global_provisional_groups") == len(theory),
+            "Historical candidate coverage is stale")
+    require(quality.get("total_searchable_rows_all_layers") ==
+            len(records) + len(additions) + len(theory),
+            "Search index coverage mismatches source layers")
+    require(quality.get("manual_article_eligibility_checks_completed") == 0,
+            "Automated entries cannot be treated as independently coded findings")
+
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     pdf_queue = read_csv("results/pdf_henteko.csv")
@@ -180,9 +210,27 @@ def main() -> None:
             ("editorial_bibliography", len(editorial)),
             ("historical_bibliography", len(historical)),
             ("fulltext_versions", len(rights_ids)),
+            ("source_candidates", len(theory) + len(additions)),
+            ("source_candidates_fts", len(theory) + len(additions)),
+            ("searchable_metadata", len(records) + len(theory) + len(additions)),
         ]:
             require(combined_db.execute(f"SELECT count(*) FROM {table}").fetchone()[0]
                     == expected, table + " is out of date in combined SQLite archive")
+        require(combined_db.execute("SELECT value FROM database_info WHERE key='schema'").fetchone()[0]
+                == "designteori-hovuddatabase-v2",
+                "Combined SQLite archive schema must include separate candidate layers")
+        require(combined_db.execute(
+                "SELECT count(*) FROM source_candidates WHERE source_layer='historical'"
+                ).fetchone()[0] == len(theory),
+                "Historic candidates missing from combined SQLite")
+        require(combined_db.execute(
+                "SELECT count(*) FROM source_candidates WHERE source_layer='nordic'"
+                ).fetchone()[0] == len(additions),
+                "Unlinked Nordic candidates missing from combined SQLite")
+        require(combined_db.execute(
+                "SELECT count(*) FROM works WHERE in_scope=1").fetchone()[0]
+                == scope_counts["automatic-title-inclusion"],
+                "Unreviewed bibliographic candidates inflated the accepted scope")
         combined_db.close()
 
     print("DATABASE OK:",

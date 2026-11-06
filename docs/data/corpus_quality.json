@@ -1,0 +1,159 @@
+{
+  "cautions": [
+    "This is a relevance-ranked, incomplete OpenAlex sample, not a census.",
+    "Metadata matching is not independent peer review or a study of replicability.",
+    "DOI can link identity candidates but does not establish research validity.",
+    "Historical references and Nordic archival records are not automatically in scope.",
+    "Citations alone do not prove that an older result was tested or extended."
+  ],
+  "coverage_by_layer": {
+    "historical_global_theory_candidates": {
+      "decades": {
+        "1830s": 1,
+        "1840s": 2,
+        "1850s": 2,
+        "1860s": 2,
+        "1880s": 1,
+        "1890s": 3,
+        "1900s": 4,
+        "1910s": 3,
+        "1920s": 3,
+        "1930s": 6,
+        "1940s": 5,
+        "1950s": 10,
+        "1960s": 20,
+        "1970s": 27,
+        "1980s": 32,
+        "1990s": 48,
+        "2000s": 82,
+        "2010s": 112,
+        "2020s": 43
+      },
+      "kinds": {
+        "article": 119,
+        "book": 226,
+        "book-chapter": 17,
+        "proceedings-article": 9,
+        "report": 7,
+        "thesis": 5,
+        "unknown": 24
+      },
+      "searchable_registrations": 407,
+      "with_authors": 407,
+      "with_doi": 29,
+      "with_local_pdf": 0,
+      "with_open_access_url": 0,
+      "with_year": 406
+    },
+    "nordic_editorial_and_repository_candidates": {
+      "decades": {
+        "1890s": 1,
+        "1910s": 1,
+        "1960s": 2,
+        "1970s": 1,
+        "1980s": 1,
+        "2000s": 11,
+        "2010s": 22,
+        "2020s": 15
+      },
+      "kinds": {
+        "editorial-candidate": 54
+      },
+      "searchable_registrations": 54,
+      "with_authors": 54,
+      "with_doi": 24,
+      "with_local_pdf": 0,
+      "with_open_access_url": 0,
+      "with_year": 54
+    },
+    "openalex_partial_2000_2026": {
+      "decades": {
+        "2000s": 721,
+        "2010s": 2858,
+        "2020s": 3721
+      },
+      "kinds": {
+        "article": 6060,
+        "book": 182,
+        "book-chapter": 903,
+        "review": 155
+      },
+      "searchable_registrations": 7300,
+      "with_authors": 7300,
+      "with_doi": 6514,
+      "with_local_pdf": 14,
+      "with_open_access_url": 4579,
+      "with_year": 7300
+    }
+  },
+  "cross_layer_or_within_layer_possible_doi_duplicates": {
+    "duplicate_doi_keys": 4,
+    "example_groups": [
+      {
+        "doi": "10.1007/978-3-030-37896-7",
+        "records": [
+          {
+            "id": "W4231005248",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W3011884411",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1097/cin.0000000000000917",
+        "records": [
+          {
+            "id": "W4226056745",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W4224988969",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1109/ms.2019.2957715",
+        "records": [
+          {
+            "id": "W2993382791",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W2969810688",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.17705/1thci.00117",
+        "records": [
+          {
+            "id": "W2976561343",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W2953204552",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      }
+    ],
+    "registrations": 8
+  },
+  "historical_global_provisional_groups": 407,
+  "historical_original_bibliography_entries": 430,
+  "manual_article_eligibility_checks_completed": 0,
+  "measurement_unit": "source registrations; NOT vetted unique research works",
+  "nordic_unlinked_candidates": 54,
+  "openalex_partial_search": 7300,
+  "openalex_title_gate": {
+    "automatic-title-inclusion": 3729,
+    "awaiting-eligibility-review": 3571
+  },
+  "schema_version": 1,
+  "total_searchable_rows_all_layers": 7761
+}
