@@ -87,6 +87,60 @@
     }
   },
   "cross_layer_or_within_layer_possible_doi_duplicates": {
+    "all_groups": [
+      {
+        "doi": "10.1007/978-3-030-37896-7",
+        "records": [
+          {
+            "id": "W4231005248",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W3011884411",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1097/cin.0000000000000917",
+        "records": [
+          {
+            "id": "W4226056745",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W4224988969",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.1109/ms.2019.2957715",
+        "records": [
+          {
+            "id": "W2993382791",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W2969810688",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      },
+      {
+        "doi": "10.17705/1thci.00117",
+        "records": [
+          {
+            "id": "W2976561343",
+            "layer": "openalex_partial_2000_2026"
+          },
+          {
+            "id": "W2953204552",
+            "layer": "openalex_partial_2000_2026"
+          }
+        ]
+      }
+    ],
     "duplicate_doi_keys": 4,
     "example_groups": [
       {
