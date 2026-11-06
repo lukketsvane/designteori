@@ -99,6 +99,28 @@ def main() -> None:
     require(authors["count"] == len(authors["items"]), "author index incomplete")
     require(institutions["count"] == len(institutions["items"]), "institution index incomplete")
 
+    nordic = load("docs/data/nordic_status.json")
+    additions = load("docs/data/nordic_additions.json")
+    source_links = load("docs/data/source_links.json")
+    source_audit = read_csv("results/nordic_source_audit.csv")
+    imports = load("data/nordic_imports.json")
+    require(nordic["openalex_records"] == len(records), "Nordic match source is stale")
+    require(nordic["source_records_total"] == len(editorial) + len(imports),
+            "Nordic import counts do not include all sources")
+    require(nordic["unlinked_candidate_records"] == len(additions),
+            "Unlinked Nordic candidates are missing")
+    require(nordic["source_records_total"] == len(source_audit),
+            "Nordic source crosswalk is incomplete")
+    require(all(item["scope"] in ("editorial-candidate", "repository-candidate")
+                and item.get("review_status") == "metadata-unreviewed" for item in additions),
+            "Unverified Nordic references were promoted to vetted works")
+    require(len({item["id"] for item in additions}) == len(additions),
+            "Duplicate source IDs in Nordic additions")
+    require(set(source_links).issubset(set(ids)), "Source links point to unknown OpenAlex works")
+    require(nordic["matched_exact"] ==
+            sum(r["status"] in ("matched-id", "matched-doi") for r in source_audit),
+            "Exact source matches are inconsistent")
+
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     rights_ids = set()
