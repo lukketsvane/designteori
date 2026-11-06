@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 from database import DB, GZ
 
-HERE=Path(__file__).resolve().parent
+HERE=Path(__file__).resolve().parents[1]
 SUMMARY=HERE/"results"/"summary.json"
 def main():
     if not GZ.is_file():raise SystemExit("Missing public archive")
