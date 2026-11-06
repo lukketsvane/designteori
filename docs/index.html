@@ -1,298 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<title>DESIGNTEORI | Søkbar database for nordisk designteori</title>
-<meta name="description" content="Søkbar database for nordisk designteori: 6 060 artikkelregistreringar, DOI, forfattarar og kjelder frå fem nordiske land.">
-<style>
-:root{--bg:#f8f7f3;--ink:#151515;--secondary:#5c5c56;--line:#c9c7bf;--soft:#eeece5}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);margin:0;font:15px/1.48 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
-a{color:inherit;text-decoration-color:#888;text-underline-offset:3px}a:hover{text-decoration-color:var(--ink)}
-header,main,footer{padding-left:max(22px,calc((100vw - 1240px)/2));padding-right:max(22px,calc((100vw - 1240px)/2))}
-header{border-bottom:1px solid var(--ink);min-height:65px;display:flex;align-items:center;justify-content:space-between}
-.mark{font-size:19px;letter-spacing:-.05em;font-weight:750;text-decoration:none}
-nav{display:flex;gap:22px;font-size:13px}
-.hero{padding:30px 0 12px;max-width:940px}
-.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase}
-h1{font-size:clamp(34px,5vw,64px);letter-spacing:-.065em;line-height:1.04;font-weight:620;margin:0 0 12px}
-.lead{font-size:clamp(17px,2vw,22px);line-height:1.42;max-width:730px}
-.not-a-census{max-width:700px;color:var(--secondary);font-size:12px;margin:0}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:20px 0}
-.metric{padding:18px 15px 20px 0}
-.metric+.metric{border-left:1px solid var(--line);padding-left:22px}
-.num{font-size:clamp(27px,4vw,43px);letter-spacing:-.05em;line-height:1.2}
-.caption{font-size:12px;color:var(--secondary);margin-top:4px}
-.section{margin:24px 0 22px}
-h2{font-size:22px;letter-spacing:-.045em;font-weight:660;margin:0 0 14px}
-.section-intro{font-size:13px;color:var(--secondary);max-width:750px}
-.filters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(100px,1fr));gap:10px;margin:16px 0}.advanced .filters{grid-template-columns:repeat(4,minmax(100px,1fr));margin:12px 0}.advanced summary,.explorer summary{cursor:pointer;font-size:12px;color:var(--secondary)}.explorer{padding-top:12px;border-top:1px solid var(--line)}.explorer>summary{font-size:14px;font-weight:600}.explorer>section{padding-top:20px}
-.field{display:block}.field span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px}
-input,select,button{border-radius:0;border:1px solid var(--line);font:inherit;color:var(--ink);background:var(--bg);height:44px;padding:0 12px;width:100%}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
-input::placeholder{color:#898780}
-.countline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--ink);padding:13px 0;font-size:12px}.export-links{display:flex;align-items:center;gap:18px}.export-links button{display:inline;width:auto;height:auto;border:0;padding:0;background:none;font-size:12px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.countline a{color:var(--secondary)}
-.record{display:grid;grid-template-columns:85px 1fr 130px;gap:18px;padding:20px 0 19px;border-top:1px solid var(--line)}
-.year{font-size:13px;color:var(--secondary);padding-top:4px}
-.title{font-size:18px;line-height:1.3;letter-spacing:-.017em;font-weight:610;margin:0 0 6px}
-.title-open{display:inline;text-align:left;border:none;padding:0;height:auto;width:auto;background:none;color:inherit;font:inherit;line-height:inherit;cursor:pointer;text-decoration:none}
-.title-open:hover{text-decoration:underline;text-underline-offset:3px}
-.dialog{width:min(880px,calc(100vw - 28px));max-height:90vh;overflow:auto;background:var(--bg);color:var(--ink);border:1px solid var(--ink);padding:clamp(20px,4vw,40px);box-shadow:0 20px 80px #0003}
-.dialog::backdrop{background:#131310a6}
-.dialog h2{font-size:clamp(25px,4vw,40px);line-height:1.12;margin:8px 0 17px;font-weight:620}
-.detail-close{display:block;margin:0 0 25px auto;border:1px solid var(--line);width:auto;padding:0 20px;cursor:pointer}
-.detail-columns{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.detail-section{padding-top:16px;border-top:1px solid var(--line)}
-.detail-subtitle{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin:0 0 13px}
-.detail-item{padding:8px 0;font-size:13px;border-bottom:1px solid var(--line);line-height:1.4}
-.detail-item button{width:auto;height:auto;text-align:left;display:inline;padding:0;border:none;text-decoration:underline;text-underline-offset:3px;background:none;cursor:pointer}
-.detail-note{font-size:12px;color:var(--secondary);margin-top:8px}
-.cluster-card{border-top:1px solid var(--line);padding:15px 0;display:grid;grid-template-columns:1fr 75px;gap:14px}
-.cluster-card button{background:none;border:0;padding:0;cursor:pointer;height:auto;text-align:left;font-size:14px;font-weight:600}
-.cluster-card button:hover{text-decoration:underline}
-.cluster-card p{font-size:11px;color:var(--secondary);margin:4px 0 0}
-.cluster-count{text-align:right;font-size:13px;color:var(--secondary)}
-.scholar-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
-.chip{display:inline-block;padding:3px 7px;margin:4px 5px 0 0;background:var(--soft);font-size:11px}
-@media(max-width:660px){.detail-columns,.scholar-grid{grid-template-columns:1fr}}
-.metadata{color:var(--secondary);font-size:12px;line-height:1.6}
-.metadata strong{color:var(--ink);font-weight:520}
-.meta-small{font-size:11px;color:var(--secondary);margin:10px 0 0}
-.links{display:flex;flex-flow:column;gap:7px;align-items:flex-start;font-size:12px;white-space:nowrap}
-.links a{border-bottom:1px solid var(--secondary);text-decoration:none}
-.label{border:1px solid var(--line);display:inline-block;padding:1px 6px;margin-right:6px;font-size:10px;vertical-align:middle}
-.label.licensed{border-color:var(--ink)}
-.more{width:auto;min-width:205px;border:1px solid var(--ink);margin:27px 0 0;cursor:pointer}
-.more:hover{background:var(--ink);color:var(--bg)}
-.empty{padding:50px 0;color:var(--secondary);border-top:1px solid var(--line)}
-footer{padding-top:35px;padding-bottom:60px;margin-top:80px;border-top:1px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:12px;color:var(--secondary)}
-footer p{max-width:540px}
-@media(max-width:950px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.field:first-child{grid-column:1/-1}}
-@media(max-width:600px){
- header{min-height:56px}nav{gap:12px;font-size:12px}
- nav a:nth-child(3),nav a:nth-child(4),nav a:nth-child(5){display:none}
- #bibliografiar .filters{grid-template-columns:1fr !important}
- .hero{padding-top:44px}.stats{grid-template-columns:repeat(2,1fr)}
- .metric:nth-child(3){border-left:none;padding-left:0;border-top:1px solid var(--line)}
- .metric:nth-child(4){border-top:1px solid var(--line)}
- .record{grid-template-columns:58px 1fr;gap:10px}
- .links{grid-column:2;flex-flow:row wrap;gap:15px;margin-top:-5px}
- .title{font-size:16px}
- footer{grid-template-columns:1fr;gap:15px}
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DESIGNTEORI — Nordisk designteori og designforsking (1900–2026)</title>
+  <meta name="description" content="Ope, etterprøvbart forskingskorpus for nordisk designteori og designforsking: metadata, fulltekst-PDF, siteringsnettverk, Google EmbeddingGemma semantisk søk og analyse." />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-<a class="mark" href="./">DESIGNTEORI</a>
-<nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <div class="brand">
+          <h1>DESIGNTEORI</h1>
+          <p>Ope forskingskorpus for nordisk designteori og designforsking (1900–2026) — metadata, fulltekst-PDF, siteringar, Google-embeddingar og empirisk analyse.</p>
+        </div>
+        <div class="export-links">
+          <a class="chip-link" href="https://github.com/lukketsvane/designteori/tree/main/pdf" target="_blank" rel="noopener">PDF-mappe (GitHub)</a>
+          <a class="chip-link" href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">SQLite (.sqlite.gz)</a>
+          <a class="chip-link" href="data/korpus.csv" download>korpus.csv</a>
+          <a class="chip-link" href="data/pdf_katalog.csv" download>pdf_katalog.csv</a>
+          <a class="chip-link" href="https://github.com/lukketsvane/designteori" target="_blank" rel="noopener">GitHub-kjeldekode</a>
+        </div>
+      </div>
 
-<a href="./pdf.html">PDF</a>
-<a href="https://github.com/lukketsvane/designteori">GitHub</a>
-</nav>
-</header>
-<main>
-<section class="hero">
-<h1>Nordisk designteori.</h1><p class="not-a-census">Nordisk forsking 2000–2026. Metadata krev kjeldekontroll.</p>
-</section>
-<section class="stats" aria-label="Datastatus">
-<div class="metric"><div class="num" id="stat-articles">...</div><div class="caption">artiklar</div></div>
-<div class="metric"><div class="num" id="stat-total">...</div><div class="caption">postar</div></div>
-<div class="metric"><div class="num" id="stat-editorial">...</div><div class="caption">referansar</div></div>
-<div class="metric"><div class="num" id="stat-pdfs">...</div><div class="caption">PDF-ar</div></div>
-</section>
-<section class="section" id="katalog">
-<h2>Publikasjonar</h2>
-<div class="filters">
-<label class="field"><span>Søk</span><input id="search" type="search" placeholder="Tittel, forfattar, DOI" autocomplete="off" autofocus></label>
-<label class="field"><span>Type</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle</option><option value="review">Oversyn</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="unverified">Kandidatar</option><option value="historical">Historiske / internasjonale</option></select></label>
-<label class="field"><span>Land</span><select id="country"><option value="">Alle land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
-</div><details class="advanced"><summary>Fleire filter</summary><div class="filters"><label class="field"><span>År</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
-<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Bibliografi</option><option value="repository-candidate">Arkivimport</option><option value="historical-reference">Teorireferanse</option></select></label>
-<label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="pdf">PDF</option><option value="local">I arkivet</option><option value="oa">OA</option></select></label>
-<label class="field"><span>Prioritet</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
-</div></details>
-<div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><div class="export-links"><button type="button" id="export-visible">Eksporter treff (CSV)</button><a href="./data/korpus.csv">CSV</a></div></div>
-<div id="records"></div>
-<button class="more" type="button" id="more" hidden>Vis fleire</button>
-</section>
-<details class="section explorer" id="forskarar"><summary>Forskarar / institusjonar</summary><section>
-<div class="scholar-grid">
-<div>
-<label class="field"><span>Søk etter forskar</span><input id="author-search" type="search" placeholder="Namn eller OpenAlex-ID" autocomplete="off"></label>
-<div class="countline"><span id="author-count" aria-live="polite">Trykk for å laste forfattarindeksen</span><a href="./data/authors.json">Alle (JSON)</a></div>
-<div id="author-results"></div>
-<button class="more" id="author-more" type="button" hidden>Vis fleire forskarar</button>
-</div>
-<div>
-<label class="field"><span>Søk etter institusjon</span><input id="institution-search" type="search" placeholder="Universitet, designskule…" autocomplete="off"></label>
-<div class="countline"><span id="institution-count" aria-live="polite">Lastar institusjonar…</span><a href="./data/institutions.json">Alle (JSON)</a></div>
-<div id="institution-results"></div>
-<button class="more" id="institution-more" type="button" hidden>Vis fleire institusjonar</button>
-</div>
-</div>
-</section></details>
-</main>
-<dialog id="work-modal" class="dialog" aria-labelledby="detail-title">
-<button type="button" class="detail-close" id="work-close">Lukk ×</button>
-<div id="work-detail"></div>
-</dialog>
-<dialog id="scholar-modal" class="dialog" aria-labelledby="scholar-title">
-<button type="button" class="detail-close" id="scholar-close">Lukk ×</button>
-<div id="scholar-detail"></div>
-</dialog>
-<footer><div>OpenAlex · nordiske kjelder · <a href="./data/corpus_quality.json">Datakvalitet</a> · <a href="https://github.com/lukketsvane/designteori">GitHub</a></div></footer>
-<script>
-"use strict";
-const $ = id => document.getElementById(id);
-const fmt = n => Number(n||0).toLocaleString("nb-NO");
-const safe = url => typeof url === "string" && /^https:\/\//i.test(url) ? url : null;
-const make = (tag, text, className) => {const e=document.createElement(tag); if(text!==undefined)e.textContent=String(text); if(className)e.className=className;return e};
-let works=[],selected=[],limit=60;
-const countryNames={NO:"Noreg",SE:"Sverige",DK:"Danmark",FI:"Finland",IS:"Island"};
-const doiKey=s=>String(s||"").trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\//i,"").replace(/^doi:\s*/i,"").toLowerCase();
-const titleKey=s=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^\p{L}\p{N}]+/gu," ").trim().toLowerCase();
-function link(href,label){const a=make("a",label);const url=safe(href);if(!url)return null;a.href=url;a.target="_blank";a.rel="noopener noreferrer";return a}
-function renderRow(w){
- const root=make("article",undefined,"record");
- root.append(make("div",w.year || "UÅ","year"));
- const body=make("div");
- const h=make("h3",undefined,"title");
- if(w.origin){h.append(make("span",w.title))}else{const open=make("button",w.title,"title-open");open.type="button";open.addEventListener("click",()=>{if(window.openDesignWork)window.openDesignWork(w.id)});h.append(open)}body.append(h);
- const authors=Array.isArray(w.authors)?w.authors:[];
- const authorText=authors.length>3?authors.slice(0,3).join(", ")+" mfl.":authors.join(", ");
- const small=[authorText,w.source,w.origin?"Uavklart":""].filter(Boolean).join(" · ");
- body.append(make("div",small,"metadata"));
- root.append(body);
- const links=make("div",undefined,"links");
- for(const [url,label] of [[w.doi,"DOI"],[w.pdf,"PDF"],[w.remote_pdf,"PDF (kjelde)"],[w.oa_url,"OA"],[w.source_url,"Kjelde"]]){
-  const a=link(url,label);if(a)links.append(a);
- }
- root.append(links);return root;
-}
-function draw(){
- const box=$("records");box.replaceChildren();
- const frag=document.createDocumentFragment();
- for(const w of selected.slice(0,limit))frag.append(renderRow(w));
- box.append(frag);
- if(selected.length===0)box.append(make("p","Ingen treff. Prøv breiare søk eller færre filter.","empty"));
- $("count").textContent=fmt(selected.length)+" treff · "+fmt(Math.min(limit,selected.length))+" viste";
- $("more").hidden=selected.length<=limit;
-}
-function apply(){
- limit=60;
- const q=$("search").value.trim().toLocaleLowerCase();
- const country=$("country").value;
- const kind=$("kind").value;
- const period=$("period").value;
- const scope=$("scope").value;
- const fulltext=$("fulltext").value;
- const priority=$("priority").value;
- selected=works.filter(w=>{
-  if(w.origin==="historical" && kind!=="" && kind!=="historical" && kind!=="unverified")return false;
-  if(kind==="historical" && w.origin!=="historical")return false;
-  if(kind==="unverified" && !w.origin)return false;
-   if(kind && kind!=="unverified" && kind!=="historical" && w.kind!==kind)return false;
-   if(country && !(w.countries||[]).includes(country))return false;
-  if(period && !(w.year>=+period && w.year<+period+10))return false;
-  if(scope && w.scope!==scope)return false;
-  if(fulltext==="local"&&!w.pdf)return false;
-   if(fulltext==="pdf"&&!w.pdf&&!w.remote_pdf)return false;
-  if(fulltext==="oa"&&!w.oa_url)return false;
-  if(priority && w.review_priority!==priority)return false;
-  if(q&&!w._search.includes(q))return false;
-  return true;
- });draw();
-}
-async function init(){
- try{
-  const [raw,stats]=await Promise.all([
-   fetch("./data/publications.json").then(x=>{if(!x.ok)throw Error("Metadata utilgjengeleg");return x.json()}),
-   fetch("./data/stats.json").then(x=>x.json())
-  ]);
-  works=raw.sort((a,b)=>(b.review_score||0)-(a.review_score||0)||(b.year||0)-(a.year||0));
-  for(const w of works)w._search=[w.title,...(w.authors||[]),w.source,w.topic,w.theme,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
-  $("stat-total").textContent=fmt(stats.total);
-  $("stat-articles").textContent=fmt(stats.article_records??stats.kinds.article);
-  $("stat-pdfs").textContent=fmt(stats.local_pdf);
-  apply();
- }catch(e){$("count").textContent="Kunne ikkje laste katalogen. Opne sida via ein HTTP-tenar eller GitHub Pages.";console.error(e)}
-}
-for(const id of ["search","kind","country","period","scope","fulltext","priority"]){
- $(id).addEventListener(id==="search"?"input":"change",apply);
-}
-$("more").addEventListener("click",()=>{limit+=60;draw()});
-let additions=[],nordicStatus={},theoryAdditions=[],theoryStatus={},pdfFound={},pdfStatus={};
-async function initTheory(){
- const [r,s]=await Promise.all([fetch("./data/theory_additions.json"),fetch("./data/theory_status.json")]);
- if(!r.ok||!s.ok)throw Error("Historiske referansar manglar");
- theoryAdditions=await r.json();theoryStatus=await s.json();
-}
-async function initNordic(){
- const [r,st]=await Promise.all([
-  fetch("./data/nordic_additions.json"),fetch("./data/nordic_status.json")
- ]);
- if(!r.ok||!st.ok)throw Error("Nordiske kjelder kan ikkje lastast");
- additions=await r.json();nordicStatus=await st.json();
-}
-async function initPDF(){
- const [f,s]=await Promise.all([
-  fetch("./data/pdf_found.json"),fetch("./data/pdf_status.json")
- ]);
- if(f.ok)pdfFound=await f.json();
- if(s.ok)pdfStatus=await s.json();
-}
-function integrateNordic(){
- const existing=new Set(works.map(w=>w.id));
- for(const w of additions){
-  if(!w.title||existing.has(w.id))continue;
-  w._search=[w.title,...(w.authors||[]),w.source,w.venue,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
-  works.push(w);existing.add(w.id);
- }
- for(const w of theoryAdditions){
-  if(!w.title||existing.has(w.id))continue;
-  w._search=[w.title,...(w.authors||[]),w.source,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
-  works.push(w);existing.add(w.id);
- }
- $("stat-total").textContent=fmt(works.length);
- $("stat-total").title="Søkbare metadataregistreringar, ikkje verifiserte unike verk";
- $("stat-editorial").textContent=fmt((nordicStatus.editorial_records||0)+(theoryStatus.raw_historical_references||0));
- for(const w of works){
-  const record=pdfFound[w.id];
-  if(record&&record.status==="private-cache-only"&&record.url&&safe(record.url)){
-   w.remote_pdf=record.url;
-  }
- }
- if(pdfStatus.public_verified_pdf_links!==undefined)
-  $("stat-pdfs").textContent=fmt(pdfStatus.public_verified_pdf_links);
- works.sort((a,b)=>(b.review_score||0)-(a.review_score||0)||(b.year||0)-(a.year||0));
- apply();
-}
-function exportSelected(){
- const columns=["id","title","authors","year","kind","doi","source","countries","scope","oa_url","source_url"];
- const cell=value=>{
-  const raw=Array.isArray(value)?value.join("; "):String(value??"");
-  const guarded=/^\s*[=+\-@]/.test(raw)?"'"+raw:raw;
-  return '"'+guarded.replace(/"/g,'""')+'"';
- };
- const csv=[columns.join(","),...selected.map(w=>columns.map(c=>cell(w[c])).join(","))].join("\r\n");
- const blob=new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="designteori_sok.csv";document.body.append(a);a.click();a.remove();
- setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-$("export-visible").addEventListener("click",exportSelected);
+      <div class="kpi-strip" id="kpiStrip">
+        <div class="kpi-card"><div class="kpi-val" id="kpiTotal">…</div><div class="kpi-lbl">Søkbare registreringar (alle lag)</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpiIncluded">…</div><div class="kpi-lbl">OpenAlex tittelinkluderte</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpiPdfs">…</div><div class="kpi-lbl">Fulltekst-PDF i <code>pdf/</code></div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpiEmbeddings">…</div><div class="kpi-lbl">Google EmbeddingGemma-vektorar</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpiCitations">…</div><div class="kpi-lbl">Interne siteringskoplingar</div></div>
+        <div class="kpi-card"><div class="kpi-val" id="kpiCanon">…</div><div class="kpi-lbl">Sitert kanon-indeks</div></div>
+      </div>
 
-Promise.all([init(),Promise.allSettled([initNordic(),initPDF(),initTheory()])])
- .then(([,results])=>{
-  for(const r of results)if(r.status==="rejected")console.warn("Valfri datakjelde manglar",r.reason);
-  if(works.length)integrateNordic();
- })
- .catch(e=>console.error("Katalogen kunne ikkje lastast",e));
-</script>
-<script src="./atlas.js" defer></script>
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" data-tab="korpus" role="tab">Søk &amp; Semantikk</button>
+        <button class="nav-tab" data-tab="pdf" role="tab">Fulltekst &amp; PDF-arkiv</button>
+        <button class="nav-tab" data-tab="siteringar" role="tab">Siteringar, Kanon &amp; Aktørar</button>
+        <button class="nav-tab" data-tab="kart" role="tab">Semantisk Kart</button>
+        <button class="nav-tab" data-tab="analyse" role="tab">Analyse (1900–2026)</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <!-- TAB 1: KORPUS & SEMANTISK SØK -->
+    <section id="panel-korpus" class="panel active">
+      <div class="controls-card">
+        <div class="search-row">
+          <input id="qInput" class="search-input" type="search" placeholder="Søk på tittel, forfattar, tidsskrift, DOI eller tema (norsk, svensk, dansk, finsk, islandsk, engelsk)…" />
+          <button id="neuralSearchBtn" class="btn btn-primary" title="Køyr semantisk fritekstsøk med Google EmbeddingGemma-300M i nettlesaren (WebAssembly)">Google Semantisk Søk</button>
+          <button id="resetSearchBtn" class="btn">Nullstill</button>
+        </div>
+
+        <div class="filter-row">
+          <select id="layerFilter" aria-label="Kjeldelag">
+            <option value="all">Alle kjeldelag</option>
+            <option value="automatic-title-inclusion">OpenAlex: Automatisk tittelinkludert</option>
+            <option value="awaiting-eligibility-review">OpenAlex: Vurderingskø</option>
+            <option value="nordic">Nordiske arkiv (Cristin / DiVA / Nordes / Aaltodoc / KGL / IRIS)</option>
+            <option value="historical-reference">Historisk / global teoribibliografi</option>
+          </select>
+
+          <select id="countryFilter" aria-label="Land">
+            <option value="">Alle nordiske land</option>
+            <option value="NO">Noreg (NO)</option>
+            <option value="SE">Sverige (SE)</option>
+            <option value="DK">Danmark (DK)</option>
+            <option value="FI">Finland (FI)</option>
+            <option value="IS">Island (IS)</option>
+          </select>
+
+          <select id="eraFilter" aria-label="Tidsperiode">
+            <option value="">Alle år (1900–2026)</option>
+            <option value="pre2000">Før 2000 (1900–1999)</option>
+            <option value="2000-2009">2000–2009</option>
+            <option value="2010-2019">2010–2019</option>
+            <option value="2020-2026">2020–2026</option>
+          </select>
+
+          <select id="sortFilter" aria-label="Sortering">
+            <option value="relevance">Sorter: Relevans / Likskap</option>
+            <option value="citations">Sorter: Siteringar</option>
+            <option value="year_desc">Sorter: Nyaste først</option>
+            <option value="year_asc">Sorter: Eldste først</option>
+          </select>
+
+          <label class="check-pill">
+            <input type="checkbox" id="pdfOnlyToggle" />
+            <span>Berre med PDF i <code>pdf/</code></span>
+          </label>
+        </div>
+
+        <div class="semantic-bar">
+          <span style="font-size:0.83rem;font-weight:600;color:var(--ink-muted);">Google EmbeddingGemma-tema:</span>
+          <select id="presetSelect" aria-label="Semantisk forskingstema">
+            <option value="">— Vel semantisk forskingstema (lynrask vektorsøk) —</option>
+            <option value="participatory-design">Deltakande design &amp; arbeidsplassdemokrati</option>
+            <option value="codesign">Samskaping &amp; co-design</option>
+            <option value="research-through-design">Research through Design &amp; praksisbasert forsking</option>
+            <option value="design-theory-epistemology">Designteori, epistemologi &amp; designerkunnskap</option>
+            <option value="service-systemic-design">Tenestedesign, systemisk design &amp; offentleg sektor</option>
+            <option value="sustainable-circular">Berekraftig, sirkulær &amp; økologisk design</option>
+            <option value="critical-speculative">Kritisk, spekulativ &amp; diskursiv design</option>
+            <option value="interaction-hci-ai">Interaksjonsdesign, HCI &amp; kunstig intelligens</option>
+            <option value="design-history-nordic">Nordisk designhistorie &amp; materiell kultur</option>
+            <option value="craft-materiality-textile">Handverk, materialitet &amp; tekstildesign</option>
+            <option value="aesthetics-form">Estetikk, formgjeving &amp; sansing</option>
+            <option value="design-education-pedagogy">Designutdanning &amp; studiodidaktikk</option>
+            <option value="design-ethics-justice">Designetikk, universell utforming &amp; rettferd</option>
+            <option value="design-anthropology">Designantropologi &amp; kvardagspraksis</option>
+            <option value="industrial-product">Industridesign &amp; produktutvikling</option>
+            <option value="urban-architecture">Arkitekturteori, byrom &amp; landskap</option>
+          </select>
+          <span id="embeddingStatus" style="font-size:0.8rem;color:var(--ink-muted);">Lastar Google-vektorindeks…</span>
+        </div>
+      </div>
+
+      <div id="semanticActiveBanner" class="semantic-banner" style="display:none;">
+        <div id="semanticBannerText"></div>
+        <button id="clearSemanticBtn" class="btn btn-xs">Avslutt semantisk modus</button>
+      </div>
+
+      <div class="results-meta">
+        <span id="resultsSummary">Lastar korpus…</span>
+        <div>
+          <button id="prevPageBtn" class="btn btn-xs">← Førre</button>
+          <span id="pageIndicator" style="margin:0 0.5rem;">1</span>
+          <button id="nextPageBtn" class="btn btn-xs">Neste →</button>
+        </div>
+      </div>
+
+      <div id="corpusList" class="work-list"></div>
+    </section>
+
+    <!-- TAB 2: FULLTEKST & PDF -->
+    <section id="panel-pdf" class="panel">
+      <div class="controls-card">
+        <div class="search-row">
+          <input id="pdfSearchInput" class="search-input" type="search" placeholder="Filtrer fulltekst-PDF-ar på tittel, forfattar, tidsskrift, DOI eller SHA-256…" />
+          <select id="pdfAccessFilter">
+            <option value="repo">PDF lagra i GitHub (pdf/)</option>
+            <option value="verified">Alle SHA-256-verifiserte OA-PDF-ar</option>
+            <option value="all">Alle oppføringar med OA-lenkje</option>
+          </select>
+          <select id="pdfCountryFilter">
+            <option value="">Alle land</option>
+            <option value="NO">Noreg (NO)</option>
+            <option value="SE">Sverige (SE)</option>
+            <option value="DK">Danmark (DK)</option>
+            <option value="FI">Finland (FI)</option>
+            <option value="IS">Island (IS)</option>
+          </select>
+        </div>
+      </div>
+      <div class="results-meta">
+        <span id="pdfSummary">…</span>
+        <div>
+          <button id="pdfPrevBtn" class="btn btn-xs">← Førre</button>
+          <span id="pdfPageInd" style="margin:0 0.5rem;">1</span>
+          <button id="pdfNextBtn" class="btn btn-xs">Neste →</button>
+        </div>
+      </div>
+      <div id="pdfList" class="work-list"></div>
+    </section>
+
+    <!-- TAB 3: SITERINGAR, KANON & AKTØRAR -->
+    <section id="panel-siteringar" class="panel">
+      <div class="controls-card" style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+        <button class="btn btn-primary subview-btn" data-sub="internal">Mest siterte i nordisk korpus</button>
+        <button class="btn subview-btn" data-sub="canon">Sitert grunnlagskanon (1 000 verk)</button>
+        <button class="btn subview-btn" data-sub="authors">Nordiske forfattarar</button>
+        <button class="btn subview-btn" data-sub="institutions">Nordiske institusjonar</button>
+        <input id="citFilterInput" class="search-input" style="max-width:340px;margin-left:auto;" type="search" placeholder="Filtrer liste…" />
+      </div>
+      <div id="citationContainer" class="box"></div>
+    </section>
+
+    <!-- TAB 4: SEMANTISK KART -->
+    <section id="panel-kart" class="panel">
+      <div class="controls-card" style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
+        <strong>2D Semantisk Korpuskart (Google EmbeddingGemma-300M)</strong>
+        <select id="mapColorMode">
+          <option value="cluster">Fargelegg etter: Google-forskingsklynge (10)</option>
+          <option value="country">Fargelegg etter: Nordisk land (NO/SE/DK/FI/IS)</option>
+          <option value="pdf">Fargelegg etter: PDF i repoet</option>
+        </select>
+        <span style="font-size:0.83rem;color:var(--ink-muted);">Klikk på eit punkt for å opne verket, siteringar og PDF. Dra eller rull for å zoome.</span>
+        <button id="mapResetZoom" class="btn btn-xs" style="margin-left:auto;">Nullstill utsnitt</button>
+      </div>
+      <div class="map-layout">
+        <div class="canvas-wrap">
+          <canvas id="semanticCanvas" width="960" height="560"></canvas>
+          <div id="mapTooltip" class="map-tooltip"></div>
+        </div>
+        <div class="box" style="margin-bottom:0;">
+          <h3>Forskingsklynger</h3>
+          <div id="mapLegend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: ANALYSE -->
+    <section id="panel-analyse" class="panel">
+      <div id="analysisRoot"></div>
+    </section>
+  </main>
+
+  <!-- WORK DETAIL DRAWER -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="workDrawer" class="drawer" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span id="drawerBadge" class="badge badge-blue"></span>
+      <button id="closeDrawerBtn" class="btn btn-xs">Lukk ✕</button>
+    </div>
+    <h2 id="drawerTitle"></h2>
+    <div id="drawerMeta" class="work-sub"></div>
+    <div id="drawerActions" class="badge-row" style="margin:0.9rem 0 1.2rem;"></div>
+    <div id="drawerAffiliations"></div>
+    <div id="drawerSimilar"></div>
+    <div id="drawerCitedBy"></div>
+    <div id="drawerCites"></div>
+  </aside>
+
+  <script src="app.js"></script>
 </body>
 </html>

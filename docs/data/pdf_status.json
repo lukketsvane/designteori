@@ -1,12 +1,13 @@
 {
-  "openalex_and_nordic_candidates": 7354,
-  "archived_licensed_pdfs": 15,
-  "oa_links_unchecked": 4564,
-  "direct_pdf_shaped_urls_unchecked": 1706,
-  "repository_page_candidates": 0,
-  "doi_without_oa_link": 2216,
-  "without_doi_or_oa": 559,
-  "private_cached_pdfs": 0,
-  "public_verified_pdf_links": 189,
-  "note": "Open access metadata is not proof of a readable PDF or a redistribution license."
+  "openalex_and_nordic_candidates": 26270,
+  "repo_pdf_count": 2445,
+  "archived_licensed_pdfs": 0,
+  "oa_links_unchecked": 18831,
+  "direct_pdf_shaped_urls_unchecked": 5806,
+  "repository_page_candidates": 9540,
+  "doi_without_oa_link": 5100,
+  "without_doi_or_oa": 2339,
+  "private_cached_pdfs": 2887,
+  "public_verified_pdf_links": 2886,
+  "note": "All retrieved Open Access PDFs are stored in pdf/ with SHA-256 verification."
 }
