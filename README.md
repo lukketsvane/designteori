@@ -4,7 +4,7 @@ Open, søkbar database for nordisk designteori. Målet er å samle publiserte de
 
 **Status:** 7 300 OpenAlex-registreringar (6 060 artiklar), 54 nordiske kjeldekandidatar og 407 provisoriske historiske/internasjonale teorioppføringar. **14 PDF-ar** har dokumentert lisens og er offentleg arkiverte. Dette er enno ikkje eit fullstendig, manuelt verifisert korpus.
 
-**[Søk](https://lukketsvane.github.io/designteori/)** · [Metadata (CSV)](docs/data/publications.csv) · [SQLite](data/designteori_hovuddatabase.sqlite.gz) · [PDF-innsamling](fulltekst/INNSAMLING.md)
+**[Søk](https://lukketsvane.github.io/designteori/)** · [Samla korpus (CSV)](docs/data/korpus.csv) · [SQLite](data/designteori_hovuddatabase.sqlite.gz) · [PDF-innsamling](fulltekst/INNSAMLING.md)
 
 Bidrag og rettingar er velkomne via pull requests. Kjelde, DOI og publikasjonsår skal vere etterprøvbare.
 
