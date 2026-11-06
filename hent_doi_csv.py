@@ -42,6 +42,10 @@ def read_dois(path: Path) -> tuple[list[dict], dict]:
         if doi_col is None:
             raise ValueError("CSV manglar DOI-kolonne")
         title_col = next((k for k in fields if k.strip().lower() in ("title", "tittel")), None)
+        ids_col = next((k for k in fields if k.strip().lower() == "source_ids"), None)
+        layer_col = next((k for k in fields if k.strip().lower() == "source_layer"), None)
+        status_col = next((k for k in fields if k.strip().lower() == "review_status"), None)
+        scope_col = next((k for k in fields if k.strip().lower() == "scope"), None)
         oa_col = next((k for k in fields if k.strip().lower() in ("oa_url", "pdf_url")), None)
         for line, row in enumerate(reader, 2):
             raw = (row.get(doi_col) or "").strip()
@@ -59,7 +63,12 @@ def read_dois(path: Path) -> tuple[list[dict], dict]:
             entries.append({
                 "doi": doi, "line": line,
                 "title": (row.get(title_col) or "").strip() if title_col else "",
-                "oa_url": link if oa.allowed_url(link) else "",
+                "oa_url": link if oa.safe_public_link(link) else "",
+                "source_ids": sorted({s.strip() for s in (
+                    row.get(ids_col) or "").split(";") if s.strip()}) if ids_col else [],
+                "source_layer": (row.get(layer_col) or "").strip() if layer_col else "",
+                "source_scope": (row.get(scope_col) or "").strip() if scope_col else "",
+                "source_review_status": (row.get(status_col) or "").strip() if status_col else "",
             })
     return entries, {
         "unique_dois": len(entries), "duplicate_rows": repeated,
@@ -88,14 +97,21 @@ def make_rows(entries: list[dict], known: dict, archived: set[str] | None = None
         ident = work.get("id") or "doi:" + hashlib.sha256(
             item["doi"].encode("utf-8")).hexdigest()[:24]
         url = item["oa_url"] or work.get("oa_url") or ""
+        if not url and work.get("origin") == "external":
+            url = work.get("source_url") or ""
         output.append({
             "id": ident, "doi": "https://doi.org/" + item["doi"],
             "title": work.get("title") or item["title"],
             "kind": work.get("kind") or "unknown",
-            "oa_url": url if oa.allowed_url(url) else "",
+            "oa_url": url if oa.safe_public_link(url) else "",
             "scope": work.get("scope") or "doi-csv-unreviewed",
             "archived": "yes" if ident in archived else "no",
-            "source_row": item["line"], "catalog_match": match
+            "source_row": item["line"], "catalog_match": match,
+            "source_ids": item.get("source_ids") or [],
+            "source_layer": item.get("source_layer") or "",
+            "source_scope": item.get("source_scope") or "",
+            "source_review_status": item.get("source_review_status") or "",
+            "catalogue_ids": sorted({r.get("id", "") for r in candidates if r.get("id")}),
         })
     return output
 
@@ -107,13 +123,19 @@ def private_index(rows: list[dict]):
         metadata[row["id"]] = {
             "id": row["id"], "title": row["title"], "doi": row["doi"],
             "kind": row["kind"], "authors": [], "year": "",
-            "catalog_match": row["catalog_match"], "source": "DOI CSV"
+            "catalog_match": row["catalog_match"], "source": "DOI CSV",
+            "source_ids_from_input": row.get("source_ids", []),
+            "source_layer_from_input": row.get("source_layer", ""),
+            "source_scope_from_input": row.get("source_scope", ""),
+            "source_review_status_from_input": row.get("source_review_status", ""),
+            "catalogue_ids": row.get("catalogue_ids", [])
         }
     oa.write_json(target, metadata)
 
 
 def write_report(rows: list[dict], progress: dict, stats: dict):
     columns = ("id", "doi", "title", "source_row", "catalog_match",
+               "source_ids_from_input", "catalogue_ids", "source_review_status",
                "status", "cache_verified", "sha256", "bytes", "source_url")
     target = oa.PRIVATE / "doi_csv_report.csv"
     counts, verified = defaultdict(int), 0
@@ -130,6 +152,9 @@ def write_report(rows: list[dict], progress: dict, stats: dict):
             values = {
                 "id": row["id"], "doi": row["doi"], "title": row["title"],
                 "source_row": row["source_row"], "catalog_match": row["catalog_match"],
+                "source_ids_from_input": ";".join(row.get("source_ids", [])),
+                "catalogue_ids": ";".join(row.get("catalogue_ids", [])),
+                "source_review_status": row.get("source_review_status", ""),
                 "status": status, "cache_verified": "yes" if actual else "no",
                 "sha256": result.get("sha256", "") if actual else "",
                 "bytes": result.get("bytes", "") if actual else "",

@@ -39,6 +39,7 @@ class PrivateArchiveReportTests(unittest.TestCase):
                 self.assertEqual(len(verified), 1)
                 self.assertEqual(verified[0]["title"], "Verified Design Methods")
                 self.assertEqual(verified[0]["authors"], "First Researcher")
+                self.assertEqual(verified[0]["source_ids_from_input"], "")
                 self.assertEqual(missing, ["W999"])
                 self.assertEqual(failed[0]["id"], "W888")
                 self.assertEqual(duplicates, {})

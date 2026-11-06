@@ -49,10 +49,12 @@ class DOICorpusExportTests(unittest.TestCase):
             dict(id="W2", doi="https://doi.org/10.4321/ok",
                  oa_url="https://sci-hub.se/10.4321/ok"),
             dict(id="W3", doi="", title="Unknown"),
+            dict(id="W4", doi="10.4321/signed",
+                 oa_url="https://repo.example.org/private.pdf?X-Amz-Signature=abc"),
         ]
         rows, stats = make_export(works, [], [])
-        self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0]["oa_url"], "")
+        self.assertEqual(len(rows), 2)
+        self.assertTrue(all(row["oa_url"] == "" for row in rows))
         self.assertEqual(stats["registrations_without_valid_doi"]["openalex"], 2)
         with self.assertRaises(ValueError):
             make_export([works[1], works[1]], [], [])

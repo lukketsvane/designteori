@@ -53,6 +53,32 @@ class DOIImportTests(unittest.TestCase):
         self.assertEqual(rows[2]["catalog_match"], "doi-not-in-catalog")
         self.assertEqual(rows[0]["oa_url"], "https://repo.example.org/test.pdf")
 
+    def test_provenance_is_retained_without_claiming_identity(self):
+        with tempfile.TemporaryDirectory() as td, patch.object(importer.oa, "PRIVATE", Path(td)):
+            input_file = Path(td) / "corpus.csv"
+            input_file.write_text(
+                "doi,source_ids,source_layer,scope,review_status,oa_url\n"
+                "10.1234/xyz,W7;W8,openalex,automatic-title-inclusion,"
+                "possible-duplicate-doi-needs-review,https://repo.example.org/paper.pdf\n",
+                encoding="utf-8",
+            )
+            rows, _ = importer.read_dois(input_file)
+            catalog = {"10.1234/xyz": [{"id": "W7"}, {"id": "W8"}]}
+            staged = importer.make_rows(rows, catalog)
+            self.assertEqual(staged[0]["catalog_match"], "ambiguous-catalog-doi")
+            self.assertEqual(staged[0]["source_ids"], ["W7", "W8"])
+            self.assertEqual(staged[0]["catalogue_ids"], ["W7", "W8"])
+            importer.private_index(staged)
+            meta = importer.oa.read_json(Path(td) / "doi_csv_metadata.json")
+            self.assertEqual(meta[staged[0]["id"]]["source_ids_from_input"], ["W7", "W8"])
+            self.assertEqual(meta[staged[0]["id"]]["source_review_status_from_input"],
+                             "possible-duplicate-doi-needs-review")
+            importer.write_report(staged, {}, {"unique_dois": 1})
+            with (Path(td) / "doi_csv_report.csv").open(newline="", encoding="utf-8") as f:
+                report_row = next(csv.DictReader(f))
+            self.assertEqual(report_row["source_ids_from_input"], "W7;W8")
+            self.assertEqual(report_row["catalogue_ids"], "W7;W8")
+
     def test_private_metadata_and_report_do_not_publish(self):
         with tempfile.TemporaryDirectory() as td, patch.object(importer.oa, "PRIVATE", Path(td)):
             rows = importer.make_rows([{"doi": "10.1234/a", "line": 2,
