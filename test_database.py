@@ -151,6 +151,24 @@ def main() -> None:
     require(quality.get("manual_article_eligibility_checks_completed") == 0,
             "Automated entries cannot be treated as independently coded findings")
 
+    export = read_csv("docs/data/korpus.csv")
+    require(len(export) == quality["total_searchable_rows_all_layers"],
+            "Unified searchable corpus CSV has wrong number of rows")
+    require(len({r["id"] for r in export}) == len(export),
+            "Unified corpus export contains duplicate record IDs")
+    require(all(r["status"] in (
+            "automatic-title-inclusion", "awaiting-eligibility-review",
+            "editorial-candidate", "repository-candidate", "historical-reference")
+            for r in export), "Source identity statuses were lost in CSV export")
+    review_queue = read_csv("results/identity_review_queue.csv")
+    review_status = load("results/identity_review_status.json")
+    require(len(review_queue) == review_status["task_count"],
+            "Identity review queue count does not match manifest")
+    require(all(r["decision"] == "UNREVIEWED" for r in review_queue),
+            "Automated match must not be presented as a manual decision")
+    require(review_status["manual_decisions_completed"] == 0,
+            "No reviewer decisions are established by automated imports")
+
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     pdf_queue = read_csv("results/pdf_henteko.csv")
