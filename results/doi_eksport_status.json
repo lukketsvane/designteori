@@ -1,0 +1,21 @@
+{
+  "doi_keys_seen_per_layer": {
+    "historical-candidate": 29,
+    "nordic-candidate": 24,
+    "openalex": 6509
+  },
+  "doi_keys_with_multiple_source_records": 4,
+  "doi_only": 2242,
+  "doi_with_direct_pdf_shaped_url": 1596,
+  "doi_with_oa_url": 4320,
+  "registration_count": 7761,
+  "registrations_with_valid_doi": 6566,
+  "registrations_without_valid_doi": {
+    "historical-candidate": 378,
+    "nordic-candidate": 30,
+    "openalex": 787
+  },
+  "semantic_limit": "Every row is an unreviewed retrieval candidate, not proof of a Nordic design-research publication, available full text or redistribution permission. DOI collisions require manual identity/version checks.",
+  "source": "docs/data/publications.json + nordic_additions.json + theory_additions.json",
+  "unique_valid_doi_retrieval_targets": 6562
+}
