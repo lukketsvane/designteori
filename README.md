@@ -1,11 +1,9 @@
 # DESIGNTEORI
 
-Open, søkbar database over publisert nordisk designforsking, med historiske og internasjonale teorireferansar i eit eige lag.
+Open, søkbar database for nordisk designteori. Målet er å samle publiserte designteoretiske artiklar frå Noreg, Sverige, Danmark, Finland og Island på éin stad.
 
-**Korpus:** 7 300 OpenAlex-registreringar frå Norden (2000–2026), 77 redaksjonelle bibliografipostar og 430 historiske/internasjonale referanseoppføringar. Dublettar og overlapp skal avstemmast. Ingen av tala er ei teljing av manuelt verifiserte designforskingartiklar.
+**Status:** 7 300 OpenAlex-registreringar, av dei 6 060 artiklar, og 54 nordiske kjeldekandidatar. **14 PDF-ar** har dokumentert lisens og er offentleg arkiverte. Dette er enno ikkje eit fullstendig, manuelt verifisert korpus.
 
-**[Søk i databasen](https://lukketsvane.github.io/designteori/)** · [Metadata (CSV)](docs/data/publications.csv) · [SQLite](data/designteori_hovuddatabase.sqlite.gz) · [Revisjonsspor](results/theory_source_audit.csv)
+**[Søk](https://lukketsvane.github.io/designteori/)** · [Metadata (CSV)](docs/data/publications.csv) · [SQLite](data/designteori_hovuddatabase.sqlite.gz) · [PDF-innsamling](fulltekst/INNSAMLING.md)
 
-Sporbar kjelde, DOI, forfattar, publikasjonsår, tilkomst og verifikasjonsstatus. [Metode og avgrensingar](forsking/KORPUSUTVIDING.md).
-
-[Datakvalitet og dekningsmatrise](docs/data/corpus_quality.json) viser omfang og manglande metadata for kvar kjeldetype, utan å rekne kandidatane som stadfesta publikasjonar.
+Bidrag og rettingar er velkomne via pull requests. Kjelde, DOI og publikasjonsår skal vere etterprøvbare.
