@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Syntaks
-        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py bygg_teoriregister.py test_teoriregister.py bygg_dekningsoversikt.py test_dekningsoversikt.py sok_korpus.py test_sok_korpus.py eksporter_korpus.py lag_identitetsko.py test_korpus_exports.py hent_oa_pdf.py test_oa_pdf.py hent_doi_csv.py test_doi_csv.py bygg_doi_eksport.py test_bygg_doi_eksport.py sok.py sok_fulltekst.py pdf_archive_report.py test_pdf_archive_report.py
+        run: python -m py_compile collect.py import_norden.py batch_import_norden.py publiser_lisensiert_pdf.py samkoyr_norden.py bygg_katalog.py bygg_hovuddatabase.py bygg_bibliografiportal.py test_database.py test_nordic_import.py bygg_teoriregister.py test_teoriregister.py bygg_dekningsoversikt.py test_dekningsoversikt.py sok_korpus.py test_sok_korpus.py eksporter_korpus.py lag_identitetsko.py test_korpus_exports.py hent_oa_pdf.py test_oa_pdf.py hent_doi_csv.py test_doi_csv.py bygg_doi_eksport.py test_bygg_doi_eksport.py sok.py sok_fulltekst.py pdf_archive_report.py test_pdf_archive_report.py bygg_fulltekstkorpus.py test_fulltekstkorpus.py embedding_google.py test_embedding_google.py
       - name: Importer nye nordiske metadataeksportar
         run: python batch_import_norden.py
       - name: Avstem nordiske kjelder
@@ -54,6 +54,8 @@ jobs:
         run: python -m unittest -v test_pdf_archive_report
       - name: Bygg SQLite med eigne kjeldelag
         run: python bygg_hovuddatabase.py
+      - name: Test lokal fulltekst og Google-embedding utan eksterne API-kall
+        run: python -m unittest -v test_fulltekstkorpus test_embedding_google
       - name: Kontroller databasen
         run: python test_database.py
       - name: Publiser kjeldeavstemming
