@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-11-06T21:40:26.674873+00:00",
+  "generated_utc": "2026-11-06T21:41:15.573099+00:00",
   "method": "OpenAlex referenced_works IDs absent from the original works table",
   "known_works": 7300,
   "unresolved_reference_ids": 191234,
