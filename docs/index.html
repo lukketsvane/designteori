@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="nn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>DESIGNTEORI | Nordisk forskingsatlas</title>
+<meta name="description" content="Ope forskingsatlas for nordisk designteori og designforsking 2000–2026, med dokumentert metadata, kjelder og lisensiert fulltekst.">
+<style>
+:root{--bg:#f8f7f3;--ink:#151515;--secondary:#5c5c56;--line:#c9c7bf;--soft:#eeece5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);margin:0;font:15px/1.48 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+a{color:inherit;text-decoration-color:#888;text-underline-offset:3px}a:hover{text-decoration-color:var(--ink)}
+header,main,footer{padding-left:max(22px,calc((100vw - 1240px)/2));padding-right:max(22px,calc((100vw - 1240px)/2))}
+header{border-bottom:1px solid var(--ink);min-height:65px;display:flex;align-items:center;justify-content:space-between}
+.mark{font-size:19px;letter-spacing:-.05em;font-weight:750;text-decoration:none}
+nav{display:flex;gap:22px;font-size:13px}
+.hero{padding:64px 0 40px;max-width:940px}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase}
+h1{font-size:clamp(40px,6vw,82px);letter-spacing:-.075em;line-height:1.02;font-weight:620;margin:18px 0 24px}
+.lead{font-size:clamp(17px,2vw,22px);line-height:1.42;max-width:730px}
+.not-a-census{border-left:2px solid #303030;padding:4px 0 4px 15px;max-width:700px;color:var(--secondary);font-size:13px;margin:28px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:44px 0}
+.metric{padding:18px 15px 20px 0}
+.metric+.metric{border-left:1px solid var(--line);padding-left:22px}
+.num{font-size:clamp(27px,4vw,43px);letter-spacing:-.05em;line-height:1.2}
+.caption{font-size:12px;color:var(--secondary);margin-top:4px}
+.section{margin:50px 0 28px}
+h2{font-size:22px;letter-spacing:-.045em;font-weight:660;margin:0 0 14px}
+.section-intro{font-size:13px;color:var(--secondary);max-width:750px}
+.filters{display:grid;grid-template-columns:2fr repeat(4,minmax(100px,1fr));gap:10px;margin:24px 0 18px}
+.field{display:block}.field span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px}
+input,select,button{border-radius:0;border:1px solid var(--line);font:inherit;color:var(--ink);background:var(--bg);height:44px;padding:0 12px;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+input::placeholder{color:#898780}
+.countline{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--ink);padding:13px 0;font-size:12px}
+.countline a{color:var(--secondary)}
+.record{display:grid;grid-template-columns:85px 1fr 130px;gap:18px;padding:20px 0 19px;border-top:1px solid var(--line)}
+.year{font-size:13px;color:var(--secondary);padding-top:4px}
+.title{font-size:18px;line-height:1.3;letter-spacing:-.017em;font-weight:610;margin:0 0 6px}
+.metadata{color:var(--secondary);font-size:12px;line-height:1.6}
+.metadata strong{color:var(--ink);font-weight:520}
+.meta-small{font-size:11px;color:var(--secondary);margin:10px 0 0}
+.links{display:flex;flex-flow:column;gap:7px;align-items:flex-start;font-size:12px;white-space:nowrap}
+.links a{border-bottom:1px solid var(--secondary);text-decoration:none}
+.label{border:1px solid var(--line);display:inline-block;padding:1px 6px;margin-right:6px;font-size:10px;vertical-align:middle}
+.label.licensed{border-color:var(--ink)}
+.more{width:auto;min-width:205px;border:1px solid var(--ink);margin:27px 0 0;cursor:pointer}
+.more:hover{background:var(--ink);color:var(--bg)}
+.empty{padding:50px 0;color:var(--secondary);border-top:1px solid var(--line)}
+footer{padding-top:35px;padding-bottom:60px;margin-top:80px;border-top:1px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:12px;color:var(--secondary)}
+footer p{max-width:540px}
+@media(max-width:950px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.field:first-child{grid-column:1/-1}}
+@media(max-width:600px){
+ header{min-height:56px}nav{gap:12px;font-size:12px}
+ .hero{padding-top:44px}.stats{grid-template-columns:repeat(2,1fr)}
+ .metric:nth-child(3){border-left:none;padding-left:0;border-top:1px solid var(--line)}
+ .metric:nth-child(4){border-top:1px solid var(--line)}
+ .record{grid-template-columns:58px 1fr;gap:10px}
+ .links{grid-column:2;flex-flow:row wrap;gap:15px;margin-top:-5px}
+ .title{font-size:16px}
+ footer{grid-template-columns:1fr;gap:15px}
+}
+</style>
+</head>
+<body>
+<header>
+<a class="mark" href="./">DESIGNTEORI</a>
+<nav>
+<a href="#katalog">Katalog</a>
+<a href="https://github.com/lukketsvane/designteori/tree/main/fulltekst">Fulltekst</a>
+<a href="https://github.com/lukketsvane/designteori">GitHub</a>
+</nav>
+</header>
+<main>
+<section class="hero">
+<div class="eyebrow">Nordisk forskingsatlas · 2000–2026</div>
+<h1>Eit kart over<br>designfaget.</h1>
+<p class="lead">Publikasjonar, teoriar, metodar, forskarar, institusjonar og kunnskapslinjer. Ein open og etterprøvbar inngang til nordisk designteori.</p>
+<p class="not-a-census">Dette er eit førebels forskingsutval frå OpenAlex. Titlane er førehandsklassifiserte automatisk; dei er ikkje alle manuelt stadfesta som designteori. Eit søkjeresultat er ikkje ei fagleg kvalitetsvurdering.</p>
+</section>
+<section class="stats" aria-label="Datastatus">
+<div class="metric"><div class="num" id="stat-total">...</div><div class="caption">Publikasjonsskandidatar</div></div>
+<div class="metric"><div class="num" id="stat-included">...</div><div class="caption">Automatisk tittelinkluderte</div></div>
+<div class="metric"><div class="num" id="stat-review">...</div><div class="caption">Til fagleg vurdering</div></div>
+<div class="metric"><div class="num" id="stat-pdfs">...</div><div class="caption">Lisensierte PDF-ar i arkivet</div></div>
+</section>
+<section class="section" id="katalog">
+<h2>Søk i litteraturen</h2>
+<p class="section-intro">Alle 7 300 metadataregistreringane er søkbare. Bruk filtera for å avgrense til publikasjonar med nordisk institusjonstilknyting, autorisert fulltekst og status for fagleg gjennomgang.</p>
+<div class="filters">
+<label class="field"><span>Søk</span><input id="search" type="search" placeholder="Tittel, forfattar, tema, DOI..." autocomplete="off" autofocus></label>
+<label class="field"><span>Land</span><select id="country"><option value="">Alle nordiske land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
+<label class="field"><span>Periode</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
+<label class="field"><span>Vurderingsstatus</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Førehandsinkluderte</option><option value="awaiting-eligibility-review">Til manuell vurdering</option></select></label>
+<label class="field"><span>Fulltekst</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
+</div>
+<div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><a href="./data/publications.csv">Last ned metadata (CSV)</a></div>
+<div id="records"></div>
+<button class="more" type="button" id="more" hidden>Vis fleire publikasjonar</button>
+</section>
+</main>
+<footer>
+<div><strong>Datagrunnlag</strong><p>OpenAlex-metadata, 31 søkjeuttrykk, 96 fullførte søkjesider per 2. november 2026. Siteringar og tekstlikskap er ikkje bevis for kumulativ vitskap. Ingen figur eller kategori er ein manuell fulltekstdom.</p></div>
+<div><strong>Open forsking</strong><p>Alle PDF-ar i arkivet har individuelle lisensar og oppgjevne originalkjelder. Program, metode, avgrensingar, kodebok og tabellar er tilgjengelege i <a href="https://github.com/lukketsvane/designteori">GitHub-repoet</a>.</p></div>
+</footer>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n||0).toLocaleString("nb-NO");
+const safe = url => typeof url === "string" && /^https:\/\//i.test(url) ? url : null;
+const make = (tag, text, className) => {const e=document.createElement(tag); if(text!==undefined)e.textContent=String(text); if(className)e.className=className;return e};
+let works=[],selected=[],limit=60;
+const countryNames={NO:"Noreg",SE:"Sverige",DK:"Danmark",FI:"Finland",IS:"Island"};
+function link(href,label){const a=make("a",label);const url=safe(href);if(!url)return null;a.href=url;a.target="_blank";a.rel="noopener noreferrer";return a}
+function renderRow(w){
+ const root=make("article",undefined,"record");
+ root.append(make("div",w.year || "UÅ","year"));
+ const body=make("div");
+ const h=make("h3",w.title,"title");body.append(h);
+ const meta=make("div",undefined,"metadata");
+ const authors=Array.isArray(w.authors)?w.authors:[];
+ meta.append(make("div",authors.length>6 ? authors.slice(0,6).join(", ")+" mfl." : authors.join(", ") || "Ukjend forfattar"));
+ meta.append(make("div",[w.source,w.kind].filter(Boolean).join(" · ")));
+ body.append(meta);
+ const small=make("p",undefined,"meta-small");
+ for(const c of w.countries || [])small.append(make("span",countryNames[c]||c,"label"));
+ if(w.license)small.append(make("span",w.license,"label licensed"));
+ if(w.theme)small.append(make("span",w.theme,"label"));
+ else if(w.topic)small.append(make("span",w.topic,"label"));
+ small.append(make("span"," "+fmt(w.citations)+" siteringar"));
+ body.append(small);root.append(body);
+ const links=make("div",undefined,"links");
+ for(const [url,label] of [[w.doi,"DOI"],[w.pdf,"PDF i arkivet"],[w.text,"Fulltekst (TXT)"],[w.oa_url,"Open access"]]){
+  const a=link(url,label);if(a)links.append(a);
+ }
+ root.append(links);return root;
+}
+function draw(){
+ const box=$("records");box.replaceChildren();
+ const frag=document.createDocumentFragment();
+ for(const w of selected.slice(0,limit))frag.append(renderRow(w));
+ box.append(frag);
+ if(selected.length===0)box.append(make("p","Ingen treff. Prøv breiare søk eller færre filter.","empty"));
+ $("count").textContent=fmt(selected.length)+" treff · "+fmt(Math.min(limit,selected.length))+" viste";
+ $("more").hidden=selected.length<=limit;
+}
+function apply(){
+ limit=60;
+ const q=$("search").value.trim().toLocaleLowerCase();
+ const country=$("country").value;
+ const period=$("period").value;
+ const scope=$("scope").value;
+ const fulltext=$("fulltext").value;
+ selected=works.filter(w=>{
+  if(country && !(w.countries||[]).includes(country))return false;
+  if(period && !(w.year>=+period && w.year<+period+10))return false;
+  if(scope && w.scope!==scope)return false;
+  if(fulltext==="local"&&!w.pdf)return false;
+  if(fulltext==="oa"&&!w.oa_url)return false;
+  if(q&&!w._search.includes(q))return false;
+  return true;
+ });draw();
+}
+async function init(){
+ try{
+  const [raw,stats]=await Promise.all([
+   fetch("./data/publications.json").then(x=>{if(!x.ok)throw Error("Metadata utilgjengeleg");return x.json()}),
+   fetch("./data/stats.json").then(x=>x.json())
+  ]);
+  works=raw;
+  for(const w of works)w._search=[w.title,...(w.authors||[]),w.source,w.topic,w.theme,w.doi].filter(Boolean).join(" ").toLocaleLowerCase();
+  $("stat-total").textContent=fmt(stats.total);
+  $("stat-included").textContent=fmt(stats.automatic_title_inclusion);
+  $("stat-review").textContent=fmt(stats.manual_review_queue);
+  $("stat-pdfs").textContent=fmt(stats.local_pdf);
+  apply();
+ }catch(e){$("count").textContent="Kunne ikkje laste katalogen. Opne sida via ein HTTP-tenar eller GitHub Pages.";console.error(e)}
+}
+for(const id of ["search","country","period","scope","fulltext"]){
+ $(id).addEventListener(id==="search"?"input":"change",apply);
+}
+$("more").addEventListener("click",()=>{limit+=60;draw()});
+init();
+</script>
+</body>
+</html>

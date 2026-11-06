@@ -1,0 +1,1383 @@
+WORK: Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research
+AUTHORS: Maija Katariina Aksela
+YEAR: 2019
+DOI: https://doi.org/10.31129/lumat.7.3.421
+SOURCE: https://journals.helsinki.fi/lumat/article/download/1246/1244
+LICENSE: CC BY-NC 4.0, https://creativecommons.org/licenses/by-nc/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+RESEARCH ARTICLE                                                    LUMAT 7(3) 2019
+
+Towards student-centred solutions and pedagogical
+innovations in science education through co-design
+approach within design-based research
+
+Maija Aksela1, 2
+
+1 National LUMA Centre Finland, University of Helsinki, Finland
+2 The Unit of Chemistry Teacher Education, Department of Chemistry, University of Helsinki, Finland
+
+
+The aim of this case study is to demonstrate how a co-design approach could be
+                                                                                        Keywords
+used within design-based research (DBR) with diverse multi-stakeholders in the         co-design approach,
+LUMA1 ecosystem to promote social creativity towards novel student-based         design-based research,
+solutions and  pedagogical  innovations.  As  a  case,  a  national LUMA2020          teachers’ professional
+                                                                                                                  learning,
+development program (2019–2020), organized by the national LUMA Centre                                                                                                      pedagogical innovations,
+Finland and funded by the Finnish Ministry of Education and Culture, was studied         science education
+in detail. The different data sources (e.g. an action plan, written observations) were
+analysed through qualitative content analysis. The Edelson’s design-based research        Correspondence
+                                                                                                              maija.aksela@helsinki.fi
+model used in the program offered a systematic framework or a map for co-
+designing both the action plan and its implementation. The co-design approach        DOI
+within the model was organised through three stages to engage  all multi-         https://doi.org/10.31129/
+                                                                                             LUMAT.7.3.421
+stakeholders (altogether about three hundred participants) for it: (i) a research and
+societally oriented framework stage, (ii) a practical stage and (iii) a “bottom-up”
+stage in which teachers from 160 schools were active participants and professional
+key contributors. The co-design approach and the design decisions were facilitated
+by using guided face-to-face communication in small group work and digital
+creative learning spaces as a medium for social creative thinking. The co-designers
+were teachers, teacher educators, scientists or industry specialists in different
+stages. The co-design model used could be a way to bridge the newest research and
+innovations into praxis for supporting the curriculum at the school level and for
+promoting teachers’ professional development by forming creative and diverse
+learning communities, in which all partners can learn from each other through
+sharing.
+
+1 Introduction
+
+ “Together we are more!” (the LUMA1 motto)
+
+Design thinking is seen as central for promoting 21st-century competencies and
+practices in education (e.g. Noweski et al, 2012; Kelly et al, 2019). Enhancing social
+creativity (e.g. Fischer et al, 2005) and learning through a co-design approach with
+multi-stakeholders (e.g. teachers, students, scientists, teacher educators or industry
+specialists), could be a way to tackle multi-faceted challenges in science education and
+
+1 LUMA is abbreviated from “luonnontieteet, the Finnish word for natural sciences, and “matematiikka”, the Finnish
+ word for mathematics. The national LUMA* Centre Finland referred to here as the LUMA ecosystem with 11
+  universities (www.luma.fi) and about fifty partners.
+
+                    LUMAT: International Journal on Math, Science and Technology Education
+                  Published by the University of Helsinki, Finland / LUMA Centre Finland | CC BY-NC 4.0
+
+===== PAGE 2 =====
+                                       AKSELA (2019)
+
+
+its  teacher  training  towards  21st-century  competencies and  student-centered
+solutions. Especially, creativity, collaboration and  critical thinking are seen as
+necessary key competences.
+
+   There are many challenges in science education to be solved in the future. Science
+is not seen relevant enough for students themselves to study it at school or later on,
+especially in the developed countries (e.g. OECD, 2015). Their attitudes and interest
+have a big influence on their science enrolment behavior (e.g. Krapp & Brenzel, 2011;
+Regan, 2015). Relevant vocational and societal perspectives of science are often
+unknown. Although Finnish youth have been one of the most skilful students in
+science globally, their interest to study science is often very low according to the PISA
+results (Finland and PISA, 2019). School science should be promoted more positively
+for all – “perhaps as a ‘springboard' to new sources of interest and enjoyment.”
+(OECD, 2015, 6). More scientific literacy for all is also needed in the future, for
+example, to solve global challenges (e.g. climate, energy, food and water).
+
+   In addition, the 21st-century learning demands have to be better taken into
+account in the design continuum of science teacher education. How to strengthen
+teachers’ high professional role and teachers’ life-long learning (e.g. Niemi & Iso-
+Pahkala-Boureat, 2015)? How to get teachers opportunities to update their knowledge
+and skills concerning new research results in both science and its learning, thus to
+promote evidence-based teacher education for life-long learning in science (e.g.
+Aksela, 2010)? There is a need to bridge the gap between research and praxis (e.g.
+Juuti & Lavonen, 2006; Aksela, 2010; Anderson & Shattuck, 2012; Taber, 2017).
+Novel solutions for it are needed. Could the co-design approach within the design-
+based research (DBR) be a way to promote teachers’ life-long learning?
+
+   Teachers are seen as key professional contributors to reforms (e.g. Roschelle &
+Penuel, 2006). In Finland, teachers are valued and trusted as professionals in
+curriculum development, teaching and assessment (e.g. Niemi, Lavonen, Kallioniemi
+& Toom, 2018). They also have a lot of professional freedom to decide how to teach
+and collaborate within curricula. According to Juuti et al (2017), successful teachers’
+professional development should be teacher-led, continuous (long-term), situated or
+connected to the classroom context, collaborative, and should include reflective
+practices. Design-based  research (DBR) used  as a design framework  in the
+LUMA2020 program (see Section 2 for more details) has been earlier found as a
+useful way to promote teachers’ or future teachers’ professional development and
+growth (e.g. Sherin, 1998; Kelly, Lesh & Baek, 2008; Pernaa & Aksela, 2013;
+
+
+                                                 114
+
+===== PAGE 3 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+Vesterinen & Aksela, 2013; Aksela & Vihma, 2015; Aksela et al, 2016; Juuti, Lavonen
+& Meisalo, 2016).
+
+    Facilitating the school-university partnership can be potential in contributing to
+the creation and translation of knowledge about teaching and learning (e.g. Baumfield
+& Butterworth, 2007), as it is the main aims of the LUMA* ecosystem. It could be
+especially useful to engage teachers in a long-term collaborative research agenda (e.g.
+Reeves, 2000). Teachers often fail to adopt pedagogical innovations,  if they are
+designed only by researchers (e.g. Talbert & McLaughlin, 1999; Linn, 2006; Juuti &
+Lavonen, 2006). They mainly make decisions on their teaching based on their own
+needs (e.g. Zhao et al. 2002). It may have a positive effect on student achievement if
+teachers have a more active role in the co-design processes. Promoting the knowledge
+production of teachers points out: (i) shared an understanding of the challenge, (ii) a
+willingness to change one’s own perspective, (iii) a commitment to participate in the
+dynamics of the group (Orland‐Barak & Tillema, 2006).
+
+   The co-design approach focus in this study has led to high-quality teacher
+professional development for 21st-century learning used in a curriculum planning
+model (Kelly et  al, 2019). Teachers can act successfully as co-designers with
+researchers (Roschelle & Penuel, 2006). How to facilitate the co-design approach and
+social creativity within diverse multi-stakeholders (e.g. teachers, teacher educators,
+scientists  or  industry  specialists)  towards  novel  solutions  and  pedagogical
+innovations in science education as in the LUMA2020 program? There is a need for
+more understanding of the co-design approach (see Section 3 for more details) for it
+to be successful. The aim of this case study is to understand the co-design approach
+within Edelson’s design-based research model in the LUMA* ecosystem (see Section
+4). Its research policy points out that the purpose of design-based research (DBR) is
+to create student-centred solutions with diverse partners (e.g. schools, industry) and
+share them in all school levels (Research and development policy of the LUMA Centre
+Finland, 2018). This case study focuses on the following guiding questions: (i) how to
+facilitate the co-design approach?, (ii) who are the co-designers?, (iii) how can
+design decisions be executed in the process? And (iv) how to use the co-design process
+as a tool for promoting teachers’ professional development?
+
+
+
+
+
+                                                 115
+
+===== PAGE 4 =====
+                                       AKSELA (2019)
+
+2 Design-based research as a framework for the co-design
+approach
+
+Design-based research (DBR) has been found to be useful for developing new
+solutions and pedagogical innovations in education at least since the 1990s. By using
+it, educational practices are renewed through systematic, flexible and iterative
+analysis of design and development, and novel solutions are often produced for very
+complex challenges in authentic learning environments (e.g. Wang & Hannafin,
+2004¸ Van der Akker, Kelly, Lesh & Baek, 2008). The term design-based research
+(e.g. Kelly, 2003; Juuti & Lavonen, 2006; Anderson & Shattuck, 2012) used in this
+paper has also been referred to in literature as (i) design experiments (e.g. Brown,
+1992; Collins, 1992), (ii) design research (e.g. Cobb, 2001; Edelson, 2002),  (iii)
+development research (e.g. Richey & Nelson, 1996), or (iv) educational design
+research (e.g. Sandoval & Bell, 2004; Van der Akker, Kelly, Lesh & Baek, 2008,
+Vesterinen & Aksela, 2013; Sandoval, 2014). Many kinds of successful models with
+various stages in practice have been reported (e.g. Lavonen & Meisalo, 2002;
+Clements & Battista, 2000). Usually, the design-based research has 7 to 9 different
+stages.
+
+   Design-based research usually gives us three kinds of information as a result of
+the study (Edelson, 2002): (i) information on the design product itself, (ii) the
+development process and  (iii) the background theory or theories used in the
+development process. According to Edelson (2002) design methodology as a general
+design procedure provides guidelines for the process and describes (a) a process for
+achieving a class of designs, (b) the forms of expertise required, and (c) the roles to be
+played by the individuals representing those forms of expertise. As a result, concrete
+design  solutions  can  be  acquired:   activities,  materials,  courses,  learning
+environments, software or equipment for different levels (e.g. Brown & Campione,
+1994; Cognition & Technology Group at Vanderbilt, 1997; Kelly, 2003). Some
+examples of design products are mentioned in the context of the LUMA ecosystem in
+Section 4.
+
+   Design-based research differs from traditional education research on the following
+eight areas: according to  (i) the role of the participants  (it involves different
+participants in the design to bring their differing expertise into producing and
+analyzing the design),(ii) the amount of social interaction (frequently it involves
+complex social interactions with participants sharing ideas, distracting each other
+
+
+
+                                                 116
+
+===== PAGE 5 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+etc.), (iii) flexibility of the process (it involves flexible design revision in which a
+tentative  initial  set  is  revised,  depending on  its  success  in  practice),  (iv)
+characterizing the findings (it involves looking at multiple aspects of the design and
+developing a profile that characterizes the design in practice), (v) location of research
+conducted (it often occurs in the buzzing, blooming confusion of real-life settings
+where most learning actually occurs), (vi) the complexity of the variables (it involves
+multiple dependent variables, including climate variables, outcome variables and
+system variables), (vii) unfolding of procedures (it involves flexible design revision in
+which a tentative initial set is revised, depending on its success in practice and (viii)
+the object of research (it focuses on characterizing the situation in all its complexity,
+much of which is not now a priori). (e.g. Barab & Scquire, 2004; Collins, 1999; Aksela,
+2005)
+
+   The following characteristics of good design-based research guide its design and
+implementation process (Dede, 2004; Design-Based Research Collective, 2003): (i)
+the correspondence of the design in the needs of practical and education policy,(ii)
+the intertwining of the aims of the chosen intervention and developed theories, (iii)
+the cyclicity of the development between design, implementation, analysis and re-
+design, (iv) the reliability of received results, (v) how the outcome of the development
+works in an authentic environment and (vi) how the received results adapt to earlier
+theories and practical implementations. The validity of design-based research is
+shown often through collaboration (e.g. the results checked by other co-examiner(s)
+as in this case study) and iteration, and the reliability through using various references
+for the research and by evaluating the usefulness of the research concerning education
+and learning (e.g. Design-Based Research Collective, 2003; Edelson, 2002).
+   Design-based research can include a strong collaborative approach with various
+partners – the so-called co-design approach (see Section 3 for more details) in this
+paper. It is used here within the design-based research framework, called the Edelson
+model (Edelson, 2002; see Section 4 for details).
+
+
+
+
+
+                                                 117
+
+===== PAGE 6 =====
+                                       AKSELA (2019)
+
+3 Co-design approach within design-based research
+
+
+The co-design approach has been used since the early 1960s (Zamenopolous &
+Alexiou, 2018). During the years it has been applied to various fields, for example
+from computer software design to architecture. The co-design approach is close to
+many other traditions of design, for example, participatory design (e.g. Ehn, 1992; Lee
+2008), learner-centered design (e.g. Soloway et al., 1994) or co-creation (e.g. Prahalad
+& Ramaswam, 2004). According to Zamenopolous & Alexiou (2018), co-designers can
+have different roles in the process: they can facilitate or engage others in design tasks
+or share, collect, interpret or create knowledge, ideas and resources, and also engage
+at different stages of a design project. Different kinds of technology (e.g. Living labs)
+can be used for facilitating co-design and implementing activities (e.g. Andersen,
+Kanstrup & Yndigegn, 2018).
+
+   The co-design approach has been found to be the most effective way to engage
+teachers in designing new practices at the school level (e.g. Penuel et al, 2007).
+Roschelle & Penuel (2006,1) define its use in education as “a highly-facilitated”,
+team-based process in which teachers, researchers, and developers work together in
+defined roles to design an educational innovation, realize the design in one or more
+prototypes, and evaluate each prototype’s significance for addressing a concrete
+educational need”. The co-design approach can be seen as social (collective) creativity
+applied across the entire span of a design process (Sanders & Stappers, 2008). Co-
+designers can be, for example, scientists, teacher educators, teachers, specialists from
+industry.
+   The co-design approach has been found useful at the school level. It provides an
+opportunity to match the curriculum goals of teachers (Tissenbaum et al, 2012; Kelly
+et al, 2019) and increase reflections and ownership by a teacher (Roschelle & Penuel,
+2006). Seven characteristic features are recommended to be taken into account when
+using co-design as an approach (Roschelle & Penuel, 2006): (i) it takes on a concrete,
+tangible innovation challenge, (ii) the process begins by taking stock of current
+practice and classroom contexts,  (iii)  it has a flexible target, (iv)   it needs a
+bootstrapping event or process to catalyze the team’s work, (v) it is timed to fit the
+school cycle, (vi) strong facilitation with well-defined roles is a hallmark of it, and (vii)
+there is central accountability for the quality of the products of co-design.
+
+
+
+
+
+                                                 118
+
+===== PAGE 7 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+   Although co-design with the DBR framework has been found to be very useful in
+producing various relevant solutions and also theories, as mentioned in Section 2,
+challenges may occur when using it. According to Piirainen, Kolfschoten & Lukosch
+(2009),  five main challenges  of collaboration can be found: creating shared
+understanding, balancing requirements of different stakeholders, balancing rigor and
+relevance in the process, organizing the collaboration  effectively and creating
+ownership. If co-designers are novices, more guidance is needed to be successful (e.g.
+Chao, Saj & Hamilton, 2010). In addition, the following things could be taken into
+account: (i) the process is often time-intensive (e.g. Rheinfrank et al.,1992; Roschelle
+& Penuel, 2006), (ii) trust is needed on each other’s knowledge and skills between co-
+designers (e.g. Shrader et al., 2001), (iii) criteria for success is needed between co-
+designers (e.g. Blomberg & Henderson, 1990), (iv) understanding of goals, roles, and
+contributions of each participant (e.g. Shrader et al., 2001; Lee, 2008), (v) tight
+integration of curriculum (e.g. Roschelle & Penuel, 2006) and (vi) understanding of
+negotiating shared frames during early design phases (e.g. Hey, Joyce & Backman,
+2007). Designers’ frames seem to be effective on design decisions and the actions that
+they will take (e.g. Schön, 1983).
+
+4 Design-based research in the LUMA ecosystem
+
+The aim of the national LUMA* Centre Finland (network of 11 universities and 13
+LUMA Centres with around 50 partners; referred to here as the LUMA ecosystem) is
+to  develop  novel,  student-centred,  research-based  solutions and  pedagogical
+innovations, and to distribute them both directly and indirectly to  all science
+education and learning on different educational levels (Research and development
+policy of the LUMA Centre Finland, 2018). The co-design approach is seen as central
+for its design-based research (DBR) framework. The first LUMA Centre was built in
+the year 2003 in order to build a bridge for promoting collaboration between
+universities, schools and industry (e.g. Aksela, 2015).
+
+   Design-based research has been used broadly in promoting science education or
+its research-based science teacher education earlier in Finland (e.g. Lavonen &
+Meisalo, 2002; Aksela, 2005; Juuti, 2005; Juuti & Lavonen, 2006; Pernaa, 2013;
+Vesterinen & Aksela, 2013; Juuti, Lavonen & Meisalo, 2016; Juuti & Lavonen, 2017).
+For example, relevant inquiry-based working instructions for science education have
+been designed collaboratively with diverse partners outside the university (e.g.
+
+
+
+                                                 119
+
+===== PAGE 8 =====
+                                       AKSELA (2019)
+
+
+Aksela, 2005; Aksela & Boström, 2012; Aksela & Ikävalko, 2016). A Finnish book on
+design-based research contains other examples  for carrying out design-based
+research in education and in science teacher education in Finland (Pernaa, 2013).
+
+   Design-based research is mostly connected to the studies and theses in science
+teacher education in the LUMA ecosystem. In research concerning doctoral theses,
+for example, the following new solutions and pedagogical innovations are produced
+with the help of design-based research (SECO, 2019): (i) learning games and a
+framework  for  their  evaluation,   (ii)  inquiry-based  working  instructions  in
+collaboration with future teachers and the industry, (iii) a science club model for small
+children’s  inquiry-based  education,  (iv)  a  model  for  teachers’  educational
+development  by  using  inquiry-based  learning  and  SOLO-taxonomy,  (v)  a
+collaborative and engaging model for teacher education that promotes inquiry-based
+education in-class teacher education, (vi) a course in the context of the Nature of
+Science for future teachers, (vii) problem-based and inquiry-based laboratory work
+activities into university education, and (viii) molecular modelling activities for
+instruction.
+
+   In practice, design-based research (DBR) can be carried out in various ways (see
+Section 2), and different models are available for supporting design decisions carried
+out during design-based research (e.g. Sandoval, 2014). In the LUMA2020 program,
+the design-based research framework, the so-called Edelson’s model (Edelson, 2002)
+has been applied in practice. It has two main parts that guide the process and the
+decisions of the process: (a) theoretical problem analysis and (b) empirical problem
+analysis (see Figure 1). In the different parts of its cyclic development process, the so-
+called mixed methodology  is often used in order to understand the object of
+development and  its relevancy based on design decisions. For example, video-
+recordings, naturalistic observations, group interviews, concept maps, learning
+diaries, students’ research reports or surveys can be used (e.g. Aksela, 2005) through
+the  co-design  approach,  especially  with  teachers  (teachers  as  reflectors  or
+researchers) in the framework.
+
+   The co-design approach of Edelson’s model (Edelson, 2002) can be carried out
+systematically in the following steps within the LUMA ecosystem. The framework is
+also used in the LUMA2020 program (Figure 1; the main phases are marked bold in
+the text): (i) mapping out the needs for the development process together with the
+participants (often called empirical problem analysis or a needs analysis: it can
+be done through a survey with teachers or a content analysis of learning materials or
+
+
+                                                 120
+
+===== PAGE 9 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+curriculum framework; the needs can be national needs and/or teachers’ needs in
+science education),  (ii) mapping out new research information concerning the
+chosen theme and synthesis (theoretical problem analysis), (iii) setting the goals
+of development together with different stakeholders based on the steps i) – ii) (goals
+for the activity), (iv) designing a pilot model together (e.g. practical activities) for
+the object of development based on chosen aims, and testing the pilot model with the
+target groups and refining it based on received results (a pilot model and testing
+it; an iterative design cycle)
+
+
+
+
+
+ Figure 1. An example of the different phases of co-design within design-based research carried out in the
+     Finnish LUMA ecosystem (see www.luma.fi) by applying Edelson’s (2002) model. The different phases
+                                      are marked bold in the text.’
+
+
+    (a cyclic model; teacher as a researcher or a reflector), (v) describing the outcome
+of development, and reporting it (results and pedagogical innovations) and (vii)
+spreading new openings and solutions, and offering education (e.g. through massive
+open online platforms, the so-called MOOCs) on them (teacher education;
+scientific papers). Usually, a researcher at a university, a teacher educator or a
+future teacher acts as a facilitator that carries out the synthesis and maps out new
+research information concerning the topic for other partners of the program or
+projects. In co-design meetings, steps (i) and (ii) are gone over together, and the aims
+for development and the model for implementation with timetables are arranged
+together.
+
+
+
+                                                 121
+
+===== PAGE 10 =====
+                                       AKSELA (2019)
+
+
+   Besides  formal  learning  environments  at  schools,  non-formal  learning
+environments (e.g. 15 LUMA labs), are often used during the co-design processes,
+include science and technology activities for children, youth and entire families, such
+as clubs, camps, parties and events, as well as the pursuit of hobbies at home. For
+example, in ChemistryLab Gadolin (one of the LUMA Labs), new openings in the
+contexts of everyday chemistry, sustainable chemistry, and development and modern
+technology are developed together with visiting school groups (Aksela et al, 2018)
+within industry collaboration (Aksela & Ikävalko, 2016).
+
+   The distribution channels of the LUMA ecosystem include the education of future
+and current teachers at universities, events organized by universities and other
+partners, academic and popular multimedia publications, as well as international
+researcher exchange and education export. Innovations are spread to be used in non-
+formal, in-formal or formal learning environments. Research results will be published
+for the academic community in the form of articles in domestic and international
+peer-reviewed open access publications, conference presentations and proceedings,
+as well as scholarly works (bachelor’s, master’s and licentiate theses, doctoral
+dissertations).
+
+   The LUMA ecosystem has also channels of its own, such as the national LUMA
+days for teachers, International LUMAT Symposium and the peer-reviewed LUMAT
+(International Journal on Math, Science and Technology Education) online journal
+and the LUMAT-B online journal focused on conference and project proceedings, as
+well as the LUMA News section of the LUMA website. (Research and development
+policy of the LUMA Centre Finland, 2018). These acquired solutions are spread into
+teaching through teachers’ pre-service and in-service education. As future teachers
+and teachers at schools have participated in designing, implementing and reflecting
+on the results of the development process, this acts as a novel model for organizing
+teacher education. An online book (Aksela, Oikkonen & Halonen, 2018) gives a
+summary of examples of the projects that have been carried out at the University of
+Helsinki since the year 2003.
+
+
+
+
+
+                                                 122
+
+===== PAGE 11 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+5 A case study in the context of the LUMA ecosystem
+
+The aim of this case study is to demonstrate how a co-design approach could be used
+within the design-based research (DBR), the Edelson’s model (explained earlier in
+Section  4)  with  diverse  multi-stakeholders  (altogether  about  three hundred
+participants) in the LUMA* ecosystem to promote social creativity towards novel
+student-based solutions and pedagogical innovations focusing on the following
+guiding questions: (i) how to facilitate the co-design approach?, (ii) who are the co-
+designers?, (iii) how are design decisions in the process executed? In addition, the
+aim is to demonstrate (iv) how to use the co-design process as a tool for promoting
+teachers’ professional development.
+
+   As a case, a national LUMA2020 development program (2019-2020) organized by
+national LUMA Centre Finland and funded by the Finnish Ministry of Education and
+Culture was studied in detail. The quality of the program has been guaranteed by using
+the best specialists in the evaluation process during the program and applying their
+advice on the design processes. The main aim, target groups and the design products
+of the LUMA2020 development program are summarised in Table 1. The main
+principles are given for the design process and the partners of the program can be
+found in Table 3 (Appendix 1). The organization of the program and responsibilities
+of different partners, and the stages of the program process can be found in Table 4
+(Appendix 2).
+
+   The program is a continuum for the earlier national LUMA Suomi development
+program (2013-2019; www.luma.fi) funded by the Ministry of Education and Culture.
+The main focus of the program was the lower secondary level (6 to 16 years-olds). The
+focus of the LUMA2020 is especially on early childhood education and the upper
+secondary level, also in vocational education and training. The LUMA2020 program
+was chosen into this study because the co-design process framework has been
+documented in detail, and thus it is suitable for the content analysis method used (see
+later in detail).
+
+
+
+
+
+                                                 123
+
+===== PAGE 12 =====
+                                       AKSELA (2019)
+
+
+Table 1. The main aim, target groups and the design products of the LUMA2020 development program (the
+text is translated from the action plan written in the co-design stage 1 by the LUMA ecosystem).
+ The main aims of the LUMA program   Target groups (given from     The design products in the
+ (given from the policymakers)          the policymakers)              action plan designed by the
+                                                LUMA ecosystem
+ As the program ends at the end of 2020    The target groups of the actions  New operating models are
+ the program has:                          include 3-19-year-old children    developed in the program for e.g.
+ -increased fascination towards studying   and youth – both girls and boys,   collaboration between early
+ LUMA subjects and has improved the       their guardians and              childhood education / upper
+ quality of teaching and learning from       educational/teaching staff       secondary school / vocational
+ early childhood education to universities   working on different levels from   institution and universities,
+ -increased children and youths’ interest    early childhood education to     working life collaboration, and
+ in LUMA subjects and their study and        universities.                     online courses.
+ career possibilities (individual, vocational   The program includes the         Virtual clubs (packages) and online
+ and societal relevance)                  development of LUMA subjects’   courses for science and technology
+  - strengthened the contents of teaching    teaching and learning from       education (national, shared
+ and learning, and methods in teacher      early childhood education to     between universities). These are
+ training at faculties of science in             universities, by stressing actions  exploited in order to strengthen
+ universities (early childhood education,     especially from early childhood   the continuity/path of science and
+ class teachers, special needs education,    education to the upper          technology education from the
+ subject teachers, teacher education that   secondary level (also in           very young to the very old.
+ universities offer, vocational teacher        vocational education and
+ education)                                     training).                           In addition, alongside the
+  - promoted development work between                                 implementation of the program,
+ faculties of science / technical faculties                                    theses and other research papers
+ (according to the subject), teacher                                         are written. The final report of the
+ training institutions and teacher training                               program that includes evaluation
+ schools, and university of applied                                                     will be finished at the end of 2020.
+ sciences and vocational teacher
+ education                                                                       -building a new national network
+ -increased competences of staff and                                         of LUMA development
+ their own education in these institutes                                  communities (e.g. with 50 partners
+ To develop:                                                                         in the LUMA ecosystem)
+ 1) children and youth’s formal learning
+ from early childhood education to                                           -strengthening the national LUMA
+ secondary education.                                                     contact person’s network of
+ 2) children’s, youth’s and families’ free-                                       municipalities.
+ time non-formal/informal science and
+ technology education and 3) the
+ competences of educational/ teaching
+ staff
+
+
+   The different data sources (an action plan as a main source (see Table 3 and Table
+4 in Appendix 1 and Appendix 2), a memorandum of the co-design meeting in a wiki
+platform  at the University  of Helsinki, the materials in the open web page
+(http://2020.luma.fi) and written observations by a researcher) were analysed
+through qualitative content analysis to understand the co-design processes within the
+model. Applying content analysis from the texts (Huberman & Miles, 1994), the
+
+
+
+                                                 124
+
+===== PAGE 13 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+central features of the co-design process and providing answers for the above-
+mentioned questions have been presented as the results in Section 6.
+
+   The co-design approach was facilitated in three stages (the answer for the first
+research question): (i) a Research and societally oriented framework stage (see
+Section 6.1), (ii) a practical stage (see Section 6.2) and (iii) a “bottom-up” stage (see
+Section 6.3). As an example of the analysis, the form of the names of the stages are
+described (see Table 2):
+
+
+Table 2. An example of the content analysis.
+ The source 1                            The source 2             The name of the stage
+                                                               formed from source 1 and
+                                                                      source 2
+ The action plan:                             The LUMA2020 webpage:     a research and societally
+ Table 3: LUMA Centre Finland (a network of 11    The names and organizations  oriented framework stage
+ universities), In the implementation of the         of LUMA advisory board
+ program, LUMA Centre Finland carries out         -about 50 partners outside
+ development, education and                       of university (e.g. industry)
+ marketing/communication collaboration with e.g.
+ partners that are represented in the national        =>”societally oriented”
+ LUMA advisory board.
+
+ => the role of the universities is to bring the
+ newest research to the co-design approach.
+ => “a research oriented”
+ A memorandum of the meeting (saved in the wiki  The written observations:     a practical stage
+ platform):
+ You can attend of the Facebook group to discuss   Few suggestions for a digital
+ more about the program:                         platform (e.g. Wiki, Teams
+ www.facebook.com/groups/LUMA2020.         and Facebook).
+                                            => the practical decisions of
+ =>the practical decisions of the action plan         the action plan
+ => “a practical stage”                         => “a practical stage”
+ A memorandum of the meeting (saved in the wiki  The written observations:     a “bottom-up” stage
+ platform):                                  The next teachers at each
+ The meetings and discussions with teachers will    school are written a plan in
+ be organised once a month…                     the context of their school
+ =>the discussions of the program with teachers     curricula in a digital form
+ =>a “bottom-up” stage                           during a month. The co-
+                                                   designing will continue with
+                                                the LUMA workers and other
+                                                  teachers from different
+                                                   schools during the next
+                                                 meeting.”
+                                               =>the teachers in each
+                                                  school made their plan for
+                                                the program in details
+                                           =>a “bottom-up” stage
+
+
+
+                                                 125
+
+===== PAGE 14 =====
+                                       AKSELA (2019)
+
+
+   The names for the main phases of the co-design approach by the Edelson model
+framework (empirical problem analysis, theoretical problem analysis) has
+been formed from the text in Table 3: “1) mapping out needs together with
+participants (empirical problem analysis, the so-called needs-analysis), 2) mapping
+out new research information concerning the chosen topic from sciences, their
+learning and teaching (theoretical problem analysis).” In addition, the name for the
+third main phase, a cyclic development process was named from the stages 3-6: “3)
+setting the aims for development together with the participants based on steps 1 and
+2, 4) planning a pilot model for the object of development (e.g. an activity, material)
+based on set aims, 5) testing the pilot model with the target group and refining the
+model based on received results (multiple steps), describing the development output
+and reporting and 6) spreading out new openings and solutions and offering
+education for these new topics. During the LUMA 2020 program, the development
+process is carried out at least in one cycle.”
+
+   The written observations by a researcher from the stages (see Section 6.1, 6.2 and
+6.3) were used to open more the texts in the main sources, for example, “The co-
+designers suggested few suggestions for a digital platform (e.g. Wiki, Teams,
+Facebook).” There it was mentioned only generally “digital platform” in the texts.
+
+   Because a researcher of this case study has been actively involved in the
+LUMA2020 program, a co-examiner has checked and accepted the written texts in
+this paper in order to increase the validity and the reliability of the case study.
+
+6 Results and discussion
+
+The co-design approach used within the design-based research framework, the
+Edelson’s model (Edelson, 2002) is described in the following Sections (see Sections
+6.1, 6.2 and 6.3) by providing answers to the following questions: (i) how to facilitate
+the co-design approach?, (ii) who are the co-designers?, (iii) how are design decisions
+executed in the process? The results for the question (iv) how to use the co-design
+process as a tool for promoting teachers’ professional development? is presented in
+Section 6.4.
+
+
+
+
+
+                                                 126
+
+===== PAGE 15 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+6.1 A Research and societally oriented framework stage
+
+The characteristics of good design-based research have guided the design and
+implementation process of the LUMA2020 program, as described in Section 2. The
+co-design approach was used in the designing of the general action plan for the
+framework given by the policymakers through the Edelson model’s three main phases
+(see Figure 1):(i) empirical problem analysis (the needs for co-design), (ii) theoretical
+problem analysis (most novel research in science and science learning) and (iii) cyclic
+development process (actions for the decided goals). Co-designers in stage 1 were
+teacher educators and researchers from 11 universities (13 LUMA centres) by
+facilitating a national team (a director and a coordinator of the centre, a chair and a
+vice-chair of the board). The digital platform google docs was used for writing the
+action plan with different stakeholders around Finland. First, the director and the
+coordinator of the program wrote the framework of the action plan and then other
+members of the LUMA ecosystem continued the writing process.
+
+   The design decisions were accepted first by the board of LUMA Centre Finland (a
+member of each 13 LUMA Centres) and then by the steering group of the policymakers
+(including invited members from the universities: a director of the program, a project
+manager and four special experts). Design decisions were made based on the co-
+designers’ expertise (e.g. most novel research in the field), international assessment
+programs (e.g. TALIS, TIMMS, PISA), the new national curriculum framework,
+experiences of the earlier national LUMA Suomi program (the program continuum
+for the earlier one) and the ideas collected through brainstorming from about 50
+LUMA steering group members (e.g. industry foundations and pedagogical teacher
+organizations).
+
+   Four themes for the program were chosen through the co-design approach (i)
+sustainable development (e.g. climate change), (ii) math around us (e.g. math and
+art), (iii) technology around us (e.g. Al) and my LUMA (open for different integrated
+topics  over   subjects).  A   successful   international  StarT  program   (see
+https://start.luma.fi/en/) in which students are making projects, was decided to be
+used as a tool in practice at the school level.
+
+
+
+
+
+                                                 127
+
+===== PAGE 16 =====
+                                       AKSELA (2019)
+
+6.2 A practical stage in the co-design approach used
+
+The co-design of the action plan for practice level in three phases of the Edelson’s
+model (Edelson, 2002; Figure 1) was executed through a two-day design meeting,
+using mainly small group work and discussions. The main facilitators of the event
+were the project manager and the director of the program.
+
+   There were a  lot  of co-designers  in the program: about 50  researchers,
+coordinators, project workers from the universities and a partner from industry
+facilitating by a national team (a director, a project manager, evaluation specialists,
+team leaders and chosen special researchers in science and technology education).
+They were divided into the teams of the chosen topics (see Section 6.1). The co-
+designers chose their own groups (e.g. math specialists participated in the math
+group). Each group had a group leader who facilitated discussion. As Roschelle &
+Penuel (2006) mentioned, co-design needs a bootstrapping event or process to
+catalyze the team’s work and well-defined roles. After group discussions, the project
+manager summarised different ideas together and wrote a memorandum of the
+decisions (saved in the wiki platform) and shared it with all the co-designers via e-
+mail and also through the digital platform used.
+
+   Decision making was done in the co-design meeting, for example (i) about the
+digital platform (Teams selected) for co-design in detail, (ii) collecting evaluation
+materials from co-designers at school and (iii) a pre-questionnaire for co-designers at
+school before the first co-design meeting and timetables of the program. The co-
+designers suggested few suggestions for a digital platform (e.g. Wiki, Teams and
+Facebook). According to Andersen, Kanstrup & Yndigegn, (2018), there are many
+challenges with using technology for facilitating co-design. Teams were chosen
+because it is easy to use and teachers are using it a lot in Finland.
+
+6.3 A “Bottom-up” stage in the co-design approach used
+
+In the model, teachers are seen as active participants, professional key contributors
+and collaborators with researchers, as Roschelle & Penuel, (2006) found. The co-
+design of the previous action plan for supporting participating schools’ and daycares’
+curricula based on empirical problem analysis (the needs of a school or a daycare), is
+seen as a critical phase of the co-design approach in the model. It is important to
+provide an opportunity to match the curriculum goals of teachers (cf. Tissenbaum et
+al, 2012; Kelly et al, 2019) and to increase reflections and ownership by a teacher (cf.
+
+
+
+                                                 128
+
+===== PAGE 17 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+Roschelle, Penuel & Schechtman, 2006). According to Orland‐Barak & Tillema
+(2006) also important for teachers, are: (i) shared an understanding of the challenge,
+(ii) a willingness to change one’s own perspective, (iii) a commitment to participate in
+the dynamics of the group.
+
+   The main co-designers in this stage were teachers, the so-called LUMA mentors
+from each school or daycare. Their needs based on the curriculum of their school were
+taken into account in the co-design of the program. Altogether 160 voluntary schools
+and kindergartens (two members from each one) were chosen to the program by using
+the open call. A small group works between the co-designers were used in the
+meetings for facilitating the co-design approach.
+
+   The project workers from each LUMA Centre in a university (one for each chosen
+theme) and possible partners from industry were seen as facilitators for the co-design
+approach. The digital platform (Teams) for the co-design in detail was chosen by the
+teachers because it is easy to use and familiar to the teachers.
+
+   The co-design meetings were decided to be organised once a month during the
+development process. The schedule (only one year) is, however, quite tight. The way
+in which we fit the co-design approach to the school cycle is critical for success (cf.
+Roschelle & Penuel, 2006).
+
+6.4 The co-design process as a tool for promoting teachers’
+professional development
+
+The LUMA2020 program trusts the “bottom-up approach” for its success as in many
+earlier projects in which the DBR was found a useful way to promote teachers’ or
+future teachers’ professional development and growth (e.g. Vesterinen & Aksela,
+2013; Aksela & Vihma, 2015; Aksela et al, 2016; Juuti, Lavonen & Meisalo, 2016). The
+co-design phases above describe the factors pointed out (Juuti et al, 2017): teacher-
+led, continuous (long-term),  situated or connected  to the classroom  context,
+collaborative, and include reflective practices.
+
+   The systematic phases of the Edelson’s design-based research model offer a
+learning environment, where teachers and all other participants can reflect and learn
+from one another, according to the ‘learning community’, especially in a cyclic
+development process of the model (Edelson, 2002; Figure 1). In practice, teacher
+educators as facilitators support teachers in the program to test the decided pilot
+model with their students, to collect research data and to reflect on the results in the
+
+
+
+                                                 129
+
+===== PAGE 18 =====
+                                       AKSELA (2019)
+
+
+monthly co-design meetings or through a digital platform that has been chosen
+together. Teachers as co-designers can also participate in writing the report and
+papers concerning the program or possible research facilitated by the teacher
+educators participating in the model.
+
+7 Conclusions
+
+The Edelson’s design-based research model (DBR) used in the program can offer a
+systematic framework or a map for co-designing both the action plan and  its
+implementation. Organizing the co-design approach within the model (Figure 1)
+through three main stages (see Sections 6.1, 6.2 and 6.3) with diverse multi-
+stakeholders (teachers, teacher educators, scientists or industry specialists as in the
+LUMA2020 program) could be fruitful for building relevant, novel practices in science
+education together  if teachers are seen as active participants, key professional
+contributors and partners of researchers and teacher educators.
+
+   Guided face-to-face communication in the workshops or digital creative learning
+spaces as a medium for social, creative thinking could be useful for facilitating the co-
+design approach as in the LUMA2020 program. Familiar digital platforms can be used
+for planning, discussions, questions, sharing experiences and materials between co-
+designers within different stakeholders around Finland. Their role can be central for
+the co-design approach in practice when co-designers are far away from each other as
+in the LUMA2020 program.
+
+   The co-design model could help to bridge the newest research and innovations
+from industry into praxis for supporting the curriculum at school level and for
+promoting teachers’ professional development by forming creative and diverse
+learning communities, in which all partners can learn from each other through
+sharing. It can also promote novel teacher training together with partners outside the
+universities (e.g. industry). Thus, the co-design approach implementation can offer a
+new kind of an educational model for both pre-service and in-service training.
+Teachers or possibly also future teachers can act as “researching teachers” in projects
+and learn through their reflection facilitated by the teacher educators.
+
+   The used Edelson’s design-based research model (Figure 1) can be helpful for
+especially the novices in research and sponsors -to whom research and the process for
+research-based solutions are new things. The implementation of the co-design
+approach may increase relevant collaboration between schools, universities and the
+
+
+                                                 130
+
+===== PAGE 19 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+industry and commerce, promote collaboration between participants that are often
+unknown to each other (e.g. researchers, teacher educators, industry specialists,
+teachers, representatives from the educational administration and future teachers).
+
+   The limitation of this case study is the use of only a few documents as the main
+source. In order to better understand the successful co-design approach within
+design-based research with diverse multi-stakeholders, more research is needed to
+understand the different roles of the stakeholders (e.g. facilitators; teachers as co-
+designers), early design frames, design decision processes, creative learning spaces
+(e.g. digital platforms) for promoting the co-design approach and the views of its
+advantages and challenges for co-designers.
+
+Acknowledgements
+
+This article is based on my keynote presentation of the design-based research method
+and  fruitful  discussions on November  8th, 2018  in  the symposium  called
+“Contemporary approaches  to  research on mathematics,  science,  health and
+environmental   education”   at   Deakin   University,   Australia.  The   best
+acknowledgements to the STEM research group at Deakin University, all LUMA
+collaborators   (https://www.luma.fi)  and   especially  my   research  team
+(https://www.helsinki.fi/en/researchgroups/seco) who has collaborated with me
+since the year 2005, and especially to a co-examiner, Topias Ikävalko.
+
+References
+
+Aksela, M. (2005). Supporting meaningful chemistry learning and higher-order thinking
+      through computer-assisted inquiry: a design research approach. Helsinki: The University
+       of Helsinki.
+Aksela, M. K. (2010). Evidence-based teacher education: becoming a lifelong research-oriented
+      chemistry teacher? Chemistry education research and practice, 11(2), 84–91.
+Aksela, M., & Boström, M. (2012). Supporting Students’ Interest through Inquiry-Based Learning in the
+       Context of Fuel Cells. Mevlana International Journal of Education, 2(3), 53–61.
+Aksela, M. K. & Vihma, L. J. (2015). Uudenlainen yhteisöllinen opettajankoulutus LUMA-
+      ekosysteemissä elinikäisen oppimisen tukena (In English: Novel collaborative teacher
+      education for long-life learning in the LUMA ecosystem). LUMAT: Luonnontieteiden,
+      matematiikan ja teknologian opetuksen tutkimus ja käytäntö 3(6), pp. 711-720.
+       https://www.lumat.fi/index.php/lumat-old/article/view/91
+Aksela, M. K. (2015). Luma Centre Finland: The Finnish model to educate teachers in math,
+       science and technology. In U. Heinichen, & O. J. Haupt (Eds.), 10 Jahre LeLa
+      Jahrestagung (pp. 16-18). Berlin: LernortLabor, Bundesverband der Schülerlabore.
+Aksela, M., & Ikävalko V-M. (2016). How to promote relevant practical work in science education
+      through a non-formal learning environment? Science Education Research and Practical
+
+
+
+                                                 131
+
+===== PAGE 20 =====
+                                       AKSELA (2019)
+
+
+     Work: A collection of invited papers inspired by the 23rd Symposium on Chemistry and
+      Science Education held at the TU Dortmund University, May 26-28, 2016. Eds. Eilks, I,
+      Markic, S. & Ralle, B. Aachen: Shaker, 2016.
+Aksela, M. K., Vartiainen, J. L., Tuomisto, M., Turkka, J. S., Pernaa, J. I. S., & Tolppanen, S.
+       (2016). Promoting Meaningful Science Teaching and Learning Through ICT in the Finnish
+    LUMA Ecosystem. In H. Niemi, & J. Jia (Eds.), New Ways to Teach and Learn in China and
+       Finland: Crossing Boundaries with Technology (pp. 255-278). Frankfurt am Main: Peter Lang.
+Aksela, M., Oikkonen, J., & Halonen, J. (Eds.) (2018). Collaborative Science Education at the University
+        of Helsinki since 2003: New Solutions and Pedagogical Innovations for Teaching from Early
+      Childhood to Universities. Helsinki: Unigrafia Oy.
+       https://www.helsinki.fi/sites/default/files/atoms/files/isbn-978-951-51-4089-0.pdf
+Aksela, M. K., Pernaa, J. I. S., Blomgren, P. I. A., & Rautiainen, I. M. (2018). Collaborative science
+      education at the University of Helsinki: ChemistryLab Gadolin: a science lab as an
+       inspiring environment for learning, development and research since 2008. Helsinki: The
+       University of Helsinki. https://www.helsinki.fi/sites/default/files/atoms/files/isbn-978-951-51-
+       4506-2.pdf
+Anderson, T., & Shattuck, J. (2012). Design-based research a decade of progress in education
+      research? Educational researcher, 41(1), 16–25.
+Barab, S., & Squire, K. (2004). Design-based research: Putting a stake in the ground. Journal of the
+      Learning Sciences, 13(1), 1–14.
+Baumfield, V. & Butterworth, M. (2007). Creating and translating knowledge about teaching and
+       learning in collaborative school–university research partnerships: an analysis of what is
+      exchanged across the partnerships, by whom and how. Teachers and Teaching, 13:4, 411–
+      427.
+Blomberg, J. L., & Henderson, A. (1990). Reflections on participatory design: Lessons from the
+       Trillium Experience. Proceedings of CHI 90, (pp. 353-359). New York, NY:ACM.
+Brown, A. L. (1992). Design experiments: Theoretical and methodological challenges in creating
+      complex interventions in classroom settings. The Journal of the Learning Sciences, 2(2), 141–
+       178.
+Brown, A., & Campione, J. (1996). Psychological theory and the design of innovative learning
+      environments: On procedures, principles, and systems. In L. Schauble & R. Glaser (Eds.),
+       Innovations in learning: New environments for education (pp. 289-325). Mahwah, NJ:
+      Lawrence Erlbaum Associates.
+Clements, D. H. & Battista, M. T. (2000). Designing Effective Software. In A. E. Kelly & R. A. Lesh.
+       (Eds.) Handbook of Research Design in Mathematics and science Education, (pp. 761-776).
+     New Jersey, Lawrence Erlbaum Associates.
+Cobb, P. (2001). Supporting the improvement of learning and teaching in social and institutional
+       context. In S. Carver & D. Klahr (Eds.), Cognition and instruction: Twenty-five years of
+      progress (pp. 455-478). Cambridge, MA: Lawrence Erlbaum Associates.
+Cognition and Technology Group at Vanderbilt. (1997). The Jasper project: Lessons in
+      curriculum, instruction, assessment, and professional development. Mahwah, NJ:
+      Erlbaum.
+Collins, A. (1992). Towards a design science of education. In E. Scanlon & T. O'Shea (Eds.), New
+       directions in educational technology (pp. 15-22). Berlin: Springer.
+Collins, A. (1999). The changing infrastructure of education research. In E. Lagemann & L.
+     Shulman (Eds.), Issues in education research (pp. 289-298). San Francisco: Jossey-Bass.
+Dede, C. (2004). If design-based research is the answer, what is the question? A commentary on
+       Collins, Joseph, and Bielaczyc; diSessa & Cobb; and Fishman, Marx, Blumenthal, Krajcik &
+
+
+
+
+                                                 132
+
+===== PAGE 21 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+      Soloway in the JLS special issue on design-based research. Journal of the Learning Sciences,
+        13(1), 105–114.
+The Design-Based Research Collective. (2003). Design-based research: An emerging paradigm for
+      educational inquiry. Educational Researcher, 5-8.
+Edelson, D. C. (2002). Design research: What we learn when we engage in design. The Journal of
+       the Learning Sciences, 11, 105–121.
+Ehn, P. (1992). Scandinavian design: On participation and skill. In P. S. Adler & T. A. Winograd
+       (Eds.), Usability: Turning technologies into tools (pp. 96-132). New York: Oxford University
+       Press.
+Finland and PISA, (2019). Finnish Ministry of Education and Culture. Finland and PISA.
+            https://minedu.fi/en/pisa-en
+ Fischer, G., Giaccardi, E., Eden, H., Sugimoto, M., Ye,Y. (2005) Beyond binary choices:
+       Integrating individual and social creativity. International Journal of Human-Computer
+       Studies, 63(4-5), 482–512.
+Hey, J.,Joyce, C. K. & Beckman, S. L. (2007). Framing Innovation: Negotiating Shared Frames
+      During Early Design Phases. Journal of Design Research, 6(1), 77–99.
+Huberman, A. M., & Miles, M. B. (1994). Data management and analysis methods. In N. K. Denzin
+    & Y. S. Lincoln (Eds.), Handbook of qualitative research (pp. 428-444). Thousand Oaks, CA,
+      US: Sage Publications, Inc.
+Kelly, A. E. (2003). Research as design. Educational Researcher, 32(1), 3–4.
+Kelly, A. E., Lesh, R. A., & Baek, J. Y. (Eds.) (2008). Handbook of design research in methods in
+      education. Innovations in science, technology, engineering, and mathematics learning and
+       teaching. New York, NY: Routledge.
+Kelly, N., Wright, N., Dawes, L., Kerr, J., & Robertson, A. (2019). Co-design for Curriculum
+      Planning: A Model for Professional Development for High School Teachers. Australian
+      Journal of Teacher Education, 44(7).
+Krapp, A. & Prenzel, M. (2011) Research on Interest in Science: Theories, methods, and findings,
+      International Journal of Science Education, 33(1), 27-50.
+Juuti, K., & Lavonen, J. (2006). Design-based research in science education: One step towards
+      methodology. Nordina, 4, 54–68.
+Juuti, K. (2005). Towards primary school physics teaching and learning: design research approach.
+       Helsinki: University of Helsinki.
+Juuti, K., Lavonen, J. & Meisalo, V. (2016). Pragmatic Design-based Research –Designing as a
+      Shared Activity of Teachers and Researchers. Iterative Design of Teaching-Learning
+      Sequences: Introducing the Science of Materials in European Schools. Psillos, D. &
+       Kariotoglou,P. (eds.). Dordrecht: Springer Science + Business Medisa, 35–46.
+Lavonen, J. & Meisalo, V. (2002). Research-based design of learning materials for technology-
+      oriented science education. Themes in Education, 3, 107–131.
+Lavonen, J., Inkinen, J., Juuti, K., Salmela-Aro, K., Krajcik, J., & Schneider, B. (2017). The
+       influence of an international professional development project for the design of engaging
+      secondary science teaching in Finland. In M. K. Mhlolo, S. N. Matoti, & B. Fredericks (Eds.),
+      Book of Long Papers:25th Annual Meeting of the Southern African Association of Researchers in
+      Mathematics Science & Technology Education (SAARMSTE) (pp. 206-220). Johannesburg:
+     SAARMSTE.
+Lee, Y. (2008). Design participation tactics: The challenges and new roles for designers in the co-
+      design process. Co-design, 4(1), 31–50.
+Niemi, H., Lavonen, J., Kallioniemi, A., & Toom, A. (2018). The Role of Teachers in the Finnish
+      Educational System: High Professional Autonomy and Responsibility. In H. Niemi, A.
+
+
+
+                                                 133
+
+===== PAGE 22 =====
+                                       AKSELA (2019)
+
+
+     Toom, A. Kallioniemi, & J. Lavonen (Eds.), The Teacher's Role in the Changing Globalizing
+      World: Resources and Challenges Related to the Professional Work of Teaching (pp. 47-61).
+      Leiden: Brill Sense.
+Niemi, H. & Isopahkala-Bouret, U. (2015) Persistent Work for Equity and Lifelong Learning in the
+      Finnish Educational System. The New Educator, 11:2, 130–145.
+OECD (2015, 6) PISA 2015. PISA results in focus. http://www.oecd.org/pisa/pisa-2015-results-in-
+       focus.pdf
+Osman Andersen, T., Kanstrup, A. M., & Yndigegn, S. L. (2018). Three living labs in Denmark:
+      Challenges with co-design and implementation of health IT. I A. Bygholm, L. Pape-
+      Haugaard, K. Niss, O. Hejlesen, & C. Zhou (red.), Proceedings from The 16th Scandinavian
+      Conference on Health Informatics 2018 Aalborg, Denmark August 28–29, 2018 (s. 1-6).
+      Linköping University Electronic Press. Linköping Electronic Conference Proceedings, Bind.
+      151
+Noweski, C., Scheer, A., Büttner, N., von Thienen, J., Erdmann, J., & Meinel, C. (2012). Towards a
+      paradigm shift in education practice: Developing twenty-first century skills with design
+       thinking. In H. Plattner, C. Meinel, & L. Leifer (Eds.), Design thinking research:
+      Understanding innovation (pp. 71-94). Berlin, Heidelberg: Springer-Verlag.
+Penuel, W. R., Roschelle, J., & Shechtman, N. (2007). Teachers: An analysis of the co-desing
+       process. Learning, 2(1), 51–74.
+Pernaa, J. (Ed., 2013). Kehittämistutkimus opetusalalla (In English: Design-based research in
+      education in English). Juva: Bookwell Oy.
+Pernaa, J., & Aksela, M. (2013). Model-Based Design Research: A Practical Method for Educational
+       Innovations. Advances in Business-Related Scientific Research Journal, 4(1), 71–83.
+Prahalad, C.K. & Ramaswamy, V. (2004). Co-Creation Experiences: The Next Practice in Value Creation.
+      Journal of Interactive Marketing, 18(3), 5-14.
+Regan, E. & DeWitt, J., (2015). Attitudes, interest and factors influencing STEM enrolment
+      behaviour: an overview of relevant literature. In E.K. Henriksen, J. Dillon and J. Ryder (Eds.),
+      Understanding student participation and choice in science and technology education. (pp. 63-
+       88). Dordrecht: Springer.
+Research and development policy of the LUMA Centre Finland, (2018). LUMA Centre Finland,
+       http://www.luma.fi
+Richey, R. C., & Nelson, W. A. (1996). Developmental research. In D. Jonassen (Ed.), Handbook of
+       research for educational communications and technology (pp. 1213–1245). London: Macmillan.
+Rheinfrank, J. J., Hartman, W. R., & Wasserman, A. (1992). Design for usability: Crafting a
+       strategy for the design of a new generation of Xerox copiers. In P. S. Adler & T. A. Winograd
+       (Eds.), Usability: Turning technologies into tools (pp. 15-40). New York: Oxford University
+       Press.
+Roschelle, J., DiGiano, C., Koutlis, M., Repenning, A., Phillips, J., Jackiw, N., et al. (1999).
+      Developing educational software components. IEEE Computer, 32(9), 50–58.
+Roschelle, J., & Penuel, W. R., (2006). Co-design of innovations with teachers: Definition and
+      dynamics. Proceedings of the 7th International Conference on Learning Sciences, 606–
+       612.
+Sanders, E. & Stappers, P.J. (2008) Co-creation and the new landscapes of design. CoDesign, 4(1),
+      5–18.
+Sandoval, W. A., & Bell, P. (2004). Design-based research methods for studying learning in
+       context: Introduction. Educational Psychologist, 39(4), 199–201.
+Sandoval, W. (2014). Conjecture mapping: An approach to systematic educational design research.
+      Journal of the Learning Sciences, 23(1), 18–36.
+
+
+
+
+                                                 134
+
+===== PAGE 23 =====
+                   LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+SECO, (2019). SECO (Science and Chemistry Education Collaboration) research group at
+       University of Helsinki, Finland. https://www.helsinki.fi/seco
+Shrader, G., Williams, K., Lachance-Whitcomb, J., Finn, L.-E., & Gomez, L. (2001). Participatory
+    design of science curricula: The case for research for practice. Paper presented at the Annual
+      Meeting of the American Educational Research Association, Seattle, WA.
+Sherin, M.G. (1998). Developing teachers’ ability to identify student conceptions during
+       instruction. In S. B. Berenson, K. R. Dawkins, M. Blanton, W. N. Coulombe, J. Kolb, K.
+     Norwood, & L. Stiff (Eds.), Proceedings of the Twentieth Annual Meeting of the North
+     American Chapter of the International Group for the Psychology of Mathematics
+      Education (pp. 761-767). Columbus, OH: ERIC Clearinghouse for Science, Mathematics,
+     and Environmental Education.
+Soloway, E., Guzdial, M., & Hay, K. E. (1994). Learner-centered design: The challenge for HCI in
+      the 21st century. Interactions, 1(2), 36–47.
+Schön, D.A. (1983). The Reflective Practitioner. New York, NY: Basic Books.
+Taber, K.S. (2017). Science Education as a Field of Scholarship. In: Taber K.S., Akpan B. (Eds).
+      Science Education. New Directions in Mathematics and Science Education.
+      SensePublishers, Rotterdam.
+Talbert, J.E. & M.W. McLaughlin (1999). Assessing the School Environment: Embedded Contexts and
+      Bottom-Up Research Strategies,” in S.L. Friedman & T.D. Wachs (Eds.) Measuring
+      Environment Across the Life Span, (pp. 197-227). Washington DC: American Psychological
+       Association.
+Tissenbaum, M., Lui M., Slotta, J. & D. (2012). Co-Designing Collaborative Smart Classroom
+      Curriculum for Secondary School Science. Journal of Universal Computer Science, 18(3),
+      327–352.
+Zamenopoulos, T. and Alexiou, K. (2018). Co-Design as Collaborative Research in Facer, K and
+      Dunleavy, K. (eds.) Connected Communities Foundation Series. Bristol: University of
+      Bristol/AHRC Connected Communities Programme. https://connected-communities.org/wp-
+      content/uploads/2018/07/Co-Design_SP.pdf
+Wang, F. & Hannafin, M. J. (2004). Using design-based research in design and research of
+      technology-enhanced learning environments. Paper presented at the Annual Meeting of the
+      American Educational Research Association, San Diego, CA.
+van der Akker, J., Gravemeijer, K., McKenney, S., & Nieveen, N. (2006). Educational design
+       research. London: Routledge. Whitehurst.
+Vesterinen, V-M., & Aksela, M. (2013). Design of Chemistry Teacher Education Course on Nature of
+       Science. Science & Education, 22(9), 2193–2225.
+
+
+
+
+
+                                                 135
+
+===== PAGE 24 =====
+                                       AKSELA (2019)
+
+Appendix 1
+
+
+
+Table 3. The main principles given for the design process and the partners of the program (the text translated from the action
+plan written during the co-design phase 1 by the LUMA ecosystem).
+
+
+ The main principles for the design process                The partners of the program or activity
+
+ In the program, measures are carried out in two measure  LUMA Centre Finland (a network of 11 universities), where 13
+ entities that in practice come together as one logical and   regional LUMA Centres operate. University of Helsinki is in
+ intact program: A) The sparking of motivation to learn and  charge of the administration of the network and  it is the
+  its support, on the one hand in “classrooms” in different   responsible organizer of the LUMA 2020 program and other
+ education levels and on the other hand during children,   universities are its subcontractors.
+ youth and families’ free time. B) The development of pre-
+ service and in-service education for teachers who teach   1)Nationally:
+ math, environmental studies, biology, physics, chemistry
+ and geography in different levels.                               In the implementation of the program, LUMA Centre Finland
+                                                                   carries     out     development,     education     and
+                                                       marketing/communication collaboration with e.g. partners
+ The program focuses on four focal points:1. vocational and   that are represented in the national LUMA advisory board. In
+ societal relevance in education                                addition, LUMA Centre Finland strengthens collaboration with
+ 2. differentiated instruction, 3. the promotion of             other national networks.
+ ‘engineering skills’ (technology education) and 4. creative,
+ engaging work (e.g. embodied and drama-based learning)     2)Regionally/locally:
+
+ The common thread in the implementation of the LUMA     With Regional State Administrative Agencies, Education
+ 2020 program consists of a differentiated viewpoint that     Division/  Education  Consortiums  of  municipalities and
+ promotes mathematical and scientific literacy in a cross-      individual learning environments (units of early childhood
+ currical way (uniting different fields and subjects, STEAM),    education, units of primary and lower secondary education,
+ in the spirit of multidisciplinary learning entities and theme    units of upper secondary education,  units of vocational
+ learning according to the national core curricula.             education and  training) and  e.g.  with  libraries,  youth
+                                                                        activities,  sports  clubs,  hobby  groups  and  parents’
+ Both ‘face-to-face’ measures and virtual measures are        associations. In individual learning environments, the aim is to
+ carried out in the program, which have effectiveness         get especially tutors and guidance counselors to participate
+ broadly all over Finland.                                         actively in development. The aim is to also collaborate with
+                                                                 university alumni already in the working life.
+ The program complements the  national  projects and
+ actions that LUMA Centre Finland has already carried out  LUMA Centre Finland strengthens especially the so-called
+ (see above).                                LUMA municipal network that has been created in the LUMA
+                                                  FINLAND program during 2014-2016.
+ LUMA 2020 program complements the national learning
+ path for science and technology education.                                                                   In the concrete implementation of the measures of the
+                                                       program, the members of teams collaborate in the usual way
+ The  program  promotes  educational   continuity   of                                                                  in their universities with teacher educators, researchers and
+ educational and teaching staff (early childhood educators,                                                          other  staff  as  well  as with  basic degree students and
+ class teachers, special needs teachers, subject teachers,                                                         postgraduate students.
+ guidance counselors and vocational teachers).
+
+ Spreading out occurs for example by educating future
+ teachers and in-service teachers, in events organized by
+ universities and other partners, in the form of academic and
+ popular multimedia publication, and internationally also
+ through  researchers  exchange  and  education  export.
+ Development can be  published  also  for the  scientific
+ community and in the form of theses. The aim is to include
+  this program as a part of partners’ events such as events of
+ educational organizations, already in Fall 2019 and especially
+ in 2020.
+
+ LUMA Centre Finland produces only such new data in its
+ program that can be published using an open license. LUMA
+ Centre Finland publishes all data from its program in a web
+ platform that it operates and maintains this data at least
+  until the program comes to its end, but depending on the
+  possibilities data is available indefinitely.
+
+
+
+
+                                                 136
+
+===== PAGE 25 =====
+                  LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+
+The implementation of the program is evaluated
+throughout the entire process. Evaluation gives us
+information on how the implementation of the program is
+progressing concerning the aims set for development.
+Evaluation is divided into three areas: 1. Evaluating the
+extent/activity of operations and its quality
+2. Evaluation of the effectiveness of operations
+3. Evaluation of different actions (development of formal
+education, free-time activities and teacher’s competences)
+
+In the first area of evaluation, the amounts of operational
+units (e.g. unit of early childhood education, primary and
+lower secondary school, upper secondary school, vocational
+institution),   teachers,   pupils,  students  and  parents
+participating in the program are monitored during the entire
+process.  Measuring  instruments  are  developed  for
+evaluating  the  quality  of  the  operations  and  these
+instruments are based on surveys for guardians, the school
+and students, used in the PISA and TIMMS surveys, on the
+TALIS teacher survey and on national surveys such as the
+measuring instruments for entrepreneurship education. The
+approach makes it possible that the effectiveness of actions
+can be compared with the starting point (results of PISA,
+TALIS  and TIMMS  surveys).  The  evaluations  rely  on
+qualitative and quantitative sections. In addition, it’s possible
+to carry out interviews for students and teachers.
+
+Results acquired from different areas of the evaluation
+program are analyzed also vertically by combining results
+from various areas. This is how a plausible bigger picture can
+be formed of the effectiveness of the different operational
+processes and its quality. This way it is possible to reliably
+recognize good and unsuitable practices from one another
+and justifiable solutions can be made for developing actions
+and increasing the effectiveness.
+
+
+
+
+
+                                                137
+
+===== PAGE 26 =====
+                                       AKSELA (2019)
+
+Appendix 2
+
+Table 4. The organization of the program and responsibilities of different partners and the stages of the program process the text
+translated from the action plan written during the co-design phase 1 by the LUMA ecosystem).
+
+
+ The organization of the program and        The stages of the program process
+ responsibilities of different partners
+
+ The  Finnish  Ministry  of  Education  and  The iterative methodology of design-based research  is exploited in the
+ Culture assigns a steering group for the   collaborative planning, implementation and evaluation of the LUMA 2020
+ program that aligns the implementation of  program. Measures selected for the program are driven forward with a
+ the program, and the following experts, the  developing way during the entire program, and novel, suitable solutions are
+ so-called core group are a  part  of the  produced to serve as everyday actions in different levels such as inspiring
+ steering group.                             operations concepts and pedagogical approaches. At the same time the
+                                                collaborative continuous culture of development in the LUMA ecosystem is
+ The responsible leader is the Director of      strengthened and established.
+ LUMA Centre Finland from the University of
+ Helsinki.                               The systematic phases of design-based research offer a learning environment,
+                                     where all participants can reflect and learn from one another, according to
+ Experts with their special expertise areas in                                          the ‘learning community’: 1) mapping out needs together with participants
+ the   planning   of   the   program,    its                                                (empirical problem analysis, the so-called needs-analysis), 2) mapping out new
+ implementation  and  evaluation  include                                             research information concerning the chosen topic from sciences, their learning
+ professors   (science   education,   math                                       and  teaching  (theoretical problem  analysis),  3)  setting  the  aims  for
+ education, technology education and the                                        development together with the participants based on steps 1 and 2, 4)
+ evaluation of education) and senior lecturers                                             planning a pilot model for the object of development (e.g. an activity, material)
+ as  representatives  of  vocational  teacher                                         based on set aims, 5) testing the pilot model with the target group and refining
+ education colleges. Experts participated for                                           the model based on  received  results  (multiple  steps),  describing the
+ example by  giving inserts/examples  that                                        development output and reporting and 7) spreading out new openings and
+ guided learning. Those working alongside                                                solutions and offering education for these new topics. During the LUMA 2020
+ the program can consult experts and ask                                          program, the development process is carried out at least in one cycle.
+ them about their views and they can receive
+ support   as   the  program    is   being                                       The implementation of the program is divided into two main phases;
+ implemented.                                        development phase (from late Spring 2019 until Spring 2020) and spreading
+                                         phase (from Spring 2020 until the end of 2020). In addition to experts, the program’s project
+ manager supports the responsible leader                                                   In the first phase (from late Spring 2019 until Spring 2020) LUMA Centre
+ and  directs  the  implementation  of  the                                              Finland  is going  to  build a  national network  of LUMA development
+ program and  is in charge of the national                                          communities.  Learning  communities  operating   in   different   levels
+ marketing/communication           and                                                (kindergartens, primary and secondary schools, upper secondary schools and
+ collaboration with  various  partners. The                                               vocational institutions) are encouraged to apply. The core group of the LUMA
+ mentioned experts and the project manager                                       2020 program chooses those learning communities that are accepted to the
+ together  form  the  core  group  of  the                                        network of LUMA development communities, this  is done based on the
+ program.                                                  applications. Those  learning communities  selected  to  the network  of
+                                        development communities are engaged with their  staff in collaborative The LUMA 2020 program  is implemented
+                                        development and at the same time in education, using StarT as a tool. nationally within the framework of the four
+ themes of the StarT program. A team  is                                                   In the academic year of 2019-2020, the StarT program  is implementing
+ formed for each theme, the so-called theme                                                learning projects in four various themes that those applying for the network
+ team. Each LUMA Centre participates in the                                               of LUMA development communities can choose the most interesting themes
+ implementation of each theme,  in other                                                  for their own objects of development (and themes for projects): 1. Sustainable
+ words they participate in four theme teams;                                        development (e.g. climate change, circular economy), 2) Mathematics around
+ in the joint planning/forming of measures                                           us (e.g. finances, art and statistics), 3. Technology around us (e.g. a moving
+ and   in   their   individual   geographical                                                device, artificial intelligence, robotics) and 4. My LUMA (topic free of choice,
+ operations  area, where  they implement                                          but one that is connected to LUMA subjects). The theme teams plan concrete
+ measures. In each of the LUMA Centres at                                        measures in the framework of design-based research that can be made a part
+ least one worker works full time with the                                               of  current,  existing national LUMA operations. Each theme team  first
+ program or a couple of workers work part                                                   familiarizes with already existing LUMA operating models and their material
+ time on the program. The leaders of theme                                       and models that are being planned currently. This ensures that the LUMA 2020
+ teams work in close collaboration together                                       program complements earlier LUMA programs and operations.
+ with the project manager.
+                                           Together with participating learning communities that have been selected
+ In addition, there is a team for the                                                  for the network of LUMA development communities, theme teams comprise
+ evaluation of the program, and it includes                                         aims for development and together they test implementations of novel
+ an evaluation specialist and the leaders of                                            pedagogical solutions with learning communities, especially on the level of
+ the four theme teams. The project manager                                                 early childhood education and upper secondary education.
+  is a part of all of the theme teams and the
+
+
+
+                                                 138
+
+===== PAGE 27 =====
+                  LUMAT SPECIAL ISSUE – EDUCATIONAL DESIGN RESEARCH
+
+
+evaluation teams. If needed, teams can
+consult the program’s experts.              Each theme may consist of an educational package for all levels (also for
+                                          primary and lower secondary education) offered to the learning communities
+                                     and also differentiated packages for early childhood education and upper
+                                        secondary level. The packages contain inserts/examples (in the form of
+                                              videos) from the program’s experts and other academic specialists. The inserts
+                                        can be made e.g. from the viewpoint of the program’s four focal points.
+
+                                          Engaging education is carried out in practice with the model of blended
+                                                learning, where (short) contact meetings and individual work through the
+                                             online environment and especially interactions between colleagues working in
+                                                different levels alternate. The staff of theme teams guide the development
+                                     work for learning communities in a low-threshold online environment (e.g. in
+                                       Facebook groups).
+
+                                                 In Fall 2019 a national welcome session is organized for the staff of LUMA
+                                       development communities, which  is organized simultaneously  in LUMA
+                                           Centres in different parts of Finland. After this session, LUMA Centres organize
+                                       monthly ‘face-to-face’ meetings (2 hours each) until the late Spring of 2020.
+
+                                           Alongside the regional StarT festivals in 2020, LUMA Centres offer educational
+                                      program for the staff of LUMA development communities. The training for
+                               LUMA 2020 program’s themes is in a central role in the national LUMA Days in
+                                         June 2020.
+
+                                      The staff of learning environments test pedagogical models in their teaching
+                                              that are new for them, for example by instructing the students’ project-
+                                              learning and by carrying out their learning community’s own StarT Day,
+                                               possibly  collect research data and  reflect on the  results  in an online
+                                        environment and/or in meetings together with the university personnel and
+                                          with peers. They can also participate in writing research papers.
+
+                               LUMA development communities are encouraged to participate in regional
+                                             StarT festivals in Spring 2020 with their students’ project works. Models are
+                                      formed for learning communities’ StarT Days and regional StarT festivals for
+                                             science and technology education activities for entire families and for working
+                                                             life collaboration.
+
+                                                 In addition, with these learning communities  it is possible to form StarT
+                                             science clubs for early childhood education and StarT clubs e.g. for the lower
+                                     and upper secondary level. Here, also the staff of learning communities can
+                                                 test how to instruct project learning.
+
+                                               In the second phase (from Spring 2020 to the end of 2020), online-courses
+                                                  (at least 1-3) are created for themes. With the help of these it is possible to
+                                      promote operations of learning communities as well as the competences of
+                                            educational and teaching staff more broadly and with long-term effect,
+                                        because these can be exploited even after the LUMA 2020 program in
+                                              teachers’ pre-service education and in support of continuous development
+                                     and as a part of support for the learning community from the StarT program.
+
+                                                 In addition, virtual club packages can be formed from the themes for small
+                                              children with their families and for youth.
+
+                                      The purpose is that the learning communities belonging in the network of
+                               LUMA development communities operate in Fall 2020 and even after that in
+                                          the roles of LUMA peer mentors for other learning communities nearby.
+
+                                      The contents of the LUMA 2020 program are in a central role in 2020 in all
+                                            operations that LUMA Centre Finland monitors in the forums of teacher
+                                          education in LUMA subjects aimed for university personnel, research on
+                                            teaching and development. Through the program, the aim is to include more
+                                            aspects from universities and also teacher educators from early childhood
+                                            education, teacher training schools and from universities of applied sciences.
+                                       Through the broadening of the forum, tripartite and four-party collaboration
+                                     between operators of teacher education are promoted.
+
+
+
+
+
+                                                139

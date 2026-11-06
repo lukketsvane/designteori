@@ -4,7 +4,27 @@
 
 **Status:** Bibliografisk metadatauttrekk frå 2. november 2026, ikkje ein fullstendig forskingspopulasjon eller ferdig fulltekstbasert vurdering. Resultata må ikkje brukast som bevis for at designteori ikkje er kumulativ.
 
-Start med [dashboard](results/DASHBOARD.md), [databasen](data/nordic_design_research.sqlite.gz), [kuratert bibliografi](bibliografi/norden-2000-2026.md), [kodeboka](CODEBOOK.md) og [vidare arbeidsplan](VIDARE_ARBEID.md).
+Start med [søkekatalogen](docs/index.html), [dashboard](results/DASHBOARD.md), [den samanslåtte forskingsdatabasen](data/designteori_hovuddatabase.sqlite.gz), [det originale metadatauttrekket](data/nordic_design_research.sqlite.gz), [kuratert bibliografi](bibliografi/norden-2000-2026.md), [kodeboka](CODEBOOK.md) og [vidare arbeidsplan](VIDARE_ARBEID.md).
+
+## Tilført etter flyttinga, 6. november 2026
+
+- **7 300** registrerte OpenAlex-kandidatar, **35 508** forfattar-/institusjonstilknytingar og **269 305** referansekantar i metadataarkivet (ikkje like mange unike teoriarbeid).
+- **77** redaksjonelle bibliografipostar kryssjekka mot det store uttrekket: **22** automatiske identitetsmatchar og **55** oppføringar som må kontrollerast vidare. [Avstemt liste](bibliografi/avstemt_mot_openalex.csv).
+- **11 PDF-ar** med dokumentert Creative Commons-lisens, individuelt attribuerte og arkiverte offentleg under [fulltekst/](fulltekst/). **10** har fulltekstdump for vidare søk. **15** OA-kandidatar har berre original-URL inntil redistribusjonsrett er klarlagd.
+- [Fulltekstsøk (SQLite FTS5)](data/fulltekst_sok.sqlite.gz), med dokument-ID, DOI og tekstutdrag.
+- [Nettlesarkatalog](docs/index.html) med filtre og [CSV-eksport](docs/data/publications.csv), klar til GitHub Pages.
+- [Automatisk publiseringskontroll](test_publisering.py) og GitHub Actions for dataintegritet.
+
+### Lokal bruk
+
+```bash
+python bygg_katalog.py
+python sok_fulltekst.py '"design theory"' --limit 10
+python test_publisering.py
+python -m http.server 8000 --directory docs
+```
+
+Opne deretter `http://localhost:8000`. Dokumentasjonsnettstaden kan publiserast med GitHub Pages frå `main/docs`. Kjelder med uklart opphavsrettsleg løyve blir indekserte via lenkje, ikkje spegla.
 
 ---
 
@@ -22,7 +42,7 @@ for ein testbar metascience-studie av kumulativitet i designteori.
 - 7 300 unike kandidatar; 3 729 med nordisk forfattartilknyting og relevansterm i tittelen
 - 3 571 kandidatpostar skal vurderast manuelt, ikkje teljast som feil eller irrelevante utan kontroll
 - Utvidinga vart avbroten av HTTP 429 (API-grense) før alle frasar var gjennomgått til side 5
-- Hovudkorpuset er berre OpenAlex-metadata og samandrag; eit seinare, avgrensa OA-kontrollutval henta **26** unike siterande PDF-dokument lokalt på CYGNUS (ikkje publiserte i repoet).
+- Hovudkorpuset vart analysert frå OpenAlex-metadata og samandrag; ein seinare OA-kontroll henta **26** unike siterande PDF-dokument lokalt på CYGNUS. Av desse er **11** seinare publiserte i dette repoet med dokumentert CC-lisens. Dei offentlege metadataarkiva inneheld ikkje dei opphavlege OpenAlex-samandraga.
 
 **NB:** Tala er ikkje eit anslag på kor mange nordiske designstudiar som finst.
 Toppsider sorterte etter OpenAlex-relevans har systematiske skeivskapar.

@@ -1,0 +1,1536 @@
+WORK: The Use of Design Thinking in Transdisciplinary Research and Innovation Consortia: Challenges, Enablers, and Benefits
+AUTHORS: Antje Gonera, Reinhold Pabst
+YEAR: 2019
+DOI: https://doi.org/10.24840/2183-0606_007.003_0006
+SOURCE: https://journalsojs3.fe.up.pt/index.php/jim/article/download/2183-0606_007.003_0006/345
+LICENSE: CC BY 3.0, https://creativecommons.org/licenses/by/3.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+HANDLE: https://hdl.handle.net/10216/122981
+DOI:https://doi.org/10.24840/2183-0606_007.003_0006
+SM: Feb/2019 AM: Apr/2019
+
+
+
+   The Use of Design Thinking in Transdisciplinary
+
+   Research and Innovation Consortia: Challenges,
+
+                Enablers and Beneﬁts
+
+
+
+
+
+                                   Antje Gonera
+ antje.gonera@noﬁma.no | Innovation Research, Division Food Science, Noﬁma AS, PO Box 210, 1431
+                                           Ås, Norway
+                                 Reinhold Pabst
+   reinhold.pabst@iof.fraunhofer.de | Innovation Research, Division Strategy-Marketing-Coordination,
+                  Fraunhofer IOF, Albert-Einstein-Straße 7, 07745 Jena, Germany
+
+Abstract. The innovation management literature describes a competitive advantage when applying De-
+sign Thinking (DT) in corporate environments. In this paper we study the perceived challenges, enablers,
+and beneﬁts for implementing DT in publicly funded transdisciplinary industry-academia research and
+innovation consortia (RIC). We facilitate and investigate ﬁve large RIC from the food and high-tech
+industry in Norway and Germany using an explorative qualitative action research design. Our research
+shows that the challenges of using DT in RIC are to some extent comparable to those for the corporate
+context. Additionally, we identify distinct challenges for RIC. Beneﬁts from using DT in RIC are stronger
+user and innovation focus, better transdisciplinary collaboration, and triangulation of qualitative with
+scientiﬁc data. We suggest that complex RIC beneﬁt from an intermediary (DT) role translating business
+needs into research questions, and research results into understandable and business-relevant information
+and innovation.
+
+Keywords. Design Thinking; Transdisciplinary; Industry-Academia-Collaboration; Research and Inno-
+vation Consortia; Innovation; Implementation; Challenges; Enabler; Action Research.
+
+
+Cite paper as: Gonera, A., Pabst, R., (2019). The Use of Design Thinking in Transdisciplinary Research and
+Innovation Consortia: Challenges, Enablers and Beneﬁts, Journal of Innovation Management, www.open-jim.org,
+7(3), 96-122.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                          96
+
+===== PAGE 2 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+1 Introduction
+
+
+Increased competition and a faster innovation pace in a globalized environment motivate par-
+ticipation in research-based innovation collaborations between industry and academia to solve
+problems none of the stakeholders can solve alone (Sandberg, Pareto, & Arts, 2011). The busi-
+ness model of research organizations however requires public funding, which historically is based
+on academic excellence only. There is a major change happening: Pure knowledge creation is no
+longer the aim of many research projects. Funding calls increasingly address complex societal
+challenges that can only be solved by transdisciplinary teams and in collaboration between in-
+dustry and academia (European Commission, 2018, Federal Ministry of Education and Research,
+2012, UK Government, 2017, Popowitz & Dorgelo, 2018). The recently developed EU mission-
+based research and innovation strategy addresses global challenges fostering experimentation and
+citizen involvement (Mazzucato 2018). This is also reﬂected in several core dimensions of change
+on how to organize innovation as described by Leitner, Warnke & Rhomberg (2016). Among
+them is a changing perception of creativity, changing motivation for innovation, and a need for
+systemic sustainability innovation, which will all strongly aﬀect the way we execute research
+and innovation projects in the future. These developments seem to legitimize the use of Design
+Thinking (DT) in the context of publicly funded collaborative research. DT is a human-centered
+approach to problem-solving, creativity and innovation. DT is also a management concept of
+innovation that gained massive attention in the corporate world in the recent years and is of-
+ten referred to as providing a competitive advantage (Liedtka, Salzman, & Azer, 2017, Brown,
+2009, Brown & Katz, 2011, Rauth, Carlgren & Elmquist, 2015, Carlgren, Elmquist & Rauth,
+2014).
+
+Successful research projects must deliver on social, environmental and economic sustainability
+through innovation, collaboration, and solving wicked problems. This requires impact-focus and
+innovation management thinking from scientists and is challenging, as many scientists work to
+“understand” and not to “create”.  In the context of RIC, facilitation of transdisciplinarity is
+needed in order to achieve a working mode where knowing and understanding each other and
+collaborating to extract the best from every discipline for achieving results beyond what one dis-
+cipline could achieve alone (Thompson, Owen, Lindsay, Leonard, & Cronin, 2017). Transdiscipli-
+narity in the setting of RIC can be characterized by diﬀerent features according to Zscheischler,
+Rogga, & Busse (2017): collaborative problem framing and co-designing the research process,
+integrating knowledge form diﬀerent disciplines, and science-practice collaboration.
+
+We observe a mismatch between external funding and industry requirements and the scientists’
+capability to lead and work in transdisciplinary impact-oriented projects. DT with its focus
+on user needs, co-creative problem-solving, and innovation outcome could help to bridge that
+gap when introduced in a way that accounts for both culture-, sector-, topic-, and team-speciﬁc
+factors in the socio-technical system of a RIC (Liedtka et al., 2017). DT has not been widely
+used in publicly funded research and innovation consortia, and there is a lack of understanding
+which challenges and beneﬁts its use implies. The aim of this study is two-fold: Describe the
+facilitated introduction and continuous use of DT in RIC and study the perceived challenges,
+enablers, and beneﬁts of implementing and using DT in RIC. In our action research-based case
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                          97
+
+===== PAGE 3 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+study, we selected ﬁve large RIC from the food and high-tech industry in Norway and Germany
+where DT was introduced and applied continuously.
+
+
+2 Theoretical Background
+
+2.1 Design Thinking
+
+DT in an innovation management context can be described as a human-centered approach to
+problem-solving, creativity and innovation combining what is technologically feasible, with what
+is desirable and economically viable (Brown, 2008, Brown & Katz, 2011, Verganti, 2008, Beckman
+& Barry, 2007, Liedtka, 2015, Carlgren, Rauth & Elmquist, 2016b). DT is a meta-disciplinary
+methodology where pre-established rationales of one discipline are replaced with a mindset that
+helps to develop a common basis of knowledge and agreement between disciplines (Lindberg et
+al., 2010). The beneﬁt of DT is still diﬃcult to proof and measure. One of the few measura-
+ble successes of design-centric companies that are part of the design value index is that they
+outperform their peers from the S&P500 by over 200% (Rae, 2016).
+
+The core elements of DT are empathy and people focus, problem framing, visualization, expe-
+rimentation, and diversity (Carlgren et al., 2016b). They are often paraphrased or visualized
+by an array of diverging and converging processes of need ﬁnding, idea generation, and testing
+(Liedtka, 2015) in contrast to more traditional product-centric stage gate and linear innovation
+processes (Cooper, 1990). Diﬀerent models of operation with a more or less rigid set of tools
+and methods exist based on their origin and primary use at e.g. IDEO, Hasso Plattner Insti-
+tute, Darden School of Business, or the British Design Council (Tschimmel, 2012, Carlgren et
+al.  2016b). The Double Diamond model from the British Design Council is divided in four
+distinct phases (see Figure 2): The diverging Discover phase - gathering new insight by looking
+at the world from diﬀerent perspectives. The converging Deﬁne phase - making sense of the
+information from the ﬁrst phase and deciding which opportunity matters most. The diverging
+Develop phase - repeated cycles of creation and testing of concepts and prototypes leading to
+constant improvement of ideas. The converging Deliver phase - validating and implementing the
+innovative solutions (products, services, technologies, designs, business models).
+
+It should be noted, that DT is not only a toolset but also a mind-set and therefore not easy to
+implement in settings where linear thinking and hypothesis-based working are the dominant logic
+(Carlgren, Elmquist & Rauth, 2016; Liedtka et al., 2017). We planned and researched the use
+of DT in RIC according to the Double Diamond Model and its phases as our project facilitation
+framework and theoretical lens.
+
+
+2.2 Design Thinking in the Corporate Context
+
+Brown and Katz (2011) encourage the use of DT and the designer’s creative problem-solving
+skills by non-designers into the broader organization. As stated above, adaptation and use of
+DT is however challenging when coming from a diﬀerent school of thought where a technology or
+product is often developed and put onto the market rather than starting with a user need. While
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                          98
+
+===== PAGE 4 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+designers are comfortable with insecurity and ambiguity, managers and scientists are usually risk
+averse and afraid of failure.
+
+Several academic studies describe theoretical reﬂections of conceptualizing DT (Johansson-Sköldberg,
+Woodilla & Çetinkaya, 2013, Kimbell, 2011), an empirical study by Carlgren et al. (2016) is de-
+liberately distancing itself from that approach by focusing on the use, users, terminologies, and
+perception of DT in large corporate organizations. Carlgren’s study leads to a better unders-
+tanding of how and why DT is used and proposes a research agenda to better understand the
+value of using DT, to develop a common language when discussing DT, and to study DT as
+managerial practice. The authors call for more empirical studies on how DT is used and which
+value it creates depending on the context it is applied in as well as how DT skills are learned
+and taught in an organizational/project context.
+
+Seven speciﬁc challenges unique for using DT are described by Carlgren, Elmquist & Rauth
+(2016a) based on empirical data from ﬁve large ﬁrms (see Figure 1). The challenges are linked
+to the inherent characteristics of the DT concept itself in relation to its core themes: user focus,
+framing, experimentation, visualization and diversity (Carlgren et al., 2016b) and distinct from
+established barriers to innovation. A more structured approach to DT is needed when practicing
+DT with non-designers, relating to competency development, establishing structures and routines
+and the facilitation of DT (Liedtka et al., 2017). The study of Rauth et al. (2015) on legitimizing
+DT in large organizations identiﬁes ﬁve ways to create or sustain support for DT (see Figure
+1). The challenges to overcome uncertainty around the DT concept that encourages failure and
+exploration outside the comfort zone were especially large in organizations with traditional R&D
+structures. This could also be the case in RIC based on their R&D centric nature.
+
+
+
+
+
+Fig. 1. Challenges and Enablers for using DT in Corporate Context according to (Carlgren et
+al., 2016a, Rauth et al., 2015, Seidel & Fixson, 2013)
+
+A recent study of 50 industry projects from Liedtka (2018b) describes DT as a paradigm that
+enables people’s full creative energy, commitment, and an improved innovation process. DT
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                          99
+
+===== PAGE 5 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+creates a natural ﬂow from early insights to user experiences to the transformation of these in-
+sights into ideas and actionable solutions. The DT process overcomes human biases and is able
+to provide immersion, helps sense-making, builds alignment, and fosters articulation: “What
+makes DT a social technology is its ability to counteract the biases of innovators and change
+the way they engage in innovation processes”. Another study (Liedtka, 2018a) of 22 companies,
+NGOs, government association (no industry-academia collaboration projects) explores the im-
+pact of DT in action and describes the observed practices of deep understanding of user needs,
+heterogeneity of teams, dialogue-based conversations, multiple solution outcome, creation of a
+structured and facilitated process. Those practices have shown to lead to improved quality of
+choices, reduce risk and cost failure, enhance likelihood of successful implementation, increase
+adaptability, and contribute to capability building. These are practices and outcomes becoming
+increasingly important also for industry-academia collaborations.
+
+Existing research on DT as method, mindset, and innovation enabler is limited to corporate en-
+vironments and often restricted to a single company or comparison of a few companies (Carlgren
+et al., 2016a, Rauth et al., 2015, Wrigley, 2017, Liedtka, 2018b). This underpins a lack of un-
+derstanding on how DT is practiced in organizations and how DT beneﬁts innovation outcome.
+Based on literature search, we discovered an even larger research gap on understanding how
+DT is used in large multi-year science projects with interorganizational and transdisciplinary
+industry-academia collaboration such as RIC.
+
+
+2.3 Industry-Academia Research and Innovation Consortia and Design Thin-
+king
+
+The main diﬀerences between corporate R&D and academic R&D is the focus on business pro-
+ductivity versus personal productivity and building customer value versus building reputation
+with peers (Simons, Gupta & Buchanan, 2011).  Corporate R&D appears to have goals and
+motivations similar to DT (user desirability, technical feasibility, commercial viability) whereas
+academic R&D is more self-centered and focuses on academic merits and peer recognition. The
+authors suggest that some of the DT motivations and tools could apply to corporate R&D espe-
+cially by working multidisciplinary, collaborating radically, incentivizing knowledge sharing and
+change. However, Simons et al.  (2011) merely raise questions rather than providing answers
+on how this potential can be utilized. Due to the diﬀerent nature of corporate and academic
+R&D challenges implementing DT into RIC are expected to be diﬀerent and multifaceted and
+currently not understood.
+
+RIC become increasingly complex and diﬀerent communities of practice working to solve a large
+scientiﬁc or innovation challenge are needed.  “Conceptually, transdisciplinarity aims to foster
+meaningful knowledge co-production through integrative and participatory processes that bring to-
+gether diverse actors, disciplines, and knowledge bases.” (Thompson et al., 2017). This concept is
+not easy to implement as disciplinary success is often higher rewarded in academia and commu-
+nication between disciplines can be a major challenge (Benard & de Cock-Buning, 2014, Basche
+et al., 2014).  Designers can act as brokers through applying their user centric, socio-cultural
+and product semantic skills to the creation of new (product) meaning (Verganti 2003) and have
+the ability to successfully facilitate multi-stakeholder co-creation activities (Aguirre, Agudelo &
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         100
+
+===== PAGE 6 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Romm, 2017). Alves, Marcques, Saur & Marques (2007) study multidisciplinary and multisecto-
+ral cooperation as catalysts for creativity and innovation without explicitly mentioning DT but
+describing some of the tools and methods. Their study provides a limited view on new product
+development and does not include long term collaboration projects or RIC. Interestingly, diver-
+sity from multidisciplinary and multisectoral collaboration is discussed exclusively as positive
+for innovation. Emerging management challenges are mentioned only very brieﬂy and remain
+unspeciﬁc.
+
+The expectation to collaborative R&D is moving more towards impact creation (Mazzucato,
+2018). However, classical project management in an innovation context has its limitations in a
+sense that it tries to apply a rigid framework to an agile and unpredictable process (Mahmoud-
+Jouni, Midler & Silberzahn, 2016). The expected contributions of DT to project management
+in an innovation context for exploration, stakeholder involvement and strategizing on a the-
+oretical level provide an interesting steppingstone for our work in RIC. Garousi, Petersen &
+Ozkan (2016) identiﬁed 10 challenge themes and 17 best practice themes in their review arti-
+cle on industry-academia collaborations. Most common best practices documented in diﬀerent
+contexts are regular workshops and seminars, continuous learning from industry and academic
+sides, ensuring management engagement, the need for a champion, conducting research based
+on real-world problems, showing explicit beneﬁts to the industry partner, and agility during
+the collaboration. Once more the described practices are coherent with a DT-mindset, but DT
+was not explicitly applied or mentioned. A recent action research study reveals a positive im-
+pact of co-production / co-creation activities (as in DT) to joint problem formulation, research
+methodology, capacity-building, communication, and project outcome in industry-academia col-
+laborations (Sannö, Ericsen Öberg, Flores-Garcia, & Jackson, 2019), however, DT has not been
+mentioned speciﬁcally as facilitation tool.
+
+Many of the studies mentioned above describe shorter activities compared to RIC projects with
+focus on an innovation solution or are even purely theoretical. Principles of co-creation, agility,
+transdisciplinarity, industry relevance, and innovation outcome are the focal point of several
+scholars. According to our literature search, DT has not been used extensively and consistently
+nor has it been studied in industry-academia collaboration such as RIC to increase transdisci-
+plinary collaboration, user focus/relevance and innovation outcome. Thus, there is a research
+gap on both the use of DT in RIC and understanding the challenges and beneﬁts this implies.
+The research question in this paper is: How can DT contribute to better collaboration across
+disciplines and between theory and practice in complex industry-academia RIC? The aim of this
+study is therefore two-fold: Firstly, we elucidate how we use DT in RIC to foster transdiscipli-
+narity and innovativeness by describing and analyzing ﬁve large RIC (our cases). Secondly, we
+empirically study the perceived challenges, enablers, and beneﬁts of implementing DT in RIC
+in the light of existing research. Focus of the research is on the use of DT as facilitation tool to
+improve transdisciplinary collaboration, user-focus, and innovation outcome in RICs.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         101
+
+===== PAGE 7 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+3 Method
+
+3.1 Research Context and Case Descriptions
+
+We studied the use of DT in joint academia-industry research and innovation consortia (RIC)
+from a pre-project stage throughout the project’s duration. We designed and selected the RICs
+based on the following common criteria in order to assure comparability across cases:
+
+   • they are publicly funded based on competitive research proposals, which means similar
+      set-up and KPIs,
+
+   • the projects require a high degree of transdisciplinarity, which is challenging to realize in
+      traditionally run RICs
+
+   • the DT methodology is new to the project teams, and thus allows us to study the implica-
+      tions of using DT in an exploratory action research setting,
+
+   • they have a Design Innovation Catalyst (Wrigley, 2017) also acting as the action researcher
+      assuring robust implementation and execution of DT activities
+
+   • the project duration is between four to six years with minimum three years into the project
+      allowing for rich and diverse activities and data collection throughout all phases of the DT
+      process.
+
+We studied three national and two international RIC from the food industry and high-tech
+industry in Norway and Germany, respectively. Table 1 shows an overview of the ﬁve cases in
+this study.
+
+Table 1. Overview of Research and Innovation Consortia in the Study
+
+
+ Case       Funding     Participants        Description
+
+ Plant      EUR 4 mill   22 partners           Research Project: Develop knowledge
+ Protein     NRC          (13 research           platform for optimal
+          BIONÆR      organizations, 9 food   production/utilization of Norwegian
+                             companies) from 5     plant raw materials accelerating
+                           European countries    adaption and value creation from
+                                                     plant-based protein-rich resources to
+                                                        future food products.
+
+ Food Safety  EUR 9 mill   32 partners           Research and Innovation Project:
+          EU H2020     (7 NGOs, 18 research  Reducing health burden from
+                                organizations, 3 large  foodborne illnesses by changing
+                                  enterprises, 4 SMEs)   consumers’ behavior through eﬀective
+                            from 14 European     and convenient tools and products,
+                                countries             communication strategies, education
+                                              and an inclusive food safety policy.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         102
+
+===== PAGE 8 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+ Case       Funding     Participants        Description
+
+ Food for    EUR 1.5      8 partners             Innovation Project: New insight and
+ Elderly        mill           (4 food companies, 4   knowledge related to elderly people as
+          NRC IPN     research                basis for the development of
+              and industry   organizations) from    innovative products, services, and
+               funding      Norway              communication strategies that can
+                                                   motivate and facilitate healthier diet
+                                              and healthy ageing.
+
+ Innofo3D    EUR 0.4      90 partners            Innovation Research Project: Applied
+                  mill in a       (27 research           innovation and communication tools,
+          EUR 45 mill   institutes, 47 SMEs,    services, and scientiﬁc publications for
+          BMBF       16 large enterprises,    the innovation consortium
+               consortium    3 research networks)   “3Dsensation” (transdicsiplinary
+                            from Germany        human-machine-interaction
+                                                      innovation)
+
+ Camera       Subproject    5 partners            Product Development Project in the
+ Sensor         in EUR 45     (large enterprises,      ﬁeld of human-machine-interaction for
+                  mill BMBF   SMEs, research        the development of a camera sensor
+               consortium     institutions)
+
+
+3.2 Design Thinking Approach and Activities in the RIC Cases
+
+We can distinguish between description-driven, explanatory research and prescription-driven
+design sciences, with an added value, solution focus, and practical relevance of the latter within
+management research (Aken, 2004).  This encouraged our approach of using DT in a ﬁeld of
+otherwise explanatory research domains.  Applying DT is learning in action (Liedtka, 2018).
+Based on the hands-on experiences of using this innovation method in ﬁve RIC perpetual new
+insights about the key enablers and challenges were generated.
+
+Classical RIC operate according to a linear project model with a predeﬁned set of activities, often
+in silos and with little iteration. The linear activities are reﬂected in a critical path schedule with
+milestones and deliverables adapted to the reporting requirements following an annual cycle. The
+DT approach with its iterative phases is new to RIC. Figure 2 describes the project phases of
+RIC overlaid with the Double Diamond DT phases. The iterative nature of the DT process is
+reﬂected by the circular arrows within and between the diverging and converging DT phases. As
+RIC depend on public funding, a pre-project application phase 12 to 18 months prior to project
+start is illustrated.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         103
+
+===== PAGE 9 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+
+
+
+Fig.  2. A typical RIC timeline with project phases overlaid to Double Diamond and DT
+phases
+
+In the various RIC we used DT as a novel approach to facilitate collaboration and innovation
+activities, take user-centric perspective, achieve transdisciplinarity, and translate insights into
+innovations as shown in Table 2.
+
+Table 2. Overview of the use of Design Thinking in Research and Innovation Consortia
+
+  Case      Aim of using DT       DT Methods used*
+
+  Plant         Achieve transdisciplinarity,     Future visions, user observation, user
+   Protein       Develop innovation strategy,    survey, prototyping, personas,
+                 Translate insights into           visualization, co-creation workshops,
+                  innovations, Work user         teambuilding, ﬁeld trips, iterative testing
+                   centric                     and validation
+
+  Food Safety   Achieve transdisciplinarity,     User observation, user survey, user
+                 Translate insights into          journey, pains and gains, reﬂexive DT
+                  innovations,                   workshops, opportunity area deﬁnition,
+             Work user centric              brain storming, innovation workshops,
+                                             product design projects, prototypes,
+                                                      visualization, testing and validation
+
+  Food for      Improve project               User observation, user survey, personas,
+   Elderly        collaboration,                  pains and gains, user empathy, business
+                 Translate insights into           ideas, storytelling, prototyping, testing
+                  innovations,                 and validation
+             Work user centric
+
+  Innofo3D     Develop innovation strategy,    Networking, games, roadmaps, personas,
+                   Facilitate transdisciplinary      user observations, user survey, ideation
+                  collaboration,                 workshops, storytelling, value proposition
+             Work user centric               design, pitching, prototyping, user testing
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         104
+
+===== PAGE 10 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+
+  Camera        Facilitate innovation,           Stakeholder analysis, shared vision,
+  Sensor         Facilitate transdisciplinary     persona, storytelling, user journey, value
+                  collaboration                   proposition design, pitching, prototyping,
+                Develop new products          user testing
+
+  *only main examples, not exhaustive
+
+
+We deliberately distance our research methodology from the “spectator - astronomer” or “stranger
+- visitor” paradigm where a researcher observes without intervening (Eikeland, 2006). Transfor-
+mative knowledge creation can only arise in the context between researchers and practitioners
+(Bradbury-Huang, 2010) and not as simple observers or through interviews.  The large gap
+between disciplines, and between research and practice in RICs calls for an intermediary role
+translating research results into understandable and business-relevant information, and business
+needs into research questions. This role can be described as Translational Developer (Norman,
+2010) or more relevant for our research the Design Innovation Catalyst (Wrigley, 2017, Wrigley,
+2016). Wrigley derives six important capabilities of the Design Innovation Catalyst from empiri-
+cal case studies: designer knowledge and skills, business knowledge and understanding, cognitive
+abilities, customer and stakeholder centricity, personal qualities, and research knowledge and
+skills.  In line with the DT approach, action research (Guertler, Sick & Kriz, 2019, Guertler,
+Kriz, McGregor, Bankins & Bucolo, 2017) and engaged scholarship (Van de Ven, 2007) comprise
+similar beneﬁts of better collaboration, capability building, increased relevance of the research
+methodology. The research was therefore carried out as action research where the researchers
+acted as boundary subject, process leader, change agent, and innovation catalyst (Huzzard, Ahl-
+berg & Ekman, 2010, Price, Wrigley & Matthews, 2018, Wrigley, 2016). Our primary purpose
+was not only understanding how to implement DT in RIC but actively eﬀect the desired changes
+and empower stakeholders. Our action research and its central elements are designed to solve a
+research challenge (the RIC’s thematic research focus) and thus has the ability to combine an
+academic knowledge gain with solving a practical problem and capability building (Guertler et
+al., 2017).
+
+
+3.2 Data Collection and Analysis
+
+As research on using DT in RIC is scarce, we applied an explorative qualitative research design.
+This study builds on a multiple case study (Yin, 2017, Eisenhardt, 1989) investigating ﬁve RIC
+from diﬀerent industries and diﬀerent countries.
+
+The ﬁndings of this study rely on a three-year co-creational knowledge generation process. The
+data was collected in the period of 2015 to 2018 in the diﬀerent phases of the case projects. The
+iterative DT activities and linked learning cycles took place in each of the ﬁve RIC and is based
+on a two-fold knowledge creation process due to the role as Design Innovation Catalyst and action
+researcher (see Figure 3). We organized and participated in events, workshops, project meetings,
+and conferences where we observed the behavior of project participants in each of the cases.
+During and after these events we took detailed ﬁeld notes and photographic documentation.
+Additionally, we conducted semi-structured and informal interviews with representatives of our
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         105
+
+===== PAGE 11 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+case organizations and took part in informal reﬂective conversations. Observations and interviews
+revolved around the use of DT in the RIC context, how it was perceived, what the beneﬁts and
+challenges were and how the approach could be improved.
+
+
+
+
+
+Fig. 3. Illustration of action research approach within and between ﬁve cases
+
+We comprehensively collected secondary material describing the broader context of the cases
+(policy documents, company information, project descriptions, and results from other activities
+in the RIC). This allowed triangulation of the ﬁndings from our interviews and observations,
+strengthening the quality of our ﬁndings (Flick & Gibbs, 2007). Knowledge creation took place
+by practicing DT at diﬀerent stages of the research and innovation projects and validating the
+gained insights. The researchers shared their insights, reﬂected their learnings, and designed
+upcoming DT and research activities in three annually held one-day face-to-face workshops and
+had shorter exchange meetings during the three-year data collection period.
+
+For further exempliﬁcation of our advancement and explanation of how we gathered and analyzed
+the data within each RIC, Table 3 provides an overview of one RIC’s project activities and events
+for the Innofo3D case, their link to the respective DT activities and the action research activities
+performed at each point in time. The iterative character of DT is reﬂected by a variation in DT
+process stages depending on the goals of the particular participants or stakeholder goals at the
+given project phase.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         106
+
+===== PAGE 12 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Table 3. Event speciﬁc Design Thinking and Research Activities at Innofo3D
+
+
+ N       Event Type    Date       Design Thinking   Action Research
+         and Characte-                Activities           Activities
+             ristics
+
+ 1        2016 Annual     June       DISCOVER:         5 Video interviews with
+           consortium        22-23, 2016   Moderation of      RIC project owners
+            conference, 80                     several project       about DT, in particular:
+           people of 90                     kick-oﬀsessions: In-   user focus, empathy and
+         member                         troduction to DT      challenges of the
+            organizations                  methodology and      application of DT as a
+            participated                    beneﬁts of applying    project-centered
+                                                             it as an innovation    innovation method
+                                               process, moderation
+                                                  of network sessions
+                                         aiming at building
+                                                trust
+
+ 2         Prototyping      September   DEVELOP: Execu-   Analysis of feedback and
+           workshop,         30, 2016       tion of a one-day      evaluation forms of 25
+          Consortium                     prototyping DT       participants about how
+             internal open                  workshop (Lego or    they perceived the
+            2nd call:                           role-play) including    prototyping workshop
+            “Idea-Invention-                a testing phase, 90s   (takeaways, ideas for
+            Innovation (I³)”                   elevator pitch        improvement)
+           program,                        explaining the      An additional observer
+           around 25                       concrete idea for a     joined the workshop and
+           people from 17                  one-year side           ﬁlled out an empathy
+            diﬀerent                         research and       map to gain deeper
+            organizations                    innovation project     insights of the workshop
+           attended                     program               participants
+
+  3        Panel           June       DISCOVER: User     Field notes from
+            presentation       28, 2017      Journey of scientiﬁc   discussion with RIC
+          and discussion                   research within an    members as well as
+                                           academic-industry     industry experts at the
+                                            innovation project     panel session and trade
+                                         aiming for building     fair booths
+                                     empathy
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         107
+
+===== PAGE 13 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+ N       Event Type    Date       Design Thinking   Action Research
+         and Characte-                Activities           Activities
+             ristics
+
+ 4        3 Business       November   DEFINE &           Analysis of the
+            design              until       DEVELOP: 3         participants
+           workshops with   December     one-day workshops    appreciation of mixing
+           one RIC, 3 to 7   2017           for deﬁning the      DT, e.g. business model
+            persons of the                   Point of View         canvas within a
+            diﬀerent                   (POV) while using    brainwriting session,
+         member                         the concept of         validation of the
+            organizations of                 personas as well as    approach via feedback
+           one RIC                        the generation of     and evaluation forms
+            participated                      ideas for distinctive   and informal discussions
+                                              application areas
+                                      and ideas
+                                           concerning the
+                                             business model
+
+ 5        2017 Annual      October     DELIVER:           Follow-up of the
+            consortium,       23-25, 2017   Execution of a        winning approaches in
+            conference,                   “Human-Machine-     forthcoming research
+           around 80                        Interaction          and innovation projects
+           people of 90                   Hackathon”          funded by the consortia,
+         member                       Prototype             gaining further insights
+            organizations                      validation, testing    from mentoring of teams
+            participated                        for hypothesis,        that found each other at
+                                          concept testing        the hackathon
+                                          (mockups), pitch of
+                                               solutions
+
+ 6        RICs project     2017 until   DISCOVER:          Researcher moderated
+            kick-oﬀs and      2018       Demand of RIC for    at least 5 meetings and
+           workshops                   more user insights,    workshops including
+                                     mapping possible      questioning and
+                                                alternatives for        feedback form
+                                               technologies, DT &    evaluations, activities
+                                            google sprint related  were initiated by the
+                                                    activities          RIC
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         108
+
+===== PAGE 14 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+ N       Event Type    Date       Design Thinking   Action Research
+         and Characte-                Activities           Activities
+             ristics
+
+ 7        Consortium      2017 until   DISCOVER &        Researcher focus was to
+           board meetings   2018       DEFINE              gain insights from the
+                                         moderation of 5       stakeholder perspective
+                                        board meetings by     of the consortia. The
+                                           applying DT         outcome of each session
+                                      methods including    was documented by an
+                                              (presentation of user   assistant and analyzed
+                                            journeys of the RIC,  by the researcher
+                                                 post-it
+                                            brainstorming,
+                                              project mapping
+                                                    etc.)
+
+ 8        2018 Annual      September   DISCOVER: this      Analysis of the feedback
+           consortium        17-20, 2018    year’s event         and evaluation forms, an
+            conference, 75                   included special       additional observer
+            persons from 90                   sessions “spots on      joined the workshop and
+          members                         dialogue” focusing     ﬁlled out an empathy
+            participated and              on the open        map to gain deeper
+           60 external                    exchange for           insight of the workshop
+           academia and                     collaborative           participants
+            industry expert                  research progress as
+            joined for the                     well as building
+          open second-                     further trust among
+          and third day                   the partners of this
+                                              consortia
+
+
+Analysis was carried out within cases and across cases according to Yin (2017). We chronologi-
+cally documented all data linked to the respective activity and project phase of the individual
+cases. The material was sorted into clusters representing the respective DT activities, observati-
+ons, and interview notes. The derived challenges and enablers for using DT were then clustered
+and further reﬁned. A case summary of each case was written to complement the aggregated data
+and enable cross-case comparison. The analysis was iterative and emerging themes were compa-
+red with results from previous research on challenges, enablers and beneﬁts of using DT in other
+contexts.  Categories of analysis in our research where for example individual DT workshops,
+DT methodologies, workshop outputs, and stakeholder groups. Emerging themes and results
+were discussed between the researchers and third persons within RIC project teams and in th-
+ree reﬂection & learning workshops across all cases. The generated knowledge was immediately
+applied in further project and research activities. One example of generated knowledge from
+our reﬂection & learning workshops is the learning that we need to focus thoroughly on DT
+capability building in order to successfully use the tools and change a researcher’s mindset. This
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         109
+
+===== PAGE 15 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+resulted in increased DT training and exposure to DT in the RIC in addition to the already
+planned activities. Another learning is that the term DT as such can create aversive reactions
+which made us focus on the actual workshop output and ﬂow much more than the fact that we
+are doing DT.
+
+
+4 Results and Discussion
+
+
+As the use of DT in RIC has not been studied previously, we build our analysis on diﬀerent
+streams of literature from management research, action research, and DT and combine it with
+our own research data to derive speciﬁc challenges, enablers and beneﬁts of using DT in RIC.
+We deliberately do not include classical innovation barriers (Tushman & O’Reilly, 1996, Kanter,
+2006, Tidd & Bessant, 2018, Bessant, Öberg & Triﬁlova, 2014) in our analysis as we want to
+focus on the DT speciﬁc elements.
+
+
+4.1 Challenges of using DT in RIC
+
+Success of research projects is measured mainly by numerical parameters such as number of
+publications, number of patents, number of spin oﬀs and schedule fulﬁlment (Al-Ashaab, Flo-
+res, Doultsinou & Magyar, 2011, Langford, Hall, Josty, Matos & Jacobsen, 2006). This leads
+to a lower motivation to engage in creative and unknown/uncomfortable activities as already
+suggested by Pink (2011). We experienced that an established linear project process for RIC is
+contradictory to the principles of DT which require multiple short iterations and testing loops.
+However, we ﬁnd that the mismatch of timelines in RIC with their long duration is even larger
+compared to the corporate context and that the challenge towards implementation of DT is
+proportionally bigger.
+
+Our analysis shows that some of the identiﬁed challenges for using DT in RIC are compara-
+ble the those for the corporate context as described by Carlgren et al.  (2016a). The speciﬁc
+characteristics for these challenges seen in the new context of RIC are described in Table 4.
+
+Table 4.  Types of challenges using DT in RIC compared to previous studies in corporate
+context
+
+ Known DT Challenges        RIC speciﬁc Description
+
+ Misﬁt w/existing Processes and      Used to operating in linear project model, large
+ Structures (Carlgren, 2016a)         independency and little co-creation.
+
+ Design driven vs. Data driven         Scientists and engineers educated to trust and
+ (Price et al., 2018)                   generate quantitative data, skepticism to qualitative,
+                                        explorative and visual data.
+
+ Resulting Ideas and Concepts        Nature of ideas and concepts often abstract and
+ diﬃcult to implement (Carlgren,       futuristic outside comfort zone, desire for perfect
+ 2016a)                                 solutions right away.
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         110
+
+===== PAGE 16 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+ Known DT Challenges        RIC speciﬁc Description
+
+ Value of DT diﬃcult to prove       Not enough time/touchpoints in RIC to prove value
+ (Carlgren, 2016a)                       of DT, bad experience with post it’s
+
+ DT Principles/Mindsets clash with    Qualitative work, insecurity of the outcome and fun
+ org. Culture (Carlgren, 2016a,        are not seen as serious research.
+ Price et al., 2018)
+
+ Existing Power Dynamics are        Tenure and independent work of especially senior
+ threatened (Carlgren, 2016a)           scientists less important in DT teams.
+
+  Skills are hard to acquire (Carlgren,  No exposure to design or DT in scientist’s education
+ 2016a)                          and bias towards DT.
+
+ Communication Style is diﬀerent     Long texts and proceedings used for communication
+ (Carlgren, 2016a)                     rather than visuals.
+
+ Cognitive Bias (Liedtka, 2015)       Looking for conﬁrmation or invalidation of a set of
+                                     hypotheses deﬁned early in the research process. Not
+                                  open for new solutions.
+
+
+In our research we additionally identiﬁed six new challenges of using DT distinct for the context
+of RIC:
+
+1. Discontinuity of Activities - One speciﬁc challenge of using DT in RIC is the discontinuity
+of activities and often only annual meetings between project members during the long project
+duration of four to six years. For example, it was diﬃcult to continue working with material, i.e.
+personas or stories, developed in joint workshops early in the projects because the participants
+in the follow-up workshop had lost the empathic connection to the situation or we had diﬀerent
+participants in the follow-up workshop that did not know the work we did initially. We observed
+that acquired DT skills are lost when not practiced in between the activities.
+
+2. Lack of Credibility in the Research Field – The designers and DT facilitators in RIC were
+initially met with skepticism because the ﬁeld of DT was new and unfamiliar to the participants.
+We observed a lack of credibility and trust especially for coaches and facilitators that did not
+have an education in one of the scientiﬁc ﬁelds of the RIC as illustrated by the following quote:
+“They don’t understand what our research is all about” – scientist. Another explanation for the
+skepticism were negative previous experiences with creative techniques resulting in statements
+like “I have been part of such (DT) processes internally but have usually never heard about it
+afterwards” – product developer; “I am allergic to post its – this doesn’t lead to anything and I
+can spend my time better in the lab” – researcher.
+
+3. Tension between Intrinsic and Extrinsic Motivation – This may be one of the most funda-
+mental challenges in academia-industry RIC going back to what Simons et al. describe as goals
+and motivations in R&D (Simons, 2011). The intrinsic motivation of researchers are knowledge
+generation and peer recognition. We heard statements like “I just want to get my results pu-
+blished, that’s how I am measured” – researcher; or “We cannot work like that because it is not
+publishable” – scientist. Scientiﬁc publications are important for obtaining project funding and
+thus cannot be ignored as output measures. Industry participants of RIC often underestimate
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         111
+
+===== PAGE 17 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+the need for extensive data collection and want to jump to a solution rather quickly as indicated
+by statements like “When can we use the results to make a new product?” – industry R&D ma-
+nager. We experienced this tension being a barrier to using DT in early project phases but once
+established as mindset, DT was able to lower the tension by creating a common understanding
+of desired scientiﬁc and innovation outputs.
+
+4.  Extreme Diversity  - RIC have an extreme variety of cultural diﬀerences as the members
+often come from multiple countries, organizations, sectors, and disciplines. Compared to the
+corporate context these transdisciplinary teams make it diﬃcult to ﬁnd a common language and
+even more diﬃcult when bringing in the designer’s unfamiliar mindset, language, and tools in
+addition. An illustrating example is the combination of microbiology, social science, educational
+science, policy, innovation management and design thinking in the FoodSafety case: in the early
+project phase a dictionary between disciplines had to be generated and a common language
+established to overcome this challenge. A statement by a researcher is “I don’t understand your
+[the social scientist’s] way of working and terminologies, you make it so complicated and large”,
+and vice versa about the microbiologist “Things are much more complicated than what lab tests
+and numbers can tell, we need to do it our way”.
+
+5.  Lack of “Bias for Action” – Science-driven and theory-driven linear thinking fosters data
+creation and often statistical proof instead of rapid prototyping and frequent testing with users.
+In all our cases we observed that it was diﬃcult to engage in spontaneous or guided creative
+activities or activities involving users due to the fear of a) doing something wrong and b) doubting
+the value of the activity. One work stream leader stated after a persona and innovation workshop
+in the “Develop” phase of the PlantProtein RIC that “It is so diﬃcult to come up with things
+within such a short time, but I am getting used to it as we are using approaches like that in our
+project more often now. During my ﬁrst experience I was totally lost”. The bias for action and
+interest to try a diﬀerent way of working was higher for younger, less established team members
+compared to senior scientists.
+
+6. “Team by Law” - RIC teams are selected in each participating organization separately based
+on expertise in the ﬁeld and availability without considering creativity/DT skills. Participation
+is often inconsistent over time and therefore it is diﬃcult to fully embrace DT. RIC participants
+may have competing market interests which according to our observations leads to skepticism
+and closedness. This changed over time due to diverging or converging nature of the DT phase
+(Pabst, Drescher, Haendschke, Tyrasa & Gonera, 2018) and statements around openness and
+the wish to collaborate after DT workshops became common in diverging phases; “We can be
+so proud of us. This was so good. What a feeling” – project manager and “I look forward to
+continued collaboration with you in the project” – industry partner.
+
+
+4.2 Enablers for using DT in RIC
+
+The context and ecosystem in RIC are more complex compared to corporate environments due
+the extreme diversity described above, thus asking for a diﬀerent practical approach to introduce
+DT. In the process of facilitating and studying DT in the ﬁve cases we derived and developed
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         112
+
+===== PAGE 18 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+enabling approaches particularly important for the RIC context.  These build somewhat on
+existing literature but diﬀer from previously described enablers.
+
+1. Experiential Learning – We used a “learning by doing” approach to implement DT to RIC
+as also described in other contexts (Price et al., 2018, Beckman & Barry, 2007, Rauth et al.,
+2015, Liedtka, 2018). Especially in early project phases it was crucial to have short DT lessons
+combined with practical workshops on the research topic of the RIC. Examples of these activities
+are building a joint project vision and roadmap, working with personas, user empathy exercises,
+and ﬁeld trips. DT with its hands-on, co-creative methods contributed to the positive experience
+and fun in joint activities as indicated by the following quotes: “This was the best session of the
+entire two days of the project meeting” – researcher; “This was fun, and I learned a lot” – product
+developer. This again improves team building and collaboration across disciplinary boundaries.
+Keeping up the continuity of activities showed to be essential for the learning journey. DT is a
+methodology that leads to trust building, partnership and engagement in teams enabling a better
+innovation outcome (Liedtka, 2017). We observed that DT contributed to better collaboration in
+diverging project phases also between RIC participants that have competing interests: “This time
+(with DT) we really experience the project as a joint project.” – industry R&D manager.
+
+2. Change Agent / Design Innovation Catalyst – A process responsible who is actively driving
+DT engagement as also described by Price et al.  (2018) is a key enabler of DT not only in
+corporate context but also in RIC. We found that this Design Innovation Catalyst (DIC) needs
+to have high credibility in the research ﬁeld to be accepted and successful. The role of the change
+agent is to translate and facilitate design observation, insights, meaning, and strategy into all
+facets of the RIC. The role of the DIC is described by project members as “uniting the language of
+the technology and the language of the user in the sense of a bridge builder” and to “facilitate and
+activate creativity and novel thinking and also generate a sense of [. . . ] user needs”. In classical
+RIC this role is basically non-existent, and we are pioneering the approach by our research.
+
+3. Gatekeeper / Advocate for DT – Especially during the pre-project phase, when the overall
+project approach is designed and in the early (discover) phase of the RIC, a strong advocate for
+DT was essential to enable the approach (Price et al., 2018). For all cases this was the responsible
+RIC project manager who acknowledged the potential beneﬁts of using DT in this new context,
+trusted the DT facilitators in their capabilities, and communicated the importance of working
+according to DT principles. The role of DT advocate gradually developed into an ambassador
+network (Rauth et al., 2015) with increasing establishment and success of using DT. Project
+members started to talk positive about the DT activities to peers and leadership.
+
+4.  Established Set of DT Tools and Formats – We developed tailor-made methods in each of
+the RIC depending on the DT phase and respective challenges we worked on. Explanation of
+the process and coaching of DT proved especially important to create conﬁdence and trust that
+the method will bring the team to the desired outcome. The establishment of a DT terminology
+in conjunction with other ﬁelds of the RIC as well the repetition of tools and terminology in a
+language that is understandable were important enablers. Visualization of the content and sum-
+marizing results in a tangible format supported the interest and engagement for DT. We found
+it particularly important to take research data into account and triangulate it to DT outcomes
+to improve credibility of DT and minimize the perceived risk when using qualitative methods.
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         113
+
+===== PAGE 19 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Adapted DT tools and methods will increase the chance for reapplication and recognition of the
+methodology in the scientiﬁc community.
+
+5. Team Reﬂexivity - Surprisingly we found that team reﬂexivity became more important for
+team performance and using DT in later DT phases. This is in contrast with a previous study
+by Seidel and Fixson (2013) who ﬁnd team reﬂexivity important for novice DT teams especially
+in the early DT phases. One explanation could be that RIC participants ﬁrst needed to get
+familiar with DT and the RIC team before they could develop team reﬂexivity from initial
+skepticism.
+
+
+4.3 Beneﬁts and Practitioner Implications for Research and Innovation Con-
+sortia
+
+Successful innovation projects must deliver three things: superior solutions, lower risks and costs
+of change, and employee-buy in (Liedtka, 2018). Applying DT in RIC has the potential to en-
+counter all of these outcomes. The beneﬁts of using DT in our ﬁve RIC cases center around
+the key DT elements of empathy, visualization, and experimentation for superior solutions. Par-
+ticularly the use of DT in the RIC funding application phase lead to an overall people-centric
+approach taking user needs into account and strongly focusing on innovation and (business) im-
+pact. We argue that this is a distinct quality and a novel unconventional approach compared to
+other research projects or consortia and can be further explored and exploited. One researcher
+summarized his experience after several DT workshops in PlantProtein RIC in the following
+way: “I have never seen something like that, and I joined a lot of similar huge projects. This is
+just great and should be a role model for other projects. Others have to learn from what we are
+doing”.
+
+Scientiﬁc RIC have the advantage that resilient studies and knowledge of the ﬁeld are available
+already at the project proposal stage/early in the project thus strengthening the DT approach
+by enabling triangulation. This leads to a perceived risk reduction (through use of data) at the
+same time as it leads to improved innovation outcome (through use of creativity).
+
+We believe that the use of DT in RIC leads to increased ﬂexibility for the research and innovation
+process and outcome but to achieve this ﬂexibility good process management and excellent
+capabilities of the Design Innovation Catalyst are necessary. Based on our ﬁndings, we suggest
+that complex RIC will beneﬁt from an intermediary (DT) role translating research results into
+understandable and business-relevant information, and business needs into research questions in
+analogy to Wrigley’s Design Innovation Catalyst (Wrigley, 2017).  It is recommended that the
+DT facilitator works closely with the respective project manager to assure seamless execution
+but also have an important advocate and door opener.
+
+We experienced in the projects that a more innovative and broader form of research result com-
+munication was achieved by using DT. In addition to the classical reports and publications
+also visualizations, physical prototypes, public events, exhibitions, and ﬁlms were produced re-
+aching a much broader audience compared to classical research projects. This is again in line
+with the funding bodies’ ambitions for eﬀective dissemination and implementation of research
+results.
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         114
+
+===== PAGE 20 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+In the projects were a continuous requested for DT facilitation occurred, project participants
+fully emerged into the DT mindset and developed employee buy-in: “I was totally surprised by
+the power of testing prototypes and the willingness of giving feedback by users, thus I ﬁnd myself
+questioning much more often.” - research participant in one RIC.
+
+The introduction and use of DT in RIC must be planned carefully considering the identiﬁed
+challenges. DT must be explained and demystiﬁed for scientists and practitioners who are not
+used to working user-centric, visual, co-creative and iterative so that it can become a respected
+way of working. Using DT requires suﬃcient time and resources, especially when the approach
+is new to the team. This calls for additional project budget with no direct scientiﬁc output and
+may therefore be diﬃcult to justify.
+
+
+4.4 Implications for Policy Makers
+
+Several of the challenges of using DT in RIC are related to policy framework conditions. Public
+funding and reporting requirements determine which societal problems need to be solved, who
+receives funding, and how RIC success is measured. We must work with policy makers and
+educators to encourage and legitimize DT in RIC. For a successful implementation of DT in
+publicly funded RIC a change of KPIs for research projects is necessary shifting focus from only
+scientiﬁc contribution to real positive impact on people, planet, proﬁt as also mentioned by Fisk
+(2010).
+
+At the same time, a development from linear project organization and project reporting to a
+more dynamic and ﬂexible form should be encouraged by the funding bodies. DT with its phases
+and elements could enable such a transition. The European Commission’s “Implementing an
+Action Plan for Design Driven Innovation” (European Commission, 2013) aims to understand
+the impact of design on innovation and strengthen industry competitiveness through design-
+driven innovation. We observe the onset of that shift in public funding calls and at proposal
+phase where novel approaches (such as DT) are speciﬁcally encouraged, however during project
+reporting the paradigm shift has yet to happen.
+
+An inclusion of DT skills, creative methods, and innovation studies in the education of scientists
+of various backgrounds is politically supported (European Commission, 2013). These ambitions
+have the potential to improve problem-solving skills, collaboration and innovation skills among
+scientists without compromising on the credibility of science.
+
+
+5 Conclusion
+
+
+This paper describes how we use DT in RIC in a systematic and continuous way and makes
+several contributions related to the potential role of DT as an approach to working in RIC. We
+identiﬁed unique empirically categorized challenges and enablers for using DT in joint academia
+– industry RIC.
+
+The use of DT was challenging when ﬁrst introduced to RIC as DT principles are contradictory
+to scientist’s way of thinking and working.  Through rigorously applying DT, using Design
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         115
+
+===== PAGE 21 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Innovation Catalysts, adapting DT methods to the individual cases, and reﬂecting with the
+team on the use of DT in RIC we experienced true game-changer potential. There are several
+challenges to overcome to fully utilize DT’s potential in RIC, some of them inherent to the way
+academia is performing R&D and some of them dependent on policy framework conditions. We
+suggest that complex RIC beneﬁt from an intermediary (DT) role translating business needs into
+research questions, and research results into understandable and business-relevant information
+and innovation.
+
+
+6 Limitations and Further Research
+
+
+The results of the study are derived from ﬁve cases. The data collected strongly depends on the
+choice of cases and the persons and material included. In this study, the researchers themselves
+are action researchers facilitating the DT process at the same time as they perform the research.
+This means that we are not simply external observers but take a transformative orientation to
+knowledge creation that can only arise in the context of practice (Bradbury-Huang, 2010). This
+mode of research provides valuable ﬁrst-hand insights and experiences enabling an immersive
+and holistic way of collecting data. We have incorporated learnings from our analysis into the
+projects immediately and thus achieve a better implementation of DT in RIC.
+
+Methodologically, action research can bear the risk for limited precision in interventions including
+suboptimal research design as highlighted by the discussion of relevance and rigor in action
+research (Guertler et al., 2019). Within innovation projects that tackle real world problems,
+it is easy to rather focus on the problem to be solved than on the research or methodological
+perspective. Therefore, we emphasize action researchers for a strong self-awareness concerning
+proper research design and process advancement. Careful planning of the DT activities as well
+as the linked research is necessary. This was achieved by thorough project design of both the
+activities and data collection, frequent data analysis and reﬂection within each case and jointly
+across cases during the three-year timeline of the study. Shortening learning cycles, increasing
+the researchers’ resources and focusing on an even stronger visualization for a more eﬃcient
+reﬂection among research collaborators are some of our learning points.
+
+We study all phases of the DT process and the methods/tools feasible to solve the respective
+innovation challenge of the case RIC. Not all case projects are completed at the point of analysis
+but have had at least three to four years of DT experience. Due to the explorative character of
+the study the results should be considered a “working hypothesis” (Guba & Lincoln, 1994). Our
+action research approach with its reﬂective nature as well as frequent validation and feedback
+with RIC project members lead to a pragmatic validity of the research results and we believe
+that our data is representative for an exploratory study in an area where cases and data are
+scarce.
+
+The studied sample is not large enough to analyze for country or sector speciﬁc challenges. Based
+on our empirically derived data further research is needed to investigate in depth understanding
+of other cases and conﬁrm our hypotheses. A quantitative study within the described cases and
+beyond could help to validate our ﬁndings. Further research is needed to understand speciﬁc
+aspects unique to RIC for example the role of the DT facilitator or the speciﬁc combination of
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         116
+
+===== PAGE 22 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+disciplines in a project. As future research we highly encourage to study the use of speciﬁc DT
+tools and approaches in a context and project speciﬁc setting. As increased transdisciplinarity
+was only one aspect emerging as a beneﬁt of using DT in RIC, future research should focus
+on better understanding the impact of DT on transdiciplinarity. As we found the pre-project
+phase and project set-up/start-up phases critical for deﬁning common project goals, a common
+language across disciplines, and aligned on DT as way of working, more focus should be laid on
+DT stage-speciﬁc emerging patterns in RIC in future research.  It would also be of interest to
+compare projects with and without DT as a pure case study (without the action research appro-
+ach) speciﬁcally focusing on transdisciplinary collaboration, capability building and innovation
+outcome.
+
+Further research studying innovation policy development concerning the use of DT in RIC could
+provide valuable insights leading to an increased implementation of DT into research-based in-
+novation. This will also shed light on how the fundamental question of adapting incentives and
+measures for research and innovation projects may be addressed in future.
+
+
+Acknowledgements
+
+We thank the Norwegian Fund for Research Fees for Agricultural Products (FFL) supporting
+the study through the project “InnoFood” (NRC262303), the Norwegian Research Council for
+ﬁnancial support of the projects “MATLYST” (NRC269077) and “FoodProFuture” (NRC267858),
+the European Commission for support of the project “SafeConsumE” (GA727580), and the Ger-
+man Federal Ministry of Education and Research (BMBF) with - Entrepreneurial Regions and
+their initiative “Twenty20” for the support of the research and innovation consortia “3Dsensation”
+including the “camera sensor” and “InnoFo3D”project.
+
+
+7 References
+
+
+Aguirre, M., Agudelo, N., & Romm, J. (2017). Design Facilitation as Emerging Practice: Analy-
+zing How Designers Support Multi-stakeholder Co-creation.  She Ji: The Journal of Design,
+Economics, and Innovation, 3(3), 198-209.
+
+Aken, J. E. v. (2004). Management Research Based on the Paradigm of the Design Sciences.
+Journal of Management Studies, 41(2), 220-238.
+
+Al-Ashaab, A., Flores, M., Doultsinou, A., & Magyar, A. (2011). A balanced scorecard for
+measuring the impact of industry–university collaboration.  Production Planning & Control,
+22(5-6), 554-570.
+
+Alves, J., Marques, M. J., Saur, I., & Marques, P. (2007). Creativity and Innovation through
+Multidisciplinary and Multisectoral Cooperation. Creativity and Innovation Management, 16(1),
+27-34.
+
+Basche, A. D., Roesch-McNally, G. E., Pease, L. A., Eidson, C. D., Lahdou, G. B., Dunbar,
+M. W.,  .  .  . Wilke, A. K. (2014). Challenges and opportunities in transdisciplinary science:
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         117
+
+===== PAGE 23 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+The experience of next generation scientists in an agriculture and climate research collaboration.
+Journal of Soil and Water Conservation, 69(6), 176A-179A.
+
+Beckman, S. B., Barry, M. (2007). Innovation as a Learning Process Embedding Design Thinking.
+California Managment Review, 50(1), 25-56.
+
+Benard, M., & de Cock-Buning, T. (2014). Moving from monodisciplinarity towards transdis-
+ciplinarity: Insights into the barriers and facilitators that scientists faced. Science and Public
+Policy, 41(6), 720-733.
+
+Bessant, J., Öberg, C., & Triﬁlova, A. (2014). Framing problems in radical innovation. Industrial
+Marketing Management, 43(8), 1284-1292.
+
+Bradbury-Huang, H. (2010). What is good action research? Action Research, 8(1), 93-109.
+
+British Design Council. (2015). Double Diamond Model. Accessed July 2019:
+https://www.designcouncil.org.uk/news-opinion/design-process-what-double-diamond
+
+Brown, T. (2008). Design Thinking. Harvard Business Review (June).
+
+Brown, T. (2009). Change by design: How Design Thinking transforms organizations and inspires
+innovation. New York: HarperBusiness.
+
+Brown, T., & Katz, B. (2011). Change by design. Journal of Product Innovation Management,
+28(3), 381-383.
+
+Carlgren, L., Elmquist, M., & Rauth, I. (2016). Exploring the use of design thinking in large
+organizations: Towards a research agenda. Swedish Design Research Journal, 11(1), 55-63.
+
+Carlgren, L., Elmquist, M., & Rauth, I. (2016a). The challenges of using Design thinking in
+industry - experiences from ﬁve large ﬁrms.  Creativity and Innovation Management, 25(3),
+355-362.
+
+Carlgren, L., Elmquist, M., & Rauth, I. (2014). Design Thinking: Exploring Values and Eﬀects
+from an Innovation Capability Perspective. The Design Journal, 17(3), 403-423.
+
+Carlgren, L., Rauth, I., Elmquist, M. (2016b). Framing Design Thinking: The Concept in Idea
+and Enactment. Creativity and Innovation Management, 25(1), 38-57.
+
+Cooper, R. G. (1990).  Stage-gate systems: a new tool for managing new products. Business
+Horizons, 33(3), 44-54.
+
+Eikeland, O. (2006). The validity of action research-validity in action research.  Action and
+interactive research–Beyond theory and practice, 193-240.
+
+Eisenhardt, K. M. (1989). Building theories from case study research. Academy of Management
+Review, 14(4), 532-550.
+
+European Commission.  (2013).  Implementing an Action Plan for Design-Driven Innovation.
+Commission Staﬀworking document, EC SWD (380) ﬁnal. Brussels: European Commission.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         118
+
+===== PAGE 24 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+European Commission. (2018). A renewed agenda for research and Innovation. Accessed July
+2019:
+https://ec.europa.eu/info/publications/renewed-european-agenda-research-and-innovation-europes-
+chance-shape-its-future_en
+
+Fisk, P. (2010. People planet proﬁt: How to embrace sustainability for innovation and business
+growth), Kogan Page Publishers.
+
+Flick, U., & Gibbs, G. (2007).  Analyzing qualitative data.  Designing qualitative research,
+104.
+
+Garousi, V., Petersen, K., & Ozkan, B. (2016).  Challenges and best practices in industry-
+academia collaborations in software engineering: A systematic literature review.  Information
+and Software Technology, 79, 106-127.
+
+German Federal Ministry of Education and Research.  2012.  Twenty20 – The programme
+retrieved from https://www.unternehmen-region.de/en/twenty20---the-programme-2048.
+html)
+
+Guertler, M., Sick, N., & Kriz, A. (2019). A Discipline-Spanning Overview of Action Research
+and Its Implications for Technology and Innovation Management. Technology and Innovation
+Mangement, 9(4), 48-65.
+
+Guertler, M. R., Kriz, A., McGregor, C., Bankins, S., & Bucolo, S. (2017). “And Action!” –
+Rigour Meets Relevance in Action Innovation Management (AIM). Paper presented at the The
+XXVIII ISPIM Innovation Conference, Austria, Vienna.
+
+Guba, E. G., & Lincoln, Y. S. (1994). Competing paradigms in qualitative research. Handbook
+of qualitative research, 2(163-194), 105.
+
+Huzzard, T., Ahlberg, B. M., & Ekman, M. (2010). Constructing interorganizational collabora-
+tion: The action researcher as boundary subject. Action Research, 8(3), 293-314.
+
+Johansson-Sköldberg, U., Woodilla, J., Çetinkayav, M. (2013). Design Thinking: Past, Present
+and Possible Futures. Creativity and Innovation Management, 22(2), 121-146.
+
+Kanter, R. M. (2006).  Innovation The Classic Traps.  Harvard Business Review (Novem-
+ber).
+
+Kimbell, L. (2011). Rethinking design thinking: Part I. Design and Culture, 3(3), 285-306.
+
+Langford, C. H., Hall, J., Josty, P., Matos, S., & Jacobson, A. (2006).  Indicators and outco-
+mes of Canadian university research: Proxies becoming goals? Research Policy, 35(10), 1586-
+1598.
+
+Leitner, K.-H., Warnke, P., & Rhomberg, W. (2016). New forms of innovation:  critical issues
+for future pathways. Foresight, 18(3), 224-237.
+
+Liedtka, J. (2015).  Perspective: Linking Design Thinking with Innovation Outcomes through
+Cognitive Bias Reduction. Journal of Product Innovation Management, 32(6), 925-938.
+
+Liedtka, J., Salzman, R., & Azer, D. (2017). Democratizing Innovation in Organizations: Tea-
+ching Design Thinking to Non-Designers. Design Management Review, 28(3), 49-55.
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         119
+
+===== PAGE 25 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Liedtka, J. (2018a). Exploring the impact of design thinking in action. Darden Working Paper
+Series.
+
+Liedtka, J. (2018b). Why Design Thinking Works.  Harvard Business Review, September –
+Oktober 2018 Issue, 72-79.
+
+Lindberg, T., Noweski, C., & Meinel, C. (2010). Evolving discourses on design thinking: how
+design cognition inspires meta-disciplinary creative collaboration.  Technoetic Arts, 8(1), 31-
+37.
+
+Mahmoud-Jouni, S. B., Midler, C, & Silberzahn, P. (2016). Contributions of Design Thinking
+to Project Management in an Innovation Context.  Project Management Journal, 47(2), 144-
+156.
+
+Mazzucato, M. (2018).  Mission-oriented research & innovation in the European Union: A
+problem-solving approach to fuel innovation-led growth. Retrieved from https://ec.europa.
+eu/info/sites/info/files/mazzucato_report_2018.pdf
+
+Norman, D. A. (2010). The research-Practice Gap: The need for translational developers. inte-
+ractions, 17(4), 9-12.
+
+Pabst, R., Drescher, M., Haendschke, S., Tyrasa, I., & Gonera, A. (2018). Temporal patterns of
+Open Innovation in Research and Innovation Collaborations Conference Paper presented at the
+ISPIM conference Fukuoka, Japan.
+
+Pink, D. H. (2011). Drive: The surprising truth about what motivates us: Penguin.
+
+Popowitz, M. & Dorgelo, C. (2018). University-led Grand Challenges. Retrieved from https:
+//escholarship.org/uc/item/46f121cr
+
+Price, R., Wrigley, C., & Matthews, J. (2018). Action researcher to design innovation catalyst:
+Building design capability from within. Action Research, 147675031878122.
+
+Rae, J. (2016) Design value index exemplars outperform the S&P 500 index (again) and a new
+crop of design leaders emerge. Design Management Review, 27, 4-11.
+
+Rauth,  I., Carlgren, L., Elmquist, Maria.  (2015).  Making it happen:  Legitimizing Design
+Thinking in Large Organizations. Design Managment Journal, 9(1), 47-60.
+
+Sandberg, A., Pareto, L., & Arts, T. (2011). Agile collaborative research: Action principles for
+industry-academia collaboration. IEEE software, 28(4), 74-83.
+
+Sannö, A., Ericsen Öberg, A., Flores-Garcia, E., & Jackson, M. (2019). Increasing the impact
+of industry-academia collaboration through co-production. Technology Innovation Management
+Review, 9(4).
+
+Seidel, V. P., & Fixson, S. K. (2013). Adopting Design Thinking in Novice Multidisciplinary
+Teams: The Application and Limits of Design Methods and Reﬂexive Practices.  Journal of
+Product Innovation Management, 30, 19-33.
+
+Simons, S. M. R., Kimberly N. (2011). Diversity and its Impact on Organizational Performance:
+The Inﬂuence of Diversity Constructions on Expectations and Outcomes. Journal of Technology
+Management and Innovation, 6(3), 71-83.
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         120
+
+===== PAGE 26 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+
+Simons, T., Gupta, A., & Buchanan, M. (2011). Innovation in R&D: Using design thinking to
+develop new models of inventiveness, productivity and collaboration.  Journal of Commercial
+Biotechnology, 17(4), 301-307.
+
+Thompson, M. A., Owen, S., Lindsay, J. M., Leonard, G. S., & Cronin, S. J. (2017). Scientist
+and stakeholder perspectives of transdisciplinary research: Early attitudes, expectations, and
+tensions. Environmental Science & Policy, 74, 30-39.
+
+Tidd, J. O. E., & Bessant, J. (2018). Innovation Management Challenges: From Fads to Funda-
+mentals. International Journal of Innovation Management, 22(05), 1840007.
+
+Tschimmel, K. (2012). Design Thinking as eﬀective Toolkit for Innovation. Paper presented at
+the The XXIII ISPIM Conference, Barcelona, Spain.
+
+Tushman, M. L., & O’Reilly III, C. A. (1996). Ambidextrous organizations: Managing evoluti-
+onary and revolutionary change. California Management Review, 38(4), 8-29.
+
+UK Government. (2017). UK Strategy for Global Challenges Research Fund.
+
+Van de Ven, A. H. (2007). Engaged scholarship: Creating knowledge for science and practice.
+Oxford University Press, Oxford. Accessed on May, 17, 2019.
+
+Verganti, R. (2003). Design as brokering of languages: Innovation strategies in Italian ﬁrms.
+Design Management Journal (Former Series), 14(3), 34-42.
+
+Verganti, R. (2008). Design, Meanings, and Radical Innovation: A Metamodel and a Research
+Agenda. The Journal of Product Innovation Management, 25, 436–456.
+
+Wrigley, C. (2016). Design Innovation Catalysts: Education and Impact. She Ji: The Journal
+of Design, Economics, and Innovation, 2(2), 148-165.
+
+Wrigley, C. (2017). Principles and practices of a design-led approach to innovation. International
+Journal of Design Creativity and Innovation, 5(3-4), 235-255.
+
+Yin, R. K. (2017). Case study research and applications: Design and methods: Sage publicati-
+ons.
+
+Zscheischler, J., Rogga, S., & Busse, M. (2017). The Adoption and Implementation of Transdis-
+ciplinary Research in the Field of Land-Use Science—A Comparative Case Study. Sustainability,
+9(11).
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         121
+
+===== PAGE 27 =====
+Journal of Innovation Management                                                        Gonera, Pabst
+JIM 7, 3 (2019) 96-122
+
+Biographies
+
+
+               Antje Gonera. Antje Gonera is senior scientist at the Norwegian food research institute
+            NOFIMA in the Department of Sensory, Consumer, and Innovation and leads the strategic
+                   research program on innovation in the food industry. After her M.Sc. degree in Food Science
+                   at the Technical University in Dresden, Germany and Purdue University, USA she obtained
+                 a PhD in Food Science at the University of Braunschweig, Germany and Kochi University,
+                Japan and as well an exec. MBA in Innovation Studies from the Business School in Oslo,
+                 Norway. Dr. Gonera previously has had international roles in in the consumer goods industry,
+                   biotechnology, and consulting spanning from product and technology development, consumer
+                    research, innovation management, supply chain optimization, to organizational improvement.
+Her research focus is on the implementation and understanding of the use of design thinking, user focus, and agile
+innovation methods into transdisciplinary academia-industry research collaborations.
+
+
+               Reinhold Pabst. Reinhold Pabst is an experienced business development manager and rese-
+                   archer in the ﬁeld of innovation management at the applied research organization Fraunhofer-
+                     Institute IOF in Germany. After obtaining his Diploma in Business Administration and Inter-
+                    cultural Management from the Friedrich-Schiller University in Jena, Germany, he obtained a
+             PhD in Innovation Marketing at the same University and an MA in Coaching and Leadership.
+                  Dr. Pabst is a certiﬁed innovation manager and coach. He manages the innovation research
+                   project "Innoﬂy3D" of the consortium "3Dsensation". His research focuses on the role of inno-
+                   vation facilitation and the linked competencies and tools. He is also an independent business
+                  coach and consultant. With entrepreneurial expertise from two start-ups and more than ten
+                   years of coaching and consulting experience, he supports and accompanies people in business
+creation as well as public research institutions in innovation projects, change processes or personal development
+issues.
+
+
+
+
+
+ISSN 2183-0606
+http://www.open-jim.org
+http://creativecommons.org/licenses/by/3.0                                                         122

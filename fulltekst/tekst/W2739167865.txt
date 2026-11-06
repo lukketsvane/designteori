@@ -1,0 +1,832 @@
+WORK: Collaborating with Young Adults Diagnosed with Schizophrenia: A Participatory Design Study to Shape the Healthcare System
+AUTHORS: Malene Terp, Charlotte D. Bjørnes, Rikke Jørgensen, Jan Mainz, Birgitte Schantz Laursen
+YEAR: 2017
+DOI: https://doi.org/10.4236/ojn.2017.77056
+SOURCE: https://content.scirp.org/pdf/ojn_2017071814170883.pdf
+LICENSE: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+                                                                Open Journal of Nursing, 2017, 7, 743-758
+                                                                                              http://www.scirp.org/journal/ojn
+                                                                                                 ISSN Online: 2162-5344
+                                                                                                   ISSN Print: 2162-5336
+
+Collaborating with Young Adults Diagnosed
+with Schizophrenia: A Participatory Design
+Study to Shape the Healthcare System
+
+
+Malene Terp1,2, Charlotte D. Bjørnes3, Rikke Jørgensen1,2, Jan Mainz1,2,
+Birgitte Schantz Laursen2,3
+
+1Aalborg University Hospital-Psychiatry, Region North Denmark, Aalborg, Denmark
+2Clinical Institute, Aalborg University, Region North Denmark, Aalborg, Denmark
+3Clinical Nursing Research Unit, Aalborg University Hospital, Region North Denmark, Aalborg, Denmark
+
+
+
+How to cite this paper: Terp, M., Bjørnes,   Abstract
+C.D., Jørgensen, R., Mainz, J. and Laursen,
+B.S. (2017) Collaborating with Young Adults    Introduction: Disengagement from mental health services in young adults
+Diagnosed with Schizophrenia: A Participa-   with schizophrenia has been associated with dissatisfaction and unmet needs.
+tory Design Study to Shape the Healthcare                                        Striving to improve engagement, we invited service users recently diagnosedSystem. Open Journal of Nursing, 7, 743-
+758.                                with schizophrenia to be co-designers of a smartphone technology that will be
+https://doi.org/10.4236/ojn.2017.77056       responsive to their needs. Aim: This paper reports the first phase of a three-
+                                  phased participatory design process. The objective was to identify needs of
+Received: June 20, 2017
+                                   support in young adults recently diagnosed with schizophrenia and to gener-Accepted: July 16, 2017
+Published: July 19, 2017                    ate ideas of how the needs could be accommodated using smartphone tech-
+                                     nology. Methods: Participatory design guided the research process and a qua-
+Copyright © 2017 by authors and                                              litative approach was used to generate and analyse the data. Data were gener-Scientific Research Publishing Inc.
+This work is licensed under the Creative      ated by means of participant observations (n= 45 hours) and interviews (n=
+Commons Attribution International          6) with young adults from a first episode psychosis program in Denmark.
+License (CC BY 4.0).                     Findings: Low levels of knowledge and high levels of uncertainties are charac-
+http://creativecommons.org/licenses/by/4.0/
+                                              teristic of young adults recently diagnosed with schizophrenia, bringing about            Open Access
+                                    a vast need of support in order for them to gain power over their new life sit-
+                                       uation. Our study suggests that the smartphone may be used to foster empo-
+                               werment by guiding the young adult’s actions in situ, providing comprehen-
+                                         sive and easily understood information on the go, allowing for recovery
+                                        tracking, and notification of mental health changes, providing medication
+                                   overview and giving easy access to healthcare providers. Conclusion: Young
+                                       adults recently diagnosed with schizophrenia require comprehensive support
+                                       in order to become empowered to confidently manage their new life situation.
+                              The smartphone holds this potential by offering flexible collaboration and
+                                     timely access to self-management resources.
+
+
+
+DOI: 10.4236/ojn.2017.77056   July 19, 2017
+
+===== PAGE 2 =====
+M. Terp et al.
+
+
+                       Keywords
+                              Empowerment, Mobile Health, Participatory Design, Schizophrenia,
+                             Young adults
+
+
+                              1. Introduction
+
+                            The early phases of schizophrenia have gained increased attention over the past
+                                  decade, and today it is well established that when a young adult suffers from a
+                                   psychotic illness, intensive care is required to control symptoms, prevent psy-
+                                    chotic relapse and improve quality of life [1] [2] [3]. Encouraging and promot-
+                                  ing service engagement among young adult in the early phases of schizophrenia,
+                                however, is a challenge despite intensive and specialized care being routinely of-
+                                    fered [4] [5] [6]. This is a serious treat to mental health recovery, as disengage-
+                                ment, when a service is still needed, can lead to devastating consequences [7],
+                                   including exacerbations of psychotic symptoms [8] [9] social isolation and sui-
+                                      cidal behaviour [3].
+                                                 It is hypothesized that the first five years of schizophrenia care is optimal to
+                               change the long-term course of the illness [3]. Fostering service engagement in
+                                   the early phases of schizophrenia therefore is of particular importance to im-
+                                prove the mental health recovery.
+                                   Research has been established that disengagement from mental health services
+                                              is associated with dissatisfaction [5] and unmet needs [6] in persons with schi-
+                                  zophrenia. This provides a strong basis for shaping services around input from
+                                      service users, which would then foster mental health recovery through health-
+                                   care that they themselves perceive to be meaningful and relevant.
+                                  Shaping services with mental health users, however, is not common practice
+                                       [10]. This is true regardless of user-involvement being at the heart of the rec-
+                             ommendations for a more modern and sustainable mental healthcare system
+                                    [10] [11] [12] [13] [14], and irrespective of research designating that service user
+                                involvement offers a promising pathway towards better quality healthcare, more
+                                         efficient care and improved population health [15] [16] [17].
+                              As a result, we set out to shape an early intervention service in collaboration
+                                 with young adults recently diagnosed with schizophrenia. We wanted to design a
+                                      service that was “engaging”, by grounding the innovation in user needs and by
+                               drawing on the power of smartphone technology to extend services beyond the
+                                   confines of the physical clinic [18] [19] [20]. Smartphone ownership is particu-
+                                         larly high in younger people with schizophrenia [21] making the smartphone
+                                   highly relevant as a tool to respond to service user needs at all times.
+                                   This article reports the  first phase of a three-phased participatory design
+                                     process. The objective of the first phase was to identify the needs of support in
+                             young adults recently diagnosed with schizophrenia, and to generate ideas of
+                          how the needs could be accommodated using smartphone technology. The ob-
+                                        jective of phase two and three were to design and develop the technology and to
+
+
+744
+
+===== PAGE 3 =====
+                                                         M. Terp et al.
+
+test it in a clinical setting, respectively.
+  Figure 1 provides an overview of the different phases and activities in the par-
+ticipatory process of shaping, designing and testing a service with young adults
+recently diagnosed with schizophrenia.
+
+2. Methods
+2.1. Research Design
+
+The overall research was conducted within a methodological framework of par-
+ticipatory design (PD) [22]. PD has roots in action research [23], and is preoc-
+cupied with finding and developing solutions to practical problems in close col-
+laboration with service users [24] [25] [26] [27]. Therefore, PD supports the
+practice of making service users co-designers of services responsive to their
+needs.
+ A qualitative approach was used to generate and analyse the data. In the first
+phase of the PD process, data were collected through participant observations
+and interviews with service users from a specialized first episode psychosis pro-
+gram in Denmark (OPUS). OPUS is a two-year program that provides intensive
+care for young adults between the ages of 18 - 34 years old, recently diagnosed
+with schizophrenia. Participant observations were carried out to generate a con-
+textual understanding of the young adults’ problems and needs, in order to get a
+grasp of what mattered most to them. Observations were primarily used to iden-
+tify themes for a semi structured interview guide [28], thus, the findings in this
+article solely focus on the interviews.
+
+2.2. Participants and Data Collection
+
+Firstly, the first author carried out passive participant observations (45 hours) to
+construct the interview guide. The observations were obtained in the primary
+contexts of the OPUS program. This included an outpatient clinic in which
+home consultations were provided as well as an in-patient clinic for young
+adults only. Observations and field notes were taken concurrently in accordance
+with Spradleys recommendations [29]. Nine observations of home visits, with
+two nurses and an occupational therapist, were obtained. The rest of the time
+was spent in the car or the clinic talking to healthcare professionals (HCPs)
+about the problems of living with schizophrenia and the needs to be accommo-
+
+
+
+
+
+Figure 1. An overview of the different phases and activities in the participatory design
+process.
+
+
+                                                                      745
+
+===== PAGE 4 =====
+M. Terp et al.
+
+                                    dated. The managers of both settings gave their consent to be observed, and pa-
+                                        tients were asked permission for the first-author to sit in on conversations be-
+                               tween them and their HCP.
+                                     Secondly, the first author conducted individual interviews with (n= 6) young
+                                    adults from the OPUS program, using the interview guide. In order to encourage
+                                   the participants to speak freely, interview questions were open ended and not
+                                     established in a fixed sequence, rather as prompts [30]. A Venn diagram [31]
+                              was used as a tangible artefact to address the supportive network, in an attempt
+                                    to get an idea of how the technology should be “wired” to accommodate the
+                                needs of the young adults in a real life setting. To secure depth of data, each in-
+                                   terview was continued until saturation had been reached [32], therefore, the in-
+                                    terviews stopped when the narrative became repetitive and no new data were
+                                     revealed. Interviews lasted between 55 minutes to 1 hour and 18 minutes. They
+                               were conducted either at the participants’ home (5 interviews) or at the research
+                                    unit at the hospital (1 interview) depending on participant’s preference. Inter-
+                                 views were digitally recorded and transcribed verbatim. The interviews were
+                               conducted in Danish; therefore the quotes in the findings section were translated
+                                    into English, omitting any corrections in phrasing.
+                                        Criteria for inclusion in the study were willingness and ability to share infor-
+                               mation and ideas by virtue of knowledge and experience. However, since it has
+                               been argued that individuals who are not “stuck” with too much experience
+                           make excellent innovators [33] [34], we were interested in recruiting participants
+                                     that had been diagnosed within the past year. Criteria for exclusion were inabili-
+                                      ty to speak or understand Danish and unwillingness to provide written consent.
+                                Recruitment was conducted in close collaboration with HCPs from OPUS, who
+                                    singled out relevant participants, gave them an information letter and asked
+                            them to consider participation. The first-author contacted them either by phone
+                                  or email, to make further arrangements, when consent had been obtained.
+
+                                 2.3. Data Analysis
+
+                     A hermeneutical approach to data analysis was chosen. Within this frame of ref-
+                                    erence, interpretation of meaning is an iterative and circular process [35], which
+                                                fits the methodology of PD [36]. In the tradition of Gadamer it is rejected, that
+                                hermeneutics is a step-by-step method, rather  it is an explication of general
+                                     principles [28]. Guided by canon principles of hermeneutical interpretation, in-
+                                     terpretation of meaning was constructed through an incessant back-and forth
+                                   process between parts and the whole of the interview text, which follows from
+                                   the hermeneutical circle. The process of hermeneutical questioning continued
+                                       until an inner unity of a text free of logical contradictions had been reached.
+
+                                 2.4. Ethical Considerations
+
+                            The study was submitted to the North Denmark Region Committee on Health
+                                 Research Ethics. In accordance with Danish law, the committee found that a
+                                 formal ethics approval of the study was not required. In line with the Helsinki
+
+
+746
+
+===== PAGE 5 =====
+                                                                                       M. Terp et al.
+
+                                  Declaration [37], all participants were fully informed about the purpose of the
+                                  study and informed consent was obtained both verbally and in writing before
+                                 enrolment. The participants retained the right to withdraw from the study at any
+                                  given point, and they were carefully informed, that withdrawal would not influ-
+                                ence their course of care. Authorization by the Danish Data Protection Agency
+                              was obtained (2008-58-0028).
+
+                              3. Findings
+
+                                    Six participants in the OPUS program were eligible for interviews (four women,
+                              two men). All accepted the invitation to participate. At inclusion, the age of the
+                                     participants ranged between 19 - 27 years. All had been diagnosed within the
+                                    past year, received social benefits and lived independently. All owned a mobile
+                             phone and used it on a daily basis.
+                            The hermeneutical inspired process of analysis governing the findings is out-
+                                    lined in Figure 2. Based on the young adults descriptions of living with schi-
+                                  zophrenia, we identified a need of support to gain power, to be able to control
+                                   the new life-situation confidently. The need was related to low levels of know-
+                                   ledge and high levels of uncertainties, making the new and changed life situation
+                             somewhat impossible to cope with independently. Six ideas for resources to ac-
+                            commodate the need using smartphone technology were identified. The findings
+                                    are outlined in the next section.
+
+
+
+
+
+Figure 2. Outline of the hermeneutical process of analysis governing the study findings.
+
+
+                                                                                                       747
+
+===== PAGE 6 =====
+M. Terp et al.
+
+                                 3.1. A Need of Support to Gain Power in Order to Control the New
+                                    Life Situation Confidently
+                                     3.1.1. In-Situ Guidance
+                            The participants emphasized how they sometimes felt powerless and helpless in
+                              managing the illness and their new life situation. All had received psychoeduca-
+                                        tion, either only individually or individually followed by 10 weeks of group ses-
+                                    sions with other service users in the OPUS program. The participants were ex-
+                                           plicit that education about the nature of the illness, recovery rates, medication,
+                                     relapse prevention and symptom management was truly helpful, and key to be-
+                             coming in charge of the illness, rather than a victim of it:
+                          “Whathashelpedmethemosthasbeentolearnabouttheillness. WhenIbe-
+                       gantoknowthesigns [ofillness] andknowwhenIwasextravulnerable, Igot
+                              power. ThenIwassmarterthanmyownhead. Therecouldbejustasmany
+                               questionsandconcerns, butbecauseIhadseenthroughit[illness], thenIcould
+                    dosomethinginadvance-Icouldactinsteadofjustbeingavictim.”
+                                However, despite their contentment with the psychoeducation, in specific sit-
+                                   uations they felt incapable of translating the knowledge obtained in the “class-
+                            room” into action. Lack of “translation” and “adoption” skills made them reliant
+                            on help from their HCPs. Nevertheless, dependency was something the partici-
+                                  pants strived to extricate themselves from, and they stressed the need of having
+                                    access to resources, that could guide them “in situ” to self-manage the illness
+                                   appropriately and pro-actively:
+                                  “Itwouldbereallynicetogetsuggestionsforhowtohelpmyself… andto
+                         havethesuggestionshandy. Thenitwouldbeawholeloteasiertomanagethis
+                       inthelongrun.”
+                                   Thus, it appeared that extending psychoeducation outside the physical walls of
+                                   the classroom was crucial for making the young adults more independent and
+                                    increasing their confidence in their ability to navigate their new life situation.
+                                 This became especially visible in regard to the time restriction of the OPUS pro-
+                                gram. Since the program was within a two-year timescale, they were under the
+                                   pressure of time, learning what to do and how to act unassisted. As such, in-situ
+                                guidance emerged as a resource to assist young adults on the go in the process of
+                              managing the illness more independently over the course of time.
+
+                                     3.1.2. Recovery Tracking
+                            The participants stressed how cognitive impairments were a central feature of
+                                       their illness. In particular, they emphasised how severe impairment of memory
+                             and attention made it hard to recall their own progress, which vastly impacted
+                                   the hope of recovery. Since experiences were no longer stored in the memory,
+                                   the good days often faded or even disappeared:
+                             “Ioftenforget, howIwasyesterday. It’sdifficulttoremember, whatIhave
+                         beendoing, andwhetheritwasagooddayorabadday. Itfeelsasifthegood
+                          dayscalmlypassesdaybyday.”
+                              The pass of the good days was evident among the participants even though
+                                  they stressed how the OPUS program had bettered their mental state signifi-
+
+
+748
+
+===== PAGE 7 =====
+                                                         M. Terp et al.
+
+cantly. Particular on “the bad days”, the loss of memory impacted the hope of
+recovery, as it was difficult to believe that things would actually change for the
+better:
+  “Willthiseverbebetter? Onthebaddays, Ireallydoubtit.”
+  Thus, impaired memory left the participants in doubt of recovery, and main-
+tained a strong presence of the bad days in the memory.
+   Several of the participants explained how their HCPs had encouraged them to
+monitor their health in an attempt to call to mind their own progress. Some had
+taken the word of advice using a diary to record the day; others had discovered
+that using the camera in their smartphone was a useful strategy to keep a sense
+of perspective, therefore keeping track of their progress over time. Yet others did
+not monitor their progress and had discovered how the “bad days” had the
+strongest presence in their memory.
+  A participant proposed that systematic tracking of the mental state could help
+to recall and tell apart the good days and bad days respectively, and emphasised
+how a display would be an important resource for believing in progress:
+  “IthinkthatgettingthingsinblackandwhitecouldhelptoconvincemethatI
+amgettingbetter.”
+  As such, it appeared that recovery tracking could help provide a more accu-
+rate and realistic picture of the process of recovery, particularly if the tracking
+were presented visually. Thus, recovery tracking emerged as an important fea-
+ture to keep up the hope of recovery and to escape the mental captivity of illness.
+
+3.1.3. Notifications of Illness Exacerbation
+Fear of illness exacerbation was widely recognized by the participants. They
+emphasised how the OPUS program had improved their mental state signifi-
+cantly, yet, still they persistently wondered whether and when the illness would
+“strike” again. They were highly alert of early warning signs of impending psy-
+chotic relapse, as were their relatives. In  fact, their mind was almost pro-
+grammed to think that even small changes in the mental state could be deteri-
+oration:
+  “Whatisthis… arelapse? Honestly, thatisalwaysthefirstthingIthinkof.
+Thethoughtofrelapseandhospitalizationreallyfreaksmeout.”
+  The thoughts of relapse and hospitalization were dominant, and it appeared
+that the participants had difficulty “reading” the illness. Since they did not know
+what to pay attention to and what to let pass unattended, they identified all in-
+formation from the senses as potential signs of impending psychotic relapse:
+  “Isittheillnessspeakingnow, orisitjustmebeingyoung?”
+  As such, lack of knowledge and insight into their relapse signature and drill
+left them in an incessant potential danger, not knowing for certain whether to be
+worried or not. The uncertainty was evident over the course of time. A partici-
+pant explained how, still after one year in the OPUS program, he found it diffi-
+cult to interpret fatigue, for example. This could be interpreted as a negative
+symptom (something normal for people suffering from schizophrenia), an early
+sign of illness exacerbation (a potential danger that should be acted upon) but
+
+
+                                                                      749
+
+===== PAGE 8 =====
+M. Terp et al.
+
+                                         also, a healthy reaction to living an irregular and “normal” youth life, occasio-
+                                      nally having too little sleep.
+                              The sustained problem of reading the illness prevented the participants from
+                             knowing whether to be worried or not, thus preventing them from “becoming
+                          thecaptainofone’sownlife” as one of the participants framed it. This restricted
+                                       their ability to be proactive. Further, this left them watchful 24/7-worried and
+                                    controlled by their illness, rather than certain and in control of it:
+                              “SometimesitfeelsasifI’matworknonstop. Itwouldbesohelpful, ifIcould
+                           getsomekindofwarningtellingmewhentobealert. ThenIcouldfocuslesson
+                 myillnessandmoreonjustlivingmylife.”
+                                   Thus, notifications of illness exacerbation appeared to be a resource of para-
+                           mount importance to promote a sense of confidence and control in their life
+                                 with their illness, but also in “taking time off” from the illness, and focusing on
+                                 being young rather than being ill.
+
+                                     3.1.4. Wired List of Medications
+                            The participants stressed how the severe impairment of memory and attention,
+                                 did not only impact their hope of recovery, but also their ability to keep track of
+                                       their medications. Most stressed how they had control of taking their daily me-
+                                    dication through different routines, but found  it difficult to remember the
+                               names, types and doses of different psychotropic drugs, particularly ones used in
+                                   the past. This left them powerless, particularly in stressful situations, where they
+                              had to account for it:
+                                        “It’sreallydifficulttorememberallthedifferentdrugsIhavetriedthepast
+                                  year. IftheyaskmeattheGeneralpractitionerortheEmergencyroom, Ican’t
+                                 reallyreportit, tobequitehonest.”
+                                Having a sense of perspective of prescribed medication, both present and past,
+                              was greatly stressed as a means to be in control, and several stressed how a list of
+                                wired medications would be a helpful resource to recall this:
+                                  “ItwouldbeawholeloteasierifIhadsomesortoflistathandthatIcould
+                       showthem.”
+                              The emphasis of having a list at hand pointed towards the importance of
+                                   ubiquity in order to support the memory. Thus, a wired  list of medications
+                              emerged as an important resource to keep a sense of perspective and feel in con-
+                                            trol.
+
+                                     3.1.5. On-Demand Information
+                            The need for widespread and timely information was evident among the partic-
+                                      ipants. All turned to websites looking for information about the nature of illness,
+                                  treatment options, rates of recovery, medication, as well as tips and tools to fight
+                             and manage the illness and their new life situation. This was particularly true
+                           when they had just been diagnosed:
+                           “Atfirst, Ireallyneededinformation. IsearchedtheInternetforfactsabout
+                          theillness, justtoknowwhatIshouldexpectthefirstcoupleofmonths… Be-
+                                 cause, F***theywerehard.”
+
+
+750
+
+===== PAGE 9 =====
+                                                         M. Terp et al.
+
+  As such, the Internet was used as a tool to seek answers and self-educate.
+However, the information on the Internet, did not necessarily empower them:
+  “It[information] canbereallyhardtounderstand, butalsotorelateto, since
+theyusesomanytradeterms.”
+  Thus, it appeared, that easily comprehensible information was key in order to
+keep a sense of perspective in the process of preparing for the time to come. As
+such, the participants pointed towards the importance of an on-demand infor-
+mation resource that was simple and enlightening, thus workable and applicable
+in the early phases of schizophrenia where the level of knowledge was low and
+the level of uncertainties high.
+  A participant shared the idea that the application could provide an encyclo-
+paedia consisting of a knowledgebase with a search option similar to Google,
+and an interactive part where all the patients enrolled in the OPUS program
+could share their tips and tools, therefore providing each other with useful in-
+formation through websites and articles. Thus, the active role in sharing and
+disseminating meaningful information was mentioned as an important aspect to
+take into account in the re-design of standard formats of information and learn-
+ing aids.
+
+3.1.6. Online Lifeline
+The participants stressed the importance of easy access to their HCP. In this re-
+spect, they highlighted how their mobile phone was the platform commonly
+used to reach out for guidance and directions. This mode of contact was really
+reassuring:
+  “I’msohappythatshe [theHCP] hasamobilephone. Sheisalwayswithin
+reach. Thatisreallycomfortingtoknow.”
+  As such, the mobile phone served as an online lifeline ensuring that qualified
+advices was within reach regardless of time and place.
+  Reaching out for guidance and directions appeared to be equally important
+day and night. In fact, nights were often the time of day where the participants
+felt the biggest need for help and guidance:
+  “Afterdark, Ioftenfeelanxious. ThatisthetimeofdaywhereIfeelmostvul-
+nerable.”
+  The OPUS program, however, was only available during office hours. Conse-
+quently, it was not possible to communicate with the HCPs after 4 pm. Yet, sev-
+eral of the participants sent texts to the HCPs after hours, knowing that their
+messages would not be seen or answered until the next day. They had expe-
+rienced how just getting things off their chest made them calm down and relax:
+   “It’sreallynicethatyoucanalwayswritedownthingsandsenditoffstraight
+away, eveninthemiddleofthenight. Then [nameoftheHCP] canlookatit
+whenshehasgotthetime: readthroughit, analyseitandsenditback.”
+  An important feature of the lifeline was customized guidance and directions.
+To this end, written communication was highly emphasised. The participants
+explained how their impaired memory and short attention span made it not only
+hard to focus, but also to remember the verbal advice received by phone. This
+
+
+                                                                      751
+
+===== PAGE 10 =====
+M. Terp et al.
+
+                           made written guidance somewhat more supportive in controlling their new life
+                                       situation:
+                                  “Itisreallyhardformetocommunicate[verbally], sinceIhavetothinkfast
+                      andrememberwhathasbeensaidafterwards. Itismucheasierandconvenient
+                       tohavethingsinwriting.”
+                              As a result, it appeared that the mobile phone served the means of an online
+                                             lifeline, making help and guidance  feel  accessible. Yet, the mobile phone
+                              emerged as a key feature in establishing a secure and empowering environment
+                                     that enabled the participants to take time off from the illness, even in their most
+                                   vulnerable hours where many questions and doubts arose.
+                            Summing up, six ideas for supportive resources of power for the participant’s
+                                    to control their new life situation were identified. The findings are synthesised in
+                                Figure 3.
+
+                              4. Discussion
+
+                            The findings presented here provide new insights into the users’ perspectives on
+                                   the needs of support when being young and recently diagnosed with schizoph-
+                                       renia, including potential features that should be considered in designing a
+                              smartphone technology to accommodate these needs. Our study highlights that
+                                  a smartphone technology should be designed to promote empowerment while
+                                responding to the needs required to confidently navigate this new life situa-
+                                       tion.
+
+
+
+
+
+                                    Figure 3. Synthesis of findings.
+
+
+752
+
+===== PAGE 11 =====
+                                                         M. Terp et al.
+
+  There is growing evidence that the perception of personal control plays a crit-
+ical role in health and wellbeing [38], and finding ways to increase this power is
+important as a means to this end [39]. We identified six ways to increase this
+power in the early phases of schizophrenia, where the levels of knowledge are
+low and uncertainties high.
+  The analysis revealed that knowledge is a source of power, which is of great
+importance to control the new life situation independently. In-situ guidance,
+on-demand information and on-line lifeline were all different means to this end.
+The power of knowledge is highly recognized in psychoeducation literature [40],
+where evidence has been established that education helps individuals with schi-
+zophrenia gain basic knowledge on their illness [41]. Our study signifies that
+young adults with schizophrenia want to be educated in order to self-manage
+their illness, but they are unable to use the knowledge obtained outside the
+classroom to do this effectively. These findings are concurrent with previous
+studies claiming that knowledge gained through psychoeducation does not ap-
+pear to help individuals with schizophrenia to manage their illness better or en-
+gage actively in the recovery process [41] [42]. Considered together, this subs-
+tantiates the relevance of ubiquity to be able to assist young adults on the go, in
+the process of resuming the management of their lives independently.
+  The analysis revealed that memory is another important source of power to
+feel certain and in control of the new life situation. In this respect, recovery
+tracking and a wired list of medications came up as resources to help memoriz-
+ing and keeping a sense of perspective. Cognitive impairments are a distinct di-
+mension of schizophrenia and are highly evident in persons with this illness
+[43], as was widely evident in our sample. Cognitive deficits have emerged as an
+important new target in schizophrenia care, due to evidence suggesting that they
+are critically related to difficulties of functioning in everyday life [44]. Our study
+indicates that the smartphone may play an important role in compensating for
+cognitive deficits, therefore providing improved functioning in everyday life for
+those with schizophrenia. More importantly, our findings suggest that memory
+support may help keep the good days present, when the hope of recovery is hard
+to obtain. Thus, recovery tracking appears vital to sustain hope in the young
+adults on their journey towards mental health recovery.
+  Also, the analysis revealed how warnings are an important source of power to
+assert control. To this end, notifications of illness exacerbation came up as an
+idea to provide a sense of certainty and control in managing their new life situa-
+tion. Birchwood proposes that persons with schizophrenia have a strong interest
+in learning to recognize and prevent impending psychotic relapse [45], and
+stresses the importance of promoting a sense of control through knowledge and
+insight into their relapse signature and drill [46]. This is in line with our find-
+ings, which eventually suggests that reading the illness and recognizing early
+signs of change is somewhat impossible in the early phases of schizophrenia,
+which makes notification of undesirable changes crucial to assert control. Noti-
+fications of illness exacerbations may be provided using smartphone technology.
+
+
+                                                                      753
+
+===== PAGE 12 =====
+M. Terp et al.
+
+                            The persuasive personal monitoring system, MONARCA, developed for the
+                                  treatment of persons with bipolar disorder, is an example of this. This system
+                                   uses an automatic trigger mechanism to detect early changes in the mental state
+                                through electronic self-assessments provided by the patients [47].
+                            Summing up, our study advocates that control in the management of the early
+                                 phases of schizophrenia may be achieved if support is extended into the every-
+                               day lives and homes of the young adults, where powerlessness, helplessness and
+                                  worries develop. The smartphone, which enables digital engagement with pa-
+                                         tients in real time and real environments [48], may facilitate this process through
+                                   easy and timely access to support. Firth and Torous [49] have documented high
+                                       rates of engagement and satisfaction with apps in the care of people with schi-
+                                  zophrenia. This further encourages the nascent potential of the mode of service
+                                     delivery to accommodate the needs of young adults with schizophrenia at all
+                                     times.
+
+                          Study Limitations
+
+                            The study was conducted with rigorous qualitative methodology, but there are
+                            some limitations.
+                              The majority of the sample population were women. Since first episode schi-
+                                 zophrenia incident rates are approximately two times higher in males than
+                         women [21] [50] our sample is gender biased. This might indicate that our find-
+                                    ings are in favour of women, however, we did not see any distinct differences in
+                                      relation to the needs of support in the two genders.
+                              The sample was small and the study only included ethnic Danes from one
+                                   outpatient clinic. Thereby, it reflects the culture, norms and values of young eth-
+                                    nic Danes, in a specific clinic at a specific time. It might be argued that a varia-
+                                    tion in ethnicity might have broadened the perspective of needs and ideas for
+                                       their accommodation, particular since needs may vary over the course of an ill-
+                                   ness and depend on a patient’s health status, demographics and culture [39].
+                                 This could affect the transferability of our results. Thus, it would be interesting
+                                    to replicate the study in other contexts, countries and within different ethnic
+                                  groups.
+                                 There were no distinct differences in experiences and statements from the
+                                      participants; thus, the sample size appears to be adequate for the subject studied.
+                              However, the cognitive difficulties addressed in the findings, and widely docu-
+                             mented in the literature [43], questions whether data saturation was actually
+                                   reached. Even though the interviewer experienced saturation during each inter-
+                                    view, there is a risk that some complexities did not unfold.
+
+                              5. Conclusion
+
+                                 This study demonstrates that young adults with first episode schizophrenia need
+                               comprehensive support to become empowered to manage and feel certain in
+                                       their new and changed life situation. Our study suggests that the smartphone
+                          may be used to foster empowerment by guiding the young adult’s actions in situ,
+
+
+754
+
+===== PAGE 13 =====
+                                                         M. Terp et al.
+
+providing comprehensive and easily understood information on the go, allowing
+for recovery tracking, and notification of mental health changes, providing me-
+dication overview and giving easy access to HCPs. The high rates of engagement
+and satisfaction with apps in the care of people with schizophrenia encourage
+the nascent potential of the mode of smartphone service delivery to accommo-
+date the needs of support at all times.
+
+Clinical Implications
+
+Our study advocates that smartphone technology holds the promise of empo-
+wering young adults newly diagnosed with schizophrenia to manage their new
+life situation confidently through easy and timely access to flexible collaboration
+and self-management resources. One thing to be aware of, however is, that pa-
+tient empowerment may lead to over-involvement in own care [39]. Generally,
+over-involvement has gained less attention than under-involvement, although
+evidence has been provided that both types of mismatches affect patient satisfac-
+tion [51]. Since dissatisfaction is associated with disengagement from mental
+health services in young adults with schizophrenia [5], it appears crucial that
+HCPs continually assess with the patient whether the technology has become a
+burden. Otherwise, the technology may foster service disengagement rather than
+encourage and promote engagement. This strongly indicates the need for further
+research on the topic, and highlights that future studies could benefit from not
+exclusively addressing how the smartphone may promote empowerment, but
+also when and how such a technology may defeat its own purpose.
+
+Acknowledgements
+
+This study was funded by a grant from the Tryg Foundation and the Lundbeck
+Foundation, Denmark. We want to express our gratitude to the funding source,
+which had no involvement in the study. Also, we want to express our heartfelt
+thanks to the young adults who took their time to participate in the study, in-
+cluding consultant and service user Camilla Krogh, who helped us to synthesize
+our findings into a drawing. Without the commitment of the young adults this
+study would never have become a reality. Last but not least, we want to thank
+Research Officer, Julie Walsh, Lawson Health Research Institute, for proofread-
+ing.
+
+References
+[1]   Larsen, J.A. (2007) Understanding a Complex Intervention: Person-Centred Ethno-
+     graphy in Early Psychosis. JournalofMentalHealth, 16, 333-345.
+     https://doi.org/10.1080/09638230701299186
+[2]   Jorgensen, P., Nordentoft, M., Abel, M.B., Gouliaev, G., Jeppesen, P. and Kassow, P.
+     (2000) Early Detection and Assertive Community Treatment of Young Psychotics:
+    The Opus Study. Rationale and Design of the Trial. SocialPsychiatryandPsychia-
+     tricEpidemiology, 35, 283-287. https://doi.org/10.1007/s001270050240
+[3]   Nordentoft, M., Melau, M., Iversen, T., Petersen, L., Jeppesen, P., Thorup, A., Ber-
+      telsen, M., Hjorthøj, C.R., Hastrup, L.H. and Jørgensen, P. (2015) From Research to
+
+
+                                                                      755
+
+===== PAGE 14 =====
+M. Terp et al.
+
+                                                Practice: How OPUS Treatment Was Accepted and Implemented throughout
+                                     Denmark. EarlyInterventioninPsychiatry, 9, 156-162.
+                                              https://doi.org/10.1111/eip.12108
+                                         [4]  Stowkowy, J., Addington, D., Liu, L., Hollowell, B. and Addington, J. (2012) Pre-
+                                               dictors of Disengagement from Treatment in an Early Psychosis Program. Schi-
+                                 zophrResElsevierB.V., 136, 7-12.
+                                         [5]   O’Brien, A., Fahmy, R. and Singh, S.P. (2009) Disengagement from Mental Health
+                                                Services. A Literature Review. SocialPsychiatryandPsychiatricEpidemiology, 44,
+                                           558-568. https://doi.org/10.1007/s00127-008-0476-0
+                                         [6]  Kreyenbuhl,  J., Nossel, I.R. and Dixon, L.B. (2009) Disengagement from Mental
+                                         Health Treatment among Individuals with Schizophrenia and Strategies for Facili-
+                                                tating Connections to Care: A Review of the Literature. SchizophreniaBulletin, 35,
+                                           696-703. https://doi.org/10.1093/schbul/sbp046
+                                         [7]  Conus, P., Lambert, M., Cotton, S., Bonsack, C., McGorry, P.D. and Schimmel-
+                                    mann, B.G. (2010) Rate and predictors of service disengagement in an epidemio-
+                                                  logical first-episode psychosis cohort. SchizophrResElsevierB.V., 118, 256-263.
+                                         [8]   Craig, T.K.J. (2004) The Lambeth Early Onset (LEO) Team: Randomised Controlled
+                                                Trial of the Effectiveness of Specialised Care for Early Psychosis. BMJ, 329, 1067.
+                                            https://doi.org/10.1136/bmj.38246.594873.7C
+                                         [9]   Lester, H., Marshall, M., Jones, P., Fowler, D., Amos, T., Khan, N. and Birchwood,
+                                 M. (2011) Views of Young People in Early Intervention Services for First-Episode
+                                           Psychosis in England. PsychiatricServices, 62, 882-887.
+                                             https://doi.org/10.1176/ps.62.8.pss6208_0882
+                                       [10]  Ion, R.M., Cowan, S. and Lindsay, R. (2010) Working with People Who Have Been
+                                           There: The Meaningful Involvement of Mental Health Service Users in Curriculum
+                                        Design and Delivery. TheJournalofMentalHealthTraining,EducationandPrac-
+                                                  tice, 5, 4-11. https://doi.org/10.5042/jmhtep.2010.0214
+                                       [11]  Millar, S.L., Chambers, M. and Giles, M. (2016) Service User Involvement in Mental
+                                         Health Care: An Evolutionary Concept Analysis. HealthExpectations, 19, 209-221.
+                                             https://doi.org/10.1111/hex.12353
+                                       [12] Crawford, M.J., Rutter, D., Manley, C., Weaver, T., Bhui, K., Fulop, N. and Tyrer, P.
+                                           (2002) Systematic Review of Involving Patients in the Planning and Development of
+                                         Health Care. BMJ, 325, 1263. https://doi.org/10.1136/bmj.325.7375.1263
+                                       [13]  Rutter, D., Manley, C., Weaver, T., Crawford, M.J. and Fulop, N. (2004) Patients or
+                                            Partners? Case Studies of User Involvement in the Planning and Delivery of Adult
+                                       Mental Health Services in London. SocialScience&Medicine, 58, 1973-1984.
+                                       [14] Omeni, E., Barnes, M., MacDonald, D., Crawford, M. and Rose, D. (2014) Service
+                                       User Involvement, Impact and Participation: A Survey of Service User and Staff
+                                               Perspectives. BMCHealthServicesResearch, 14, 491.
+                                            https://doi.org/10.1186/s12913-014-0491-7
+                                       [15] Carman, K.L., Dardess, P., Maurer, M., Sofaer, S., Adams, K., Bechtel, C. and Swee-
+                                             ney, J. (2013) Patient and Family Engagement: A Framework for Understanding the
+                                        Elements and Developing Interventions and Policies. HealthAffairs, 32, 223-231.
+                                              https://doi.org/10.1377/hlthaff.2012.1133
+                                       [16] Coulter, A. (2012) Patient Engagement—What Works? TheJournalofAmbulatory
+                               CareManagement, 35, 80-89. https://doi.org/10.1097/JAC.0b013e318249e0fd
+                                       [17]  Institute of Medicine (2001) Committee on Quality of Health Care in America.
+                                          Crossing the Quality Chasm: A New Health System for the 21st Century. National
+                                  Academy Press, Washington DC.
+
+
+756
+
+===== PAGE 15 =====
+                                                         M. Terp et al.
+
+[18] Donker, T., Petrie, K., Hons, B., Proudfoot, J., Clarke, J., Birch, M. and Christensen,
+     H. (2013) Smartphones for Smarter Delivery of Mental Health Programs: A Syste-
+     matic Review. JournalofMedicalInternetResearch, 15, 1-13.
+      https://doi.org/10.2196/jmir.2791
+[19] World Health Organization (2011) mHealth, New Horizons for Health through
+     Mobile Technologies. Observatory, 3, 112.
+[20] Hanlon, P.O., Aref-adib, G., Fonseca, A., Lloyd-evans, B., Osborn, D. and Johnson,
+       S. (2016) Tomorrow’s World, Current Developments in the Therapeutic Use of
+     Technology for Psychosis. BJPsychAdvances, 22, 301-310.
+      https://doi.org/10.1192/apt.bp.115.014654
+[21]  Lal, S., Dell’Elce, J., Tucci, N., Fuhrer, R., Tamblyn, R. and Malla, A. (2015) Prefe-
+     rences of Young Adults with First-Episode Psychosis for Receiving Specialized
+     Mental Health Services Using Technology: A Survey Study. JMIRMentalHealth, 2,
+      e18. https://doi.org/10.2196/mental.4400
+[22]  Spinuzzi, C. (2005) The Methodology of Participatory Design. TechnicalCommu-
+     nication, 52, 163-174.
+[23] Kensing, F. (2003) Methods and Practices in Participatory Design. ITU Press, Co-
+     penhagen.
+[24] Clemensen, J., Rothmann, M.J., Smith, A.C., Caffery, L.J. and Danbjorg, D.B. (2016)
+      Participatory Design Methods in Telemedicine Research. JournalofTelemedicine
+   andTelecare, 1-6.
+[25] Clemensen, J., Larsen, S.B., Kyng, M. and Kirkevold, M. (2007) Participatory Design
+      in Health Sciences, Using Cooperative Experimental Methods in Developing Health
+      Services and Computer Technology. QualitativeHealthResearch, 17, 122-130.
+     https://doi.org/10.1177/1049732306293664
+[26] Kushniruk, A. and Nøhr, C. (2016) Participatory Design, User Involvement and
+     Health IT Evaluation. StudiesinHealthTechnologyandInformatics, 222, 139-151.
+[27] Terp, M., Laursen, B.S., Jørgensen, R., Mainz, J. and Bjørnes, C.D. (2016) A Room
+      for Design, through Participatory Design Young Adults with Schizophrenia Become
+     Strong Collaborators. InternationalJournalofMentalHealthNursing, 25.
+[28] Kvale, S. and Brinkmann, S. (2009) InterViews, Learning the Craft of Qualitative
+     Research Interviewing. Sage Publications, Los Angeles.
+[29] Spradley, J. (1980) Participant Observation. Holt Rinehart and Winston, New York.
+[30] Hammersley, M. (2010) Ethnography, Principles in Practice. 3rd Edition, Rout-
+      ledge, London, New York.
+[31] Kanstrup, A.M. and Bertelsen, P. (2011) User Innovation Management: A Hand-
+     book. Aalborg Denmark, Aalborg University Press.
+[32]  O’Reilly, M. and Parker, N. (2012) “Unsatisfactory Saturation”: A Critical Explora-
+      tion of the Notion of Saturated Sample Sizes in Qualitative Research. Qualitative
+     Research, 13, 190-197. https://doi.org/10.1177/1468794112446106
+[33] Kanstrup, A.M. and Christiansen, E. (2006) Selecting and Evoking Innovators,
+    Combining Democracy and Creativity. Proceedingsofthe 4thNordicConference
+   onHuman-ComputerInteraction, 321-330.
+     https://doi.org/10.1145/1182475.1182509
+[34] Thomke, S. and von Hippel, E. (2002) Customers as Innovators: A New Way to
+     Create Value. HarvardBusinessReview, 74-81.
+[35] Gadamer, H.-G. (2013) Truth and Method. Revised 2nd Edition, Bloomsbury Aca-
+     demic, London.
+
+
+                                                                      757
+
+===== PAGE 16 =====
+M. Terp et al.
+
+                                       [36] Bjørnes, C.D. (2011) The Patients’ Health Informatics Tool—Exploring the Possi-
+                                                          bilities: A Web 2.0 Application for Men with Prostate Cancer. Virtual Centre for
+                                         Health Informatics, Aalborg University, Aalborg.
+                                       [37] WMA (2013) WMA Declaration of Helsinki—Ethical Principles for Medical Re-
+                                           search Involving Human Subjects.
+                                       [38] Rodin, J. (1986) Aging and Health, Effects of the Sense of Control. Science, 233,
+                                          1271-1276. https://doi.org/10.1126/science.3749877
+                                       [39] Angelmar, R. and Berman, P.C. (2007) Patient Empowerment and Efficient Health
+                                      Outcomes. In: FinancingSustainableHealthcareinEurope, NewApproachesfor
+                        NewOutcomes, ConclusionsfromaCollaborativeInvestigationintoContentious
+                                  AreasofHealthcare, Grand Duchy of Luxembourg, Ministry of Health, Luxem-
+                                           bourg, 139-162.
+                                       [40]  Xia, J., Merinder, L.B. and Belgamwar, M.R. (2014) Europe PMC Funders Group
+                                         Psychoeducation for Schizophrenia. PsychiatryandClinicalNeurosciences, 1-157.
+                                       [41] Vreeland, B., Minsky, S., Yanos, P.T., Menza, M., Gara, M., Kim, E., Toto, A.M. and
+                                              Allen, L. (2006) Efficacy of the Team Solutions Program for Educating Patients
+                                        about Illness Management and Treatment. PsychiatricServices, 57, 822-828.
+                                              https://doi.org/10.1176/ps.2006.57.6.822
+                                       [42] Mueser, K.T. and Mcgurk, S.R. (2004) Schizophrenia. TheLancet, 363, 2063-2072.
+                                       [43] Harvey, P.D. (2013) Cognitive Aspects of Schizophrenia. WileyInterdisciplinary
+                                        Reviews: CognitiveScience, 4, 599-608. https://doi.org/10.1002/wcs.1253
+                                       [44] Gold, J.M. (2004) Cognitive Deficits as Treatment Targets in Schizophrenia. Schi-
+                                     zophreniaResearch, 72, 21-28.
+                                       [45] Birchwood, M. (2000) Schizophrenia, Early Warning Signs. AdvancesinPsychiatric
+                                       Treatment, 6, 93-101. https://doi.org/10.1192/apt.6.2.93
+                                       [46] Birchwood, M. and Spencer, E. (2001) Early Intervention in Psychotic Relapse.
+                                         ClinicalPsychologyReview, 21, 1211-1226.
+                                       [47]  Frost, M., Marcu, G., Hansen, R., Szaántó, K. and Bardram, J. (2011) The Monarca
+                                           Self-Assessment System, Persuasive Personal Monitoring for Bipolar Patients. Proc
+                                  5thIntICSTConfPervasiveComputTechnolHealthcIeee.
+                                              https://doi.org/10.4108/icst.pervasivehealth.2011.246050
+                                       [48] Ben-Zeev, D. (2017) Technology in Mental Health, Creating New Knowledge and
+                                           Inventing the Future of Services. PsychiatricServices, 68, 107-108.
+                                             https://doi.org/10.1176/appi.ps.201600520
+                                       [49]  Firth, J. and Torous, J. (2015) Smartphone Apps for Schizophrenia: A Systematic
+                                          Review. JMIRmHealthuHealth, 3, e102. https://doi.org/10.2196/mhealth.4930
+                                       [50] Amminger, G., Harris, M., Conus, P., Lambert, M., Elkins, K., Yuen, H.-P. and
+                                      McGorry, P. (2006) Treated Incidence of First-Episode Psychosis in the Catchment
+                                       Area of EPPIC between 1997 and 2000. ActaPsychiatricaScandinavica, 114, 337-
+                                             345. https://doi.org/10.1111/j.1600-0447.2006.00790.x
+                                       [51] Lantz, P.M., Janz, N.K., Fagerlin, A., Schwartz, K., Liu, L., Lakhani, I., Salem, B. and
+                                             Katz. S.J. (2005) Satisfaction with Surgery Outcomes and the Decision Process in a
+                                          Population-Based Sample of Women with Breast Cancer. HealthServicesResearch,
+                                             40, 745-767. https://doi.org/10.1111/j.1475-6773.2005.00383.x
+
+
+
+
+
+758
+
+===== PAGE 17 =====
+Submit or recommend next manuscript to SCIRP and we will provide best
+service for you:
+Accepting pre-submission inquiries through Email, Facebook, LinkedIn, Twitter, etc.
+A wide selection of journals (inclusive of 9 subjects, more than 200 journals)
+Providing 24-hour high-quality service
+User-friendly online submission system
+Fair and swift peer-review system
+Efficient typesetting and proofreading procedure
+Display of the result of downloads and visits, as well as the number of cited articles
+Maximum dissemination of your research work
+Submit your manuscript at: http://papersubmission.scirp.org/
+Or contact ojn@scirp.org

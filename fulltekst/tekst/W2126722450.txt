@@ -1,0 +1,1652 @@
+WORK: Understanding of a product/service system design: a holistic approach to support design for remanufacturing
+AUTHORS: Tomohiko Sakao, Hajime Mizuyama
+YEAR: 2014
+DOI: https://doi.org/10.1186/2210-4690-4-1
+SOURCE: https://link.springer.com/content/pdf/10.1186/2210-4690-4-1.pdf
+LICENSE: CC BY 2.0, https://creativecommons.org/licenses/by/2.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+RESEARCH                                          Open Access
+
+Understanding of a product/service system
+design: a holistic approach to support design for
+remanufacturing
+
+Tomohiko Sakao1* and Hajime Mizuyama2
+
+
+
+* Correspondence:
+tomohiko.sakao@liu.se             Abstract
+1Division of Environmental
+                      A product/service system (PSS) facilitates remanufacturing and thus is the article’sTechnology and Management,
+Department of Management and        subject. This article presents a first quantitative analysis, through a descriptive study,
+Engineering, Linköping University,       of the details of a PSS design case. To do so, an example of PSS design was
+Linköping 58183, Sweden
+                           conducted using a real offering in the marketplace, and this design episode wasFull list of author information is
+available at the end of the article       analyzed through protocol analysis developed further by the authors. The results of
+                              the analysis include reasonable hypotheses: PSS design begins with needs by and
+                               value for a customer, addresses primarily life cycle activities for solutions, and ends
+                            back with value. In addition, life cycle activities, which accounted for about 30% of
+                              the episode, were found to be given a central role within PSS design. Furthermore,
+                              reasoning about problems, which spent more than 30% of the design, seems to be a
+                       new and important type of activity in PSS design as compared to physical product
+                                design. This article contributes to greater understanding of PSS design process in
+                                 quantitative terms and thus to developing effective support for PSS design.
+                          Knowledge about PSS enables the understanding of remanufacturing with a more
+                                     holistic perspective and thus creating an opportunity for better optimization of
+                               remanufacturers’ activities.
+
+                          Keywords: Design for remanufacturing; Protocol analysis; Design process; Life cycle
+                                     activity
+
+
+
+
+                      Background
+                           Remanufacturing is the process of bringing used products to a ‘like-new’ functional
+                                 state by rebuilding and replacing their component parts [1]; as several articles [2-5]
+                             point out, it goes hand-in-hand with the product/service system (PSS). PSS, an emer-
+                             ging marketing concept where an original equipment manufacturer (OEM) will some-
+                            times retain ownership of a physical product, can be defined as ‘tangible products and
+                               intangible services designed and combined so that they jointly are capable of fulfilling
+                                 specific customer needs’ [6]. Neither remanufacturing nor PSS is an aim of a business.
+                          However, PSS is indeed a potential means in an ever-increasing part of the industry.
+                        With PSS, an OEM can have better control in taking back used products and in main-
+                               taining better product condition, and thus PSS facilitates remanufacturing. Therefore,
+                                  this article addresses PSS - with a more holistic approach than remanufacturing - while
+                            observing its contribution to remanufacturing.
+
+                           © 2014 Sakao and Mizuyama; licensee Springer. This is an open access article distributed under the terms of the Creative Commons
+                                              Attribution License (http://creativecommons.org/licenses/by/2.0), which permits unrestricted use, distribution, and reproduction in any
+                                    medium, provided the original work is properly cited.
+
+===== PAGE 2 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 2 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+               Design is important in PSS as it has a high impact on quality. However, sufficient insights
+                into PSS design are not available (see e.g., [7,8]). The literature discussing design for rema-
+               nufacturing, including design of product, service, and supporting system, has the same ten-
+             dency  [9]  - the overall volume on the subject  is low. Within PSS design  literature,
+              understanding of PSS design processes is scarce. In fact, very little research has been carried
+              out on how PSS is actually designed. The processes of PSS design are not sufficiently under-
+              stood in detail from a scientific standpoint. One cannot, for example, answer what is hap-
+              pening inside the PSS design processes along time; this question has been posed and
+             answered many times, however, in design research in general (e.g., [10]). Better information
+             grounded on design as a time-based activity can be used to develop richer models of design
+                 [11]. Were this information available in PSS design, it could be effectively used to develop
+            PSS design support methods and tools.
+
+               Motivated by this gap, this paper aims to propose a method to analyze PSS design
+                cases, analyze the details of the entire process of a PSS design case using the proposed
+             method, and thus contribute to the understanding of PSS design processes. To do so,
+              protocol analysis was used as a basis for the method, and an instance of PSS design
+            was conducted to improve a PSS offering in the marketplace. The PSS design was car-
+               ried out by three people working as a group. Then, this design episode was analyzed to
+              capture some salient characteristics of PSS design. This article is extended based on
+              previous work [12].
+
+             The remainder of the paper is structured as follows: Section Remanufacturing and
+            PSS clarifies the relation between remanufacturing and PSS, Section Literature review
+              presents our research motivation, Section Research method describes the proposed and
+             adopted method, Section Results - analysis of a PSS design episode shows the results of
+              the analysis, Section Discussion discusses the results, and Section Conclusion con-
+              cludes the paper.
+
+
+            Remanufacturing and PSS
+           The relation between remanufacturing and PSS is not clearly explained in the literature
+              (one early paper [13] analyzed that between remanufacturing and service selling). PSS
+                   is often seen as a concept that does not specify types of included services, while rema-
+              nufacturing needs specific service such as take back. Thus, remanufacturing can be
+              seen as a concrete activity in PSS as already implied by various authors [2-5].
+
+                 Setting the target of the research on PSS, i.e., at a more abstract level than remanu-
+               facturing  itself, might be inefficient with the final aim of supporting and spreading
+             remanufacturing in a wider range of industry. However, the fact that some features of
+            PSS (e.g., strong relationship between a provider and a user) facilitate remanufacturing
+                [2] makes this research approach beneficial.
+              Another benefit of this approach lies in the holistic and interdisciplinary nature of
+              PSS. Researching PSS enables the understanding of remanufacturing with a more holis-
+                  tic perspective than researching remanufacturing alone and thus provides an opportun-
+                  ity to better optimize a company’s activities.
+
+               Furthermore, there are many more firms interested in PSS than only in remanufac-
+                turing. In fact, numerous manufacturers’ offerings today include services - in the USA
+            and Finland, this combination of offerings exceeds 50% of all manufacturers [14]. This
+
+===== PAGE 3 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 3 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              proportion can be a good target as a channel for disseminating PSS, and through this,
+              dissemination remanufacturing can be promoted. Thus, promoting remanufacturing as
+              a concrete type of PSS may be a good alternative to disseminating remanufacturing.
+           The above provides justification for setting the research target on PSS in order to
+              develop and disseminate knowledge about remanufacturing into industry.
+
+
+
+             Literature review
+
+            Need of descriptive quantitative study in PSS design research
+            Knowledge  is needed about the thoughts and actions of designers throughout the
+              process of designing in various contexts to create methods, if one assumes that design-
+              ing is a procedure that can be taught and learned [15]. In order to develop knowledge,
+            and thus methods and tools thoroughly in the engineering design discipline, a seminal
+            work in this area by Blessing and Chakrabarti [16] recommends, in the following order:
+                (1) descriptive study (DS-I) to characterize the concerned design process and derive,
+                    e.g., a reference model for developing a design method, (2) prescriptive study to pro-
+              duce, e.g., a normative design method, and (3) descriptive study (DS-II) to observe the
+              design process by applying the developed normative method. A descriptive study (both
+             DS-I and DS-II) aims at understanding the phenomenon of design and is argued to be
+              a crucial part of design research together with a prescriptive study [16,17].
+
+                 Several PSS design methods have been proposed. Many of them (e.g., [18-20]) have been
+              developed for PSS based on theories and methodologies for conventional product design
+                    (e.g., [21]) and extended through logical reasoning of what extension and modification is
+             needed for integrating services with products. These methods, however, have the risk of
+             mismatching how PSS design is actually conducted. On the other hand, little literature on
+            PSS design methods has come out explicitly from the first type of descriptive study (DS-I)
+                of an actual PSS design process. Two articles [22,23] presenting the PSS design process
+              with a more descriptive style are found. The process by Morelli [22], based on a case of
+              telecom center design, consists of the following, and in this order: value proposition, mar-
+               ket analysis, product/service definition, use-case analysis, tentative architecture, test, and
+                final definition. Another process by Alonso-Rasgado and Thompson [23] produces
+              the following information, also in order: (1) business ambitions of the client, (2) po-
+                tential business solutions, (3) core definition of PSS plus PSS options, (4) enhanced
+               definition of the potential PSS, and (5) risk analysis and evaluation of business cases.
+            However, the information about these processes is only qualitatively written, and in-
+               sights about quantitative details of PSS design processes are rarely available. In gen-
+                 eral, quantitative data about a given process serves as a fundamental way to improve
+              a process, and thus, quantitative analysis is powerful in providing exact information.
+             For instance, identifying the most time-consuming part of a process enables putting
+              focus on that part to improve the efficiency of the whole process.
+
+             The lack of this understanding can be a problem for the research area - producing a
+            number of methods and tools to support PSS design without understanding the PSS de-
+               sign processes thoroughly. This lack of understanding does not secure the optimum ef-
+                fectiveness of the developed normative design support methods, as well as the efficiency
+                of improvement of the design process. Thus, descriptive and quantitative study would be
+           among the most promising research streams to be further explored. This gap provides
+
+===== PAGE 4 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 4 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              motivation for the authors to conduct research in order to understand more about PSS
+              design processes in detail through a descriptive and quantitative study.
+
+
+            What to understand in PSS design
+              Following the demanded research stream identified in Section Need of descriptive
+               quantitative study in PSS design research, the next question to be answered is what
+             should be understood in PSS design; this section answers this question. According to
+               Blessing et al. [24], ‘the aim of engineering design is to support industry by developing
+             knowledge, methods and tools which can improve the chances of producing a success-
+                 ful product’. Among other things, this article focuses on methods to support industry
+              with developing an effective PSS.
+                In general, to develop prescriptive methods, ‘it is important to understand the inter-
+             dependencies in the design process and the activities during the process’ [15]. This
+                 article focuses on ‘the activities during the process’ as a  first step. At present, for
+               instance, almost none of the PSS design or design for remanufacturing literature can
+             answer the following questions. These types of questions usually can be answered in
+              general engineering design (referring to, e.g., a typology of design models [25]):
+
+
+              What concepts are the most time-consuming in the PSS design process?
+                        Is there any difference regarding types of activities between different PSS
+                   design stages?
+                Does the entire PSS design process follow the waterfall model (see, e.g., [26])?
+
+
+               Even from the practical viewpoint, these questions are all relevant. Challenges for conven-
+                 tional manufacturing firms to develop PSS include establishing an effective development rou-
+                 tine [27]. It is difficult to establish and rely on such a routine without knowing the answers
+               to the questions above. What is missing is a fundamental understanding of the PSS design
+                process, including concepts addressed and elemental processes taking place in the design
+                process. For instance, if PSS design concentrates on discussing a limited set of concepts, de-
+               veloping support for addressing those concepts in detail would be effective; if discussion is
+              spread between many types of concepts, however, addressing the relations between concepts
+             would be important. In addition, dominant types of processes in PSS design would also sug-
+                gest effective support - a process of creating a solution and analyzing an object can be sup-
+              ported effectively by creativity support software (TRIZ [28] is an example of software of this
+               type in product design) and computer aided engineering (CAE)-like software, respectively.
+              Thus, this article aims to answer, with regard to effective PSS design, the following:
+
+
+                    (a) Which concepts are frequently used in different stages?
+                  (b) Which elemental processes take place in different stages?
+                    (c) Which combination of concepts and processes are used?
+
+
+
+            Research method
+
+               Protocol analysis in general
+             This research adopts protocol analysis in order to quantitatively describe, structure,
+            and analyze the process of a PSS design episode. Development of protocol analysis to
+
+===== PAGE 5 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 5 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+              analyze a process of technical problem solving is largely owed to Gero’s and Cross’
+             groups [11,29]. Protocol analysis is based on the ‘think aloud’ method introduced by
+              Ericsson and Simon [30] and further developed by van Someren et al. [31].
+                Protocol analysis facilitates detailed inspection of  all the protocol data in a given
+              process that has rich information regarding what is happening in a process. Unlike con-
+               ventional content analysis methods, it focuses on understanding the cognitive process
+               of a person or team of people conducting a task and thus is more suitable for the pur-
+             pose of this research. This accords with the view of Carley [32], who points out that
+               content-analytic procedures are appropriate and work well at macrolevels where the
+                interest is in broad cultural concepts, but seems less effective at the microlevel, where
+               psychological or cognitive phenomena need to be examined. Protocol analysis is used
+                for different activities like teamwork [33] and in various fields such as psychology [34]
+            and software engineering [35]. It is an established method in the discipline of design
+                (as shown by, e.g., [11,29]). In general, it is conducted in the following order [11,30]: (1)
+                setting the design task, (2) carrying out and recording the design, (3) transcribing the
+              design episode, (4) segmenting (dividing the protocol into utterances) and encoding the
+               utterances, and (5) analyzing the data.
+             The categories in the coding scheme adopted by each author vary depending on
+                their interest. For instance, the categories used in architectural design [36] are for cog-
+                nitive actions: physical (e.g., move a pen), perceptual (e.g., attend to shapes), func-
+                tional, and conceptual. Another example [11] uses three columns for an episode of
+               physical product design: the first column is from the viewpoint of the design object
+            and coded by ‘Function’, ‘Behavior’, and ‘Structure’ as well as by different levels of ab-
+                straction. The second and the third are micro- and macrostrategies, respectively. The
+              microstrategy categories are ‘Proposing Solution’, ‘Analyzing Solution’, and ‘Explicit
+                 Strategies’, while the macrostrategy categories are ‘Top-Down’, ‘Bottom-Up’, ‘Decom-
+             posing the Problem’, ‘Backtracking’, and ‘Opportunistic’. The term ‘strategies’ can be
+             understood as an indication of the effectiveness of characterizing each process in light
+               of how the goal is approached, as design is a goal-oriented activity. The microstrategies
+              are effective in characterizing elemental processes, while the macrostrategies are useful
+               to link to design models (e.g., [25]).
+                Protocol analysis in any coding scheme can derive extremely rich, quantitative, and
+               objective information, such as utilized concepts and elemental processes across the
+             temporal dimension, because it can follow a certain predefined framework that captures
+           how a designer confronts and handles a problem [11]. Therefore, it is a powerful and
+                suitable tool for the purpose of this research. This feature cannot be obtained by other
+             methods; for instance, a retrospective interview study of a design case - one of the
+             major methods - is here obviously impossible to produce information with the same
+                characteristics.
+               However, an attempt to apply protocol analysis to PSS design is scarcely found in the
+                 literature.  In some  existing  research  of  physical product  design  [11], ‘Function’,
+                ‘Behavior’, and ‘Structure’ were adopted to code an aspect of the problems addressed in
+              the protocol, which can be interpreted as identification of concepts of a design object.
+         How to represent a design object is an issue to apply protocol analysis in this research
+             because a design object in PSS design is different from the physical product design
+                 [37]. The solution adopted in this research is described in the next section.
+
+===== PAGE 6 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 6 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+             Design parameters in PSS
+           The question is which set of parameters to represent a design object in the case of PSS
+              design  is necessary and sufficient. Although the PSS research community does not
+            seem to agree on  it, consolidating various PSS concepts based on the PSS Layer
+           Method [38] can be used as a working solution. This research employs the nine
+             dimensions of this method.
+               This method adopts the nine dimensions by reflecting divergent viewpoints of differ-
+              ent actors involved in PSS, as well as various aspects not only concerning the physical
+             product but also the business model as well. The nine dimensions consist of the follow-
+                ing. ‘Needs’ (dimension 1) are satisfied by ‘Customer Value’ (dimension 2), which a
+             customer perceives. ‘Needs’ involves capturing non-solution-oriented needs,  e.g., the
+             need for access to broadcast information. ‘Customer Value’  is the benefit obtained
+             through the PSS and can be classified into four types of benefits: economic, environ-
+              mental, social, and technical. Such value has to be created by ‘Deliverables’ (dimension
+                  3), which have value for the customer. The deliverables are a result (either material or
+              immaterial) of delivery processes,  i.e., ‘Life cycle Activities’ (dimension 4). ‘Life cycle
+                 Activities’ are performed by the PSS provider and/or the customer, e.g., take back and
+               reconditioning. To implement a life cycle activity chain, resources are needed. Actors
+             (dimension 5), Core Products (dimension 6) (what is called core in remanufacturing),
+            and Periphery (like IT infrastructure or public transport systems) (dimension 7) are
+             such resources. Actors can include the provider, the user, and the logistics company.
+               ‘Contract Elements’ (dimension 8) frame the entire value creation process, including
+               ‘Finance’ (dimension 9) (especially about the payment model, e.g., flat rates, pre-paid,
+              scheduled, or incremental (down-) payment), offerings, and finally the entire business
+             model. This covers most of the important elements of PSS with multi-disciplinary
+                characteristics and is at least a workable solution.
+
+
+
+
+            Method proposed and adopted in this research
+             This section describes the method proposed and adopted in this research based on
+            work by Gero et al. [11] and Müller [38]. The reason for adopting the work by Gero
+                et  al. [11]  is  its generic characteristics and  its modularity realized by the three
+            columns (one column concerns a design object and can be replaced with another for
+              PSS). This research intends to capture general trends of PSS design because few
+              research results have been presented in the area and because it coincides with the
+             based method [11].
+             The coding scheme is adjusted from research by Gero et al. [11] using ‘Function’,
+                ‘Behavior’, and ‘Structure’ (in the case of product design) for the column concerning a
+              design object; the nine dimensions of the PSS Layer Method [38] (as shown in Table 1
+              with abbreviations used in the paper) are adopted to describe the object (PSS in this
+               case) as explained in the previous section. Thus, the nine dimensions are substituted to
+              the set of ‘Function’, ‘Behavior’, and ‘Structure’, which were used for the design object
+            column [11].
+            To be able to answer questions b and c, categories for the process characteristics
+             were prepared. The same macrostrategies were used as in the existing cases [11] (see
+              Table 2) to characterize the underlining trends of the utterances. Note that ‘Top-Down’
+
+===== PAGE 7 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 7 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 1 Categories for the PSS dimensions
+
+            Name                                                                               Abbreviation
+
+               Needs                                                              N
+
+                  Value                                                                                V
+
+                   Deliverables                                                         D
+
+                      Life cycle Activities                                                                             L
+
+                  Actors                                                                    A
+
+                Core Products                                                                    CP
+
+                  Periphery                                                                            P
+
+                  Contract Elements                                                                   CE
+
+                 Finance                                                                                     F
+
+             No dimension applied                                                             X
+
+
+                   is interpreted in the PSS design context as a process of elaborating need/value and
+                identifying product/service (‘Bottom-Up’ is for reasoning in the opposite direction).
+            To complement the macrostrategies, the microstrategies shown in Table 3 are used. This
+               contributes to characterize the motivations of the utterances. The microstrategies were cre-
+               ated after modification of the existing cases [11], where ‘Proposing Solution’, ‘Analyzing
+                 Solution’, and ‘Explicit Strategies’ were the three categories. Now, ‘Introducing Problem’,
+               ‘Analyzing Problem’, ‘General Strategies’, and ‘Discussion Strategies’ are newly introduced
+             groups of categories. There are two reasons for this addition. First, the PSS design process
+                    is argued to be a zigzag process between the problem space and the solution space (e.g.,
+                  [22]), while a traditional product design process focuses more on exploration in the solu-
+               tion space. Therefore, ‘Introducing Problem’ and ‘Analyzing Problem’ were two groups of
+                categories foreseen to be useful to include. Second, the analysis of PSS design is conducted
+             by multiple people, as opposed to the cases [11], and thus, it is more likely to have sen-
+               tences questioning or agreeing with other people in the design episode. Thus, two add-
+                 itional groups of categories,‘General Strategies’ and ‘Discussion Strategies’, were added.
+                In sum, encoding each segment of the design episode is done from three aspects, i.e.,
+              the PSS dimension, the macrostrategy, and the microstrategy. The alternatives are
+           shown in Tables 1, 2, and 3. Note that an alternative, ‘no dimension applied’, was pos-
+                 sible to be chosen for the PSS dimension.
+             The encoding is first performed independently by two people; this can be seen as the
+                   first phase of the Delphi method [39]. Then, after a 3-day break at a minimum, the
+            same two people check coding consistency by comparing the two different protocols.
+           The two encoders reach the final, agreed coding through discussion to derive the final
+               protocol. This aims to increase the robustness of the final protocol. This arbitration
+               step corresponds to the latter phases of the Delphi method.
+
+
+              Table 2 Categories for the macrostrategies
+
+            Name                                                                               Abbreviation
+
+              Top-Down                                                                    TD
+
+               Bottom-Up                                                                  BU
+
+               Decomposing Problem                                                           DE
+
+                  Backtracking                                                                             BT
+
+                  Opportunistic                                                              OP
+
+===== PAGE 8 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 8 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 3 Categories for the microstrategies
+
+            Name                                                                               Abbreviation
+
+                  Introducing Problem                                                                                                                                                                  I
+
+                  Analyzing Problem                                                                 Z
+
+                 Proposing Solution                                                                     P
+
+                  Analyzing Solution                                                           A
+
+                 General Strategies                                                        G
+
+                  Discussion Strategies                                                    D
+
+                      Explicit Strategies                                                                            E
+
+
+
+          How the PSS design was carried out
+
+              Addressed PSS offering and business
+           The company studied develops, manufactures, and delivers drilling equipment for the
+              construction industry. The construction industry can be characterized by its huge pro-
+                 ject budgets and less than precise predictions for operations due to the variable condi-
+               tions (at least compared to production in a factory). These uncertain conditions make
+               operators’ skills (such as digging a hole through rocks/soils with different characteristics
+              within a given time) important. Construction is also typically carried out under great
+             time pressure, and given that work is often performed in remote locations, machine
+                 availability is in high demand.
+                Training, spare parts delivery, and maintenance, repair and overhaul (MRO) are part
+               of the company’s service portfolio. An offering for the construction business, based on
+              a complex machine such as drilling equipment and its related services, has good poten-
+                   tial for being designed and offered as a PSS. Another firm in the construction business
+               also offers a PSS by integrating construction machines and services such as monitoring,
+                 repair, and performance reports [40]. This is technically realized by the firm’s informa-
+               tion and communication network with individual machines, which the studied com-
+             pany has not yet installed.
+             The motivation for this company to provide PSS is to create higher value for its cus-
+              tomers/users. The PSS offering investigated was one of the major services provided by
+              the company. Instead of selling a physical product alone,  i.e., a drilling machine, the
+           company also delivers warranty of quality, original spare parts on time, early informa-
+               tion on the next MRO activity, grease and oil of adequate quality, cleaning equipment,
+            and a service binder. Life cycle activities are early fault detection, MRO prognostics,
+            and execution including scheduling, transport of spares to the field, and take back of
+               rotatable and broken parts.
+
+
+             The design task and preconditions of designers
+           The task of this design was to find several rational improvement options for this offer-
+              ing and represent them with the nine parameters within approximately 1 h. This task
+            was given to a group of three designers working in a collaborative manner. The reason
+               to not give the task to a single designer was the intention to obtain more ideas from a
+              broader range, which appears to be the rationale in PSS design addressing various
+              dimensions. In addition, the reason why the frame for description, i.e., the nine parame-
+                  ters, was used is that it is difficult to understand how to describe the output without a
+              given frame.
+
+===== PAGE 9 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                          Page 9 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+              Three designers were nominated from master’s students majoring in mechanical en-
+               gineering at Kyoto University, Japan. Each had basic knowledge of industrial economics
+               in addition to knowledge in mechanical engineering. None of them were instructed to
+               play a certain function, and the three designers had a homogeneous role in the task. As
+              Stempfle and Badke-Schaub [41] point out, although generalizations from student
+             teams to design teams in industry must be drawn with caution, some insight  is
+              expected to be gained into basic thinking processes which are not contaminated by
+           unknown and unpredictable  factors which occur in a  field  setting. This point  is
+                revisited in Section Factors influencing PSS design.
+
+
+
+               Preparation for the design
+              Before conducting the design, the designers accomplished the following, in this order:
+
+
+                    1. Understand the background for industrial interest in PSS.
+                    2. Understand the PSS Layer Method.
+                    3. Understand the addressed offering through studying materials (brochures, etc.)
+                 from the company and by visiting a tunnel construction site, located in Kumano,
+                    Japan, where similar services and the same core product of the PSS offering were
+                  provided by the company.
+                    4. Create, working individually, one or two improvement ideas based on the current
+                      offering described in the PSS Layer Method by a developer and an expert in the
+                  method.
+                    5. Review feedback about the description from the PSS Layer Method expert in order
+                    to correct misunderstandings and to stimulate ideas.
+                    6. Understand how the design should be conducted, e.g., by thinking aloud.
+
+
+              Each designer spent around 14 h on the activities above, excluding the visit to the
+                   site. Note that the designers were not allowed to exchange information about the de-
+               sign with the others in order to prevent any co-development in advance of the design
+                session. It should also be noted that the designers did not learn any particular methods
+                for PSS design in order to avoid influencing the design process.
+
+
+
+              Design environments
+           The design episode was created in the form of group discussion in the Japanese
+              language, the mother tongue of the three designers. The execution of the design took
+               place in October 2010. A poster-sized paper was used to describe information via post-
+                   its for the nine dimensions. In addition, a whiteboard and pens were used for comple-
+             mentary means (see Figure  1). Besides the three designers, two other people were
+              present during the design. One of them, who had more information about the offering
+            and the company, assisted the designers with the aim of ensuring that everything went
+              according to plan. This person also worked as a consultant with external sources
+              during the design. This person, as well as the other attendant, transcribed and encoded
+              the protocols in order to get the best possible insight into the design activities. The
+             equipment used for both audio and video recording consisted of two video cameras
+              with mobile microphones to provide the best possible sound recording.
+
+===== PAGE 10 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 10 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+
+                  Figure 1 Snapshot of the conducted design.
+
+
+
+
+
+            Outcome of the PSS design - generated ideas for improvement
+           The design episode lasted for 1 h, 13 min, and 29 s. A number of distinguishable ideas
+                for improving the offering were generated during the design and are presented below.
+             These are all effective solutions with respect to the information given to the designers,
+           some of which is described in Section Addressed PSS offering and business (note that
+              the case by another firm [40] was not discussed in advance to avoid any copying of
+                 ideas). Thus, the given design episode can be regarded as one of effective design.
+
+
+                    1. Have an on-site service technician for enabling quicker service and sharing more in-
+                  formation on machine operation.
+                    2. Provide more information about the provider’s costs with a customer for more
+                   transparency of the cost structure.
+                    3. Estimate economic costs of services, particularly for a concerned customer.
+                    4. Introduce an IT system for the different actors to share the current status of a
+                 machine and their needs.
+                    5. Introduce a kaizen system at the site to facilitate more efficient machine operation.
+                    6. Improve safety for machine operators (usually not from the PSS provider).
+                    7. Introduce qualification skills for machine operators to assure proper operation of
+                  equipment.
+                    8. Make the charging scheme for services easier for a customer to project their
+                economic costs.
+                    9. Support the customer’s corporate social responsibility (CSR) activities at the
+                   construction site.
+
+
+             Results - analysis of a PSS design episode
+
+             Encoding
+           The design episode was transcribed into 1,450 segments. The transcripts were the main
+              source for the segmented texts, but when ambiguity about the texts appeared, the video
+
+===== PAGE 11 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 11 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+               of the design episode as well as the designers were consulted. A table shows an
+             example of a part of the segmented protocols with coding (see Appendix).
+             The results are shown in Table 4, where the first column shows agreement between
+            two encoders. The second and the third columns show agreement within encoder A
+            and encoder B, respectively. For example, in categorizing the PSS dimensions, two en-
+              coders agreed with 67% of their first codings, while the first coding by encoder A was
+                different from the final one by 8%. The ratio of agreement between the encoders in the
+               microstrategies was the lowest, 36%.
+
+
+
+               Overall trend along the timeline
+              Figure 2 shows the transitions of dialogues of the entire PSS design along the timeline
+               in terms of microstrategies, macrostrategies, and PSS dimensions (from the top). Note
+               that microstrategies are categorized into a higher level and limited to the four groups
+              (by removing those concerning strategies).
+                Figure 2 shows, for instance, that the PSS dimensions begin with the customer view
+                      (i.e., ‘Needs’ and ‘Customer Value’) and take a descent through the dimensions to return
+               to the customer view later. After around 27 min, the graph for the PSS dimensions
+            shows a focus change from the customer view to the ‘Life cycle Activity’ and then to
+              other dimensions. Note that discontinuous parts of each graph mean no appropriate
+              category is assigned to the corresponding segment.
+
+
+
+               Analysis by divided parts
+          To make a trend easier to understand and to answer to questions a, b, and c, the design
+              episode has been divided into five parts, evenly distributed in terms of number of utter-
+               ances. The reason for adopting the number of utterances is its convenience to test the
+              data statistically. Tables 5, 6, and 7 show numbers of utterances of each micro/macro-
+               strategy used and those of each PSS dimension discussed, respectively. All the numbers
+               in these tables are a percentage of the whole PSS design; 100, for instance, means 100%
+            and corresponds to 1,450 utterances.
+                In order to check if there is a significant difference in the data in Tables 5, 6, and 7,
+              the utterance numbers (i.e., matrixes with the elements on Tables 5, 6, and 7 multiplied
+             by 1,450 and divided by 100) were tested statistically. As a result, the null hypothesis of
+             independence between the row and column variables is rejected by the Chi-square test
+              with a p value less than 0.01 for all the data sets. This means that the distributions of
+             micro- and macrostrategies used and that of PSS dimensions discussed depend on the
+                parts; that is, they vary along time.
+             The numbers above the average are shown in italics in the table to visualize the
+                difference. Table 5 shows  that two  microstrategies, ‘Introducing Problem’  (I) and
+
+              Table 4 Agreement between codings
+
+                  Between the first codings   Between the first coding by       Between the first coding by
+                  by encoders A and B       encoder A and the final coding    encoder B and the final coding
+
+                PSS 67%                   92%                         74%
+
+                Mi  36%                   75%                         50%
+
+             Ma  42%                   75%                         60%
+
+                    PSS, PSS dimensions; Mi, micro strategies; Ma, macrostrategies.
+
+===== PAGE 12 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 12 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+
+                  A
+
+                       P
+
+                     Z
+
+                                       I                                                                                        Micro strategies
+
+
+
+
+                            OP
+                            BT                                                                                  Macro strategies
+
+                           DE
+
+                          BU
+
+                            TD
+
+
+
+                     N
+                     V
+                     D
+                         L
+                     A
+                       CP                                                                             PSS dimensions
+                           P
+                      CE
+                           F
+
+                                 Part 1               Part 2    27 min.      Part 3                 Part 4                Part 5
+
+                  Figure 2 Transitions of dialogues along the timeline.
+
+
+
+              ‘Analyzing Problem’ (Z), are used in earlier parts, while the strategy ‘Analyzing
+               Solution’ (A)  is used  later.  Actually, ‘Introducing Problem’  (I) and  ‘Analyzing
+             Problem’ (Z) accounted for 49% within parts 1 and 2. Table 6 shows a clear shift of
+              the macrostrategies used in parts 1/2 and parts 3/4/5, from ‘Top-Down’ (TD) to
+             ‘Bottom-Up’ (BU).
+                Table 7 shows that the customer view, i.e., ‘Need and Customer Value’, are discussed
+           14% (8% and 5% each) in part 1 and 12% in part 2. Actually, 64% of the utterances in
+               part 1 and part 2 were spent in these two dimensions. In part 3 and part 4, the ‘Life
+               cycle Activities’ rose to 54%, while the customer view fell to 8%. In the last part, ‘Value’
+                   is heavily discussed (34%). In addition, the dimension with the highest frequency was
+                  ‘Life cycle Activities’ with 31% of the total number, followed by ‘Value’ (21%). Further-
+             more, noticeable from the other dimensions  is that ‘Core Products’ (CP)  is almost
+               non-existent.
+
+
+
+
+               Analysis of combination between strategies and PSS dimensions
+              Table 8 shows numbers of utterances of each PSS dimension discussed in combination
+              with micro/macrostrategies.
+             The utterance numbers were tested statistically in the same manner as in Section
+              Analysis by divided parts. As a result, the null hypothesis of independence between the
+            row and column variables is rejected for these tables as well by the Chi-square test with
+              a p value less than 0.01.This means that the PSS dimensions that are primarily dis-
+              cussed are significantly affected by the macro/microstrategies used.
+             The numbers in italic are above the average in these tables as well. All the numbers
+               are in percentage, in the same manner as those in Tables 7, 8, and 9; 100% corresponds
+               to 1,450 utterances. For example, the time for ‘Life cycle Activities’ (L) to be discussed
+              with the microstrategy ‘Analyzing Solution’ (A) accounts for 18% of the design, as
+            shown in Table 8. In the same way, Table 9 shows the time for ‘Value’ (V) to be dis-
+              cussed with the macrostrategies’ ‘Top-Down’ (TD) accounting for 12%.
+
+===== PAGE 13 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 13 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 5 Number of utterances (in percentage) of microstrategy used along the timeline
+
+                             Microstrategy                                                        Total number of
+                                                                                                  microstrategies used
+                 Part               I        Z       P      A      G     D       E
+
+                1          3        7        1       4         0        3        2        20
+
+                2          3        6        2       6         1        1        1        20
+
+                3           2        6        2       9         1        1        0        20
+
+                4           0        0        2       15        0        1        1        20
+
+                5           1        4        2       8         0        1        3        20
+
+                    Total       10       23       9        43        2        7        6        100
+
+                  See also Table 3 for the abbreviations of the categories.
+
+
+             The customer view,  i.e., ‘Needs and Value’, shares highly in ‘Introducing Problem’ (I) -
+             68%. This means that most problems were introduced when discussing ‘Needs’ and ‘Value’
+                of the customer. In addition, for the customer view,  i.e., ‘Needs’ and ‘Value’, ‘Top-Down’
+            (TD) and ‘Decomposing’ (DE) strategies were dominant to be combined, with 81% for
+               ‘Needs’ and 90% for ‘Value’. On the other hand, ‘Life cycle Activities’ (L) were combined
+           63% with ‘Bottom-Up’ (BU).
+             The highest percentages were taken out from Tables 8 and 9 to Tables 10 and 11,
+                respectively. Tables 10 and 11 show combinations of a PSS dimension and a micro-
+            and macrostrategy that are addressed most frequently.
+
+
+               Analysis by division with length
+          To check the robustness of the answers to the three questions, the episode has also
+             been analyzed by dividing it into five parts, with the identical length of utterances in-
+               stead of the identical numbers. That is, each part was created so that it spent (as closely
+               as possible to) one fifth of the entire length, 4,409 seconds (1 hour, 13 minutes and 29
+               seconds).
+                Tables 12, 13, 14, 15, 16, 17, and 18 show the data of the five parts divided by the
+               length, which can be compared with Tables 5 to 11, respectively. As shown, no differ-
+             ence can be found to answer the three questions.
+
+
+             Discussion
+
+              General trend of the PSS design
+             Answering question a in Section What to understand in PSS design, as explained in
+              Table 7, simply put, the entire design episode spent major time on ‘Need’ and ‘Value’ in
+
+
+              Table 6 Number of utterances (in percentage) of macrostrategy used along the timeline
+
+                              Macrostrategy                                                     Total number of
+                                                                                              macrostrategies used
+                 Part        TD        BU        DE        BT       OP
+
+                1            12          0           8           0           0           20
+
+                2            11          1           6           2           0           20
+
+                3             1           15          3           1           0           20
+
+                4             0           18          1           1           0           20
+
+                5            6          5           9           0           0           20
+
+                    Total          29          39          27          5           0           100
+
+                  See also Table 2 for the abbreviations of the categories.
+
+===== PAGE 14 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 14 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 7 Number of utterances (in percentage) of each PSS dimension being discussed
+             along the timeline
+
+                        PSS dimension                                                                         Total
+
+                 Part     N     V     D      L     A     CP     P      CE      F      X
+
+                1         8       5       0      1       0      0       1       0       2       3      20
+
+                2         5       7       0      7       0      0       0       0       0       0      20
+
+                3         1       2       1      10      0      0       0       0       7       0      20
+
+                4         0       0       0      12      3      0       5       0       0       0      20
+
+                5         0       7       3      2       0      0       5       1       2       0      20
+
+                    Total      15      21      4      31      3      0       10      1       12      3      100
+
+                  See also Table 1 for the abbreviations of the categories.
+
+              the beginning, shifted to focus mainly on ‘Life cycle Activities’ with addressing ‘Periph-
+                 ery’ and ‘Finance’, and closed with a focus on ‘Value’. This is in clear contrast to phys-
+                  ical product design, where function is mainly reasoned about in the beginning [42].
+           The high percentages of the total time spent for ‘Life cycle Activities’ (31%), ‘Value’
+               (21%), and ‘Need’ (15%) are also evidence of the contrast to the design of a physical
+              product, in which, for instance, function, behavior, and structure are sufficiently as used
+              concepts [42]. From this analysis of used concepts, the essence of PSS design seems to
+             be linking, in a design solution, the life cycle activities and customer value anchored
+              with customer need. High frequencies of ‘Periphery’ and ‘Finance’ are caused by the im-
+            provement options derived from this particular design. If the discussed improvement
+              options were about the PSS core products, the frequency of CP might in that case have
+             been as high as ‘Periphery’ or ‘Finance’.
+              Concerning question b, as explained in Tables 5 and 6, as a general trend for the used
+               macrostrategies, the whole design episode began with ‘Top-Down’ and ‘Decomposing
+              Problem’, went through ‘Bottom-Up’, and ended with all of the three. This is in line
+              with some product design episodes analyzed with the same macrostrategies [11]. This
+               implies that a PSS design episode can have a similar pattern of processes as a certain
+             group of product design.
+
+
+
+
+              Table 8 Number of utterances (in percentage) for combination of PSS dimension and
+              microstrategy
+
+                              Microstrategy                                                                    Total
+                                                                                      number
+               PSS                  I         Z        P       A       G      D        E
+
+            N           4         6          1         2          1         1         1         15
+
+               V           3         5         2        7          0         2         2         21
+
+            D            0          1          1         2          0         0         0         4
+
+                 L            1         3         4        18         1         2         2         31
+
+             A            0          0          0         2          0         0         0         3
+
+              CP           0          0          0         0          0         0         0         0
+
+               P            0         3          0         7          0         0         0         10
+
+               CE           0          0          0         0          0         0         0         1
+
+                 F            1         4          1         5          0         0         0         12
+
+              X            0          0          0         0          0         2         1         3
+
+                    Total         10         23         9         43         2         7         6         100
+
+===== PAGE 15 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 15 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 9 Number of utterances (in percentage) for combination of PSS dimension and
+              macrostrategy
+
+                                Macrostrategy                                                                Total
+                                                                                      number
+               PSS          TD         BU         DE          BT         OP
+
+            N              8             1            4             2             0             15
+
+               V              12            2            6             0             0             21
+
+            D              1            3             0             0             0             4
+
+                 L              5            20           6             0             0             31
+
+             A               0            3             0             0             0             3
+
+              CP              0             0             0             0             0             0
+
+               P               0            5            4             1             0             10
+
+               CE              0             0             0             0             0             1
+
+                 F              2            6            3             1             0             12
+
+              X               0             0            3             0             0             3
+
+                    Total            29            39            27            5             0             100
+
+
+
+               Regarding the microstrategies, it started with ‘Introducing Problem’, ‘Analyzing Prob-
+                lem’, and ‘Analyzing Solution’, went in the middle through more ‘Analyzing Solution’,
+            and finished with ‘Analyzing Solution’. These general trends observed in this particular
+            PSS design follow the general characteristics of a problem-solving process. Regarding
+               microstrategies, similarity like high percentage of time spent on ‘Analyzing Solution’
+             can be found in the previous analysis of designing a physical product [11]. At the same
+               time, a difference has been found: ‘Introducing Problem’ and ‘Analyzing Problem’,
+             which were not used as encoding alternatives in the based work [11], accounted for as
+           much as 10% and 23%, respectively. Based on this, reasoning about problems seems to
+             be a new type of activity as compared to product design. For clarification, the three
+              questions assumed that it is possible to split a design episode into different stages, and
+              the results show that it is indeed possible.
+               Described in the previous three paragraphs  is a description of the whole design
+              episode containing nine different design solutions shown in Section Outcome of the
+            PSS design - generated ideas for improvement. This paper did not discover how these
+              multiple solutions were generated time wise; e.g.,  if they were derived in parallel or
+           more in a sequential manner on the timeline. Therefore, there is risk of identifying gen-
+                eral patterns like those previously mentioned. However, it is reasonable to make a hy-
+               pothesis: PSS design begins with ‘Need’ and  ‘Value’, addresses mainly  ‘Life  cycle
+                 Activities’ with particular dimensions addressed for solutions, and ends with ‘Value’.
+
+
+
+
+              Table 10 Ranking of number of utterances with discussed combination of PSS and
+              microstrategy
+
+                                      PSS dimension with the microstrategy                        Percentage
+
+                1                                 Life cycle Activities - Analyzing Solution                      18%
+
+                2                           Value - Analyzing Solution                             7%
+
+                3                            Periphery - Analyzing Solution                           7%
+
+                4                       Needs - Analyzing Problem                            6%
+
+                5                           Value - Analyzing Problem                             5%
+
+===== PAGE 16 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 16 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 11 Ranking of number of utterances with discussed combination of PSS dimension
+            and macrostrategy
+
+                                    PSS dimension with the macrostrategy                        Percentage
+
+                1                                Life cycle Activities - Bottom-Up                            20%
+
+                2                          Value - Top-Down                                      12%
+
+                3                      Needs - Top-Down                                   8%
+
+                4                          Value - Decomposing Problem                           6%
+
+                5                                Life cycle Activities - Decomposing Problem                  6%
+
+
+               Regarding question c, the combination between ‘Life cycle Activities’ and ‘Analyzing
+               Solution’ was ranked at the top (18%) in terms of frequency as shown in Table 10. In
+               addition, the combination between ‘Life cycle Activities’ and ‘Bottom-Up’ was ranked at
+              the top (20%) (see Table 11).
+              These facts in this design may give a central role to ‘Life cycle Activities’ in quantita-
+                 tive terms.
+
+
+
+               Effectiveness of the proposed method for analysis
+           As described in Section Method proposed and adopted in this research, this article pro-
+              poses a method for analysis of a PSS design protocol. The results from the analysis
+              using the method showed distinct difference in characteristics of the design process
+              over time. This means that the method is effective to analyze PSS design. This effective-
+              ness is also supported by another piece of research work using protocol analysis of PSS
+              design [43], which is based on the earlier publication (as a conference paper) [12] of
+                this proposed method but extended differently. In sum, one of the new insights brought
+             by this article lies in this unique method for analysis explained in a complete manner.
+
+
+
+               Factors influencing PSS design
+           As shown in Table 7, Core Products (CP) was virtually untouched in this PSS design.
+             This is due to the fact that all the improvement options were not directly about the
+              core product. The reason for this can be attributed to the relatively sparse information
+               that designers had about the details of the core product. On the other hand, the de-
+               signers could and did reason about the ‘Finance’, e.g., by referring to offerings in other
+                sectors. This implies that the time spent in each dimension is dependent on the compe-
+              tence of the designers, as well as the type of offering.
+
+
+
+              Table 12 Length of utterances (in percentage) of microstrategies used along the timeline
+
+                              Microstrategy used                                                                 Total
+
+                 Part                  I         Z         P        A       G      D         E
+
+                1           6         6          1          3          0          1          2         20
+
+                2           4         5          3          5          1          1          1         20
+
+                3            2          4         3          10         0          0          0         20
+
+                4            1          2          3          12         0          1          0         20
+
+                5            2          1          3          9          0          1         3         20
+
+                    Total         15         19         13         40         2          4          8         100
+
+===== PAGE 17 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 17 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 13 Length of utterances (in percentage) of macrostrategy used along the
+               timeline
+
+                                Macrostrategy used                                                             Total
+
+                 Part          TD         BU          DE           BT         OP
+
+                1              11             0             9              0             0              20
+
+                2              10             2             6              2             0              20
+
+                3               0             16             3              1             0              20
+
+                4              0             16            3              1             0              20
+
+                5               7              5              8              0             0              20
+
+                    Total            28             39             30             3             0              100
+
+
+
+
+               Furthermore, the capacity and skills of the designers are interesting factors that in-
+              fluence the outcomes and the process of the design. A review paper [44] shows the
+               difference between design by an expert and a novice. This design episode was created
+             by master’s course students, i.e., not experienced designers, which is a delimitation
+               of this research. There is a possibility, for instance, for the created design solutions
+              to be less realistic to implement, and the reason for this may be their lack of
+               expertise. Nevertheless, the insight gained in this research can be regarded as a
+             meaningful piece of scientific insight for PSS design in practice for the following
+              reasons. First, there is similarity in problem solving strategies in design between that
+             by an expert and by a non-expert. For instance, Ho [45] found, by a protocol analysis
+               of product design,  that both a novice and an expert used bottom-up solving
+                strategies. Second, the designers in this research are senior students at the master’s
+                 level, not junior students or novices. Third, carrying out (and reporting) the same
+             experiment in a natural, industrial setting on a real task can be problematic because
+               practitioners may feel embarrassed and/or companies may not allow the recording of
+             such an experiment [16]. Thus, the result (including the proposed method) of this
+                article  is  valuable  despite  the  uncertainty coming from  the  characteristics  of
+              designers  in  this  experiment.  Noteworthy   is  that  the  acknowledged  article
+             analyzed  the PSS  design  process  that was  carried out by  students  [43]. Yet
+             another piece of acknowledged work analyzed processes of decision making in
+             supply chain management by master’s students (instead of experts in marketing,
+              production, etc.) [46].
+
+
+
+
+              Table 14 Length of utterances (in percentage) of each PSS dimension being discussed
+             along the timeline
+
+                        PSS dimension                                                                         Total
+
+                 Part     N     V     D      L     A     CP     P      CE      F      X
+
+                1         8       6       0      1       0      0       1       0       2       2      20
+
+                2         5       4       0      7       0      0       0       0       3       1      20
+
+                3         2       2       1      11      0      0       0       0       5       0      20
+
+                4         0       0       0      9       2      0       8       0       0       0      20
+
+                5         0       8       3      2       0      0       2       1       3       0      20
+
+                    Total      16      20      4      30      3      0       11      1       14      3      10
+
+===== PAGE 18 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 18 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 15 Length of utterances (in percentage) for combination of PSS dimension and
+              microstrategy
+
+                              Microstrategy                                                                      Total
+
+               PSS                  I         Z         P        A       G      D         E
+
+            N           5         5          1          2          1          0          1         16
+
+               V           4         3         3          7          0          1         3         20
+
+            D            0          1          1          2          0          0          0         4
+
+                 L            1         3         5          16         1          1         3         30
+
+             A            0          0          1          1          0          1          0         3
+
+              CP           0          0          0          0                     0          0         0
+
+               P            1          2          1          7          0          0          0         11
+
+               CE           0          0          0          0          0          0          0         1
+
+                 F            3         4          1          5          0          0          0         14
+
+              X            0          0          0          0          0          1          1         3
+
+                    Total         15         19         13         40         2          4          8         100
+
+
+
+
+               Issues about encoding
+                   It should be mentioned that the way of encoding the episode based on the PSS Layer
+           Method has the drawback of making it impossible to compare the result of protocol
+                analysis for other types of design such as software. This analysis was conducted by pri-
+                oritizing the motivation to understand PSS design, and thus by using a modeling
+            method specific to PSS, but with sacrifice of such comparability. However, analysis
+              using a generic modeling method, rather than one specific to PSS, would enable the
+             comparison and thus lead to further understanding of PSS design.
+                 Verifying the encoding, Table 4 clearly shows the difficulty of encoding in the same
+            manner by two different encoders. First of all, sentences are in some cases very short
+                  (e.g. ‘Yes.’ and ‘The information from inspection is …’). This is relevant for all the three
+             columns. For the macrostrategies, it can be hard to discriminate among their categor-
+                   ies,  e.g., ‘Top-down’ and ‘Decomposing  Problem’  in  the  macrostrategies.  In  the
+
+
+
+              Table 16 Length of utterances (in percentage) for combination of PSS dimension and
+              macrostrategy
+
+                                Macrostrategy                                                                  Total
+
+               PSS          TD         BU          DE           BT         OP
+
+            N              8              1              5              1             0              16
+
+               V              11             2              7              0             0              20
+
+            D               1             3              0              0             0              4
+
+                 L              5             18            6              0             0              30
+
+             A               0             3              0              0             0              3
+
+              CP              0              0              0              0             0              0
+
+               P               0             5             4              1             0              11
+
+               CE              0              1              0              0             0              1
+
+                 F              3             6             4              0             0              14
+
+              X               0              0             3              0             0              3
+
+                    Total            28             39             30             3             0              100
+
+===== PAGE 19 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 19 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 17 Ranking of length of utterances with discussed combination of PSS dimension
+            and microstrategy
+
+                                      PSS dimension with the microstrategy                        Percentage
+
+                1                                 Life cycle Activities - Analyzing Solution                      16%
+
+                2                           Value - Analyzing Solution                             7%
+
+                3                            Periphery - Analyzing Solution                           7%
+
+                4                       Needs - Analyzing Problem                            5%
+
+                5                       Needs - Introducing Problem                           5%
+
+
+
+
+               microstrategies,  it can be hard to determine exactly when the switch took place be-
+             tween ‘Introducing Problem’ and ‘Analyzing Problem’. In the PSS dimension, an utter-
+             ance sometimes has multiple aspects, e.g., ‘We don’t know if it’s feasible to take back
+              the product, isn’t it?’ was coded as ‘Needs’ and as ‘Finance’ differently by the two en-
+               coders. All of these constitute, in combination, the reasons for the difficulty.
+               This difficulty is not unique to this case. For instance, another case with a product
+              design [11], which is more simple in its object dimension (‘Function’, ‘Behavior’, and
+                 ‘Structure’), has shown that the match ratio between two encodings was 63%, and en-
+             coding in this case was done twice by an identical encoder with a 10-day break. Thus,
+              the match ratio between the two encoders in this article should not be overemphasized
+           when questioning the encoding quality. Nevertheless, this uncertainty should be kept in
+           mind in making the analysis.
+
+
+
+               Implication for development of PSS design methods
+           From the viewpoint of developing methods/tools to support PSS design, there are
+               several implications. First, it will be important to address need, value, and life cycle ac-
+                   tivity, as they accounted for 66% of the time of the design case in total. Notably, these
+               three concepts are not addressed in traditional product design. Thus, they should be
+                 effectively incorporated into a PSS design method as compared to traditional product
+               design. Second, developing the methods/tools supporting the combinations in Tables 10
+            and 11 is implied to be more focused on than other combinations. This is based on the
+             assumption that the activities consuming more time have the higher possibility of redu-
+              cing the time for the design as a whole. It would be of interest to question the research
+            community  if, for instance, the process of analyzing solutions at the level of life cycle
+                 activities (with the highest ratio in Table 10) has sufficiently been the target of research,
+              or if that process deserves more attention. It should be noted that the ‘partner’ of life
+
+
+
+              Table 18 Ranking of length of utterances with discussed combination of PSS dimension
+            and macrostrategies
+
+                                    PSS dimension with the macrostrategy                        Percentage
+
+                1                                Life cycle Activities - Bottom-Up                            18%
+
+                2                          Value - Top-Down                                      11%
+
+                3                      Needs - Top-Down                                   8%
+
+                4                          Value - Decomposing Problem                           7%
+
+                5                                Life cycle Activities - Decomposing Problem                  6%
+
+===== PAGE 20 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 20 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+               cycle activities is analyzing solutions, and neither analyzing problems nor introducing
+              problems, which took the second and  third  shares  in the analyzed PSS  design,
+                respectively.
+
+
+              Contribution to design for remanufacturing
+         How can the result be used to better support design for remanufacturing? First of all,
+            one should bear in mind that remanufacturing goes in hand-in-hand with PSS [2-5].
+           More precisely, PSS facilitates remanufacturing, and thus PSS design contributes to the
+              design for remanufacturing. Industrial cases also show that PSS design and design for
+             remanufacturing go hand-in-hand [47].
+              According to the result, PSS design has been found to give a central role to
+                 ‘Life cycle Activities’. Remanufacturing is a kind of  ‘Life cycle Activity’ and thus
+             should be discussed substantially in PSS design. Indeed, remanufacturing activities
+             such as take back, inspection, maintenance, and repair were discussed in the case
+              design episode. This means that PSS design, even  if not guided with  specific
+              attention to remanufacturing or the environmental aspect, would go through ‘Life
+               cycle Activities’, which have in many cases a positive contribution to the environ-
+             mental impact and can be remanufacturing. Thus, knowledge about PSS design
+             such as the result presented in this article contributes to better support the de-
+              sign for remanufacturing. Additional support needed for PSS designers to incorp-
+              orate remanufacturing may be making them fully aware of remanufacturing as a
+             candidate for ‘Life cycle Activities’.
+              Concerning the design for remanufacturing as such, it could be said, based on the re-
+                  sult, that designers should make sure to sufficiently address the need and value of a
+              customer, as focusing on a remanufacturer’s activities may take away the designers’ at-
+               tention to them.
+
+
+            Conclusion
+             This article presented a first protocol analysis of the entire process of a PSS design epi-
+               sode. The proposed and adopted methods were protocol analysis with extension by the
+               authors. This article presented results from investigating what is happening inside a
+            PSS design process, with a focus on the general trends. The insights gained through
+                this research include reasonable hypotheses. First, PSS design begins with need and
+                value, addresses mainly life cycle activities with particular dimensions addressed for so-
+                lutions, and ends with value. In addition, life cycle activities seem to play a central role
+               in design. This article contributed to understanding of the PSS design process scientif-
+                  ically and in quantitative terms. However, more research is needed to draw stronger
+               conclusions. To do so, the method proposed by this article can be immediately used.
+               Future work will include continued research to obtain greater understanding of PSS
+               design, of particular interest will be scientific and quantitative understanding of design
+                for remanufacturing. When sufficient knowledge on what to implement is accumulated,
+              research on how to implement it in an organization would become an issue.
+
+           Appendix
+           The categories for the microstrategies including their subcategories are presented in
+              Table 19. Table 20 shows an example of a part of the segmented protocols with coding.
+
+===== PAGE 21 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 21 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 19 Categories for the microstrategies including subcategories
+
+            Name                                    Abbr.  Example
+
+                  Introducing Problem                                                      I
+
+                    Discovering a Problem                      ID              ‘I think this is a problem…’
+
+                       Clarifying a Problem                          ICL     ‘…this is because of…’
+
+                     Correcting a Problem                     ICO     ‘Wouldn’t this rather be the real reason for the problem?’.
+
+                     Retracting a Previous Problem                  IR        ‘This isn't really an issue that needs to be investigated.’
+
+                  Making a Problem Design Decision         IM        ‘Let's go this direction with the problem…’
+
+                  Analyzing Problem                       Z
+
+                    Analyzing a Problem                   ZAZ    ‘What is the problem leading to…?’
+
+                   Questioning a Problem                ZQ         ‘Is that really a part of the problem?’
+
+                       Justifying a Problem                        ZJ        ‘This is a problem because of…’
+
+                   Agreeing to a Problem                ZAG         ‘I agree with you that that is an issue.’
+
+                    Disagreeing with a Problem             ZD            ‘I don't think that is a problem.’
+
+                     Evaluating a Problem                    ZE       ‘That’s an important requirement…’
+
+                   Postponing Analysis of the Problem        ZP             ‘I can find that out later.’
+
+                 Proposing Solution                        P
+
+                   Proposing Solution                       PS      ‘The way to solve that is…’
+
+                       Clarifying a Solution                     PCL      ‘This is a good solution because of…’
+
+                     Correcting a Solution                    PCS      ‘This has to be changed.’
+
+                     Retracting a Previous Solution             PR      ‘That approach is no good, what we…’
+
+                  Making a Solution Design Decision       PM      ‘Ok. We’ll go with that one…’
+
+                  Analyzing Solution                     A
+
+                    Analyzing a Proposed Solution           AAZ     ‘That will work like this…’
+
+                   Questioning a Proposed Solution        AQ     ‘Why is that good?’
+
+                       Justifying a Proposed Solution              AJ       ‘This is the way to go because…’
+
+                   Agreeing with a Proposed Solution        AAG         ‘I agree with that solution.’
+
+                    Disagreeing with a Proposed Solution      AD            ‘I don't agree on that part.’
+
+                   Postponing Analysis of a Proposed Solution  AP       ‘We’ll need to work that out later.’
+
+                     Evaluating a Proposed Solution            AE       ‘This is faster, cheaper etc.…’
+
+                 General Strategies                    G
+
+                    Consulting External Information          GC     ‘What are my options…?’
+
+                   Postponing a Design Action             GP             ‘I need to do…later.’
+
+                   Looking Ahead                     GA      ‘These things will be trivial to do.’
+
+                   Looking Back                        GB      ‘Can I improve this solution?’
+
+                  Discussion Strategies                 D
+
+                    Permission Request                    DPR    ‘Can I say something?’
+
+                    Confirmation Request                DCO    ‘Does everyone understand?’
+
+                   Understanding Request              DU         ‘Is that a good idea?’
+
+                        Clarification Request                   DCL    ‘Can you describe that part further in detail?’
+
+                      Affirmative Response                  DAR      ‘Yes.’
+
+                    Negative Response                  DNR     ‘No.’
+
+                      Explicit Strategies                            E
+
+                      Referring to Application Knowledge        EA        ‘In this environment, it will need to be…’
+
+                      Referring to Domain Knowledge            EK              ‘I know that these components are…’
+
+                      Referring to Design Strategy                ES        ‘I’m doing this the hard way…’
+
+===== PAGE 22 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 22 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+              Table 20 A part of segmented protocols
+
+                Time      PSS   Mi    Ma  D   Dialogue
+
+                   00:09:27  N     ID    TD   2     ‘So, it’s a fact that the workers’ skills are not enough.’
+
+                   00:09:29  N    ZAG   TD   1     ‘That’s right.’
+
+                   00:09:30  N    ZAZ   TD   2     ‘So, the method of solving that is…’
+
+                   00:09:32  N     ID    TD   1    Their skills aren’t enough… but we can’t really
+                                                measure that…’
+
+                   00:09:36  N    ZQ    TD   2     ‘Their skill levels are unclear?’
+
+                   00:09:38  N    ZAZ   TD   1     ‘Unclear.’
+
+                   00:09:40  N    ZAG   DE   3   ‘We can’t measure it… So the problem is that we can’t know how skillful
+                                                 each worker is?’
+
+                   00:09:46  N     ID    DE   1    ‘Right…’
+
+                   00:09:48  N     ID    DE   3    ‘Or is it really? Isn’t the problem that they don’t have enough skills?’
+
+                   00:09:52  N    ZAG   DE   1     ‘Well, no but… Simply put, the problem I thought about was that
+                                               you would like to be able to use the product for a longer time…’
+
+                   00:10:02  N    ZAG   DE   2     ‘Right.’
+
+                   00:10:03  N    ZAZ   DE   1    ‘And, well, the most important factor there is…’
+
+                   00:10:07  N    ZAG   DE   2    ‘Yeah…’
+
+                   00:10:08  N    ZAZ   DE   1    ‘That the workers’ skills are quite low, so… well…’
+
+                   00:10:14  N    ZAZ   DE   2    ‘They’re focusing on the wrong parts.’
+
+                   00:10:15  N     ID    DE   1    ‘Focusing on the wrong parts, right…’
+
+                   00:10:18  N    ZAZ   DE   2         ‘I see, the workers’ overall skills are too low.’
+
+                   00:10:20  N    ZAG   DE   1     ‘Yes.’
+
+                   00:10:21  N    ZAZ   DE   2     ‘Well, I’m not personally sure about it but let’s go with that for
+                                                     the moment.’
+
+                   00:10:23  N    ZAG   DE   3     ‘Ok.’
+
+                   00:10:25  N    ZAG   DE   2    ‘Low skills… right’
+
+                   00:10:29  N    ZAZ   DE   1     ‘Right, so the next step is…’
+
+
+             The time column shows what time the specific segment starts. PSS is an abbreviation
+                for a dimension of the PSS Layer Method. The Mi and Ma columns specify which type
+               of micro- and macrostrategies are used, respectively. The D column, for designer,
+                specifies which designer out of the three (labeled 1, 2, and 3) spoke the dialogue. In the
+               ‘Dialogue’ column, the designer’s words are transcribed. In this column, short pauses
+               are represented by ‘…’ in the text.
+
+               Competing interests
+                 The authors declare that they have no competing interests.
+
+                  Authors’ contributions
+                  TS reviewed the literature, initiated the definition of the method, and analyzed the design. HM conducted and
+                  supported the analysis of the design. Both authors have read and approved the final manuscript.
+
+
+                  Authors’ information
+                       Prof. Tomohiko Sakao is from the Division of Environmental Technology and Management, Department of
+               Management and Engineering, Linköping University, Sweden. He is a visiting researcher at the University of Tokyo and
+                      at Technical University of Berlin. His research interests include Ecodesign and Integrated Product Service Engineering.
+                    Assoc. Prof. Hajime Mizuyama is from the Department of Industrial and Systems Engineering, Aoyama Gakuin
+                      University, Japan. His research interests include Collective Intelligence, CSCW, and Group Decision Making.
+
+
+               Acknowledgements
+                 The authors express their sincere thanks to all who contributed to this paper, especially to the company that provided
+                  us with a valuable opportunity to adopt the PSS offering as a case. Dr. Patrick Müller, a primary developer of the PSS
+                   Layer Method from Fraunhofer IPK Berlin, supported us through commenting on a description of the current offering
+               on the PSS Layer Method. Mr. Svante Paulsson supported the analysis of the PSS design. This research was partially
+
+===== PAGE 23 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 23 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+
+                  supported by a Grant-in-Aid for Creative Scientific Research 2007 to 2011 (19GS0208) funded by the Ministry of
+                    Education, Culture, Sports, Science and Technology, Japan. Last not but not the least, three anonymous reviewers are
+                    highly appreciated with their insightful and inspiring comments to the earlier versions of this manuscript.
+
+                Author details
+                     1Division of Environmental Technology and Management, Department of Management and Engineering, Linköping
+                      University, Linköping 58183, Sweden. 2Department of Industrial and Systems Engineering, Aoyama Gakuin University,
+                    5-10-1 Fuchinobe, Chuo-ku, Sagamihara-shi, Kanagawa 252-5258, Japan.
+
+                   Received: 12 February 2013 Accepted: 20 December 2013
+                   Published: 17 Jan 2014
+
+
+                 References
+                           1.    Ijomah, WL, Childe, SJ: A model of the operations concerned in remanufacture. Int J Prod Res 45(24), 5857–5880 (2007)
+                           2.   Sundin, E, Bras, B: Making functional sales environmentally and economically beneficial through product
+                         remanufacturing. J Clean Prod 13(9), 913–925 (2005)
+                           3.   Mont, O, Dalhammar, C, Jacobsson, N: A new business model for baby prams based on leasing and product
+                         remanufacturing. J Clean Prod 14(17), 1509–1518 (2006)
+                           4.    Besch, K: Product-service systems for office furniture: barriers and opportunities on the European market. J Clean
+                       Prod 13, 1083–1094 (2005)
+                           5.   Kuo, TC, Ma, H-Y, Huang, SH, Hu, AH, Huang, CS: Barrier analysis for product service system using interpretive
+                             structural model. Int J Adv Manuf Technol 49, 407–417 (2010)
+                           6.    Tischner, U, Verkuijl, M, Tukker, A: First Draft PSS Review. Econcept, Cologne (2002)
+                           7.   Fukushige, S, Yamamoto, K, Umeda, Y: Lifecycle scenario design for product end-of-life strategy. J Remanufacturing
+                            2(1) (2012)
+                           8.    Aurich, JC, Fuchs, C, Wagenknecht, C: Life cycle oriented design of technical product-service systems. J Clean Prod
+                            14(17), 1480–1494 (2006)
+                           9.    Hatcher, GD, Ijomah, WL, Windmill, JFC: Design for remanufacture: a literature review and future research needs. J
+                        Clean Prod 19, 2004–2014 (2011)
+                       10.  Eder, EW: Design modeling - a design science approach (and Why does industry Not Use It?). J Eng Des
+                              9(4), 355–371 (1998)
+                       11.  Gero, JS, Neill, TM: An approach to the analysis of design protocols. Des Stud 19, 21–61 (1998)
+                       12.  Sakao, T, Paulsson, S, Mizuyama, H: Inside a PSS design process: insights through protocol analysis. In: International
+                       Conference on Engineering Design. Copenhagen (2011)
+                       13.  Sundin, E, Björkman, M, Jacobsson, N: Analysis of Service Selling and Design for Remanufacturing. In: Proceedings
+                           of IEEE International Symposium on Electronics and the Environment, pp. 272–277. San Francisco (2000)
+                       14.   Neely, A: The servitization of manufacturing: an analysis of global trends. In: 14th EurOMA Conference. , Ankara (2007)
+                       15.  Badke-Schaub, P, Daalhuizen, J, Roozenburg, N: Towards a designer-centred methodology: descriptive consider-
+                           ations and prescriptive reflections. In: Birkhofer, H (ed.) The Future of Design Methodology, pp. 181–197. Springer,
+                     London (2011)
+                       16.   Blessing, L, Chakrabarti, A: DRM, a Design Research Methodology. Springer, London (2010)
+                       17.   Cross, N: Engineering Designs Methods. Wiley, Chichester (1989)
+                       18.  Sakao, T, Shimomura, Y: Service engineering: a novel engineering discipline for producers to increase value
+                      combining service and product. J Clean Prod 15(6), 590–604 (2007)
+                       19.  Maussang, N, Zwolinski, P, Brissaud, D: Product-service system design methodology: from the PSS architecture
+                        design to the products specifications. J Eng Des 20(4), 349–366 (2009)
+                       20.  Komoto, H, Tomiyama, T: Integration of a service CAD and a life cycle simulator. CIRP Ann Manuf Technol
+                            57(1), 9–12 (2008)
+                       21.   Pahl, G, Beitz, W: Engineering Design: A Systematic Approach. Springer-Verlag, London (1988)
+                       22.   Morelli, N: Product-service systems, a perspective shift for designers: a case study: the design of a telecentre. Des
+                       Stud 24(1), 73–99 (2003)
+                       23.  Alonso-Rasgado, T, Thompson, G: A rapid design process for total care product creation. J Eng Des
+                            17(6), 509–531 (2006)
+                       24.   Blessing, L, Chakrabatri, A, Wallace, KM: An overview of descriptive studies in relation to a general design research
+                       methodology. In: Frankenberger, E, Badke-Schaub, P, Birkhofer, H (eds.) Designers – The Key to Successful
+                       Development, pp. 42–56. Springer, London (1998)
+                       25.   Blessing, LTM: A process-based approach to computer-supported engineering design. University of Twente,
+                      Twente (1994)
+                       26.  Hoffman, CM, Joan-Arinyo, R: CAD and the product master model. Comput Aided Des 30(11), 905–918 (1998)
+                       27.   Isaksson, O, Larsson, TC, Rönnbäck, AÖ: Development of product-service systems: challenges and opportunities for
+                        the manufacturing firm. J Eng Des 20(4), 329–348 (2009)
+                       28.   Altshuller, G, Altov, H: And suddenly the inventor appeared-TRIZ, the theory of inventive problem solving. Technical
+                          Innovation Center, Worcester (1996)
+                       29.   Kruger, C, Cross, N: Solution driven versus problem driven design: strategies and outcomes. Des Stud 27, 527–548 (2006)
+                       30.   Ericsson, KA, Simon, HA: Protocol Analysis Verbal Reports as Data. MIT Press, Cambridge, MA (1993)
+                       31.  Van Someren, MW, Bardard, YF, Sandberh, JAC: The Think Aloud Method: A Practical Guide to Modelling Cognitive
+                           Processes. Academic Press, London (1994)
+                       32.   Carley, K: Coding choices for textual analysis: a comparison of content analysis and map analysis. Sociol Methodol
+                           23, 75–126 (1993)
+                       33.  Frankenberger, E, Auer, P: Standardized observation of team-work in design. Res Eng Des 9, 1–9 (1997)
+                       34.  Smagorinsky, P: Rethinking protocol analysis from a cultural perspective. Ann Rev Appl Linguist 21, 233–245 (2001)
+
+===== PAGE 24 =====
+Sakao and Mizuyama Journal of Remanufacturing 2014, 4:1                                                         Page 24 of 24
+http://www.journalofremanufacturing.com/content/4/1/1
+
+
+
+
+
+                       35.  Hughes, J, Parkes, S: Trends in the use of verbal protocol analysis in software engineering research. Behav Inform
+                        Technol 22(2), 127–140 (2003)
+                       36.   Al-Sayed, K, Dalton, RC, Hölscher, C: Discursive design thinking: the role of explicit knowledge in creative architectural
+                         design reasoning. Artificial Intelligence for Engineering Design, Analysis and Manufacturing 24, 211–230 (2010)
+                       37.  Sakao, T, Shimomura, Y, Sundin, E, Comstock, M: Modeling design objects in CAD system for service/product
+                          engineering. Comput Aided Des 41(3), 197–213 (2009)
+                       38.   Müller, P: Integrated Engineering of Products and Services. Technical University of Berlin, Berlin, Layer-based Development
+                       Methodology for Product-Service Systems (2013)
+                       39.  Linstone, HA, Turoff, M: The Delphi Method Techniques and Applications. Addison-Wesley Educational Publishers,
+                         Reading, MA (1975)
+                       40.  Komatsu, Komtrax: www.komatsuamerica.com/komtrax
+                       41.  Stempfle, J, Badke-Schaub, P: Thinking in design teams - an analysis of team communication. Des Stud 23(5),
+                     473–496 (2002)
+                       42.   Neill, TM, Gero, JS, Warren, J: Understanding conceptual electronic design using protocol analysis. Res Eng
+                     Des 10(3), 129–140 (1998)
+                       43.   Bertoni, A: Analyzing product-service systems conceptual design: the effect of colorcoded 3D representation. Des
+                       Stud 34, 763–793 (2013)
+                       44.   Cross, N: Expertise in design: an overview. Des Stud 25, 427–441 (2004)
+                       45.  Ho, CH: Some phenomena of problem decomposition strategy for design thinking: dierences between novices
+                     and experts. Des Stud 22, 27–45 (2001)
+                       46.   Önkal, D, Sayım, KZ, Lawrence, M: Wisdom of group forecasts: does role-playing play a role? Omega 40, 693–702 (2012)
+                       47.  Sundin, E, Lindahl, M, Ijomah, W: Product design for product/service systems - design experiences from Swedish
+                             industry. J Manuf Technol Manage 20(5), 723–753 (2009)
+
+
+                  10.1186/2210-4690-4-1
+                      Cite this article as: Sakao and Mizuyama: Understanding of a product/service system design: a holistic approach
+                     to support design for remanufacturing. Journal of Remanufacturing 2014, 4:1
+
+
+
+
+
+                                      Submit your manuscript to a
+                                            journal and beneﬁ t from:
+
+                                  7 Convenient online submission
+                                  7 Rigorous peer review
+                                  7 Immediate publication on acceptance
+                                  7 Open access: articles freely available online
+                                  7 High visibility within the ﬁeld
+                                  7 Retaining the copyright to your article
+
+
+                                                  Submit your next manuscript at 7 springeropen.com

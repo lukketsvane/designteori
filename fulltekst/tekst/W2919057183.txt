@@ -1,0 +1,667 @@
+WORK: University entrepreneurship education: a design thinking approach to learning
+AUTHORS: Gabriel Linton, Markus Klinton
+YEAR: 2019
+DOI: https://doi.org/10.1186/s13731-018-0098-z
+SOURCE: https://innovation-entrepreneurship.springeropen.com/track/pdf/10.1186/s13731-018-0098-z
+LICENSE: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3             Journal of Innovation and
+https://doi.org/10.1186/s13731-018-0098-z                                     Entrepreneurship
+
+
+
+SHORT REPORT                                      Open Access
+
+University entrepreneurship education: a
+design thinking approach to learning
+
+Gabriel Linton1*  and Markus Klinton2
+
+
+
+* Correspondence: gabriel.linton@
+                           Abstractoru.se
+1Örebro University School of
+                          Background: Entrepreneurship has traditionally been taught from a businessBusiness, SE-701 82 Örebro, Sweden
+Full list of author information is         administration perspective, where predicting the future is central and where the
+available at the end of the article       world is seen as linear with known inputs and outputs. The world of entrepreneurs is a
+                                quite different, usually highly uncertain environment, and therefore requires a different
+                              type of skill set. In this paper, we conceptualize entrepreneurial learning through a
+                           method- and design-based approach and illustrate how a course can be developed
+                          and designed.
+                               Findings: In this paper it is argued that by utilizing design thinking and a methods
+                              approach, learning from a “through” approach can be achieved. This learning is more
+                              focused on the entrepreneurial process, highlighting the role of skills and mindset. This
+                                 learning approach enables student-centered learning and focus on skills more
+                                 applicable to entrepreneurs. It is also argued that the entrepreneurship process is not
+                                          linear; therefore, creativity is central and finding structure is an unstructured
+                                process. Design thinking emphasizes a practical approach where students step
+                              outside the classroom. This experimentation and interaction in the real world of users
+                          and customers with real feedback is important in combination with reflection exercises.
+                             Conclusions: This paper highlights how a methods approach and entrepreneurship
+                              education with a “through” perspective can be achieved by utilizing design thinking.
+                                   This is elaborated conceptually and illustrated with an example. We argue that a methods
+                             approach for teaching entrepreneurship is beneficial, where design thinking can be one
+                                  valuable tool and approach for teaching entrepreneurship.
+
+                            Keywords: Entrepreneurship, Entrepreneurship education, Design thinking, Iteration,
+                                      Creativity
+
+
+
+
+                          Introduction
+                            Entrepreneurship is a messy and complex process that is not linear (Neck and Greene
+                              2011). Educators in entrepreneurship have the task to educate students to have the
+                                     skills to survive in a fast and rapidly changing environment. Nonetheless, traditional
+                            entrepreneurship courses have focused on business plan development as a planned
+                               practice (Honig 2004; Solomon 2007), and many courses are still more “about” entre-
+                            preneurship than “for” or “through” entrepreneurship (Pittaway and Edwards 2012). In
+                               addition, many courses have a focus on business planning and prediction (Daniel
+                              2016), which can have a negative impact on students’ intention of starting a venture
+                               (Carrier 2005; von Graevenitz et al. 2010).
+
+                           © The Author(s). 2019 Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0 International
+                                           License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium,
+                                         provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and
+                                              indicate if changes were made.
+
+===== PAGE 2 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 2 of 11
+
+
+
+
+
+                In this paper, a different approach is taken compared to the traditional way of teach-
+              ing entrepreneurship and innovation, based in no small extent on design thinking and
+              the methods approach (Neck and Greene 2011). One of the teachers (who also is one
+               of the authors) became frustrated with the traditional entrepreneurship course which
+            was to a large extent based on developing a business plan. The way the course was set
+              up, the students developed different parts of the business plan over the time of the
+               course. Quite often, it became problematic when the different parts of the plan did not
+                     fit well together, which frequently resulted in that the individual parts were forced to-
+              gether in the end. Students quickly had to come up with an idea and thereafter spent
+            most of the course developing the business plan itself. To a great degree, ignoring the
+               pre-idea stage and the actual problem-solving activity (or opportunity creation/develop-
+             ment) was only briefly covered, which seems common in entrepreneurship courses
+              (Daniel 2016). During the development of the business plan, the students frequently
+             found that the parts did not fit together, which often happened too late for real change
+               to be possible within the time frame of the course.
+                     It was realized that, rather than a course in entrepreneurship, the course was trying
+               to teach small parts of all aspects of running a business (marketing, management, ac-
+              counting, etc.) into one course where planning and predictability were emphasized.
+               But, entrepreneurship is a complex process that lacks linearity of business thinking and
+              entrepreneurship students need to master uncertain environments (Neck and Greene
+               2011). Hence, the business plan might not be the best tool for students studying entre-
+              preneurship and innovation  practices. Therefore, the purpose  of  this paper  is to
+              conceptualize entrepreneurial learning through a method- and design-based approach
+            and to illustrate how a course can be developed and designed.
+
+
+
+             Theoretical background
+
+               Entrepreneurial education
+              Entrepreneurship education can be taught in different ways, and Pittaway and Edwards
+              (2012) distinguish four different approaches to teaching entrepreneurship. They propose
+               that the approach of teaching can be “about,” “for,” and “through.” Most entrepreneurship
+              education has been found to be of the “about” approach, which has a more traditional
+             pedagogy that does not engage the students in activities and projects (Pittaway and Ed-
+             wards 2012; Stovang and Nielsen 2015). We reason that entrepreneurial education should
+           move away from approaches of “about” and “for” to be more of the character of “through.”
+                   It can be argued that entrepreneurship education and learning need to reflect the process
+               that entrepreneurs go through by focusing on action, experiences from the real world,
+            and reflection (Kassean et al. 2015). What this entrepreneurial process consists of can be
+              debated (Stovang and Nielsen 2015), but it can be argued that the entrepreneurial process
+                   is dominated by effectuation logics in comparison to causation logics (Sarasvathy 2001).
+               Effectuation suggests that instead of predefining goals in highly uncertain environments,
+              entrepreneurs rely on the means that are available at hand and co-create opportunities
+               (Sarasvathy 2001). The effectuation logic is based on many features that align with design
+              (Stovang and Nielsen 2015) and is closely associated with the work of Herbert Simon
+               (1969). The opposite of effectuation is causation, which is a logic based on prediction,
+                control, planning, and rational analysis to reach predefined outcomes (Sarasvathy 2008).
+
+===== PAGE 3 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 3 of 11
+
+
+
+
+
+               Effectuation is also closely related to the ideas of bricolage (Baker et al. 2003; Baker and
+             Nelson 2005) and organizational emergence (Katz and Gartner 1988). These ideas all
+               highlight that creating entrepreneurial opportunity and developing it for the market is a
+              process that is highly complex, social, and evolves gradually. This process is quite differen-
+                tiated from a traditional manager role in an established firm where structure and predict-
+                  ability exist (Nielsen and Christensen 2014).
+                Entrepreneurship education usually has a causational approach with a focus on planning
+            and prediction (Daniel 2016; Sarasvathy 2008). And, it has been found that many courses
+                     still use business plans as a method of teaching entrepreneurship courses (Honig 2004;
+            Solomon 2007), which indicates that planning and predictability are in focus. Daniel
+               (2016), p. 216) states “in a survey conducted in 2008, which encompassed 31 countries
+               (including 27 European Union member states), it was concluded that the most common
+              teaching method in entrepreneurship was lecturing, with some use of guest speakers
+           (NIRAS Consultants, 2008).” It has even been found that basic courses with a focus on
+               business plans have a negative impact on students’ intentions of starting a business ven-
+               ture (Carrier 2005; von Graevenitz et al. 2010), which of course is not the intended out-
+           come of most entrepreneurship courses (Liñán and Fayolle 2015). On the contrary,
+              courses that focus on developing skills and competence show that students are more
+                  likely to start a venture (Nabi et al. 2017). As a response to the traditional entrepreneur-
+               ship courses, Neck and Greene (2011) stress that entrepreneurship education should
+              focus on how to act, anticipate, and generate in an unknown future. A possible way to do
+                 this is to take a design thinking approach (Stovang and Nielsen 2015).
+
+
+
+             Design thinking
+             Design thinking is essentially concerned with human needs and solving problems. De-
+               sign thinking is not a strictly linear process or based on specific milestones. Rather, it is
+              the interaction that happens between the three spaces of inspiration, ideation, and im-
+              plementation (Brown and Katz 2009). The professionals of design have conventionally
+            worked with forming, styling, designing, redesigning, and constructing artifacts, but
+              over the past few years, the design process has become relevant for much wider use
+              (Stovang and Nielsen 2015) such as business, innovation, and entrepreneurship. In de-
+               sign thinking, the problem can be seen as wicked (Buchanan 1992) because the prob-
+            lem is not fixed and can change and take new shapes as more is found out about the
+             problem. The wicked problem will eventually come forward after extensive explorative
+                  activities, but even then, the problem will continue to change its face. Insights into the
+             problem, its possible solutions, and the effects of those solutions are seen as constantly
+              evolving (Nielsen and Christensen 2014). It has been argued that creativity and an in-
+              novative mindset is central for students in design (Koh et al. 2015). It can be reasoned
+               that constantly challenging for new ideas and constantly rethinking current solutions
+               are central aspects of design thinking.
+
+
+
+            The new entrepreneurial education
+           Neck and Greene (2011) argue that entrepreneurship is an applied discipline but is
+               often taught as it was a natural science. They reason that entrepreneurs and designers
+             have much in common and that entrepreneurs “think and to some extent act like
+
+===== PAGE 4 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 4 of 11
+
+
+
+
+               designers” (p. 65). Conventionally, entrepreneurship education has assumed a fixed
+            problem that can be solved through a linear problem-solving process. Also, students
+               are often forced to come up with a business idea very quickly at the beginning of the
+              semester and then perform planning and prediction activities with the goal of showing
+            economic viability at the end of the course (Daniel 2016). Students of entrepreneurship
+              courses are also often graded on the output of the course, the business plan, instead of
+              being graded on the process of learning the skills and mindsets of entrepreneurs. Shift-
+              ing focus to the process instead of the output also switches what is graded; instead of
+              grading the business plan, the process should be graded. An effective way to capture
+              the learning process has been through a learning log, also called a reflection log (Robin-
+             son et al. 2016).
+             With this in mind, there has been somewhat of a shift from the traditional courses
+               that are more of the type “about” or ones that are “for” but have a planning approach
+               to a more holistic approach, where the actual output from the course (e.g., business
+               plan) is not the main goal, but developing an entrepreneurial mindset and behaviors is
+              (Daniel 2016). The creation of new businesses is therefore not the central focus, but ra-
+               ther for students to develop entrepreneurial attitudes and skills (Fayolle et al. 2006). It
+             has also been argued that entrepreneurship education should be moved away from
+              teacher-centered to student-centered education (Daniel 2016; Robinson et al. 2016).
+             Neck and Greene (2011) suggest that entrepreneurship should be taught as an ap-
+             proach of methods instead of as a process (see Fig. 1). It has also been argued that de-
+               sign thinking is the possible future of entrepreneurial education (Val et al. 2017) and
+             has many compatibilities with the methods approach (Fig. 1).
+
+
+
+           The process of redesigning a course
+           The following section will elaborate and illustrate how entrepreneurial education can be
+              transformed to follow more of an approach focused on methods and developing entrepre-
+               neurial skills and mindset. Design thinking follows many aspects of the methods ap-
+              proach, as  it  is based on toolkits that usually are of a creative and iterative nature.
+              Experimentation is a central part of design thinking, as is practice. Students that take part
+               in a design thinking process would also develop entrepreneurial skills and techniques.
+             The process of redesigning the course started when the university received a grant
+             which had the goal of increasing the entrepreneurial culture of students at the university.
+             There was also a goal of developing entrepreneurship courses for all departments at the
+                university. The paper describes the development of a single course over several years. The
+
+
+
+
+                  Entrepreneurship as a                                     Entrepreneurship as a
+                          process                                             method
+              Known inputs and outputs                      A body of skills and techniques
+                            Steps                                                           Toolkit
+                            Predictive                                                        Creative
+                            Linear                                                                  Iterative
+                            Precision                                                  Experimentation
+                           Tested                                                          Practiced
+
+                          Process vs. Method approaches to teaching entrepreneurship based on Neck and Greene (2011)
+
+                     Fig. 1 Process vs. method approaches to teaching entrepreneurship based on Neck and Greene (2011)
+
+===== PAGE 5 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 5 of 11
+
+
+
+
+             time periods include 3 years of experience with the “preexisting course,” 1 year of devel-
+            opment of the new course and building a “prototype course,” and 2 years of running the
+           new course. The experiences have been captured through documentation of the develop-
+            ment process (reports for the grant, presentations of the work in progress, etc.) as well as
+            documented learnings from the prototype courses (learning documented for each proto-
+                 type). The students’ perspective has also been considered from formal feedback (survey
+                 after course) and informal feedback (meetings with students), and student reflection logs
+             have also been used to understand the students’ experience. It was decided that the devel-
+            opment process of the course should be influenced by the design process, and therefore a
+                 pilot program was first developed to allow for iteration and early feedback, instead of fo-
+              cusing too much on planning and predicting.
+
+
+
+                  First pilot
+                  First, a pilot program, which can be seen as a prototype, was developed and lasted for
+            10 weeks. The pilot was based on design thinking and centered around the “double dia-
+           mond” model, which in the first diamond highlights learning about the problem and in
+              the second diamond focuses on solutions to the problem. The pilot lasted for 10 weeks,
+              with the 12 students alternating meeting in workshops 1 week and the next meeting
+              with a teacher  for a coaching session to help with the progress with the work
+             in-between sessions. The problems for the pilot came from organizations that had a
+             need to find new and innovative solutions. These organizations developed a problem
+              statement and attended the first workshop and then were available for contact with the
+             teams throughout the course. The organizations also attended the final workshop,
+            where the solutions and plans forward were presented.
+
+
+
+             Second pilot
+              In the second pilot, some of the learnings from the first pilot related to feedback. The
+              coaching was not only assessed as helpful but also time consuming for the teachers. In an
+                 effort to increase the teachers’ effectiveness and also downplay the view that the teachers
+            knew the right answers, the coaching part was deleted. Instead, more focus was on learning
+             between the groups and students, with teachers as facilitators. This also resulted in a de-
+               crease in the timespan of the course from 10 weeks to 5 weeks. It was also found that the
+              groups of students seemed to work better with four students compared to the groups with
+               three students. A few times, a student was missing, and then the group only had two stu-
+              dents left, which seemed to be too few to complete the workshops in a creative and ener-
+               gized way. In addition, although the organizations were happy with the results of the
+                students’ solutions, it was decided to keep a more “open” approach to problems without an
+               organization behind every problem, thereby influencing the students to work in certain di-
+                 rections. Instead, some areas of focus where problems could be identified were compiled by
+               the teachers before the course, and the first session included identification. These areas of
+             problems were, for example, food waste, elder care, and segregation.
+
+
+
+              Learnings from pilots
+               After the second pilot, the new course was developed, based on the learnings from the
+                 pilots. Overall, the design thinking approach was received well by both the teachers
+
+===== PAGE 6 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 6 of 11
+
+
+
+
+
+            and students. Students were found to be more engaged in developing their ideas. The
+              focus was somewhat switched to pre-idea stages compared to only developing an idea
+               that was not always very thought through. Several of the teams from the prototypes
+             continued developing their ideas after the pilot was over, and one team went on to a
+              business incubator. However, it has to be emphasized that the learning process of skills
+            and mindset was more important than achieving great end results in the project. For
+              the course, this resulted in clearly explaining to the students that they were not evalu-
+              ated and graded on the idea itself, but rather on the process of understanding the prob-
+            lem and developing the idea. In the pilots, it was also found that it was important to
+            document the process. For example, when the results from the first workshop were
+            compared to the last workshop, the students could comprehend how much they had
+             developed their ideas during the course.
+
+
+            Contents of a new course
+
+              Preparation
+           Teams need to be formed, and each team needs a challenge to solve. The teams should be
+             formed with as high heterogeneity as possible, where different points of view from the
+              students can contribute, rather than homogeneous teams that think alike. The challenges
+             can be distributed by the teacher. We have had success with challenges that have been
+                identified by the teachers, e.g., society-based challenges such as how to reduce food waste,
+            and the teachers have also had success with asking different types of organizations to pro-
+               vide challenges they need to solve (e.g., how can customers have an improved experience
+              while waiting in the lobby for our service?). The student groups themselves can also iden-
+                   tify challenges: have the students ask different types of professions, e.g., a nurse or a bus
+                 driver, about common challenges they face. From our experience, it is useful for the stu-
+              dents not to think about their own personal challenges or campus-related challenges as
+              they themselves experience the challenge and therefore have a difficult time seeing the
+               bigger picture and interviewing fellow classmates. It is better for the students to take on a
+               challenge that is new to them. The challenge should specify the purpose and goal of the
+                solution. It is a good idea to identify possible results of the solutions, but not suggest what
+              type of solution that is needed. Also, some limitations might apply.
+
+
+
+            Module 1: Discovery of challenge
+              Discovery is about understanding the context of the challenge by collecting informa-
+                 tion. Here,  it is emphasized that students get out of the classroom and collect data
+             about users’ experiences and people with expert knowledge about the challenge. To be
+               able to solve the challenge, the team needs plenty of information about the challenge
+              they are about to solve and to build empathy with the users. Often students (and we as
+               teachers) will see one easy solution right away, but, at this stage, the focus should be
+            on the challenge and not yet on trying to solve it.
+                 Interviews can be a powerful tool to collect information and get a deeper understand-
+              ing of the situation. First, try to identify different types of people that can share their
+                insights. Users are of course essential; however, other people might also be able to pro-
+               vide useful information. For example, if you want to know more about people’s prefer-
+              ences about food choices at a certain place, you, of course, can ask the people eating
+
+===== PAGE 7 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 7 of 11
+
+
+
+
+
+            and serving food. However, the people that clean the area might have useful informa-
+               tion about what type of food that they have noticed has been thrown away or left be-
+               hind. Open questions are preferred which do not restrict the answers that yes and no
+              questions usually do. Follow-up questions are also encouraged because the first answer
+            you get might not tell the whole story. Why? When? How? What is an example of that?
+             These can all be useful follow-up questions to dig deeper into a previous answer.
+               Observation is a research approach often applied in ethnography and anthropology
+             but used more and more to understand users. Interviews can provide a rich under-
+              standing but sometimes the users themselves will not know (when asked) why they act
+               in a certain way, and it is easy to come to premature conclusions. By observing (at least
+            60 min) to understand users’ needs and preferences in a certain situation, a deeper un-
+              derstanding of why people act the way they do can be achieved. During the observation,
+              the focus should be on what is happening and which behaviors are noticed (not count-
+                ing, measuring, or thinking about solutions).
+
+
+
+            Module 2: Interpretation of challenge
+               After module 1, the teams should have collected plenty of different types of information
+             about the challenge. Now is the time to start to sort and analyze the information and
+              consider the following questions: what can we learn from all of it? What are the needs
+               of the user? When talking about needs, we emphasize not only physical needs such as
+               that the solution is functional but also cognitive needs in the form of user-friendliness
+            and emotional needs in the form of feeling pleasure and meaningfulness. When analyz-
+              ing for needs, the teams will seek patterns, structures, and relationships that can give a
+             deeper understanding of the needs. What are the keywords that describe the challenge?
+           Can they be structured or sorted in a specific way?
+                Creating personas is a powerful method for understanding users. Who are the typical
+               users in terms of attitudes, motivations, and goals? What is the narrative that describes
+           how personas act in a sequence of actions? When creating a persona, it should describe
+              the specific wants or needs of the persona. Another method is mapping the customer
+              journey from initial contact and into a long-term relationship.
+
+
+
+            Module 3: Ideation of solutions
+           Once the teams have a deep understanding of the challenge, they can start to create so-
+               lutions for  it. Creativity is at the forefront, where the focus is on thinking differently
+            and in new ways. In this module, there is no learning without coming up with many
+               ideas and knowing that many of the ideas will fail. It is important to create many ideas,
+            where some are wild and crazy. Usually, the first idea is not the best idea. We challenge
+              the students to be creative and ask the teams to come up with at least 50 solutions to
+              the challenge. Here, we emphasize keeping the ideas simple and not criticizing them.
+           The method of brainstorming in different ways can be a good way to come up with
+           many different ideas.
+
+
+
+            Module 4: Prototyping of solutions
+              In the prototyping module, the teams take their ideas for solutions and start sorting
+            and grouping them to find realistic solutions. The teams then take a few ideas (3–10)
+
+===== PAGE 8 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 8 of 11
+
+
+
+
+
+               further and prototype them. The purpose of prototyping several ideas is to advance the
+              one-sentence statement into a more advanced solution. This can be done through a
+              simple sketch, Legos, or perhaps an advertisement describing the main features. The
+             teams can then go out and interview users, show them the simple prototypes, and get
+              feedback on which ones to develop further. As the number of prototypes is reduced,
+              the more advanced prototypes can be developed, with more detail and functionality.
+           More advanced prototypes include functional prototypes that solve the functional chal-
+              lenge but do not have the  final design;  it can be a 3D computer simulation, a
+             scaled-down version, and so on.
+
+
+
+            Module 5: Solution and future
+              In the last module, the students present their final solution and prototype(s). This can
+             be done by pitching the solution to an audience or showcasing the prototypes in a stu-
+             dent exhibition. In this module, the teams also develop a plan looking forward. What
+            team members and resources are needed to complete the solution? What needs to be
+              completed, and what would a timeline consist of?
+
+
+
+             Grading and assessment
+           The view that learning the entrepreneurial process is more important than the outcome
+                    (e.g., business plan) shifts what should be graded. Moving to the process, the final pres-
+              entation of the idea is not graded. Instead, the focus is on the process, and the students
+               are graded (which they document) on how they complete the different modules and
+            what learnings they have achieved in each module. Essentially, the students document
+           how they have completed each module and present this in their report together with
+              the final solution. In addition, each student creates a learning log where specific ques-
+               tions are answered. For example, what was the greatest takeaway from developing sev-
+                eral prototypes?
+
+
+             Discussion
+              In this entrepreneurship course, students are exposed to developing new solutions for a
+              problem/challenge and practicing identifying entrepreneurial opportunities. The focus
+                   is also on the pre-entrepreneurial process, focusing on identifying the opportunity and
+              developing it. Previous entrepreneurship research has to a large degree focused on the
+                 latter part of the entrepreneurial process (Kreuger and Welpe 2014), which also reflects
+              the entrepreneurship education (Daniel 2016). The traditional entrepreneurship theory
+             has assumed that opportunities already exist and require alertness to discover them
+              (Kirzner 1973). The centrality of creating opportunities in entrepreneurship research
+             has later been highlighted (Alvarez and Barney 2007), and this centrality has slowly
+               started to shift the focus in entrepreneurial education from the planning and prediction
+               to the pre-idea phase of creating opportunities. Connecting entrepreneurship education
+              with design thinking and a methods approach, in line with education “through,” is one
+            way to focus more on the creation of opportunities, instead of assuming ideas exist and
+              the entrepreneur only needs to act on them.
+                Previous research has highlighted the value of learning/reflection logs as an essential
+               tool in teaching entrepreneurship (Robinson et al. 2016). Our experiment also shows that
+
+===== PAGE 9 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                           Page 9 of 11
+
+
+
+
+
+              the students learn in an enhanced way when reflecting throughout the course on their de-
+              velopment. The teachers have also noticed an improvement in outcome in the quality of
+               ideas in the new course compared to the old one, even though this aspect has been deem-
+              phasized in the new course. This finding can indicate that when the students worry less
+             about the outcome and instead focus on the process, the outcome will be of high quality
+              anyway. The reflections also help the students connect the practical knowledge with their
+              understanding of the theoretical perspectives of entrepreneurship. When the students
+              look back at their early reflections, they often find that their comprehension of the chal-
+              lenge changes and that the most obvious solution is not always the best one.
+                Previous research has underlined the usefulness of design thinking for promoting entre-
+               preneurial  skills  (Val  et  al.  2017). Our  experiment  with  switching  to  a  design
+              thinking-based course as a possible new entrepreneurial education approach should be
+              seen in many ways as a positive change. Design thinking underscores a classroom culture
+               that fosters collaboration and creativity, which can be in contrast to traditional formal
+              education at the university level. Iteration is an important aspect of the methods approach
+             (Neck and Greene 2011). When opening up the course to iterations as a natural part of
+              the entrepreneurial process, the ideas became more developed. When comparing the end
+                results of the old course and the new course, a clear trend can be noticed, as the parts of
+              the ideas fit together much better and the ideas were not forced together, which was one
+               of the triggers for the teachers to redesign the course. Research on new ventures shows
+               that ventures can learn much from these iterations in the entrepreneurial process (Hasche
+            and Linton 2018). When focusing more on iterations, students seem to dare more to do
+            an iteration and show that they learned something and went back and made it right, in-
+               stead of covering up and making ideas of a more “make-believe” character.
+               Using design thinking for entrepreneurship education also shifts the center of atten-
+               tion away from the teacher and more to a student-centered learning (Daniel 2016; Rob-
+              inson et al. 2016). The active workshops and the reflection logs help students facilitate
+                their own learning in a much different way compared to the traditional university lec-
+               ture style of learning. In agreement with Val et al. (2017) we extend the thoughts of the
+                     fit of design thinking with entrepreneurship education by illustrating an example of
+           how a course can be modified and we also extend the theoretical arguments for why
+              design thinking is a suitable for entrepreneurship education.
+             From our experience, students gain a deeper level of understanding by taking a practice
+              approach, stepping outside the classroom and experimenting in the real world of users
+            and customers with real feedback. Thus, the focus from the “about” and “for” approaches
+               of entrepreneurial education has turned to a “through” approach (Pittaway and Edwards
+               2012). Edelman et al. (2008) suggest that more of a practice approach can help to develop
+            an entrepreneurial skill set. We find that it is difficult to assess if the students have more
+              or less entrepreneurial skills with the new course; however, we can note that the students
+               leave with a different set of entrepreneurial skills that are more focused on creativity, col-
+                laboration, and problem-solving. These skills seem to include more entrepreneurship
+                 characteristics, while the previous course developed more (small) business skills.
+
+
+            Conclusions
+           The paper contributes with extending the theoretical connection between entrepre-
+               neurial education and design thinking compared to previous research in this literature
+
+===== PAGE 10 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                          Page 10 of 11
+
+
+
+
+
+             stream (e.g., Armstrong 2016; Daniel 2016; Nielsen and Christensen 2014; Stovang and
+              Nielsen 2015; Val et al. 2017). The paper also contributes by conceptually connecting
+              previous research that call for both a methods approach (Neck and Greene 2011) and
+              entrepreneurship education with a “through” perspective (Pittaway and Edwards 2012);
+                this paper highlights how these approaches can be achieved by utilizing design thinking
+            (Brown and Katz 2009).
+
+
+               Acknowledgements
+             We are thankful for the language editing provided by M. Comstock. We are also thankful for the insightful comments
+                and suggestions from two reviewers and the editor which helped improve the paper.
+
+
+                Funding
+                    Gabriel Linton was supported by the Faculty for Business,Science, and Technology at Örebro University.
+
+
+                    Availability of data and materials
+                Does not apply
+
+
+                  Authors’ contributions
+               GL has been the lead author, with the main responsibility of developing the research and manuscript. MK has been
+                   involved as a co-author and contributed actively with ideas and concepts for the research and the practical implemen-
+                     tation of the research and empirical data, and assisted in developing the short report. Both authors read and approved
+                   the final manuscript.
+
+
+                  Authors’ information
+                    Gabriel Linton, Ph.D., works as an assistant professor at the Örebro University School of Business. His research is
+                  focused around entrepreneurship and innovation with an interest in, for example, startups, firm’s entrepreneurial
+                      orientation, and regional innovation systems.
+                    Gabriel serves as a member of the editorial review board for the Journal of Small Business and Entrepreneurship.
+                    Gabriel has previously published in journals such as Journal of Business Research, R&D Management, European Journal
+                     of Innovation Management, and Journal of Small Business and Entrepreneurship.
+                 Markus Klinton, Ph.D., works at the Department of External Relations at Örebro University. His research is focused
+                 around the organization of work and employment.
+
+
+                Consent for publication
+                 Not applicable
+
+
+               Competing interests
+                 The authors declare that they have no competing interests.
+
+
+             Publisher’s Note
+                   Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+
+                Author details
+                  1Örebro University School of Business, SE-701 82 Örebro, Sweden. 2Örebro University External Relations, SE-701 82
+                   Örebro, Sweden.
+
+                   Received: 29 August 2018 Accepted: 9 December 2018
+
+
+
+                 References
+                       Alvarez, S. A., & Barney, J. B. (2007). Discovery and creation: Alternative theories of entrepreneurial action. Strategic
+                          Entrepreneurship Journal, 1(1–2), 11–26. https://doi.org/10.1002/sej.4.
+                   Armstrong, C. E. (2016). Teaching innovation through empathy: Design thinking in the undergraduate business classroom.
+                    Management Teaching Review, 1(3), 164–169. https://doi.org/10.1177/2379298116636641.
+                      Baker, T., Miner, A. S., & Eesley, D. T. (2003). Improvising firms: Bricolage, account giving and improvisational competencies in
+                       the founding process. Research Policy, 32(2), 255–276. https://doi.org/10.1016/S0048-7333(02)00099-9.
+                      Baker, T., & Nelson, R. E. (2005). Creating something from nothing: Resource construction through entrepreneurial bricolage.
+                          Administrative Science Quarterly, 50(3), 329–366. https://doi.org/10.2189/asqu.2005.50.3.329.
+                   Brown, T., & Katz, B. (2009). Change by design  : How design thinking transforms organizations and inspires innovation. New York:
+                       Harper Business.
+                   Buchanan, R. (1992). Wicked problems in design thinking. Design Issues, 8(2), 5–21. https://doi.org/10.2307/1511637.
+                         Carrier, C. (2005). Pedagogical challenges in entrepreneurship education. In The dynamics of learning entrepreneurship in a
+                            cross-cultural university context (pp. 136–158).
+                      Daniel, A. D. (2016). Fostering an entrepreneurial mindset by using a design thinking approach in entrepreneurship
+                         education. Industry and Higher Education, 30(3), 215–223. https://doi.org/10.1177/0950422216653195.
+
+===== PAGE 11 =====
+Linton and Klinton Journal of Innovation and Entrepreneurship       (2019) 8:3                                          Page 11 of 11
+
+
+
+
+
+                   Edelman, L. F., Manolova, T. S., & Brush, C. G. (2008). Entrepreneurship education: Correspondence between practices of
+                       nascent entrepreneurs and textbook prescriptions for success. Academy of Management Learning & Education, 7(1), 56–70.
+                         https://doi.org/10.5465/amle.2008.31413862.
+                       Fayolle, A., Gailly, B., & Lassas-Clerc, N. (2006). Assessing the impact of entrepreneurship education programmes: A new
+                      methodology. Journal of European Industrial Training, 30(9), 701–720. https://doi.org/10.1108/03090590610715022.
+                    Hasche, N., & Linton, G. (2018). The value of failed relationships for the development of a Medtech start-up. Journal of Small
+                         Business & Entrepreneurship, 30(1), 97–119. https://doi.org/10.1080/08276331.2017.1388953.
+                    Honig, B. (2004). Entrepreneurship education: Toward a model of contingency-based business planning. Academy of
+                    Management Learning & Education, 3(3), 258–273. https://doi.org/10.5465/amle.2004.14242112.
+                     Kassean, H., Vanevenhoven, J., Liguori, E., & Winkel, D. E. (2015). Entrepreneurship education: A need for reflection, real-world
+                        experience and action. International Journal of Entrepreneurial Behavior & Research, 21(5), 690–708. https://doi.org/10.1108/
+                         IJEBR-07-2014-0123.
+                        Katz, J., & Gartner, W. B. (1988). Properties of emerging organizations. Academy of Management Review, 13(3), 429–441. https://
+                        doi.org/10.5465/amr.1988.4306967.
+                        Kirzner,  I. (1973). Competition and entrepreneurship. Chicago: University of Chicago Press.
+                    Koh, J. H. L., Chai, C. S., Wong, B., & Hong, H.-Y. (2015). Design thinking and education. In J. H. L. Koh, C. S. Chai, B. Wong, &
+                             H.-Y. Hong (Eds.), Design thinking for education: Conceptions and applications in teaching and learning (pp. 1–15).
+                        Singapore: Springer Singapore. https://doi.org/10.1007/978-981-287-444-3_1.
+                     Kreuger, N., & Welpe,  I. (2014). Neuroentrepreneurship: What can entrepreneurship learn from neuroscience? Annals of
+                          entrepreneurship education and pedagogy 2014, 60.
+                       Liñán, F., & Fayolle, A. (2015). A systematic literature review on entrepreneurial intentions: Citation, thematic analyses, and research
+                       agenda. International Entrepreneurship and Management Journal, 11(4), 907–933. https://doi.org/10.1007/s11365-015-0356-5.
+                     Nabi, G., Liñán, F., Fayolle, A., Krueger, N., & Walmsley, A. (2017). The impact of entrepreneurship education in higher
+                         education: A systematic review and research agenda. Academy of Management Learning & Education, 16(2), 277–299.
+                         https://doi.org/10.5465/amle.2015.0026.
+                    Neck, H. M., & Greene, P. G. (2011). Entrepreneurship education: Known worlds and new Frontiers. Journal of Small Business
+                     Management, 49(1), 55–70. https://doi.org/10.1111/j.1540-627X.2010.00314.x.
+                      Nielsen, S. L., & Christensen, P. R. (2014). The wicked problem of design management: Perspectives from the field of
+                         entrepreneurship. The Design Journal, 17(4), 560–582. https://doi.org/10.2752/175630614X14056185480113.
+                  NIRAS Consultants, FORA and ECON Pöyry (2008) Survey of Entrepreneurship in Higher Education in Europe. Brussels:
+                      European Commission, Directorate-General for Enterprise and Industry.
+                      Pittaway, L., & Edwards, C. (2012). Assessment: Examining practice in entrepreneurship education. Education + Training, 54(8/
+                                  9), 778–800. https://doi.org/10.1108/00400911211274882.
+                    Robinson, S., Neergaard, H., Tanggaard, L., & Krueger, N. F. (2016). New horizons in entrepreneurship education: From teacher-
+                         led to student-centered learning. Education + Training, 58(7/8), 661–683. https://doi.org/10.1108/ET-03-2016-0048.
+                      Sarasvathy, S. D. (2001). Causation and effectuation: Toward a theoretical shift from economic inevitability to entrepreneurial
+                        contingency. The Academy of Management Review, 26, 243–263.
+                      Sarasvathy, S. D. (2008). Effectuation: elements of entrepreneurial expertise. Cheltenham: Elgar.
+                   Simon, H. (1969), The Science of the Artificial, MIT Press, Cambridge, MA.
+                  Solomon, G. (2007). An examination of entrepreneurship education in the United States. Journal of Small Business and
+                            Enterprise Development, 14(2), 168–182. https://doi.org/10.1108/14626000710746637.
+                    Stovang, P., & Nielsen, S. L. (2015). DesUni: University entrepreneurship education through design thinking. Education +
+                            Training, 57(8/9), 977–991. https://doi.org/10.1108/ET-09-2014-0121.
+                            Val, E., Gonzalez,  I., Iriarte,  I., Beitia, A., Lasa, G., & Elkoro, M. (2017). A design thinking approach to introduce entrepreneurship education
+                             in European school curricula. The Design Journal, 20(sup1), S754–S766. https://doi.org/10.1080/14606925.2017.1353022.
+                 von Graevenitz, G., Harhoff, D., & Weber, R. (2010). The effects of entrepreneurship education. Journal of Economic Behavior &
+                          Organization, 76(1), 90–112. https://doi.org/10.1016/j.jebo.2010.02.015.

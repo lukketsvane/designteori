@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-06T19:08:21.610354+00:00",
+  "count": 11,
+  "items": [
+    {
+      "id": "W2126722450",
+      "title": "Understanding of a product/service system design: a holistic approach to support design for remanufacturing",
+      "authors": [
+        "Tomohiko Sakao",
+        "Hajime Mizuyama"
+      ],
+      "year": 2014,
+      "doi": "https://doi.org/10.1186/2210-4690-4-1",
+      "journal_or_source": "Journal of remanufacturing",
+      "original_fulltext_url": "https://link.springer.com/content/pdf/10.1186/2210-4690-4-1.pdf",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2126722450.pdf",
+      "text": "tekst/W2126722450.txt",
+      "sha256": "8f7c764ffc6df5e306d45c6a603867dc875f047ee5668bdfd652a915097180b5",
+      "bytes": 616784,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2739167865",
+      "title": "Collaborating with Young Adults Diagnosed with Schizophrenia: A Participatory Design Study to Shape the Healthcare System",
+      "authors": [
+        "Malene Terp",
+        "Charlotte D. Bjørnes",
+        "Rikke Jørgensen",
+        "Jan Mainz",
+        "Birgitte Schantz Laursen"
+      ],
+      "year": 2017,
+      "doi": "https://doi.org/10.4236/ojn.2017.77056",
+      "journal_or_source": "Open Journal of Nursing",
+      "original_fulltext_url": "https://content.scirp.org/pdf/ojn_2017071814170883.pdf",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2739167865.pdf",
+      "text": "tekst/W2739167865.txt",
+      "sha256": "8255be5b12dabf63ab05b036d8c16f6287adbabd48b85d5681fafd9897e76f44",
+      "bytes": 2274206,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2774875954",
+      "title": "Uncertainty Driven Action (UDA) model: A foundation for unifying perspectives on design activity",
+      "authors": [
+        "Philip J. Cash",
+        "Melanie E. Kreye"
+      ],
+      "year": 2017,
+      "doi": "https://doi.org/10.1017/dsj.2017.28",
+      "journal_or_source": "Design Science",
+      "original_fulltext_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/CDA79270F2C59AEDD7A1DDA4C51316F2/S2053470117000282a.pdf/div-class-title-uncertainty-driven-action-uda-model-a-foundation-for-unifying-perspectives-on-design-activity-div.pdf",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2774875954.pdf",
+      "text": "tekst/W2774875954.txt",
+      "sha256": "d91bf2478b293041f0bf8638f81538649f978a53373b17efcd8826992febc818",
+      "bytes": 929167,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2919057183",
+      "title": "University entrepreneurship education: a design thinking approach to learning",
+      "authors": [
+        "Gabriel Linton",
+        "Markus Klinton"
+      ],
+      "year": 2019,
+      "doi": "https://doi.org/10.1186/s13731-018-0098-z",
+      "journal_or_source": "Journal of Innovation and Entrepreneurship",
+      "original_fulltext_url": "https://innovation-entrepreneurship.springeropen.com/track/pdf/10.1186/s13731-018-0098-z",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2919057183.pdf",
+      "text": "tekst/W2919057183.txt",
+      "sha256": "b20875f4e887789d0ed187ccc45ac53081a7e53b5516d2c42e24dcd100601865",
+      "bytes": 618130,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2982281212",
+      "title": "The Use of Design Thinking in Transdisciplinary Research and Innovation Consortia: Challenges, Enablers, and Benefits",
+      "authors": [
+        "Antje Gonera",
+        "Reinhold Pabst"
+      ],
+      "year": 2019,
+      "doi": "https://doi.org/10.24840/2183-0606_007.003_0006",
+      "journal_or_source": "Journal of Innovation Management",
+      "original_fulltext_url": "https://journalsojs3.fe.up.pt/index.php/jim/article/download/2183-0606_007.003_0006/345",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2982281212.pdf",
+      "text": "tekst/W2982281212.txt",
+      "sha256": "c8b6bf9cb14035670c42ebdde597259595818f7d71f43e20daa29a2d6f9ac078",
+      "bytes": 2832558,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2986925238",
+      "title": "Advancing service design research with design science research",
+      "authors": [
+        "Jorge Teixeira",
+        "Lia Patrício",
+        "Tuure Tuunanen"
+      ],
+      "year": 2019,
+      "doi": "https://doi.org/10.1108/josm-05-2019-0131",
+      "journal_or_source": "Journal of service management",
+      "original_fulltext_url": "https://jyx.jyu.fi/bitstreams/c10677da-4bea-40e4-9e74-334b9909727f/download",
+      "license": "CC BY-NC 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2986925238.pdf",
+      "text": "tekst/W2986925238.txt",
+      "sha256": "f37c83622d4e39194a821feb65775b078473cdbfd56abafe4c73dd7bc9ed2c5c",
+      "bytes": 1497547,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W2995635751",
+      "title": "Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research",
+      "authors": [
+        "Maija Katariina Aksela"
+      ],
+      "year": 2019,
+      "doi": "https://doi.org/10.31129/lumat.7.3.421",
+      "journal_or_source": "LUMAT International Journal on Math Science and Technology Education",
+      "original_fulltext_url": "https://journals.helsinki.fi/lumat/article/download/1246/1244",
+      "license": "CC BY-NC 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W2995635751.pdf",
+      "text": "tekst/W2995635751.txt",
+      "sha256": "60c6abc4a6ef0c639e14aef149051eec66a38c289f364395d4458a140da7d2d1",
+      "bytes": 829472,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W3183081787",
+      "title": "Integrating perspectives of patients, healthcare professionals, system developers and academics in the co-design of a digital information tool",
+      "authors": [
+        "Annika Grynne",
+        "Maria Browall",
+        "Sofi Fristedt",
+        "Karin Ahlberg",
+        "Frida Smith"
+      ],
+      "year": 2021,
+      "doi": "https://doi.org/10.1371/journal.pone.0253448",
+      "journal_or_source": "PLoS ONE",
+      "original_fulltext_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0253448&type=printable",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W3183081787.pdf",
+      "text": "tekst/W3183081787.txt",
+      "sha256": "bef0bd1626a17af72da392d08f278b7c04a2f1a8fcdc7f6a1e861c6f606968cf",
+      "bytes": 897473,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W4307994144",
+      "title": "A quick review of ethics, design thinking, gender, and AI development",
+      "authors": [
+        "Aila Kronqvist",
+        "Rebekah Ann Rousi"
+      ],
+      "year": 2022,
+      "doi": "https://doi.org/10.1080/21650349.2022.2136762",
+      "journal_or_source": "International Journal of Design Creativity and Innovation",
+      "original_fulltext_url": "https://jyx.jyu.fi/bitstreams/ad5915e1-9a87-4263-92e7-170f5f82c6b6/download",
+      "license": "CC BY-NC-ND 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W4307994144.pdf",
+      "text": null,
+      "sha256": "fe5ee01a7f4a688e2d969b57d3c76ef54f907d9eebdc41015bf88312cff5643d",
+      "bytes": 1453311,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W4311715142",
+      "title": "Design Thinking as a Master Idea",
+      "authors": [
+        "Hilde Marie Pettersen",
+        "Turid Moldenæs"
+      ],
+      "year": 2022,
+      "doi": "https://doi.org/10.7557/13.6718",
+      "journal_or_source": "Nordlit",
+      "original_fulltext_url": "https://septentrio.uit.no/index.php/nordlit/article/download/6718/6873",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W4311715142.pdf",
+      "text": "tekst/W4311715142.txt",
+      "sha256": "daf39c0266e4d149995525cc46b886518f2f146c10c8af65514243127257c217",
+      "bytes": 245875,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    },
+    {
+      "id": "W7155508854",
+      "title": "Design fiction as critical pedagogy for exploring technology futures in social research",
+      "authors": [
+        "Henry Nsaidzeka Mainsah",
+        "Carolina Sanchez Boe",
+        "Bastien Kerspern",
+        "Léa Lippera"
+      ],
+      "year": 2026,
+      "doi": "https://doi.org/10.3389/feduc.2026.1692366",
+      "journal_or_source": "Frontiers in Education",
+      "original_fulltext_url": "https://public-pages-files-2025.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1692366/pdf",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "rights_basis": "Explicit Creative Commons licence statement in the first three pages of the PDF; reviewed 2026-11-06",
+      "pdf": "pdf/W7155508854.pdf",
+      "text": "tekst/W7155508854.txt",
+      "sha256": "9173146e78f14d3673e4a8dd85705fe94bc4118c5946f4f4eeb518241d8b141b",
+      "bytes": 1995908,
+      "verification_status": "checked-document-licence",
+      "reviewed_on": "2026-11-06"
+    }
+  ]
+}

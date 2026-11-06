@@ -1,0 +1,1450 @@
+WORK: Advancing service design research with design science research
+AUTHORS: Jorge Teixeira, Lia Patrício, Tuure Tuunanen
+YEAR: 2019
+DOI: https://doi.org/10.1108/josm-05-2019-0131
+SOURCE: https://jyx.jyu.fi/bitstreams/c10677da-4bea-40e4-9e74-334b9909727f/download
+LICENSE: CC BY-NC 4.0, https://creativecommons.org/licenses/by-nc/4.0/
+TRANSFORMATION: Plain-text extraction from PDF; layout lost, spelling not corrected.
+
+
+===== PAGE 1 =====
+This is a self-archived version of an original article. This version
+may differ from the original in pagination and typographic details.
+
+               Teixeira, Jorge Grenha; Patrício, Lia; Tuunanen, TuureAuthor(s):
+
+
+
+
+      Advancing service design research with design science researchTitle:
+
+
+
+
+
+Year: 2019
+
+Version: Accepted version (Final draft)
+
+Copyright: © 2019 the Authors
+
+Rights: CC BY-NC 4.0
+
+Rights url: https://creativecommons.org/licenses/by-nc/4.0/
+
+Please cite the original version:
+Teixeira, J. G., Patrício, L., & Tuunanen, T. (2019). Advancing service design research with design
+science research. Journal of Service Management, 30(5), 577-592.
+https://doi.org/10.1108/JOSM-05-2019-0131
+
+
+
+
+The University of Jyväskylä's Rights Retention Strategy (RRS) enables
+accepted versions (final drafts) to be made openly available through self-
+archiving. For more information, see: https://www.jyu.fi/en/rrs
+
+===== PAGE 2 =====
+           Advancing Service Design Research with Design Science Research
+
+
+
+                           Jorge Grenha Teixeira and Lia Patrício
+
+    Faculty of Engineering, University of Porto, Porto, Portugal and Institute for Systems and
+
+             Computer Engineering, Technology and Science, Porto, Portugal
+
+                                  Tuure Tuunanen
+
+                         University of Jyväskylä, Jyväskylä, Finland
+
+
+
+                                          Abstract
+
+Purpose: Service design is a multidisciplinary approach that is key to service innovation, as it
+
+brings new service ideas to life. In this context, the development of new service design methods
+
+and models for creating new service futures is an important stream of service design research. Such
+
+developments can benefit from a systematized research methodology that builds on existing
+
+knowledge and robustly evaluates the suitability of research contributions. To address this
+
+challenge, this article presents design science research (DSR), an established methodology from
+
+the information systems field, and examines how it can be useful for service design research by
+
+supporting the development of new artifacts, such as service design constructs, methods, and
+
+models.
+
+Design/methodology/approach: This article shows how DSR can support service design research
+
+through a step-by-step approach. As a methodology to develop prescriptive driven solutions for
+
+classes of problems, DSR can support service design research in developing rigorous and relevant
+
+research. One illustrative example of a service design research effort using the DSR approach is
+
+presented.
+
+
+
+                                         1
+
+===== PAGE 3 =====
+Findings: Building on DSR’s robust methodological background, this article discusses how DSR
+
+can support service design research, namely through the development of new methods and models,
+
+and how DSR can be adapted to leverage service design research participatory, iterative, human-
+
+centric, and creative approach.
+
+Originality/value: This article provides an overview of DSR and proposes it as a methodology to
+
+conduct service design research, offering step-by-step guidance on the application of DSR in
+
+service design research and discussing how  it can be adapted according  to the  specific
+
+characteristics of service design research and drive future research.
+
+Keywords: Service Design, Service Innovation, Design Science Research, Research Methodology
+
+Article Classification: Conceptual Paper
+
+
+
+1.  Introduction
+
+Service design plays an increasingly important role in service research, as it brings new service
+
+ideas to life (Ostrom et al., 2010), thus enabling new forms of value co-creation with customers,
+
+organizations, and societal actors, in general (Patrício et al., 2018a). Service design can be defined
+
+as a human-centered, holistic, and iterative approach to the creation of new services (Blomkvist et
+
+al., 2010, Meroni and Sangiorgi, 2011). It integrates a service perspective through a creative and
+
+iterative process of exploration (understanding the experience of customers and other relevant
+
+actors), ideation (envisioning new service futures), prototyping (representing and testing the new
+
+services), and implementation (Patrício et al., 2019). Service design creates new service futures
+
+through a human-centered approach that allows a contextual and holistic understanding of
+
+customer experiences, aligning system actors to support customer experience and supporting
+
+
+
+
+
+                                         2
+
+===== PAGE 4 =====
+codesign and prototyping with creative tools (Yu and Sangiorgi, 2018). Overall, leveraging service
+
+design has been highlighted as a service research priority (Ostrom et al., 2010, Ostrom et al., 2015).
+
+       Service design research has focused on advancing different facets of service through a full
+
+spectrum of action-oriented research approaches, from design science focused on supporting
+
+expert decision-making and problem solving to participatory service design focused on sense-
+
+making to collectively build innovative health futures (Patrício et al., 2019). Early service design
+
+research approaches have focused on designing the frontstage and backstage of service delivery
+
+through blueprinting (Shostack, 1984). Later, service design has covered other service facets, such
+
+as service clues or the dramatic structure of events (Zomerdijk and Voss, 2010), with service
+
+interfaces playing a central role (Secomandi and Snelders, 2011). Multilevel approaches with an
+
+integrated design of service concepts, service architectures, and touchpoints have also been
+
+developed to create compelling value propositions within value networks and enhance the
+
+customer experience  (Patrício  et  al., 2011). More  recently,  service design has addressed
+
+increasingly complex contexts, namely service design for value networks (Patrício et al., 2018b)
+
+and for institutional change (Wetter-Edman et al., 2018, Kurtmollaiev et al., 2018).
+
+      These diverse developments show how service design has evolved as a multidisciplinary
+
+field that builds upon service research (Shostack, 1984, Johnson et al., 2000, Goldstein et al., 2002,
+
+Cook et al., 2002, Verma et al., 2002, Bitner et al., 2008, Zomerdijk and Voss, 2009) and design
+
+(Sangiorgi, 2009, Mager and Sung, 2011, Kimbell, 2011, Secomandi and Snelders, 2011), as well
+
+as integrates contributions from the fields of marketing, operations, and interaction design, among
+
+other fields (Patrício et al., 2018a, Joly et al., forthcoming). These multidisciplinary contributions
+
+have enriched service design, but each field also brings different methodological approaches that
+
+are difficult to integrate (Patrício et al., 2018a).
+
+
+
+                                         3
+
+===== PAGE 5 =====
+     Among the range of service design multidisciplinary perspectives and contributions to
+
+service research, this article looks more specifically to service design literature that focuses on
+
+developing dedicated methods for the field. Examples of such methods and tools range from
+
+service blueprinting (Bitner et al., 2008) to customer journey mapping (Følstad and Kvale, 2018),
+
+process-chain network (Sampson, 2012), and integrated approaches for designing technology-
+
+enabled services (Teixeira et al., 2017). These methods and tools are grounded on extensive
+
+applications to real-world situations. However, the development of service design methods still
+
+lacks a  well-established systematized research methodology  that can help  service design
+
+researchers better ground their contributions on existing knowledge and more robustly evaluate
+
+the suitability of these contributions to address service challenges. The lack of such a methodology
+
+has led to calls to reinforce the foundations of service design research by exploring multiple
+
+research methods (Patrício et al., 2018a, Ostrom et al., 2015).
+
+     To address these calls, this article presents design science research (DSR), a domain-
+
+independent research strategy (Van Aken et al., 2016) that was initially developed in Information
+
+Systems (IS) (March and Smith, 1995, Hevner et al., 2004, Peffers et al., 2007, Walls et al., 1992,
+
+Nunamaker et al., 1990) and is spreading to service research (Beloglazov et al., 2015, Teixeira et
+
+al., 2017, Patrício et al., 2018b), operations management (Van Aken et al., 2016), and design
+
+(Costa et al., 2018). DSR focuses on understanding organizational phenomena in context and on
+
+advancing research by creating and evaluating dual-purpose artifacts that 1) solve organizational,
+
+real-world problems and 2) advance a field’s knowledge base, i.e., offer a research contribution
+
+(Hevner et al., 2004, Gregor and Hevner, 2013).
+
+     DSR artifacts are constructs, models, methods, and instantiations (i.e., applications of
+
+artifacts) that are innovative and valuable in such a way that they offer a research contribution
+
+
+
+                                         4
+
+===== PAGE 6 =====
+(March and Smith, 1995, Hevner et al., 2004). Constructs are the vocabulary to define problems
+
+and solutions; models are representations of the problem; methods define processes; and
+
+instantiations are applications showing that the artifacts can be implemented and can solve the
+
+identified problem (Hevner et al., 2004). For example, Secomandi and Snelders (2011) research
+
+on the conceptualization of service interfaces in service design can be considered a development
+
+in service design constructs. On the other hand, Shostack (1984) service blueprinting and Teixeira
+
+et al. (2017) MINDS method involve the development of both service design methods and tools.
+
+     DSR  is  supported by  a  robust and growing  literature  that  offers  researchers  a
+
+comprehensive understanding of the methodology (Hevner, 2007, Peffers et al., 2007, Hevner et
+
+al., 2004, Baskerville et al., 2018) and guides them to positioning and presenting contributions
+
+(Gregor and Hevner, 2013, Gregor and Jones, 2007, Peffers et al., 2018a) and to evaluating them
+
+(Peffers et al., 2012, Venable et al., 2012). Therefore, DSR can support service design research
+
+efforts by providing a robust and well-documented methodology that aims to rigorously develop
+
+and evaluate service design research contributions and address real-world problems. To this end,
+
+this article details the process for conducting DSR from a service design perspective, highlighting
+
+the most relevant aspects for conducting service design research using DSR. Supporting literature
+
+for each step of the process is presented, as well as an illustration of how DSR has been applied in
+
+service design research (Patrício et  al., 2018b). The next section introduces the theoretical
+
+underpinnings of service design research and DSR, followed by a description of the DSR process
+
+and its application to service design research. The article concludes by discussing how DSR’s main
+
+concepts and positioning can be interpreted from a service design perspective and offering future
+
+research direction to leverage and evolve DSR for service design research.
+
+
+
+
+
+                                         5
+
+===== PAGE 7 =====
+2.  Service Design Research and DSR
+
+Service design is an evolving field, and although it is frequently considered as originating from
+
+and as a subfield of design, the initial contributions to service design can be traced to Shostack
+
+(1984) seminal  article on  service  blueprinting. Recently,  service design  multidisciplinary
+
+contributions have been traced to service research, design, IS, interaction design, and operations
+
+management (Joly et al., forthcoming). According to this study, a service perspective provides the
+
+conceptual framework to design for value co-creation within service systems (Edvardsson and
+
+Tronvoll, 2013), whereas design  offers the methods and  tools  to support the process of
+
+understanding and envisioning new forms of value co-creation through service (Kimbell, 2011).
+
+Marketing brings an extensive understanding of customer-centric service systems (Mahr et al.,
+
+2013) at both frontstage and backstage of service provision (Bitner et al., 2008). The design of
+
+service interfaces to support the user experience is a key contribution of interaction design
+
+(Zimmerman et al., 2011). Operations management, in turn, focuses on planning and controlling
+
+service operations and on designing the entire service delivery system to enable the customer
+
+experience (Sampson, 2012). In parallel, IS contributes with the information technology (IT)
+
+component of service systems (Glushko and Nomorosa, 2012). With such rich multidisciplinary
+
+contributions,  it is not surprising that service design research assumes many forms and  its
+
+methodological foundations need further exploration (Patrício et al., 2018a, Ostrom et al., 2015).
+
+       Service design research is rooted in design research (Patrício et al., 2018a). Similar to
+
+service design, design research is approached from different disciplinary backgrounds, such as the
+
+fields of design (Buchanan, 2001, Archer, 1981), art (Frayling, 1993), management (Pandza and
+
+Thorpe, 2010, Kasanen et al., 1993, Van Aken, 2004), interaction design (Fallman, 2008, Forlizzi
+
+et al., 2008), and IS (March and Smith, 1995). DSR is rooted in Herbert Simon (1969) who, in The
+
+
+
+                                         6
+
+===== PAGE 8 =====
+Sciences of the Artificial, describes design as “how things ought to be, with devising artifacts to
+
+attain goals” and the designer as one “who devises courses of action aimed at changing existing
+
+situations into preferred ones.” However, design researchers often focus on solving specific
+
+problems without developing theories or abstracting knowledge (Buchanan, 2001, Friedman,
+
+2003, Van Aken, 2004). Friedman (2003) further adds that there is confusion between research
+
+and practice, leading to the positioning of tacit knowledge from design practice as a research
+
+contribution. DSR can contribute to overcoming  this challenge by focusing on rigorously
+
+developing prescriptive-driven solutions for classes of problems,  i.e., on developing abstract
+
+knowledge that contributes to a field’s knowledge base, rather than a situated solution for a specific
+
+problem (Van Aken, 2004, Hevner et al., 2004). In the IS literature, the artifact has been considered
+
+to be an IT one (Baskerville et al., 2018). These artifacts have been depicted as constructs, models,
+
+methods, and instantiations that are related to the design of IT systems or software (March and
+
+Smith, 1995, March and Storey, 2008). However, Peffers et al. (2018b) recognize the cross-
+
+disciplinary nature of DSR and argue that there are different genres of DSR that use and adapt this
+
+methodology according to each field’s characteristics.
+
+       Service design research has dedicated considerable attention to the development of
+
+artifacts, such as new models and methods (Blomkvist et al., 2010). In fact, this research stream
+
+can be highlighted because of the number and impact of published research articles in peer-
+
+reviewed journals (Chai et al., 2005, Bitner et al., 2008, Patrício et al., 2011, Sampson, 2012, Sousa
+
+et al., 2016, Teixeira et al., 2017, Patrício et al., 2018b). While these efforts have not, until recently,
+
+used a DSR approach, Teixeira et al. (2017) and Patrício et al. (2018b) introduce DSR to develop
+
+methods to design, respectively, technology-enabled services and services that support complex
+
+many-to-many interactions.
+
+
+
+                                         7
+
+===== PAGE 9 =====
+These articles show that DSR can support service design research to rigorously develop methods
+
+and models that are relevant to service design research and to real-world challenges addressed by
+
+service design. Building on the extensive literature about the process of conducting DSR, the next
+
+section presents a DSR approach to conduct service design research, and illustrates how it can be
+
+applied to service design research.
+
+
+
+3.  Applying the DSR Methodology to Service Design Research
+
+Many different approaches to conduct DSR have been proposed in the literature, such as in the
+
+pioneering works by Nunamaker et al. (1990) and Walls et al. (1992). Hevner et al.’ s (2004)
+
+seminal article offers a set of guidelines to conduct DSR, and this is later extended and arranged
+
+into a three-cycles view, encompassing relevance, design, and rigor (Hevner, 2007). The relevance
+
+cycle bridges the research contextual and empirical ground, i.e., the organizational or societal
+
+problems addressed by the research with the design of the artifact. The design cycle involves
+
+building, designing, and evaluating the artifact. Finally, the rigor cycle relates the design of the
+
+artifact with existing and relevant scientific and methodological foundations. Offering a structured
+
+and step-by-step approach, Peffers et al. (2007) propose the design science research methodology
+
+(DSRM). DSRM is well suited for cross-disciplinary research and has already been applied in
+
+service design research (Teixeira et al., 2017, Patrício et al., 2018b).
+
+       Building on DSRM and the three-cycle view, Figure 1 presents a DSR process for service
+
+design research. In this DSR process, the stages proposed by Peffers et al. (2007) were combined
+
+for improved clarity. Furthermore, Figure 1 shows how DSR builds on empirical grounds (the real
+
+world) for relevance, and combines it with the service design knowledge base for rigor. Following
+
+the overall structure of the DSRM, the process starts with the identification of the research
+
+problem(s) and the motivation for the research. Basing on evidence, reasoning, and inference, the
+
+                                         8
+
+===== PAGE 10 =====
+DSR process continues toward defining the objectives of a solution in order to solve the research
+
+problem. This DSR process should be based on prior knowledge in the given field of research.
+
+This knowledge is then used to design and develop an artifact and to create how-to knowledge.
+
+Following that, the artifact is used to solve the pre-described problem. Thus, it is applied in a
+
+suitable context before its effectiveness and/or efficiency is evaluated. This approach leads to
+
+disciplinary knowledge, which is then communicated to both academia and practice.
+
+
+
+                                         (Insert Figure 1 around here)
+
+
+
+     To illustrate how DSR can offer a valuable research approach for the development of new
+
+service design  artifacts, more specifically service design methods and models,  this  article
+
+illustrates each phase in reference to Patrício  et  al. (2018b) research, which involves the
+
+development of a new service design method, the Service Design for Value Networks (SD4VN).
+
+SD4VN is a method to design services in complex networks as an enabler of many-to-many value
+
+co-creating interactions. These services require a balanced approach to address the multiple and
+
+often conflicting goals of numerous stakeholders. DSR was considered useful in developing the
+
+SD4VN method because it is a well-documented methodology with step-by-step guidance and
+
+evaluation criteria; it has been considered useful and relevant to service research and service design
+
+(Patrício et al., 2018b, Ostrom et al., 2015).
+
+
+
+    3.1. Identifying the class of problems and the solution objectives
+
+This first phase involves defining the research problem and motivating for the importance of
+
+developing a solution that addresses the problem. This requires an understanding of the state of
+
+
+
+                                         9
+
+===== PAGE 11 =====
+the problem and the importance of a solution (Peffers et al., 2007). The objectives of a DSR
+
+solution can be defined quantitatively by establishing how much the desired solution should be
+
+better than the current one, or qualitatively by describing how the new artifact should better support
+
+the identified problem (Peffers et al., 2007). The definition of the objective also has significant
+
+repercussions in the later stage of evaluation because it will frame how the evaluation is conducted.
+
+As such, when defining the objectives of a solution, service design researchers using DSR should
+
+also prepare an adequate evaluation method.
+
+     As shown in Figure 1, service design research deals with a broad range of relevant real-
+
+world challenges concerning technology-enabled (Teixeira et al., 2017, Kurtmollaiev et al., 2018),
+
+experience-centric (Zomerdijk and Voss, 2009), financial and  retail (Patrício et  al., 2011),
+
+healthcare (Patrício et al., 2018b), or non-profit (Baron et al., 2018, Trischler et al., 2018) services.
+
+However, not all problems addressed by service design constitute a research problem and thus
+
+require a DSRM approach. A routine design problem, in which knowledge to address a problem
+
+area already exists, is the domain of service design practice (Gregor and Hevner, 2013). Therefore,
+
+the problem identified in this first stage must be relevant to the service design empirical domain,
+
+meaning it addresses important service design-related challenges, and to research, meaning it
+
+addresses a class of problems and adds to the service design knowledge base (Hevner et al., 2004,
+
+Hevner, 2007, Van Aken, 2004). In service design research, the knowledge base is very significant,
+
+as it includes service design existing principles and concepts (Yu and Sangiorgi, 2018, Secomandi
+
+and Snelders, 2011, Goldstein et al., 2002), models and methods (Bitner et al., 2008, Tax et al.,
+
+2013, Patrício et al., 2018b, Teixeira et al., 2017), and a rich set of multidisciplinary contributions
+
+(Joly et al., forthcoming).
+
+
+
+
+
+                                         10
+
+===== PAGE 12 =====
+       In the SD4VN example, the identified research problem concerned the dyadic approach
+
+(customer–service provider) of available service design methods, meaning there was a lack of
+
+service design methods that incorporated a value network perspective and that could deal with its
+
+related complexity (interactions among multiple actors). This problem was also relevant to several
+
+real-world contexts, as increasingly complex service systems are required to co-create critical
+
+services, such as healthcare. Henceforth, the objective of the solution for this class of problems
+
+was to develop a service design method for designing services that enable value co-creating
+
+interactions in value networks. However, because of the multiplicity of actors in a value network,
+
+the designed solution should also pursue balanced centricity. Balanced centricity means that in a
+
+value network, the designed service should not focus on the goals of one customer but should
+
+support the different actors of the network in reaching their goals in a balanced way (Gummesson,
+
+2008). Following a DSR approach, SD4VN contributed to a relevant problem in healthcare and
+
+was grounded on relevant service research literature on value networks and service systems.
+
+
+
+    3.2. Designing and developing a solution to a class of problems
+
+DSR involves the design and development of an artifact that addresses the identified problem and
+
+accomplishes the defined objectives (Hevner et al., 2004). Artifacts are well suited to service
+
+design research, as service design has a strong tradition of using visual models both in research
+
+and in practice (Blomkvist and Segelström, 2014, Diana et al., 2012, Blomkvist et al., 2010), as
+
+well as lacks dedicated models and methods (Ostrom et al., 2010, Patrício et al., 2018a). Service
+
+design builds on a broad range of multidisciplinary contributions from fields, such as service
+
+research, design, service marketing, operations management, interaction design, and IS (Joly et al.,
+
+
+
+
+
+                                         11
+
+===== PAGE 13 =====
+forthcoming). These multidisciplinary contributions also bring a rich set of knowledge that can be
+
+built upon.
+
+   Regarding the design and development stage, the artifact developed by Patrício et al. (2018b),
+
+SD4VN, was a new method. SD4VN involves (1) mapping the value network to identify key actors
+
+and their relationships, (2) understanding the experience of each actor in the network and mapping
+
+their interconnections, and (3) designing the value network service concept. The development of
+
+this new method and respective models was grounded on concepts, such as value networks and
+
+value co-creation, which stem from service research (Vargo and Lusch, 2008, Gronröos, 2008), as
+
+well as balanced centricity, which originates from service marketing (Gummesson, 2008). SD4VN
+
+also combines and adapts several service design models to the value network context (Morelli and
+
+Tollestrup, 2007, Patrício et al., 2011, Teixeira et al., 2012). SD4VN was a new solution for an
+
+identified problem, thus contributing to an improvement (Gregor and Hevner, 2013) over previous
+
+research that had a dyadic focus.
+
+
+
+    3.3. Applying the artifact and evaluating
+
+The application of the artifact involves using it to solve one or more instances of the problem by
+
+resorting to experimentation, simulation, case studies, or other suitable methods (Peffers et al.,
+
+2007). The application, or instantiation, of the artifact demonstrates the feasibility of the design
+
+process and the design outcome (Hevner et  al., 2004). As such, the demonstration and the
+
+evaluation stages can also be considered as one (Nunamaker et al., 1990). Evaluation is considered
+
+a crucial stage of DSR (Hevner et al., 2004, Peffers et al., 2007). However, while there is a
+
+consensus that evaluation is essential, the way to perform it is sometimes more elusive (Peffers et
+
+al., 2012, Peffers et al., 2018a). Evaluation is often considered in quantitative terms as a way to
+
+
+
+                                         12
+
+===== PAGE 14 =====
+guarantee rigor, but it is not always necessary or even recommended if it entails an excessive
+
+formalism that can only decrease the relevance of the contribution (Hevner et al., 2004). As such,
+
+DSR evaluation is closely connected with the designed artifact and should be adapted to the types
+
+of artifacts developed. Venable et al. (2016) suggest a four-step approach to structure the DSR
+
+evaluation process starting with (1) explicating the goals of the evaluation, (2) choosing the
+
+evaluation strategy, (3) determining the properties to evaluate, and (4) designing the individual
+
+evaluation episodes. To evaluate its artifacts, DSR can resort to several methods, both quantitative
+
+and qualitative, such as expert evaluations, technical experiments, action research, prototypes, case
+
+study, or illustrative scenarios (Peffers et al., 2012).
+
+       Service design research frequently resorts to qualitative methods, such as ethnography
+
+(Atkinson and Hammersley, 1994) and case research (Blomkvist et al., 2010, Yin, 2017, Voss et
+
+al., 2002, Eisenhardt, 1989), or quantitative methods, such as survey research (Fowler Jr, 2013).
+
+However, the focus should not be the specific case involved but the development of a generalizable
+
+artifact that addresses a class of problems. Service design research using DSR therefore approaches
+
+the case study instrumentally to apply the artifact in a real-world context and assess its ability to
+
+address the identified problem. This application should be conducted rigorously, following the
+
+required methodological procedures, as rigor is a fundamental principle of DSR (Hevner et al.,
+
+2004). Therefore, the application of a service design artifact requires an iterative dialogue between
+
+DSR (creation of new artifacts) and social science (exploration and evaluation) (Patrício et al.,
+
+2018b). Service design research that is focused on developing new models and methods has
+
+engaged in the qualitative evaluation of the developed artifacts, resorting to interviews and focus
+
+groups to evaluate their demonstrations (Patrício et al., 2018b, Teixeira et al., 2017). The DSR
+
+evaluation stage has also been used to assess service design research efforts that use other
+
+
+
+                                         13
+
+===== PAGE 15 =====
+approaches (Costa et al., 2018). On the relevance side, the application of a service design artifact
+
+can then lead  to  the development of new  service concepts,  service  prototypes, and  the
+
+implementation of new services.
+
+       In the study of Patrício et al. (2018b), the SD4VN method was used to develop a national
+
+electronic health record (EHR), a service to securely share patient data in digital form (Hayrinena
+
+et al., 2008) between a complex value network of interdependent actors (e.g., citizens, doctors and
+
+nurses). The application of the SD4VN method to develop the EHR involved a qualitative
+
+approach (Corbin and Strauss, 2008), in which focus groups, in-depth interviews, and participatory
+
+design sessions (Sanders, 2008) were conducted with over 170 participants throughout the
+
+different stages of the SD4VN method (mapping the value network, understanding the multiple
+
+actors’ experiences and interactions, and designing the value network service concept and service
+
+architecture).
+
+      The evaluation of SD4VN was threefold. First, the impact of the EHR designed using
+
+SD4VN was analyzed. The EHR had a very significant impact on the respective national health
+
+systems; in 2018, more than 1.8 million citizens (from a total population of 10.2 million) and 650
+
+institutions were registered, with an average daily access of 100,000 healthcare practitioners and
+
+over 12,000 citizens. As healthcare professionals and citizens are not obliged to register or use the
+
+EHR, these usage numbers indicate a good response by all stakeholders. Adding to this analysis,
+
+a qualitative study involving 37 healthcare professionals was performed to assess the usefulness
+
+of the EHR for their work. This study concluded that the EHR was very well regarded by healthcare
+
+staff, being considered a significant improvement over other available healthcare IS. Second, the
+
+process of developing the EHR,  i.e., the SD4VN method, was evaluated by the software
+
+development team through regular meetings. The development team highlighted that the network
+
+
+
+                                         14
+
+===== PAGE 16 =====
+perspective of SD4VN was especially useful in a complex setting, such as healthcare. Finally,
+
+following Forlizzi et al. (2008), SD4VN was evaluated according to the criteria for design research
+
+contributions, namely process, invention, relevance, and extensibility. As such, SD4VN was
+
+comprehensively evaluated by resorting to several DSR evaluation methods, such as case study
+
+and expert evaluations. The SD4VN case shows how service design research can strengthen the
+
+rigor of its contributions without decreasing its relevance by using suitable DSR evaluation
+
+methods.
+
+
+
+   3.4.Communicating
+
+Aligned with the quest for relevance to real-world problems, as well as for research rigor, a DSR
+
+approach  involves  communicating  the  results  to  scholarly  and  practitioner  audiences.
+
+Communication to these audiences aims to ensure that the contribution of DSR is added to the
+
+knowledge base (Hevner, 2007). Communication should also include the application context to
+
+ensure that the solution to the real-world problem reaches those who experience it. While DSR is
+
+already a mature methodology in the IS field, a recognizable and broadly accepted structure to
+
+present DSR has yet to be consolidated. To systematize the communication of DSR in research
+
+outlets, Gregor and Hevner (2013) propose a publication schema with the following sections:
+
+introduction (problem and objective definition), literature review (existing knowledge base that
+
+grounds the artifact development), method (DSR work), artifact description (showing how  it
+
+contributes to the knowledge base), evaluation (showing how the worth of the artifact was
+
+assessed), discussion, and conclusion.
+
+      The multidisciplinary background of service design research brings many potential
+
+research outlets to communicate the results of DSR work. However, as each of the service design
+
+
+
+                                         15
+
+===== PAGE 17 =====
+contributing fields has its own research traditions and might be relatively unaware of DSR, an
+
+approach similar to that described by Gregor and Hevner (2013) is especially useful.
+
+      Regarding communication, SD4VN has been disseminated to both practitioner and
+
+academic audiences. Regarding practitioner audiences, while SD4VN has not been published in
+
+practitioner-oriented outlets, it was used in multiple workshops with stakeholders, both for the
+
+development of the EHR and in dedicated training sessions for health information systems
+
+professionals, thus disseminating the method itself. Regarding academic communication, the
+
+SD4VN method was published in research journals from different fields, focusing on both the
+
+method and the EHR instantiation (Patrício et al., 2018b, Patrício et al., 2019, Grenha Teixeira et
+
+al., 2019).
+
+      Having explained the different stages of the DSR process and how DSR can be applied to
+
+service design research, the next section discusses how DSR can further foster service design
+
+research and vice versa.
+
+
+
+4.  Implications and Future Research
+
+Service design research has already successfully applied DSR to develop new service design
+
+methods.  However,  advancing  service  design  as  a  human-centered,  participatory,  and
+
+multidisciplinary approach to creating new services can benefit from dedicated DSR approaches
+
+for  service  design. This  cross-fertilization between DSR and  service design has  several
+
+implications and opens new and promising avenues for research.
+
+       Table 1 summarizes the implications of using DSR for service design research, particularly
+
+addressing 1) how artifacts can be viewed in light of service design research, 2) how DSR
+
+
+
+
+
+                                         16
+
+===== PAGE 18 =====
+processes, such as DSRM, can be adapted to better fit service design research, and 3) how service
+
+design research contributions developed with DSR can be positioned.
+
+
+
+                                         (Insert Table 1 around here)
+
+
+
+
+         First, as depicted in this paper, a focal concept of DSR is the artifact. DSR describes
+
+artifacts as constructs, models, methods, and instantiations, (March and Smith 1995; March and
+
+Storey 2008). DSR artifacts can be associated with IT systems or software (Baskerville et al.,
+
+2018). However, authors, such as Peffers et al. (2007), take a more social science approach, talking
+
+of methods for understanding user needs for an IS. Other authors have extended the use of artifacts
+
+to business models (Osterwalder and Pigneur, 2012). As such, the use of the artifact goes well
+
+beyond IT systems, and the term should be contextualized to the field of research in question.
+
+
+       Service design methods can be considered as artifacts when applying DSR to service design
+
+research, which is well aligned with extant DSR literature. However, other types of artifacts can
+
+also be explored by service design. For example, service design models, such as service blueprints
+
+(Shostack, 1984, Bitner et al., 2008), can be developed using DSR.
+
+
+       Perhaps more importantly, the characteristics of service design artifacts are different from
+
+those of IS artifacts. While IT artifacts in the IS literature are related to IS or software, service
+
+design artifacts are service centered. This means that service design involves an understanding of
+
+the needs of different service system actors to design new service solutions that meet such needs
+
+(Lin et al., 2011). Therefore, artifacts developed when applying DSR in service design research
+
+are based on an understanding of different actors’ experience, and/or include participation from
+
+relevant actors of the service system in the design decisions. For example, the SD4VN method
+
+                                         17
+
+===== PAGE 19 =====
+includes a qualitative study to map different service system actors experience and interactions, and
+
+involves the active participation of relevant actors in the design process as a part of the method
+
+itself.
+
+
+       Second, the DSR process has been systematized by several authors. For example, Peffers
+
+et al. (2007) offer a clear path to presenting the development of artifacts and their relevance for
+
+research and practice. The adaption of Peffers et al. (2007) and Hevner (2007) processes for service
+
+design research (Figure 1) highlights the interaction between the service design knowledge base
+
+and empirical grounds and includes the following four main phases: 1) problem identification and
+
+definition of a solution objective, 2) the design of the artifact (solution), 3) the application of the
+
+solution in the real world and evaluation, and 4) communication of the findings. This DSR process
+
+for service design research is aligned with the iterative, participatory, and human-centered nature
+
+of service design (Patrício et al., 2018a, Sangiorgi, 2010). Iterations are suggested by several DSR
+
+methodologies (Peffers et al., 2007, Hevner, 2007), and a DSR process for service design research
+
+can include them at different stages. First, several rounds of data collection can be performed to
+
+improve the understanding of the actors’ experience. Second, prototypes can iteratively test new
+
+service solutions with their intended audience. In addition, service design often uses a participatory
+
+approach, in which the expertise of customers, users, and/or employees is leveraged by integrating
+
+it in the design process (Sangiorgi, 2010). This participatory approach is relevant and a DSR
+
+approach for service design research should involve relevant actors in the design process.
+
+       Third, service design research can develop several types of contributions by using a DSR
+
+approach. The nature of research contributions has been a topic of debate for DSR studies, with
+
+Gregor and Hevner (2013) proposing three types of research contributions: (1) adapting and
+
+extending solutions from one field to another, (2) developing better solutions for known problems,
+
+
+                                         18
+
+===== PAGE 20 =====
+and (3) creating new solutions for newly identified problems. First, as a multidisciplinary field,
+
+service design is a fertile ground for extending solutions from one field to another, such as applying
+
+DSR to adapt existing service design methods and models to contexts that have not been explored.
+
+For example, this could involve following a DSR approach to expand service design in general or
+
+apply a method such as the Multilevel Service Design (Patrício et al., 2011), to other research areas
+
+such as sports management or marketing (Kallitsari and Theodorakis, 2018). Second, service
+
+design research has already used DSR to develop better solutions for identified problems, namely
+
+by developing service design methods for complex value networks, as well as to design
+
+technology-enabled services (Patrício et al., 2018b, Teixeira et al., 2017). Finally, service design
+
+research can also leverage the creative nature of service design to create entirely new solutions for
+
+new problems.
+
+       Leveraging DSR as research methodology for service design also offers a rich set of
+
+research opportunities, as illustrated in Figure 2. This research potential can be structured in three
+
+main areas: expanding service design research real-world impact; evolving DSR for service design
+
+research; and expanding service design research knowledge base.
+
+
+
+                                     (Insert Figure 2 around here)
+
+
+
+         First, DSR can help service design research to expand its real-world impact. By being
+
+focused on solving real-world challenges, DSR is well-suited to support service design in engaging
+
+in transformative service research (Anderson et al., 2013) and contributing to societal well-being.
+
+Perhaps more importantly, by focusing on solving classes of problems, and not single instances,
+
+DSR can help service design research in developing generalizable knowledge that can have a
+
+
+
+                                         19
+
+===== PAGE 21 =====
+greater and transformational change, truly broadening service design research impact in the real-
+
+world. DSR can also contribute to expanding service design research in the real-world by
+
+addressing the challenges brought by ever-changing technology. As artificial intelligence, service
+
+robots and the internet of things have increased relevance for service (Huang and Rust, 2018, Ng
+
+and Wakenshaw, 2017, Wirtz et al., 2018, Čaić et al., 2018), DSR can help service design research
+
+to develop new models, methods and theories to understand and design value co-creating services
+
+with these technologies. Finally, service design has a rich and active practitioner community that
+
+can be engaged to pursue research endeavors by using DSR well-defined, step-by-step approach.
+
+With its unique blend of solving real-world problems and offering research contribution DSR can
+
+be presented to the practitioner community as a way to support their work, while building a more
+
+robust and generalizable knowledge base that can further enrich research and practice.
+
+       Second, service design researchers can focus on evolving DSR for service design research
+
+by adapting existing DSR methodologies to their research contexts, as well as combining DSR
+
+with other research approaches. For example, Costa et al. (2018) combined a design research
+
+approach coming from design with the evaluation phase of DSR to develop new methods for
+
+integrating product–service system and service design. Also, the applicability and adaptation to
+
+service design research of other DSR methodologies can be considered, such as design-oriented
+
+IS research (Kuechler and Vaishnavi, 2008) or action design research (Sein et al., 2011). Finally,
+
+other adaptations can involve the specific aspects of the DSR process, namely, by developing
+
+evaluation techniques for service design research contributions developed with DSR. This might
+
+include integrating other contributions from fields associated with service design, such as Forlizzi
+
+et al. (2008) criteria for evaluating design research contributions already used in SD4VN; the
+
+development of adapted evaluation processes, such as in the work of Venable et al. (2016); or the
+
+
+
+                                         20
+
+===== PAGE 22 =====
+integration of DSR with design research approaches coming from a design background (Costa et
+
+al., 2018). This way, more than using the current DSR literature, service design research should
+
+develop its own genre of DSR, one that leverages service design literature’s rich background,
+
+creativity, and, most importantly, service-centricity.
+
+        Finally, DSR can help expand service design research knowledge base. First, by building
+
+upon DSR systematic approach and IS origins, service design research can expand its knowledge
+
+base by bridging with more technical-oriented and engineering-related fields. Using DSR as a
+
+common ground with, for example, software engineering, new interdisciplinary service design
+
+methods can be developed to address emerging challenges brought by technologies such as
+
+artificial intelligence, service robots or the internet of things. DSR roots on design research can
+
+also further strengthen the link between service design research and design studies (Fallman,
+
+2008).
+
+5.  Conclusion
+
+DSR is a well-known and documented methodology in IS but despite being used increasingly in
+
+service design and service research, it is still new to many scholars in these fields. This article
+
+makes a first attempt at introducing DSR literature, terminology, and processes, including potential
+
+contributions and respective evaluations, to service design researchers. This article also presents
+
+an application of DSR, showing how it can be used to support service design research. Finally, this
+
+article presents how future research can leverage DSR to expand service design research impact
+
+on the real-world, expand service design research knowledge base, and evolve DSR for service
+
+design research. These research directions also address recent calls for future research in service
+
+design and innovation Patrício et al. (2018a) namely: expanding the foundations of service design
+
+
+
+
+
+                                         21
+
+===== PAGE 23 =====
+by integrating multiple perspectives and methods, advancing service design by leveraging the role
+
+of technology; and strengthen research impact through transformative service research.
+
+     DSR was already successfully used to conduct service design research (Patrício et al.,
+
+2018b, Teixeira et al., 2017). However, these are still early-efforts to leverage this methodology
+
+and use it so that service design research can offer relevant real-world contributions, while solving
+
+classes of problems that offer rigorous research contributions. By showcasing DSR, how it can be
+
+applied to service design research and suggesting future research directions, this article is enriching
+
+service design research toolset and hopefully setting the groundwork for establising DSR as a
+
+cornerstone methodology for service design research.
+
+
+
+
+
+       References
+
+
+
+ANDERSON, L., OSTROM, A. L., CORUS, C., FISK, R. P., GALLAN, A. S., GIRALDO, M., MENDE, M., MULDER,
+       M., RAYBURN, S. W., ROSENBAUM, M. S., SHIRAHADA, K. & WILLIAMS, J. D. 2013.
+       Transformative service research: An agenda for the future. Journal of Business Research, 66,
+       1203-1210.
+ARCHER, B. 1981. A view of the nature of design research. Design: science: method, 1, 30-47.
+ATKINSON, P. & HAMMERSLEY, M. 1994. Ethnography and participant observation. In: DENZIN, N. K. &
+       LINCOLN, Y. S. (eds.) Handbook of qualitative research. Thousand Oaks, CA, US: Sage
+        Publications.
+BARON, S., PATTERSON, A., MAULL, R. & WARNABY, G. 2018. Feed People First:A Service Ecosystem
+        Perspective on Innovative Food Waste Reduction. Journal of Service Research, 21, 135-150.
+BASKERVILLE, R., BAIYERE, A., GREGOR, S., HEVNER, A. & ROSSI, M. 2018. Design science research
+        contributions: finding a balance between artifact and theory. Journal of the Association for
+       Information Systems, 19, 358-376.
+BELOGLAZOV, A., BANERJEE, D., HARTMAN, A. & BUYYA, R. 2015. Improving Productivity in Design and
+       Development of Information Technology (IT) Service Delivery Simulation Models. Journal of
+        Service Research (JSR), 18, 75-89.
+BITNER, M. J., OSTROM, A. L. & MORGAN, F. N. 2008. Service Blueprinting: A Practical Technique for
+        Service Innovation. California Management Review, 50, 66-94.
+BLOMKVIST, J., HOLMLID, S. & SEGELSTRÖM, F. 2010. Service Design Research: Yesterday, Today and
+      Tomorrow. In: STICKDORN, M. & SCHNEIDER, J. (eds.) This is Service Design Thinking.
+       Amsterdam: BIS Publishers.
+
+                                         22
+
+===== PAGE 24 =====
+BLOMKVIST, J. & SEGELSTRÖM, F. 2014. Benefits of External Representations in Service Design: a
+        Distributed Cognition Perspective. Design Journal, 17, 331-346.
+BUCHANAN, R. 2001. Design Research and the New Learning. Design Issues, 17, 3-23.
+ČAIĆ, M., ODEKERKEN-SCHRÖDER, G. & MAHR, D. 2018. Service robots: value co-creation and co-
+        destruction in elderly care networks. Journal of Service Management, 29, 178-205.
+CHAI, K.-H., ZHANG, J. & TAN, K.-C. 2005. A TRIZ-Based Method for New Service Design. Journal of
+        Service Research, 8, 48-66.
+COOK, L. S., BOWEN, D. E., CHASE, R. B., DASU, S., STEWART, D. M. & TANSIK, D. A. 2002. Human issues
+         in service design. Journal of Operations Management, 20, 159-174.
+CORBIN, J. M. & STRAUSS, A. L. 2008. Basics of Qualitative Research: Techniques and Procedures for
+       Developing Grounded Theory, Thousand Oaks, California, Sage Publications, Inc.
+COSTA, N., PATRÍCIO, L., MORELLI, N. & MAGEE, C. L. 2018. Bringing service design to manufacturing
+       companies: integrating PSS and service design approaches. Design Studies, 55, 112-145.
+DIANA, C., PACENTI, E. & TASSI, R. Visualtiles: Communication tools for (service) design. Conference
+       Proceedings ServDes. 2009; DeThinking Service; ReThinking Design; Oslo Norway 24-26
+      November 2009, 2012. Linköping University Electronic Press, 65-76.
+EDVARDSSON, B. & TRONVOLL, B. 2013. A new conceptualization of service innovation grounded in SD
+         logic and service systems. International Journal of Quality and Service Sciences, 5, 19-31.
+EISENHARDT, K. M. 1989. Building theories from case study research. Academy of management review,
+        14, 532-550.
+FALLMAN, D. 2008. The Interaction Design Research Triangle of Design Practice, Design Studies and
+       Design Exploration. Design Issues, 24, 4-18.
+FEAST, L. & MELLES, G. Epistemological positions in design research: A brief review of the literature. 2nd
+        International Conference on Design Education, University of New South Wales, Sydney,
+         Australia, 2010.
+FØLSTAD, A. & KVALE, K. 2018. Customer journeys: a systematic literature review. Journal of Service
+       Theory and Practice, 28, 196-227.
+FORLIZZI, J., ZIMMERMAN, J. & EVENSON, S. 2008. Crafting a Place for Interaction Design Research in
+        HCI. Design Issues, 24, 19-29.
+FOWLER JR, F. J. 2013. Survey research methods, Sage publications.
+FRAYLING, C. 1993. Research in art and design, Royal College of Art London.
+FRIEDMAN, K. 2003. Theory construction in design research: criteria: approaches, and methods. Design
+        studies, 24, 507-522.
+GLUSHKO, R. J. & NOMOROSA, K. J. 2012. Substituting information for interaction: A framework for
+        personalization in service encounters and service systems. Journal of Service Research, 16, 21-
+        38.
+GOLDSTEIN, S. M., JOHNSTON, R., DUFFY, J. A. & RAO, J. 2002. The service concept: the missing link in
+        service design research? Journal of Operations Management, 20, 121-134.
+GREGOR, S. & HEVNER, A. R. 2013. Positioning and Presenting Design Science Research for Maximum
+       Impact. MIS Quarterly, 37, 337-355.
+GREGOR, S. & JONES, D. 2007. The anatomy of a design theory. Journal of the Association for
+       Information Systems, 8, 312.
+GRENHA TEIXEIRA, J., PATRÍCIO, L. & PINHO, N. F. D. 2019. Bringing Service Design to the Development
+        of Health Information Systems: The Case of the Portuguese National Electronic Health Record.
+        International Journal of Medical Informatics.
+GRONRÖOS, C. 2008. Service Dominant Logic Revisited: Who Creates Value? and Who Co-Creates?
+       European Business Review, 20.
+
+
+                                         23
+
+===== PAGE 25 =====
+GUMMESSON, E. 2008. Extending the service-dominant logic: from customer centricity to balanced
+         centricity. Journal of the Academy of Marketing Science, 36, 15-17.
+HAYRINENA, K., SARANTOA, K. & NYKANEN, P. 2008. Definition, structure, content, use and impacts of
+        electronic health records: A review of the research literature. International Journal of Medical
+        Informatics, 77, 291-304.
+HEVNER, A. 2007. The three cycle view of design science research. Scandinavian Journal of Information
+       Systems, 19, 87.
+HEVNER, A. R., MARCH, S. T., PARK, J. & RAM, S. 2004. Design Science in Information Systems Research.
+      MIS Quarterly, 28, 75-105.
+HUANG, M.-H. & RUST, R. T. 2018. Artificial Intelligence in Service. Journal of Service Research, 21, 155-
+       172.
+JOHNSON, S. P., MENOR, L. J., ROTH, A. V. & CHASE, R. B. 2000. A Critical Evaluation of the New Service
+       Development Process: Integrating Service Innovation and Service Design. In: FITZSIMMONS, J. A.
+     & FITZSIMMONS, M. J. (eds.) New Service Development: Creating Memorable Experiences.
+       Thousand Oaks: Sage Publications, Inc.
+JOLY, M., TEIXEIRA, J. G., PATRÍCIO, L. & SANGIORGI, D. forthcoming. Leveraging service design as a
+        multidisciplinary approach to service innovation. Journal of Service Management, 0.
+KALLITSARI, Z. & THEODORAKIS, N. Application of the Multilevel Service Design method to redesign a
+        sport event. 26th European Sport Management Conference, 2018 Malmö, Sweden.
+KASANEN, E., LUKKA, K. & SIITONEN, A. 1993. The constructive approach in management accounting
+        research. Journal of Management Accounting Research, 5, 243-264.
+KIMBELL, L. 2011. Designing for Service as One Way of Designing Services. International Journal of
+        Design, 5, 41-52.
+KUECHLER, W. & VAISHNAVI, V. 2008. The emergence of design research in information systems in
+       North America. Journal of Design Research, 7, 1-16.
+KURTMOLLAIEV, S., FJUK, A., PEDERSEN, P. E., CLATWORTHY, S. & KVALE, K. 2018. Organizational
+       Transformation Through Service Design: The Institutional Logics Perspective. Journal of Service
+        Research, 21, 59-74.
+LIN, M. C., HUGHES, B. L., KATICA, M. K., DINING-ZUBER, C. & PLSEK, P. E. 2011. Service design and
+       change of systems: Human-centered approaches to implementing and spreading service design.
+        International Journal of Design, 5.
+MAGER, B. & SUNG, T.-J. D. 2011. Special Issue Editorial: Designing for Services. International Journal of
+        Design, 5, 1-3.
+MAHR, D., KALOGERAS, N. & ODEKERKEN-SCHRÖDER, G. 2013. A service science approach for improving
+        healthy food experiences. Journal of Service Management, 24, 435-471.
+MARCH, S. T. & SMITH, G. F. 1995. Design and natural science research on information technology.
+        Decision Support Systems, 15, 251-266.
+MARCH, S. T. & STOREY, V. C. 2008. Design science in the information systems discipline: an introduction
+        to the special issue on design science research. MIS quarterly, 32, 725-730.
+MERONI, A. & SANGIORGI, D. (eds.) 2011. Design for Services, Surrey: Gower.
+MORELLI, N. & TOLLESTRUP, C. 2007. New Representation Techniques for Designing in a Systemic
+        Perspective. Nordic Design Research Conference. Stockholm, Sweden.
+NG, I. C. L. & WAKENSHAW, S. Y. L. 2017. The Internet-of-Things: Review and research directions.
+        International Journal of Research in Marketing, 34, 3-21.
+NUNAMAKER, J. F., CHEN, M. & PURDIN, T. D. M. 1990. Systems development in information systems
+        research. Journal of management information systems, 7, 89-106.
+OSTERWALDER, A. & PIGNEUR, Y. 2012. Designing business models and similar strategic objects: the
+        contribution of IS. Journal of the Association for information systems, 14, 3.
+
+                                         24
+
+===== PAGE 26 =====
+OSTROM, A. L., BITNER, M. J., BROWN, S., BURKHARD, K. A., GOUL, M., SMITH-DANIELS, V., DEMIRKAN,
+       H. & RABINOVICH, E. 2010. Moving Forward and Making a Difference: Research Priorities for the
+       Science of Service. Journal of Service Research, 13, 4-36.
+OSTROM, A. L., PARASURAMAN, A., BOWEN, D. E., PATRÍCIO, L. & VOSS, C. A. 2015. Service Research
+         Priorities in a Rapidly Changing Context. Journal of Service Research, 18, 127-159.
+PANDZA, K. & THORPE, R. 2010. Management as design, but what kind of design? An appraisal of the
+       design science analogy for management. British Journal of Management, 21, 171-186.
+PATRÍCIO, L., FISK, R. P., CUNHA, J. F. E. & CONSTANTINE, L. 2011. Multilevel Service Design: From
+       Customer Value Constellation to Service Experience Blueprint. Journal of Service Research, 14,
+       180-200.
+PATRÍCIO, L., GUSTAFSSON, A. & FISK, R. 2018a. Upframing Service Design and Innovation for Research
+       Impact. Journal of Service Research, 21, 3-16.
+PATRÍCIO, L., PINHO, N., TEIXEIRA, J. G. & FISK, R. P. 2018b. Service Design for Value Networks: Enabling
+       Value Cocreation Interactions in Health Care. Service Science, 10, 76-97.
+PATRÍCIO, L., TEIXEIRA, J. G. & VINK, J. 2019. A service design approach to healthcare innovation: from
+       decision-making to sense-making and institutional change. Academy of Marketing Science
+       Review, 9, 115-120.
+PEFFERS, K., ROTHENBERGER, M., TUUNANEN, T. & VAEZI, R. 2012. Design science research evaluation.
+         In: PEFFERS, K., ROTHENBERGER, M. & KUECHLER, B. (eds.) Design science research in
+       information systems. Advances in theory and practice. Springer.
+PEFFERS, K., TUUNANEN, T. & NIEHAVES, B. 2018a. Design science research genres: introduction to the
+        special issue on exemplars and criteria for applicable design science research. European Journal
+        of Information Systems, 27, 129-139.
+PEFFERS, K., TUUNANEN, T. & NIEHAVES, B. 2018b. Design science research genres: introduction to the
+        special issue on exemplars and criteria for applicable design science research. Taylor & Francis.
+PEFFERS, K., TUUNANEN, T., ROTHENBERGER, M. A. & CHARTTERJEE, S. 2007. A Design Science Research
+       Methodology for Information Systems Research. Journal of Management Information Systems,
+        24, 45-77.
+SAMPSON, S. E. 2012. Visualizing Service Operations. Journal of Service Research, 15, 182-198.
+SANDERS, L. 2008. An evolving map of design practice and design research. interactions, 15, 13-17.
+SANGIORGI, D. Building a framework for service design research. 8th European Academy of Design
+       conference, 2009. GBR, 415-420.
+SANGIORGI, D. 2010. Transformative Services and Transformation Design. International Journal of
+        Design, 5, 29-40.
+SCHON, D. A. 1984. The reflective practitioner: How professionals think in action, Basic books.
+SECOMANDI, F. & SNELDERS, D. 2011. The object of service design. Design Issues, 27, 20-34.
+SEIN, M. K., HENFRIDSSON, O., PURAO, S., ROSSI, M. & LINDGREN, R. 2011. Action Design Research. MIS
+        Quarterly, 35, 37-56.
+SHOSTACK, G. L. 1984. Designing Services that Deliver. Harvard Business Review, 62, 133-139.
+SIMON, H. A. 1969. The Sciences of the Artificial, Cambridge, MA, MIT Press.
+SOUSA, R., AMORIM, M., PINTO, G. M. & MAGAL1 AES, A. 2016. Multi-channel deployment: a
+       methodology for the design of multi-channel service processes. Production Planning & Control,
+        1-16.
+TAX, S. S., MCCUTCHEON, D. & WILKINSON, I. F. 2013. The Service Delivery Network (SDN): A Customer-
+        Centric Perspective of the Customer Journey. Journal of Service Research, 16, 454-470.
+TEIXEIRA, J. G., PATRÍCIO, L., HUANG, K.-H., FISK, R. P., NÓBREGA, L. & CONSTANTINE, L. 2017. The
+      MINDS Method: Integrating Management and Interaction Design perspectives for Service
+        Design. Journal of Service Research, 20, 240 - 258.
+
+                                         25
+
+===== PAGE 27 =====
+TEIXEIRA, J. G., PATRÍCIO, L., NUNES, N., NÓBREGA, L., FISK, R. P. & CONSTANTINE, L. 2012. Customer
+       Experience Modeling: From Customer Experience to Service Design. Journal of Service
+      Management, 23, 362-376.
+TRISCHLER, J., PERVAN, S. J., KELLY, S. J. & SCOTT, D. R. 2018. The Value of Codesign:The Effect of
+       Customer Involvement in Service Design Teams. Journal of Service Research, 21, 75-100.
+VAN AKEN, J., CHANDRASEKARAN, A. & HALMAN, J. 2016. Conducting and publishing design science
+        research: Inaugural essay of the design science department of the Journal of Operations
+      Management. Journal of Operations Management, 47-48, 1-8.
+VAN AKEN, J. E. 2004. Management Research Based on the Paradigm of the Design Sciences: The Quest
+        for Field-Tested and Grounded Technologicla Rules. Journal of Management Studies, 41, 219-
+       246.
+VARGO, S. L. & LUSCH, R. F. 2008. Service Dominant Logic: continuing the evolution. Journal of The
+      Academy of Marketing Science, 36, 1-10.
+VENABLE, J., PRIES-HEJE, J. & BASKERVILLE, R. A comprehensive framework for evaluation in design
+        science research. International Conference on Design Science Research in Information Systems,
+       2012. Springer, 423-438.
+VENABLE, J., PRIES-HEJE, J. & BASKERVILLE, R. 2016. FEDS: a framework for evaluation in design science
+        research. European journal of information systems, 25, 77-89.
+VERMA, R., FITZSIMMONS, J., HEINEKE, J. & DAVIS, M. 2002. New issues and opportunities in service
+       design research. Journal of Operations Management, 20, 117-120.
+VOSS, C., TSIKRIKTSIS, N. & FROHLICH, M. 2002. Case research in operations management. International
+        journal of operations & production management, 22, 195-219.
+WALLS, J. G., WIDMEYER, G. R. & EL SAWY, O. A. 1992. Building an information system design theory for
+         vigilant EIS. Information systems research, 3, 36-59.
+WETTER-EDMAN, K., VINK, J. & BLOMKVIST, J. 2018. Staging aesthetic disruption through design
+      methods for service innovation. Design Studies, 55, 5-26.
+WINTER, R. 2008. Design science research in Europe. European Journal of Information Systems, 17, 470.
+WIRTZ, J., PATTERSON, P. G., KUNZ, W. H., GRUBER, T., LU, V. N., PALUCH, S. & MARTINS, A. 2018. Brave
+      new world: service robots in the frontline. Journal of Service Management, 0, null.
+YIN, R. K. 2017. Case study research and applications: Design and methods, Sage publications.
+YU, E. & SANGIORGI, D. 2018. Service Design as an Approach to Implement the Value Cocreation
+        Perspective in New Service Development. Journal of Service Research, 21, 40-58.
+ZIMMERMAN, J., TOMASIC, A., GARROD, C., YOO, D., HIRUNCHAROENVATE, C., AZIZ, R.,
+      THIRUVENGADAM, N. R., HUANG, Y. & STEINFELD, A. Field trial of tiramisu: crowd-sourcing bus
+         arrival times to spur co-design. Proceedings of the SIGCHI Conference on Human Factors in
+       Computing Systems, 2011. ACM, 1677-1686.
+ZOMERDIJK, L. G. & VOSS, C. A. 2009. Service Design for Experience-Centric Services. Journal of Service
+        Research, 13, 67-82.
+
+
+
+
+
+                                         26
+
+===== PAGE 28 =====
+Figure 1 – DSR for Service Design.
+
+
+
+
+
+                                         27
+
+===== PAGE 29 =====
+Figure 2 - Future Research directions for service design research with DSR.
+
+
+
+
+
+                                         28
+
+===== PAGE 30 =====
+Table 1 – Implications of using DSR in Service Design Research
+
+                         DSR in Service Design Research
+
+ Nature of the     Earlier applications to service design research have shown that DSR is
+
+ Artifact           particularly suitable for the development of artifacts, such as new service
+
+                  design methods and models. Through DSR, service design approaches have
+
+                 evolved to address new challenges, such as leveraging technology to develop
+
+                  value co-creating service solutions, network services, or product-service
+
+                  systems. As service design addresses constantly emerging technology and
+
+                   increasingly complex  contexts,  the  usage  of DSR  can  support  the
+
+                 development of new kinds of artifacts such as new service design concepts
+
+                and theories.
+
+ DSR Process     Conducting service design research through DSR should consider the
+
+                  human-centered, iterative, participatory nature of service design. As such, it
+
+                        is expected that the DSR process in service design research is iterative by
+
+                 engaging in several rounds of data collection to improve the understanding
+
+                   of the actor’s experience, as well as by prototyping and testing new service
+
+                    solutions with the intended audience. Moreover, a DSR process in service
+
+                  design research is expected to be human- centered by understanding multiple
+
+                    actors’ experiences and participatory by involving customers, users, and/or
+
+                 employees in the design process.
+
+ Contributions    Service design research can make several potential contributions by using a
+
+            DSR approach, including (1) building on the multidisciplinary nature of
+
+                   service design to adapt and extend solutions from one field to another, (2)
+
+
+
+                                         29
+
+===== PAGE 31 =====
+developing better solutions for known problems, and (3) creating new
+
+solutions for newly identified problems.
+
+
+
+
+
+                        30
