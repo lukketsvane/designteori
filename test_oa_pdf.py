@@ -26,15 +26,15 @@ class PDFHarvestTest(unittest.TestCase):
         expected = "https://repo.example.org/id/eprint/123/Oral%20storytelling%20v11%20CAMERA%20READY.pdf"
         self.assertEqual(pdf.safely_encoded_url(original), expected)
         with self.assertRaises(ValueError):
-            pdf.safely_encoded_url("https://repo.example.org/paper\\r\\n.pdf")
-        raw = b"%PDF-1.7\\n" + b" " * 700 + b"%%EOF"
+            pdf.safely_encoded_url("https://repo.example.org/paper\r\n.pdf")
+        raw = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
         reply = io.BytesIO(raw)
         reply.headers = {"Content-Type": "application/pdf", "Content-Length": str(len(raw))}
-        with patch.object(pdf, "public_dns", return_value=True), \\
-             patch.object(pdf, "build_opener") as opener:
-            opener.return_value.open.return_value = reply
-            result, resolved, mime = pdf.safe_request(original)
-            requested = opener.return_value.open.call_args.args[0].full_url
+        with patch.object(pdf, "public_dns", return_value=True):
+            with patch.object(pdf, "build_opener") as opener:
+                opener.return_value.open.return_value = reply
+                result, resolved, mime = pdf.safe_request(original)
+                requested = opener.return_value.open.call_args.args[0].full_url
         self.assertEqual(requested, expected)
         self.assertEqual(resolved, expected)
         self.assertTrue(pdf.pdf_data(result))
