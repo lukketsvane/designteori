@@ -53,3 +53,23 @@ python hent_doi_csv.py --input doi_liste.csv
 ```
 
 Sjølvstendig Linux/macOS: `DOI_CSV=doi_liste.csv bash hent_tusen_pdfar.sh`. For Unpaywall: legg til `-Email "kontakt@institusjon.no"` i PowerShell eller set `EMAIL` i shell. Resultata kjem som `doi_csv_report.csv`, `doi_csv_summary.json`, `doi_csv_metadata.json` og lokalt PDF-indeks i git-ignorert privat cache. DOI-ar utanfor OpenAlex-korpuset blir ikkje automatisk lagt til som kvalitetssikra designforsking. Ingen betalingsmurar blir omgått og ingen PDF får offentleg redistribusjonsrett utan kontroll av lisens og versjon.
+
+## Korpuset si ferdiglagde DOI-liste
+
+Du treng ikkje samle DOI-ar manuelt. Korpuset byggjer
+`results/doi_eksport.csv` automatisk frå OpenAlex-, nordiske- og
+historiske metadata. Kvar DOI står éin gong. Dersom fleire postar deler
+DOI, blir alle kjelde-ID-ane tekne vare på for manuell identitetskontroll.
+Direkte PDF-forma OA-lenkjer kjem først, deretter andre OA-adresser,
+og sist DOI-ar utan registrert OA-lenkje. Prioritet er **berre** ein
+nedlastingsplan, ikkje eit forskingsresultat.
+
+```powershell
+python hent_doi_csv.py --input results/doi_eksport.csv
+.\hent_tusen_pdfar.ps1 -DoiCsvPath results/doi_eksport.csv -Limit 8000
+```
+
+For Linux/macOS: `DOI_CSV=results/doi_eksport.csv bash hent_tusen_pdfar.sh`.
+Du kan kontrollere tala i `results/doi_eksport_status.json`. Det er eit
+metadatauttrekk; faktisk lagra PDF-ar må kontrollerast i den private
+`pdf_local_report.json`-fila.
