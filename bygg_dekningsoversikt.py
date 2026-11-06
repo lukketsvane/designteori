@@ -88,6 +88,9 @@ def summarize(base: list[dict], nordic: list[dict], theory: list[dict],
             "example_groups": [
                 {"doi": d, "records": v} for d, v in sorted(shared.items())[:25]
             ],
+            "all_groups": [
+                {"doi": d, "records": v} for d, v in sorted(shared.items())
+            ],
         },
         "manual_article_eligibility_checks_completed": 0,
         "cautions": [
