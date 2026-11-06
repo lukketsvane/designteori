@@ -161,19 +161,11 @@ function renderRow(w){
  const body=make("div");
  const h=make("h3",undefined,"title");
  if(w.origin==="editorial"){h.append(make("span",w.title))}else{const open=make("button",w.title,"title-open");open.type="button";open.addEventListener("click",()=>{if(window.openDesignWork)window.openDesignWork(w.id)});h.append(open)}body.append(h);
- const meta=make("div",undefined,"metadata");
  const authors=Array.isArray(w.authors)?w.authors:[];
- meta.append(make("div",authors.length>6 ? authors.slice(0,6).join(", ")+" mfl." : authors.join(", ") || "Ukjend forfattar"));
- meta.append(make("div",[w.source,w.origin==="editorial"?"Kjeldekandidat":w.kind].filter(Boolean).join(" · ")));
- body.append(meta);
- const small=make("p",undefined,"meta-small");
- for(const c of w.countries || [])small.append(make("span",countryNames[c]||c,"label"));
- if(w.license)small.append(make("span",w.license,"label licensed"));
- if(w.origin)small.append(make("span",w.duplicate_status==="possible-duplicate"?"Mogleg dublett":"Uavklart","label"));
- if(w.theme)small.append(make("span",w.theme,"label"));
- else if(w.topic)small.append(make("span",w.topic,"label"));
- if(w.citations!==null&&w.citations!==undefined)small.append(make("span"," "+fmt(w.citations)+" siteringar"));
- body.append(small);root.append(body);
+ const authorText=authors.length>3?authors.slice(0,3).join(", ")+" mfl.":authors.join(", ");
+ const small=[authorText,w.source,w.origin?"Uavklart":""].filter(Boolean).join(" · ");
+ body.append(make("div",small,"metadata"));
+ root.append(body);
  const links=make("div",undefined,"links");
  for(const [url,label] of [[w.doi,"DOI"],[w.pdf,"PDF"],[w.remote_pdf,"PDF (kjelde)"],[w.oa_url,"OA"],[w.source_url,"Kjelde"]]){
   const a=link(url,label);if(a)links.append(a);
