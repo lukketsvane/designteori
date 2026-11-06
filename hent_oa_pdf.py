@@ -184,7 +184,8 @@ def cached_pdf_ok(ident, entry):
 def cache_summary(progress):
     found = [r for r in progress.values() if r.get("status") == "pdf-confirmed"]
     return {"cached": len(found), "bytes": sum(r.get("bytes", 0) for r in found),
-            "failed": sum(r.get("status") == "failed" for r in progress.values())}
+            "failed": sum(r.get("status") == "failed" for r in progress.values()),
+            "deferred": sum(r.get("status") == "deferred" for r in progress.values())}
 
 
 def pdf_candidates_from_html(data, landing):
@@ -361,6 +362,8 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
     pdf_dir.mkdir(exist_ok=True)
     tried = 0
     last_request = 0.0
+    blocked_sources = set()
+    blocked_hosts = set()
 
     def pace():
         nonlocal last_request
@@ -393,6 +396,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
             break
         tried += 1
         success = None
+        deferred = False
         why = "No direct PDF at public OA sources"
         seen = set()
         # Search the registered OA link first, and only then call outside APIs.
@@ -400,6 +404,9 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
         for source in ("registered", "unpaywall", "openalex"):
             if success:
                 break
+            if source in blocked_sources:
+                deferred = True
+                continue
             if source == "registered":
                 candidates = [row["oa_url"]] if row["oa_url"] else []
             elif source == "unpaywall":
@@ -412,9 +419,10 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         json.JSONDecodeError) as exc:
                     print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
-                        print("RATE_LIMIT", source, "stopping batch", flush=True)
-                        write_json(LOG, progress)
-                        return tried
+                        print("RATE_LIMIT", source, "skip this API for this batch", flush=True)
+                        blocked_sources.add(source)
+                        deferred = True
+                        why = "rate-limited API: " + source
                     continue
             else:
                 if not lookup_openalex or not row["doi"]:
@@ -426,12 +434,17 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         json.JSONDecodeError) as exc:
                     print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
                     if isinstance(exc, HTTPError) and exc.code == 429:
-                        print("RATE_LIMIT", source, "stopping batch", flush=True)
-                        write_json(LOG, progress)
-                        return tried
+                        print("RATE_LIMIT", source, "skip this API for this batch", flush=True)
+                        blocked_sources.add(source)
+                        deferred = True
+                        why = "rate-limited API: " + source
                     continue
             for target in candidates[:10]:
                 if not allowed_url(target) or target in seen:
+                    continue
+                host = urlsplit(target).hostname
+                if host in blocked_hosts:
+                    deferred = True
                     continue
                 seen.add(target)
                 try:
@@ -445,6 +458,10 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                     for destination in pdf_candidates_from_html(payload, landing):
                         if destination in seen:
                             continue
+                        destination_host = urlsplit(destination).hostname
+                        if destination_host in blocked_hosts:
+                            deferred = True
+                            continue
                         seen.add(destination)
                         try:
                             pace()
@@ -455,17 +472,17 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                         except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
                             why = type(exc).__name__ + ": " + str(exc)[:140]
                             if isinstance(exc, HTTPError) and exc.code == 429:
-                                print("RATE_LIMIT", ident, "stopping batch", flush=True)
-                                write_json(LOG, progress)
-                                return tried
+                                blocked_hosts.add(destination_host)
+                                deferred = True
+                                print("RATE_LIMIT", destination_host, "defer host", flush=True)
                     if success:
                         break
                 except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
                     why = type(exc).__name__ + ": " + str(exc)[:140]
                     if isinstance(exc, HTTPError) and exc.code == 429:
-                        print("RATE_LIMIT", ident, "stopping batch", flush=True)
-                        write_json(LOG, progress)
-                        return tried
+                        blocked_hosts.add(host)
+                        deferred = True
+                        print("RATE_LIMIT", host, "defer host", flush=True)
         if success:
             payload, url = success
             sha = hashlib.sha256(payload).hexdigest()
@@ -477,8 +494,9 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                                "sha256": sha, "bytes": len(payload), "checked_at": now()}
             print("PDF_OK", ident, len(payload), sha[:12], flush=True)
         else:
-            progress[ident] = {"status": "failed", "reason": why, "checked_at": now()}
-            print("PDF_MISSING", ident, why, flush=True)
+            progress[ident] = {"status": "deferred" if deferred else "failed",
+                               "reason": why, "checked_at": now()}
+            print("PDF_DEFERRED" if deferred else "PDF_MISSING", ident, why, flush=True)
         write_json(LOG, progress)
     print("CACHE_SUMMARY", json.dumps(cache_summary(progress)), flush=True)
     return tried
