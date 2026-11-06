@@ -302,6 +302,12 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
     pdf_dir.mkdir(exist_ok=True)
     tried = 0
     last_request = 0.0
+
+    def pace():
+        nonlocal last_request
+        time.sleep(max(0, pause - (time.monotonic() - last_request)))
+        last_request = time.monotonic()
+
     for row in rows:
         ident = row["id"]
         if row["archived"] == "yes" or progress.get(ident, {}).get("status") == "pdf-confirmed":
@@ -313,47 +319,72 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
         if not row["oa_url"] and not ((email or lookup_openalex) and row["doi"]):
             continue
         tried += 1
-        candidates = [row["oa_url"]] if row["oa_url"] else []
-        if email and row["doi"]:
-            try:
-                candidates += unpaywall_urls(row["doi"], email)
-            except (ValueError, URLError, HTTPError, TimeoutError, OSError, json.JSONDecodeError) as exc:
-                print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
-        if lookup_openalex and row["doi"]:
-            try:
-                candidates += openalex_urls(row["doi"])
-            except (ValueError, URLError, HTTPError, TimeoutError, OSError, json.JSONDecodeError) as exc:
-                print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
         success = None
-        why = "No direct PDF at published OA links"
+        why = "No direct PDF at public OA sources"
         seen = set()
-        for target in candidates[:10]:
-            if target in seen or not allowed_url(target):
-                continue
-            seen.add(target)
-            time.sleep(max(0, pause - (time.monotonic() - last_request)))
-            last_request = time.monotonic()
-            try:
-                payload, landing, mime = safe_request(target, limit=max_bytes)
-                if pdf_data(payload):
-                    success = payload, landing
-                    break
-                if ("html" in mime.lower() or payload[:80].lower().find(b"<html") >= 0):
-                    derived = pdf_candidates_from_html(payload, landing)
-                    for destination in derived:
+        # Search the registered OA link first, and only then call outside APIs.
+        # This greatly reduces traffic against OA discovery services.
+        for source in ("registered", "unpaywall", "openalex"):
+            if success:
+                break
+            if source == "registered":
+                candidates = [row["oa_url"]] if row["oa_url"] else []
+            elif source == "unpaywall":
+                if not email or not row["doi"]:
+                    continue
+                try:
+                    pace()
+                    candidates = unpaywall_urls(row["doi"], email)
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                        json.JSONDecodeError) as exc:
+                    print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
+                    continue
+            else:
+                if not lookup_openalex or not row["doi"]:
+                    continue
+                try:
+                    pace()
+                    candidates = openalex_urls(row["doi"])
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError,
+                        json.JSONDecodeError) as exc:
+                    print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
+                    continue
+            for target in candidates[:10]:
+                if not allowed_url(target) or target in seen:
+                    continue
+                seen.add(target)
+                try:
+                    pace()
+                    payload, landing, mime = safe_request(target, limit=max_bytes)
+                    if pdf_data(payload):
+                        success = (payload, landing)
+                        break
+                    if "html" not in mime.lower() and b"<html" not in payload[:100].lower():
+                        continue
+                    for destination in pdf_candidates_from_html(payload, landing):
                         if destination in seen:
                             continue
                         seen.add(destination)
-                        time.sleep(max(0, pause - (time.monotonic() - last_request)))
-                        last_request = time.monotonic()
-                        candidate, resolved, _ = safe_request(destination, limit=max_bytes)
-                        if pdf_data(candidate):
-                            success = candidate, resolved
-                            break
-                if success:
-                    break
-            except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
-                why = type(exc).__name__ + ": " + str(exc)[:140]
+                        try:
+                            pace()
+                            candidate, resolved, _ = safe_request(destination, limit=max_bytes)
+                            if pdf_data(candidate):
+                                success = (candidate, resolved)
+                                break
+                        except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                            why = type(exc).__name__ + ": " + str(exc)[:140]
+                            if isinstance(exc, HTTPError) and exc.code == 429:
+                                print("RATE_LIMIT", ident, "stopping batch", flush=True)
+                                write_json(LOG, progress)
+                                return tried
+                    if success:
+                        break
+                except (ValueError, URLError, HTTPError, TimeoutError, OSError) as exc:
+                    why = type(exc).__name__ + ": " + str(exc)[:140]
+                    if isinstance(exc, HTTPError) and exc.code == 429:
+                        print("RATE_LIMIT", ident, "stopping batch", flush=True)
+                        write_json(LOG, progress)
+                        return tried
         if success:
             payload, url = success
             sha = hashlib.sha256(payload).hexdigest()
