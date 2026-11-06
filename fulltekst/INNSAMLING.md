@@ -35,7 +35,7 @@ $env:DESIGNTEORI_PDF_CACHE = "D:\\Forsking\\designteori-pdf"
 
 Med standardinnstillingane stoppar innsamlinga ved 30 GB i cache eller når det er mindre enn 2 GB ledig diskplass. Du kan dele inn køen i sekvensielle delar: `-Shards 4 -Shard 0`, deretter shard 1, 2 og 3. Ikkje køyr fleire shard-prosessar parallelt mot den same framdriftsfila.
 
-Manglande filer, avbrot og endra PDF-ar blir fanga opp ved kontroll av filstorleik, PDF-format og SHA-256. Mislykka forsøk blir ikkje prøvde igjen i kvar køyring med mindre du brukar `-RetryFailed`. Eit HTTP 429-svar stoppar batchen, slik at tenesta får kvile.
+Manglande filer, avbrot og endra PDF-ar blir fanga opp ved kontroll av filstorleik, PDF-format og SHA-256. Mislykka forsøk blir ikkje prøvde igjen i kvar køyring med mindre du brukar `-RetryFailed`. Ved HTTP 429 blir den aktuelle tenaren eller oppslagstenesta hoppa over resten av køyringa, medan andre OA-kjelder kan halde fram. Desse postane blir merkte for seinare forsøk.
 
 ## Publisering
 
