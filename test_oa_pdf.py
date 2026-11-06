@@ -175,5 +175,37 @@ class PDFHarvestTest(unittest.TestCase):
             "https://example.org/paper.pdf?download=1"))
 
 
+    def test_rate_limited_host_does_not_block_other_open_pdfs(self):
+        from urllib.error import HTTPError
+        payload = b"%PDF-1.7\n" + b" " * 700 + b"%%EOF"
+        seen = []
+        def request(url, **kwargs):
+            seen.append(url)
+            if "limited.example.org" in url:
+                raise HTTPError(url, 429, "Too Many Requests", {}, None)
+            return payload, url, "application/pdf"
+        rows = [
+            {"id": "W1", "archived": "no",
+             "oa_url": "https://limited.example.org/a.pdf", "doi": ""},
+            {"id": "W2", "archived": "no",
+             "oa_url": "https://working.example.org/b.pdf", "doi": ""},
+            {"id": "W3", "archived": "no",
+             "oa_url": "https://limited.example.org/c.pdf", "doi": ""},
+        ]
+        with tempfile.TemporaryDirectory() as td:
+            progress = {}
+            with patch.multiple(pdf, PRIVATE=Path(td), LOG=Path(td) / "progress.json"), \
+                 patch.object(pdf, "safe_request", side_effect=request), \
+                 patch.object(pdf.time, "sleep"):
+                n = pdf.download(rows, progress, limit=3, email="", pause=0.5,
+                                 max_bytes=2_000_000, retry_failed=False,
+                                 lookup_openalex=False)
+            self.assertEqual(n, 3)
+            self.assertEqual(progress["W1"]["status"], "deferred")
+            self.assertEqual(progress["W2"]["status"], "pdf-confirmed")
+            self.assertEqual(progress["W3"]["status"], "deferred")
+            self.assertEqual(len(seen), 2)
+
+
 if __name__ == "__main__":
     unittest.main()
