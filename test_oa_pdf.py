@@ -153,5 +153,27 @@ class PDFHarvestTest(unittest.TestCase):
             request.assert_not_called()
 
 
+    def test_verified_pdf_links_survive_stateless_rebuilds(self):
+        url = "https://archive.example.org/research-paper.pdf"
+        digest = "a" * 64
+        with tempfile.TemporaryDirectory() as td:
+            index = Path(td) / "pdf_found.json"
+            index.write_text(json.dumps({
+                "W1": {"status": "private-cache-only", "url": url,
+                       "license": "", "sha256": digest},
+                "W2": {"status": "private-cache-only",
+                       "url": "https://archive.example.org/file.pdf?token=secret",
+                       "license": "", "sha256": "b" * 64},
+            }), encoding="utf-8")
+            with patch.object(pdf, "FOUND", index):
+                recovered = pdf.remote_links({}, {"items": []})
+            self.assertEqual(recovered["W1"]["url"], url)
+            self.assertNotIn("W2", recovered)
+        self.assertFalse(pdf.safe_public_link(
+            "https://example.org/paper.pdf?X-Amz-Signature=secret"))
+        self.assertTrue(pdf.safe_public_link(
+            "https://example.org/paper.pdf?download=1"))
+
+
 if __name__ == "__main__":
     unittest.main()
