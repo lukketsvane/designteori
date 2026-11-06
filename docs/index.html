@@ -15,20 +15,20 @@ header,main,footer{padding-left:max(22px,calc((100vw - 1240px)/2));padding-right
 header{border-bottom:1px solid var(--ink);min-height:65px;display:flex;align-items:center;justify-content:space-between}
 .mark{font-size:19px;letter-spacing:-.05em;font-weight:750;text-decoration:none}
 nav{display:flex;gap:22px;font-size:13px}
-.hero{padding:64px 0 40px;max-width:940px}
+.hero{padding:30px 0 12px;max-width:940px}
 .eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase}
-h1{font-size:clamp(40px,6vw,82px);letter-spacing:-.075em;line-height:1.02;font-weight:620;margin:18px 0 24px}
+h1{font-size:clamp(34px,5vw,64px);letter-spacing:-.065em;line-height:1.04;font-weight:620;margin:0 0 12px}
 .lead{font-size:clamp(17px,2vw,22px);line-height:1.42;max-width:730px}
-.not-a-census{border-left:2px solid #303030;padding:4px 0 4px 15px;max-width:700px;color:var(--secondary);font-size:13px;margin:28px 0 0}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:44px 0}
+.not-a-census{max-width:700px;color:var(--secondary);font-size:12px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:20px 0}
 .metric{padding:18px 15px 20px 0}
 .metric+.metric{border-left:1px solid var(--line);padding-left:22px}
 .num{font-size:clamp(27px,4vw,43px);letter-spacing:-.05em;line-height:1.2}
 .caption{font-size:12px;color:var(--secondary);margin-top:4px}
-.section{margin:50px 0 28px}
+.section{margin:24px 0 22px}
 h2{font-size:22px;letter-spacing:-.045em;font-weight:660;margin:0 0 14px}
 .section-intro{font-size:13px;color:var(--secondary);max-width:750px}
-.filters{display:grid;grid-template-columns:2fr repeat(6,minmax(100px,1fr));gap:10px;margin:24px 0 18px}
+.filters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(100px,1fr));gap:10px;margin:16px 0}.advanced .filters{grid-template-columns:repeat(4,minmax(100px,1fr));margin:12px 0}.advanced summary{cursor:pointer;font-size:12px;color:var(--secondary)}
 .field{display:block}.field span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;margin-bottom:7px}
 input,select,button{border-radius:0;border:1px solid var(--line);font:inherit;color:var(--ink);background:var(--bg);height:44px;padding:0 12px;width:100%}
 input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
@@ -90,57 +90,37 @@ footer p{max-width:540px}
 <a class="mark" href="./">DESIGNTEORI</a>
 <nav>
 
-<a href="#katalog">Artiklar</a>
-<a href="#bibliografiar">Bibliografiar</a>
 <a href="#forskarar">Forskarar</a>
-<a href="https://github.com/lukketsvane/designteori/tree/main/fulltekst">Fulltekst</a>
 <a href="https://github.com/lukketsvane/designteori">GitHub</a>
 </nav>
 </header>
 <main>
 <section class="hero">
-<div class="eyebrow">Nordisk designteori · open bibliografisk database</div>
-<h1>Designteori.<br>Samla og søkbart.</h1>
-<p class="lead">Eit felles register over publiserte designteoretiske artiklar og sentrale kjelder frå Noreg, Sverige, Danmark, Finland og Island. Søk på tittel, forfattar, år, tema og DOI.</p>
-<p class="not-a-census">OpenAlex-registeret er eit førebels metadatauttrekk frå 2000–2026, ikkje ei fullstendig oversikt over nordisk designteori. Redaksjonelle kjelder som ikkje er sikkert kopla til OpenAlex, blir merkte som uavklara bibliografipostar.</p>
+<h1>Nordisk designteori.</h1><p class="not-a-census">Søk i publisert forsking frå Norden, 2000–2026. Metadata er ikkje fagleg verifisert.</p>
 </section>
 <section class="stats" aria-label="Datastatus">
-<div class="metric"><div class="num" id="stat-articles">...</div><div class="caption">Artikkelregistreringar</div></div>
-<div class="metric"><div class="num" id="stat-total">...</div><div class="caption">OpenAlex-postar totalt</div></div>
-<div class="metric"><div class="num" id="stat-editorial">...</div><div class="caption">Nordiske redaksjonelle kjeldepostar</div></div>
-<div class="metric"><div class="num" id="stat-pdfs">...</div><div class="caption">Lisensierte PDF-ar i arkivet</div></div>
+<div class="metric"><div class="num" id="stat-articles">...</div><div class="caption">artiklar</div></div>
+<div class="metric"><div class="num" id="stat-total">...</div><div class="caption">postar</div></div>
+<div class="metric"><div class="num" id="stat-editorial">...</div><div class="caption">kjelder</div></div>
+<div class="metric"><div class="num" id="stat-pdfs">...</div><div class="caption">PDF-ar</div></div>
 </section>
 <section class="section" id="katalog">
-<h2>Søk i litteraturen</h2>
-<p class="section-intro">Hovudregisteret har 7 300 OpenAlex-postar, inkludert 6 060 artikkelregistreringar. I tillegg blir nordiske redaksjonelle kjelder utan sikker identitetskopling viste med eigen status. Artikkeltype er ikkje det same som manuelt verifisert relevans.</p>
+<h2>Publikasjonar</h2>
 <div class="filters">
-<label class="field"><span>Søk</span><input id="search" type="search" placeholder="Tittel, forfattar, tema, DOI..." autocomplete="off" autofocus></label>
-<label class="field"><span>Publikasjonstype</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle typar og kjeldepostar</option><option value="review">Oversynsartiklar</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="editorial-candidate">Uavklara redaksjonelle kjelder</option></select></label>
-<label class="field"><span>Land</span><select id="country"><option value="">Alle nordiske land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
-<label class="field"><span>Periode</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
-<label class="field"><span>Vurderingsstatus</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Førehandsinkluderte</option><option value="awaiting-eligibility-review">Til manuell vurdering</option><option value="editorial-candidate">Uavklara bibliografipostar</option></select></label>
-<label class="field"><span>Fulltekst</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
-<label class="field"><span>Prioritet for vurdering</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
-</div>
+<label class="field"><span>Søk</span><input id="search" type="search" placeholder="Tittel, forfattar, DOI" autocomplete="off" autofocus></label>
+<label class="field"><span>Type</span><select id="kind"><option value="article">Artiklar</option><option value="">Alle</option><option value="review">Oversyn</option><option value="book-chapter">Bokkapittel</option><option value="book">Bøker</option><option value="editorial-candidate">Uavklara</option></select></label>
+<label class="field"><span>Land</span><select id="country"><option value="">Alle land</option><option value="NO">Noreg</option><option value="SE">Sverige</option><option value="DK">Danmark</option><option value="FI">Finland</option><option value="IS">Island</option></select></label>
+</div><details class="advanced"><summary>Fleire filter</summary><div class="filters"><label class="field"><span>År</span><select id="period"><option value="">Alle år</option><option value="2000">2000–2009</option><option value="2010">2010–2019</option><option value="2020">2020–2026</option></select></label>
+<label class="field"><span>Status</span><select id="scope"><option value="">Alle kandidatar</option><option value="automatic-title-inclusion">Automatisk</option><option value="awaiting-eligibility-review">Uavklara</option><option value="editorial-candidate">Kjeldekandidatar</option></select></label>
+<label class="field"><span>Tilgang</span><select id="fulltext"><option value="">Alle</option><option value="local">PDF i arkivet</option><option value="oa">OA-lenkje</option></select></label>
+<label class="field"><span>Prioritet</span><select id="priority"><option value="">Alle prioritetar</option><option value="high">Høg</option><option value="medium">Middels</option><option value="low">Låg</option></select></label>
+</div></details>
 <div class="countline"><span id="count" aria-live="polite">Lastar registreringar…</span><div class="export-links"><button type="button" id="export-visible">Eksporter treff (CSV)</button><a href="./data/publications.csv">OpenAlex (CSV)</a></div></div>
-<p class="section-intro">Kjeldepostar blir avstemte mot OpenAlex-ID, DOI og normalisert tittel/år før dei kjem med i hovudsøket. Uavklara kjelder er tydeleg merkte. Landfilteret gjeld postar med registrert institusjonstilknyting.</p>
 <div id="records"></div>
-<button class="more" type="button" id="more" hidden>Vis fleire publikasjonar</button>
-</section>
-<section class="section" id="bibliografiar">
-<h2>Historiske og internasjonale referansar</h2>
-<p class="section-intro">430 historiske og internasjonale teorireferansar frå FORMLÆRE og GRUNNLAUST. Desse er bakgrunnslitteratur, ikkje dokumenterte nye nordiske artiklar. Dei 77 nordiske redaksjonelle kjeldepostane blir avstemte i hovudsøket over.</p>
-<div class="filters" style="grid-template-columns:2fr 1fr">
-<label class="field"><span>Søk i bibliografiane</span><input id="bib-search" type="search" placeholder="Forfattar, boktittel, omgrep, år..." autocomplete="off"></label>
-<label class="field"><span>Kjeldesamling</span><select id="bib-collection"><option value="">Begge referansesamlingar</option><option value="GRUNNLAUST">GRUNNLAUST</option><option value="FORMLÆRE akademisk">FORMLÆRE akademisk</option></select></label>
-</div>
-<div class="countline"><span id="bib-count" aria-live="polite">Lastar bibliografiane…</span><a href="https://github.com/lukketsvane/designteori/tree/main/bibliografi">Sjå originalkjeldene</a></div>
-<div id="bib-records"></div>
-<button class="more" type="button" id="bib-more" hidden>Vis fleire kjelder</button>
+<button class="more" type="button" id="more" hidden>Vis fleire</button>
 </section>
 <section class="section" id="forskarar">
 <h2>Forskarar og institusjonar</h2>
-<p class="section-intro">Utforsk person- og institusjonskoplingar i den avgrensa OpenAlex-databasen. Ein forfattar sin publikasjonsfrekvens i dette utvalet er ikkje eit rangeringstal for det nordiske fagmiljøet som heilskap.</p>
 <div class="scholar-grid">
 <div>
 <label class="field"><span>Søk etter forskar</span><input id="author-search" type="search" placeholder="Namn eller OpenAlex-ID" autocomplete="off"></label>
@@ -165,10 +145,7 @@ footer p{max-width:540px}
 <button type="button" class="detail-close" id="scholar-close">Lukk ×</button>
 <div id="scholar-detail"></div>
 </dialog>
-<footer>
-<div><strong>Datagrunnlag</strong><p>OpenAlex-metadata frå eit avgrensa søkjeuttrekk, datert 2. november 2026, og kjeldemerkt redaksjonell bibliografi. Registreringane er ikkje eit fullstendig eller manuelt godkjent fagkorpus.</p></div>
-<div><strong>Opne kjelder</strong><p>Bibliografi, metadata og kode ligg i <a href="https://github.com/lukketsvane/designteori">GitHub-repoet</a>. Arkiverte PDF-ar har dokumenterte lisensar. Andre fulltekstar blir lenkja til, ikkje kopierte.</p></div>
-</footer>
+<footer><div>OpenAlex · nordiske kjelder · <a href="https://github.com/lukketsvane/designteori">GitHub</a></div></footer>
 <script>
 "use strict";
 const $ = id => document.getElementById(id);
@@ -189,12 +166,12 @@ function renderRow(w){
  const meta=make("div",undefined,"metadata");
  const authors=Array.isArray(w.authors)?w.authors:[];
  meta.append(make("div",authors.length>6 ? authors.slice(0,6).join(", ")+" mfl." : authors.join(", ") || "Ukjend forfattar"));
- meta.append(make("div",[w.source,w.origin==="editorial"?"Bibliografipost, identitet uavklart":w.kind].filter(Boolean).join(" · ")));
+ meta.append(make("div",[w.source,w.origin==="editorial"?"Kjeldekandidat":w.kind].filter(Boolean).join(" · ")));
  body.append(meta);
  const small=make("p",undefined,"meta-small");
  for(const c of w.countries || [])small.append(make("span",countryNames[c]||c,"label"));
  if(w.license)small.append(make("span",w.license,"label licensed"));
- if(w.origin==="editorial")small.append(make("span","Ikkje manuelt verifisert","label"));if(w.review_priority==="high")small.append(make("span","Høg leseprioritet · automatisk","label"));
+ if(w.origin==="editorial")small.append(make("span","Uavklart","label"));
  if(w.theme)small.append(make("span",w.theme,"label"));
  else if(w.topic)small.append(make("span",w.topic,"label"));
  if(w.citations!==null&&w.citations!==undefined)small.append(make("span"," "+fmt(w.citations)+" siteringar"));
@@ -253,55 +230,15 @@ for(const id of ["search","kind","country","period","scope","fulltext","priority
  $(id).addEventListener(id==="search"?"input":"change",apply);
 }
 $("more").addEventListener("click",()=>{limit+=60;draw()});
-let bibliography=[],bibSelected=[],bibLimit=45;
-function renderBibliography(){
- const box=$("bib-records");box.replaceChildren();
- const fragment=document.createDocumentFragment();
- for(const r of bibSelected.slice(0,bibLimit)){
-  const item=make("article",undefined,"record");
-  item.append(make("div",r.year||"UÅ","year"));
-  const body=make("div");
-  body.append(make("h3",r.title||r.id,"title"));
-  body.append(make("div",r.authors||"Forfattar manglar","metadata"));
-  const meta=make("p",undefined,"meta-small");
-  meta.append(make("span",r.collection,"label"));
-  if(r.type)meta.append(make("span",r.type,"label"));
-  if(r.source_id)meta.append(make("span","Kopla til OpenAlex","label"));
-  body.append(meta);
-  item.append(body);
-  const links=make("div",undefined,"links");
-  for(const [url,label] of [[r.doi,"DOI"],[r.url,"Kjelde"]]){
-   const a=link(url,label);if(a)links.append(a);
-  }
-  item.append(links);fragment.append(item);
- }
- box.append(fragment);
- if(!bibSelected.length)box.append(make("p","Ingen treff i bibliografiane.","empty"));
- $("bib-count").textContent=fmt(bibSelected.length)+" bibliografipostar · "+fmt(Math.min(bibLimit,bibSelected.length))+" viste";
- $("bib-more").hidden=bibSelected.length<=bibLimit;
-}
-function filterBibliography(){
- bibLimit=45;
- const q=$("bib-search").value.trim().toLocaleLowerCase();
- const source=$("bib-collection").value;
- bibSelected=bibliography.filter(r=>r.origin==="historical"&&(!source||r.collection===source)&&(!q||r._search.includes(q)));
- renderBibliography();
-}
+let bibliography=[];
 async function initBibliography(){
  try{
   const response=await fetch("./data/bibliografiar.json");
-  if(!response.ok)throw Error("Kjeldefil utilgjengeleg");
-  const data=await response.json();
-  bibliography=data.items||[];
-  $("stat-editorial").textContent=fmt(bibliography.filter(r=>r.origin==="editorial").length);
-  for(const r of bibliography)r._search=[r.title,r.authors,r.year,r.doi,r.collection,r.section].filter(Boolean).join(" ").toLocaleLowerCase();
-  filterBibliography();
- }catch(err){$("bib-count").textContent="Klarte ikkje laste bibliografiane.";console.error(err)}
+  if(!response.ok)throw Error("Bibliografien er utilgjengeleg");
+  const data=await response.json();bibliography=(data.items||[]).filter(x=>x.origin==="editorial");
+  $("stat-editorial").textContent=fmt(bibliography.length);
+ }catch(err){$("stat-editorial").textContent="0";console.error(err)}
 }
-for(const id of ["bib-search","bib-collection"])
- $(id).addEventListener(id==="bib-search"?"input":"change",filterBibliography);
-$("bib-more").addEventListener("click",()=>{bibLimit+=45;renderBibliography()});
-
 function integrateEditorial(){
  if(!works.length||!bibliography.length)return;
  const ids=new Set(works.map(w=>w.id));
