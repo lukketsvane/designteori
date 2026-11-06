@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-ROOT=Path(__file__).resolve().parent;OUT=ROOT/"results"
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/"results"
 def main():
     works=pd.read_csv(OUT/"included_publications.csv",low_memory=False)
     labels=pd.read_csv(OUT/"semantic_clusters.csv")[["id","theme"]]

@@ -16,7 +16,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from database import ensure_database
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"results"
 FLAGS={
  "direct_test_words":r"\b(test(?:ing|ed|s)?|validat(?:e|ion|ed|ing)|experiment(?:al|s)?|evaluat(?:e|ion|ed|ing)|assess(?:ment|ed)?)\b",

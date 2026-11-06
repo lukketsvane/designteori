@@ -11,7 +11,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 RES=ROOT/"results"
 def read(name):
     with (RES/name).open(encoding="utf-8",newline="") as f:

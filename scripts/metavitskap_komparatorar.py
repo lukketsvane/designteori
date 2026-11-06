@@ -7,7 +7,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"results"
 REFS=[
  {"id":"cash2023","year":2023,"doi":"10.1016/j.destud.2023.101204",

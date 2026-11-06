@@ -14,7 +14,7 @@ from pathlib import Path
 import requests
 import fitz
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 CACHE=ROOT/"data"/"oa_fulltexts_private"
 OUT=ROOT/"results"
 DB=ROOT/"data"/"nordic_design_research.sqlite"
