@@ -16,6 +16,19 @@ Original-PDF-ane blir ikkje endra. Vektorane kan slettast eller byggjast på nyt
 
 **Innsamlingsstatus:** 7 300 OpenAlex-registreringar og nordiske kjeldekandidatar. Registreringane er ikkje lik manuelt verifiserte designteoriartiklar. På CYGNUS er 26 PDF-ar i privat cache; 14 av dei ligg òg i det offentlege lisensierte arkivet. Desse tala gjeld ei lokal kontrollkøyring 6. november 2026.
 
+## Samle nedlasta PDF-ar frå fleire lokale cacher
+
+Dersom ei anna innsamling alt køyrer i ein eigen arbeidsmappe, må me **ikkje starte ein parallell nettverksinnsamlar**. Ferdige PDF-ar kan i staden verifiserast og importerast lokalt:
+
+```powershell
+$env:DESIGNTEORI_PDF_CACHE = "C:\Users\Iver\Documents\designteori-pdf-cache\harvester"
+cd C:\Users\Iver\Documents\github\designteori-henting
+py -3 pdf_archive_report.py --merge-local ".\data\oa_fulltexts_private"
+py -3 bygg_fulltekstkorpus.py --build
+```
+
+Importen brukar berre filer som finst på disken. Han kontrollerer SHA-256, PDF-signatur, avslutningsmarkør og storleik, kopierer eller hardlenkjer til den private cachen og skriv atomisk framdriftsstatus. Mislykka nettverksførespurnader blir ikkje importerte. Originalar, lisensstatus og historikk blir bevarte.
+
 ## 1. Lokal fulltekst
 
 I den reine arbeidsmappa på CYGNUS:
