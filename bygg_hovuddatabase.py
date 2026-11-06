@@ -33,6 +33,13 @@ def build():
     publisher TEXT,isbn TEXT,url TEXT,
     openalex_id TEXT,identity_match_method TEXT,nordic_affiliation_status TEXT,
     raw_fields_json TEXT);
+  CREATE TABLE IF NOT EXISTS source_candidates (
+    id TEXT PRIMARY KEY,source_layer TEXT NOT NULL,title TEXT NOT NULL,
+    authors TEXT,year INTEGER,kind TEXT,doi TEXT,source_url TEXT,
+    scope TEXT NOT NULL,review_status TEXT,source_country TEXT,
+    provenance_json TEXT NOT NULL);
+  CREATE VIRTUAL TABLE IF NOT EXISTS source_candidates_fts USING fts5(
+    title,authors,source_layer,content='source_candidates',content_rowid='rowid');
   CREATE TABLE IF NOT EXISTS fulltext_versions (
     work_id TEXT PRIMARY KEY,title TEXT,authors TEXT,year INTEGER,doi TEXT,
     original_url TEXT,version_type TEXT,license TEXT,license_url TEXT,
@@ -61,7 +68,7 @@ def build():
     work_id UNINDEXED,title,authors,fulltext,tokenize='unicode61 remove_diacritics 2');
   """)
   db.executemany("INSERT OR REPLACE INTO database_info VALUES(?,?)",[
-    ("schema","designteori-hovuddatabase-v1"),
+    ("schema","designteori-hovuddatabase-v2"),
     ("original_opalex_snapshot","2026-11-02"),
     ("original_works_count",str(db.execute("SELECT count(*) FROM works").fetchone()[0])),
     ("source_original_sqlite_gz","data/nordic_design_research.sqlite.gz"),
@@ -88,6 +95,21 @@ def build():
      int(r["year"]) if r["year"] else None,r["doi"],r["publisher"],
      r["isbn"],r["url"],r["openalex_id"] or None,r["match_type"],
      r["nordic_affiliation_status"],r["raw_fields_json"]))
+  # Sjølvstendige søkbare kandidatlag. Desse vert ikkje lagt inn i works.
+  # Metadata og proveniens er skilde frå fagleg verifisert teori.
+  for layer,name in (("nordic","nordic_additions.json"),
+                     ("historical","theory_additions.json")):
+   items=json.loads((ROOT/"docs"/"data"/name).read_text(encoding="utf-8"))
+   for w in sorted(items,key=lambda x:x["id"]):
+    db.execute("""INSERT INTO source_candidates VALUES(?,?,?,?,?,?,?,?,?,?,?,?)""",(
+     w["id"],layer,w["title"],"; ".join(w.get("authors") or []),
+     w.get("year"),w.get("kind") or "unknown",w.get("doi") or "",
+     w.get("source_url") or "",w["scope"],
+     w.get("review_status") or "metadata-unreviewed",
+     w.get("source_country") or "",
+     json.dumps(w.get("provenance") or [],ensure_ascii=False,sort_keys=True)
+    ))
+  db.execute("INSERT INTO source_candidates_fts(source_candidates_fts) VALUES('rebuild')")
   manifest=json.loads((ROOT/"fulltekst/manifest.json").read_text(encoding="utf-8"))["items"]
   for r in manifest:
    db.execute("INSERT INTO fulltext_versions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(
@@ -104,6 +126,13 @@ def build():
   CREATE VIEW IF NOT EXISTS vetted_fulltexts AS
    SELECT w.id,w.title,w.year,w.doi,f.license,f.pdf_path,f.text_path,f.sha256
    FROM works AS w JOIN fulltext_versions AS f ON w.id=f.work_id;
+  CREATE VIEW IF NOT EXISTS searchable_metadata AS
+    SELECT id,title,year,kind,doi,'openalex' AS source_layer,
+      CASE WHEN in_scope=1 THEN 'automatic-title-inclusion'
+           ELSE 'awaiting-eligibility-review' END AS scope
+    FROM works
+    UNION ALL
+    SELECT id,title,year,kind,doi,source_layer,scope FROM source_candidates;
   CREATE VIEW IF NOT EXISTS uncrossmatched_editorial AS
    SELECT * FROM editorial_bibliography WHERE matched_openalex_id IS NULL;
   """)
@@ -114,13 +143,20 @@ def build():
    "bibliographic_edges":db.execute("SELECT count(*) FROM references_all").fetchone()[0],
    "editorial_works":db.execute("SELECT count(*) FROM editorial_bibliography").fetchone()[0],
    "historic_bibtex_entries":db.execute("SELECT count(*) FROM historical_bibliography").fetchone()[0],
+   "source_candidates":db.execute("SELECT count(*) FROM source_candidates").fetchone()[0],
+   "metadata_search_rows":db.execute("SELECT count(*) FROM searchable_metadata").fetchone()[0],
    "unmatched_editorial":db.execute("SELECT count(*) FROM uncrossmatched_editorial").fetchone()[0],
    "fulltexts":db.execute("SELECT count(*) FROM fulltext_versions").fetchone()[0],
    "searchable_fulltexts":db.execute("SELECT count(*) FROM fulltext_fts").fetchone()[0],
    "manually_coded_claims":db.execute("SELECT count(*) FROM theory_claims").fetchone()[0],
   }
   db.close()
-  with tmp.open("rb") as src,gzip.open(DEST,"wb",compresslevel=9) as dst:shutil.copyfileobj(src,dst)
+  # Stabil gzip-header hindrar unødige Git-commits ved identisk bygg.
+  gz_tmp=DEST.with_suffix(DEST.suffix+".tmp")
+  with tmp.open("rb") as src,gz_tmp.open("wb") as target:
+   with gzip.GzipFile(filename="",mode="wb",fileobj=target,mtime=0,compresslevel=9) as dst:
+    shutil.copyfileobj(src,dst)
+  os.replace(gz_tmp,DEST)
   print("RESEARCH_DB",counts,"MB",round(DEST.stat().st_size/1e6,2))
  finally:
   if tmp.exists():tmp.unlink()
