@@ -123,6 +123,25 @@ def main() -> None:
 
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
+    pdf_queue = read_csv("results/pdf_henteko.csv")
+    pdf_stats = load("docs/data/pdf_status.json")
+    pdf_found = load("docs/data/pdf_found.json")
+    require(len(pdf_queue) == len(records) + len(additions),
+            "PDF search queue must cover all indexed and unmatched Nordic records")
+    require(len({item["id"] for item in pdf_queue}) == len(pdf_queue),
+            "duplicate work ID in PDF retrieval queue")
+    require(pdf_stats["openalex_and_nordic_candidates"] == len(pdf_queue),
+            "PDF coverage count is stale")
+    require(pdf_stats["archived_licensed_pdfs"] == len(manifest["items"]),
+            "PDF manifest coverage count is stale")
+    require(pdf_stats["public_verified_pdf_links"] == len(pdf_found),
+            "verified PDF link count differs from published index")
+    require(set(pdf_found).issubset({item["id"] for item in pdf_queue}),
+            "PDF link points to unknown publication")
+    require(all(row.get("status") in ("archived", "private-cache-only")
+                for row in pdf_found.values()), "PDF metadata contains an unverified link")
+    require(all("license" in row and "sha256" in row for row in pdf_found.values()),
+            "PDF metadata lacks provenance and rights distinction")
     rights_ids = set()
     for entry in manifest["items"]:
         require(entry["id"] in set(ids) and entry["id"] not in rights_ids,
@@ -131,7 +150,8 @@ def main() -> None:
         pdf = ROOT / "fulltekst" / entry["pdf"]
         require(pdf.is_file() and hashlib.sha256(pdf.read_bytes()).hexdigest() == entry["sha256"],
                 "PDF missing or checksum mismatch for " + entry["id"])
-        require(entry["license_url"].startswith("https://creativecommons.org/licenses/"),
+        require((entry["license_url"].startswith("https://creativecommons.org/licenses/")
+                 or entry["license_url"] == "https://creativecommons.org/publicdomain/zero/1.0/"),
                 "missing redistributable Creative Commons license")
         if entry.get("text"):
             require((ROOT / "fulltekst" / entry["text"]).is_file(),
