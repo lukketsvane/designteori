@@ -43,6 +43,34 @@ class PDFHarvestTest(unittest.TestCase):
         self.assertEqual(result[0], "https://journals.example.org/media/item.pdf")
         self.assertEqual(len(result), 2)
 
+    def test_pdf_alternate_link_and_html_doctype(self):
+        html = (b'<!doctype html><html><head>'
+                b'<link rel="alternate" type="application/pdf" href="/files/paper.pdf">'
+                b'<link rel="stylesheet" href="/app.css">'
+                b'</head></html>')
+        matches = pdf.pdf_candidates_from_html(html, "https://repo.example.org/work/1")
+        self.assertEqual(matches, ["https://repo.example.org/files/paper.pdf"])
+
+    def test_openalex_oa_fallback_sources(self):
+        data = {
+            "best_oa_location": None,
+            "primary_location": {"is_oa": True, "pdf_url":
+                                 "https://archive.example.org/paper.pdf"},
+            "locations": [{"is_oa": False, "pdf_url":
+                           "https://publisher.example.org/paywalled.pdf"}],
+            "open_access": {"is_oa": True, "oa_url":
+                            "https://archive.example.org/record/123"},
+        }
+        with patch.object(pdf, "safe_request", return_value=(
+                json.dumps(data).encode("utf-8"),
+                "https://api.openalex.org/works/x", "application/json")):
+            urls = pdf.openalex_urls("https://doi.org/10.1234/example")
+        self.assertEqual(urls, [
+            "https://archive.example.org/paper.pdf",
+            "https://archive.example.org/record/123",
+        ])
+        self.assertFalse(any("paywalled" in url for url in urls))
+
     def test_queue_keeps_all_works_and_separates_archived(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
