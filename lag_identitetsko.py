@@ -79,7 +79,7 @@ def build(root: Path = ROOT) -> dict:
     with (root / "results/theory_source_audit.csv").open(newline="", encoding="utf-8") as f:
         history = list(csv.DictReader(f))
     quality = json.loads((root / "docs/data/corpus_quality.json").read_text(encoding="utf-8"))
-    groups = quality["cross_layer_or_within_layer_possible_doi_duplicates"]["example_groups"]
+    groups = quality["cross_layer_or_within_layer_possible_doi_duplicates"]["all_groups"]
     rows = make_queue(nordic, history, groups)
     out = root / "results/identity_review_queue.csv"
     with out.open("w", newline="", encoding="utf-8") as f:
