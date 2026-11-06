@@ -1,1 +1,18 @@
-{}
+{
+  "editorial_records": 77,
+  "match_status_counts": {
+    "matched-id": 22,
+    "missing-title": 1,
+    "new-candidate": 54
+  },
+  "matched_exact": 22,
+  "note": "Neither repository exports nor title matches imply verified Nordic design theory.",
+  "openalex_records": 7300,
+  "possible_duplicate_records": 0,
+  "repository_records": 0,
+  "source_counts": {
+    "editorial": 77
+  },
+  "source_records_total": 77,
+  "unlinked_candidate_records": 54
+}
