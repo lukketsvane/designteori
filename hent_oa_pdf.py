@@ -294,6 +294,16 @@ def load_progress():
     return raw if isinstance(raw, dict) else {}
 
 
+def safe_public_link(url):
+    """Do not publish time-limited or credential-bearing download URLs."""
+    if not allowed_url(url):
+        return False
+    query = urlsplit(url).query.lower()
+    secrets = ("token=", "access_token=", "api_key=", "apikey=", "signature=",
+               "x-amz-", "x-goog-", "authorization=", "credential=", "session=", "expires=")
+    return not any(term in query for term in secrets)
+
+
 def remote_links(progress, published):
     originals = {
         item["id"]: {"url": item.get("original_fulltext_url", ""),
@@ -307,11 +317,11 @@ def remote_links(progress, published):
     if isinstance(previous, dict):
         for ident, row in previous.items():
             if (isinstance(row, dict) and row.get("status") == "private-cache-only"
-                    and allowed_url(row.get("url"))
+                    and safe_public_link(row.get("url"))
                     and re.fullmatch(r"[a-f0-9]{64}", str(row.get("sha256", "")))):
                 originals.setdefault(ident, row)
     for ident, row in progress.items():
-        if row.get("status") == "pdf-confirmed" and allowed_url(row.get("url")):
+        if row.get("status") == "pdf-confirmed" and safe_public_link(row.get("url")):
             originals.setdefault(ident, {
                 "url": row["url"], "status": "private-cache-only",
                 "sha256": row.get("sha256", ""), "license": "",
