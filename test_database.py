@@ -138,6 +138,19 @@ def main() -> None:
                 and not w.get("countries") for w in theory),
             "historical candidates promoted to verified Nordic research")
 
+    quality = load("docs/data/corpus_quality.json")
+    require(quality.get("openalex_partial_search") == len(records),
+            "OpenAlex coverage denominator does not match the base catalog")
+    require(quality.get("nordic_unlinked_candidates") == len(additions),
+            "Nordic candidate coverage is stale")
+    require(quality.get("historical_global_provisional_groups") == len(theory),
+            "Historical candidate coverage is stale")
+    require(quality.get("total_searchable_rows_all_layers") ==
+            len(records) + len(additions) + len(theory),
+            "Search index coverage mismatches source layers")
+    require(quality.get("manual_article_eligibility_checks_completed") == 0,
+            "Automated entries cannot be treated as independently coded findings")
+
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     pdf_queue = read_csv("results/pdf_henteko.csv")
