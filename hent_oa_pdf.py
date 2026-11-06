@@ -187,6 +187,33 @@ def unpaywall_urls(doi, email):
     return result[:10]
 
 
+def openalex_urls(doi):
+    """Optional OA-location fallback. URLs returned are leads, not licensing claims."""
+    if not doi:
+        return []
+    short = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi.strip(), flags=re.I)
+    if not short.startswith("10."):
+        return []
+    url = "https://api.openalex.org/works/https://doi.org/" + quote(short, safe="/")
+    payload, _, _ = safe_request(url, limit=1_500_000, accept="application/json")
+    data = json.loads(payload.decode("utf-8"))
+    locs = [data.get("best_oa_location")] + list(data.get("locations") or [])
+    urls = []
+    for loc in locs:
+        if not isinstance(loc, dict) or not loc.get("is_oa", False):
+            continue
+        for candidate in (loc.get("pdf_url"), loc.get("landing_page_url")):
+            if allowed_url(candidate) and candidate not in urls:
+                urls.append(candidate)
+    return urls[:12]
+
+
+def direct_pdf_hint(link):
+    """Sorting hint only: a URL shaped like a PDF is not a verified PDF."""
+    return bool(re.search(r"(?:\.pdf(?:[?#]|$)|/content/pdf/|/track/pdf/|/article/download/|/bitstream/|/download(?:[/?#]|$))",
+                          str(link or ""), re.I))
+
+
 def queue_rows():
     published = read_json(ROOT / "fulltekst" / "manifest.json", {"items": []})
     archived = {entry["id"] for entry in published["items"]}
@@ -219,7 +246,7 @@ def queue_rows():
     rank = {"high": 0, "medium": 1, "low": 2}
     all_rows.sort(key=lambda x: (
         x["archived"] == "yes", x["kind"] not in ("article", "review", "proceedings-article"),
-        not bool(x["oa_url"]), rank.get(x["priority"], 3),
+        not bool(x["oa_url"]), not direct_pdf_hint(x["oa_url"]), rank.get(x["priority"], 3),
         -(int(x["year"]) if str(x["year"]).isdigit() else 0), x["id"]))
     return all_rows, published
 
@@ -251,6 +278,7 @@ def publish(rows, published, progress):
         "openalex_and_nordic_candidates": len(rows),
         "archived_licensed_pdfs": len(published["items"]),
         "oa_links_unchecked": sum(r["candidate_status"] == "oa-link-unchecked" for r in rows),
+        "direct_pdf_shaped_urls_unchecked": sum(r["candidate_status"] == "oa-link-unchecked" and direct_pdf_hint(r["oa_url"]) for r in rows),
         "doi_without_oa_link": sum(r["candidate_status"] == "doi-only" for r in rows),
         "without_doi_or_oa": sum(r["candidate_status"] == "no-oa-link" for r in rows),
         "private_cached_pdfs": sum(x.get("status") == "pdf-confirmed" for x in progress.values()),
@@ -268,7 +296,7 @@ def publish(rows, published, progress):
     return summary
 
 
-def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed):
+def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lookup_openalex):
     PRIVATE.mkdir(parents=True, exist_ok=True)
     pdf_dir = PRIVATE / "pdf"
     pdf_dir.mkdir(exist_ok=True)
@@ -282,7 +310,7 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed):
             continue
         if tried >= limit:
             break
-        if not row["oa_url"] and not (email and row["doi"]):
+        if not row["oa_url"] and not ((email or lookup_openalex) and row["doi"]):
             continue
         tried += 1
         candidates = [row["oa_url"]] if row["oa_url"] else []
@@ -290,7 +318,12 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed):
             try:
                 candidates += unpaywall_urls(row["doi"], email)
             except (ValueError, URLError, HTTPError, TimeoutError, OSError, json.JSONDecodeError) as exc:
-                print("OA_LOOKUP_FAIL", ident, type(exc).__name__, flush=True)
+                print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
+        if lookup_openalex and row["doi"]:
+            try:
+                candidates += openalex_urls(row["doi"])
+            except (ValueError, URLError, HTTPError, TimeoutError, OSError, json.JSONDecodeError) as exc:
+                print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
         success = None
         why = "No direct PDF at published OA links"
         seen = set()
@@ -345,6 +378,7 @@ def main():
     parser.add_argument("--delay", type=float, default=1.0)
     parser.add_argument("--max-mb", type=int, default=25)
     parser.add_argument("--retry-failed", action="store_true")
+    parser.add_argument("--lookup-openalex", action="store_true", help="Consult OpenAlex for additional legal OA locations")
     args = parser.parse_args()
     if args.limit < 1 or args.delay < 0.5 or not 1 <= args.max_mb <= 50:
         parser.error("Invalid limit, delay or max-mb")
@@ -353,7 +387,7 @@ def main():
     if args.download:
         tried = download(rows, progress, limit=args.limit, email=args.email,
                          pause=args.delay, max_bytes=args.max_mb * 1_000_000,
-                         retry_failed=args.retry_failed)
+                         retry_failed=args.retry_failed, lookup_openalex=args.lookup_openalex)
         print("ATTEMPTED", tried)
     publish(rows, published, progress)
 
