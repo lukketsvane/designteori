@@ -342,6 +342,10 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 except (ValueError, URLError, HTTPError, TimeoutError, OSError,
                         json.JSONDecodeError) as exc:
                     print("UNPAYWALL_FAIL", ident, type(exc).__name__, flush=True)
+                    if isinstance(exc, HTTPError) and exc.code == 429:
+                        print("RATE_LIMIT", label, "stopping batch", flush=True)
+                        write_json(LOG, progress)
+                        return tried
                     continue
             else:
                 if not lookup_openalex or not row["doi"]:
@@ -352,6 +356,10 @@ def download(rows, progress, *, limit, email, pause, max_bytes, retry_failed, lo
                 except (ValueError, URLError, HTTPError, TimeoutError, OSError,
                         json.JSONDecodeError) as exc:
                     print("OPENALEX_FAIL", ident, type(exc).__name__, flush=True)
+                    if isinstance(exc, HTTPError) and exc.code == 429:
+                        print("RATE_LIMIT", label, "stopping batch", flush=True)
+                        write_json(LOG, progress)
+                        return tried
                     continue
             for target in candidates[:10]:
                 if not allowed_url(target) or target in seen:
