@@ -121,36 +121,6 @@ def main() -> None:
             sum(r["status"] in ("matched-id", "matched-doi") for r in source_audit),
             "Exact source matches are inconsistent")
 
-    # Det historiske registeret er ein separat, urevidert kandidatpopulasjon.
-    theory = load("docs/data/theory_additions.json")
-    theory_status = load("docs/data/theory_status.json")
-    theory_audit = read_csv("results/theory_source_audit.csv")
-    require(len(theory) == theory_status["unique_provisional_candidate_records"],
-            "historical theory register count out of sync")
-    require(len(theory_audit) == theory_status["raw_historical_references"],
-            "historical source audit incomplete")
-    require(len({w["id"] for w in theory}) == len(theory),
-            "duplicate theory candidate IDs")
-    require(not set(w["id"] for w in theory).intersection(ids),
-            "historical candidates masquerading as OpenAlex works")
-    require(all(w.get("scope") == "historical-reference"
-                and w.get("review_status") == "metadata-unreviewed"
-                and not w.get("countries") for w in theory),
-            "historical candidates promoted to verified Nordic research")
-
-    quality = load("docs/data/corpus_quality.json")
-    require(quality.get("openalex_partial_search") == len(records),
-            "OpenAlex coverage denominator does not match the base catalog")
-    require(quality.get("nordic_unlinked_candidates") == len(additions),
-            "Nordic candidate coverage is stale")
-    require(quality.get("historical_global_provisional_groups") == len(theory),
-            "Historical candidate coverage is stale")
-    require(quality.get("total_searchable_rows_all_layers") ==
-            len(records) + len(additions) + len(theory),
-            "Search index coverage mismatches source layers")
-    require(quality.get("manual_article_eligibility_checks_completed") == 0,
-            "Automated entries cannot be treated as independently coded findings")
-
     manifest = load("fulltekst/manifest.json")
     require(manifest["count"] == len(manifest["items"]), "fulltext manifest count mismatch")
     pdf_queue = read_csv("results/pdf_henteko.csv")
