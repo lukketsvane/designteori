@@ -17,7 +17,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 DB=ROOT/"data"/"nordic_design_research.sqlite"
 OUT=ROOT/"results"; PLOTS=OUT/"figures"
 THEMES={

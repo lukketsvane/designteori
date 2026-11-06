@@ -13,7 +13,7 @@ import sqlite3
 from collections import Counter,defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"docs"/"data"
 def main():
  db=ROOT/"data"/"nordic_design_research.sqlite"

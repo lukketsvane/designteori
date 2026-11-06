@@ -9,7 +9,7 @@ import sqlite3
 import tempfile
 import os
 import shutil
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"data"/"fulltekst_sok.sqlite.gz"
 def main():
  manifest=json.loads((ROOT/"fulltekst"/"manifest.json").read_text(encoding="utf-8"))["items"]

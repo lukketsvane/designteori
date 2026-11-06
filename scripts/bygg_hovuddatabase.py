@@ -9,7 +9,7 @@ from __future__ import annotations
 import csv,gzip,json,os,sqlite3,shutil,tempfile
 from datetime import date
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/"data"/"nordic_design_research.sqlite.gz"
 DEST=ROOT/"data"/"designteori_hovuddatabase.sqlite.gz"
 def build():
