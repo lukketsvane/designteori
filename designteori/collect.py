@@ -352,6 +352,15 @@ def fetch_cursor_stream(conn: sqlite3.Connection, filter_expr: str, label: str,
                         fallback_countries: list[str] | None = None) -> int:
     added = 0
     for page in range(1, min(max_pages, 49) + 1):
+        prev = conn.execute(
+            "SELECT total_hits, returned, error FROM query_log WHERE query=? AND page=?",
+            (label, page),
+        ).fetchone()
+        if prev is not None and prev[2] is None:
+            prev_total, prev_ret, _ = prev
+            if prev_ret < 200 or page * 200 >= (prev_total or 0):
+                break
+            continue
         params = {"filter": filter_expr, "per_page": 200, "page": page, "select": SELECT_FIELDS}
         if search:
             params["search"] = search
@@ -503,7 +512,6 @@ def harvest_openalex(*, pages_en: int = 5, pages_nordic: int = 5, end_year: int 
     canon = conn.execute("SELECT COUNT(*) FROM cited_canon").fetchone()[0]
     conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
     conn.close()
-    archive_raw_sqlite(db_path)
     summary = {
         "works": total_works,
         "in_scope": in_scope,

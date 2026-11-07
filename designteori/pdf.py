@@ -564,10 +564,10 @@ def queue_rows() -> list[dict]:
     rank = {"high": 0, "medium": 1, "low": 2}
     rows.sort(key=lambda x: (
         x["archived"] == "yes",
-        x["kind"] not in ("article", "review", "proceedings-article", "conference-paper"),
+        not (direct_pdf_hint(x["oa_url"]) or normalize_doi(x["doi"]).startswith(OA_DOI_PREFIXES)),
         not bool(x["oa_url"]),
-        not direct_pdf_hint(x["oa_url"]),
-        rank.get(x["priority"], 3),
+        x["kind"] in ("dissertation", "book"),
+        rank.get(x["priority"], 2),
         -(int(x["year"]) if str(x["year"]).isdigit() else 0),
         x["id"],
     ))
@@ -612,22 +612,30 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
             host_last[key] = time.monotonic()
 
     any_api = bool(email or lookup_openalex or lookup_europepmc or lookup_crossref or lookup_semantic_scholar)
-    eligible = []
+    unvisited_rows = []
+    deferred_rows = []
     for row in rows:
         ident = row["id"]
         if row["archived"] == "yes":
             continue
-        if progress.get(ident, {}).get("status") == "pdf-confirmed":
-            if cached_pdf_ok(ident, progress[ident], cache_dir):
+        prev = progress.get(ident) or {}
+        st = prev.get("status")
+        if st == "pdf-confirmed":
+            if cached_pdf_ok(ident, prev, cache_dir):
                 continue
             progress.pop(ident, None)
-        if progress.get(ident, {}).get("status") == "failed" and not retry_failed:
+            st = None
+        if st == "failed" and not retry_failed:
             continue
         if not row["oa_url"] and not (any_api and row["doi"]):
             continue
-        eligible.append(row)
-        if len(eligible) >= limit:
-            break
+        if st == "deferred":
+            deferred_rows.append(row)
+        else:
+            unvisited_rows.append(row)
+            if len(unvisited_rows) >= limit:
+                break
+    eligible = (unvisited_rows + deferred_rows)[:limit]
 
     prefetched_oa = {}
     if lookup_openalex and eligible:
