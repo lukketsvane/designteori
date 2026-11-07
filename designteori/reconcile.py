@@ -32,7 +32,15 @@ from . import (
     write_csv_rows,
     write_json,
 )
-from .collect import ensure_raw_sqlite
+from .collect import ensure_raw_sqlite, refresh_existing_scope
+from .eligibility import (
+    CANON_NOISE_RE,
+    FORBIDDEN_VENUES_RE,
+    HARD_NON_DESIGN_RE,
+    clean_display_title,
+    is_strict_nordic_archive_work,
+    load_semantic_gate_scores,
+)
 
 NORDIC_SOURCES = {
     "nva": ("Nasjonalt vitenarkiv / Cristin", "NO"),
@@ -212,6 +220,7 @@ def _iter_import_records(path: Path):
 def stage_nordic_imports(imports_dir: Path = IMPORTS_DIR) -> list[dict]:
     indexed = {}
     max_year = date.today().year + 1
+    sem_scores = load_semantic_gate_scores()
     for source in sorted(NORDIC_SOURCES):
         folder = imports_dir / source
         if not folder.is_dir():
@@ -220,9 +229,10 @@ def stage_nordic_imports(imports_dir: Path = IMPORTS_DIR) -> list[dict]:
             if file.suffix.lower() not in (".csv", ".json", ".jsonl", ".ndjson", ".xml"):
                 continue
             for row in _iter_import_records(file):
-                title = str(row.get("title") or row.get("display_name") or row.get("name") or "").strip()
+                title = clean_display_title(row.get("title") or row.get("display_name") or row.get("name") or "")
                 if not title:
                     continue
+                venue_str = clean_display_title(row.get("venue") or row.get("journal") or row.get("source") or "")
                 raw_authors = row.get("authors") or row.get("creator") or row.get("author") or []
                 if isinstance(raw_authors, str):
                     authors = [p.strip() for p in re.split(r"\s*;\s*|\s+\band\b\s+", raw_authors) if p.strip()]
@@ -236,12 +246,16 @@ def stage_nordic_imports(imports_dir: Path = IMPORTS_DIR) -> list[dict]:
                 raw_id = str(row.get("id") or row.get("identifier") or d or "").strip()
                 if not raw_id:
                     raw_id = hashlib.sha256(f"{normalize_title(title)}|{year}|{authors[0] if authors else ''}".encode()).hexdigest()[:20]
+                cid = f"{source}:{hashlib.sha256(raw_id.encode()).hexdigest()[:20]}"
+                if not is_strict_nordic_archive_work(
+                    title, NORDIC_SOURCES[source][0], venue_str, sem_scores.get(f"nordic:{cid}")
+                ):
+                    continue
                 s_url = str(row.get("url") or row.get("source_url") or row.get("link") or "").strip()
                 if s_url.startswith(("http://urn.kb.se/", "http://hdl.handle.net/", "http://urn.fi/")):
                     s_url = "https://" + s_url[7:]
                 if not s_url.startswith("https://"):
                     s_url = ""
-                cid = f"{source}:{hashlib.sha256(raw_id.encode()).hexdigest()[:20]}"
                 indexed[cid] = {
                     "id": cid,
                     "origin": "external",
@@ -254,7 +268,7 @@ def stage_nordic_imports(imports_dir: Path = IMPORTS_DIR) -> list[dict]:
                     "year": year,
                     "doi": doi_url(d),
                     "kind": _normalize_import_kind(row.get("kind") or row.get("type") or ""),
-                    "venue": str(row.get("venue") or row.get("journal") or row.get("source") or "").strip(),
+                    "venue": venue_str,
                     "source_url": s_url,
                     "status": "metadata-unreviewed",
                     "affiliation_status": "not-verified",
@@ -266,15 +280,15 @@ def build_triage_and_atlas(conn: sqlite3.Connection) -> tuple[dict, dict]:
     citation_in = Counter()
     for (cid,) in conn.execute("""
         SELECT r.cited_id FROM references_all r
-        JOIN works w ON w.id=r.citing_id
-        JOIN works v ON v.id=r.cited_id
+        JOIN works w ON w.id=r.citing_id AND w.in_scope=1
+        JOIN works v ON v.id=r.cited_id AND v.in_scope=1
         WHERE r.citing_id != r.cited_id
     """):
         citation_in[cid] += 1
 
     triage_catalog = {}
     for wid, doi, title, year, source, topic, kind, selected in conn.execute(
-        "SELECT id, doi, title, year, source, topic, kind, in_scope FROM works"
+        "SELECT id, doi, title, year, source, topic, kind, in_scope FROM works WHERE in_scope=1"
     ):
         t = (title or "").casefold()
         s = (source or "").casefold()
@@ -308,7 +322,7 @@ def build_triage_and_atlas(conn: sqlite3.Connection) -> tuple[dict, dict]:
 
     works_map = {
         r[0]: {"id": r[0], "title": r[1], "year": r[2], "citations": r[3] or 0, "in_scope": r[4], "source": r[5]}
-        for r in conn.execute("SELECT id, title, year, citations, in_scope, source FROM works")
+        for r in conn.execute("SELECT id, title, year, citations, in_scope, source FROM works WHERE in_scope=1")
     }
     context = {wid: {"authors": [], "cites": [], "cited_by": []} for wid in works_map}
     author_works = defaultdict(set)
@@ -347,8 +361,8 @@ def build_triage_and_atlas(conn: sqlite3.Connection) -> tuple[dict, dict]:
     internal_edges = 0
     for citing, cited in conn.execute("""
         SELECT r.citing_id, r.cited_id FROM references_all r
-        JOIN works w ON w.id=r.citing_id
-        JOIN works v ON v.id=r.cited_id
+        JOIN works w ON w.id=r.citing_id AND w.in_scope=1
+        JOIN works v ON v.id=r.cited_id AND v.in_scope=1
         ORDER BY r.citing_id, r.cited_id
     """):
         if citing == cited:
@@ -395,21 +409,55 @@ def build_triage_and_atlas(conn: sqlite3.Connection) -> tuple[dict, dict]:
     canon_rows = []
     has_canon = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='cited_canon'").fetchone()
     if has_canon:
-        for r in conn.execute("""
-            SELECT id, doi, title, year, kind, authors, source, global_citations, nordic_citing_count, countries, oa_url
-            FROM cited_canon ORDER BY nordic_citing_count DESC, global_citations DESC LIMIT 1000
+        pure_citing = Counter()
+        for cid, cnt in conn.execute("""
+            SELECT r.cited_id, COUNT(DISTINCT r.citing_id)
+            FROM references_all r
+            JOIN works w ON w.id=r.citing_id AND w.in_scope=1
+            WHERE r.citing_id != r.cited_id
+            GROUP BY r.cited_id
         """):
+            pure_citing[cid] = cnt
+
+        seen_canon_titles: set[str] = set()
+        raw_canon = []
+        for r in conn.execute("""
+            SELECT id, doi, title, year, kind, authors, source, global_citations, countries, oa_url
+            FROM cited_canon
+        """):
+            cid = r[0]
+            ncnt = pure_citing.get(cid, 0)
+            if ncnt < 4:
+                continue
+            ctitle = clean_display_title(r[2])
+            csource = clean_display_title(r[6])
+            if not ctitle:
+                continue
+            if CANON_NOISE_RE.search(ctitle) or CANON_NOISE_RE.search(csource) or CANON_NOISE_RE.search(r[5] or ""):
+                continue
+            if HARD_NON_DESIGN_RE.search(ctitle) or FORBIDDEN_VENUES_RE.search(csource):
+                continue
+            raw_canon.append((ncnt, r[7] or 0, cid, r[1] or "", ctitle, r[3], r[4] or "", r[5] or "", csource, r[8], r[9] or ""))
+
+        raw_canon.sort(key=lambda x: (-x[0], -x[1], x[2]))
+        for ncnt, gcit, cid, cdoi, ctitle, cyear, ckind, cauthors, csource, ccs_json, coa in raw_canon:
+            nt = normalize_title(ctitle)
+            if not nt or nt in seen_canon_titles:
+                continue
+            seen_canon_titles.add(nt)
             try:
-                cs = json.loads(r[9] or "[]")
+                cs = json.loads(ccs_json or "[]")
             except json.JSONDecodeError:
                 cs = []
             canon_rows.append({
-                "id": r[0], "doi": r[1] or "", "title": r[2] or "", "year": r[3],
-                "kind": r[4] or "", "authors": r[5] or "", "source": r[6] or "",
-                "global_citations": r[7] or 0, "nordic_citing_count": r[8] or 0,
-                "countries": cs, "oa_url": r[10] or "",
-                "in_primary_corpus": r[0] in works_map,
+                "id": cid, "doi": cdoi, "title": ctitle, "year": cyear,
+                "kind": ckind, "authors": cauthors, "source": csource,
+                "global_citations": gcit, "nordic_citing_count": ncnt,
+                "countries": cs, "oa_url": coa,
+                "in_primary_corpus": cid in works_map,
             })
+            if len(canon_rows) >= 500:
+                break
     write_json(DOCS_DATA_DIR / "cited_canon.json", {"count": len(canon_rows), "items": canon_rows}, compact=True)
 
     return triage_catalog, {"internal_edges": internal_edges, "authors": len(author_rows), "institutions": len(inst_rows)}
@@ -429,9 +477,10 @@ def build_primary_catalog(conn: sqlite3.Connection, triage: dict) -> list[dict]:
 
     for r in conn.execute("""
         SELECT id, doi, title, year, kind, citations, source, countries, topic, oa_url, in_scope, language
-        FROM works ORDER BY year DESC, citations DESC, id
+        FROM works WHERE in_scope=1 ORDER BY year DESC, citations DESC, id
     """):
         wid, doi, title, year, kname, citations, source, country_json, topic, oa_url, in_scope, lang = r
+        clean_t = clean_display_title(title)
         try:
             coun = json.loads(country_json or "[]")
         except json.JSONDecodeError:
@@ -449,7 +498,7 @@ def build_primary_catalog(conn: sqlite3.Connection, triage: dict) -> list[dict]:
         tri = triage.get(wid, {})
         docs.append({
             "id": wid,
-            "title": title or "",
+            "title": clean_t or "",
             "year": year,
             "doi": doi or "",
             "authors": authors_by_work[wid],
@@ -659,6 +708,11 @@ def export_unified_csv_and_coverage(works: list[dict], nordic: list[dict]) -> di
 
 def run_reconciliation(db_path: Path = RAW_SQLITE) -> tuple[list[dict], list[dict]]:
     ensure_raw_sqlite(db_path)
+    wconn = sqlite3.connect(db_path)
+    try:
+        refresh_existing_scope(wconn)
+    finally:
+        wconn.close()
     conn = sqlite3.connect(f"file:{db_path.as_posix()}?mode=ro", uri=True)
     try:
         staged = stage_nordic_imports()

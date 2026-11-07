@@ -1,21 +1,21 @@
 {
   "match_status_counts": {
-    "duplicate-staging-doi": 98,
-    "matched-doi": 848,
-    "new-candidate": 8872,
-    "possible-duplicate": 345
+    "duplicate-staging-doi": 9,
+    "matched-doi": 487,
+    "new-candidate": 1620,
+    "possible-duplicate": 125
   },
-  "matched_exact": 848,
-  "openalex_records": 24812,
-  "possible_duplicate_records": 345,
+  "matched_exact": 487,
+  "openalex_records": 4709,
+  "possible_duplicate_records": 125,
   "source_counts": {
-    "aalto": 22,
-    "diva": 2806,
-    "iris": 38,
-    "kgl": 374,
-    "nordes": 711,
-    "nva": 6212
+    "aalto": 2,
+    "diva": 187,
+    "iris": 4,
+    "kgl": 48,
+    "nordes": 704,
+    "nva": 1296
   },
-  "source_records_total": 10163,
-  "unlinked_candidate_records": 9217
+  "source_records_total": 2241,
+  "unlinked_candidate_records": 1745
 }

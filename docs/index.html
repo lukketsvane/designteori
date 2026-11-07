@@ -20,35 +20,23 @@
   </header>
 
   <main>
-    <!-- 1. KATALOG -->
     <section id="view-korpus" class="view active">
       <div class="metrics">
-        <button class="metric metric-btn" id="metricAllBtn" type="button">
+        <button class="metric metric-btn active-metric" id="metricAllBtn" type="button">
           <span class="num" id="stWorks">…</span>
-          <span class="label">Publikasjonar (1900–2026)</span>
+          <span class="label">Publikasjonar i designteori</span>
         </button>
         <button class="metric metric-btn" id="metricPdfBtn" type="button">
           <span class="num" id="stPdfs">…</span>
           <span class="label">Fulltekst-PDF i arkivet</span>
         </button>
-        <div class="metric">
-          <span class="num" id="stCit">…</span>
-          <span class="label">Nordiske siteringar</span>
-        </div>
       </div>
 
-      <div class="search-bar">
-        <input type="search" id="qInput" placeholder="Søk i tittel, forfattar, tidsskrift, DOI…" autocomplete="off" aria-label="Søk">
-        <button id="wasmBtn" class="btn-ink" type="button" title="Semantisk fritekstsøk med Google EmbeddingGemma">Semantisk søk</button>
+      <div class="search-wrap">
+        <input type="search" id="qInput" placeholder="Søk i designteori, forfattar, tidsskrift…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk">
       </div>
 
       <div class="filters">
-        <select id="accessSel" aria-label="Tilgang">
-          <option value="">Alle dokument</option>
-          <option value="repo">Har PDF i arkivet</option>
-          <option value="oa">Har Open Access-lenkje</option>
-        </select>
-
         <select id="ccSel" aria-label="Land">
           <option value="">Alle land</option>
           <option value="NO">Noreg</option>
@@ -61,49 +49,38 @@
         <select id="presetSel" aria-label="Tema">
           <option value="">Alle tema</option>
           <option value="participatory-design">Deltakande design</option>
-          <option value="codesign">Co-design og samskaping</option>
+          <option value="codesign">Co-design</option>
           <option value="research-through-design">Research through Design</option>
-          <option value="design-theory-epistemology">Designteori og epistemologi</option>
+          <option value="design-theory-epistemology">Designteori</option>
           <option value="service-systemic-design">Teneste- og systemdesign</option>
-          <option value="sustainable-circular">Berekraft og sirkulær design</option>
-          <option value="critical-speculative">Kritisk og spekulativ design</option>
-          <option value="interaction-hci-ai">Interaksjonsdesign, HCI og KI</option>
-          <option value="design-history-nordic">Nordisk designhistorie</option>
-          <option value="craft-materiality-textile">Handverk, tekstil og materialitet</option>
-          <option value="aesthetics-form">Estetikk og formgjeving</option>
-          <option value="design-education-pedagogy">Designutdanning og didaktikk</option>
-          <option value="design-ethics-justice">Etikk og universell utforming</option>
+          <option value="sustainable-circular">Berekraftig design</option>
+          <option value="critical-speculative">Kritisk design</option>
+          <option value="interaction-hci-ai">Interaksjonsdesign</option>
+          <option value="design-history-nordic">Designhistorie</option>
+          <option value="craft-materiality-textile">Handverk og tekstil</option>
+          <option value="aesthetics-form">Estetikk og form</option>
+          <option value="design-education-pedagogy">Designdidaktikk</option>
+          <option value="design-ethics-justice">Etikk og universell</option>
           <option value="design-anthropology">Designantropologi</option>
-          <option value="industrial-product">Industri- og produktdesign</option>
-          <option value="urban-architecture">Arkitektur og byrom</option>
+          <option value="industrial-product">Industridesign</option>
+          <option value="urban-architecture">Arkitekturteori</option>
+        </select>
+
+        <select id="eraSel" aria-label="Periode">
+          <option value="">1900–2026</option>
+          <option value="pre2000">1900–1999</option>
+          <option value="2000-2009">2000–2009</option>
+          <option value="2010-2019">2010–2019</option>
+          <option value="2020-2026">2020–2026</option>
         </select>
 
         <select id="sortSel" aria-label="Sortering">
-          <option value="relevance">Relevans / PDF først</option>
+          <option value="relevance">PDF først</option>
           <option value="citations">Mest sitert</option>
-          <option value="year_desc">Nyaste først</option>
-          <option value="year_asc">Eldste først</option>
+          <option value="year_desc">Nyaste</option>
+          <option value="year_asc">Eldste</option>
         </select>
       </div>
-
-      <details class="more-filters">
-        <summary>Periode og kjeldelag</summary>
-        <div class="filters filters-2">
-          <select id="eraSel" aria-label="Periode">
-            <option value="">1900–2026 (alle år)</option>
-            <option value="pre2000">1900–1999</option>
-            <option value="2000-2009">2000–2009</option>
-            <option value="2010-2019">2010–2019</option>
-            <option value="2020-2026">2020–2026</option>
-          </select>
-          <select id="layerSel" aria-label="Kjeldelag">
-            <option value="all">Alle kjelder</option>
-            <option value="automatic-title-inclusion">OpenAlex tittelinkludert</option>
-            <option value="awaiting-eligibility-review">OpenAlex vurderingskø</option>
-            <option value="nordic">Nasjonale arkiv (Cristin, DiVA m.fl.)</option>
-          </select>
-        </div>
-      </details>
 
       <div id="semBanner" class="sem-active" hidden>
         <span id="semBannerTxt"></span>
@@ -112,45 +89,42 @@
 
       <div class="resultline">
         <span id="hitCount">Lastar…</span>
-        <button id="resetBtn" class="link-btn" type="button" hidden>Nullstill filter</button>
+        <button id="resetBtn" class="link-btn" type="button" hidden>Nullstill</button>
       </div>
 
       <div id="corpusList"></div>
       <button id="moreCorpusBtn" class="more-btn" type="button" hidden>Vis 50 fleire</button>
     </section>
 
-    <!-- 2. KANON -->
     <section id="view-siteringar" class="view">
-      <div class="subnav">
+      <div class="subnav" role="tablist">
         <button class="sub-pill active" data-sub="internal" type="button">Mest sitert i Norden</button>
-        <button class="sub-pill" data-sub="canon" type="button">Sitert grunnlagskanon</button>
+        <button class="sub-pill" data-sub="canon" type="button">Sitert kanon</button>
         <button class="sub-pill" data-sub="authors" type="button">Forfattarar</button>
         <button class="sub-pill" data-sub="institutions" type="button">Institusjonar</button>
       </div>
-      <div class="search-bar" style="margin-bottom: 12px;">
-        <input type="search" id="citQ" placeholder="Filtrer liste…" autocomplete="off" aria-label="Filtrer">
+      <div class="search-wrap">
+        <input type="search" id="citQ" placeholder="Filtrer liste…" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Filtrer">
       </div>
       <div id="citBox"></div>
     </section>
 
-    <!-- 3. KART -->
     <section id="view-kart" class="view">
-      <div class="filters filters-2" style="margin-top: 18px;">
+      <div class="filters filters-2 map-controls">
         <select id="mapMode" aria-label="Fargekoding">
-          <option value="cluster">Farge etter klynge (10)</option>
-          <option value="country">Farge etter land</option>
-          <option value="pdf">Farge etter PDF-tilgang</option>
+          <option value="cluster">Farge: klynge</option>
+          <option value="country">Farge: land</option>
+          <option value="pdf">Farge: PDF</option>
         </select>
         <button id="mapReset" class="btn-line" type="button">Nullstill utsnitt</button>
       </div>
       <div class="map-frame">
-        <canvas id="semCanvas" width="960" height="420"></canvas>
-        <div id="mapSelectedBar" class="map-bar">Trykk på eit punkt for å vise publikasjonen.</div>
+        <canvas id="semCanvas" width="960" height="400"></canvas>
+        <div id="mapSelectedBar" class="map-bar">Trykk på eit punkt for å vise publikasjonen. Knip med to fingrar for zoom.</div>
       </div>
       <div id="mapLegend" class="cluster-grid"></div>
     </section>
 
-    <!-- 4. ANALYSE -->
     <section id="view-analyse" class="view">
       <div id="anaRoot"></div>
     </section>

@@ -9,6 +9,7 @@ import os
 import re
 import shutil
 import socket
+import sqlite3
 import threading
 import time
 from collections import defaultdict
@@ -25,6 +26,7 @@ from . import (
     DOCS_DATA_DIR,
     PDF_DIR,
     PRIVATE_CACHE,
+    RAW_SQLITE,
     REPO_BLOB_BASE,
     REPO_RAW_BASE,
     USER_AGENT,
@@ -608,14 +610,43 @@ def expand_registered_oa_urls(oa_url: str) -> list[str]:
         return []
     out: list[str] = []
     m_arxiv = re.match(r"^https://arxiv\.org/abs/([0-9]+\.[0-9]+(?:v\d+)?|[a-z-]+/\d+)(?:[?#].*)?$", u, re.I)
+    m_pmc = re.search(r"ncbi\.nlm\.nih\.gov/(?:pmc/)?articles/(PMC\d+)", u, re.I)
     if m_arxiv:
         out.append(f"https://arxiv.org/pdf/{m_arxiv.group(1)}.pdf")
+    elif m_pmc:
+        out.append(f"https://europepmc.org/backend/ptpmcrender.fcgi?accid={m_pmc.group(1).upper()}&blobtype=pdf")
     elif ".hal.science/" in u.lower() and not u.lower().rstrip("/").endswith(("/document", ".pdf")):
         base_u = u.split("?", 1)[0].split("#", 1)[0].rstrip("/")
         out.append(f"{base_u}/document")
     if u not in out:
         out.append(u)
     return out
+
+
+def load_local_openalex_urls(db_path: Path = RAW_SQLITE) -> dict[str, list[str]]:
+    if not Path(db_path).is_file():
+        return {}
+    mapping: dict[str, list[str]] = {}
+    try:
+        conn = sqlite3.connect(db_path)
+        for wid, rj in conn.execute("SELECT id, raw_json FROM works WHERE raw_json <> '{}'"):
+            if not rj:
+                continue
+            try:
+                raw_urls = extract_openalex_work_urls(json.loads(rj))
+            except Exception:
+                continue
+            expanded: list[str] = []
+            for raw_u in raw_urls:
+                for eu in expand_registered_oa_urls(raw_u):
+                    if eu not in expanded:
+                        expanded.append(eu)
+            if expanded:
+                mapping[wid] = expanded
+        conn.close()
+    except Exception:
+        return mapping
+    return mapping
 
 
 def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.0,
@@ -626,9 +657,12 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                  cache_dir: Path = PRIVATE_CACHE) -> int:
     cache_dir.mkdir(parents=True, exist_ok=True)
     (cache_dir / "pdf").mkdir(exist_ok=True)
+    for stale in (cache_dir / "pdf").glob("*.partial.*"):
+        stale.unlink(missing_ok=True)
     log_path = cache_dir / "progress.json"
     progress = read_json(log_path, {}) or {}
     rows = queue_rows()
+    local_oa_map = load_local_openalex_urls()
 
     max_bytes = max_mb * 1_000_000
     max_cache_bytes = int(max_cache_gb * 1_000_000_000)
@@ -656,6 +690,7 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
             host_last[key] = time.monotonic()
 
     any_api = bool(email or lookup_openalex or lookup_europepmc or lookup_crossref or lookup_semantic_scholar)
+    untried_green_rows = []
     unvisited_rows = []
     deferred_rows = []
     for row in rows:
@@ -669,27 +704,34 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                 continue
             progress.pop(ident, None)
             st = None
+        prim_oa = candidate_https_url(row["oa_url"])
+        alt_local = [u for u in local_oa_map.get(ident, []) if u != prim_oa and "doi.org/" not in u]
+        if alt_local and not prev.get("local_oa_checked"):
+            untried_green_rows.append(row)
+            if len(untried_green_rows) >= limit:
+                break
+            continue
         if st == "failed" and not retry_failed:
             continue
-        if not row["oa_url"] and not (any_api and row["doi"]):
+        if not row["oa_url"] and not local_oa_map.get(ident) and not (any_api and row["doi"]):
             continue
         if st == "deferred":
             deferred_rows.append(row)
         else:
             unvisited_rows.append(row)
-            if len(unvisited_rows) >= limit:
+            if len(untried_green_rows) + len(unvisited_rows) >= limit:
                 break
-    eligible = (unvisited_rows + deferred_rows)[:limit]
+    eligible = (untried_green_rows + unvisited_rows + deferred_rows)[:limit]
 
     prefetched_oa = {}
     if lookup_openalex and eligible:
-        dois = [r["doi"] for r in eligible if r.get("doi")]
+        dois = [r["doi"] for r in eligible if r.get("doi") and r["id"] not in local_oa_map]
         if dois:
             print("OPENALEX_PREFETCH_START", len(dois), flush=True)
             prefetched_oa = openalex_batch_prefetch(dois, pause_fn=pace_host)
             print("OPENALEX_PREFETCH_DONE", len(prefetched_oa), flush=True)
 
-    sources = ("registered", "synthesized", "unpaywall", "openalex", "europepmc", "crossref", "semantic_scholar")
+    sources = ("local_openalex", "registered", "synthesized", "unpaywall", "openalex", "europepmc", "crossref", "semantic_scholar")
 
     def process_one(row: dict):
         nonlocal tried, used_bytes, dirty
@@ -722,7 +764,9 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     deferred = True
                     continue
             try:
-                if src == "registered":
+                if src == "local_openalex":
+                    cands = local_oa_map.get(ident, [])
+                elif src == "registered":
                     cands = expand_registered_oa_urls(row["oa_url"]) if row["oa_url"] else []
                 elif src == "synthesized":
                     cands = synthesized_oa_urls(row["doi"]) if row["doi"] else []
@@ -732,7 +776,7 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     pace_host("api.unpaywall.org")
                     cands = unpaywall_urls(row["doi"], email)
                 elif src == "openalex":
-                    if not lookup_openalex or not row["doi"]:
+                    if not lookup_openalex or not row["doi"] or ident in local_oa_map:
                         continue
                     nd = normalize_doi(row["doi"])
                     if nd in prefetched_oa:
@@ -819,7 +863,14 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
             tmp.write_bytes(payload)
             os.replace(tmp, pdf_file)
             with state_lock:
-                progress[ident] = {"status": "pdf-confirmed", "url": final_url, "sha256": sha, "bytes": len(payload), "checked_at": now_iso()}
+                progress[ident] = {
+                    "status": "pdf-confirmed",
+                    "url": final_url,
+                    "sha256": sha,
+                    "bytes": len(payload),
+                    "local_oa_checked": True,
+                    "checked_at": now_iso(),
+                }
                 used_bytes += len(payload)
                 dirty += 1
                 if workers == 1 or dirty >= 15:
@@ -828,7 +879,12 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
             print("PDF_OK", ident, len(payload), sha[:12], flush=True)
         else:
             with state_lock:
-                progress[ident] = {"status": "deferred" if deferred else "failed", "reason": why, "checked_at": now_iso()}
+                progress[ident] = {
+                    "status": "deferred" if deferred else "failed",
+                    "reason": why,
+                    "local_oa_checked": True,
+                    "checked_at": now_iso(),
+                }
                 dirty += 1
                 if workers == 1 or dirty >= 15:
                     write_json(log_path, progress)
