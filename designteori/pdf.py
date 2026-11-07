@@ -155,8 +155,9 @@ class PDFLinks(HTMLParser):
         if tag == "a":
             href = d.get("href", "")
             if re.search(
-                r"(?:\.pdf(?:[?#]|$)|/download(?:[/?#]|$)|/bitstreams?/|/smash/get/|"
-                r"viewcontent\.cgi|/ws/portalfiles/|/doi/pdf(?:direct)?/|/content/pdf/)",
+                r"(?:\.pdf(?:[?#]|$)|/download[-_a-z]*(?:[/?#]|$)|/bitstreams?/|/smash/get/|"
+                r"viewcontent\.cgi|/ws/(?:portal)?files/|/files/\d+/|/document(?:[/?#]|$)|"
+                r"/doi/pdf(?:direct)?/|/content/pdf/)",
                 href, re.I,
             ):
                 self.body_urls.append(href)
@@ -590,6 +591,7 @@ def queue_rows() -> list[dict]:
     rank = {"high": 0, "medium": 1, "low": 2}
     rows.sort(key=lambda x: (
         x["archived"] == "yes",
+        (("hdl.handle.net/11250/" in x["oa_url"] or "nva.sikt.no" in x["oa_url"]) and not x["doi"]),
         not (direct_pdf_hint(x["oa_url"]) or normalize_doi(x["doi"]).startswith(OA_DOI_PREFIXES)),
         not bool(x["oa_url"]),
         x["kind"] in ("dissertation", "book"),
@@ -600,11 +602,27 @@ def queue_rows() -> list[dict]:
     return rows
 
 
+def expand_registered_oa_urls(oa_url: str) -> list[str]:
+    u = candidate_https_url(oa_url)
+    if not allowed_url(u):
+        return []
+    out: list[str] = []
+    m_arxiv = re.match(r"^https://arxiv\.org/abs/([0-9]+\.[0-9]+(?:v\d+)?|[a-z-]+/\d+)(?:[?#].*)?$", u, re.I)
+    if m_arxiv:
+        out.append(f"https://arxiv.org/pdf/{m_arxiv.group(1)}.pdf")
+    elif ".hal.science/" in u.lower() and not u.lower().rstrip("/").endswith(("/document", ".pdf")):
+        base_u = u.split("?", 1)[0].split("#", 1)[0].rstrip("/")
+        out.append(f"{base_u}/document")
+    if u not in out:
+        out.append(u)
+    return out
+
+
 def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.0,
                  email: str = "", max_mb: int = 45, max_cache_gb: float = 25.0,
                  min_free_gb: float = 6.0, retry_failed: bool = False,
                  lookup_openalex: bool = True, lookup_europepmc: bool = True,
-                 lookup_crossref: bool = True, lookup_semantic_scholar: bool = True,
+                 lookup_crossref: bool = True, lookup_semantic_scholar: bool = False,
                  cache_dir: Path = PRIVATE_CACHE) -> int:
     cache_dir.mkdir(parents=True, exist_ok=True)
     (cache_dir / "pdf").mkdir(exist_ok=True)
@@ -705,7 +723,7 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     continue
             try:
                 if src == "registered":
-                    cands = [candidate_https_url(row["oa_url"])] if row["oa_url"] else []
+                    cands = expand_registered_oa_urls(row["oa_url"]) if row["oa_url"] else []
                 elif src == "synthesized":
                     cands = synthesized_oa_urls(row["doi"]) if row["doi"] else []
                 elif src == "unpaywall":
