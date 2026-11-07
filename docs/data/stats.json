@@ -1,14 +1,13 @@
 {
-  "generated_at": "2026-11-06T23:36:28.059554+00:00",
+  "generated_at": "2026-11-06T23:55:18.356806+00:00",
   "metadata_source": "OpenAlex (1900–2026 Nordic design corpus: flagship venues, academies, multilingual queries & citation frontier)",
   "total": 16685,
   "automatic_title_inclusion": 8305,
   "manual_review_queue": 8380,
   "article_records": 11375,
   "review_records": 210,
-  "local_pdf": 15,
-  "local_fulltext_text": 14,
-  "high_priority_for_manual_review": 318,
+  "local_pdf": 2798,
+  "high_priority_for_manual_review": 482,
   "country_memberships": {
     "SE": 4778,
     "DK": 7459,
@@ -105,6 +104,5 @@
     "1948": 1,
     "1939": 1,
     "1938": 1
-  },
-  "warning": "Bibliographic registrations; automated inclusion is not manual theoretical peer review."
+  }
 }

@@ -1,13 +1,8 @@
 {
-  "openalex_and_nordic_candidates": 26270,
-  "repo_pdf_count": 2445,
-  "archived_licensed_pdfs": 0,
-  "oa_links_unchecked": 18831,
-  "direct_pdf_shaped_urls_unchecked": 5806,
-  "repository_page_candidates": 9540,
-  "doi_without_oa_link": 5100,
-  "without_doi_or_oa": 2339,
-  "private_cached_pdfs": 2887,
-  "public_verified_pdf_links": 2886,
-  "note": "All retrieved Open Access PDFs are stored in pdf/ with SHA-256 verification."
+  "openalex_and_nordic_candidates": 26228,
+  "repo_pdf_count": 2798,
+  "oa_links_unchecked": 16038,
+  "doi_without_oa_link": 5082,
+  "without_doi_or_oa": 2310,
+  "public_verified_pdf_links": 2798
 }
