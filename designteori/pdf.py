@@ -270,13 +270,39 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
     valid_meta = {r["id"]: r for r in valid_rows}
 
     progress = read_json(cache_dir / "progress.json", {}) or {}
-    # Identify boilerplate site-footer hashes appearing >= 3 times across different works
+    source_links = read_json(DOCS_DATA_DIR / "source_links.json", {}) or {}
+    migrated = False
+    if isinstance(source_links, dict):
+        for oa_id, cids in source_links.items():
+            if oa_id not in valid_meta or not isinstance(cids, list):
+                continue
+            if (progress.get(oa_id) or {}).get("status") == "pdf-confirmed":
+                continue
+            for cid in cids:
+                nid = f"nordic:{cid}"
+                nrec = progress.get(nid)
+                if isinstance(nrec, dict) and nrec.get("status") == "pdf-confirmed":
+                    nsrc = cache_path(nid, cache_dir)
+                    odst = cache_path(oa_id, cache_dir)
+                    if nsrc.is_file():
+                        if not odst.is_file():
+                            try:
+                                os.link(nsrc, odst)
+                            except OSError:
+                                shutil.copy2(nsrc, odst)
+                        progress[oa_id] = dict(nrec)
+                        migrated = True
+                        break
+    if migrated:
+        write_json(cache_dir / "progress.json", progress)
+
+    # Identify boilerplate site-footer hashes appearing >= 4 times across active corpus works
     sha_counts = Counter(
         rec.get("sha256")
-        for rec in progress.values()
-        if isinstance(rec, dict) and rec.get("status") == "pdf-confirmed" and rec.get("sha256")
+        for wid, rec in progress.items()
+        if wid in valid_meta and isinstance(rec, dict) and rec.get("status") == "pdf-confirmed" and rec.get("sha256")
     )
-    boilerplate_shas = {sha for sha, cnt in sha_counts.items() if cnt >= 3}
+    boilerplate_shas = {sha for sha, cnt in sha_counts.items() if cnt >= 4}
 
     prev_manifest = (read_json(pdf_dir / "manifest.json", {}) or {}).get("items", {})
     manifest_items: dict[str, dict] = {}

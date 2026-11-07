@@ -1,13 +1,13 @@
 {
   "match_status_counts": {
-    "duplicate-staging-doi": 119,
-    "matched-doi": 501,
-    "new-candidate": 9215,
-    "possible-duplicate": 328
+    "duplicate-staging-doi": 98,
+    "matched-doi": 848,
+    "new-candidate": 8872,
+    "possible-duplicate": 345
   },
-  "matched_exact": 501,
-  "openalex_records": 16685,
-  "possible_duplicate_records": 328,
+  "matched_exact": 848,
+  "openalex_records": 24812,
+  "possible_duplicate_records": 345,
   "source_counts": {
     "aalto": 22,
     "diva": 2806,
@@ -17,5 +17,5 @@
     "nva": 6212
   },
   "source_records_total": 10163,
-  "unlinked_candidate_records": 9543
+  "unlinked_candidate_records": 9217
 }
