@@ -170,15 +170,17 @@ def index_all_pdfs(*, db_path: Path = PRIVATE_CORPUS_DB, cache_dir: Path = PRIVA
 
     sources: dict[str, tuple[Path, str, str]] = {}
     licenses: dict[str, str] = {}
+    progress = read_json(cache_dir / "progress.json", {}) or {}
     repo_manifest = (read_json(PDF_DIR / "manifest.json", {}) or {}).get("items", {}) or {}
     for wid, info in repo_manifest.items():
-        if isinstance(info, dict) and info.get("file"):
-            pdf_file = ROOT / info["file"]
-            if pdf_file.is_file():
-                sources[wid] = (pdf_file, info.get("sha256", ""), info.get("source_url", ""))
-                if info.get("license"):
-                    licenses[wid] = info["license"]
-    progress = read_json(cache_dir / "progress.json", {}) or {}
+        if isinstance(info, dict):
+            if info.get("license"):
+                licenses[wid] = info["license"]
+            cache_pdf = cache_dir / "pdf" / (hashlib.sha256(wid.encode("utf-8")).hexdigest()[:24] + ".pdf")
+            repo_pdf = ROOT / info["file"] if info.get("file") else None
+            chosen = cache_pdf if cache_pdf.is_file() else (repo_pdf if repo_pdf and repo_pdf.is_file() else None)
+            if chosen is not None:
+                sources[wid] = (chosen, info.get("sha256", ""), info.get("source_url", ""))
     for wid, rec in progress.items():
         if wid not in sources and isinstance(rec, dict) and rec.get("status") == "pdf-confirmed":
             pdf_file = cache_dir / "pdf" / (hashlib.sha256(wid.encode("utf-8")).hexdigest()[:24] + ".pdf")
@@ -220,7 +222,7 @@ def index_all_pdfs(*, db_path: Path = PRIVATE_CORPUS_DB, cache_dir: Path = PRIVA
 
     for batch_start in range(0, len(to_extract), 64):
         batch = to_extract[batch_start:batch_start + 64]
-        tasks = [(wid, p, c, 1000) for wid, p, c, _ in batch]
+        tasks = [(wid, p, c, 3000) for wid, p, c, _ in batch]
         url_map = {wid: u for wid, _, _, u in batch}
         extracted_batch = []
         with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
