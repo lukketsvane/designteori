@@ -1,0 +1,246 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[nynorsk]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[hidelinks]{hyperref}
+
+\title{\textbf{Fragmentert ad-hokkrati og epistemisk lukking:\\Ei kvantitativ metavitskapleg gransking av nordisk designteori og designforsking (1900--2026)}}
+\author{Metavitskapleg korpusgransking \\ \small Korpus, kode og data: \texttt{https://github.com/lukketsvane/designteori}}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Gjennom dei siste fire tiåra har designfaget i Norden gått frå handverks- og kunstindustriskular til universitetsfakultet med doktorgradsrett, statlege innovasjonsmidlar og vitskaplege publiseringskrav. Likevel manglar det ei systematisk, kvantitativ metavitskapleg etterprøving av om feltet faktisk oppfyller grunnleggjande kjenneteikn ved kumulativ og sjølvkorrigerande vitskap. I denne studien prøver me ti førehandsdefinerte vitskapsteoretiske og institusjonelle påstandar (\texttt{P1}--\texttt{P10}) mot det komplette, strengt avgrensa korpuset av nordisk designteori og designforsking frå Noreg, Sverige, Danmark, Finland og Island i perioden 1900--2026 ($N = 6\,454$ verk: $4\,709$ i OpenAlex-grafen og $1\,745$ i nasjonale vitskapsarkiv). Analysen kombinerer (i) siteringsnettverket av $109\,631$ utgåande referansar til $61\,066$ unike verk og $6\,589$ interne siteringskantar, (ii) ein tverrfagleg kontrollmatrise på $20\,103$ eksterne nordiske forskingsverk med $538\,952$ utgåande referansar, (iii) tette fleirspråklege representasjonar i eit $256$-dimensjonalt semantisk vektorrom (\texttt{EmbeddingGemma-300M}, $N = 6\,454$) og (iv) fulltekstanalyse av $n = 1\,461$ sideekstraherte Open Access-PDF-ar ($28\,955$ sider; $12\,431\,220$ ord, med algoritmisk fråskiljing av referanselister), stratifisert på dedikerte kjernekanalar i design ($n = 735$) og fagfellevurderte tidsskriftartiklar ($n = 921$).
+
+Alle ti påstandar får sterk og statistisk konsistent empirisk støtte: $75{,}89\,\%$ av siterte verk vert siterte berre éin gong og revisjonsmarkørar førekjem i $1{,}23\,\%$ av fulltekstane (\texttt{P1}); semantisk amnesi ved $\cos \ge 0{,}80$ ligg på $94{,}13\,\%$ og replikasjonsstudiar på $0{,}21\,\%$ (\texttt{P2}); $98{,}22\,\%$ av fulltekstane manglar formelle hypotesar og $99{,}05\,\%$ i kjernekanalar (\texttt{P3}); $75{,}93\,\%$ av innkomande siteringar forblir i design-/HCI-/innovasjonsenklaven med epistemisk handelsbalanse $\mathrm{ETB} = -0{,}4314$ (\texttt{P4}); $95{,}86\,\%$ av prosessmetodiske studiar manglar både kontrollert effektmåling og negative utfall (\texttt{P5}); $98{,}36\,\%$ av finansierte mandatsprosjekt leverer reint affirmative konklusjonar med $0/1\,461$ kritiske mandatreverseringar (\texttt{P6}); doktorgradsavhandlingar har $0$ interne \texttt{PhD->PhD}-siteringar og $64{,}91\,\%$ av doktorandar ($\le 2021$) publiserer null seinare arbeid (\texttt{P7}); $40{,}55\,\%$ av interne siteringar er institusjonsendogame med $4{,}23\times$ overrepresentert resiprositet ($p = 3{,}76 \times 10^{-12}$, \texttt{P8}); $91{,}77\,\%$ av menneskestudiar manglar dokumentert forskingsetisk nemndgodkjenning (\texttt{P9}); og $96{,}71\,\%$ ($98{,}91\,\%$ i kjernekanalar) manglar validerte måleinstrument og reliabilitetstesting (\texttt{P10}).
+
+\medskip
+\noindent\textbf{Nøkkelord:} metavitskap, bibliometri, nordisk designforsking, designteori, kumulativitet, falsifiserbarheit, forskingsetikk, siteringsnettverk, vektorsemantikk
+\end{abstract}
+
+\section{Innleiing og vitskapsteoretisk rammeverk}
+
+I perioden etter 1980 har designfeltet i dei fem nordiske landa gjennomgått ei grunnleggjande institusjonell omforming frå verkstadbaserte kunsthandverks- og arkitekturskular til universitetsfakultet med doktorgradsrett og statleg forskingsfinansiering \cite{simon1969,cross2001,friedman2003,koskinen2011,redstrom2017}. Samstundes har nordiske forskingsråd og innovasjonsbyrå kanalisert betydlege offentlege midlar inn i tenestedesign, samskaping (\emph{co-design}), offentleg innovasjon og berekraftstransformasjon.
+
+Denne institusjonaliseringa aktualiserer eit grunnleggjande metavitskapleg spørsmål: har akademiseringa av nordisk design ført fram til kumulativ og sjølvkorrigerande kunnskapsproduksjon, eller opererer feltet som det vitskapssosiologen Richard Whitley \cite{whitley2000} kallar eit \emph{fragmentert ad-hokkrati} (\emph{fragmented adhocracy}), kjenneteikna av låg gjensidig avhengigskap mellom forskarar, høg oppgåveusikkerheit og sterk gjennomtrengelegheit for eksterne styringsmandat?
+
+For å besvare spørsmålet integrerer studien fem klassiske posisjonar i vitskapsfilosofi og vitskapssosiologi:
+\begin{enumerate}
+  \item \textbf{Forskingsprogram og teoretisk revisjon} \cite{lakatos1970}: Eit progressivt forskingsprogram krev konsentrert oppslutning om felles kjerneproblem, konvergerande begrepsapparat og eksplisitte mekanismar for revisjon av modellar i møte med anomaliar.
+  \item \textbf{Falsifiserbarheit og streng prøving} \cite{popper1959,meehl1978,mayo2018}: Vitskaplege utsagn får empirisk innhald gjennom kva dei utelukkar. Utan presise hypotesar og metodar som kan avdekkje feil, forfell teoriane til plastiske tolkingsskjema som aldri vert felte, berre skifta ut med nye moteord.
+  \item \textbf{Kumulativitet og konsensus ved forskingsfronten} \cite{price1965,cole1992}: Kumulative fag byggjer fleirledda siteringskjeder og gjennomfører direkte replikasjonar som skil haldbare funn frå støy.
+  \item \textbf{Organisert skepsis og universalisme mot endogami} \cite{merton1973,ioannidis2005}: Uavhengig kontroll krev opne publiseringsarenaer frie frå institusjonell innavl og gjensidige siteringskartell.
+  \item \textbf{Målevaliditet og forskingsetisk ansvar} \cite{flake2020,munafo2017}: Utan validerte måleinstrument, reliabilitetstestar, opne rådata og uavhengig forskingsetisk førehandskontroll vert funn korkje samanliknbare, korrigerbare eller etisk forsvarlege.
+\end{enumerate}
+
+Ut frå dette prøver me ti førehandsformulerte påstandar:
+\begin{itemize}
+  \item \textbf{P1:} Designforskinga har ikkje eit samordna forskingsprogram med felles kjerneproblem og mekanismar for revisjon.
+  \item \textbf{P2:} Kunnskapen er ikkje kumulativ; nye studiar korkje etterprøver, korrigerer eller byggjer systematisk på eldre funn.
+  \item \textbf{P3:} Faget set ikkje fram presise hypotesar eller prediksjonar som kan fellast gjennom empirisk prøving.
+  \item \textbf{P4:} Andre disiplinar byggjer ikkje vidare på funn, modellar eller metodar frå designforskinga.
+  \item \textbf{P5:} Metodikken rettferdiggjer sjølve prosessen utan etterprøvbare krav til faktisk effekt eller negative utfall.
+  \item \textbf{P6:} Forskinga legitimerer i etterkant økonomiske og organisatoriske val som var tekne før arbeidet starta.
+  \item \textbf{P7:} Doktorgradsavhandlingar står som isolerte eingongsverk utan forpliktande liner bakover eller vidareføring framover.
+  \item \textbf{P8:} Publisering og fagfellevurdering skjer i lukka kretsløp utan streng, uavhengig kontroll og reell avvisingsrisiko.
+  \item \textbf{P9:} Faget manglar handheva etiske rammer, sanksjonar og ansvar for konsekvensar utanfor prosjektet.
+  \item \textbf{P10:} Forskinga manglar validerte målereiskapar og faste kriterium som gjer funn samanliknbare og korrigerbare.
+\end{itemize}
+
+\section{Korpus, datagrunnlag og statistisk metodikk}
+
+\subsection{Utvalsramme og fagleg avgrensing}
+Korpuset dekkjer nordiske vitskaplege publikasjonar i designteori og designforsking frå Noreg, Sverige, Danmark, Finland og Island i perioden 1900--2026 ($N = 6\,454$). Gjennom eit deterministisk avgrensingsfilter (\texttt{designteori/eligibility.py}) vart $20\,103$ ikkje-designfaglege nordiske verk (mellom anna kliniske forsøksdesign, elektronisk kretsdesign og rein maskinteknikk) skilde ut. Analysekorpuset består av $4\,709$ verk i OpenAlex-siteringsgrafen ($109\,631$ utgåande referansar til $61\,066$ unike verk; $6\,589$ interne siteringskantar) og $1\,745$ deduplikatkontrollerte verk frå Cristin/NVA, DiVA, Forskningsdatabasen, Aaltodoc/Finna og Opin vísindi/IRIS. Dei $20\,103$ utskilde nordiske verka ($538\,952$ utgåande referansar) fungerer som eksakt fleirdisiplinær samanlikningsmatrise i \texttt{P4}.
+
+\subsection{Fulltekstanalyse og kanalstratifisering}
+Alle verifiserte Open Access-PDF-ar med komplett sideekstraksjon ($n = 1\,461$ verk; $28\,955$ sider; $12\,431\,220$ ord) vart delte algoritmisk i brødtekst og litteraturliste (\texttt{split\_body\_and\_references}) slik at mønstersøk aldri treffer titlar i bibliografien. Fulltekstane er stratifiserte på alle fulltekstar ($n = 1\,461$), dedikerte kjernekanalar i design ($n = 735$, t.d.\ \emph{Design Studies}, \emph{Design Issues}, \emph{CoDesign}, \emph{She Ji}, \emph{International Journal of Design}, \emph{FormAkademisk}, \emph{Artifact}, \emph{Nordes}, \emph{DRS}, \emph{IASDR}) og fagfellevurderte tidsskriftartiklar ($n = 921$).
+
+\subsection{Vektorrom, grafmål og inferensstatistikk}
+Samtlege $N = 6\,454$ verk er innleira med Google \texttt{EmbeddingGemma-300M} ($d = 256$, $\|\mathbf{v}_i\|_2 = 1$). Tematisk spreiing for ei mengd $M$ er målt ved den sfæriske variansen \cite{mardia2000}:
+\begin{equation}
+  V_{\mathrm{sf}}(M) = 1 - \left\| \frac{1}{|M|} \sum_{i \in M} \mathbf{v}_i \right\|_2.
+\end{equation}
+I den tidsrespekterande siterings-DAG-en er tropisk djupn definert ved lengste bakoverkjede $d(u) = 1 + \max_{w \in N_{\mathrm{ut}}(u)} d(w)$ ($d(u)=0$ utan interne referansar) og vurdert mot gradbevarande omkoplingsnullmodellar \cite{maslov2002,newman2010}. For binomiske delar $\hat{p} = k/n$ rapporterer me eksakte 95~\% Wilson-konfidensintervall \cite{wilson1927}:
+\begin{equation}
+  \mathrm{KI}_{95\,\%} = \frac{\hat{p} + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n} + \frac{z^2}{4n^2}}}{1 + \frac{z^2}{n}}, \qquad z = 1{,}95996.
+\end{equation}
+Kontinuerlege og skjeve fordelingar vert analyserte med bootstrap ($B = 2\,000$, frø \texttt{20261107}), rang-korrigert Mann--Whitney $U$-test med rang-biserial korrelasjon $r_{\mathrm{rb}} = \frac{2U}{n_1 n_2} - 1$, og Yates-korrigert $\chi^2$-test med Haldane--Anscombe-oddsrate. Epistemisk handelsbalanse er definert ved $\mathrm{ETB} = (E - I)/(E + I)$.
+
+\section{Empiriske resultat: Prøving av påstand P1--P10}
+
+Tabell~\ref{tab:oversikt} samanfattar hovudindikatorar, punktanslag og 95~\% Wilson-konfidensintervall for samtlege ti påstandar.
+
+\begin{table}[htbp]
+\centering
+\caption{Samla empirisk hypotesetestoversikt for påstand \texttt{P1}--\texttt{P10} i nordisk designteori (1900--2026).}
+\label{tab:oversikt}
+\footnotesize
+\begin{tabular}{@{}llrrl@{}}
+\toprule
+\textbf{Kode} & \textbf{Primær operasjonell indikator} & \textbf{Utval ($n$)} & \textbf{Estimat (\%)} & \textbf{95~\% Wilson-KI} \\
+\midrule
+\textbf{P1} & Einsleg-siterte referansar (sitert berre 1 gong) & $61\,066$ & $75{,}89$ & $[75{,}55,\; 76{,}23]$ \\
+\textbf{P2} & Semantisk amnesi ($\cos \ge 0{,}80$ ikkje sitert) & $2\,011$ & $94{,}13$ & $[93{,}02,\; 95{,}08]$ \\
+\textbf{P3} & Fulltekstar utan formelle/testbare hypotesar & $1\,461$ & $98{,}22$ & $[97{,}41,\; 98{,}78]$ \\
+\textbf{P4} & Siteringar lukka i design-/HCI-/innovasjonsenklave & $11\,849$ & $75{,}93$ & $[75{,}15,\; 76{,}69]$ \\
+\textbf{P5} & Prosessmetode utan effektkontroll eller nullfunn & $918$ & $95{,}86$ & $[94{,}37,\; 96{,}97]$ \\
+\textbf{P6} & Finansierte mandatsprosjekt med affirmativ konklusjon & $122$ & $98{,}36$ & $[94{,}22,\; 99{,}55]$ \\
+\textbf{P7} & Doktorandar ($\le 2021$) med $0$ seinare publikasjonar & $114$ & $64{,}91$ & $[55{,}80,\; 73{,}06]$ \\
+\textbf{P8} & Institusjonsendogame interne siteringar & $6\,589$ & $40{,}55$ & $[39{,}37,\; 41{,}74]$ \\
+\textbf{P9} & Menneskestudiar utan etisk nemndgodkjenning & $1\,021$ & $91{,}77$ & $[89{,}93,\; 93{,}31]$ \\
+\textbf{P10} & Fulltekstar utan validert måleinstrument/psykometri & $1\,461$ & $96{,}71$ & $[95{,}67,\; 97{,}51]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{P1: Manglande forskingsprogram og revisjonsmekanismar}
+Av $61\,066$ unike siterte verk vert $46\,344$ ($75{,}89\,\%$, KI $[75{,}55, 76{,}23]$) siterte berre éin gong; berre $1{,}62\,\%$ vert siterte $\ge 10$ gonger ($\mathrm{HHI} = 0{,}000094$; normalisert Shannon-entropi $H/H_{\max} = 0{,}9515$). Det mest siterte kanonverket \cite{sanders2008} vert sitert av berre $4{,}59\,\%$ av OpenAlex-korpuset ($6{,}06\,\%$ blant refererande verk), og $42{,}88\,\%$ av verka er fullstendig isolerte i den interne nordiske siteringsgrafen. Tabell~\ref{tab:spreiing} viser at den sfæriske variansen er uendra frå 1990-talet ($0{,}2622$) til 2020-talet ($0{,}2622$), mens Jaccard-overlappet mellom topp-50 fagtermar på 1990- og 2020-talet er berre $0{,}1494$ ($85{,}06\,\%$ leksikalsk utskifting). Eksplisitte markørar for teoretisk revisjon eller tilbakevising førekjem i berre $18/1\,461$ fulltekstar ($1{,}23\,\%$, KI $[0{,}78, 1{,}94]$; kjernekanalar $1{,}77\,\%$).
+
+\begin{table}[htbp]
+\centering
+\caption{Utvikling i sfærisk varians ($d=256$) og leksikalsk Jaccard-likskap per tiår (\texttt{P1}).}
+\label{tab:spreiing}
+\footnotesize
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+\textbf{Tiår} & \textbf{Verk ($n$)} & \textbf{Sfærisk varians $V_{\mathrm{sf}}$} & \textbf{Topp-50 Jaccard mot neste tiår} \\
+\midrule
+1990-talet & $97$ & $0{,}2622$ & $0{,}2500$ (mot 2000-talet) \\
+2000-talet & $685$ & $0{,}2717$ & $0{,}4493$ (mot 2010-talet) \\
+2010-talet & $2\,876$ & $0{,}2618$ & $0{,}5385$ (mot 2020-talet) \\
+2020-talet & $2\,787$ & $0{,}2622$ & $0{,}1494$ (1990-talet mot 2020-talet) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{P2: Fråvær av kumulativitet, replikasjon og semantisk minne}
+I siterings-DAG-en mottar $64{,}73\,\%$ (KI $[63{,}35, 66{,}08]$) av verka null interne siteringar, og $55{,}89\,\%$ ($2\,632/4\,709$) har tropisk djupn $d = 0$. Replikasjonsstudiar utgjer $0{,}21\,\%$ ($10/4\,709$, KI $[0{,}12, 0{,}39]$) i metadata og $0{,}07\,\%$ ($1/1\,461$) i fulltekst, mot $387$ titlar som lanserer nye rammeverk eller omgrep (forholdstal $38{,}7 : 1$). Som vist i Tabell~\ref{tab:amnesi}, lèt $94{,}13\,\%$ av seinare studiar med cosinuslikskap $\cos \ge 0{,}80$ til eit minst to år eldre nordisk verk vere å sitere dette verket ($85{,}45\,\%$ sjølv ved $\cos \ge 0{,}85$).
+
+\begin{table}[htbp]
+\centering
+\caption{Semantisk amnesi etter cosinuslikskap i \texttt{EmbeddingGemma-300M} ($t_u - t_w \ge 2$ år, \texttt{P2}).}
+\label{tab:amnesi}
+\footnotesize
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+\textbf{Likskapsintervall} & \textbf{Par ($n$)} & \textbf{Siterte} & \textbf{Usiterte} & \textbf{Amnesirate (\%)} & \textbf{95~\% Wilson-KI} \\
+\midrule
+$0{,}75 \le \cos < 0{,}80$ & $13\,234$ & $290$ & $12\,944$ & $97{,}81$ & $[97{,}55,\; 98{,}04]$ \\
+$0{,}80 \le \cos < 0{,}85$ & $1\,791$ & $86$ & $1\,705$ & $95{,}20$ & $[94{,}11,\; 96{,}10]$ \\
+$\cos \ge 0{,}85$ & $220$ & $32$ & $188$ & $85{,}45$ & $[80{,}19,\; 89{,}50]$ \\
+\midrule
+\textbf{Samla $\cos \ge 0{,}80$} & $2\,011$ & $118$ & $1\,893$ & $94{,}13$ & $[93{,}02,\; 95{,}08]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{P3: Fråvær av presise, falsifiserbare hypotesar}
+Heile $98{,}22\,\%$ ($1\,435/1\,461$, KI $[97{,}41, 98{,}78]$) av fulltekstane inneheld ingen formelle eller testbare hypotesar. I dedikerte kjernekanalar i design er delen med hypotesar berre $0{,}95\,\%$ ($7/735$), signifikant lågare enn i grensekanalar ($\chi^2 = 4{,}88$, $p = 0{,}0272$, $\mathrm{OR} = 0{,}36$, KI $[0{,}15, 0{,}86]$). Inferensstatistikk førekjem i $3{,}70\,\%$ (kjernekanalar $2{,}04\,\%$) og preregistrering i $0{,}48\,\%$ ($7/1\,461$; kjernekanalar $0{,}00\,\%$), mens uforpliktande fortolkingsprosa førekjem i $13{,}62\,\%$.
+
+\subsection{P4: Manglande vidarebygging i andre vitskaplege disiplinar}
+Av dei $500$ mest siterte verka i nordisk designkanon kjem $60{,}60\,\%$ ($303/500$, KI $[56{,}25, 64{,}79]$) frå ikkje-designkanalar. Blant $538\,952$ utgåande referansar frå $20\,103$ eksterne nordiske forskingsverk går berre $5\,260$ ($0{,}98\,\%$) til nordisk designteori. Tabell~\ref{tab:eksport} viser at $75{,}93\,\%$ ($8\,997/11\,849$, KI $[75{,}15, 76{,}69]$) av alle observerte siteringar til korpuset blir verande i enklaven av design, HCI og innovasjons-/marknadsfag ($\mathrm{ETB} = -0{,}4314$), mens basale natur-, livs-, medisin- og psykologivitskapar står for berre $2{,}76\,\%$ ($327/11\,849$). Globalt har $46{,}36\,\%$ av korpuset $\le 2$ siteringar, og nordiske kjernetidsskrift har median $2{,}0$ siteringar.
+
+\begin{table}[htbp]
+\centering
+\caption{Fordeling av innkomande siteringar til nordisk designteori (\texttt{P4}, $n = 11\,849$).}
+\label{tab:eksport}
+\footnotesize
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+\textbf{Siterande hovudfelt} & \textbf{Siteringar ($k$)} & \textbf{Del (\%)} & \textbf{Dominerande underfelt} \\
+\midrule
+Nordisk designteori (intern enklave) & $6\,589$ & $55{,}61$ & Designteori og designforsking \\
+Computer Science & $1\,790$ & $15{,}11$ & Human-Computer Interaction ($1\,443$) \\
+Business, Management \& Accounting & $1\,178$ & $9{,}94$ & Technology/Innovation ($450$), Marketing ($387$) \\
+Engineering & $669$ & $5{,}65$ & Mechanical ($293$), Building ($195$) \\
+Social Sciences & $633$ & $5{,}34$ & Education ($185$), Sociology ($141$) \\
+Arts and Humanities & $257$ & $2{,}17$ & Visual/Performing Arts ($128$) \\
+Psychology, Medicine \& Neuroscience & $323$ & $2{,}73$ & Anvendt helse- og arbeidspsykologi \\
+Øvrige og uklassifiserte felt & $410$ & $3{,}46$ & Miljø, helseprofesjonar, beslutningsfag \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{P5: Prosessuell sjølvrettferdiggjering utan effektkontroll}
+Prosessuelle og deltakande metodar førekjem i $62{,}83\,\%$ ($918/1\,461$) av fulltekstane, kontrollert effektmåling i $3{,}15\,\%$ ($46/1\,461$) og negative/null-utfall i $0{,}75\,\%$ ($11/1\,461$; kjernekanalar $0{,}82\,\%$). Blant dei $918$ prosessmetodiske studiane manglar $95{,}86\,\%$ (KI $[94{,}37, 96{,}97]$) både kontrollert effektvurdering og negative utfall. Prosessordtettleiken ($1{,}192$ per $1\,000$ ord) overstig effektkontrolltettleiken ($0{,}011$ per $1\,000$ ord) med faktor $108{,}4$ (Mann--Whitney $U = 1\,717\,336{,}5$, $z = 34{,}10$, $p = 8{,}19 \times 10^{-255}$, $r_{\mathrm{rb}} = 0{,}6091$).
+
+\subsection{P6: Etterskotslegitimering av økonomiske og organisatoriske førehandsval}
+Ekstern oppdrags- eller partnarfinansiering er oppgjeven i $21{,}97\,\%$ ($321/1\,461$) av fulltekstane og førehandsdefinerte strategiske eller organisatoriske omstillingsmandat i $26{,}49\,\%$ ($387/1\,461$), med $n = 122$ studiar som eksplisitt kombinerer begge. Blant desse $122$ leverer $98{,}36\,\%$ ($120/122$, KI $[94{,}22, 99{,}55]$) reint affirmative konklusjonar. I heile fulltekstkorpuset på $1\,461$ verk finst det eksakt $0$ studiar ($0{,}00\,\%$, KI $[0{,}00, 0{,}26]$) som konkluderer med å stanse eller reversere oppdragsgjevaren sitt førehandsvalde mandat.
+
+\subsection{P7: Doktorgradsavhandlingar som isolerte eingongsverk}
+På tvers av $201$ doktorgradsavhandlingar ($24$ i OpenAlex-grafen og $177$ i nasjonale arkiv) finst det eksakt $0$ \texttt{PhD->PhD}-siteringskantar; $83{,}33\,\%$ (KI $[64{,}15, 93{,}32]$) har null interne siteringar og $91{,}67\,\%$ har null interne referansar bakover. Median globale siteringar er $0{,}0$ mot $5{,}0$ for tidsskriftartiklar (Mann--Whitney $z = -4{,}78$, $p = 1{,}77 \times 10^{-6}$, $r_{\mathrm{rb}} = -0{,}5621$). Av $114$ doktorgradsforfattarar med disputas $\le 2021$ publiserer $64{,}91\,\%$ ($74/114$, KI $[55{,}80, 73{,}06]$) null seinare verk i korpuset ($75{,}44\,\%$ publiserer $\le 1$).
+
+\subsection{P8: Lukka publiseringskretsløp og institusjonell endogami}
+Ikkje-tidsskriftkanalar utgjer $60{,}92\,\%$ (KI $[59{,}73, 62{,}11]$) av alle $6\,454$ verk, og regionale eller institusjonsnære nettverkskanalar utgjer $49{,}61\,\%$ ($3\,202/6\,454$). Av $6\,589$ interne siteringar er $40{,}55\,\%$ ($2\,672$, KI $[39{,}37, 41{,}74]$) institusjonsendogame, $31{,}84\,\%$ ($2\,098$) forfattarsjølvsiteringar og $21{,}05\,\%$ same-kanal-siteringar. Direkte gjensidig sitering mellom forfattarar ($0{,}546\,\%$) er $4{,}23$ gonger høgare enn i gradbevarande nullmodell ($0{,}129\,\%$, $z = 6{,}95$, $p = 3{,}76 \times 10^{-12}$), og topp $5\,\%$ av forfattarane står for $24{,}40\,\%$ av produksjonen i nordiske kjernekanalar ($\mathrm{Gini} = 0{,}3254$).
+
+\subsection{P9: Fråvær av handheva forskingsetiske rammer og etter-prosjekt-ansvar}
+Tabell~\ref{tab:etikk} viser at $1\,021$ av $1\,461$ fulltekstar ($69{,}88\,\%$) involverer menneskelege deltakarar ($481$ med sårbare grupper). Heile $91{,}77\,\%$ ($937/1\,021$, KI $[89{,}93, 93{,}31]$) manglar dokumentert forskingsetisk nemndvurdering (i kjernekanalar manglar $93{,}09\,\%$, og ved sårbare grupper manglar $88{,}15\,\%$). Interessekonflikterklæring manglar i $92{,}47\,\%$, og oppfølging etter prosjektslutt manglar i $99{,}31\,\%$ ($1\,014/1\,021$).
+
+\begin{table}[htbp]
+\centering
+\caption{Forskingsetisk dokumentasjon og ansvar etter prosjektslutt i fulltekstkorpuset (\texttt{P9}).}
+\label{tab:etikk}
+\footnotesize
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+\textbf{Indikator} & \textbf{Utval ($n$)} & \textbf{Med ($k$)} & \textbf{Med (\%)} & \textbf{Utan (\%)} & \textbf{95~\% KI (utan)} \\
+\midrule
+Etisk nemnd (alle menneskestudiar) & $1\,021$ & $84$ & $8{,}23$ & $91{,}77$ & $[89{,}93,\; 93{,}31]$ \\
+Etisk nemnd (kjernekanalar i design) & $463$ & $32$ & $6{,}91$ & $93{,}09$ & $[90{,}30,\; 95{,}12]$ \\
+Etisk nemnd (sårbare grupper) & $481$ & $57$ & $11{,}85$ & $88{,}15$ & $[84{,}95,\; 90{,}74]$ \\
+Dokumentert informert samtykke & $1\,021$ & $116$ & $11{,}36$ & $88{,}64$ & $[86{,}55,\; 90{,}44]$ \\
+Interessekonflikterklæring (alle) & $1\,461$ & $110$ & $7{,}53$ & $92{,}47$ & $[91{,}00,\; 93{,}72]$ \\
+Etter-prosjekt-oppfølging / ansvar & $1\,021$ & $7$ & $0{,}69$ & $99{,}31$ & $[98{,}59,\; 99{,}67]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{P10: Manglande validerte målereiskapar og opne rådata}
+Validerte skalaer (t.d.\ SUS, NASA-TLX, AttrakDiff, UEQ) førekjem i $1{,}23\,\%$ ($18/1\,461$) og psykometrisk reliabilitetstesting (Cronbachs $\alpha$, Cohens $\kappa$, ICC, faktoranalyse) i $2{,}26\,\%$ ($33/1\,461$). Kombinert manglar $96{,}71\,\%$ ($1\,413/1\,461$, KI $[95{,}67, 97{,}51]$) begge delar; i kjernekanalar i design manglar $98{,}91\,\%$ ($727/735$) validerte mål, og berre $0{,}68\,\%$ ($5/735$) deler opne rådata eller kode.
+
+\section{Validitetsdrøfting og institusjonelle konklusjonar}
+
+Ei nærliggjande motinnvending er at konstruktiv designforsking (\emph{research through design}) følgjer eit idiografisk og utforskande kunnskapsideal som ikkje skal målast mot hypotetisk-deduktive krav \cite{gaver2012,redstrom2017}. Dataa våre viser kvifor dette forsvaret bryt saman som generell unnskyldning: (1) $69{,}88\,\%$ av fulltekstane gjennomfører empiriske intervensjonar med menneske og over ein fjerdedel fremjar kausale nyttepåstandar om samfunns- og tenesteforbetring (\texttt{P6}), noko som gjer avvising av effektkontroll og falsifikasjon til ei epistemisk immuniseringsstrategi \cite{albert1968,boudry2011}; (2) $94{,}13\,\%$ semantisk amnesi overfor nesten identiske nordiske studiar (\texttt{P2}) bryt like sterkt med humanistiske krav til tekstleg og historisk akribi som med naturvitskaplege normer; (3) sensitivitetsanalysen viser at fagfellevurderte tidsskrift ($n=921$) og dedikerte kjernekanalar ($n=735$) skårar endå svakare på hypotesar, validerte mål og opne data enn grensekanalane; og (4) manglande forskingsetisk kontroll ved intervensjonar overfor sårbare grupper ($88{,}15\,\%$, \texttt{P9}) kan ikkje legitimerast gjennom nokon vitskapsteoretisk posisjon.
+
+Samla påviser studien ei sjølvforsterkande institusjonell likevekt \cite{whitley2000,smaldino2016} der eksterne omstillingsmandat (\texttt{P6}), prosessuell sjølvrettferdiggjering (\texttt{P5}), ufalsifiserbar prosa (\texttt{P3}), ustandardiserte mål (\texttt{P10}) og endogame publiseringskretsløp (\texttt{P8}) hindrar kumulativ kunnskapsbygging (\texttt{P1}, \texttt{P2}, \texttt{P7}) og tverrvitskapleg relevans (\texttt{P4}). Overgang til etterprøvbar vitskap krev obligatorisk etisk førehandskontroll, \emph{Registered Reports} for oppdragsforsking, krav om validerte utfallsmål ved effektpåstandar og avvikling av endogame publiseringsinsentiv.
+
+\begin{thebibliography}{99}
+\bibitem{albert1968} Albert, H. (1968). \emph{Traktat über kritische Vernunft}. Mohr Siebeck.
+\bibitem{boudry2011} Boudry, M., \& Braeckman, J. (2011). Immunizing strategies and epistemic defense mechanisms. \emph{Philosophia}, 39(1), 145--161.
+\bibitem{cash2018} Cash, P. J. (2018). Developing theory-driven design research. \emph{Design Studies}, 56, 84--119.
+\bibitem{cole1992} Cole, S. (1992). \emph{Making Science: Between Nature and Society}. Harvard University Press.
+\bibitem{cross2001} Cross, N. (2001). Designerly ways of knowing: Design discipline versus design science. \emph{Design Issues}, 17(3), 49--55.
+\bibitem{flake2020} Flake, J. K., \& Fried, E. I. (2020). Measurement schmeasurement: Questionable measurement practices and how to avoid them. \emph{Advances in Methods and Practices in Psychological Science}, 3(4), 456--465.
+\bibitem{friedman2003} Friedman, K. (2003). Theory construction in design research: Criteria, approaches, and methods. \emph{Design Studies}, 24(6), 507--522.
+\bibitem{gaver2012} Gaver, W. (2012). What should we expect from research through design? In \emph{Proceedings of CHI '12} (pp.\ 937--946). ACM.
+\bibitem{ioannidis2005} Ioannidis, J. P. A. (2005). Why most published research findings are false. \emph{PLoS Medicine}, 2(8), e124.
+\bibitem{koskinen2011} Koskinen, I., Zimmerman, J., Binder, T., Redström, J., \& Wensveen, S. (2011). \emph{Design Research Through Practice}. Morgan Kaufmann.
+\bibitem{lakatos1970} Lakatos, I. (1970). Falsification and the methodology of scientific research programmes. In \emph{Criticism and the Growth of Knowledge} (pp.\ 91--196). Cambridge University Press.
+\bibitem{mardia2000} Mardia, K. V., \& Jupp, P. E. (2000). \emph{Directional Statistics}. Wiley.
+\bibitem{maslov2002} Maslov, S., \& Sneppen, K. (2002). Specificity and stability in topology of protein networks. \emph{Science}, 296(5569), 910--913.
+\bibitem{mayo2018} Mayo, D. G. (2018). \emph{Statistical Inference as Severe Testing}. Cambridge University Press.
+\bibitem{meehl1978} Meehl, P. E. (1978). Theoretical risks and tabular asterisks: Sir Karl, Sir Ronald, and the slow progress of soft psychology. \emph{Journal of Consulting and Clinical Psychology}, 46(4), 806--834.
+\bibitem{merton1973} Merton, R. K. (1973). \emph{The Sociology of Science}. University of Chicago Press.
+\bibitem{munafo2017} Munafò, M. R., et al. (2017). A manifesto for reproducible science. \emph{Nature Human Behaviour}, 1, 0021.
+\bibitem{newman2010} Newman, M. E. J. (2010). \emph{Networks: An Introduction}. Oxford University Press.
+\bibitem{popper1959} Popper, K. R. (1959). \emph{The Logic of Scientific Discovery}. Hutchinson.
+\bibitem{price1965} Price, D. J. de Solla (1965). Networks of scientific papers. \emph{Science}, 149(3683), 510--515.
+\bibitem{redstrom2017} Redström, J. (2017). \emph{Making Design Theory}. MIT Press.
+\bibitem{sanders2008} Sanders, E. B.-N., \& Stappers, P. J. (2008). Co-creation and the new landscapes of design. \emph{CoDesign}, 4(1), 5--18.
+\bibitem{simon1969} Simon, H. A. (1969). \emph{The Sciences of the Artificial}. MIT Press.
+\bibitem{smaldino2016} Smaldino, P. E., \& McElreath, R. (2016). The natural selection of bad science. \emph{Royal Society Open Science}, 3(9), 160384.
+\bibitem{whitley2000} Whitley, R. (2000). \emph{The Intellectual and Social Organization of the Sciences} (2nd ed.). Oxford University Press.
+\bibitem{wilson1927} Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. \emph{Journal of the American Statistical Association}, 22(158), 209--212.
+\end{thebibliography}
+
+\end{document}

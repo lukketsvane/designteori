@@ -1,0 +1,649 @@
+{
+  "metadata": {
+    "corpus_total_works": 6454,
+    "openalex_works": 4709,
+    "nordic_archive_works": 1745,
+    "fulltext_pdfs_analyzed": 1461,
+    "fulltext_flagship_pdfs": 735,
+    "fulltext_journal_pdfs": 921,
+    "fulltext_pages_analyzed": 28955,
+    "fulltext_words_analyzed": 12431220,
+    "outgoing_references_analyzed": 109631,
+    "internal_citation_edges": 6589,
+    "vectors_256d_analyzed": 6454,
+    "random_seed": 20261107
+  },
+  "summary_table": [
+    {
+      "id": "P1",
+      "paastand": "Manglar samordna forskingsprogram og revisjonsmekanismar",
+      "hovudindikator": "Einsleg-siterte referansar (1 gong) / fråvær av revisjonsmarkørar i fulltekst",
+      "utval_n": 61066,
+      "estimat_pct": 75.89,
+      "ki95_lav_pct": 75.55,
+      "ki95_hog_pct": 76.23,
+      "sekundaer_funn": "Maks kanondel 4.6 %; revisjonsmarkørar i 1.23 % av fulltekstar (kjerne 1.77 %)"
+    },
+    {
+      "id": "P2",
+      "paastand": "Kunnskapen er ikkje kumulativ; ingen etterprøving eller systematisk vidarebygging",
+      "hovudindikator": "Semantisk amnesi (cos >= 0.80 til eldre nordisk verk utan sitering)",
+      "utval_n": 2011,
+      "estimat_pct": 94.13,
+      "ki95_lav_pct": 93.02,
+      "ki95_hog_pct": 95.08,
+      "sekundaer_funn": "Replikasjonsstudiar 0.21 % (10/4709); nyord/rammeverk-rate 387:10"
+    },
+    {
+      "id": "P3",
+      "paastand": "Set ikkje fram presise, falsifiserbare hypotesar eller prediksjonar",
+      "hovudindikator": "Fulltekstar utan formelle hypotesar (og utan preregistrering)",
+      "utval_n": 1461,
+      "estimat_pct": 98.22,
+      "ki95_lav_pct": 97.41,
+      "ki95_hog_pct": 98.78,
+      "sekundaer_funn": "Formelle hypotesar i 1.78 % (kjernekanalar 0.95 %); preregistrering 0.48 % (7/1461)"
+    },
+    {
+      "id": "P4",
+      "paastand": "Andre disiplinar byggjer ikkje vidare på funn, modellar eller metodar",
+      "hovudindikator": "Siteringar lukka inne i design-/HCI-/innovasjonsenklaven",
+      "utval_n": 11849,
+      "estimat_pct": 75.93,
+      "ki95_lav_pct": 75.15,
+      "ki95_hog_pct": 76.69,
+      "sekundaer_funn": "Kanonimport utanfrå 60.6 %; basale vitskapar 2.76 %; <=2 siteringar globalt 46.4 %"
+    },
+    {
+      "id": "P5",
+      "paastand": "Metodikken rettferdiggjer prosessen utan krav til faktisk effekt eller negative utfall",
+      "hovudindikator": "Prosessmetodiske studiar utan kontrollert effektmåling eller negative funn",
+      "utval_n": 918,
+      "estimat_pct": 95.86,
+      "ki95_lav_pct": 94.37,
+      "ki95_hog_pct": 96.97,
+      "sekundaer_funn": "Negative/null-utfall i 0.75 % av fulltekstar (kjernekanalar 0.82 %); Mann-Whitney z=34.0969"
+    },
+    {
+      "id": "P6",
+      "paastand": "Forskinga legitimerer i etterkant økonomiske og organisatoriske førehandsval",
+      "hovudindikator": "Oppdrags-/strategiforankra prosjekt utan reversering eller negativ konklusjon",
+      "utval_n": 122,
+      "estimat_pct": 98.36,
+      "ki95_lav_pct": 94.22,
+      "ki95_hog_pct": 99.55,
+      "sekundaer_funn": "Ekstern finansiering/partnar i 22.0 %; mandatreversering i 0.00 % (0/1461)"
+    },
+    {
+      "id": "P7",
+      "paastand": "Doktorgradsavhandlingar står som isolerte eingongsverk",
+      "hovudindikator": "Avhandlingar med 0 interne siteringar / doktorandar (<=2021) med 0 seinare verk",
+      "utval_n": 114,
+      "estimat_pct": 64.91,
+      "ki95_lav_pct": 55.8,
+      "ki95_hog_pct": 73.06,
+      "sekundaer_funn": "<=1 seinare verk 75.4 %; PhD->PhD-siteringar 0; 0 interne siteringar på 83.3 % av OA-avhandlingar"
+    },
+    {
+      "id": "P8",
+      "paastand": "Publisering og fagfellevurdering skjer i lukka kretsløp",
+      "hovudindikator": "Institusjons-/forfattarendogame siteringar og interne nettverkskanalar",
+      "utval_n": 6589,
+      "estimat_pct": 40.55,
+      "ki95_lav_pct": 39.37,
+      "ki95_hog_pct": 41.74,
+      "sekundaer_funn": "Forfattarsjølvsitering 31.8 %; resiprositet z=6.9 (p<1e-12); ikkje-tidsskrift 60.9 %; forfattar-Gini 0.325"
+    },
+    {
+      "id": "P9",
+      "paastand": "Manglar handheva etiske rammer, sanksjonar og ansvar etter prosjektslutt",
+      "hovudindikator": "Menneskestudiar utan dokumentert etisk nemndgodkjenning (IRB/REK/SIKT)",
+      "utval_n": 1021,
+      "estimat_pct": 91.77,
+      "ki95_lav_pct": 89.93,
+      "ki95_hog_pct": 93.31,
+      "sekundaer_funn": "Kjernekanalar med nemnd 6.9 %; interessekonflikterklæring 7.5 %; etter-prosjekt-oppfølging 0.69 %"
+    },
+    {
+      "id": "P10",
+      "paastand": "Manglar validerte målereiskapar og faste kriterium for samanlikning",
+      "hovudindikator": "Fulltekstar utan validert måleinstrument eller psykometrisk reliabilitet",
+      "utval_n": 1461,
+      "estimat_pct": 96.71,
+      "ki95_lav_pct": 95.67,
+      "ki95_hog_pct": 97.51,
+      "sekundaer_funn": "Kjernekanalar med validert mål 1.09 %; opne rådata/kode 3.35 % (kjerne 0.68 %)"
+    }
+  ],
+  "P1_research_programme": {
+    "unique_cited_works": 61066,
+    "singleton_cited_works": 46344,
+    "singleton_cited_share": 0.7589,
+    "singleton_cited_ci95": [
+      0.7555,
+      0.7623
+    ],
+    "cited_ge10_share": 0.0162,
+    "reference_hhi": 9.4e-05,
+    "reference_shannon_norm": 0.9515,
+    "top_canon_work": "Co-creation and the new landscapes of design",
+    "max_canon_share_all_oa": 0.0459,
+    "max_canon_share_all_ci95": [
+      0.0403,
+      0.0522
+    ],
+    "max_canon_share_among_referencing": 0.0606,
+    "max_canon_share_ref_ci95": [
+      0.0532,
+      0.0689
+    ],
+    "internally_isolated_oa_share": 0.4288,
+    "internally_isolated_ci95": [
+      0.4147,
+      0.4429
+    ],
+    "decade_spherical_dispersion": {
+      "1990s": {
+        "n": 97,
+        "spherical_variance": 0.2622
+      },
+      "2000s": {
+        "n": 685,
+        "spherical_variance": 0.2717
+      },
+      "2010s": {
+        "n": 2876,
+        "spherical_variance": 0.2618
+      },
+      "2020s": {
+        "n": 2787,
+        "spherical_variance": 0.2622
+      }
+    },
+    "top50_term_jaccard_adjacent": {
+      "1990s_2000s": 0.25,
+      "2000s_2010s": 0.4493,
+      "2010s_2020s": 0.5385
+    },
+    "top50_term_jaccard_1990s_vs_2020s": 0.1494,
+    "fulltext_revision_markers_k": 18,
+    "fulltext_revision_markers_n": 1461,
+    "fulltext_revision_share": 0.0123,
+    "fulltext_revision_ci95": [
+      0.0078,
+      0.0194
+    ],
+    "flagship_revision_share": 0.0177
+  },
+  "P2_cumulativity": {
+    "dag_depth_distribution": {
+      "0": 2632,
+      "1": 405,
+      "2": 182,
+      "3": 140,
+      "4": 214,
+      "5": 188,
+      "6": 150,
+      "7": 137,
+      "8": 137,
+      "9": 130,
+      "10": 103,
+      "11": 93,
+      "12": 70,
+      "13": 41,
+      "14": 48,
+      "15": 25,
+      "16": 9,
+      "17": 5
+    },
+    "max_dag_depth": 17,
+    "depth_ge3_share": 0.3164,
+    "depth_ge3_ci95": [
+      0.3033,
+      0.3298
+    ],
+    "null_depth_ge3_mean": 0.1859,
+    "zero_internal_citations_share": 0.6473,
+    "zero_internal_citations_ci95": [
+      0.6335,
+      0.6608
+    ],
+    "replication_studies_metadata_k": 10,
+    "replication_studies_metadata_share": 0.00212,
+    "replication_studies_metadata_ci95": [
+      0.00115,
+      0.0039
+    ],
+    "replication_studies_fulltext_k": 1,
+    "replication_studies_fulltext_share": 0.0007,
+    "replication_studies_fulltext_ci95": [
+      0.0001,
+      0.0039
+    ],
+    "novelty_framing_titles_k": 387,
+    "novelty_framing_titles_share": 0.06,
+    "novelty_framing_ci95": [
+      0.0544,
+      0.066
+    ],
+    "neologism_to_replication_ratio": 38.7,
+    "semantic_amnesia_by_cosine": {
+      "0.75-0.80": {
+        "prior_similar_pairs": 13234,
+        "cited_pairs": 290,
+        "uncited_amnesia_rate": 0.9781,
+        "amnesia_ci95": [
+          0.9755,
+          0.9804
+        ]
+      },
+      "0.80-0.85": {
+        "prior_similar_pairs": 1791,
+        "cited_pairs": 86,
+        "uncited_amnesia_rate": 0.952,
+        "amnesia_ci95": [
+          0.9411,
+          0.961
+        ]
+      },
+      ">=0.85": {
+        "prior_similar_pairs": 220,
+        "cited_pairs": 32,
+        "uncited_amnesia_rate": 0.8545,
+        "amnesia_ci95": [
+          0.8019,
+          0.895
+        ]
+      }
+    }
+  },
+  "P3_falsifiability": {
+    "n_fulltext": 1461,
+    "n_flagship_fulltext": 735,
+    "n_journal_fulltext": 921,
+    "formal_hypothesis_all_k": 26,
+    "formal_hypothesis_all_share": 0.0178,
+    "formal_hypothesis_all_ci95": [
+      0.0122,
+      0.0259
+    ],
+    "formal_hypothesis_flagship_k": 7,
+    "formal_hypothesis_flagship_share": 0.0095,
+    "formal_hypothesis_flagship_ci95": [
+      0.0046,
+      0.0195
+    ],
+    "formal_hypothesis_journal_share": 0.0195,
+    "inferential_stats_all_k": 54,
+    "inferential_stats_all_share": 0.037,
+    "inferential_stats_all_ci95": [
+      0.0284,
+      0.0479
+    ],
+    "inferential_stats_flagship_k": 15,
+    "inferential_stats_flagship_share": 0.0204,
+    "inferential_stats_flagship_ci95": [
+      0.0124,
+      0.0334
+    ],
+    "preregistered_studies_k": 7,
+    "preregistered_share": 0.00479,
+    "preregistered_ci95": [
+      0.00232,
+      0.00986
+    ],
+    "interpretive_open_discourse_share": 0.1362,
+    "interpretive_open_ci95": [
+      0.1196,
+      0.1548
+    ],
+    "flagship_vs_boundary_hypothesis_chi2": {
+      "chi2": 4.8773,
+      "p": 0.027211595234633824,
+      "cramers_v": 0.063,
+      "odds_ratio": 0.3578,
+      "odds_ratio_ci95": [
+        0.1495,
+        0.8564
+      ]
+    }
+  },
+  "P4_external_impact": {
+    "canon_total": 500,
+    "canon_from_non_design_venues_k": 303,
+    "canon_import_share": 0.606,
+    "canon_import_ci95": [
+      0.5625,
+      0.6479
+    ],
+    "enclave_and_adjacent_retention_k": 8997,
+    "enclave_and_adjacent_retention_n": 11849,
+    "enclave_and_adjacent_retention_share": 0.7593,
+    "enclave_retention_ci95": [
+      0.7515,
+      0.7669
+    ],
+    "citing_outside_design_hci_enclave_share": 0.2407,
+    "citing_natural_and_basic_sciences_share": 0.0276,
+    "external_uptake_rate_of_non_design_refs": 0.00976,
+    "epistemic_trade_balance_index": -0.4314,
+    "zero_global_citations_share": 0.2669,
+    "zero_global_citations_ci95": [
+      0.2545,
+      0.2798
+    ],
+    "le2_global_citations_share": 0.4636,
+    "flagship_median_global_citations": 4.0,
+    "flagship_median_citations_ci95": [
+      3.0,
+      4.0
+    ],
+    "nordic_core_journals_median_citations": 2.0,
+    "citing_fields_top12": {
+      "Nordisk designteori (intern enklave)": 6589,
+      "Computer Science": 1790,
+      "Business, Management and Accounting": 1178,
+      "Engineering": 669,
+      "Social Sciences": 633,
+      "Arts and Humanities": 257,
+      "Psychology": 192,
+      "Uklassifisert": 154,
+      "Medicine": 118,
+      "Environmental Science": 96,
+      "Health Professions": 91,
+      "Decision Sciences": 34,
+      "Neuroscience": 13
+    },
+    "cross_disciplinary_matrix": {
+      "non_design_works_in_db": 20103,
+      "non_design_total_outgoing_refs": 538952,
+      "design_to_design_citations": 6589,
+      "external_db_to_design_citations": 5260,
+      "external_uptake_rate_of_non_design_refs": 0.00976,
+      "total_observed_incoming_citations": 11849,
+      "enclave_hci_innovation_retention_k": 8997,
+      "enclave_hci_innovation_retention_share": 0.7593,
+      "basic_and_empirical_sciences_incoming_k": 327,
+      "basic_and_empirical_sciences_share": 0.0276,
+      "export_by_field": {
+        "Computer Science": 1790,
+        "Business, Management and Accounting": 1178,
+        "Engineering": 669,
+        "Social Sciences": 633,
+        "Arts and Humanities": 257,
+        "Psychology": 192,
+        "Uklassifisert": 154,
+        "Medicine": 118,
+        "Environmental Science": 96,
+        "Health Professions": 91,
+        "Decision Sciences": 34,
+        "Neuroscience": 13
+      },
+      "export_by_subfield": {
+        "Human-Computer Interaction": 1443,
+        "Management of Technology and Innovation": 450,
+        "Marketing": 387,
+        "Mechanical Engineering": 293,
+        "Building and Construction": 195,
+        "Education": 185,
+        "Management Information Systems": 177,
+        "Uklassifisert": 154,
+        "Sociology and Political Science": 141,
+        "Computer Science Applications": 135,
+        "Visual Arts and Performing Arts": 128,
+        "Strategy and Management": 105
+      },
+      "import_by_field_in_db": {
+        "Computer Science": 2068,
+        "Business, Management and Accounting": 1249,
+        "Social Sciences": 460,
+        "Engineering": 413,
+        "Arts and Humanities": 186,
+        "Uklassifisert": 109,
+        "Environmental Science": 107,
+        "Psychology": 102,
+        "Medicine": 73,
+        "Health Professions": 33
+      }
+    }
+  },
+  "P5_process_justification": {
+    "process_method_docs_k": 918,
+    "process_method_share": 0.6283,
+    "process_method_ci95": [
+      0.6033,
+      0.6527
+    ],
+    "controlled_effect_docs_k": 46,
+    "controlled_effect_share": 0.0315,
+    "controlled_effect_ci95": [
+      0.0237,
+      0.0417
+    ],
+    "negative_or_null_outcome_docs_k": 11,
+    "negative_or_null_outcome_share": 0.0075,
+    "negative_or_null_outcome_ci95": [
+      0.0042,
+      0.0134
+    ],
+    "flagship_negative_outcome_share": 0.0082,
+    "flagship_negative_outcome_ci95": [
+      0.0037,
+      0.0177
+    ],
+    "process_without_controlled_effect_or_null_share": 0.9586,
+    "process_without_effect_ci95": [
+      0.9437,
+      0.9697
+    ],
+    "process_terms_per_1k_words_mean": 1.192,
+    "process_terms_ci95": [
+      1.08,
+      1.31
+    ],
+    "effect_terms_per_1k_words_mean": 0.011,
+    "effect_terms_ci95": [
+      0.005,
+      0.021
+    ],
+    "mann_whitney_process_vs_effect": {
+      "U": 1717336.5,
+      "z": 34.0969,
+      "p": 8.19392052422394e-255,
+      "rank_biserial": 0.6091
+    }
+  },
+  "P6_ex_post_legitimation": {
+    "externally_funded_or_partnered_k": 321,
+    "externally_funded_share": 0.2197,
+    "externally_funded_ci95": [
+      0.1992,
+      0.2417
+    ],
+    "strategic_or_organizational_mandate_k": 387,
+    "strategic_mandate_share": 0.2649,
+    "strategic_mandate_ci95": [
+      0.2429,
+      0.2881
+    ],
+    "funded_with_preexisting_mandate_k": 122,
+    "mandate_reversal_or_halt_k": 0,
+    "mandate_reversal_share": 0.0,
+    "mandate_reversal_ci95": [
+      0.0,
+      0.00262
+    ],
+    "affirmative_legitimation_rate_in_mandated_projects": 0.9836,
+    "affirmative_legitimation_ci95": [
+      0.9422,
+      0.9955
+    ],
+    "funded_vs_independent_negative_outcome_chi2": {
+      "chi2": 0.0037,
+      "p": 0.9515282428361125,
+      "cramers_v": 0.0112,
+      "odds_ratio": 1.3349,
+      "odds_ratio_ci95": [
+        0.3521,
+        5.0611
+      ]
+    }
+  },
+  "P7_doctoral_isolation": {
+    "total_dissertations_all_layers": 201,
+    "openalex_dissertations_n": 24,
+    "phd_to_phd_citation_edges": 0,
+    "phd_zero_internal_citations_k": 20,
+    "phd_zero_internal_citations_share": 0.8333,
+    "phd_zero_internal_ci95": [
+      0.6415,
+      0.9332
+    ],
+    "phd_zero_backward_internal_refs_share": 0.9167,
+    "phd_zero_global_citations_share": 0.7083,
+    "phd_zero_global_ci95": [
+      0.5083,
+      0.8509
+    ],
+    "phd_median_global_citations": 0.0,
+    "article_median_global_citations": 5.0,
+    "mann_whitney_phd_vs_article_citations": {
+      "U": 12053.5,
+      "z": -4.7785,
+      "p": 1.7662592946634132e-06,
+      "rank_biserial": -0.5621
+    },
+    "phd_cohort_upto_2021_authors_n": 114,
+    "zero_post_phd_publications_k": 74,
+    "zero_post_phd_share": 0.6491,
+    "zero_post_phd_ci95": [
+      0.558,
+      0.7306
+    ],
+    "le1_post_phd_publications_share": 0.7544,
+    "le1_post_phd_ci95": [
+      0.6679,
+      0.8243
+    ],
+    "post_phd_mean_cosine_similarity": 0.611
+  },
+  "P8_closed_peer_review": {
+    "inhouse_or_regional_network_works_k": 3202,
+    "inhouse_or_regional_share": 0.4961,
+    "inhouse_ci95": [
+      0.4839,
+      0.5083
+    ],
+    "non_journal_output_share": 0.6092,
+    "non_journal_ci95": [
+      0.5973,
+      0.6211
+    ],
+    "internal_edges_total": 6589,
+    "author_overlap_self_citation_k": 2098,
+    "author_overlap_self_citation_share": 0.3184,
+    "author_self_citation_ci95": [
+      0.3073,
+      0.3298
+    ],
+    "institution_endogamous_citation_k": 2672,
+    "institution_endogamous_citation_share": 0.4055,
+    "institution_citation_ci95": [
+      0.3937,
+      0.4174
+    ],
+    "same_venue_citation_share": 0.2105,
+    "same_venue_ci95": [
+      0.2008,
+      0.2205
+    ],
+    "reciprocal_citation_share": 0.00546,
+    "null_reciprocal_share": 0.00129,
+    "reciprocity_z_score": 6.95,
+    "reciprocity_p_value": 3.759191325908598e-12,
+    "core_nordic_venue_author_gini": 0.3254,
+    "core_venue_top5pct_author_output_share": 0.244
+  },
+  "P9_ethics_accountability": {
+    "human_participant_studies_n": 1021,
+    "human_participant_share_of_fulltext": 0.6988,
+    "vulnerable_group_studies_n": 481,
+    "lacking_ethics_board_approval_k": 937,
+    "lacking_ethics_board_share": 0.9177,
+    "lacking_ethics_board_ci95": [
+      0.8993,
+      0.9331
+    ],
+    "with_ethics_board_approval_share": 0.0823,
+    "with_ethics_board_ci95": [
+      0.0669,
+      0.1007
+    ],
+    "flagship_human_studies_with_ethics_board_share": 0.0691,
+    "flagship_ethics_board_ci95": [
+      0.0488,
+      0.097
+    ],
+    "vulnerable_group_with_ethics_board_share": 0.1185,
+    "vulnerable_ethics_ci95": [
+      0.0926,
+      0.1505
+    ],
+    "documented_informed_consent_share": 0.1136,
+    "informed_consent_ci95": [
+      0.0956,
+      0.1345
+    ],
+    "conflict_of_interest_disclosure_share": 0.0753,
+    "conflict_of_interest_ci95": [
+      0.0628,
+      0.09
+    ],
+    "post_project_accountability_or_followup_k": 7,
+    "post_project_accountability_share": 0.0069,
+    "post_project_accountability_ci95": [
+      0.0033,
+      0.0141
+    ]
+  },
+  "P10_validated_measurement": {
+    "validated_instrument_docs_k": 18,
+    "validated_instrument_share": 0.0123,
+    "validated_instrument_ci95": [
+      0.0078,
+      0.0194
+    ],
+    "psychometric_reliability_docs_k": 33,
+    "psychometric_reliability_share": 0.0226,
+    "psychometric_reliability_ci95": [
+      0.0161,
+      0.0316
+    ],
+    "any_validated_or_psychometric_share": 0.0329,
+    "any_validated_or_psychometric_ci95": [
+      0.0249,
+      0.0433
+    ],
+    "lacking_validated_measurement_share": 0.9671,
+    "lacking_validated_measurement_ci95": [
+      0.9567,
+      0.9751
+    ],
+    "flagship_validated_or_psychometric_share": 0.0109,
+    "flagship_validated_ci95": [
+      0.0055,
+      0.0213
+    ],
+    "open_data_or_code_repository_k": 49,
+    "open_data_or_code_share": 0.0335,
+    "open_data_or_code_ci95": [
+      0.0255,
+      0.0441
+    ],
+    "flagship_open_data_share": 0.0068,
+    "flagship_open_data_ci95": [
+      0.0029,
+      0.0158
+    ]
+  }
+}
