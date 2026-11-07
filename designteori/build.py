@@ -23,6 +23,7 @@ from . import (
 )
 from .analysis import build_analysis
 from .collect import ensure_raw_sqlite
+from .eligibility import FORBIDDEN_VENUES_RE, HARD_NON_DESIGN_RE
 from .embeddings import LOCAL_GEMMA_MODEL, embed_corpus_works, export_public_semantic_index
 from .pdf import HOST_DENY, allowed_url, publish_pdf_catalog, safe_public_link
 from .reconcile import export_unified_csv_and_coverage, run_reconciliation
@@ -79,7 +80,25 @@ def build_unified_sqlite(
 
         db = sqlite3.connect(tmp_db)
         db.execute("PRAGMA journal_mode=DELETE")
+        db.execute("DELETE FROM works WHERE in_scope = 0")
+        db.execute("DELETE FROM authorships WHERE work_id NOT IN (SELECT id FROM works)")
+        db.execute("DELETE FROM discoveries WHERE id NOT IN (SELECT id FROM works)")
+        db.execute("DELETE FROM references_all WHERE citing_id NOT IN (SELECT id FROM works)")
         db.execute("UPDATE works SET abstract='', raw_json='{}'")
+
+        canon_json = (read_json(DOCS_DATA_DIR / "cited_canon.json", {}) or {}).get("items", [])
+        if db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='cited_canon'").fetchone():
+            db.execute("DELETE FROM cited_canon")
+            import json as _json
+            db.executemany(
+                "INSERT INTO cited_canon VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                [(
+                    c["id"], c.get("doi", ""), c.get("title", ""), c.get("year"),
+                    c.get("kind", ""), c.get("authors", ""), c.get("source", ""),
+                    c.get("global_citations", 0), c.get("nordic_citing_count", 0),
+                    _json.dumps(c.get("countries") or []), c.get("oa_url", ""),
+                ) for c in canon_json],
+            )
 
         db.executescript("""
             DROP TABLE IF EXISTS works_fts;
@@ -296,7 +315,7 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
     sem_meta = read_json(DOCS_DATA_DIR / "semantic_index.json")
     analysis = read_json(DOCS_DATA_DIR / "analysis.json")
 
-    if not isinstance(works, list) or len(works) < 10_000:
+    if not isinstance(works, list) or len(works) < 3_500:
         errors.append(f"publications.json missing or unexpectedly small ({len(works) if isinstance(works, list) else 'nil'})")
     if not isinstance(nordic, list) or len(nordic) == 0:
         errors.append("nordic_additions.json missing or empty")
@@ -304,6 +323,8 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
         errors.append("corpus_quality.json provenance gate violated")
     if not isinstance(analysis, dict) or "overview" not in analysis:
         errors.append("analysis.json missing overview")
+    if not (DOCS_DATA_DIR / "semantic_vocab.json").is_file():
+        errors.append("Missing semantic_vocab.json for mobile semantic search")
 
     if isinstance(works, list) and isinstance(nordic, list):
         w_ids = {w["id"] for w in works}
@@ -312,6 +333,16 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
             errors.append("ID collision across OpenAlex and Nordic candidate layers")
         if any(not wid.startswith("nordic:") for wid in n_ids):
             errors.append("nordic_additions IDs must start with 'nordic:'")
+        unreviewed_oa = [w["id"] for w in works if w.get("scope") != "automatic-title-inclusion"]
+        if unreviewed_oa:
+            errors.append(f"Found {len(unreviewed_oa)} unscreened OpenAlex works in publications.json")
+        noisy_titles = [
+            w["id"] for w in (works + nordic)
+            if HARD_NON_DESIGN_RE.search(str(w.get("title") or ""))
+            or FORBIDDEN_VENUES_RE.search(f"{w.get('source') or ''} {w.get('venue') or ''}")
+        ]
+        if noisy_titles:
+            errors.append(f"Found {len(noisy_titles)} non-design works violating strict eligibility: {noisy_titles[:5]}")
 
     if isinstance(pdf_found, dict):
         for wid, item in pdf_found.items():

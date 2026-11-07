@@ -45,6 +45,14 @@ from . import (
     write_gzip_deterministic,
     write_json,
 )
+from .eligibility import (
+    HARD_NON_DESIGN_RE as CLINICAL_NOISE,
+    PURE_DESIGN_VENUES,
+    STRICT_DESIGN_THEORY_RE as TITLE_TERMS,
+    clean_display_title,
+    evaluate_strict_design_scope,
+    load_semantic_gate_scores,
+)
 
 OPENALEX_API = "https://api.openalex.org/works"
 NORDIC_SET = set(NORDIC_COUNTRIES)
@@ -56,26 +64,9 @@ SELECT_FIELDS = (
     "primary_location,best_oa_location,locations,open_access,language"
 )
 
-PURE_DESIGN_VENUES = {
-    "S2764463729",  # FormAkademisk
-    "S152445846",   # Design Studies
-    "S107659597",   # Design Issues
-    "S4210216195",  # International Journal of Design
-    "S4210189112",  # CoDesign
-    "S153469747",   # The Design Journal
-    "S2898472644",  # She Ji
-    "S191448683",   # Journal of Design History
-    "S1509497",     # Design and Culture
-    "S4210222023",  # Journal of Design Research
-    "S4210182550",  # Artifact
+DESIGN_VENUES_ALL = sorted(PURE_DESIGN_VENUES | {
     "S4210173131",  # Design Science
     "S4210205958",  # Proceedings of the Design Society
-    "S4210174351",  # Design Philosophy Papers
-    "S207009260",   # Strategic Design Research Journal
-    "S4210211686",  # Journal of Textile Design Research and Practice
-}
-
-DESIGN_VENUES_ALL = sorted(PURE_DESIGN_VENUES | {
     "S196057155",   # International Journal of Technology and Design Education
 })
 
@@ -104,24 +95,9 @@ QUERIES_EN = [
 QUERIES_NORDIC = [
     "designteori", "designforskning", "designforsking", "formgivning", "formgiving",
     "formgjeving", "brukskunst", "industridesign", "tjenestedesign", "tjänstedesign",
-    "interaksjonsdesign", "interaktionsdesign", "brukermedvirkning", "brugerinddragelse",
+    "interaksjonsdesign", "interaktionsdesign",
     "muotoilu", "muotoilututkimus", "taideteollisuus", "hönnun",
 ]
-
-TITLE_TERMS = re.compile(
-    r"\b(?:design\w*|formgiv\w*|formgjev\w*|gestaltn\w*|brukskunst\w*|"
-    r"tjenestedesign\w*|tjänstedesign\w*|muotoilu\w*|taideteollis\w*|hönnun\w*|"
-    r"co-design\w*|codesign\w*|arkitektur\w*|architectur\w*)\b",
-    re.I,
-)
-
-CLINICAL_NOISE = re.compile(
-    r"\b(?:trial design|study design|design of (?:a|the) (?:cohort|trial|study)|"
-    r"clinical trial protocol|randomi[sz]ed controlled trial|primer design|drug design|"
-    r"vaccine design|protein design|oligonucleotide|microstrip|antenna array|"
-    r"power electronic|inverter|filter design|circuit design|controller design)\b",
-    re.I,
-)
 
 
 def http_get(url: str, *, accept: str = "application/json", timeout: int = 35, retries: int = 3) -> bytes:
@@ -252,19 +228,17 @@ def best_oa_link(w: dict) -> str:
     return str(oa.get("oa_url") or "")
 
 
-def evaluate_scope(title: str, cs: list[str], source_id: str) -> tuple[int, str]:
-    short_source = (source_id or "").rsplit("/", 1)[-1]
-    in_design_venue = short_source in PURE_DESIGN_VENUES
-    has_term = bool(TITLE_TERMS.search(title or ""))
-    noise = bool(CLINICAL_NOISE.search(title or ""))
-    include = int(bool(cs) and (has_term or in_design_venue) and not noise)
-    if include:
-        reason = ("Nordic affiliation and dedicated design venue"
-                  if in_design_venue and not has_term
-                  else "Nordic affiliation and design-related title")
-    else:
-        reason = "Needs manual eligibility review"
-    return include, reason
+def evaluate_scope(
+    title: str,
+    cs: list[str],
+    source_id: str,
+    source_name: str = "",
+    raw_json_str: str = "",
+    semantic_cos: float | None = None,
+) -> tuple[int, str]:
+    return evaluate_strict_design_scope(
+        title, cs, source_id, source_name, raw_json_str, semantic_cos
+    )
 
 
 def ingest_work(conn: sqlite3.Connection, w: dict, query_label: str, page: int,
@@ -281,13 +255,11 @@ def ingest_work(conn: sqlite3.Connection, w: dict, query_label: str, page: int,
         cs = sorted(set(fallback_countries) & NORDIC_SET)
     if not cs:
         return False
-    title = (w.get("display_name") or "").strip() or "(untitled)"
+    title = clean_display_title(w.get("display_name")) or "(untitled)"
     loc = w.get("primary_location") or {}
     source = loc.get("source") or {}
     source_id = source.get("id") or ""
-    include, decision = evaluate_scope(title, cs, source_id)
-    topic = w.get("primary_topic") or {}
-    oa_link = best_oa_link(w)
+    source_name = source.get("display_name") or ""
     slim_raw = {
         k: w.get(k) for k in (
             "id", "doi", "display_name", "publication_year", "type",
@@ -295,12 +267,16 @@ def ingest_work(conn: sqlite3.Connection, w: dict, query_label: str, page: int,
             "best_oa_location", "locations", "open_access", "language",
         ) if k in w
     }
+    raw_json_str = json.dumps(slim_raw, ensure_ascii=False, separators=(",", ":"))
+    include, decision = evaluate_scope(title, cs, source_id, source_name, raw_json_str)
+    topic = w.get("primary_topic") or {}
+    oa_link = best_oa_link(w)
     record = (
         wid, w.get("doi"), title, w.get("publication_year"), w.get("publication_date"),
         w.get("type"), abstract_from_index(w.get("abstract_inverted_index")),
-        w.get("cited_by_count", 0), source.get("display_name"), source_id,
+        w.get("cited_by_count", 0), source_name, source_id,
         w.get("language"), oa_link, json.dumps(cs), topic.get("display_name"),
-        include, decision, json.dumps(slim_raw, ensure_ascii=False, separators=(",", ":")),
+        include, decision, raw_json_str,
     )
     conn.execute("""
         INSERT INTO works VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
@@ -393,16 +369,20 @@ def fetch_cursor_stream(conn: sqlite3.Connection, filter_expr: str, label: str,
 
 
 def refresh_existing_scope(conn: sqlite3.Connection) -> None:
-    rows = conn.execute("SELECT id, title, countries, source_id FROM works").fetchall()
+    sem_scores = load_semantic_gate_scores()
+    rows = conn.execute("SELECT id, title, countries, source_id, source, raw_json FROM works").fetchall()
     updates = []
-    for wid, title, countries_json, source_id in rows:
+    for wid, title, countries_json, source_id, source_name, raw_json in rows:
         try:
             cs = json.loads(countries_json or "[]")
         except json.JSONDecodeError:
             cs = []
-        inc, dec = evaluate_scope(title or "", cs, source_id or "")
-        updates.append((inc, dec, wid))
-    conn.executemany("UPDATE works SET in_scope=?, decision=? WHERE id=?", updates)
+        clean_t = clean_display_title(title)
+        inc, dec = evaluate_scope(
+            clean_t, cs, source_id or "", source_name or "", raw_json or "", sem_scores.get(wid)
+        )
+        updates.append((clean_t or title or "", inc, dec, wid))
+    conn.executemany("UPDATE works SET title=?, in_scope=?, decision=? WHERE id=?", updates)
     conn.commit()
 
 
@@ -410,7 +390,7 @@ def resolve_reference_frontier(conn: sqlite3.Connection, *, min_citing: int = 3,
     rows = conn.execute("""
         SELECT r.cited_id, COUNT(DISTINCT r.citing_id) AS cnt
         FROM references_all r
-        JOIN works w ON w.id = r.citing_id
+        JOIN works w ON w.id = r.citing_id AND w.in_scope = 1
         LEFT JOIN works existing ON existing.id = r.cited_id
         WHERE existing.id IS NULL AND r.cited_id LIKE 'W%'
         GROUP BY r.cited_id
@@ -436,7 +416,7 @@ def resolve_reference_frontier(conn: sqlite3.Connection, *, min_citing: int = 3,
             aus = w.get("authorships") or []
             all_cs = sorted({c for a in aus for c in (a.get("countries") or []) if c})
             nordic_cs = sorted(set(all_cs) & NORDIC_SET)
-            title = (w.get("display_name") or "").strip()
+            title = clean_display_title(w.get("display_name"))
             loc = w.get("primary_location") or {}
             src = (loc.get("source") or {}).get("display_name") or ""
             src_id = (loc.get("source") or {}).get("id") or ""
@@ -452,8 +432,9 @@ def resolve_reference_frontier(conn: sqlite3.Connection, *, min_citing: int = 3,
                 citing_counts.get(wid, 0), json.dumps(all_cs), best_oa_link(w),
             ))
             canon_indexed += 1
-            inc, _ = evaluate_scope(title, nordic_cs, src_id)
-            if nordic_cs and (inc or citing_counts.get(wid, 0) >= 6):
+            raw_str = json.dumps({"primary_topic": w.get("primary_topic") or {}})
+            inc, _ = evaluate_scope(title, nordic_cs, src_id, src, raw_str)
+            if nordic_cs and inc == 1:
                 if ingest_work(conn, w, "reference_frontier", 1):
                     ingested_nordic += 1
         conn.commit()

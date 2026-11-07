@@ -377,7 +377,6 @@ def export_public_semantic_index(works: list[dict], vectors: np.ndarray, *, dims
 
     meta = {
         "model": f"google/{LOCAL_GEMMA_MODEL}",
-        "onnx_web_model": "onnx-community/embeddinggemma-300m-ONNX",
         "count": len(works),
         "dimensions": dims,
         "quantization": "int8_unit_norm",
@@ -385,8 +384,54 @@ def export_public_semantic_index(works: list[dict], vectors: np.ndarray, *, dims
         "presets": presets,
     }
     write_json(out_dir / "semantic_index.json", meta, compact=True)
+
+    # Precompute compact multilingual design-theory vocabulary vectors (int8 base64)
+    # so mobile browsers (iOS Safari) execute instant (<2 ms) Google EmbeddingGemma
+    # semantic queries without downloading a 300 MB ONNX WASM model.
+    import base64
+    from collections import Counter
+
+    token_re = re.compile(r"[a-zæøåäöüþð]{4,}")
+    stop = {
+        "with", "from", "into", "through", "toward", "towards", "between", "using",
+        "based", "this", "that", "their", "these", "those", "have", "been", "were",
+        "what", "when", "where", "which", "while", "about", "after", "before", "under",
+        "over", "within", "across", "among", "beyond", "more", "most", "some", "such",
+        "only", "also", "other", "both", "each", "many", "much", "very", "just",
+        "eller", "ikkje", "ikke", "frå", "mellom", "gjennom", "korleis", "hvordan",
+    }
+    df: Counter[str] = Counter()
+    for w in works:
+        txt = f"{w.get('title') or ''} {w.get('topic') or ''}".lower()
+        for tok in set(token_re.findall(txt)):
+            if tok not in stop:
+                df[tok] += 1
+    seed_terms = [
+        "designteori", "designforskning", "designforsking", "formgjeving", "formgivning",
+        "formgiving", "brukskunst", "kunsthandverk", "kunsthåndverk", "konsthantverk",
+        "tenestedesign", "tjenestedesign", "tjänstedesign", "interaksjonsdesign",
+        "interaktionsdesign", "industridesign", "brukarmedverknad", "brukermedvirkning",
+        "deltakande", "samskaping", "medskabelse", "berekraft", "bærekraft", "sirkulær",
+        "estetikk", "etikk", "epistemologi", "ontologi", "fenomenologi", "metode",
+        "metodologi", "praksis", "handverk", "tekstil", "materialitet", "arkitektur",
+        "utdanning", "didaktikk", "pedagogikk", "kritisk", "spekulativ", "universell",
+        "utforming", "muotoilu", "palvelumuotoilu", "muotoilututkimus", "hönnun",
+        "epistemology", "ontology", "phenomenology", "somaesthetics", "affordance",
+        "pluriversal", "posthuman", "infrastructuring", "prototyping", "wicked",
+    ]
+    vocab_words = sorted(set(seed_terms) | {w for w, _ in df.most_common(1350)})
+    v_vecs = embed_local_gemma(vocab_words, dims=dims, is_query=True, max_tokens=24, batch_size=64)
+    v_bytes = quantize_int8(v_vecs)
+    write_json(out_dir / "semantic_vocab.json", {
+        "model": f"google/{LOCAL_GEMMA_MODEL}",
+        "dimensions": dims,
+        "words": vocab_words,
+        "vectors_b64": base64.b64encode(v_bytes).decode("ascii"),
+    }, compact=True)
+
     return {
         "works_embedded": len(works),
+        "vocab_terms": len(vocab_words),
         "dimensions": dims,
         "vector_bytes": len(bin_bytes),
         "model": f"google/{LOCAL_GEMMA_MODEL}",

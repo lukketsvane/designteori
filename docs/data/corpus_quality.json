@@ -2,78 +2,68 @@
   "coverage_by_layer": {
     "nordic_national_and_institutional_archives": {
       "decades": {
-        "1900s": 1,
-        "1960s": 2,
-        "1970s": 6,
-        "1980s": 12,
-        "1990s": 114,
-        "2000s": 844,
-        "2010s": 2503,
-        "2020s": 5735
+        "1990s": 33,
+        "2000s": 278,
+        "2010s": 750,
+        "2020s": 684
       },
       "kinds": {
-        "article": 980,
-        "book": 70,
-        "book-chapter": 74,
-        "proceedings-article": 956,
-        "review": 63,
-        "thesis": 1618,
-        "unknown": 5456
+        "article": 228,
+        "book": 13,
+        "book-chapter": 10,
+        "proceedings-article": 637,
+        "review": 8,
+        "thesis": 177,
+        "unknown": 672
       },
-      "searchable_registrations": 9217,
-      "with_authors": 9156,
-      "with_doi": 2090,
-      "with_open_access_url": 9217,
-      "with_repo_pdf": 1729,
-      "with_year": 9217
+      "searchable_registrations": 1745,
+      "with_authors": 1728,
+      "with_doi": 666,
+      "with_open_access_url": 1745,
+      "with_repo_pdf": 99,
+      "with_year": 1745
     },
     "openalex_primary_1900_2026": {
       "decades": {
-        "1930s": 2,
-        "1940s": 1,
-        "1950s": 4,
-        "1960s": 31,
-        "1970s": 154,
-        "1980s": 517,
-        "1990s": 2090,
-        "2000s": 2205,
-        "2010s": 9039,
-        "2020s": 10769
+        "1980s": 9,
+        "1990s": 64,
+        "2000s": 407,
+        "2010s": 2126,
+        "2020s": 2103
       },
       "kinds": {
-        "article": 14043,
-        "book": 603,
-        "book-chapter": 2150,
-        "book-review": 6,
-        "conference-abstract": 5,
-        "conference-paper": 7302,
-        "dissertation": 352,
-        "editorial": 8,
+        "article": 2294,
+        "book": 66,
+        "book-chapter": 279,
+        "book-review": 2,
+        "conference-abstract": 4,
+        "conference-paper": 2017,
+        "dissertation": 24,
+        "editorial": 2,
         "letter": 1,
         "other": 1,
-        "paratext": 2,
+        "paratext": 1,
         "reference-entry": 1,
-        "review": 338
+        "review": 17
       },
-      "searchable_registrations": 24812,
-      "with_authors": 24812,
-      "with_doi": 20483,
-      "with_open_access_url": 14461,
-      "with_repo_pdf": 5693,
-      "with_year": 24812
+      "searchable_registrations": 4709,
+      "with_authors": 4709,
+      "with_doi": 4137,
+      "with_open_access_url": 3192,
+      "with_repo_pdf": 1378,
+      "with_year": 4709
     }
   },
   "cross_layer_or_within_layer_possible_doi_duplicates": {
-    "duplicate_doi_keys": 20,
-    "registrations": 40
+    "duplicate_doi_keys": 4,
+    "registrations": 8
   },
   "manual_article_eligibility_checks_completed": 0,
-  "nordic_unlinked_candidates": 9217,
-  "openalex_partial_search": 24812,
+  "nordic_unlinked_candidates": 1745,
+  "openalex_partial_search": 4709,
   "openalex_title_gate": {
-    "automatic-title-inclusion": 11958,
-    "awaiting-eligibility-review": 12854
+    "automatic-title-inclusion": 4709
   },
   "schema_version": 3,
-  "total_searchable_rows_all_layers": 34029
+  "total_searchable_rows_all_layers": 6454
 }

@@ -151,9 +151,25 @@ def build_analysis(*, out_dir: Path = DOCS_DATA_DIR, n_clusters: int = 10, map_l
         import sqlite3
         try:
             cdb = sqlite3.connect(f"file:{PRIVATE_CORPUS_DB.as_posix()}?mode=ro", uri=True)
-            fulltext_extracted_docs = cdb.execute("SELECT COUNT(*) FROM documents WHERE quality='extracted'").fetchone()[0]
-            fulltext_chunks_count = cdb.execute("SELECT COUNT(*) FROM chunks").fetchone()[0]
-            fulltext_embedded_chunks = cdb.execute("SELECT COUNT(DISTINCT chunk_id) FROM embeddings").fetchone()[0]
+            valid_shas = set()
+            for wid, sha in cdb.execute("SELECT work_id, sha256 FROM work_documents"):
+                if wid in works_by_id and sha:
+                    valid_shas.add(sha)
+            if valid_shas:
+                q_marks = ",".join("?" for _ in valid_shas)
+                sha_params = tuple(valid_shas)
+                fulltext_extracted_docs = cdb.execute(
+                    f"SELECT COUNT(*) FROM documents WHERE quality='extracted' AND sha256 IN ({q_marks})",
+                    sha_params,
+                ).fetchone()[0]
+                fulltext_chunks_count = cdb.execute(
+                    f"SELECT COUNT(*) FROM chunks WHERE sha256 IN ({q_marks})",
+                    sha_params,
+                ).fetchone()[0]
+                fulltext_embedded_chunks = cdb.execute(
+                    f"SELECT COUNT(DISTINCT e.chunk_id) FROM embeddings e JOIN chunks c ON c.chunk_id=e.chunk_id WHERE c.sha256 IN ({q_marks})",
+                    sha_params,
+                ).fetchone()[0]
             cdb.close()
         except Exception:
             pass

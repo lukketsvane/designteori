@@ -1,4 +1,4 @@
-/* DESIGNTEORI - Minimal, Zero-Redundancy Nordic Research Interface */
+/* DESIGNTEORI - Minimal, Native-Feel Nordic Design Theory Interface */
 (() => {
   "use strict";
 
@@ -17,9 +17,12 @@
     semMeta: null,
     semVecs: null,
     semIdx: new Map(),
+    semVocab: null,
+    semVocabVecs: null,
+    semVocabMap: new Map(),
     semMap: null,
-    wasm: null,
 
+    pdfOnly: false,
     filtered: [],
     shown: STEP,
     expandedId: null,
@@ -57,7 +60,7 @@
     }
     for (const w of nordic) {
       w._layer = "nordic";
-      w._q = `${w.title || ""} ${(w.authors || []).join(" ")} ${w.source || ""} ${w.doi || ""}`.toLowerCase();
+      w._q = `${w.title || ""} ${(w.authors || []).join(" ")} ${w.source || ""} ${w.venue || ""} ${w.doi || ""}`.toLowerCase();
       S.works.push(w);
       S.byId.set(w.id, w);
     }
@@ -67,23 +70,24 @@
     const repoPdfCnt = ov.repo_pdf_files ?? S.works.filter((w) => w.pdf).length;
     $("stWorks").textContent = fmt(ov.total_searchable_works ?? S.works.length);
     $("stPdfs").textContent = fmt(repoPdfCnt);
-    $("stCit").textContent = fmt(ov.internal_citation_edges ?? 0);
+
+    const h = (location.hash || "").replace("#", "");
+    if (h === "pdf") S.pdfOnly = true;
 
     filterCorpus();
     renderAnalysis();
     loadVectors();
 
-    const h = (location.hash || "").replace("#", "");
-    if (h === "pdf") {
-      $("accessSel").value = "repo";
-      filterCorpus();
-    } else if (["korpus", "siteringar", "kart", "analyse"].includes(h)) {
+    if (["korpus", "siteringar", "kart", "analyse"].includes(h)) {
       setTab(h);
     }
   }
 
   async function loadVectors() {
-    const m = await jget("data/semantic_index.json", null);
+    const [m, vocab] = await Promise.all([
+      jget("data/semantic_index.json", null),
+      jget("data/semantic_vocab.json", null),
+    ]);
     if (!m?.ids) return;
     try {
       const r = await fetch("data/semantic_vectors.bin");
@@ -93,6 +97,20 @@
       S.semMeta = m;
       S.semVecs = v;
       m.ids.forEach((id, i) => S.semIdx.set(id, i));
+      if (vocab?.words && vocab?.vectors_b64) {
+        const bin = atob(vocab.vectors_b64);
+        const vv = new Int8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+          const c = bin.charCodeAt(i);
+          vv[i] = c > 127 ? c - 256 : c;
+        }
+        if (vv.length === vocab.words.length * vocab.dimensions) {
+          S.semVocab = vocab.words;
+          S.semVocabVecs = vv;
+          vocab.words.forEach((w, idx) => S.semVocabMap.set(w, idx));
+        }
+      }
+      if ($("qInput").value.trim() || S.expandedId) filterCorpus();
     } catch {}
   }
 
@@ -109,6 +127,33 @@
       map.set(ids[i], vn > 0 ? dot / (Math.sqrt(vn) * qn) : 0);
     }
     return map;
+  }
+
+  function querySemanticVector(tokens) {
+    if (!S.semVocabVecs || !S.semMeta || !tokens.length) return null;
+    const D = S.semMeta.dimensions;
+    const acc = new Float32Array(D);
+    let matched = 0;
+    for (const raw of tokens) {
+      const tok = raw.replace(/[^a-zæøåäöüþð0-9-]/gi, "").toLowerCase();
+      if (tok.length < 3) continue;
+      let idx = S.semVocabMap.get(tok);
+      if (idx === undefined && tok.length >= 4 && S.semVocab) {
+        for (let i = 0; i < S.semVocab.length; i++) {
+          const vw = S.semVocab[i];
+          if (vw.startsWith(tok) || (tok.length >= 5 && tok.startsWith(vw))) {
+            idx = i;
+            break;
+          }
+        }
+      }
+      if (idx !== undefined) {
+        const base = idx * D;
+        for (let d = 0; d < D; d++) acc[d] += S.semVocabVecs[base + d];
+        matched++;
+      }
+    }
+    return matched > 0 ? acc : null;
   }
 
   function topNeighbors(wid, k = 6) {
@@ -129,49 +174,19 @@
     const q = new Float32Array(D);
     for (let d = 0; d < D; d++) q[d] = S.semVecs[row * D + d];
     S.semScores = cosineAll(q);
-    S.semLabel = `Liknande publikasjonar til «${(S.byId.get(wid)?.title || wid).slice(0, 72)}»`;
+    S.semLabel = `Liknande: «${(S.byId.get(wid)?.title || wid).slice(0, 64)}»`;
     $("sortSel").value = "relevance";
     setTab("korpus");
     filterCorpus();
   }
 
-  async function runWasmQuery() {
-    const q = $("qInput").value.trim();
-    if (!q || !S.semVecs) return;
-    const btn = $("wasmBtn");
-    const orig = btn.textContent;
-    try {
-      btn.disabled = true;
-      if (!S.wasm) {
-        btn.textContent = "Lastar…";
-        const { pipeline, env } = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.0");
-        env.allowLocalModels = false;
-        S.wasm = await pipeline("feature-extraction", S.semMeta.onnx_web_model || "onnx-community/embeddinggemma-300m-ONNX", { dtype: "q8" });
-      }
-      btn.textContent = "Søkjer…";
-      const out = await S.wasm(`task: search result | query: ${q}`, { pooling: "none" });
-      const D = S.semMeta.dimensions, qv = new Float32Array(D);
-      for (let d = 0; d < D; d++) qv[d] = out.data[d] || 0;
-      S.semScores = cosineAll(qv);
-      S.semLabel = `Semantisk søk: «${q}»`;
-      $("sortSel").value = "relevance";
-      filterCorpus();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = orig;
-    }
-  }
-
   function hasActiveFilters() {
     return Boolean(
       $("qInput").value.trim() ||
-      $("accessSel").value ||
+      S.pdfOnly ||
       $("ccSel").value ||
       $("presetSel").value ||
       $("eraSel").value ||
-      $("layerSel").value !== "all" ||
       S.semScores
     );
   }
@@ -179,24 +194,25 @@
   function filterCorpus() {
     const q = $("qInput").value.trim().toLowerCase();
     const toks = q ? q.split(/\s+/).filter(Boolean) : [];
-    const acc = $("accessSel").value;
-    const layer = $("layerSel").value;
     const cc = $("ccSel").value;
     const era = $("eraSel").value;
     const sort = $("sortSel").value;
 
-    $("metricPdfBtn").classList.toggle("active-metric", acc === "repo");
-    $("metricAllBtn").classList.toggle("active-metric", acc === "");
+    $("metricPdfBtn").classList.toggle("active-metric", S.pdfOnly);
+    $("metricAllBtn").classList.toggle("active-metric", !S.pdfOnly);
     $("resetBtn").hidden = !hasActiveFilters();
     $("semBanner").hidden = !S.semScores;
     if (S.semScores) $("semBannerTxt").textContent = S.semLabel;
 
-    const out = [];
+    let queryCos = null;
+    if (!S.semScores && toks.length) {
+      const qv = querySemanticVector(toks);
+      if (qv) queryCos = cosineAll(qv);
+    }
+
+    const baseCandidates = [];
     for (const w of S.works) {
-      if (acc === "repo" && !w.pdf) continue;
-      if (acc === "oa" && !w.pdf && !w.oa_url) continue;
-      if (layer === "nordic" && w._layer !== "nordic") continue;
-      if (layer !== "all" && layer !== "nordic" && w.scope !== layer) continue;
+      if (S.pdfOnly && !w.pdf) continue;
       if (cc && !(w.countries || []).includes(cc) && w.source_country !== cc) continue;
       if (era) {
         const y = w.year;
@@ -206,12 +222,25 @@
         if (era === "2010-2019" && (y < 2010 || y > 2019)) continue;
         if (era === "2020-2026" && y < 2020) continue;
       }
-      if (!S.semScores && toks.length) {
+      baseCandidates.push(w);
+    }
+
+    let out = [];
+    if (!S.semScores && toks.length) {
+      const lexical = [];
+      const semFallback = [];
+      for (const w of baseCandidates) {
         let ok = true;
         for (const t of toks) if (!w._q.includes(t)) { ok = false; break; }
-        if (!ok) continue;
+        if (ok) {
+          lexical.push(w);
+        } else if (queryCos && (queryCos.get(w.id) || 0) >= 0.64) {
+          semFallback.push(w);
+        }
       }
-      out.push(w);
+      out = lexical.length > 0 ? lexical.concat(semFallback.slice(0, 60)) : semFallback;
+    } else {
+      out = baseCandidates;
     }
 
     if (sort === "citations") out.sort((a, b) => (b.citations || 0) - (a.citations || 0));
@@ -221,9 +250,12 @@
     else if (toks.length) {
       out.sort((a, b) => {
         const at = (a.title || "").toLowerCase(), bt = (b.title || "").toLowerCase();
-        const ah = toks.reduce((s, t) => s + (at.includes(t) ? 1 : 0), 0);
-        const bh = toks.reduce((s, t) => s + (bt.includes(t) ? 1 : 0), 0);
-        return bh !== ah ? bh - ah : (b.citations || 0) - (a.citations || 0);
+        const aExact = toks.every((t) => a._q.includes(t)) ? 1 : 0;
+        const bExact = toks.every((t) => b._q.includes(t)) ? 1 : 0;
+        if (bExact !== aExact) return bExact - aExact;
+        const ah = toks.reduce((s, t) => s + (at.includes(t) ? 1 : 0), 0) + (queryCos ? (queryCos.get(a.id) || 0) * 0.8 : 0);
+        const bh = toks.reduce((s, t) => s + (bt.includes(t) ? 1 : 0), 0) + (queryCos ? (queryCos.get(b.id) || 0) * 0.8 : 0);
+        return Math.abs(bh - ah) > 0.05 ? bh - ah : (Boolean(b.pdf) !== Boolean(a.pdf) ? (b.pdf ? 1 : -1) : (b.citations || 0) - (a.citations || 0));
       });
     } else {
       out.sort((a, b) => (Boolean(b.pdf) !== Boolean(a.pdf) ? (b.pdf ? 1 : -1) : (b.citations || 0) - (a.citations || 0)));
@@ -253,7 +285,7 @@
 
       const subParts = [];
       if (auth) subParts.push(auth);
-      if (w.source) subParts.push(w.source);
+      if (w.venue || w.source) subParts.push(w.venue || w.source);
       if (typeof w.citations === "number" && w.citations > 0) subParts.push(`${fmt(w.citations)} sit.`);
       if (typeof cos === "number") subParts.push(`likskap ${cos.toFixed(2)}`);
 
@@ -298,7 +330,7 @@
             <h4>Siteringskoplingar i korpuset (${(ctx.cited_by || []).length} inn, ${(ctx.cites || []).length} ut)</h4>
             ${citedBy.map((cw) => `<div class="detail-row"><span>Sitert av: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></span></div>`).join("")}
             ${cites.map((cw) => `<div class="detail-row"><span>Siterer: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></span></div>`).join("")}
-            ${!citedBy.length && !cites.length ? `<div class="detail-row" style="color:var(--muted);">${esc(w.id)} · ${esc(w.scope || w._layer)}</div>` : ""}
+            ${!citedBy.length && !cites.length ? `<div class="detail-row" style="color:var(--muted);">${esc(w.id)} · ${esc(w.source || "")}</div>` : ""}
           </div>
         </div>
       </div>`;
@@ -331,6 +363,7 @@
       const rows = S.canon.filter((r) => !q || `${r.title} ${r.authors}`.toLowerCase().includes(q)).slice(0, 150);
       box.innerHTML = rows.map((r) => {
         const sub = [r.authors, `Sitert ${fmt(r.nordic_citing_count)} gonger frå Norden`, `${fmt(r.global_citations)} globalt`].filter(Boolean).join(" · ");
+        const doiHref = r.doi ? (r.doi.startsWith("http") ? r.doi : `https://doi.org/${r.doi}`) : "";
         return `
           <article class="item">
             <div class="meta-col">${esc(r.year || "")}</div>
@@ -338,7 +371,7 @@
               <h3 class="title">${esc(r.title)}</h3>
               <p class="subline">${esc(sub)}</p>
             </div>
-            <div class="actions">${r.doi ? `<a href="${esc(r.doi)}" target="_blank" rel="noopener">DOI</a>` : ""}</div>
+            <div class="actions">${doiHref ? `<a href="${esc(doiHref)}" target="_blank" rel="noopener">DOI</a>` : ""}</div>
           </article>`;
       }).join("");
       return;
@@ -370,7 +403,7 @@
           <div class="meta-col">${esc(i.country || "")}</div>
           <div>
             <h3 class="title">${esc(i.name)}</h3>
-            <p class="subline">${fmt(i.automatically_title_included)} tittelinkluderte · ${fmt(i.works)} verk totalt</p>
+            <p class="subline">${fmt(i.works)} designteoretiske verk</p>
           </div>
           <div class="actions"></div>
         </article>`).join("");
@@ -397,9 +430,10 @@
   function drawMap() {
     const cv = $("semCanvas");
     if (!cv || !S.semMap) return;
+    cv.style.touchAction = S.zoom > 1.05 ? "none" : "pan-y pinch-zoom";
     const dpr = window.devicePixelRatio || 1;
     const rect = cv.getBoundingClientRect();
-    const W = Math.max(300, rect.width), H = rect.height || 360;
+    const W = Math.max(280, rect.width), H = rect.height || 340;
     cv.width = W * dpr; cv.height = H * dpr;
     const ctx = cv.getContext("2d");
     ctx.scale(dpr, dpr);
@@ -415,16 +449,16 @@
       p._sx = sx; p._sy = sy;
       if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
       ctx.fillStyle = mode === "country" ? (CC_COLORS[p.cc] || "#888") : mode === "pdf" ? (p.pdf ? "#10b981" : "#52524e") : COLORS[p.c % COLORS.length];
-      ctx.globalAlpha = p.pdf ? 0.92 : 0.62;
+      ctx.globalAlpha = p.pdf ? 0.92 : 0.65;
       ctx.beginPath();
-      ctx.arc(sx, sy, p.pdf ? 2.8 : 2.0, 0, Math.PI * 2);
+      ctx.arc(sx, sy, p.pdf ? 2.9 : 2.1, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
   }
 
   function pickPoint(mx, my) {
-    let best = null, bd = 144;
+    let best = null, bd = 196;
     for (const p of S.semMap?.points || []) {
       if (S.clusterFilter !== -1 && p.c !== S.clusterFilter) continue;
       const d2 = (p._sx - mx) ** 2 + (p._sy - my) ** 2;
@@ -459,24 +493,30 @@
         </div>
         <div class="ana-sec">
           <h3>Landfordeling</h3>
-          <table class="tbl-clean">
-            <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">OA</th></tr></thead>
-            <tbody>${cs.map((c) => `<tr><td><strong>${esc(c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
-          </table>
+          <div class="table-wrap">
+            <table class="tbl-clean">
+              <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">OA</th></tr></thead>
+              <tbody>${cs.map((c) => `<tr><td><strong>${esc(c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
+            </table>
+          </div>
         </div>
         <div class="ana-sec">
           <h3>Tematiske klynger</h3>
-          <table class="tbl-clean">
-            <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
-            <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--muted);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
-          </table>
+          <div class="table-wrap">
+            <table class="tbl-clean">
+              <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
+              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--muted);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
+            </table>
+          </div>
         </div>
         <div class="ana-sec">
           <h3>Tidsskrift og konferansar</h3>
-          <table class="tbl-clean">
-            <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sit.</th></tr></thead>
-            <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.pdfs)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
-          </table>
+          <div class="table-wrap">
+            <table class="tbl-clean">
+              <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sit.</th></tr></thead>
+              <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.pdfs)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
+            </table>
+          </div>
         </div>
       </div>`;
   }
@@ -493,10 +533,10 @@
     const w = S.byId.get(wid);
     if (!w) return;
     $("qInput").value = w.title || wid;
-    $("accessSel").value = "";
-    $("layerSel").value = "all";
+    S.pdfOnly = false;
     $("ccSel").value = "";
     $("eraSel").value = "";
+    $("presetSel").value = "";
     S.semScores = null;
     S.expandedId = wid;
     setTab("korpus");
@@ -509,11 +549,8 @@
       setTab(b.dataset.tab);
     }));
 
-    $("metricAllBtn").addEventListener("click", () => { $("accessSel").value = ""; filterCorpus(); });
-    $("metricPdfBtn").addEventListener("click", () => {
-      $("accessSel").value = $("accessSel").value === "repo" ? "" : "repo";
-      filterCorpus();
-    });
+    $("metricAllBtn").addEventListener("click", () => { S.pdfOnly = false; filterCorpus(); });
+    $("metricPdfBtn").addEventListener("click", () => { S.pdfOnly = !S.pdfOnly; filterCorpus(); });
 
     let tmr = null;
     $("qInput").addEventListener("input", () => {
@@ -521,21 +558,23 @@
       tmr = setTimeout(() => {
         if (S.semScores && $("presetSel").value === "") S.semScores = null;
         filterCorpus();
-      }, 110);
+      }, 90);
     });
     $("qInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") filterCorpus();
+      if (e.key === "Enter") {
+        $("qInput").blur();
+        filterCorpus();
+      }
     });
-    $("wasmBtn").addEventListener("click", runWasmQuery);
 
     $("resetBtn").addEventListener("click", () => {
-      $("qInput").value = ""; $("accessSel").value = ""; $("presetSel").value = "";
-      $("layerSel").value = "all"; $("ccSel").value = ""; $("eraSel").value = "";
+      $("qInput").value = ""; S.pdfOnly = false; $("presetSel").value = "";
+      $("ccSel").value = ""; $("eraSel").value = "";
       $("sortSel").value = "relevance"; S.semScores = null; S.expandedId = null;
       filterCorpus();
     });
 
-    for (const id of ["accessSel", "layerSel", "ccSel", "eraSel", "sortSel"]) $(id).addEventListener("change", filterCorpus);
+    for (const id of ["ccSel", "eraSel", "sortSel"]) $(id).addEventListener("change", filterCorpus);
 
     $("presetSel").addEventListener("change", (e) => {
       const k = e.target.value;
@@ -571,7 +610,7 @@
     window.addEventListener("resize", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
     cv.addEventListener("wheel", (e) => {
       e.preventDefault();
-      S.zoom = Math.min(12, Math.max(0.5, S.zoom * (e.deltaY < 0 ? 1.18 : 0.85)));
+      S.zoom = Math.min(12, Math.max(0.8, S.zoom * (e.deltaY < 0 ? 1.18 : 0.85)));
       drawMap();
     }, { passive: false });
 
@@ -592,24 +631,31 @@
 
     cv.addEventListener("touchstart", (e) => {
       if (e.touches.length === 1) {
-        drag = true; moved = false; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+        moved = false;
+        lx = e.touches[0].clientX;
+        ly = e.touches[0].clientY;
+        drag = S.zoom > 1.05;
       } else if (e.touches.length === 2) {
         drag = false;
+        moved = true;
         pinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
       }
     }, { passive: true });
     cv.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-      if (e.touches.length === 1 && drag) {
-        const dx = e.touches[0].clientX - lx, dy = e.touches[0].clientY - ly;
-        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
-        S.panX += dx; S.panY += dy; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
-        drawMap();
-      } else if (e.touches.length === 2 && pinchDist > 0) {
+      if (e.touches.length === 2 && pinchDist > 0) {
+        e.preventDefault();
         const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-        S.zoom = Math.min(12, Math.max(0.5, S.zoom * (d / pinchDist)));
+        S.zoom = Math.min(12, Math.max(0.8, S.zoom * (d / pinchDist)));
         pinchDist = d;
         drawMap();
+      } else if (e.touches.length === 1) {
+        const dx = e.touches[0].clientX - lx, dy = e.touches[0].clientY - ly;
+        if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
+        if (drag && S.zoom > 1.05) {
+          e.preventDefault();
+          S.panX += dx; S.panY += dy; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+          drawMap();
+        }
       }
     }, { passive: false });
     cv.addEventListener("touchend", (e) => {
