@@ -1,27 +1,21 @@
 {
-  "editorial_records": 77,
   "match_status_counts": {
-    "duplicate-staging-doi": 121,
+    "duplicate-staging-doi": 119,
     "matched-doi": 501,
-    "matched-id": 32,
-    "missing-title": 1,
-    "new-candidate": 9254,
-    "possible-duplicate": 331
+    "new-candidate": 9215,
+    "possible-duplicate": 328
   },
-  "matched_exact": 533,
-  "note": "Neither repository exports nor title matches imply verified Nordic design theory.",
+  "matched_exact": 501,
   "openalex_records": 16685,
-  "possible_duplicate_records": 331,
-  "repository_records": 10163,
+  "possible_duplicate_records": 328,
   "source_counts": {
     "aalto": 22,
     "diva": 2806,
-    "editorial": 77,
     "iris": 38,
     "kgl": 374,
     "nordes": 711,
     "nva": 6212
   },
-  "source_records_total": 10240,
-  "unlinked_candidate_records": 9585
+  "source_records_total": 10163,
+  "unlinked_candidate_records": 9543
 }
