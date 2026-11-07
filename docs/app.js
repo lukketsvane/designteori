@@ -1,270 +1,221 @@
-/* DESIGNTEORI — Unified Research Workbench (Metadata + PDF + Citations + Google Embeddings + Analysis) */
+/* DESIGNTEORI — Nordic Typographic Workbench (Zero Popups, Load-More, Google Embeddings) */
 (() => {
   "use strict";
 
-  const PAGE_SIZE = 40;
-  const CLUSTER_COLORS = [
-    "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6",
-    "#06b6d4", "#ec4899", "#84cc16", "#f97316", "#6366f1"
-  ];
-  const COUNTRY_COLORS = {
-    NO: "#2563eb", SE: "#eab308", DK: "#dc2626", FI: "#06b6d4", IS: "#a855f7"
+  const STEP = 50;
+  const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#ec4899", "#84cc16", "#f97316", "#6366f1"];
+  const CC_COLORS = { NO: "#3b82f6", SE: "#eab308", DK: "#ef4444", FI: "#06b6d4", IS: "#a855f7" };
+
+  const HERO_COPY = {
+    korpus: [
+      "Open forsking / Nordisk designteori 1900–2026",
+      "Designteori.",
+      "Søkbar database for nordisk designteori og designforsking på tvers av Noreg, Sverige, Danmark, Finland og Island — med fulltekst-PDF, siteringsnettverk og Google-embeddingar.",
+    ],
+    pdf: [
+      "Open forsking / Dokumenttilgang",
+      "Fulltekst.",
+      "SHA-256-verifiserte Open Access fulltekst-PDF-ar lagra direkte i repoet under pdf/, med direkte lenkjer til opne originalkjelder.",
+    ],
+    siteringar: [
+      "Open forsking / Siteringsnettverk & Kanon",
+      "Kanon.",
+      "Dei mest siterte nordiske designpublikasjonane, den internasjonale grunnlagskanonen sitert frå Norden, samt sentrale forfattarar og institusjonar.",
+    ],
+    kart: [
+      "Open forsking / Google EmbeddingGemma-300M",
+      "Semantisk kart.",
+      "To-dimensjonal projeksjon av heile det nordiske korpuset bygd frå Google EmbeddingGemma-300M-vektorar og delt inn i ti tematiske klynger.",
+    ],
+    analyse: [
+      "Open forsking / Bibliometri & Historikk",
+      "Analyse.",
+      "Historisk utvikling frå 1900 til 2026, landfordeling, tematisk struktur og dei viktigaste nordiske og internasjonale publiseringskanalane.",
+    ],
   };
 
-  const state = {
-    allWorks: [],
-    worksById: new Map(),
-    pdfItems: [],
+  const S = {
+    works: [],
+    byId: new Map(),
+    pdfs: [],
     analysis: null,
     context: null,
     canon: null,
     authors: null,
-    institutions: null,
+    insts: null,
     semMeta: null,
-    semVectors: null, // Int8Array (N * dims)
-    semRowById: new Map(),
+    semVecs: null,
+    semIdx: new Map(),
     semMap: null,
-    wasmExtractor: null,
+    wasm: null,
 
-    // Corpus tab state
     filtered: [],
-    page: 0,
-    semanticScores: null, // Map<workId, cosine>
-    semanticLabel: "",
+    shown: STEP,
+    expandedId: null,
+    semScores: null,
+    semLabel: "",
 
-    // PDF tab state
     pdfFiltered: [],
-    pdfPage: 0,
-
-    // Citations tab state
+    pdfShown: STEP,
     citSub: "internal",
 
-    // Map state
-    mapClusterFilter: -1,
-    mapZoom: 1,
-    mapPanX: 0,
-    mapPanY: 0,
+    clusterFilter: -1,
+    zoom: 1,
+    panX: 0,
+    panY: 0,
   };
 
   const $ = (id) => document.getElementById(id);
   const fmt = (n) => (typeof n === "number" ? n.toLocaleString("nn-NO") : "—");
-  const esc = (s) =>
-    String(s ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+  const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-  async function fetchJson(url, fallback = null) {
-    try {
-      const r = await fetch(url);
-      if (!r.ok) return fallback;
-      return await r.json();
-    } catch {
-      return fallback;
-    }
+  async function jget(u, fb = null) {
+    try { const r = await fetch(u); return r.ok ? await r.json() : fb; } catch { return fb; }
   }
 
-  async function boot() {
-    bindEvents();
-    const [pubs, nordic, theory, analysis, pdfKat] = await Promise.all([
-      fetchJson("data/publications.json", []),
-      fetchJson("data/nordic_additions.json", []),
-      fetchJson("data/theory_additions.json", []),
-      fetchJson("data/analysis.json", null),
-      fetchJson("data/pdf_katalog.json", { items: [], stats: {} }),
+  async function init() {
+    bind();
+    const [pubs, nordic, ana, pkat] = await Promise.all([
+      jget("data/publications.json", []),
+      jget("data/nordic_additions.json", []),
+      jget("data/analysis.json", null),
+      jget("data/pdf_katalog.json", { items: [], stats: {} }),
     ]);
 
     for (const w of pubs) {
       w._layer = "openalex";
-      w._search = buildSearchString(w);
-      state.allWorks.push(w);
-      state.worksById.set(w.id, w);
+      w._q = `${w.title || ""} ${(w.authors || []).join(" ")} ${w.source || ""} ${w.doi || ""} ${w.topic || ""}`.toLowerCase();
+      S.works.push(w);
+      S.byId.set(w.id, w);
     }
     for (const w of nordic) {
       w._layer = "nordic";
-      w._search = buildSearchString(w);
-      state.allWorks.push(w);
-      state.worksById.set(w.id, w);
-    }
-    for (const w of theory) {
-      w._layer = "historical";
-      w._search = buildSearchString(w);
-      state.allWorks.push(w);
-      state.worksById.set(w.id, w);
+      w._q = `${w.title || ""} ${(w.authors || []).join(" ")} ${w.source || ""} ${w.doi || ""}`.toLowerCase();
+      S.works.push(w);
+      S.byId.set(w.id, w);
     }
 
-    state.analysis = analysis;
-    state.pdfItems = pdfKat.items || [];
-    updateKpis();
-    applyCorpusFilters();
-    applyPdfFilters();
+    S.analysis = ana;
+    S.pdfs = pkat.items || [];
+    const ov = ana?.overview || {};
+    const repoPdfCnt = ov.repo_pdf_files ?? S.works.filter((w) => w.pdf).length;
+    const totalW = ov.total_searchable_works ?? S.works.length;
+    $("stWorks").textContent = fmt(totalW);
+    $("stPdfs").textContent = fmt(repoPdfCnt);
+    $("stEmb").textContent = fmt(ov.google_embedded_works || totalW);
+    $("stInc").textContent = fmt(ov.openalex_auto_included ?? S.works.filter((w) => w.scope === "automatic-title-inclusion").length);
+
+    filterCorpus();
+    filterPdfs();
     renderAnalysis();
+    loadVectors();
 
-    // Load Google EmbeddingGemma int8 vectors asynchronously
-    loadSemanticIndex();
-
-    // Respect initial URL hash
-    const initHash = (location.hash || "").replace("#", "");
-    if (["korpus", "pdf", "siteringar", "kart", "analyse"].includes(initHash)) {
-      switchTab(initHash);
-    }
+    const h = (location.hash || "").replace("#", "");
+    if (HERO_COPY[h]) setTab(h);
   }
 
-  function buildSearchString(w) {
-    const auth = Array.isArray(w.authors) ? w.authors.join(" ") : (w.authors || "");
-    return `${w.title || ""} ${auth} ${w.source || ""} ${w.doi || ""} ${w.topic || ""} ${w.keyword_categories || ""}`.toLowerCase();
-  }
-
-  function updateKpis() {
-    const ov = state.analysis?.overview || {};
-    $("kpiTotal").textContent = fmt(ov.total_searchable_works ?? state.allWorks.length);
-    $("kpiIncluded").textContent = fmt(ov.openalex_auto_included ?? 0);
-    $("kpiPdfs").textContent = fmt(ov.repo_pdf_files ?? state.allWorks.filter((w) => w.pdf).length);
-    $("kpiEmbeddings").textContent = fmt(ov.google_embedded_works ?? 0);
-    $("kpiCitations").textContent = fmt(ov.internal_citation_edges ?? 0);
-    $("kpiCanon").textContent = fmt(ov.cited_canon_works ?? 0);
-  }
-
-  async function loadSemanticIndex() {
-    const meta = await fetchJson("data/semantic_index.json", null);
-    if (!meta || !meta.ids) {
-      $("embeddingStatus").textContent = "Ingen semantisk indeks funnen.";
-      return;
-    }
+  async function loadVectors() {
+    const m = await jget("data/semantic_index.json", null);
+    if (!m?.ids) return;
     try {
-      const resp = await fetch("data/semantic_vectors.bin");
-      if (!resp.ok) throw new Error("Bin missing");
-      const buf = await resp.arrayBuffer();
-      const vecs = new Int8Array(buf);
-      if (vecs.length !== meta.ids.length * meta.dimensions) {
-        throw new Error("Dim mismatch");
-      }
-      state.semMeta = meta;
-      state.semVectors = vecs;
-      meta.ids.forEach((id, idx) => state.semRowById.set(id, idx));
-      $("embeddingStatus").textContent = `Google EmbeddingGemma-300M klar (${fmt(meta.ids.length)} vektorar · ${meta.dimensions}d)`;
-    } catch {
-      $("embeddingStatus").textContent = "Kunne ikkje laste vektorfil.";
+      const r = await fetch("data/semantic_vectors.bin");
+      if (!r.ok) return;
+      const v = new Int8Array(await r.arrayBuffer());
+      if (v.length !== m.ids.length * m.dimensions) return;
+      S.semMeta = m;
+      S.semVecs = v;
+      m.ids.forEach((id, i) => S.semIdx.set(id, i));
+      if (m.ids.length) $("stEmb").textContent = fmt(m.ids.length);
+    } catch {}
+  }
+
+  function cosineAll(qVec) {
+    if (!S.semVecs || !S.semMeta) return null;
+    const D = S.semMeta.dimensions, ids = S.semMeta.ids, M = S.semVecs;
+    let qn = 0;
+    for (let d = 0; d < D; d++) qn += qVec[d] * qVec[d];
+    qn = Math.sqrt(qn) || 1;
+    const map = new Map();
+    for (let i = 0, b = 0; i < ids.length; i++, b += D) {
+      let dot = 0, vn = 0;
+      for (let d = 0; d < D; d++) { const x = M[b + d]; dot += x * qVec[d]; vn += x * x; }
+      map.set(ids[i], vn > 0 ? dot / (Math.sqrt(vn) * qn) : 0);
     }
+    return map;
   }
 
-  function scoreAgainstFloatVector(qVec) {
-    if (!state.semVectors || !state.semMeta) return null;
-    const dims = state.semMeta.dimensions;
-    const ids = state.semMeta.ids;
-    const mat = state.semVectors;
-    let qNorm = 0;
-    for (let d = 0; d < dims; d++) qNorm += qVec[d] * qVec[d];
-    qNorm = Math.sqrt(qNorm) || 1;
-
-    const scores = new Map();
-    for (let i = 0, base = 0; i < ids.length; i++, base += dims) {
-      let dot = 0;
-      let vNormSq = 0;
-      for (let d = 0; d < dims; d++) {
-        const v = mat[base + d];
-        dot += v * qVec[d];
-        vNormSq += v * v;
-      }
-      const denom = Math.sqrt(vNormSq) * qNorm;
-      scores.set(ids[i], denom > 0 ? dot / denom : 0);
-    }
-    return scores;
-  }
-
-  function runWorkSimilarity(workId) {
-    if (!state.semVectors || !state.semRowById.has(workId)) return;
-    const row = state.semRowById.get(workId);
-    const dims = state.semMeta.dimensions;
-    const slice = new Float32Array(dims);
-    for (let d = 0; d < dims; d++) slice[d] = state.semVectors[row * dims + d];
-    const target = state.worksById.get(workId);
-    state.semanticScores = scoreAgainstFloatVector(slice);
-    state.semanticLabel = `Semantisk likskap (Google EmbeddingGemma) til: «${(target?.title || workId).slice(0, 85)}»`;
-    $("sortFilter").value = "relevance";
-    switchTab("korpus");
-    applyCorpusFilters();
-  }
-
-  function topSimilarWorks(workId, k = 10) {
-    if (!state.semVectors || !state.semRowById.has(workId)) return [];
-    const row = state.semRowById.get(workId);
-    const dims = state.semMeta.dimensions;
-    const slice = new Float32Array(dims);
-    for (let d = 0; d < dims; d++) slice[d] = state.semVectors[row * dims + d];
-    const scores = scoreAgainstFloatVector(slice);
+  function topNeighbors(wid, k = 6) {
+    if (!S.semVecs || !S.semIdx.has(wid)) return [];
+    const D = S.semMeta.dimensions, row = S.semIdx.get(wid);
+    const q = new Float32Array(D);
+    for (let d = 0; d < D; d++) q[d] = S.semVecs[row * D + d];
+    const sc = cosineAll(q);
     const arr = [];
-    for (const [id, sc] of scores.entries()) {
-      if (id !== workId && state.worksById.has(id)) arr.push([id, sc]);
-    }
+    for (const [id, c] of sc) if (id !== wid && S.byId.has(id)) arr.push([id, c]);
     arr.sort((a, b) => b[1] - a[1]);
-    return arr.slice(0, k).map(([id, sc]) => ({ work: state.worksById.get(id), cosine: sc }));
+    return arr.slice(0, k).map(([id, c]) => ({ w: S.byId.get(id), c }));
   }
 
-  async function runLiveBrowserEmbeddingSearch() {
-    const query = $("qInput").value.trim();
-    if (!query) return;
-    if (!state.semVectors || !state.semMeta) return;
-    const btn = $("neuralSearchBtn");
-    const origText = btn.textContent;
+  function triggerSimilar(wid) {
+    if (!S.semVecs || !S.semIdx.has(wid)) return;
+    const D = S.semMeta.dimensions, row = S.semIdx.get(wid);
+    const q = new Float32Array(D);
+    for (let d = 0; d < D; d++) q[d] = S.semVecs[row * D + d];
+    S.semScores = cosineAll(q);
+    S.semLabel = `Semantisk liknande til «${(S.byId.get(wid)?.title || wid).slice(0, 75)}»`;
+    $("sortSel").value = "relevance";
+    setTab("korpus");
+    filterCorpus();
+  }
+
+  async function runWasmQuery() {
+    const q = $("qInput").value.trim();
+    if (!q || !S.semVecs) return;
+    const btn = $("wasmBtn");
+    const orig = btn.textContent;
     try {
       btn.disabled = true;
-      if (!state.wasmExtractor) {
-        btn.textContent = "Lastar Google EmbeddingGemma (WASM)…";
+      if (!S.wasm) {
+        btn.textContent = "Lastar modell …";
         const { pipeline, env } = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.0");
         env.allowLocalModels = false;
-        state.wasmExtractor = await pipeline("feature-extraction", state.semMeta.onnx_web_model || "onnx-community/embeddinggemma-300m-ONNX", {
-          dtype: "q8",
-        });
+        S.wasm = await pipeline("feature-extraction", S.semMeta.onnx_web_model || "onnx-community/embeddinggemma-300m-ONNX", { dtype: "q8" });
       }
-      btn.textContent = "Reknar vektor…";
-      const out = await state.wasmExtractor(`task: search result | query: ${query}`, {
-        pooling: "none",
-      });
-      // EmbeddingGemma ONNX returns pooled sentence_embedding or token states; slice first `dims`
-      const flat = out.data;
-      const dims = state.semMeta.dimensions;
-      const qVec = new Float32Array(dims);
-      for (let d = 0; d < dims; d++) qVec[d] = flat[d] || 0;
-      state.semanticScores = scoreAgainstFloatVector(qVec);
-      state.semanticLabel = `Google EmbeddingGemma semantisk fritekstsøk: «${query}»`;
-      $("sortFilter").value = "relevance";
-      applyCorpusFilters();
-    } catch (err) {
-      $("embeddingStatus").textContent = "Nettlesar-WASM feila — bruk førehandsrekna tema eller «Liknande verk» på alle kort.";
-      console.error(err);
+      btn.textContent = "Søkjer …";
+      const out = await S.wasm(`task: search result | query: ${q}`, { pooling: "none" });
+      const D = S.semMeta.dimensions, qv = new Float32Array(D);
+      for (let d = 0; d < D; d++) qv[d] = out.data[d] || 0;
+      S.semScores = cosineAll(qv);
+      S.semLabel = `Google EmbeddingGemma-søk: «${q}»`;
+      $("sortSel").value = "relevance";
+      filterCorpus();
+    } catch (e) {
+      console.error(e);
     } finally {
       btn.disabled = false;
-      btn.textContent = origText;
+      btn.textContent = orig;
     }
   }
 
-  function applyCorpusFilters() {
+  function filterCorpus() {
     const q = $("qInput").value.trim().toLowerCase();
-    const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
-    const layer = $("layerFilter").value;
-    const cc = $("countryFilter").value;
-    const era = $("eraFilter").value;
-    const pdfOnly = $("pdfOnlyToggle").checked;
-    const sort = $("sortFilter").value;
+    const toks = q ? q.split(/\s+/).filter(Boolean) : [];
+    const acc = $("accessSel").value;
+    const layer = $("layerSel").value;
+    const cc = $("ccSel").value;
+    const era = $("eraSel").value;
+    const sort = $("sortSel").value;
 
-    const banner = $("semanticActiveBanner");
-    if (state.semanticScores) {
-      banner.style.display = "flex";
-      $("semanticBannerText").textContent = state.semanticLabel;
-    } else {
-      banner.style.display = "none";
-    }
+    $("semBanner").hidden = !S.semScores;
+    if (S.semScores) $("semBannerTxt").textContent = S.semLabel;
 
     const out = [];
-    for (const w of state.allWorks) {
+    for (const w of S.works) {
+      if (acc === "repo" && !w.pdf) continue;
+      if (acc === "oa" && !w.pdf && !w.oa_url) continue;
       if (layer === "nordic" && w._layer !== "nordic") continue;
       if (layer !== "all" && layer !== "nordic" && w.scope !== layer) continue;
-      if (cc) {
-        const wCs = w.countries || (w.source_country ? [w.source_country] : []);
-        if (!wCs.includes(cc)) continue;
-      }
+      if (cc && !(w.countries || []).includes(cc) && w.source_country !== cc) continue;
       if (era) {
         const y = w.year;
         if (!y) continue;
@@ -273,713 +224,493 @@
         if (era === "2010-2019" && (y < 2010 || y > 2019)) continue;
         if (era === "2020-2026" && y < 2020) continue;
       }
-      if (pdfOnly && !w.pdf) continue;
-      // When not in semantic mode, require lexical match for all tokens
-      if (!state.semanticScores && tokens.length > 0) {
+      if (!S.semScores && toks.length) {
         let ok = true;
-        for (const t of tokens) {
-          if (!w._search.includes(t)) {
-            ok = false;
-            break;
-          }
-        }
+        for (const t of toks) if (!w._q.includes(t)) { ok = false; break; }
         if (!ok) continue;
       }
       out.push(w);
     }
 
-    if (sort === "citations") {
-      out.sort((a, b) => (b.citations || 0) - (a.citations || 0));
-    } else if (sort === "year_desc") {
-      out.sort((a, b) => (b.year || 0) - (a.year || 0));
-    } else if (sort === "year_asc") {
-      out.sort((a, b) => (a.year || 9999) - (b.year || 9999));
-    } else if (state.semanticScores) {
-      out.sort((a, b) => (state.semanticScores.get(b.id) || -1) - (state.semanticScores.get(a.id) || -1));
-    } else if (tokens.length > 0) {
+    if (sort === "citations") out.sort((a, b) => (b.citations || 0) - (a.citations || 0));
+    else if (sort === "year_desc") out.sort((a, b) => (b.year || 0) - (a.year || 0));
+    else if (sort === "year_asc") out.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    else if (S.semScores) out.sort((a, b) => (S.semScores.get(b.id) || -1) - (S.semScores.get(a.id) || -1));
+    else if (toks.length) {
       out.sort((a, b) => {
-        const aTitle = (a.title || "").toLowerCase();
-        const bTitle = (b.title || "").toLowerCase();
-        const aHits = tokens.reduce((s, t) => s + (aTitle.includes(t) ? 2 : 0), 0);
-        const bHits = tokens.reduce((s, t) => s + (bTitle.includes(t) ? 2 : 0), 0);
-        if (bHits !== aHits) return bHits - aHits;
-        return (b.citations || 0) - (a.citations || 0);
+        const at = (a.title || "").toLowerCase(), bt = (b.title || "").toLowerCase();
+        const ah = toks.reduce((s, t) => s + (at.includes(t) ? 1 : 0), 0);
+        const bh = toks.reduce((s, t) => s + (bt.includes(t) ? 1 : 0), 0);
+        return bh !== ah ? bh - ah : (b.citations || 0) - (a.citations || 0);
       });
     } else {
-      out.sort((a, b) => {
-        if (Boolean(b.pdf) !== Boolean(a.pdf)) return b.pdf ? 1 : -1;
-        return (b.citations || 0) - (a.citations || 0);
-      });
+      out.sort((a, b) => (Boolean(b.pdf) !== Boolean(a.pdf) ? (b.pdf ? 1 : -1) : (b.citations || 0) - (a.citations || 0)));
     }
 
-    state.filtered = out;
-    state.page = 0;
-    renderCorpusPage();
+    S.filtered = out;
+    S.shown = STEP;
+    renderCorpus();
   }
 
-  function renderCorpusPage() {
-    const total = state.filtered.length;
-    const maxPage = Math.max(0, Math.ceil(total / PAGE_SIZE) - 1);
-    state.page = Math.min(Math.max(0, state.page), maxPage);
-    const slice = state.filtered.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE);
+  async function renderCorpus() {
+    const N = S.filtered.length;
+    const rows = S.filtered.slice(0, S.shown);
+    $("hitCount").textContent = `Viser ${fmt(rows.length)} av ${fmt(N)} publikasjonar`;
+    $("moreCorpusBtn").hidden = rows.length >= N;
 
-    $("resultsSummary").textContent = `Viser ${fmt(slice.length)} av ${fmt(total)} registreringar`;
-    $("pageIndicator").textContent = `${state.page + 1} / ${maxPage + 1}`;
-    $("prevPageBtn").disabled = state.page <= 0;
-    $("nextPageBtn").disabled = state.page >= maxPage;
+    if (S.expandedId && !S.context) {
+      S.context = await jget("data/work_context.json", {});
+    }
 
-    const html = slice.map((w) => renderWorkCard(w)).join("");
-    $("corpusList").innerHTML = html || `<div class="box">Ingen treff for gjeldande filter.</div>`;
+    $("corpusList").innerHTML = rows.map((w) => {
+      const isExp = S.expandedId === w.id;
+      const auth = (w.authors || []).slice(0, 4).join(", ");
+      const cc = (w.countries && w.countries.length ? w.countries : (w.source_country ? [w.source_country] : [])).join(", ");
+      const cos = S.semScores?.get(w.id);
+      const doiHref = w.doi ? (w.doi.startsWith("http") ? w.doi : `https://doi.org/${w.doi}`) : "";
+
+      const tags = [];
+      if (w.pdf) tags.push(`<span class="tag checked">PDF i repo</span>`);
+      if (typeof cos === "number") tags.push(`<span class="tag checked">Likskap ${cos.toFixed(2)}</span>`);
+      if (cc) tags.push(`<span class="tag">${esc(cc)}</span>`);
+      if (typeof w.citations === "number" && w.citations > 0) tags.push(`<span class="tag">${fmt(w.citations)} sit.</span>`);
+
+      return `
+        <article class="item">
+          <div class="year">${esc(w.year || "—")}</div>
+          <div>
+            <h3 class="title"><button class="title-btn" type="button" data-toggle="${esc(w.id)}">${esc(w.title || "(utan tittel)")}</button></h3>
+            ${auth ? `<p class="byline">${esc(auth)}</p>` : ""}
+            ${w.source ? `<p class="source">${esc(w.source)}</p>` : ""}
+            <div class="tags">${tags.join("")}</div>
+          </div>
+          <div class="links">
+            ${w.pdf ? `<a href="${esc(w.pdf)}" target="_blank" rel="noopener"><strong>Opne PDF</strong></a>` : (w.oa_url ? `<a href="${esc(w.oa_url)}" target="_blank" rel="noopener">Originalkjelde</a>` : "")}
+            ${doiHref ? `<a href="${esc(doiHref)}" target="_blank" rel="noopener">DOI</a>` : ""}
+            ${S.semIdx.has(w.id) ? `<button type="button" data-sim="${esc(w.id)}">Liknande verk</button>` : ""}
+          </div>
+          ${isExp ? renderInlineDetail(w) : ""}
+        </article>`;
+    }).join("") || `<p style="padding:28px 0;color:var(--muted);">Ingen publikasjonar trefte filteret.</p>`;
   }
 
-  function scopeBadge(w) {
-    if (w.scope === "automatic-title-inclusion") return `<span class="badge badge-blue">OpenAlex tittelinkludert</span>`;
-    if (w.scope === "awaiting-eligibility-review") return `<span class="badge">OpenAlex vurderingskø</span>`;
-    if (w._layer === "nordic") return `<span class="badge badge-amber">${esc(w.source || "Nordisk arkiv")}</span>`;
-    return `<span class="badge">Historisk referanse</span>`;
-  }
-
-  function renderWorkCard(w) {
-    const auth = Array.isArray(w.authors) ? w.authors.slice(0, 5).join(", ") : (w.authors || "");
-    const cs = (w.countries && w.countries.length ? w.countries : (w.source_country ? [w.source_country] : [])).join(", ");
-    const cos = state.semanticScores?.get(w.id);
-    const cosHtml = typeof cos === "number" ? `<span class="badge badge-blue">cos ${cos.toFixed(3)}</span>` : "";
-    const pdfBtn = w.pdf
-      ? `<a class="btn btn-xs btn-pdf" href="${esc(w.pdf)}" target="_blank" rel="noopener">Opne PDF</a>`
-      : (w.oa_url ? `<a class="btn btn-xs" href="${esc(w.oa_url)}" target="_blank" rel="noopener">OA-kjelde</a>` : "");
-    const simBtn = state.semRowById.has(w.id)
-      ? `<button class="btn btn-xs" data-sim="${esc(w.id)}">Liknande verk</button>`
-      : "";
+  function renderInlineDetail(w) {
+    const ctx = S.context?.[w.id] || {};
+    const sims = topNeighbors(w.id, 6);
+    const citedBy = (ctx.cited_by || []).map((id) => S.byId.get(id)).filter(Boolean).slice(0, 6);
+    const cites = (ctx.cites || []).map((id) => S.byId.get(id)).filter(Boolean).slice(0, 6);
 
     return `
-      <article class="work-card">
-        <div class="work-top">
-          <div>
-            <h3 class="work-title" data-open="${esc(w.id)}">${esc(w.title || "(utan tittel)")}</h3>
-            <div class="work-sub">
-              <strong>${esc(w.year || "ukjent år")}</strong>
-              ${auth ? " · " + esc(auth) : ""}
-              ${w.source ? " · <em>" + esc(w.source) + "</em>" : ""}
-            </div>
+      <div class="inline-detail">
+        <div class="detail-cols">
+          <div class="detail-sec">
+            <h3>Semantisk næraste verk (Google EmbeddingGemma)</h3>
+            ${sims.map(({ w: sw, c }) => `
+              <div class="detail-row">
+                <span class="tag">${c.toFixed(2)}</span>
+                <a href="#" data-jump="${esc(sw.id)}">${esc(sw.year || "")} · ${esc(sw.title)}</a>
+                ${sw.pdf ? ` — <a href="${esc(sw.pdf)}" target="_blank" rel="noopener"><strong>PDF</strong></a>` : ""}
+              </div>`).join("") || `<div class="detail-row" style="color:var(--muted);">Vektorindeks lastar …</div>`}
           </div>
-          <div class="card-actions">
-            ${pdfBtn}
-            ${simBtn}
-            <button class="btn btn-xs" data-open="${esc(w.id)}">Detaljar</button>
+          <div class="detail-sec">
+            <h3>Siteringskoplingar i Norden (${(ctx.cited_by || []).length} inn / ${(ctx.cites || []).length} ut)</h3>
+            ${citedBy.map((cw) => `<div class="detail-row">← Sitert av: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year || "")} · ${esc(cw.title)}</a></div>`).join("")}
+            ${cites.map((cw) => `<div class="detail-row">→ Siterer: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year || "")} · ${esc(cw.title)}</a></div>`).join("")}
+            ${!citedBy.length && !cites.length ? `<div class="detail-row" style="color:var(--muted);">ID: ${esc(w.id)} · Lag: ${esc(w.scope || w._layer)}${w.kind ? " · Type: " + esc(w.kind) : ""}</div>` : ""}
           </div>
         </div>
-        <div class="badge-row">
-          ${scopeBadge(w)}
-          ${w.pdf ? `<span class="badge badge-green">PDF i repo (pdf/)</span>` : ""}
-          ${cs ? `<span class="badge">${esc(cs)}</span>` : ""}
-          ${w.kind ? `<span class="badge">${esc(w.kind)}</span>` : ""}
-          ${typeof w.citations === "number" ? `<span class="badge">${fmt(w.citations)} siteringar</span>` : ""}
-          ${cosHtml}
-        </div>
-      </article>
-    `;
+      </div>`;
   }
 
-  /* TAB 2: PDF ARCHIVE */
-  function applyPdfFilters() {
-    const q = $("pdfSearchInput").value.trim().toLowerCase();
-    const mode = $("pdfAccessFilter").value;
-    const cc = $("pdfCountryFilter").value;
-    const out = state.pdfItems.filter((it) => {
+  /* FULLTEKST / PDF */
+  function filterPdfs() {
+    const q = $("pdfQ").value.trim().toLowerCase();
+    const mode = $("pdfMode").value;
+    const cc = $("pdfCc").value;
+    S.pdfFiltered = S.pdfs.filter((it) => {
       if (mode === "repo" && !it.pdf_in_repo) return false;
-      if (mode === "verified" && !it.verified_oa_pdf) return false;
       if (cc && !(it.country_affiliations || []).includes(cc)) return false;
-      if (q) {
-        const hay = `${it.title || ""} ${(it.authors || []).join(" ")} ${it.source || ""} ${it.doi || ""} ${it.document_sha256 || ""}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
+      if (q && !`${it.title} ${(it.authors || []).join(" ")} ${it.source} ${it.doi} ${it.document_sha256}`.toLowerCase().includes(q)) return false;
       return true;
     });
-    state.pdfFiltered = out;
-    state.pdfPage = 0;
-    renderPdfPage();
+    S.pdfShown = STEP;
+    renderPdfs();
   }
 
-  function renderPdfPage() {
-    const total = state.pdfFiltered.length;
-    const maxP = Math.max(0, Math.ceil(total / PAGE_SIZE) - 1);
-    state.pdfPage = Math.min(Math.max(0, state.pdfPage), maxP);
-    const slice = state.pdfFiltered.slice(state.pdfPage * PAGE_SIZE, (state.pdfPage + 1) * PAGE_SIZE);
-    $("pdfSummary").textContent = `Viser ${fmt(slice.length)} av ${fmt(total)} fulltekstoppføringar`;
-    $("pdfPageInd").textContent = `${state.pdfPage + 1} / ${maxP + 1}`;
-    $("pdfPrevBtn").disabled = state.pdfPage <= 0;
-    $("pdfNextBtn").disabled = state.pdfPage >= maxP;
+  function renderPdfs() {
+    const N = S.pdfFiltered.length;
+    const slice = S.pdfFiltered.slice(0, S.pdfShown);
+    $("pdfCount").textContent = `Viser ${fmt(slice.length)} av ${fmt(N)} dokument`;
+    $("morePdfBtn").hidden = slice.length >= N;
 
     $("pdfList").innerHTML = slice.map((it) => {
-      const url = it.public_pdf_url || it.oa_location_unverified || "";
-      const mb = it.document_bytes ? (it.document_bytes / 1e6).toFixed(2) + " MB" : "";
-      const sha = it.document_sha256 ? it.document_sha256.slice(0, 12) + "…" : "";
+      const u = it.public_pdf_url || it.oa_location_unverified || "";
+      const mb = it.document_bytes ? (it.document_bytes / 1e6).toFixed(1) + " MB" : "";
+      const cc = (it.country_affiliations || []).join(", ");
       return `
-        <article class="work-card">
-          <div class="work-top">
-            <div>
-              <h3 class="work-title" data-open="${esc(it.id)}">${esc(it.title)}</h3>
-              <div class="work-sub">
-                <strong>${esc(it.year || "?")}</strong> · ${esc((it.authors || []).slice(0, 4).join(", "))}
-                ${it.source ? " · <em>" + esc(it.source) + "</em>" : ""}
-              </div>
-            </div>
-            <div class="card-actions">
-              ${url ? `<a class="btn btn-xs btn-pdf" href="${esc(url)}" target="_blank" rel="noopener">${it.pdf_in_repo ? "Opne PDF (GitHub)" : "Opne OA-PDF"}</a>` : ""}
-              <button class="btn btn-xs" data-open="${esc(it.id)}">Detaljar</button>
-            </div>
-          </div>
-          <div class="badge-row">
-            ${it.pdf_in_repo ? `<span class="badge badge-green">Lagra i pdf/</span>` : `<span class="badge badge-blue">Ekstern OA-lenkje</span>`}
-            ${mb ? `<span class="badge">${esc(mb)}</span>` : ""}
-            ${sha ? `<span class="badge" style="font-family:var(--mono);">SHA-256: ${esc(sha)}</span>` : ""}
-            ${(it.country_affiliations || []).length ? `<span class="badge">${esc(it.country_affiliations.join(", "))}</span>` : ""}
-          </div>
-        </article>
-      `;
-    }).join("") || `<div class="box">Ingen PDF-oppføringar funne.</div>`;
-  }
-
-  /* TAB 3: CITATIONS, CANON & ACTORS */
-  async function renderCitationsTab() {
-    const q = $("citFilterInput").value.trim().toLowerCase();
-    const box = $("citationContainer");
-    if (state.citSub === "internal") {
-      const list = (state.analysis?.citations?.top_internally_cited || []).filter((r) =>
-        !q || `${r.title} ${(r.authors || []).join(" ")} ${r.source}`.toLowerCase().includes(q)
-      );
-      box.innerHTML = `
-        <h3>Mest siterte nordiske verk internt i korpuset</h3>
-        <p style="color:var(--ink-muted);font-size:0.86rem;">Rangert etter kor mange andre nordiske designpublikasjonar i korpuset som siterer verket.</p>
-        <table class="data-table">
-          <thead><tr><th>Verk</th><th>År</th><th>Land</th><th>Interne sit.</th><th>Globale sit.</th><th>PDF</th></tr></thead>
-          <tbody>
-            ${list.map((r) => `
-              <tr>
-                <td><a href="#" data-open="${esc(r.id)}"><strong>${esc(r.title)}</strong></a><br/><span style="color:var(--ink-muted);font-size:0.8rem;">${esc((r.authors || []).join(", "))} · ${esc(r.source || "")}</span></td>
-                <td>${esc(r.year || "")}</td>
-                <td>${esc((r.countries || []).join(", "))}</td>
-                <td><strong>${fmt(r.internal_citations)}</strong></td>
-                <td>${fmt(r.global_citations)}</td>
-                <td>${r.pdf ? `<a href="${esc(r.pdf)}" target="_blank" rel="noopener">PDF</a>` : "—"}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>`;
-      return;
-    }
-
-    if (state.citSub === "canon") {
-      if (!state.canon) {
-        box.innerHTML = "Lastar sitert grunnlagskanon…";
-        const d = await fetchJson("data/cited_canon.json", { items: [] });
-        state.canon = d.items || [];
-      }
-      const list = state.canon.filter((r) =>
-        !q || `${r.title} ${r.authors} ${r.source}`.toLowerCase().includes(q)
-      ).slice(0, 200);
-      box.innerHTML = `
-        <h3>Grunnleggjande sitert kanon i nordisk designforsking (topp 1 000 refererte verk)</h3>
-        <p style="color:var(--ink-muted);font-size:0.86rem;">Internasjonale og nordiske referanseverk som oftast blir siterte frå det nordiske designkorpuset.</p>
-        <table class="data-table">
-          <thead><tr><th>Tittel &amp; Forfattar</th><th>År</th><th>Sitert av nordiske verk</th><th>Globale sit.</th><th>Kjelde</th></tr></thead>
-          <tbody>
-            ${list.map((r) => `
-              <tr>
-                <td>${r.in_primary_corpus ? `<a href="#" data-open="${esc(r.id)}"><strong>${esc(r.title)}</strong></a>` : `<strong>${esc(r.title)}</strong>`}<br/><span style="color:var(--ink-muted);font-size:0.8rem;">${esc(r.authors)}</span></td>
-                <td>${esc(r.year || "")}</td>
-                <td><strong>${fmt(r.nordic_citing_count)}</strong></td>
-                <td>${fmt(r.global_citations)}</td>
-                <td>${r.doi ? `<a href="${esc(r.doi)}" target="_blank" rel="noopener">DOI</a>` : esc(r.source || "—")}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>`;
-      return;
-    }
-
-    if (state.citSub === "authors") {
-      if (!state.authors) {
-        box.innerHTML = "Lastar forfattarregister…";
-        const d = await fetchJson("data/authors.json", { items: [] });
-        state.authors = d.items || [];
-      }
-      const list = state.authors.filter((a) => !q || `${a.name} ${(a.institutions || []).join(" ")}`.toLowerCase().includes(q)).slice(0, 150);
-      box.innerHTML = `
-        <h3>Nordiske designforskarar</h3>
-        <table class="data-table">
-          <thead><tr><th>Forfattar</th><th>Land</th><th>Tittelinkluderte</th><th>Totalt</th><th>Siteringssum</th><th>Institusjonar</th></tr></thead>
-          <tbody>
-            ${list.map((a) => `
-              <tr>
-                <td><a href="#" data-author-q="${esc(a.name)}"><strong>${esc(a.name)}</strong></a></td>
-                <td>${esc((a.countries || []).join(", "))}</td>
-                <td><strong>${fmt(a.automatically_title_included)}</strong></td>
-                <td>${fmt(a.works)}</td>
-                <td>${fmt(a.openalex_citation_sum_on_snapshot_works)}</td>
-                <td style="font-size:0.79rem;color:var(--ink-muted);">${esc((a.institutions || []).slice(0, 2).join("; "))}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>`;
-      return;
-    }
-
-    if (state.citSub === "institutions") {
-      if (!state.institutions) {
-        box.innerHTML = "Lastar institusjonsregister…";
-        const d = await fetchJson("data/institutions.json", { items: [] });
-        state.institutions = d.items || [];
-      }
-      const list = state.institutions.filter((i) => !q || `${i.name} ${i.country}`.toLowerCase().includes(q)).slice(0, 150);
-      box.innerHTML = `
-        <h3>Forskingsinstitusjonar</h3>
-        <table class="data-table">
-          <thead><tr><th>Institusjon</th><th>Land</th><th>Tittelinkluderte verk</th><th>Totalt i korpus</th></tr></thead>
-          <tbody>
-            ${list.map((i) => `
-              <tr>
-                <td><strong>${esc(i.name)}</strong></td>
-                <td>${esc(i.country)}</td>
-                <td><strong>${fmt(i.automatically_title_included)}</strong></td>
-                <td>${fmt(i.works)}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>`;
-    }
-  }
-
-  /* TAB 4: 2D SEMANTIC MAP */
-  async function ensureSemanticMap() {
-    if (!state.semMap) {
-      state.semMap = await fetchJson("data/semantic_map.json", { clusters: [], points: [] });
-      renderMapLegend();
-    }
-    drawSemanticMap();
-  }
-
-  function renderMapLegend() {
-    const clusters = state.semMap?.clusters || [];
-    $("mapLegend").innerHTML =
-      `<div class="legend-item ${state.mapClusterFilter === -1 ? "active" : ""}" data-cluster="-1">
-        <span class="swatch" style="background:#94a3b8;"></span>
-        <span><strong>Alle klynger (${fmt(state.semMap?.points?.length || 0)} verk)</strong></span>
-      </div>` +
-      clusters.map((c, idx) => `
-        <div class="legend-item ${state.mapClusterFilter === c.id ? "active" : ""}" data-cluster="${c.id}">
-          <span class="swatch" style="background:${CLUSTER_COLORS[idx % CLUSTER_COLORS.length]};"></span>
+        <article class="item">
+          <div class="year">${esc(it.year || "—")}</div>
           <div>
-            <div style="font-weight:600;">${esc(c.label)}</div>
-            <div style="font-size:0.74rem;color:var(--ink-muted);">${esc((c.keywords || []).slice(0, 4).join(", "))}</div>
+            <h3 class="title"><a href="${esc(u || "#")}" ${u ? `target="_blank" rel="noopener"` : ""}>${esc(it.title)}</a></h3>
+            <p class="byline">${esc((it.authors || []).slice(0, 4).join(", "))}</p>
+            ${it.source ? `<p class="source">${esc(it.source)}</p>` : ""}
+            <div class="tags">
+              ${it.pdf_in_repo ? `<span class="tag checked">PDF i repo</span>` : `<span class="tag">OA-kjelde</span>`}
+              ${mb ? `<span class="tag">${esc(mb)}</span>` : ""}
+              ${cc ? `<span class="tag">${esc(cc)}</span>` : ""}
+            </div>
           </div>
-        </div>
-      `).join("");
+          <div class="links">
+            ${u ? `<a href="${esc(u)}" target="_blank" rel="noopener"><strong>${it.pdf_in_repo ? "Opne PDF" : "Originalkjelde"}</strong></a>` : ""}
+            <button type="button" data-jump="${esc(it.id)}">Vis i katalog</button>
+          </div>
+        </article>`;
+    }).join("") || `<p style="padding:28px 0;color:var(--muted);">Ingen dokument trefte filteret.</p>`;
   }
 
-  function drawSemanticMap() {
-    const canvas = $("semanticCanvas");
-    if (!canvas || !state.semMap) return;
+  /* KANON & SITERINGAR */
+  async function renderCitations() {
+    const q = $("citQ").value.trim().toLowerCase();
+    const box = $("citBox");
+
+    if (S.citSub === "internal") {
+      const rows = (S.analysis?.citations?.top_internally_cited || []).filter((r) => !q || `${r.title} ${(r.authors || []).join(" ")}`.toLowerCase().includes(q));
+      box.innerHTML = rows.map((r) => `
+        <article class="item">
+          <div class="year">${esc(r.year || "—")}</div>
+          <div>
+            <h3 class="title"><button class="title-btn" type="button" data-jump="${esc(r.id)}">${esc(r.title)}</button></h3>
+            <p class="byline">${esc((r.authors || []).join(", "))}</p>
+            <div class="tags">
+              <span class="tag checked">${fmt(r.internal_citations)} nordiske siteringar</span>
+              <span class="tag">${fmt(r.global_citations)} globalt</span>
+              ${(r.countries || []).length ? `<span class="tag">${esc(r.countries.join(", "))}</span>` : ""}
+            </div>
+          </div>
+          <div class="links">
+            ${r.pdf ? `<a href="${esc(r.pdf)}" target="_blank" rel="noopener"><strong>Opne PDF</strong></a>` : ""}
+            <button type="button" data-jump="${esc(r.id)}">Vis i katalog</button>
+          </div>
+        </article>`).join("");
+      return;
+    }
+
+    if (S.citSub === "canon") {
+      if (!S.canon) S.canon = (await jget("data/cited_canon.json", { items: [] })).items || [];
+      const rows = S.canon.filter((r) => !q || `${r.title} ${r.authors}`.toLowerCase().includes(q)).slice(0, 150);
+      box.innerHTML = rows.map((r) => `
+        <article class="item">
+          <div class="year">${esc(r.year || "—")}</div>
+          <div>
+            <h3 class="title">${esc(r.title)}</h3>
+            <p class="byline">${esc(r.authors || "")}</p>
+            <div class="tags">
+              <span class="tag checked">Sitert ${fmt(r.nordic_citing_count)}× frå Norden</span>
+              <span class="tag">${fmt(r.global_citations)} globalt</span>
+            </div>
+          </div>
+          <div class="links">
+            ${r.doi ? `<a href="${esc(r.doi)}" target="_blank" rel="noopener">DOI</a>` : ""}
+          </div>
+        </article>`).join("");
+      return;
+    }
+
+    if (S.citSub === "authors") {
+      if (!S.authors) S.authors = (await jget("data/authors.json", { items: [] })).items || [];
+      const rows = S.authors.filter((a) => !q || `${a.name} ${(a.institutions || []).join(" ")}`.toLowerCase().includes(q)).slice(0, 120);
+      box.innerHTML = rows.map((a) => `
+        <article class="item">
+          <div class="year">${esc((a.countries || []).join(",") || "—")}</div>
+          <div>
+            <h3 class="title"><button class="title-btn" type="button" data-author="${esc(a.name)}">${esc(a.name)}</button></h3>
+            <p class="byline">${esc((a.institutions || []).slice(0, 3).join(" · "))}</p>
+            <div class="tags">
+              <span class="tag checked">${fmt(a.automatically_title_included)} tittelinkluderte</span>
+              <span class="tag">${fmt(a.works)} verk</span>
+              <span class="tag">${fmt(a.openalex_citation_sum_on_snapshot_works)} sit.</span>
+            </div>
+          </div>
+          <div class="links"><button type="button" data-author="${esc(a.name)}">Filtrer katalog</button></div>
+        </article>`).join("");
+      return;
+    }
+
+    if (S.citSub === "institutions") {
+      if (!S.insts) S.insts = (await jget("data/institutions.json", { items: [] })).items || [];
+      const rows = S.insts.filter((i) => !q || `${i.name} ${i.country}`.toLowerCase().includes(q)).slice(0, 120);
+      box.innerHTML = rows.map((i) => `
+        <article class="item">
+          <div class="year">${esc(i.country || "—")}</div>
+          <div>
+            <h3 class="title">${esc(i.name)}</h3>
+            <div class="tags">
+              <span class="tag checked">${fmt(i.automatically_title_included)} tittelinkluderte</span>
+              <span class="tag">${fmt(i.works)} verk totalt</span>
+            </div>
+          </div>
+          <div class="links"></div>
+        </article>`).join("");
+    }
+  }
+
+  /* SEMANTISK KART */
+  async function ensureMap() {
+    if (!S.semMap) {
+      S.semMap = await jget("data/semantic_map.json", { clusters: [], points: [] });
+      renderLegend();
+    }
+    requestAnimationFrame(drawMap);
+  }
+
+  function renderLegend() {
+    const cs = S.semMap?.clusters || [];
+    const total = S.semMap?.points?.length || 0;
+    $("mapLegend").innerHTML =
+      `<div class="cluster-row ${S.clusterFilter === -1 ? "active" : ""}" data-cl="-1"><span><span class="swatch" style="background:#888;"></span>Alle klynger</span><span>${fmt(total)}</span></div>` +
+      cs.map((c, i) => `<div class="cluster-row ${S.clusterFilter === c.id ? "active" : ""}" data-cl="${c.id}"><span><span class="swatch" style="background:${COLORS[i % COLORS.length]};"></span>${esc(c.label)}</span><span>${fmt(c.size || "")}</span></div>`).join("");
+  }
+
+  function drawMap() {
+    const cv = $("semCanvas");
+    if (!cv || !S.semMap) return;
     const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    const W = Math.max(600, rect.width);
-    const H = 560;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    const ctx = canvas.getContext("2d");
+    const rect = cv.getBoundingClientRect();
+    const W = Math.max(300, rect.width), H = rect.height || 360;
+    cv.width = W * dpr; cv.height = H * dpr;
+    const ctx = cv.getContext("2d");
     ctx.scale(dpr, dpr);
-    ctx.fillStyle = "#0f1522";
+    ctx.fillStyle = "#141413";
     ctx.fillRect(0, 0, W, H);
 
-    const mode = $("mapColorMode").value;
-    const pts = state.semMap.points || [];
-    const cx = W / 2 + state.mapPanX;
-    const cy = H / 2 + state.mapPanY;
-    const scale = Math.min(W, H) * 0.34 * state.mapZoom;
-
-    for (let i = 0; i < pts.length; i++) {
-      const p = pts[i];
-      if (state.mapClusterFilter !== -1 && p.c !== state.mapClusterFilter) continue;
-      const sx = cx + p.x * scale;
-      const sy = cy - p.y * scale;
-      if (sx < -6 || sx > W + 6 || sy < -6 || sy > H + 6) continue;
-      p._sx = sx;
-      p._sy = sy;
-      if (mode === "country") {
-        ctx.fillStyle = COUNTRY_COLORS[p.cc] || "#64748b";
-      } else if (mode === "pdf") {
-        ctx.fillStyle = p.pdf ? "#22c55e" : "#475569";
-      } else {
-        ctx.fillStyle = CLUSTER_COLORS[p.c % CLUSTER_COLORS.length];
-      }
+    const mode = $("mapMode").value;
+    const pts = S.semMap.points || [];
+    const cx = W / 2 + S.panX, cy = H / 2 + S.panY, sc = Math.min(W, H) * 0.36 * S.zoom;
+    for (const p of pts) {
+      if (S.clusterFilter !== -1 && p.c !== S.clusterFilter) continue;
+      const sx = cx + p.x * sc, sy = cy - p.y * sc;
+      p._sx = sx; p._sy = sy;
+      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+      ctx.fillStyle = mode === "country" ? (CC_COLORS[p.cc] || "#888") : mode === "pdf" ? (p.pdf ? "#10b981" : "#52524e") : COLORS[p.c % COLORS.length];
       ctx.globalAlpha = p.pdf ? 0.92 : 0.62;
       ctx.beginPath();
-      ctx.arc(sx, sy, p.pdf ? 3.3 : 2.3, 0, Math.PI * 2);
+      ctx.arc(sx, sy, p.pdf ? 2.8 : 2.0, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
   }
 
-  /* TAB 5: EMPIRICAL ANALYSIS */
+  function pickPoint(mx, my) {
+    let best = null, bd = 144;
+    for (const p of S.semMap?.points || []) {
+      if (S.clusterFilter !== -1 && p.c !== S.clusterFilter) continue;
+      const d2 = (p._sx - mx) ** 2 + (p._sy - my) ** 2;
+      if (d2 < bd) { bd = d2; best = p; }
+    }
+    if (best) {
+      const w = S.byId.get(best.id);
+      $("mapSelectedBar").innerHTML = `<strong>${esc(w?.year || "")} · ${esc(w?.title || best.id)}</strong> — ${esc((w?.authors || []).slice(0, 3).join(", "))} · <a href="#" data-jump="${esc(best.id)}">Vis i katalog</a> ${w?.pdf ? `· <a href="${esc(w.pdf)}" target="_blank" rel="noopener"><strong>Opne PDF</strong></a>` : ""}`;
+    }
+  }
+
+  /* ANALYSE */
   function renderAnalysis() {
-    const a = state.analysis;
+    const a = S.analysis;
     if (!a) return;
     const decs = a.decades || [];
-    const maxDec = Math.max(1, ...decs.map((d) => d.total + (d.nordic_archives || 0)));
-    const countries = a.countries || [];
-    const matrix = a.cross_nordic_collaboration?.matrix || {};
-    const clusters = a.semantic_clusters || [];
-    const venues = (a.top_venues || []).slice(0, 20);
+    const maxD = Math.max(1, ...decs.map((d) => d.total + (d.nordic_archives || 0)));
+    const cs = a.countries || [];
+    const cls = a.semantic_clusters || [];
+    const vens = (a.top_venues || []).slice(0, 15);
 
-    $("analysisRoot").innerHTML = `
-      <div class="grid-2">
-        <div class="box">
-          <h3>Historisk vekst per tiår (1900–2026)</h3>
-          <p style="font-size:0.83rem;color:var(--ink-muted);">Blå = totale registreringar, grøn = nedlasta PDF i <code>pdf/</code>.</p>
+    $("anaRoot").innerHTML = `
+      <div class="ana-grid">
+        <div class="ana-sec">
+          <h3>Publikasjonar og PDF per tiår (1900–2026)</h3>
           ${decs.map((d) => {
-            const sum = d.total + (d.nordic_archives || 0);
-            const pct = ((sum / maxDec) * 100).toFixed(1);
-            const pdfPct = ((d.pdfs / maxDec) * 100).toFixed(1);
-            return `
-              <div class="bar-row">
-                <strong>${esc(d.decade)}</strong>
-                <div class="bar-track">
-                  <div class="bar-fill" style="width:${pct}%"></div>
-                  <div class="bar-fill-pdf" style="width:${pdfPct}%"></div>
-                </div>
-                <span style="text-align:right;font-variant-numeric:tabular-nums;">${fmt(sum)} (${fmt(d.pdfs)} PDF)</span>
-              </div>`;
+            const tot = d.total + (d.nordic_archives || 0);
+            return `<div class="bar-line"><span>${esc(d.decade)}</span><div class="bar-bg"><div class="bar-a" style="width:${((tot / maxD) * 100).toFixed(1)}%"></div><div class="bar-b" style="width:${((d.pdfs / maxD) * 100).toFixed(1)}%"></div></div><span class="r">${fmt(tot)} (${fmt(d.pdfs)})</span></div>`;
           }).join("")}
         </div>
-
-        <div class="box">
-          <h3>Nordisk landprofil (NO · SE · DK · FI · IS)</h3>
-          <table class="data-table">
-            <thead><tr><th>Land</th><th>OpenAlex</th><th>Tittelinkl.</th><th>Nasjonalt arkiv</th><th>PDF i repo</th><th>OA-del</th></tr></thead>
-            <tbody>
-              ${countries.map((c) => `
-                <tr>
-                  <td><strong>${esc(c.country)}</strong></td>
-                  <td>${fmt(c.openalex_works)}</td>
-                  <td>${fmt(c.auto_included)}</td>
-                  <td>${fmt(c.nordic_archive_records)}</td>
-                  <td><strong>${fmt(c.pdfs)}</strong></td>
-                  <td>${((c.oa_share || 0) * 100).toFixed(1)} %</td>
-                </tr>`).join("")}
-            </tbody>
-          </table>
-
-          <h3 style="margin-top:1.2rem;">Nordisk samskrivingsmatrise</h3>
-          <table class="data-table">
-            <thead><tr><th></th>${["NO", "SE", "DK", "FI", "IS"].map((c) => `<th>${c}</th>`).join("")}</tr></thead>
-            <tbody>
-              ${["NO", "SE", "DK", "FI", "IS"].map((r) => `
-                <tr>
-                  <th>${r}</th>
-                  ${["NO", "SE", "DK", "FI", "IS"].map((c) => `<td>${fmt(matrix[r]?.[c] ?? 0)}</td>`).join("")}
-                </tr>`).join("")}
-            </tbody>
+        <div class="ana-sec">
+          <h3>Nordiske land</h3>
+          <table class="tbl-clean">
+            <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">OA</th></tr></thead>
+            <tbody>${cs.map((c) => `<tr><td><strong>${esc(c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
           </table>
         </div>
-      </div>
-
-      <div class="box">
-        <h3>10 Semantiske forskingsklynger (Google EmbeddingGemma-300M)</h3>
-        <table class="data-table">
-          <thead><tr><th>Forskingsklynge</th><th>Kjerneverk</th><th>PDF i repo</th><th>Nøkkelord</th><th>Landfordeling (NO/SE/DK/FI/IS)</th></tr></thead>
-          <tbody>
-            ${clusters.map((c) => `
-              <tr>
-                <td><strong>${esc(c.label)}</strong></td>
-                <td>${fmt(c.core_works)}</td>
-                <td>${fmt(c.pdfs)}</td>
-                <td style="font-size:0.8rem;color:var(--ink-muted);">${esc((c.keywords || []).join(", "))}</td>
-                <td style="font-size:0.8rem;">NO:${c.countries?.NO || 0} · SE:${c.countries?.SE || 0} · DK:${c.countries?.DK || 0} · FI:${c.countries?.FI || 0} · IS:${c.countries?.IS || 0}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="grid-2">
-        <div class="box">
-          <h3>Sentrale publiseringskanalar</h3>
-          <table class="data-table">
-            <thead><tr><th>Tidsskrift / konferanse</th><th>Tittelinkl.</th><th>PDF</th><th>Siteringar</th></tr></thead>
-            <tbody>
-              ${venues.map((v) => `
-                <tr>
-                  <td><strong>${esc(v.venue)}</strong></td>
-                  <td>${fmt(v.auto_included)}</td>
-                  <td>${fmt(v.pdfs)}</td>
-                  <td>${fmt(v.citations)}</td>
-                </tr>`).join("")}
-            </tbody>
+        <div class="ana-sec">
+          <h3>Google EmbeddingGemma forskingsklynger</h3>
+          <table class="tbl-clean">
+            <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
+            <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--muted);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
           </table>
         </div>
-
-        <div class="box">
-          <h3>Metodisk etterprøvbarheit</h3>
-          <ul class="mini-list">
-            ${(a.methodological_notes || []).map((n) => `<li>${esc(n)}</li>`).join("")}
-          </ul>
+        <div class="ana-sec">
+          <h3>Sentrale tidsskrift og konferansar</h3>
+          <table class="tbl-clean">
+            <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sit.</th></tr></thead>
+            <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.pdfs)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
+          </table>
         </div>
-      </div>
-    `;
+      </div>`;
   }
 
-  /* SLIDE-OVER DETAIL DRAWER */
-  async function openDrawer(workId) {
-    const w = state.worksById.get(workId);
+  function setTab(t) {
+    document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === t));
+    document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === `view-${t}`));
+    const copy = HERO_COPY[t] || HERO_COPY.korpus;
+    $("heroEyebrow").textContent = copy[0];
+    $("heroTitle").textContent = copy[1];
+    $("heroLead").textContent = copy[2];
+    history.replaceState(null, "", `#${t}`);
+    if (t === "siteringar") renderCitations();
+    if (t === "kart") ensureMap();
+  }
+
+  function jumpToWorkInline(wid) {
+    const w = S.byId.get(wid);
     if (!w) return;
-    if (!state.context) {
-      state.context = await fetchJson("data/work_context.json", {});
-    }
-    const ctx = state.context?.[workId] || {};
-    $("drawerBadge").textContent = `${w._layer.toUpperCase()} · ${w.id}`;
-    $("drawerTitle").textContent = w.title || "(utan tittel)";
-    const auth = Array.isArray(w.authors) ? w.authors.join(", ") : (w.authors || "");
-    $("drawerMeta").innerHTML = `<strong>${esc(w.year || "?")}</strong> · ${esc(auth)} ${w.source ? " · <em>" + esc(w.source) + "</em>" : ""}`;
-
-    const actions = [];
-    if (w.pdf) actions.push(`<a class="btn btn-pdf" href="${esc(w.pdf)}" target="_blank" rel="noopener">Opne PDF (GitHub)</a>`);
-    if (w.oa_url && w.oa_url !== w.pdf) actions.push(`<a class="btn" href="${esc(w.oa_url)}" target="_blank" rel="noopener">Original OA-URL</a>`);
-    if (w.doi) {
-      const doiHref = w.doi.startsWith("http") ? w.doi : `https://doi.org/${w.doi}`;
-      actions.push(`<a class="btn" href="${esc(doiHref)}" target="_blank" rel="noopener">DOI</a>`);
-    }
-    if (state.semRowById.has(workId)) {
-      actions.push(`<button class="btn" data-sim="${esc(workId)}">Filtrer på liknande i hovudlista</button>`);
-    }
-    $("drawerActions").innerHTML = actions.join("");
-
-    // Institutional affiliations
-    const affs = ctx.authors || [];
-    $("drawerAffiliations").innerHTML = affs.length
-      ? `<h4>Forfattarar og institusjonar</h4><ul class="mini-list">${affs.map((a) => `<li><strong>${esc(a.name)}</strong> — ${esc((a.institutions || []).map((i) => `${i.name} (${i.country})`).join("; "))}</li>`).join("")}</ul>`
-      : "";
-
-    // Live Google EmbeddingGemma nearest neighbors
-    const sims = topSimilarWorks(workId, 8);
-    $("drawerSimilar").innerHTML = sims.length
-      ? `<h4>Semantisk liknande verk (Google EmbeddingGemma-300M)</h4>
-         <ul class="mini-list">${sims.map(({ work, cosine }) => `
-           <li>
-             <a href="#" data-open="${esc(work.id)}"><strong>${esc(work.title)}</strong></a>
-             (${esc(work.year || "?")}) <span class="badge badge-blue">cos ${cosine.toFixed(3)}</span>
-             ${work.pdf ? `<a class="badge badge-green" href="${esc(work.pdf)}" target="_blank" rel="noopener">PDF</a>` : ""}
-           </li>`).join("")}</ul>`
-      : "";
-
-    const citedBy = (ctx.cited_by || []).map((id) => state.worksById.get(id)).filter(Boolean);
-    $("drawerCitedBy").innerHTML = citedBy.length
-      ? `<h4>Sitert av i nordisk korpus (${citedBy.length})</h4>
-         <ul class="mini-list">${citedBy.slice(0, 25).map((cw) => `<li><a href="#" data-open="${esc(cw.id)}">${esc(cw.title)}</a> (${esc(cw.year || "?")})</li>`).join("")}</ul>`
-      : "";
-
-    const cites = (ctx.cites || []).map((id) => state.worksById.get(id)).filter(Boolean);
-    $("drawerCites").innerHTML = cites.length
-      ? `<h4>Refererer til i nordisk korpus (${cites.length})</h4>
-         <ul class="mini-list">${cites.slice(0, 25).map((cw) => `<li><a href="#" data-open="${esc(cw.id)}">${esc(cw.title)}</a> (${esc(cw.year || "?")})</li>`).join("")}</ul>`
-      : "";
-
-    $("drawerBackdrop").classList.add("open");
-    $("workDrawer").classList.add("open");
+    $("qInput").value = w.title || wid;
+    $("accessSel").value = "";
+    $("layerSel").value = "all";
+    $("ccSel").value = "";
+    $("eraSel").value = "";
+    S.semScores = null;
+    S.expandedId = wid;
+    setTab("korpus");
+    filterCorpus();
   }
 
-  function closeDrawer() {
-    $("drawerBackdrop").classList.remove("open");
-    $("workDrawer").classList.remove("open");
-  }
-
-  function switchTab(tab) {
-    document.querySelectorAll(".nav-tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
-    document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.id === `panel-${tab}`));
-    history.replaceState(null, "", `#${tab}`);
-    if (tab === "siteringar") renderCitationsTab();
-    if (tab === "kart") ensureSemanticMap();
-  }
-
-  function bindEvents() {
-    document.querySelectorAll(".nav-tab").forEach((btn) => {
-      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
-    });
-
-    let debounceTimer = null;
-    $("qInput").addEventListener("input", () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        if (state.semanticScores && $("presetSelect").value === "") {
-          state.semanticScores = null;
-        }
-        applyCorpusFilters();
-      }, 140);
-    });
-    $("qInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && e.ctrlKey) runLiveBrowserEmbeddingSearch();
-    });
-
-    $("neuralSearchBtn").addEventListener("click", runLiveBrowserEmbeddingSearch);
-    $("resetSearchBtn").addEventListener("click", () => {
-      $("qInput").value = "";
-      $("layerFilter").value = "all";
-      $("countryFilter").value = "";
-      $("eraFilter").value = "";
-      $("sortFilter").value = "relevance";
-      $("pdfOnlyToggle").checked = false;
-      $("presetSelect").value = "";
-      state.semanticScores = null;
-      applyCorpusFilters();
-    });
-
-    for (const id of ["layerFilter", "countryFilter", "eraFilter", "sortFilter", "pdfOnlyToggle"]) {
-      $(id).addEventListener("change", applyCorpusFilters);
-    }
-
-    $("presetSelect").addEventListener("change", (e) => {
-      const key = e.target.value;
-      if (!key || !state.semMeta?.presets?.[key]) {
-        state.semanticScores = null;
-        applyCorpusFilters();
-        return;
-      }
-      const vec = state.semMeta.presets[key];
-      const label = e.target.options[e.target.selectedIndex].text;
-      state.semanticScores = scoreAgainstFloatVector(vec);
-      state.semanticLabel = `Google EmbeddingGemma semantisk temasøk: ${label}`;
-      $("sortFilter").value = "relevance";
-      applyCorpusFilters();
-    });
-
-    $("clearSemanticBtn").addEventListener("click", () => {
-      state.semanticScores = null;
-      $("presetSelect").value = "";
-      applyCorpusFilters();
-    });
-
-    $("prevPageBtn").addEventListener("click", () => { state.page--; renderCorpusPage(); window.scrollTo(0, 0); });
-    $("nextPageBtn").addEventListener("click", () => { state.page++; renderCorpusPage(); window.scrollTo(0, 0); });
-
-    // PDF tab events
-    $("pdfSearchInput").addEventListener("input", applyPdfFilters);
-    $("pdfAccessFilter").addEventListener("change", applyPdfFilters);
-    $("pdfCountryFilter").addEventListener("change", applyPdfFilters);
-    $("pdfPrevBtn").addEventListener("click", () => { state.pdfPage--; renderPdfPage(); window.scrollTo(0, 0); });
-    $("pdfNextBtn").addEventListener("click", () => { state.pdfPage++; renderPdfPage(); window.scrollTo(0, 0); });
-
-    // Citations tab events
-    document.querySelectorAll(".subview-btn").forEach((b) => {
-      b.addEventListener("click", () => {
-        document.querySelectorAll(".subview-btn").forEach((x) => x.classList.remove("btn-primary"));
-        b.classList.add("btn-primary");
-        state.citSub = b.dataset.sub;
-        renderCitationsTab();
-      });
-    });
-    $("citFilterInput").addEventListener("input", renderCitationsTab);
-
-    // Map events
-    $("mapColorMode").addEventListener("change", drawSemanticMap);
-    $("mapResetZoom").addEventListener("click", () => {
-      state.mapZoom = 1;
-      state.mapPanX = 0;
-      state.mapPanY = 0;
-      drawSemanticMap();
-    });
-    $("mapLegend").addEventListener("click", (e) => {
-      const item = e.target.closest("[data-cluster]");
-      if (!item) return;
-      state.mapClusterFilter = parseInt(item.dataset.cluster, 10);
-      renderMapLegend();
-      drawSemanticMap();
-    });
-
-    const canvas = $("semanticCanvas");
-    canvas.addEventListener("wheel", (e) => {
+  function bind() {
+    document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", (e) => {
       e.preventDefault();
-      const factor = e.deltaY < 0 ? 1.18 : 0.85;
-      state.mapZoom = Math.min(12, Math.max(0.5, state.mapZoom * factor));
-      drawSemanticMap();
+      setTab(b.dataset.tab);
+    }));
+
+    let tmr = null;
+    $("qInput").addEventListener("input", () => {
+      clearTimeout(tmr);
+      tmr = setTimeout(() => {
+        if (S.semScores && $("presetSel").value === "") S.semScores = null;
+        filterCorpus();
+      }, 110);
+    });
+    $("wasmBtn").addEventListener("click", runWasmQuery);
+
+    $("resetBtn").addEventListener("click", () => {
+      $("qInput").value = ""; $("accessSel").value = ""; $("presetSel").value = "";
+      $("layerSel").value = "all"; $("ccSel").value = ""; $("eraSel").value = "";
+      $("sortSel").value = "relevance"; S.semScores = null; S.expandedId = null;
+      filterCorpus();
+    });
+
+    for (const id of ["accessSel", "layerSel", "ccSel", "eraSel", "sortSel"]) $(id).addEventListener("change", filterCorpus);
+
+    $("presetSel").addEventListener("change", (e) => {
+      const k = e.target.value;
+      if (!k || !S.semMeta?.presets?.[k]) { S.semScores = null; filterCorpus(); return; }
+      S.semScores = cosineAll(S.semMeta.presets[k]);
+      S.semLabel = `Google EmbeddingGemma-tema: ${e.target.options[e.target.selectedIndex].text}`;
+      $("sortSel").value = "relevance";
+      filterCorpus();
+    });
+    $("clearSemBtn").addEventListener("click", () => { S.semScores = null; $("presetSel").value = ""; filterCorpus(); });
+
+    $("moreCorpusBtn").addEventListener("click", () => { S.shown += STEP; renderCorpus(); });
+    $("morePdfBtn").addEventListener("click", () => { S.pdfShown += STEP; renderPdfs(); });
+
+    $("pdfQ").addEventListener("input", filterPdfs);
+    $("pdfMode").addEventListener("change", filterPdfs);
+    $("pdfCc").addEventListener("change", filterPdfs);
+
+    document.querySelectorAll(".sub-pill").forEach((b) => b.addEventListener("click", () => {
+      document.querySelectorAll(".sub-pill").forEach((x) => x.classList.remove("active"));
+      b.classList.add("active");
+      S.citSub = b.dataset.sub;
+      renderCitations();
+    }));
+    $("citQ").addEventListener("input", renderCitations);
+
+    $("mapMode").addEventListener("change", drawMap);
+    $("mapReset").addEventListener("click", () => { S.zoom = 1; S.panX = 0; S.panY = 0; drawMap(); });
+    $("mapLegend").addEventListener("click", (e) => {
+      const el = e.target.closest("[data-cl]");
+      if (!el) return;
+      S.clusterFilter = parseInt(el.dataset.cl, 10);
+      renderLegend();
+      drawMap();
+    });
+
+    /* Mouse + iPhone Touch Pan & Pinch Zoom on Semantic Map */
+    const cv = $("semCanvas");
+    window.addEventListener("resize", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
+    cv.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      S.zoom = Math.min(12, Math.max(0.5, S.zoom * (e.deltaY < 0 ? 1.18 : 0.85)));
+      drawMap();
     }, { passive: false });
 
-    let dragging = false, lastX = 0, lastY = 0, moved = false;
-    canvas.addEventListener("mousedown", (e) => { dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; });
-    window.addEventListener("mouseup", () => { dragging = false; });
-    canvas.addEventListener("mousemove", (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      if (dragging) {
-        const dx = e.clientX - lastX;
-        const dy = e.clientY - lastY;
-        if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
-        state.mapPanX += dx;
-        state.mapPanY += dy;
-        lastX = e.clientX;
-        lastY = e.clientY;
-        drawSemanticMap();
-        return;
-      }
-      const pts = state.semMap?.points || [];
-      let best = null, bestD = 81;
-      for (const p of pts) {
-        if (state.mapClusterFilter !== -1 && p.c !== state.mapClusterFilter) continue;
-        if (p._sx === undefined) continue;
-        const d2 = (p._sx - mx) ** 2 + (p._sy - my) ** 2;
-        if (d2 < bestD) { bestD = d2; best = p; }
-      }
-      const tip = $("mapTooltip");
-      if (best) {
-        const w = state.worksById.get(best.id);
-        tip.style.display = "block";
-        tip.style.left = `${Math.min(rect.width - 280, mx + 12)}px`;
-        tip.style.top = `${Math.max(10, my - 28)}px`;
-        tip.innerHTML = `<strong>${esc(w?.title || best.id)}</strong><br/>${esc(best.y_pub || "")} · ${esc(best.cc || "")} ${best.pdf ? "· PDF i repo" : ""}`;
-      } else {
-        tip.style.display = "none";
-      }
+    let drag = false, lx = 0, ly = 0, moved = false, pinchDist = 0;
+    cv.addEventListener("mousedown", (e) => { drag = true; moved = false; lx = e.clientX; ly = e.clientY; });
+    window.addEventListener("mouseup", () => { drag = false; });
+    cv.addEventListener("mousemove", (e) => {
+      if (!drag) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly;
+      if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+      S.panX += dx; S.panY += dy; lx = e.clientX; ly = e.clientY; drawMap();
     });
-    canvas.addEventListener("click", (e) => {
+    cv.addEventListener("click", (e) => {
       if (moved) return;
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      const pts = state.semMap?.points || [];
-      let best = null, bestD = 100;
-      for (const p of pts) {
-        if (state.mapClusterFilter !== -1 && p.c !== state.mapClusterFilter) continue;
-        if (p._sx === undefined) continue;
-        const d2 = (p._sx - mx) ** 2 + (p._sy - my) ** 2;
-        if (d2 < bestD) { bestD = d2; best = p; }
-      }
-      if (best) openDrawer(best.id);
+      const r = cv.getBoundingClientRect();
+      pickPoint(e.clientX - r.left, e.clientY - r.top);
     });
 
-    // Global delegated clicks (`data-open`, `data-sim`, `data-author-q`)
+    cv.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        drag = true; moved = false; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        drag = false;
+        pinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      }
+    }, { passive: true });
+    cv.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      if (e.touches.length === 1 && drag) {
+        const dx = e.touches[0].clientX - lx, dy = e.touches[0].clientY - ly;
+        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+        S.panX += dx; S.panY += dy; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+        drawMap();
+      } else if (e.touches.length === 2 && pinchDist > 0) {
+        const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        S.zoom = Math.min(12, Math.max(0.5, S.zoom * (d / pinchDist)));
+        pinchDist = d;
+        drawMap();
+      }
+    }, { passive: false });
+    cv.addEventListener("touchend", (e) => {
+      if (!moved && e.changedTouches.length === 1 && e.touches.length === 0) {
+        const r = cv.getBoundingClientRect();
+        pickPoint(e.changedTouches[0].clientX - r.left, e.changedTouches[0].clientY - r.top);
+      }
+      drag = false; pinchDist = 0;
+    });
+
     document.body.addEventListener("click", (e) => {
-      const openEl = e.target.closest("[data-open]");
-      if (openEl) {
-        e.preventDefault();
-        openDrawer(openEl.dataset.open);
-        return;
-      }
-      const simEl = e.target.closest("[data-sim]");
-      if (simEl) {
-        e.preventDefault();
-        closeDrawer();
-        runWorkSimilarity(simEl.dataset.sim);
-        return;
-      }
-      const authEl = e.target.closest("[data-author-q]");
-      if (authEl) {
-        e.preventDefault();
-        $("qInput").value = authEl.dataset.authorQ;
-        state.semanticScores = null;
-        switchTab("korpus");
-        applyCorpusFilters();
+      const sim = e.target.closest("[data-sim]");
+      if (sim) { e.preventDefault(); triggerSimilar(sim.dataset.sim); return; }
+      const jmp = e.target.closest("[data-jump]");
+      if (jmp) { e.preventDefault(); jumpToWorkInline(jmp.dataset.jump); return; }
+      const aut = e.target.closest("[data-author]");
+      if (aut) { e.preventDefault(); $("qInput").value = aut.dataset.author; S.semScores = null; setTab("korpus"); filterCorpus(); return; }
+      const tog = e.target.closest("[data-toggle]");
+      if (tog) {
+        const id = tog.dataset.toggle;
+        S.expandedId = S.expandedId === id ? null : id;
+        renderCorpus();
       }
     });
-
-    $("closeDrawerBtn").addEventListener("click", closeDrawer);
-    $("drawerBackdrop").addEventListener("click", closeDrawer);
-    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
   }
 
-  boot();
+  init();
 })();
-

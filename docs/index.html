@@ -1,227 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
   <title>DESIGNTEORI — Nordisk designteori og designforsking (1900–2026)</title>
-  <meta name="description" content="Ope, etterprøvbart forskingskorpus for nordisk designteori og designforsking: metadata, fulltekst-PDF, siteringsnettverk, Google EmbeddingGemma semantisk søk og analyse." />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Ope forskingskorpus for nordisk designteori og designforsking (1900–2026): metadata, fulltekst-PDF, siteringar, Google EmbeddingGemma semantisk søk og analyse.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand-row">
-        <div class="brand">
-          <h1>DESIGNTEORI</h1>
-          <p>Ope forskingskorpus for nordisk designteori og designforsking (1900–2026) — metadata, fulltekst-PDF, siteringar, Google-embeddingar og empirisk analyse.</p>
-        </div>
-        <div class="export-links">
-          <a class="chip-link" href="https://github.com/lukketsvane/designteori/tree/main/pdf" target="_blank" rel="noopener">PDF-mappe (GitHub)</a>
-          <a class="chip-link" href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">SQLite (.sqlite.gz)</a>
-          <a class="chip-link" href="data/korpus.csv" download>korpus.csv</a>
-          <a class="chip-link" href="data/pdf_katalog.csv" download>pdf_katalog.csv</a>
-          <a class="chip-link" href="https://github.com/lukketsvane/designteori" target="_blank" rel="noopener">GitHub-kjeldekode</a>
-        </div>
-      </div>
-
-      <div class="kpi-strip" id="kpiStrip">
-        <div class="kpi-card"><div class="kpi-val" id="kpiTotal">…</div><div class="kpi-lbl">Søkbare registreringar (alle lag)</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpiIncluded">…</div><div class="kpi-lbl">OpenAlex tittelinkluderte</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpiPdfs">…</div><div class="kpi-lbl">Fulltekst-PDF i <code>pdf/</code></div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpiEmbeddings">…</div><div class="kpi-lbl">Google EmbeddingGemma-vektorar</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpiCitations">…</div><div class="kpi-lbl">Interne siteringskoplingar</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpiCanon">…</div><div class="kpi-lbl">Sitert kanon-indeks</div></div>
-      </div>
-
-      <nav class="nav-tabs" role="tablist">
-        <button class="nav-tab active" data-tab="korpus" role="tab">Søk &amp; Semantikk</button>
-        <button class="nav-tab" data-tab="pdf" role="tab">Fulltekst &amp; PDF-arkiv</button>
-        <button class="nav-tab" data-tab="siteringar" role="tab">Siteringar, Kanon &amp; Aktørar</button>
-        <button class="nav-tab" data-tab="kart" role="tab">Semantisk Kart</button>
-        <button class="nav-tab" data-tab="analyse" role="tab">Analyse (1900–2026)</button>
-      </nav>
-    </div>
+  <header>
+    <a class="brand" href="#korpus" data-tab="korpus">DESIGNTEORI</a>
+    <nav aria-label="Hovudmeny">
+      <button class="nav-btn active" data-tab="korpus" type="button">Katalog</button>
+      <button class="nav-btn" data-tab="pdf" type="button">Fulltekst</button>
+      <button class="nav-btn" data-tab="siteringar" type="button">Kanon</button>
+      <button class="nav-btn" data-tab="kart" type="button">Kart</button>
+      <button class="nav-btn" data-tab="analyse" type="button">Analyse</button>
+    </nav>
   </header>
 
-  <main class="main-wrap">
-    <!-- TAB 1: KORPUS & SEMANTISK SØK -->
-    <section id="panel-korpus" class="panel active">
-      <div class="controls-card">
-        <div class="search-row">
-          <input id="qInput" class="search-input" type="search" placeholder="Søk på tittel, forfattar, tidsskrift, DOI eller tema (norsk, svensk, dansk, finsk, islandsk, engelsk)…" />
-          <button id="neuralSearchBtn" class="btn btn-primary" title="Køyr semantisk fritekstsøk med Google EmbeddingGemma-300M i nettlesaren (WebAssembly)">Google Semantisk Søk</button>
-          <button id="resetSearchBtn" class="btn">Nullstill</button>
-        </div>
+  <main>
+    <section class="hero">
+      <div class="eyebrow" id="heroEyebrow">Open forsking / Nordisk designteori 1900–2026</div>
+      <h1 id="heroTitle">Designteori.</h1>
+      <p class="lead" id="heroLead">Søkbar database for nordisk designteori og designforsking på tvers av Noreg, Sverige, Danmark, Finland og Island — med fulltekst-PDF, siteringsnettverk og Google-embeddingar.</p>
+    </section>
 
-        <div class="filter-row">
-          <select id="layerFilter" aria-label="Kjeldelag">
-            <option value="all">Alle kjeldelag</option>
-            <option value="automatic-title-inclusion">OpenAlex: Automatisk tittelinkludert</option>
-            <option value="awaiting-eligibility-review">OpenAlex: Vurderingskø</option>
-            <option value="nordic">Nordiske arkiv (Cristin / DiVA / Nordes / Aaltodoc / KGL / IRIS)</option>
-            <option value="historical-reference">Historisk / global teoribibliografi</option>
+    <div class="metrics">
+      <div class="metric">
+        <div class="num" id="stWorks">…</div>
+        <div class="label">Søkbare verk (1900–2026)</div>
+      </div>
+      <div class="metric">
+        <div class="num" id="stPdfs">…</div>
+        <div class="label">Fulltekst-PDF i repoet</div>
+      </div>
+      <div class="metric">
+        <div class="num" id="stEmb">…</div>
+        <div class="label">Google-vektorar (EmbeddingGemma)</div>
+      </div>
+      <div class="metric">
+        <div class="num" id="stInc">…</div>
+        <div class="label">OpenAlex tittelinkluderte</div>
+      </div>
+    </div>
+
+    <!-- 1. KATALOG / KORPUS -->
+    <section id="view-korpus" class="view active">
+      <h2>Finn publikasjon</h2>
+      <div class="filters">
+        <label class="field field-wide">
+          <span>Søk</span>
+          <input type="search" id="qInput" placeholder="Tittel, forfattar, tidsskrift, DOI …" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Tilgang</span>
+          <select id="accessSel">
+            <option value="">Alle</option>
+            <option value="repo">PDF i repoet (pdf/)</option>
+            <option value="oa">Open Access-lenkje</option>
           </select>
-
-          <select id="countryFilter" aria-label="Land">
-            <option value="">Alle nordiske land</option>
+        </label>
+        <label class="field">
+          <span>Land</span>
+          <select id="ccSel">
+            <option value="">Alle nordiske</option>
             <option value="NO">Noreg (NO)</option>
             <option value="SE">Sverige (SE)</option>
             <option value="DK">Danmark (DK)</option>
             <option value="FI">Finland (FI)</option>
             <option value="IS">Island (IS)</option>
           </select>
-
-          <select id="eraFilter" aria-label="Tidsperiode">
-            <option value="">Alle år (1900–2026)</option>
-            <option value="pre2000">Før 2000 (1900–1999)</option>
-            <option value="2000-2009">2000–2009</option>
-            <option value="2010-2019">2010–2019</option>
-            <option value="2020-2026">2020–2026</option>
+        </label>
+        <label class="field">
+          <span>Sortering</span>
+          <select id="sortSel">
+            <option value="relevance">Relevans / PDF først</option>
+            <option value="citations">Siteringar</option>
+            <option value="year_desc">Nyaste først</option>
+            <option value="year_asc">Eldste først</option>
           </select>
+        </label>
+      </div>
 
-          <select id="sortFilter" aria-label="Sortering">
-            <option value="relevance">Sorter: Relevans / Likskap</option>
-            <option value="citations">Sorter: Siteringar</option>
-            <option value="year_desc">Sorter: Nyaste først</option>
-            <option value="year_asc">Sorter: Eldste først</option>
-          </select>
-
-          <label class="check-pill">
-            <input type="checkbox" id="pdfOnlyToggle" />
-            <span>Berre med PDF i <code>pdf/</code></span>
+      <details class="advanced">
+        <summary>Semantisk søk (Google EmbeddingGemma), kjeldelag og periode</summary>
+        <div class="filters">
+          <label class="field">
+            <span>Semantisk tema</span>
+            <select id="presetSel">
+              <option value="">Vel tema …</option>
+              <option value="participatory-design">Deltakande design &amp; demokrati</option>
+              <option value="codesign">Co-design &amp; samskaping</option>
+              <option value="research-through-design">Research through Design</option>
+              <option value="design-theory-epistemology">Designteori &amp; epistemologi</option>
+              <option value="service-systemic-design">Teneste- &amp; systemdesign</option>
+              <option value="sustainable-circular">Berekraft &amp; sirkulær design</option>
+              <option value="critical-speculative">Kritisk &amp; spekulativ design</option>
+              <option value="interaction-hci-ai">Interaksjonsdesign, HCI &amp; KI</option>
+              <option value="design-history-nordic">Nordisk designhistorie</option>
+              <option value="craft-materiality-textile">Handverk, tekstil &amp; materialitet</option>
+              <option value="aesthetics-form">Estetikk &amp; formgjeving</option>
+              <option value="design-education-pedagogy">Designutdanning &amp; didaktikk</option>
+              <option value="design-ethics-justice">Etikk &amp; universell utforming</option>
+              <option value="design-anthropology">Designantropologi</option>
+              <option value="industrial-product">Industri- &amp; produktdesign</option>
+              <option value="urban-architecture">Arkitektur &amp; byrom</option>
+            </select>
           </label>
+          <label class="field">
+            <span>Kjeldelag</span>
+            <select id="layerSel">
+              <option value="all">Alle kjeldelag</option>
+              <option value="automatic-title-inclusion">OpenAlex tittelinkludert</option>
+              <option value="awaiting-eligibility-review">OpenAlex vurderingskø</option>
+              <option value="nordic">Nordiske arkiv (Cristin/DiVA/m.fl.)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Periode</span>
+            <select id="eraSel">
+              <option value="">1900–2026</option>
+              <option value="pre2000">Før 2000</option>
+              <option value="2000-2009">2000–2009</option>
+              <option value="2010-2019">2010–2019</option>
+              <option value="2020-2026">2020–2026</option>
+            </select>
+          </label>
+          <div class="field">
+            <span>Fritekst-vektorsøk</span>
+            <button id="wasmBtn" class="btn-action" type="button">Google AI-søk</button>
+          </div>
         </div>
+      </details>
 
-        <div class="semantic-bar">
-          <span style="font-size:0.83rem;font-weight:600;color:var(--ink-muted);">Google EmbeddingGemma-tema:</span>
-          <select id="presetSelect" aria-label="Semantisk forskingstema">
-            <option value="">— Vel semantisk forskingstema (lynrask vektorsøk) —</option>
-            <option value="participatory-design">Deltakande design &amp; arbeidsplassdemokrati</option>
-            <option value="codesign">Samskaping &amp; co-design</option>
-            <option value="research-through-design">Research through Design &amp; praksisbasert forsking</option>
-            <option value="design-theory-epistemology">Designteori, epistemologi &amp; designerkunnskap</option>
-            <option value="service-systemic-design">Tenestedesign, systemisk design &amp; offentleg sektor</option>
-            <option value="sustainable-circular">Berekraftig, sirkulær &amp; økologisk design</option>
-            <option value="critical-speculative">Kritisk, spekulativ &amp; diskursiv design</option>
-            <option value="interaction-hci-ai">Interaksjonsdesign, HCI &amp; kunstig intelligens</option>
-            <option value="design-history-nordic">Nordisk designhistorie &amp; materiell kultur</option>
-            <option value="craft-materiality-textile">Handverk, materialitet &amp; tekstildesign</option>
-            <option value="aesthetics-form">Estetikk, formgjeving &amp; sansing</option>
-            <option value="design-education-pedagogy">Designutdanning &amp; studiodidaktikk</option>
-            <option value="design-ethics-justice">Designetikk, universell utforming &amp; rettferd</option>
-            <option value="design-anthropology">Designantropologi &amp; kvardagspraksis</option>
-            <option value="industrial-product">Industridesign &amp; produktutvikling</option>
-            <option value="urban-architecture">Arkitekturteori, byrom &amp; landskap</option>
-          </select>
-          <span id="embeddingStatus" style="font-size:0.8rem;color:var(--ink-muted);">Lastar Google-vektorindeks…</span>
+      <div id="semBanner" class="sem-active" hidden>
+        <span id="semBannerTxt"></span>
+        <button id="clearSemBtn" type="button">Nullstill</button>
+      </div>
+
+      <div class="resultline">
+        <span id="hitCount">Lastar korpus …</span>
+        <div class="exports">
+          <button id="resetBtn" class="link-reset" type="button">Nullstill filter</button>
+          <a href="https://github.com/lukketsvane/designteori/tree/main/pdf" target="_blank" rel="noopener">pdf/</a>
+          <a href="data/korpus.csv" download>CSV</a>
+          <a href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">SQLite</a>
         </div>
       </div>
 
-      <div id="semanticActiveBanner" class="semantic-banner" style="display:none;">
-        <div id="semanticBannerText"></div>
-        <button id="clearSemanticBtn" class="btn btn-xs">Avslutt semantisk modus</button>
-      </div>
-
-      <div class="results-meta">
-        <span id="resultsSummary">Lastar korpus…</span>
-        <div>
-          <button id="prevPageBtn" class="btn btn-xs">← Førre</button>
-          <span id="pageIndicator" style="margin:0 0.5rem;">1</span>
-          <button id="nextPageBtn" class="btn btn-xs">Neste →</button>
-        </div>
-      </div>
-
-      <div id="corpusList" class="work-list"></div>
+      <div id="corpusList"></div>
+      <button id="moreCorpusBtn" class="more-btn" type="button" hidden>Vis 50 fleire</button>
     </section>
 
-    <!-- TAB 2: FULLTEKST & PDF -->
-    <section id="panel-pdf" class="panel">
-      <div class="controls-card">
-        <div class="search-row">
-          <input id="pdfSearchInput" class="search-input" type="search" placeholder="Filtrer fulltekst-PDF-ar på tittel, forfattar, tidsskrift, DOI eller SHA-256…" />
-          <select id="pdfAccessFilter">
-            <option value="repo">PDF lagra i GitHub (pdf/)</option>
-            <option value="verified">Alle SHA-256-verifiserte OA-PDF-ar</option>
-            <option value="all">Alle oppføringar med OA-lenkje</option>
+    <!-- 2. FULLTEKST / PDF -->
+    <section id="view-pdf" class="view">
+      <h2>Finn dokument</h2>
+      <div class="filters">
+        <label class="field field-wide">
+          <span>Søk</span>
+          <input type="search" id="pdfQ" placeholder="Tittel, forfattar, DOI, SHA-256 …" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Tilgang</span>
+          <select id="pdfMode">
+            <option value="repo">PDF i repoet (pdf/)</option>
+            <option value="all">Alle OA-kjelder</option>
           </select>
-          <select id="pdfCountryFilter">
-            <option value="">Alle land</option>
+        </label>
+        <label class="field">
+          <span>Land</span>
+          <select id="pdfCc">
+            <option value="">Alle nordiske</option>
             <option value="NO">Noreg (NO)</option>
             <option value="SE">Sverige (SE)</option>
             <option value="DK">Danmark (DK)</option>
             <option value="FI">Finland (FI)</option>
             <option value="IS">Island (IS)</option>
           </select>
+        </label>
+      </div>
+
+      <div class="resultline">
+        <span id="pdfCount">…</span>
+        <div class="exports">
+          <a href="https://github.com/lukketsvane/designteori/tree/main/pdf" target="_blank" rel="noopener">Opne pdf/-mappa på GitHub</a>
+          <a href="data/pdf_katalog.csv" download>pdf_katalog.csv</a>
         </div>
       </div>
-      <div class="results-meta">
-        <span id="pdfSummary">…</span>
-        <div>
-          <button id="pdfPrevBtn" class="btn btn-xs">← Førre</button>
-          <span id="pdfPageInd" style="margin:0 0.5rem;">1</span>
-          <button id="pdfNextBtn" class="btn btn-xs">Neste →</button>
-        </div>
-      </div>
-      <div id="pdfList" class="work-list"></div>
+
+      <div id="pdfList"></div>
+      <button id="morePdfBtn" class="more-btn" type="button" hidden>Vis 50 fleire</button>
     </section>
 
-    <!-- TAB 3: SITERINGAR, KANON & AKTØRAR -->
-    <section id="panel-siteringar" class="panel">
-      <div class="controls-card" style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-        <button class="btn btn-primary subview-btn" data-sub="internal">Mest siterte i nordisk korpus</button>
-        <button class="btn subview-btn" data-sub="canon">Sitert grunnlagskanon (1 000 verk)</button>
-        <button class="btn subview-btn" data-sub="authors">Nordiske forfattarar</button>
-        <button class="btn subview-btn" data-sub="institutions">Nordiske institusjonar</button>
-        <input id="citFilterInput" class="search-input" style="max-width:340px;margin-left:auto;" type="search" placeholder="Filtrer liste…" />
+    <!-- 3. KANON & SITERINGAR -->
+    <section id="view-siteringar" class="view">
+      <h2>Siteringar, grunnlagskanon og fagmiljø</h2>
+      <div class="subnav">
+        <button class="sub-pill active" data-sub="internal" type="button">Mest sitert i Norden</button>
+        <button class="sub-pill" data-sub="canon" type="button">Sitert grunnlagskanon</button>
+        <button class="sub-pill" data-sub="authors" type="button">Forfattarar</button>
+        <button class="sub-pill" data-sub="institutions" type="button">Institusjonar</button>
       </div>
-      <div id="citationContainer" class="box"></div>
+      <div class="filters" style="grid-template-columns: 1fr;">
+        <label class="field">
+          <span>Filtrer</span>
+          <input type="search" id="citQ" placeholder="Filtrer på namn, tittel eller institusjon …" autocomplete="off">
+        </label>
+      </div>
+      <div id="citBox"></div>
     </section>
 
-    <!-- TAB 4: SEMANTISK KART -->
-    <section id="panel-kart" class="panel">
-      <div class="controls-card" style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
-        <strong>2D Semantisk Korpuskart (Google EmbeddingGemma-300M)</strong>
-        <select id="mapColorMode">
-          <option value="cluster">Fargelegg etter: Google-forskingsklynge (10)</option>
-          <option value="country">Fargelegg etter: Nordisk land (NO/SE/DK/FI/IS)</option>
-          <option value="pdf">Fargelegg etter: PDF i repoet</option>
-        </select>
-        <span style="font-size:0.83rem;color:var(--ink-muted);">Klikk på eit punkt for å opne verket, siteringar og PDF. Dra eller rull for å zoome.</span>
-        <button id="mapResetZoom" class="btn btn-xs" style="margin-left:auto;">Nullstill utsnitt</button>
-      </div>
-      <div class="map-layout">
-        <div class="canvas-wrap">
-          <canvas id="semanticCanvas" width="960" height="560"></canvas>
-          <div id="mapTooltip" class="map-tooltip"></div>
-        </div>
-        <div class="box" style="margin-bottom:0;">
-          <h3>Forskingsklynger</h3>
-          <div id="mapLegend"></div>
+    <!-- 4. SEMANTISK KART -->
+    <section id="view-kart" class="view">
+      <h2>2D Google EmbeddingGemma-kart</h2>
+      <div class="filters" style="grid-template-columns: 1fr 1fr;">
+        <label class="field">
+          <span>Fargekoding</span>
+          <select id="mapMode">
+            <option value="cluster">Forskingsklynger (10)</option>
+            <option value="country">Nordiske land</option>
+            <option value="pdf">PDF i repoet</option>
+          </select>
+        </label>
+        <div class="field">
+          <span>Utsnitt</span>
+          <button id="mapReset" class="btn-action" type="button">Nullstill zoom</button>
         </div>
       </div>
+      <div class="map-frame">
+        <canvas id="semCanvas" width="960" height="400"></canvas>
+        <div id="mapSelectedBar" class="map-bar">Trykk på eit punkt i kartet for tittel, forfattar og direkte PDF-lenkje.</div>
+      </div>
+      <h3>Forskingsklynger (trykk for å filtrere)</h3>
+      <div id="mapLegend" class="cluster-grid"></div>
     </section>
 
-    <!-- TAB 5: ANALYSE -->
-    <section id="panel-analyse" class="panel">
-      <div id="analysisRoot"></div>
+    <!-- 5. ANALYSE -->
+    <section id="view-analyse" class="view">
+      <h2>Empirisk oversyn (1900–2026)</h2>
+      <div id="anaRoot"></div>
     </section>
   </main>
 
-  <!-- WORK DETAIL DRAWER -->
-  <div id="drawerBackdrop" class="drawer-backdrop"></div>
-  <aside id="workDrawer" class="drawer" aria-hidden="true">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <span id="drawerBadge" class="badge badge-blue"></span>
-      <button id="closeDrawerBtn" class="btn btn-xs">Lukk ✕</button>
+  <footer>
+    <div>DESIGNTEORI — Ope forskingskorpus for nordisk designteori og designforsking (NO · SE · DK · FI · IS).</div>
+    <div>
+      <a href="https://github.com/lukketsvane/designteori">GitHub</a> ·
+      <a href="https://github.com/lukketsvane/designteori/tree/main/pdf">PDF-arkiv</a> ·
+      <a href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">designteori.sqlite.gz</a> ·
+      <a href="data/korpus.csv" download>korpus.csv</a>
     </div>
-    <h2 id="drawerTitle"></h2>
-    <div id="drawerMeta" class="work-sub"></div>
-    <div id="drawerActions" class="badge-row" style="margin:0.9rem 0 1.2rem;"></div>
-    <div id="drawerAffiliations"></div>
-    <div id="drawerSimilar"></div>
-    <div id="drawerCitedBy"></div>
-    <div id="drawerCites"></div>
-  </aside>
+  </footer>
 
   <script src="app.js"></script>
 </body>
