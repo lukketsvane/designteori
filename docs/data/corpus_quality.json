@@ -2,43 +2,43 @@
   "coverage_by_layer": {
     "nordic_national_and_institutional_archives": {
       "decades": {
-        "1990s": 33,
+        "1990s": 32,
         "2000s": 278,
-        "2010s": 750,
-        "2020s": 684
+        "2010s": 749,
+        "2020s": 679
       },
       "kinds": {
-        "article": 228,
+        "article": 222,
         "book": 13,
         "book-chapter": 10,
         "proceedings-article": 637,
         "review": 8,
         "thesis": 177,
-        "unknown": 672
+        "unknown": 671
       },
-      "searchable_registrations": 1745,
-      "with_authors": 1728,
-      "with_doi": 666,
-      "with_open_access_url": 1745,
-      "with_repo_pdf": 99,
-      "with_year": 1745
+      "searchable_registrations": 1738,
+      "with_authors": 1721,
+      "with_doi": 659,
+      "with_open_access_url": 1738,
+      "with_repo_pdf": 125,
+      "with_year": 1738
     },
     "openalex_primary_1900_2026": {
       "decades": {
         "1980s": 9,
-        "1990s": 64,
+        "1990s": 60,
         "2000s": 407,
-        "2010s": 2126,
-        "2020s": 2103
+        "2010s": 2124,
+        "2020s": 2094
       },
       "kinds": {
-        "article": 2294,
-        "book": 66,
-        "book-chapter": 279,
+        "article": 2283,
+        "book": 65,
+        "book-chapter": 278,
         "book-review": 2,
         "conference-abstract": 4,
-        "conference-paper": 2017,
-        "dissertation": 24,
+        "conference-paper": 2016,
+        "dissertation": 23,
         "editorial": 2,
         "letter": 1,
         "other": 1,
@@ -46,12 +46,12 @@
         "reference-entry": 1,
         "review": 17
       },
-      "searchable_registrations": 4709,
-      "with_authors": 4709,
-      "with_doi": 4137,
-      "with_open_access_url": 3192,
-      "with_repo_pdf": 1378,
-      "with_year": 4709
+      "searchable_registrations": 4694,
+      "with_authors": 4694,
+      "with_doi": 4123,
+      "with_open_access_url": 3180,
+      "with_repo_pdf": 1463,
+      "with_year": 4694
     }
   },
   "cross_layer_or_within_layer_possible_doi_duplicates": {
@@ -59,11 +59,11 @@
     "registrations": 8
   },
   "manual_article_eligibility_checks_completed": 0,
-  "nordic_unlinked_candidates": 1745,
-  "openalex_partial_search": 4709,
+  "nordic_unlinked_candidates": 1738,
+  "openalex_partial_search": 4694,
   "openalex_title_gate": {
-    "automatic-title-inclusion": 4709
+    "automatic-title-inclusion": 4694
   },
   "schema_version": 3,
-  "total_searchable_rows_all_layers": 6454
+  "total_searchable_rows_all_layers": 6432
 }
