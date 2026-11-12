@@ -78,7 +78,7 @@
     renderAnalysis();
     loadVectors();
 
-    if (["korpus", "siteringar", "kart", "analyse"].includes(h)) {
+    if (["korpus", "siteringar", "kart", "analyse", "teorielement"].includes(h)) {
       setTab(h);
     }
   }

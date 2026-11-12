@@ -1,0 +1,93 @@
+{
+  "schema": "teorielement-rows-0.2",
+  "synthetic": true,
+  "note": "Syntetiske døme som viser formatet. Ingen rad er henta frå korpuset.",
+  "rows": [
+    {
+      "id": "syn-1",
+      "work": {"title": "Syntetisk døme 1", "year": null, "doi": "", "license": ""},
+      "pdf_page": 1, "claim_location": "abstract", "attribution": "own",
+      "excerpt": "Medverknad i tidleg fase fører til at brukarane tek eigarskap til løysinga.",
+      "relation_expression": "fører til", "relation_kind": "causes_or_enables",
+      "concepts": [
+        {"term": "medverknad i tidleg fase", "role": "from", "definition_status": "defined", "definition_excerpt": "Med medverknad meiner me at brukarane deltek i avgjerder, ikkje berre i testing."},
+        {"term": "eigarskap til løysinga", "role": "to", "definition_status": "not_stated"}
+      ],
+      "scope": {"status": "stated", "excerpt": "i offentlege tenesteprosjekt"},
+      "explanation": {"status": "stated", "excerpt": "fordi dei ser sine eigne val att i resultatet"},
+      "prediction": {"status": "not_stated"},
+      "support_status": "reported",
+      "support": [{"source": "this_text", "form": "case", "excerpt": "Me følgde tre prosjekt i to år."}],
+      "theories": [{"name": "deltakande design", "role": "foundation"}]
+    },
+    {
+      "id": "syn-2",
+      "work": {"title": "Syntetisk døme 2", "year": null, "doi": "", "license": ""},
+      "pdf_page": 12, "claim_location": "conclusion", "attribution": "own",
+      "excerpt": "Design gjennom prototypar er ei form for kunnskapsutvikling.",
+      "relation_expression": "er ei form for", "relation_kind": "kind_of",
+      "concepts": [
+        {"term": "design gjennom prototypar", "role": "from", "definition_status": "not_stated"},
+        {"term": "kunnskapsutvikling", "role": "to", "definition_status": "stated_none_exists", "definition_excerpt": "Det finst ingen semje om kva kunnskapsutvikling er i design."}
+      ],
+      "scope": {"status": "not_stated"},
+      "explanation": {"status": "not_stated"},
+      "prediction": {"status": "not_stated"},
+      "support_status": "reported",
+      "support": [{"source": "this_text", "form": "design_work", "excerpt": "Gjennom tre prototypar utforska me kva som skjer når deltakarane får eigne verktøy."}],
+      "theories": []
+    },
+    {
+      "id": "syn-3",
+      "work": {"title": "Syntetisk døme 3", "year": null, "doi": "", "license": ""},
+      "pdf_page": 2, "claim_location": "introduction", "attribution": "adopted",
+      "excerpt": "Designhandling er alltid situert (X 2011).",
+      "relation_expression": "er alltid", "relation_kind": "has_property",
+      "concepts": [
+        {"term": "designhandling", "role": "from", "definition_status": "defined_by_citation", "definition_excerpt": "slik X (2011) definerer omgrepet"},
+        {"term": "situert", "role": "to", "definition_status": "not_stated"}
+      ],
+      "scope": {"status": "not_stated"},
+      "explanation": {"status": "not_stated"},
+      "prediction": {"status": "not_stated"},
+      "support_status": "reported",
+      "support": [{"source": "cited_work", "form": "literature", "excerpt": "Fleire studiar har vist dette (X 2011)."}],
+      "theories": [{"name": "situert handling", "role": "foundation"}]
+    },
+    {
+      "id": "syn-4",
+      "work": {"title": "Syntetisk døme 4", "year": null, "doi": "", "license": ""},
+      "pdf_page": 9, "claim_location": "conclusion", "attribution": "own",
+      "excerpt": "Me føreslår at tidleg visualisering reduserer usemje i tverrfaglege team.",
+      "relation_expression": "reduserer", "relation_kind": "causes_or_enables",
+      "concepts": [
+        {"term": "tidleg visualisering", "role": "from", "definition_status": "not_stated"},
+        {"term": "usemje", "role": "to", "definition_status": "not_stated"},
+        {"term": "tverrfaglege team", "role": "condition", "definition_status": "not_stated"}
+      ],
+      "scope": {"status": "stated", "excerpt": "i tverrfaglege team"},
+      "explanation": {"status": "not_stated"},
+      "prediction": {"status": "stated", "excerpt": "Team som visualiserer tidleg, vil bruke færre møte på å avklare mål."},
+      "support_status": "stated_untested",
+      "support": [],
+      "theories": []
+    },
+    {
+      "id": "syn-5",
+      "work": {"title": "Syntetisk døme 5", "year": null, "doi": "", "license": ""},
+      "pdf_page": 14, "claim_location": "conclusion", "attribution": "own",
+      "excerpt": "Gode tenester bør utformast saman med dei som skal bruke dei.",
+      "relation_expression": "bør utformast saman med", "relation_kind": "prescribes",
+      "concepts": [
+        {"term": "gode tenester", "role": "from", "definition_status": "not_stated"},
+        {"term": "dei som skal bruke dei", "role": "to", "definition_status": "not_stated"}
+      ],
+      "scope": {"status": "not_stated"},
+      "explanation": {"status": "not_stated"},
+      "prediction": {"status": "not_stated"},
+      "support_status": "reported",
+      "support": [{"source": "this_text", "form": "practice_reflection", "excerpt": "Eg ser attende på ti år med eige arbeid i kommunale prosjekt."}],
+      "theories": []
+    }
+  ]
+}

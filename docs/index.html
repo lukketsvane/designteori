@@ -20,6 +20,7 @@
       <button class="nav-btn" data-tab="siteringar" type="button">kanon</button>
       <button class="nav-btn" data-tab="kart" type="button">kart</button>
       <button class="nav-btn" data-tab="analyse" type="button">analyse</button>
+      <button class="nav-btn" data-tab="teorielement" type="button">teori</button>
     </nav>
     <a href="https://iverfinne.no">iverfinne.no</a>
   </header>
@@ -134,6 +135,69 @@
     <section id="view-analyse" class="view">
       <div id="anaRoot"></div>
     </section>
+
+    <section id="view-teorielement" class="view">
+      <div class="ana-grid">
+        <div class="ana-sec">
+          <h3>Teorielement</h3>
+          <p class="te-p">Ein open base over hovudpåstandar i nordisk designforsking: kva omgrep ein tekst bind saman, korleis teksten definerer dei, kva samanheng han påstår, kvar påstanden skal gjelde, korleis han er forklart og korleis han er prøvd.</p>
+          <p class="te-p">Basen skildrar og feller ingen dom. «Ikkje oppgjeve i teksten» er ikkje ein mangel ved teksten.</p>
+          <p class="te-p">Status: pilot. Verkelege rader blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
+        </div>
+        <div class="ana-sec">
+          <h3>Forankring</h3>
+          <p class="te-p">Cash (2018), «Developing theory-driven design research», <em>Design Studies</em> 56, tilrår mellom anna å «support aggregation of theory, e.g., via databases of studies and theoretical elements» (tabell 3, tilråding 4). <a href="https://doi.org/10.1016/j.destud.2018.03.002" target="_blank" rel="noopener">DOI</a></p>
+          <p class="te-p">Felta følgjer definisjonen av teori som artikkelen legg til grunn: definerte omgrep, eksplisitt bruksområde, forklarte samanhengar og føreseiingar. Basen brukar ikkje sjekklista i artikkelen som målestokk. Ingen måte å prøve ein påstand på er rangert over ein annan.</p>
+        </div>
+        <div class="ana-sec">
+          <h3>Felt per hovudpåstand</h3>
+          <div class="table-wrap">
+            <table class="tbl-clean">
+              <thead><tr><th>Felt</th><th>Kva som blir registrert</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stad</strong></td><td>samandrag, innleiing eller konklusjon, med side og ordrett utdrag</td></tr>
+                <tr><td><strong>Omgrep</strong></td><td>slik teksten skriv dei, med rolle i påstanden</td></tr>
+                <tr><td><strong>Definisjon</strong></td><td>definert, definert ved tilvising, ikkje oppgjeve, eller teksten seier at det ikkje finst</td></tr>
+                <tr><td><strong>Samanheng</strong></td><td>ordrett uttrykk og grov type</td></tr>
+                <tr><td><strong>Bruksområde</strong></td><td>kvar teksten seier at påstanden gjeld</td></tr>
+                <tr><td><strong>Forklaring</strong></td><td>korleis og kvifor, slik teksten seier det</td></tr>
+                <tr><td><strong>Føreseiing</strong></td><td>kva teksten seier vil, kan eller bør skje</td></tr>
+                <tr><td><strong>Prøvd</strong></td><td>argument, litteratur, døme, case, datainnsamling, eksperiment, designarbeid, praksisrefleksjon, modellering eller bruk i praksis</td></tr>
+                <tr><td><strong>Teori</strong></td><td>teoriar teksten sjølv seier han byggjer på</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="ana-sec">
+          <h3>Pilot: 30 tekstar, maskinkoda, ikkje validert</h3>
+          <div class="table-wrap">
+            <table class="tbl-clean">
+              <tbody>
+                <tr><td>Påstandar</td><td class="r"><strong>315</strong></td></tr>
+                <tr><td>Utdrag funne ordrett i teksten</td><td class="r"><strong>315 av 316</strong></td></tr>
+                <tr><td>Stadfesta ved ny lesing med lokal kontekst</td><td class="r"><strong>81–84 %</strong></td></tr>
+                <tr><td>Same attribusjon ved ny lesing</td><td class="r"><strong>95–98 %</strong></td></tr>
+                <tr><td>Same samanhengstype ved ny lesing</td><td class="r"><strong>76–84 %</strong></td></tr>
+                <tr><td>Påstandar som gjekk att då same tekstar vart lesne to gonger</td><td class="r"><strong>45 %</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="te-note">Det siste talet er grunnen til at basen er avgrensa til hovudpåstandar.</p>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <input type="search" id="teQ" placeholder="Søk i påstandar, omgrep og teoriar…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk i teorielement">
+      </div>
+      <div class="filters">
+        <select id="teRel" aria-label="Samanheng"></select>
+        <select id="teDef" aria-label="Definisjonsstatus"></select>
+        <select id="teForm" aria-label="Støtteform"></select>
+      </div>
+      <p id="teNote" class="te-note"></p>
+      <div class="resultline"><span id="teCount">Lastar…</span></div>
+      <div id="teList"></div>
+    </section>
   </main>
 
   <footer>
@@ -147,5 +211,6 @@
   </footer>
 
   <script src="app.js?v=0"></script>
+  <script src="teorielement.js?v=1"></script>
 </body>
 </html>
