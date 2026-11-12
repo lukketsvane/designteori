@@ -308,6 +308,87 @@ class TestPdfPipeline(unittest.TestCase):
             self.assertEqual(list(man.keys()), ["W1"])
             self.assertEqual(man["W1"]["license"], "CC BY 4.0")
 
+    def test_non_oa_repo_fallback_paywall_toc_and_hal_dtu_expansion(self):
+        self.assertEqual(
+            expand_registered_oa_urls("https://hal.science/hal-03981270"),
+            ["https://hal.science/hal-03981270/document", "https://hal.science/hal-03981270"],
+        )
+        self.assertEqual(
+            expand_registered_oa_urls("https://shs.hal.science/halshs-0123456"),
+            ["https://shs.hal.science/halshs-0123456/document", "https://shs.hal.science/halshs-0123456"],
+        )
+        self.assertEqual(
+            expand_registered_oa_urls("https://hal.science/hal-03981270/file/paper.pdf"),
+            ["https://hal.science/hal-03981270/file/paper.pdf"],
+        )
+        self.assertEqual(
+            expand_registered_oa_urls("https://orbit.dtu.dk/files/160367810/Paper.pdf"),
+            [
+                "https://backend.orbit.dtu.dk/ws/files/160367810/Paper.pdf",
+                "https://orbit.dtu.dk/files/160367810/Paper.pdf",
+            ],
+        )
+        self.assertEqual(
+            expand_registered_oa_urls("https://www.ep.liu.se/ecp/059/010/ecp09059010.pdf"),
+            [
+                "https://ep.liu.se/ecp/059/010/ecp09059010.pdf",
+                "https://www.ep.liu.se/ecp/059/010/ecp09059010.pdf",
+            ],
+        )
+
+        urls = extract_openalex_work_urls({
+            "open_access": {"is_oa": True, "oa_url": "https://oa.example.org/fallback"},
+            "best_oa_location": {
+                "is_oa": True,
+                "pdf_url": "https://repo.example.org/oa.pdf",
+                "source": {"type": "repository"},
+            },
+            "locations": [
+                {"is_oa": False, "pdf_url": "https://journals.sagepub.com/doi/pdf/10.1177/123", "landing_page_url": "https://www.sciencedirect.com/science/article/pii/123"},
+                {"is_oa": False, "pdf_url": "https://www.gbv.de/dms/tib-ub-hannover/999_toc.pdf"},
+                {"is_oa": False, "landing_page_url": "https://adk.elsevierpure.com/ws/files/59247138/Design.pdf"},
+                {"is_oa": False, "landing_page_url": "https://orbit.dtu.dk/files/160367810/Thesis.pdf"},
+                {"is_oa": False, "landing_page_url": "https://www.ep.liu.se/ecp/059/010/ecp09059010.pdf"},
+                {"is_oa": False, "landing_page_url": "https://vbn.aau.dk/da/publications/a6cddb66-e5f7-4891-a7a8-ba23c8f5d202"},
+                {"is_oa": False, "landing_page_url": "https://research.ulapland.fi/en/publications/some-design-study"},
+                {"is_oa": False, "landing_page_url": "https://hdl.handle.net/10044/1/99999"},
+                {"is_oa": False, "landing_page_url": "https://hdl.handle.net/2117/123456"},
+                {"is_oa": False, "landing_page_url": "https://pure.au.dk/portal/en/publications/metadata-only-uuid"},
+                {"is_oa": False, "landing_page_url": "https://radar.gsa.ac.uk/id/eprint/6543"},
+                {"is_oa": False, "landing_page_url": "https://publisher.example.org/abstract-only-page"},
+            ],
+        })
+        self.assertEqual(urls[0], "https://repo.example.org/oa.pdf")
+        self.assertEqual(urls[1], "https://oa.example.org/fallback")
+        self.assertIn("https://adk.elsevierpure.com/ws/files/59247138/Design.pdf", urls)
+        self.assertIn("https://backend.orbit.dtu.dk/ws/files/160367810/Thesis.pdf", urls)
+        self.assertIn("https://ep.liu.se/ecp/059/010/ecp09059010.pdf", urls)
+        self.assertIn("https://vbn.aau.dk/da/publications/a6cddb66-e5f7-4891-a7a8-ba23c8f5d202", urls)
+        self.assertIn("https://research.ulapland.fi/en/publications/some-design-study", urls)
+        self.assertIn("https://hdl.handle.net/10044/1/99999", urls)
+        self.assertIn("https://hdl.handle.net/2117/123456", urls)
+        self.assertIn("https://radar.gsa.ac.uk/id/eprint/6543", urls)
+        self.assertLess(
+            urls.index("https://adk.elsevierpure.com/ws/files/59247138/Design.pdf"),
+            urls.index("https://radar.gsa.ac.uk/id/eprint/6543"),
+        )
+        self.assertLess(
+            urls.index("https://backend.orbit.dtu.dk/ws/files/160367810/Thesis.pdf"),
+            urls.index("https://orbit.dtu.dk/files/160367810/Thesis.pdf"),
+        )
+        self.assertLess(
+            urls.index("https://ep.liu.se/ecp/059/010/ecp09059010.pdf"),
+            urls.index("https://www.ep.liu.se/ecp/059/010/ecp09059010.pdf"),
+        )
+        for blocked in (
+            "https://journals.sagepub.com/doi/pdf/10.1177/123",
+            "https://www.sciencedirect.com/science/article/pii/123",
+            "https://www.gbv.de/dms/tib-ub-hannover/999_toc.pdf",
+            "https://pure.au.dk/portal/en/publications/metadata-only-uuid",
+            "https://publisher.example.org/abstract-only-page",
+        ):
+            self.assertNotIn(blocked, urls)
+
 
 if __name__ == "__main__":
     unittest.main()

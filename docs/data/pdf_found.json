@@ -237,6 +237,13 @@
     "sha256": "aa7063f817d3ca6c646371f487f8c770f0ea8026fee481fb274a7618dae6d970",
     "license": ""
   },
+  "W1543044593": {
+    "url": "https://www.cs.umd.edu/hcil/interliving/chi02/westerlund.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ec7bf91c0741fdb0bd3f11af292b828958235bd819f4ef4da8c74b1e1d34854f",
+    "license": ""
+  },
   "W1544692013": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/125/109",
     "repo_pdf": "",
@@ -445,6 +452,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "cbb39b54ef397cddf3fd9ec09cc27c4663d50df57cd7bf935cfa11664942a5d0",
+    "license": ""
+  },
+  "W1584439538": {
+    "url": "https://files.eric.ed.gov/fulltext/EJ805392.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a557913c8ce5f74bbdedd38dbbff08ae803af0736fda896a8cf50dc1554fcd0a",
     "license": ""
   },
   "W1588127817": {
@@ -692,6 +706,13 @@
     "sha256": "4427c3fd0577cd162b9c5fc1449c503a81c5d648fc640c4d7e7e76aeb4ab8ca2",
     "license": ""
   },
+  "W175724460": {
+    "url": "https://idcd2014.wordpress.com/wp-content/uploads/2014/02/workshop-proposal-feb-20141.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0ff325c8229d74f69f96be2917f3e815f6817a341cef139f3456c6560f9af929",
+    "license": ""
+  },
   "W1760609958": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/406/383",
     "repo_pdf": "",
@@ -916,6 +937,13 @@
     "sha256": "eb5d956786d0a8908fe130a0acd520afb9b239259bd90862e1613f9b3ffe921d",
     "license": ""
   },
+  "W190710117": {
+    "url": "https://www.ida.liu.se/~matar63/DQ-DRS2010-final.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "13edb33bff67740f5f677fb037ea6a6e9acd04c62686e68d9dd54c744ac685df",
+    "license": ""
+  },
   "W1907528987": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/331/311",
     "repo_pdf": "",
@@ -991,6 +1019,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "2cb5cef42d00783d2ffc22c1d63a1477f70015e5085d38e3722b6a3c962688b4",
+    "license": ""
+  },
+  "W1936012342": {
+    "url": "https://files.eric.ed.gov/fulltext/EJ996071.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bd9d499053ddf493376a105a4947fdb006555ed80fd0eccc15c5bdf870598f36",
     "license": ""
   },
   "W1937810030": {
@@ -1600,6 +1635,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "b53d0e489e130528e85629ef57d067ef0f9c7d630a4ae4e5b6c3d799a0e7c407",
+    "license": ""
+  },
+  "W2028305262": {
+    "url": "https://unsworks.unsw.edu.au/server/api/core/bitstreams/ec15dd2d-e570-4068-90a7-8373d8a89769/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "92d40a8ba98ea4dc2ef3a951bd0480e44824f9e536897334144c525f974dabb0",
     "license": ""
   },
   "W2028679317": {
@@ -2281,6 +2323,13 @@
     "sha256": "2310da055d0400beaac54df1ad66040ca2d0886ff2e1c5a419f3398cb73cfd1d",
     "license": ""
   },
+  "W2117653631": {
+    "url": "https://www.axiomaticdesign.com/wp-content/uploads/16-thompson-eproceedings.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "dee24a18270d4eb4a93e84316d4ae0f013a9bda81acd03e1986c9644f7842a1e",
+    "license": ""
+  },
   "W2119812538": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/89/73",
     "repo_pdf": "",
@@ -2384,6 +2433,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "a8ae5772dde771d7b2ded208e9c715b39a72073c13a8a237d16ad6a067e4eec9",
+    "license": ""
+  },
+  "W2129649636": {
+    "url": "https://www.ida.liu.se/~matar63/EPDE10-grading.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "fa2c12ed650621b1678414a70c449fdc368553d282bebd09f0f6bbbb423bb411",
     "license": ""
   },
   "W2131260069": {
@@ -2582,6 +2638,13 @@
     "sha256": "bde6439d783bbc66e5e6a1deed40e99e245f156dd3338a61345435613ab2afc5",
     "license": ""
   },
+  "W2149741867": {
+    "url": "https://kollision.dk/pdf/wonderground2006.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "799bc0ccf12b72083902964e394156dd962ad6f344102b3fd33630b8c170c50e",
+    "license": ""
+  },
   "W2151839565": {
     "url": "https://publications.lib.chalmers.se/records/fulltext/local_157413.pdf",
     "repo_pdf": "",
@@ -2764,6 +2827,13 @@
     "sha256": "47ef02d31fe0b46927ea0fe90b8db7cd855b079c6531b88e6b2f83e406e86879",
     "license": ""
   },
+  "W2171294880": {
+    "url": "https://bloc.se/pdf/lundgren_et_al_wonderground.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "aa71a141ca58594dd6f2c87481aae17840c2e757f14d414dbcdf654bf1a8ec14",
+    "license": ""
+  },
   "W2171300027": {
     "url": "https://umu.diva-portal.org/smash/get/diva2:738307/FULLTEXT01",
     "repo_pdf": "",
@@ -2834,11 +2904,60 @@
     "sha256": "df33ab427fa72a2694cfa84cfe1aeb49372c0a308a4e8c3f9f708e2a448633ca",
     "license": ""
   },
+  "W2182225993": {
+    "url": "https://servdes.org/pdf/2012/rontti-miettinen-kuure-lindstrom.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3d09d79cff42615b68be74d76399c927a1b2f71251302c8c3b85debb9dfadc26",
+    "license": ""
+  },
+  "W2184144858": {
+    "url": "https://ep.liu.se/ecp/067/008/ecp1267008.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ba9620c3439cd7a5920084eec077b8e67111e036cbfd81f2da3f58587765ea2c",
+    "license": ""
+  },
+  "W2185369746": {
+    "url": "https://ep.liu.se/ecp/099/042/ecp14099042.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3f88f6875e02038d6bc580687863b88e46efb65fef3c165b7ea7f1ab4a408d20",
+    "license": ""
+  },
+  "W2185988922": {
+    "url": "https://ep.liu.se/ecp/067/009/ecp1267009.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d56b2e2b419339685e4bd5ef7940f4f429a511e84bc450a56b17078c7a2a3b09",
+    "license": ""
+  },
+  "W2186255790": {
+    "url": "https://ep.liu.se/ecp/060/007/ecp10060007.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "cc1438518bc09bcd6b2445700baa51314b6273021927e7cff55ac92e8ce353d7",
+    "license": ""
+  },
+  "W2189342847": {
+    "url": "https://ep.liu.se/ecp/060/008/ecp10060008.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f2a0d0c8366755012e8d9afcfc1f784d77eaa225a20d9202390a17267c545513",
+    "license": ""
+  },
   "W2189848603": {
     "url": "https://storage.googleapis.com/jnl-su-j-sjdr-files/journals/1/articles/373/submission/proof/373-1-1321-1-10-20171117.pdf",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "0e6cdc3080fd439a204c4b91b2e793ba1770516af8f5dde6b885a7d13ef10300",
+    "license": ""
+  },
+  "W219515934": {
+    "url": "https://www.drs2010.umontreal.ca/data/PDF/090.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8f90be1c1efff5b7b7ffd5e3f2cddb0c56f2d2a832788f0c5a6b640612669779",
     "license": ""
   },
   "W2195787678": {
@@ -3205,6 +3324,34 @@
     "sha256": "62409b7b942a95d61b2d8c41548799916fe517ef9c72846af74132d12d00a5a2",
     "license": ""
   },
+  "W2336079454": {
+    "url": "https://ep.liu.se/ecp/067/012/ecp1267012.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c7eda4699a2a0c301c6d46e00cc764805e226761ab84cc15f897de46e8f90593",
+    "license": ""
+  },
+  "W2336803243": {
+    "url": "https://servdes.org/pdf/2012/aro-heinonen-parkkola-vironmaki-ahola-isoaho-jarvela-kerola-reijonen-vuorela.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0f04912d265173bb0f680471d0bd84448b6c4b1b12120e7a6133ab06f1a7d635",
+    "license": ""
+  },
+  "W2337750373": {
+    "url": "https://ep.liu.se/ecp/060/023/ecp10060023.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3152c78271ab4f98f6edeb2eea0b54326952b9535e50e309e9b52fa84c34a577",
+    "license": ""
+  },
+  "W2338107739": {
+    "url": "https://ep.liu.se/ecp/060/022/ecp10060022.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f2e482d57fe65331e89345cc628aab6f12406377761ebfea2cbf266bc575b080",
+    "license": ""
+  },
   "W2338366465": {
     "url": "https://eprints.lancs.ac.uk/id/eprint/79324/1/A_to_Z_of_ContemporaryDesign_PureVersion.pdf",
     "repo_pdf": "",
@@ -3226,11 +3373,32 @@
     "sha256": "5e2f25d69b091245c6a048891e51be8bf11fe42ca81cc82cd3a5cfb361428390",
     "license": ""
   },
+  "W2340087197": {
+    "url": "https://ep.liu.se/ecp/060/014/ecp10060014.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0862b421f227e437c3787836be0ce296e22a2cde8928dce08cac840cac3e84ae",
+    "license": ""
+  },
+  "W2341479819": {
+    "url": "https://ep.liu.se/ecp/099/016/ecp14099016.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "95ff31aca2f57a5cc65373e6b6da69ade8e482fce57fd5cebcdc8012e1421903",
+    "license": ""
+  },
   "W2342509423": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:925836/FULLTEXT01.pdf",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "f2862be22bfb99c96ebc7a80ee8d4bc0cb7c1d229d5677c0905540669d2e0c31",
+    "license": ""
+  },
+  "W2342575038": {
+    "url": "https://ep.liu.se/ecp/060/003/ecp10060003.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2bedd919cff09510bbe2ff8de6184af8121e451d42a800cef450df2de6911a5e",
     "license": ""
   },
   "W2342943192": {
@@ -3252,6 +3420,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7aab0b87a033e3d6e6ca5064ca49655616adc3c99f18b177c380e18cbb06a3f3",
+    "license": ""
+  },
+  "W2398171576": {
+    "url": "https://ceur-ws.org/Vol-1450/paper2.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "968b763926759d12624e688b047f9c1038dab3eb80f42b4f12a104d0e51bea91",
     "license": ""
   },
   "W2400974148": {
@@ -3296,6 +3471,20 @@
     "sha256": "a1fe216bad751966b16fcf595a4b4fc72b637936e259d4e5da8b5201aaea43cc",
     "license": ""
   },
+  "W2413532504": {
+    "url": "https://ep.liu.se/ecp/099/026/ecp14099026.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "079e4fbf5eef6d48856ac294335a842f205e386e9011f2a6da76a000840ff421",
+    "license": ""
+  },
+  "W2413886028": {
+    "url": "https://ep.liu.se/ecp/099/060/ecp14099060.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "287854be758501c05265564ecf20ea6a8e30dc002a798aef5c47b0a3351a008c",
+    "license": ""
+  },
   "W2414252249": {
     "url": "https://research-api.cbs.dk/ws/files/46630283/kirsti_reitan_andersen_a_new_t_for_textiles_postprint.pdf",
     "repo_pdf": "",
@@ -3315,6 +3504,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "ca3338ca92f51f5407eb34d42c1ab5c5000f2e625aba7c8f762589ae38e15e0e",
+    "license": ""
+  },
+  "W2427049258": {
+    "url": "https://ep.liu.se/ecp/099/030/ecp14099030.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3aa14cf59bc509cfc51eb7e6fad7a1b537383845243ab2174be2c72790fb322a",
+    "license": ""
+  },
+  "W2436175027": {
+    "url": "https://ep.liu.se/ecp/059/010/ecp09059010.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3dc906929ea823c1b611ddbf4d76f0bfeb3361e48be56f80f200089eadede84b",
     "license": ""
   },
   "W2461863554": {
@@ -3392,6 +3595,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "16b5aa907eb0df582bff84d1ecf078e13d608d1747f7fd980c0811a2912e51da",
+    "license": ""
+  },
+  "W2481982865": {
+    "url": "https://ep.liu.se/ecp/125/032/ecp16125032.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "048c5ef838bfc5d260cf10c956eecf8e166aa44f8d69baefb30405fda430e7d8",
     "license": ""
   },
   "W2487697664": {
@@ -3660,6 +3870,13 @@
     "sha256": "28d2043895c9d2dae654de0349af1e483d3b655a0b1fb03380d560824953dd05",
     "license": ""
   },
+  "W2550710887": {
+    "url": "https://ep.liu.se/ecp/125/013/ecp16125013.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "434f3a34cdaa1f4c7495e0d10d0bda2e96bd50ebafbb2ccd5e0ba57e09324a4d",
+    "license": ""
+  },
   "W2550834185": {
     "url": "https://backend.orbit.dtu.dk/ws/files/127274201/The_role_of_logbooks_as_mediators_of_engineering_design_work_Post_Print_.pdf",
     "repo_pdf": "",
@@ -3674,11 +3891,32 @@
     "sha256": "9576f96100fe4c1ac9c6fab6e103fd83d26ec636046b74eaaa8b3a9b6b04977e",
     "license": ""
   },
+  "W2552678960": {
+    "url": "https://ep.liu.se/ecp/125/050/ecp16125050.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0e9dcb8c3a7eba48f8cc5cae4ba8d1e2ef82d1b80da2fef18d7a897a05afb164",
+    "license": ""
+  },
   "W2553685323": {
     "url": "https://backend.orbit.dtu.dk/ws/files/128524763/Behavioural_Design_Process_Post_Print.pdf",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "96e12433856b181e16c63b1768dc34b39775bab2c0b4e495f92d4c37712cb99c",
+    "license": ""
+  },
+  "W2553726059": {
+    "url": "https://ep.liu.se/ecp/125/023/ecp16125023.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ee9706ff850cf4c261ce637aa68de65caed5db5591616fc928085f513355f2a2",
+    "license": ""
+  },
+  "W2554766520": {
+    "url": "https://ep.liu.se/ecp/125/010/ecp16125010.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e6dbb720c297eadab165d4aa85dd47c77ee30779bcdc0f719091e5acf7dd84cd",
     "license": ""
   },
   "W2554794527": {
@@ -3721,6 +3959,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "10a8b5c194a1b399e9f0b8012593af8f818e3481f4a3467c733d2f823797dba5",
+    "license": ""
+  },
+  "W2559546646": {
+    "url": "https://ep.liu.se/ecp/125/051/ecp16125051.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "335becef8584027bddfaac52947852b1b0acc27bd3a2c2cc81dde041f51b7000",
     "license": ""
   },
   "W2559805304": {
@@ -3786,6 +4031,13 @@
     "sha256": "dcfa0d10b3d3922a9d1638b41797c40ff903aceeb703b3f587eb829852875de4",
     "license": ""
   },
+  "W2570265888": {
+    "url": "https://polynet.dk/lenau/lenauICED11.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "14b43d5fb611b0d68983f41939e453c4b45a1e9ff1d701712a7ac031278a4f91",
+    "license": ""
+  },
   "W2570394483": {
     "url": "https://img1.wsimg.com/blobby/go/d0dd54db-2225-42e2-a2f9-e42e4b1f907b/downloads/Vol63Whyte.pdf?ver=1561844999768",
     "repo_pdf": "",
@@ -3821,6 +4073,13 @@
     "sha256": "1c02016e7dc49e49b18e2e0c1fd564671b6e325e7fc4a503934358b3996168aa",
     "license": ""
   },
+  "W2575337597": {
+    "url": "https://spiral.imperial.ac.uk/server/api/core/bitstreams/1799660b-4e3f-4a75-8eed-366a44819cd7/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ea7ec2d9b87908d4d85ee82f5172ccd17dcc30c08b63d5d377b7c465a6d1d73e",
+    "license": ""
+  },
   "W2575458354": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/1269/1719",
     "repo_pdf": "",
@@ -3847,6 +4106,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "034121558eb3d5ac39160411a33c216ce0cc7bd99cc8ca8329a8d056d2338258",
+    "license": ""
+  },
+  "W2583098150": {
+    "url": "https://www.designsociety.org/download-publication/39085/challenges_of_collaborative_product_styling_in_design_teams",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "cd5aa4db410a14d4bafd36a2e8acefb9141e33749ca0e6c145554b60ac6517eb",
     "license": ""
   },
   "W2586991181": {
@@ -3938,6 +4204,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "b39adaf7e64991d643d9f8cea274744d0745699753d8aa4662cdb0981c576df0",
+    "license": ""
+  },
+  "W2602036365": {
+    "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/4045/19737",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "59e4e7a0dd369b9866659fcefc81a49d14494d4c1651737214e8ffe6d9ae2c71",
     "license": ""
   },
   "W2602237222": {
@@ -4066,6 +4339,13 @@
     "sha256": "1882013cf474fd02ba0a94a64796bc669d8015bf8b3af54bdde184a9561f6048",
     "license": ""
   },
+  "W2620626774": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/58600130/Report_for_Working_Group_1.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "7d5699169e19d18607f8c7a79f6381c8c6762b4bbeb5f126c93e3f384dcb3f4d",
+    "license": ""
+  },
   "W2620677664": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/543/511",
     "repo_pdf": "",
@@ -4085,6 +4365,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "744fb1b256ca545089e45b7909fd6ed29b9d479fa2fed448983b871f8fe72d34",
+    "license": ""
+  },
+  "W2621967548": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/131996751/Untitled_3.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "10dffaeca9c8bfdd92384d760689f4cb3cd80770b3fbfaa9834aa08efb424ad6",
     "license": ""
   },
   "W2622903458": {
@@ -4234,6 +4521,13 @@
     "sha256": "bed0cf210952990eaf2924617ab701fddd6f73c138b8903b1ecb36fa8f922ff2",
     "license": ""
   },
+  "W2739851592": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/103602363/WOS.NET_2014_Book_of_Abstracts.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ba1e7ccc3b145c107d4aac9ea1223c91596ae48935d9287f331a74c6e149a296",
+    "license": ""
+  },
   "W2740696008": {
     "url": "https://findresearcher.sdu.dk/ws/files/143527479/Disentangling_the_social_in_social_design_rev_june2017.pdf",
     "repo_pdf": "",
@@ -4267,6 +4561,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "2f84cdcea513a1d283fe0a867f039597b6ef3cf4eb6820c54d41dee7f0c998df",
+    "license": ""
+  },
+  "W2745780938": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/58600161/Report_for_Working_Group_2.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b1a429c615064eb25c4b156b9ce393ebd385f546ae2f9555b45ff6176d7d19f0",
     "license": ""
   },
   "W2748904929": {
@@ -4437,6 +4738,13 @@
     "sha256": "53ae160306f8fbfc8d278b2bbe248d51e523f92f7813d92d8f4f2f674c9a185a",
     "license": ""
   },
+  "W2754529588": {
+    "url": "https://ris.utwente.nl/ws/files/15060714/546_Henseler_Unified_Theory_of_Design.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e98c29cd8a694fd9b2b47a7b15fa2b41b5bc10f06a77934af00af490e4378ffa",
+    "license": ""
+  },
   "W2754773881": {
     "url": "https://journals.aau.dk/index.php/pbl/article/download/1562/1507",
     "repo_pdf": "",
@@ -4477,6 +4785,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "51aa35ffea18c0cb104810ab3c8c3b9f7ca530a540d952f7f3f1f3a9538637a7",
+    "license": ""
+  },
+  "W2756702430": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/137916136/Parraguez_Maier_DS87_Vol7_DesThe_143.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "982d8847ec1b82e2d46bd78d0d163690e6643751f48fabe7518c6aa6089d04d5",
     "license": ""
   },
   "W2757280500": {
@@ -4822,6 +5137,13 @@
     "sha256": "a20af1d836431766e41a1d50517d9b4bf7b2a2e6a1af5deb58edb2d5d264cdbf",
     "license": ""
   },
+  "W2790652507": {
+    "url": "https://researcher.itu.dk/ws/portalfiles/portal/82498440/Scripting_an_exploration_of_designing_for_participation_over_time_with_communities_CoDesign_Vol_14_No_1.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "23fb3d16f22cd5b6bf8f77ccb96113756c8bb87b434163a584722f6cbe0563d4",
+    "license": ""
+  },
   "W2790732254": {
     "url": "https://helda.helsinki.fi/server/api/core/bitstreams/63cc3a8f-4e2c-462c-b1b7-d9a83f4be4e3/content",
     "repo_pdf": "",
@@ -4913,6 +5235,20 @@
     "sha256": "a4232cf9417ed28ab282980531e2c7beece9e8b00fe065ee764594bc56a3af05",
     "license": ""
   },
+  "W2800119759": {
+    "url": "https://ep.liu.se/ecp/150/007/ecp18150007.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "50fbeb0bed25976703ce01961cb63af3cda7eb4431e2f417098c9ec18d8c5da7",
+    "license": ""
+  },
+  "W2802652143": {
+    "url": "https://arkitekturforskning.net/na/article/download/1139/654908",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ce6803f7016d76255bc17b81c6d42fb4ccb05459e718054f2cbb2b5e6f8e227a",
+    "license": ""
+  },
   "W2802810624": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/e0969f32-c48a-488b-bb66-69c0e8f099ed/content",
     "repo_pdf": "",
@@ -4939,6 +5275,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "8d2408742a71f73de2c9a50997f9b1aa33b93238c6a507dceaa68e1a3a26e279",
+    "license": ""
+  },
+  "W2804469317": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/114560426/CIB_FM_2014_PROCEEDINGS_final.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "881ecc95a9f53206ef8ac89c62877c9c07c3d8f274946d3f6e7630c1004530a6",
     "license": ""
   },
   "W2807543295": {
@@ -5065,6 +5408,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "99874db34575e6c41b061dd5b6bc276b83d923f4e05b0e3e6350262850068e42",
+    "license": ""
+  },
+  "W2884676905": {
+    "url": "https://arkitekturforskning.net/na/article/download/1136/654907",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2ac2ff6bfd63591c71fe7e680df7d6a3fcc0aaf508ac894de915b0ff627c0757",
     "license": ""
   },
   "W2885137143": {
@@ -5781,6 +6131,13 @@
     "sha256": "4e9ef7bd91fdd912de26ff124474a3e7750c870aa398cf23d1453a38b62f908a",
     "license": ""
   },
+  "W29365976": {
+    "url": "https://www.ida.liu.se/~matar63/design-ability.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5b20d15d9f238e928e491441252bd47d91b268db4a32760bf48c95e5021419c8",
+    "license": ""
+  },
   "W2937075754": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/b4dbd168-b170-45d9-bb03-492482f3ce19/content",
     "repo_pdf": "",
@@ -5793,6 +6150,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "76987d62b371c046a88665c6a5a1ea9b1bb012d5020bbd0d0e7831cf647431a3",
+    "license": ""
+  },
+  "W2938972195": {
+    "url": "https://ep.liu.se/ecp/150/087/ecp18150087.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "fe46d5991b933e5da892a4939a2b11d8f2da19cfe36a6f6d7d43731b3d47ceeb",
     "license": ""
   },
   "W2939127348": {
@@ -6089,6 +6453,20 @@
     "sha256": "fe1dd60954846bcc838e1103ae403cb1ebe66ab8ac36d1c418759845c01012d0",
     "license": ""
   },
+  "W2963208547": {
+    "url": "https://ep.liu.se/ecp/150/037/ecp18150037.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "64672cc91181bc5a7b24b58928464bc1f19ae19d6cdf23658a84a31a2d3cfaa7",
+    "license": ""
+  },
+  "W2963880912": {
+    "url": "https://ep.liu.se/ecp/150/068/ecp18150068.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bc388815a5966bdda994d9bda96ec212a814402fb4b15e082cc1b9ab95b0049d",
+    "license": ""
+  },
   "W2964425190": {
     "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0EA2CCB55B1A94CDFC8AF23BC6C3BE05/S2220434219001884a.pdf/div-class-title-semantic-analysis-approach-to-studying-design-problem-solving-div.pdf",
     "repo_pdf": "",
@@ -6157,6 +6535,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "77462e9f0820c7d6feabf92e4ef5a115fd8cc26f4f389244874d18e4098e3eaa",
+    "license": ""
+  },
+  "W2965158630": {
+    "url": "https://ep.liu.se/ecp/150/099/ecp18150099.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3538fc8a2cfc9d7d9ce52c4501498e04c8ed1167533847ed02d10ac3aaaced65",
     "license": ""
   },
   "W2965198325": {
@@ -6243,6 +6628,13 @@
     "sha256": "c855ebf7f74c4477cebe9ddf639eaebb74bef15675f8c9257ac5ebf0692850b5",
     "license": ""
   },
+  "W2966223887": {
+    "url": "https://ep.liu.se/ecp/150/092/ecp18150092.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5305ee1d556571240d0b0cfb24bfda38d94389a26d31f2cce241de6fc02ed13d",
+    "license": ""
+  },
   "W2966315446": {
     "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/50288BD982A1105B6D56E2DDEA062A7C/S2220434219001124a.pdf/div-class-title-an-introductory-review-of-methods-for-the-articulation-of-strategy-in-design-div.pdf",
     "repo_pdf": "",
@@ -6299,6 +6691,13 @@
     "sha256": "f7209154e0adb868576e4e3f172590f7815639f74bafd829a5d5b12847d4b2cf",
     "license": ""
   },
+  "W2970192101": {
+    "url": "https://inria.hal.science/hal-01371776/file/393968_1_En_1_Chapter.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "504ec761db3ca209f96661a31da43e08bc2c4e9337d5bb7b4df81e57ce63d3db",
+    "license": ""
+  },
   "W2970206573": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:1255747/FULLTEXT01.pdf",
     "repo_pdf": "",
@@ -6346,6 +6745,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7fb4deb88d4b776bed448cd955ae6c816e5dd75dfe177125b2edc6118ac933d0",
+    "license": ""
+  },
+  "W2970716342": {
+    "url": "https://ep.liu.se/ecp/150/055/ecp18150055.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b57dd7a51e1dfc4822af9b7555b90e46d577b47353a279b7befe73b2fd2163a1",
     "license": ""
   },
   "W2970943730": {
@@ -6446,6 +6852,13 @@
     "sha256": "c2ff52e0e575e45b61e1e4be7b57a849f1131b2d124cf2d0faeff1cfbefbbd32",
     "license": ""
   },
+  "W2978925652": {
+    "url": "https://radar.gsa.ac.uk/4367/1/SDR%20UK%20Report_7%20April%202014.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1d37a70115dbba5c4fed9213699a4e520f112ef1b142ca3b8d5473b07f33f8d1",
+    "license": ""
+  },
   "W2979350757": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/2310/3294",
     "repo_pdf": "",
@@ -6460,11 +6873,25 @@
     "sha256": "272037628461f9ea1a1165fea5747526f2d0349936fc0a384dc973768cde32ea",
     "license": ""
   },
+  "W2979638551": {
+    "url": "https://jespersimonsen.dk/Downloads/IRIS23JS.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1401dbbc340ce41af2838b16172ea5a66c5c57de6645c9be8491ae4df5eb146b",
+    "license": ""
+  },
   "W2979871334": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/1fa2e25d-422e-410b-9ddb-18d8fa06d4e5/content",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "2702dcd37e90c8fb802d92f1e1226f99c3ec660e48cdedd0f4d5ee9aa6573147",
+    "license": ""
+  },
+  "W2980032970": {
+    "url": "https://publications.vtt.fi/pdf/technology/2014/T185.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "7fa062a45be911b4cb1cf1b6b585174a350b37841542e5d23ad0bb22a82272b5",
     "license": ""
   },
   "W2980388915": {
@@ -6724,6 +7151,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "81bb8aa4146d2cc59a84f1491c54abb2bb36e7beb7447da5b19c0d3c4761d966",
+    "license": ""
+  },
+  "W3001156451": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/5897740/Impacting%20Society%20through%20Engineering%20Design%20Research%20%E2%80%93%20An%20alternative%20approach.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bdb32ee3e3390325e611048b6e2921e5ee7017c80e40bd56ca08de89903ef5e6",
     "license": ""
   },
   "W3001243385": {
@@ -7118,6 +7552,13 @@
     "sha256": "98dc57a5f988a001dae3a7c82a067a7d4f3b4ee6e05ec603192482ac28b65073",
     "license": ""
   },
+  "W3034570460": {
+    "url": "https://storage.googleapis.com/jnl-up-j-jime-files/journals/1/articles/1168/6a47764d5202c.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2447b3bf6606e83ba38c90b1fbf097323420a7984096054e34715a038f2a68e7",
+    "license": ""
+  },
   "W3034575054": {
     "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/7C3CD0A61DDBFE16C1CC67B2F7F7EDF8/S2633776220002940a.pdf/div-class-title-semantic-analysis-of-engineering-design-conversations-div.pdf",
     "repo_pdf": "",
@@ -7410,6 +7851,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "a0b5d06e2530cc41aab0c7abb59958b5868cb282467b5ec1f731450fb12328d5",
+    "license": ""
+  },
+  "W3044243997": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/184231047/PhD_Thesis_20_jun_2019_.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f9528619bfb9333c14d6c64665032c3ba45953d37cfb3d32db3f6d4d12752ad3",
     "license": ""
   },
   "W3045503000": {
@@ -7797,6 +8245,13 @@
     "sha256": "86a432c0c179879063ebe02f074081c9aefbc985b739bac8f7ee5799d3772821",
     "license": ""
   },
+  "W3109914647": {
+    "url": "https://www.thinkmind.org/articles/achi_2020_4_50_28019.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a43c3f43923643210002c21d531e508678677dc79720d3e335f98dcc132c8551",
+    "license": ""
+  },
   "W3110161169": {
     "url": "https://iopscience.iop.org/article/10.1088/1755-1315/588/4/042043/pdf",
     "repo_pdf": "",
@@ -8019,6 +8474,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "4ba605f4a018da88ba5d77ec83808096eb4cf7dbfddb2e13adeb3563fbee9bfb",
+    "license": ""
+  },
+  "W3125179047": {
+    "url": "https://www.designsociety.org/download-publication/43225/THE+TRIPOD+APPROACH%3A+A+PEDAGOGICAL+TOOL+FOR+CONCEPT+DEVELOPMENT+IN+FASHION+AND+TEXTILE+DESIGN",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bac4cec0c87b20fa1aaecd9dc7e4e2acbf0ca85772d63cb18994bd790ec36e42",
     "license": ""
   },
   "W3126134365": {
@@ -9099,6 +9561,13 @@
     "sha256": "61749782a9111fa87bfd841f5df8c0c833bb49a5f1d83a6ff1d7a9b1220aa94b",
     "license": ""
   },
+  "W3203673994": {
+    "url": "https://researcher.itu.dk/ws/files/84115471/BISE_Scenario_Based_Design_OA.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e4f16aedaa10d3f1f42433ca0e5d78e01a8f4fd27ae7c5df5dc04116de14a70c",
+    "license": ""
+  },
   "W3204617962": {
     "url": "https://jyx.jyu.fi/bitstreams/0aaecba7-7186-4964-b11f-4cb8b18bc7ad/download",
     "repo_pdf": "",
@@ -9216,6 +9685,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "de9f8486bf38371a25668eb6def87d53fd670f45c0d181665974842e23113679",
+    "license": ""
+  },
+  "W351198362": {
+    "url": "https://ualresearchonline.arts.ac.uk/id/eprint/20604/1/20140317_drs.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "534984e2e1786f11f99a7b33e436d2ab33fa38591c8923164230d97c014a2fdc",
+    "license": ""
+  },
+  "W384046677": {
+    "url": "https://www.ida.liu.se/~matar63/ead_2013_arvola.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4af47eb1fb78c5c5ec0dd26c32272b1247c3dad46c8350a21482f2c6179e363a",
     "license": ""
   },
   "W40255342": {
@@ -9839,6 +10322,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "76b8f9782b1e36d60e143530c14bb9701fbb8e40926f6def53ef0154fe6c2159",
+    "license": ""
+  },
+  "W4281922425": {
+    "url": "https://openresearch.ocadu.ca/id/eprint/3906/1/Nimkulrat_Embodiment_2022.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "71df82e146d235227a2e5a9c885955e5be976b0a0c26da51dbdb026798dcb6d4",
     "license": ""
   },
   "W4281962639": {
@@ -13901,6 +14391,13 @@
     "sha256": "f54fc48edfe0bb1c41aaade444b63987f955fda8e7375b4b54db1ea9cc064a2f",
     "license": ""
   },
+  "W4409884395": {
+    "url": "https://spiral.imperial.ac.uk/server/api/core/bitstreams/f4b8aa02-b6fe-4cfb-aed7-797ffa6f5a0a/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "63f9b5d90d5134200b7939a080be9821fcc07e4281aebc58e0b3e57d26b750ec",
+    "license": ""
+  },
   "W4409990235": {
     "url": "https://journals.le.ac.uk/index.php/mas/article/download/4057/4945",
     "repo_pdf": "",
@@ -14118,6 +14615,13 @@
     "sha256": "2b91ba999447899dcd153cdee7ece9f90ef53006f16a2c450b11109c6b391544",
     "license": ""
   },
+  "W4412035578": {
+    "url": "https://discovery.ucl.ac.uk/id/eprint/10219095/1/_DIS_25___SCTpm.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f2eee1ad0839183a251b625159fd569238f841a0aba108be99a79c58ab2c6fd1",
+    "license": ""
+  },
   "W4412035769": {
     "url": "https://umu.diva-portal.org/smash/get/diva2:1998137/FULLTEXT01",
     "repo_pdf": "",
@@ -14209,6 +14713,13 @@
     "sha256": "ce40984d78b24ce7fef8a21961cc9f5fa0874e66046a5057e57b20f965c3e60e",
     "license": ""
   },
+  "W4412220279": {
+    "url": "https://findresearcher.sdu.dk/ws/files/263039308/Universal_design_UK.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "30c2cacb473b612547fe3b3a10c1bde86ed8d54738b43b39d9ab6a80b846654f",
+    "license": ""
+  },
   "W4412220820": {
     "url": "https://vbn.aau.dk/ws/portalfiles/portal/678709478/Universal_design_UK.pdf",
     "repo_pdf": "",
@@ -14235,6 +14746,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "54b7c9cb5891ec24c19a181fda2271ebb1c34fe336b5228133c9ea0895d6b1d3",
+    "license": ""
+  },
+  "W4412228080": {
+    "url": "https://shs.hal.science/halshs-00745826v1/document",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6865d4904b84ff59107d8ba9dd0c86a137187c2e57a2035f684eea70ab1a3cdd",
     "license": ""
   },
   "W4412228316": {
@@ -14272,6 +14790,13 @@
     "sha256": "048af194ffe6d8893a14fe65b336b14a67c00c01968c80e3eda80ec2c0a9b0e2",
     "license": ""
   },
+  "W4412246328": {
+    "url": "https://rucforsk.ruc.dk/ws/files/83492353/Prescriptive_Design_Knowledge_Codification_accepted_authorversion.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "74663c445c1833d47161b5b16a76d0bae7b10ed4f82ba2186e88fcf9b1981b83",
+    "license": ""
+  },
   "W4412281236": {
     "url": "https://curis.ku.dk/ws/files/248851398/s10.pdf",
     "repo_pdf": "",
@@ -14291,6 +14816,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "392ecbdc01749aa0685284971c637fa388e113b7dde10c55f2531adcc42e686e",
+    "license": ""
+  },
+  "W4412285226": {
+    "url": "https://researcher.itu.dk/ws/portalfiles/portal/34928314/personas_in_co_creation_co_design.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ac6e6ae5e85acb4ca579cb49f7a13eb5dcf67b7752412f50179b5dee7ef67429",
     "license": ""
   },
   "W4412297418": {
@@ -14342,6 +14874,13 @@
     "sha256": "e4875e03f3b7f0944a1e64f41000353f691dfbee7f7bda9f73ad57fe2a16c9d8",
     "license": ""
   },
+  "W4412336118": {
+    "url": "https://ijdesign.org/index.php/IJDesign/article/viewFile/3058/867",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "62a4c737f6bfdf5ff7e17a31e6e7e313155ad219aff12fe56691f57fc429f8eb",
+    "license": ""
+  },
   "W4412337020": {
     "url": "https://ccid2.wordpress.com/wp-content/uploads/2011/02/biskjaer-halskov.pdf",
     "repo_pdf": "",
@@ -14375,6 +14914,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "682ae7d4d63c9cd2f04cdae3b3d9eb58ccf70329fdbf526de0ce3465ab103211",
+    "license": ""
+  },
+  "W4412342224": {
+    "url": "https://inria.hal.science/hal-01371781/file/393968_1_En_2_Chapter.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "22a251d4caaf2bfcdd67766c0bcb2f8f4d961656341bbb1119003e870b00f9f8",
     "license": ""
   },
   "W4412343218": {
@@ -14797,6 +15343,13 @@
     "sha256": "e58a345a586958c50d9511ae88b8f420d1d85b135425779d2d92885ca66eb1d4",
     "license": ""
   },
+  "W4415124088": {
+    "url": "https://ep.liu.se/ecp/125/040/ecp16125040.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3b3ff8ea10eff596f31fe839998645580557fc91247301da1e3d84e036b0d4d7",
+    "license": ""
+  },
   "W4415124991": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/81746697-6f08-495c-bbd5-5d3a51c9148e/content",
     "repo_pdf": "",
@@ -14928,6 +15481,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "06008c87e9f3d0112724e9757ebc0717a812ff256f11a8280211ee1bb89a7a9a",
+    "license": ""
+  },
+  "W651453534": {
+    "url": "https://konstfack.diva-portal.org/smash/get/diva2:646284/FULLTEXT01.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c002210761dbbd3ccaeed2c1842d2538c3b786df8734813330df1b7c8b6006ce",
     "license": ""
   },
   "W7104505815": {
@@ -15236,6 +15796,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "a7e63f830a665b5c11436236f9002bbd7934ca440bd3e47ae739142980af373d",
+    "license": ""
+  },
+  "W7155154553": {
+    "url": "https://spiral.imperial.ac.uk/server/api/core/bitstreams/fd40fd4b-e116-4596-a3e3-f4468bdf8ad9/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6d78b3c81a0149255586f1139c338ddfee106e70768c2f1017a02250e5d25771",
     "license": ""
   },
   "W7155600328": {
@@ -15966,6 +16533,13 @@
     "sha256": "87afca0513aee499906c3fa432d2051d78649aa092e1a9daa518796018f7712c",
     "license": ""
   },
+  "W7220787153": {
+    "url": "https://www.hrpub.org/download/20210130/UJER18-19521987.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "38e3d74606f2c897a44b4d60dd63863a77f551c46c2360d999d068c1af4d8983",
+    "license": ""
+  },
   "W7220855073": {
     "url": "https://www.frontiersin.org/journals/mechanical-engineering/articles/10.3389/fmech.2026.1968837/pdf",
     "repo_pdf": "",
@@ -16006,6 +16580,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "5048c1ffa7382c9af2aa88065743675a524e25cbf836fcc0207265b554833a6d",
+    "license": ""
+  },
+  "W7224714320": {
+    "url": "https://hb.diva-portal.org/smash/get/diva2:1825265/FULLTEXT01",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4b105df62b53b363d993187116221887b148cbcec372913a44e7df3fec3cd598",
     "license": ""
   },
   "W7224743738": {
@@ -16132,6 +16713,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "6a8632c73a2a5ec2217656a82c77951a72bed75996d378b44e5d21890b74c632",
+    "license": ""
+  },
+  "W8873600": {
+    "url": "https://rauterberg.employee.id.tue.nl/conferences/INTERACT2003/INTERACT2003-p431.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "084497f0781ceb18c095fd9a1b9db7c9d4bc37ed7ceef2d61b21940e8d663705",
     "license": ""
   },
   "W91901479": {
@@ -16302,6 +16890,13 @@
     "sha256": "82cdc54bd9499b82d296e9d5c5b9774de46f98a8eb8384f5f388fc5ad0c33c9d",
     "license": ""
   },
+  "nordic:diva:3b7117de98fec6d61201": {
+    "url": "https://hb.diva-portal.org/smash/get/diva2:1751858/FULLTEXT02.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5335fcd28e138a7ee28f2009e2c31642fc249ea68baf06927ff81af7ac7763ce",
+    "license": ""
+  },
   "nordic:diva:409f9b38f5d1d76396d7": {
     "url": "https://umu.diva-portal.org/smash/get/diva2:1459618/FULLTEXT01.pdf",
     "repo_pdf": "",
@@ -16321,6 +16916,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "5e78b98352757611ad3e85fbdbea7a531d14ff3ec460f73f87d71b9ef7823d5c",
+    "license": ""
+  },
+  "nordic:diva:4ae0132b5a77dc4d4d02": {
+    "url": "https://kth.diva-portal.org/smash/get/diva2:1705245/FULLTEXT01.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6ab31bac556a5d3c534df5949ab150666dafed27bd19d6f85ce429bf206b05c8",
+    "license": ""
+  },
+  "nordic:diva:4cc9829f6ff22b00b4cd": {
+    "url": "https://ltu.diva-portal.org/smash/get/diva2:1869972/FULLTEXT01.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "aa1c0d522c1e9d8940271191b9dc203b10e3af82f85f439a155cc12cc73c2ecf",
     "license": ""
   },
   "nordic:diva:4dda1813d1a0be6c0b46": {
@@ -19137,6 +19746,13 @@
     "sha256": "d7c4528d34ccdb101077d2b4e3d1aa25a583d2e43f758bc43ea74d7a10242a03",
     "license": ""
   },
+  "nordic:nva:0d9001e0caa1579bcc9c": {
+    "url": "https://ep.liu.se/ecp/059/007/ecp09059007.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6f54ca2c40f7d9330ce21972a2afe231a2dd8ca9b20cad4767f1564a89418855",
+    "license": ""
+  },
   "nordic:nva:10937a5ebd56714cd3c3": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd42802b-cd7d587b-82b8-4b90-9e9e-a17c5b045663",
     "repo_pdf": "",
@@ -19284,6 +19900,13 @@
     "sha256": "bb64e2e26edff2412a41d4b3fce75c5d6c9662128c9ff01ecd759f62effdad09",
     "license": ""
   },
+  "nordic:nva:1cb1278384818f4787e5": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdef1e5f-10b81928-3259-493c-ba1a-59a62b9e119b",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b56dd06df5c88dcacd7e6fe631f6179728ab6ab44a79ff9b38e3559c242d46df",
+    "license": ""
+  },
   "nordic:nva:1e71a077f750d5eeb76a": {
     "url": "https://assets-eu.researchsquare.com/files/rs-9010798/v1/4705b1db-b6e9-4d3c-8a7c-83933ff7532d.pdf?c=1782145043",
     "repo_pdf": "",
@@ -19347,6 +19970,13 @@
     "sha256": "b32c3d1dde8cb3318375748cf96b55966f5ae2ea7aa836077b6d7bcecabaa23f",
     "license": ""
   },
+  "nordic:nva:2238b9eed832605643ef": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee861a-88473e17-7c16-460c-91c5-1fe3dea08991",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "02f726ea879fdc8ed23178100d99cfa076c4416ab9e8d15b8f185a33652dbf0d",
+    "license": ""
+  },
   "nordic:nva:224ced5e9119316b6975": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd818e8d-537c21a9-6cf8-4787-91fd-e02d8313e392",
     "repo_pdf": "",
@@ -19403,6 +20033,20 @@
     "sha256": "f6cbb741ca91d7b2794001df1478437f57b4d5f92467f2810a21611bcc9c65c3",
     "license": ""
   },
+  "nordic:nva:29e8300495b491feed85": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0ef9e3-7a4e62c9-f27a-4534-8418-ca629eafaaab",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bb48b22338c2d66ccf022894426d24e34c3609c5b9b094ca74bf6be4072e6b60",
+    "license": ""
+  },
+  "nordic:nva:29e9e29756606525b271": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdeea786-b1cdc4e2-0b35-4f89-b845-7e6c2a4f1a92",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3eace1d9d3bb776ec51b3a391221b54b58efd90724a7e4d5dcaeb80140f6fd08",
+    "license": ""
+  },
   "nordic:nva:2a5e328b1493b7975cd4": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd4234ab-190ef1e4-de81-4bc5-b7a4-238f11463adf",
     "repo_pdf": "",
@@ -19452,6 +20096,13 @@
     "sha256": "9987d063176644cce47d721f137420cad2ed35da40507f83b8ae1420db8f3c80",
     "license": ""
   },
+  "nordic:nva:2f82902fe7488d47c04f": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee8da5-e0cea28e-1ff3-456f-995a-7670882f87ac",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5b95e8c85acfb7ba2196fdd93b5c5de706bcea9992ccd528354dd27d00414afe",
+    "license": ""
+  },
   "nordic:nva:301c6423eb35e411058f": {
     "url": "https://f1000research-files.f1000.com/manuscripts/171072/c4ef5976-3f86-4c74-8467-28ce41c6868e_132580_-_sarah_rosenbaum.pdf?doi=10.12688/f1000research.132580.3&gtmKey=GTM-MWFK8L5J&gtmAuth=hzk0Vc3qFsQYhCrIoHz68A&gtmPreview=env-1&immUserUrl=https%3A%2F%2Ff1r-proxy.f1krdev.com%2Feditor%2Fmember%2Fshow%2F&otid=1bc074d1-3db4-47ed-9f80-df1a4a3f2ab4&s3BucketUrl=https%3A%2F%2Ff1000research-files.f1000.com&submissionUrl=%2Ffor-authors%2Fpublish-your-research&transcendEnv=cm&transcendId=ef49a3f1-d8c1-47d6-88fc-50e41130631f&numberOfBrowsableCollections=74&numberOfBrowsableInstitutionalCollections=7&numberOfBrowsableGateways=51",
     "repo_pdf": "",
@@ -19480,6 +20131,13 @@
     "sha256": "dc68bd2dbb808a404ffb83bafa9ee32046735a48f3069e837665927826907369",
     "license": ""
   },
+  "nordic:nva:32836f6a0890c2f4e86d": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdef260d-fa214e19-d565-498c-8b9f-d81effba09cf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "434bbe1dee4d02d6464cc2e150b1544cd6a81159613c6327c574628bf679f0c9",
+    "license": ""
+  },
   "nordic:nva:33d980742c41b89ea910": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7ea9eb-27e0974d-c93a-4b16-a5ff-84f6202f55e4",
     "repo_pdf": "",
@@ -19506,6 +20164,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "4c13f4a5cf7775ed490b5a5b076e6857df0791d674e1b1234973f74ca79165f0",
+    "license": ""
+  },
+  "nordic:nva:380fcd2ffeee78bea28d": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0f92f9-d601dfa0-3bba-43a4-87dd-c33b9205efa7",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ef480b4bc2431a93d1a05939e45ded370533377d285a60b6c389e9048c3cd8dc",
     "license": ""
   },
   "nordic:nva:38295128cd9038f1e3e5": {
@@ -19557,11 +20222,25 @@
     "sha256": "85299a25145213a9f05c2ee89098f0239f62a177e77e33aa43d5a1d18eb5b5e7",
     "license": ""
   },
+  "nordic:nva:3ceaeb6cb34064a5a06b": {
+    "url": "https://ep.liu.se/ecp/059/007/ecp09059007.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6f54ca2c40f7d9330ce21972a2afe231a2dd8ca9b20cad4767f1564a89418855",
+    "license": ""
+  },
   "nordic:nva:3d937a165c920a8d8a7b": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd43181a-d48e96fd-fc91-456e-8cad-ceb04162187e",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "3868f8da5a9cd64cef3f7ba9830bda49b072adcdcb02bbcb8a31c8f1b2b0c822",
+    "license": ""
+  },
+  "nordic:nva:3e079a8f0affad89f4ff": {
+    "url": "https://zenodo.org/records/6812241/files/09-3%20-%20Session9_Rydving_LIBER2022.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "afbd0fc44cb3687382ed1270fdba773ce5b0b6e2d50f7034d5d32713531b1505",
     "license": ""
   },
   "nordic:nva:3e27581ecf07c5bf95fe": {
@@ -19583,6 +20262,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "f97d742ae0b86f62f981838cb95085a5e7dd8d912ffe312693961a621ff9f600",
+    "license": ""
+  },
+  "nordic:nva:3fd2e6a61d816dde0c41": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0ef290-d994e287-50b3-4ca0-bd52-5041a07eb616",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d3002a41f355fefe8deffaa8aa61b9e47fad66bc28eca25eba4085c543427f6a",
     "license": ""
   },
   "nordic:nva:3fd3df75d50159cc0820": {
@@ -19697,6 +20383,13 @@
     "sha256": "046155a25a4f503fe145e7d5a7dc22801195f726f62dea04b4b30705f2646592",
     "license": ""
   },
+  "nordic:nva:492cf9c4308c3d4ac602": {
+    "url": "https://publishings.eaae.eu/index.php/jp/article/download/402/382",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5d2fc9fddae00d4dc88a67e66f9a96e4fb10ee2b5d7f9663225da520f159a854",
+    "license": ""
+  },
   "nordic:nva:4963be61dc9c6114bbe8": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7f3cd8-840a3e5d-724e-4df8-8616-c89e9d7e5c98",
     "repo_pdf": "",
@@ -19716,6 +20409,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "aabbb6bdf2c85cedf5c10b6ecf1581b484b0f4f0335422e32759ebba48e8f52c",
+    "license": ""
+  },
+  "nordic:nva:4994205c7bf1812418c5": {
+    "url": "https://findresearcher.sdu.dk/ws/files/157363864/BEST_EN_2019_ABSTRACT.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c2d513b69c0c3cbf5e9c9cd0fed6623237707831c3fc8dea07cd07c913f89d76",
+    "license": ""
+  },
+  "nordic:nva:4996ce7f398311814796": {
+    "url": "https://zenodo.org/records/11056682/files/Mapping%20of%20Possible%20Pathways%20to%20Sustainable%20Design%20in%20Social%20Robotics.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1dd69d1b934f677bf64bc7b876a6d5fa07953bf4fa1dc6c815d4f963f3222038",
     "license": ""
   },
   "nordic:nva:49adaeea695db7ccfc9e": {
@@ -19795,6 +20502,20 @@
     "sha256": "19be10cb6e63c9c18a2d617bd646979ede6d7ff18c0e70a8b0e2c15b57c1399b",
     "license": ""
   },
+  "nordic:nva:5087cdfc0d34688bf935": {
+    "url": "https://storage.googleapis.com/jnl-up-j-ijic-files/journals/1/articles/10232/6aedba7cef457.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ce3a896a7653e73f207d48fd8179d79c9cbd9dca17f9c86161c37460f5f26229",
+    "license": ""
+  },
+  "nordic:nva:50d40c675966836783b0": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0f05c5-9334bf4d-e02c-405a-9eb0-62e459934596",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "610d7b69f42b091f6b4bea9be0d6b15608a50234ab0805482b90d5841c2a2b2a",
+    "license": ""
+  },
   "nordic:nva:52857a2c35f49da003f6": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd82694d-e54cd547-83e8-41ed-be76-ff1107b871d3",
     "repo_pdf": "",
@@ -19821,6 +20542,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "93a111dae9123c16f2786707d9d9b112b3f23f9e0307c193c74d303de4f9d198",
+    "license": ""
+  },
+  "nordic:nva:55c73e5c87eeffd071ef": {
+    "url": "https://ep.liu.se/ecp/099/026/ecp14099026.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "079e4fbf5eef6d48856ac294335a842f205e386e9011f2a6da76a000840ff421",
     "license": ""
   },
   "nordic:nva:591bc297f55d908d4b5f": {
@@ -19851,11 +20579,39 @@
     "sha256": "720c7ca93ca30482f44b39bf67bd49a49f6ea1d0dee980489fe7dcd2d2cf9001",
     "license": ""
   },
+  "nordic:nva:5c523ad3f2423345b30d": {
+    "url": "https://www.academic-conferences.org/wp-content/uploads/2023/08/ECIE20-Proceedings_embedded.pdf#page=338",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d65b9ba9f6bcc797470f9b81d95c80f7c0982f1b941e4f5422eae4f451749bb5",
+    "license": ""
+  },
+  "nordic:nva:5d76a7eba489a6dbc858": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0e0262-a33ed68e-ecf7-4a02-ace6-30f81ca0b227",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ff152c8617c0bb6e8f8889383d399ba8757f373fe2195f9621e40d9b03bd2592",
+    "license": ""
+  },
+  "nordic:nva:5db4cb46e3762bef69df": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0f5c3b-362d9c3c-cb37-424a-b463-70c18c117cb0",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c798042e204befb6bf228eafe464ee3ac619c5a6902965a1c0d996bb7555b0a6",
+    "license": ""
+  },
   "nordic:nva:5f7a56a08f8c90ee33ff": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd40ee38-26db118d-76ef-469e-a096-ae048567b271",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "b46bacfce5a91037964d5b8303fee523a618e673b9b7a00ef4978c526a0fe4d8",
+    "license": ""
+  },
+  "nordic:nva:6074123a0b7aef524e7e": {
+    "url": "https://inria.hal.science/hal-02270710/document",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "02ccc923192d61e4d32df3ec89cea4f72d978459e12954c9ad0b2b0aab91f412",
     "license": ""
   },
   "nordic:nva:61c32c92ca8af40ce6b1": {
@@ -19870,6 +20626,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "36913934423d06aeff3af6a7e6abe6131a33653735a5cb396776c360b73e67da",
+    "license": ""
+  },
+  "nordic:nva:6369864e9b5b326e6f7a": {
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/189/185",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3e24f9175b6a4eca18b326b8f1bb5b6ea6ad2625e3bb929d319ab1ac281e402f",
     "license": ""
   },
   "nordic:nva:63ebd70beef248d65769": {
@@ -19984,6 +20747,13 @@
     "sha256": "829087dfd3f8f3154132901882c921be34d0568fafce2e243fa62d0b7219047b",
     "license": ""
   },
+  "nordic:nva:6e8ec734e3b10fb41e8e": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee7b38-3402ba35-9c47-4886-8e0e-501517c56886",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f5e85d161cd63261e068060f3903266bcd51ec26720ad07a44e9d84a53f80613",
+    "license": ""
+  },
   "nordic:nva:6ee001b1e66ba2259e42": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd4251d2-3925ef4d-5b78-408c-b875-5a58de008842",
     "repo_pdf": "",
@@ -20047,6 +20817,13 @@
     "sha256": "22d5cf7880c7a6998d765fccc331bfd3c6d700b282605bca4ec51e2e108f59d6",
     "license": ""
   },
+  "nordic:nva:7132e47e3519dbf44949": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce104ebc-70d89f0c-b4dd-4276-b8af-cd66a964cbaf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c58fbd3db05cd616d30ea6d4c018dec5d226dae2375753f1c771944b5266a902",
+    "license": ""
+  },
   "nordic:nva:71b12bc925e805564c6f": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd46d7c5-b6d7421c-12e3-448b-beee-bc30642544ad",
     "repo_pdf": "",
@@ -20103,6 +20880,13 @@
     "sha256": "be06bf02210576a61ff6e986de425d07789499ad3b352473560fd828b934115c",
     "license": ""
   },
+  "nordic:nva:7b068b89a7c74ed75b78": {
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/443/847",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b33b45c9531676321c46f71038df9a966250e26a5817e387c28ed0893c7f6373",
+    "license": ""
+  },
   "nordic:nva:7ce2b30420b1ffb16423": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7eb27c-5151197f-37c6-4129-bbb6-2cfb659114ba",
     "repo_pdf": "",
@@ -20122,6 +20906,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "812c64d4f08d6cc807526ad22d6f3483acddb4afe1a6bc0486798f373881f35c",
+    "license": ""
+  },
+  "nordic:nva:7e081cf429f3699a90e4": {
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/119/108",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "3a33f434bc3d41324b86be8ff043b6b9f5c83bbe9fabe30fb4bb8e28e97a69f4",
     "license": ""
   },
   "nordic:nva:7e11bf49ed84f7da5080": {
@@ -20180,6 +20971,20 @@
     "sha256": "e7d9aed9141eb6b99165b7206ba8e3e150610109822fb8a46a0fe375b6f1aa0e",
     "license": ""
   },
+  "nordic:nva:859ec12ad52ef98ffa83": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0e1a84-e41f7fdf-5bc9-455a-aabd-fb208368154d",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "24c744bbc56a831098615d66a7171fb81fe6d08294aa84ba1ce5a94696f4fa90",
+    "license": ""
+  },
+  "nordic:nva:85a5354084c69c32929b": {
+    "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/136/132",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "9712040c9f39a854eec89e171bb566c5362ac19c03fa63def62e9c32720d70bd",
+    "license": ""
+  },
   "nordic:nva:85d837747a80823435e3": {
     "url": "https://media.nesta.org.uk/documents/systems_innovation_discussion_paper.pdf",
     "repo_pdf": "",
@@ -20201,11 +21006,25 @@
     "sha256": "7326a9df4ac6279888b7651db5ee75b69ad0b6c46e57590ab55a707151d7bcb5",
     "license": ""
   },
+  "nordic:nva:8685a117640013e5c741": {
+    "url": "https://journals.uio.no/index.php/nordina/article/download/2043/1906",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2fb0604decc7300c3a0ed3edddf893f36f70e39c406f1548d5d76ebf27e07ea1",
+    "license": ""
+  },
   "nordic:nva:868cb3ca110feb158be3": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd4110ae-fef5362d-cc91-4b5f-9d71-364160bb110e",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "05af692347ae74ba583ca1b1739a39c079edbf58e57e5c95020edd3decc8c130",
+    "license": ""
+  },
+  "nordic:nva:873448fe7f8da26c7e9d": {
+    "url": "https://ep.liu.se/ecp/150/087/ecp18150087.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "fe46d5991b933e5da892a4939a2b11d8f2da19cfe36a6f6d7d43731b3d47ceeb",
     "license": ""
   },
   "nordic:nva:88e9f49c13c76cac9b92": {
@@ -20255,6 +21074,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7c59d1e608950f579013d7600a85ed2f7b988f355247cbec8236eb5b0d5ea011",
+    "license": ""
+  },
+  "nordic:nva:8fb294c0a7987e0b136d": {
+    "url": "https://ep.liu.se/ecp/059/007/ecp09059007.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6f54ca2c40f7d9330ce21972a2afe231a2dd8ca9b20cad4767f1564a89418855",
+    "license": ""
+  },
+  "nordic:nva:8fe130604290fa5c958c": {
+    "url": "https://ep.liu.se/ecp/125/032/ecp16125032.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "048c5ef838bfc5d260cf10c956eecf8e166aa44f8d69baefb30405fda430e7d8",
     "license": ""
   },
   "nordic:nva:90c4ec97851d05cf63f1": {
@@ -20334,6 +21167,13 @@
     "sha256": "bdcea924c023bdad3d61c64b8364018b4ca0ac956d60e55db244c373c925d9fe",
     "license": ""
   },
+  "nordic:nva:9aeb1552bdca16d6ab63": {
+    "url": "https://scindeks-clanci.ceon.rs/data/pdf/1821-3952/2013/1821-39521302106H.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1d9c4eaed30102283b46fc13f6f3129c70e32277d307e7e7b72f16e65d712f6e",
+    "license": ""
+  },
   "nordic:nva:9af08b70ebe765377740": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd425e4e-0cde55d5-70cf-429e-88b0-3d2baf2a0219",
     "repo_pdf": "",
@@ -20346,6 +21186,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "1df06a9e67f99a8a4903b0e2e7ee907dc579c5bdd7c7f692f0426f39ffe81928",
+    "license": ""
+  },
+  "nordic:nva:9bc1b0772dc699c4be5b": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdef2ef9-2a6d9d2b-de7f-4d28-abad-4a1196324b5b",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ca8c71556ae6798034f4b17314effee369844dca46e47b829c08cae6e1b6b64a",
     "license": ""
   },
   "nordic:nva:9bcde83394da75c79b29": {
@@ -20467,6 +21314,13 @@
     "sha256": "8c7fce53f2ddfa8bd08dfb8fb8d9a3287a4970f1a6bb7964e713cc0297bc9308",
     "license": ""
   },
+  "nordic:nva:ab3397b18f766d0e0d09": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0b7c39-5bb00de2-77ff-4d7a-8af8-5a296e39e757",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6f9d2da1bde16de04ca2e070d42b9c586bba5b8fb473de4f6d3831617b84fd40",
+    "license": ""
+  },
   "nordic:nva:af9a8e78218297ecaf88": {
     "url": "https://www.designsociety.org/download-publication/42533/Participatory+Design+and+Environmental+Education+in+Visitor+Centers%3A+A+Case+Study+from+Nepal",
     "repo_pdf": "",
@@ -20509,6 +21363,13 @@
     "sha256": "13be44f149e8c739e73ceb66b6e7fbb4238504844b608608d1e5786daf9af591",
     "license": ""
   },
+  "nordic:nva:b1b8cd90740a10cae30d": {
+    "url": "https://zenodo.org/records/5338762/files/D7.1%20Set%20of%20Service%20Design%20and%20Art-Based%20Methods%20for%20Co-Design%20and%20Stakeholder%20Work%20in%20Cultural%20Tourism.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "80adc83e54d9853eadb7bd83e900272b59634bf5bb9dcc8fc9558cc5a4cb74ed",
+    "license": ""
+  },
   "nordic:nva:b1c45e636180c4e291d2": {
     "url": "https://openaccess.city.ac.uk/id/eprint/34391/1/Deanonymized%20version_IJNS%20paper%202024.pdf",
     "repo_pdf": "",
@@ -20535,6 +21396,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "2f9f36a526f060842e68b3be19e08583fa6894dc07fdc271dfb7bce76f0e1348",
+    "license": ""
+  },
+  "nordic:nva:b55d2b379c953416b4f0": {
+    "url": "https://inria.hal.science/hal-01717195/file/421764_1_En_1_Chapter.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ef6b26157fcd631ed9a7fe42630e07c26611005f04188aa837ee580028c9cb4f",
     "license": ""
   },
   "nordic:nva:b58cc321eb3edb24de30": {
@@ -20593,6 +21461,13 @@
     "sha256": "b29b01c156262bdd8eca3ae72c31376e1de1c269f3b0f00aa25601b9777c992d",
     "license": ""
   },
+  "nordic:nva:ba9c36dff1b69b02d16c": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/6255011/058-0808-NordDesign.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a1ffef2732970eab39e7115edd32272df66b0df4acf96b17a66662fb762b2775",
+    "license": ""
+  },
   "nordic:nva:baa4943aa3ebf41ebd11": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7efb7b-6830a7d2-1ebe-4643-85bb-f18fb2d79539",
     "repo_pdf": "",
@@ -20628,11 +21503,32 @@
     "sha256": "6b10d8d9fc19588880d31f18899df91ace4256daa58cedb76249f74ef2fe2931",
     "license": ""
   },
+  "nordic:nva:c3061228b7ba40857c27": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee9579-8d8bce1c-ac23-448d-867a-0b9f3a589d45",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4a542c7a39736d61606b47bd6691bb007585bb1faa3d995ed790fdc44bbdf6a4",
+    "license": ""
+  },
+  "nordic:nva:c38d743e64d2c61341b1": {
+    "url": "https://zenodo.org/records/5841437/files/634.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "dcacaa7eb69a776b2b9de23d0aa908380637a4d0dbc04081e0127f3e81539f23",
+    "license": ""
+  },
   "nordic:nva:c3dc5726d24fb77ea794": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:1859078/FULLTEXT01",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "9675371dba924f6fc3def8c060fe838c0f79eef16d5feb57a413b6bdd7176e44",
+    "license": ""
+  },
+  "nordic:nva:c5620baf8c3bdee2a7ce": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0e1e09-dc307666-c1ff-4863-b4b3-1eb939312609",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "545d4a7d6ff004722945b5f04f3043f9171f6cab23cfe53e359334dca61192f5",
     "license": ""
   },
   "nordic:nva:c594a3a9f9a7973e788b": {
@@ -20647,6 +21543,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "c0ab1a88b375d705e034a86dc6bc350e103f8ad4dc3be6f86d162d64c17dcdf0",
+    "license": ""
+  },
+  "nordic:nva:c6df1a6db471296879c3": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0ff0fa-e44d3475-29c2-4f80-b863-5fec56886ef1",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e7d9aed9141eb6b99165b7206ba8e3e150610109822fb8a46a0fe375b6f1aa0e",
     "license": ""
   },
   "nordic:nva:c764dfbbab418dddba62": {
@@ -20684,11 +21587,25 @@
     "sha256": "9ba6b4a069d4feb047354ebbb15aed1a92892ea8c2f9cbd3f407e97b98ba0cc6",
     "license": ""
   },
+  "nordic:nva:cbce8ee1850585b339a1": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce101048-105533a1-77d1-4f3a-9f18-9788fe90ca7c",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e7d9aed9141eb6b99165b7206ba8e3e150610109822fb8a46a0fe375b6f1aa0e",
+    "license": ""
+  },
   "nordic:nva:cc0a17f75cdc8e729b1c": {
     "url": "https://journals.oslomet.no/formakademisk/article/download/4649/4228",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "f485529fe27ad8fd236ff58b1bc2c3b395254bdf900059c883d302ee15cd347d",
+    "license": ""
+  },
+  "nordic:nva:cc317c6e13eeecb79452": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdeecde0-26b93097-9dd5-43d9-94f7-9a6902d189ca",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a3ce6e2999772199c8efa380d17102d183e52a69f276c1e297570ba8f197b0ab",
     "license": ""
   },
   "nordic:nva:cc4efba61782b2d732c6": {
@@ -20703,6 +21620,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "dc92cf6178620c6751e55ec2073e6a0d286e9cd150c6faa1c3c4ab041d8a1d4d",
+    "license": ""
+  },
+  "nordic:nva:cc6351f3a43651c4233b": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee7efd-562c6182-29ae-4b5c-9cdc-563271f5b637",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e797de3f48c8fb36818787a018da45b87ab196482b15034b690afe46e31e5c9b",
     "license": ""
   },
   "nordic:nva:cef3c54071a2e9f1974b": {
@@ -20845,6 +21769,13 @@
     "sha256": "b4e6cde2ea8f1fd0d3f290c4911eaee6f3201159882c1f41d901ae33469b7d01",
     "license": ""
   },
+  "nordic:nva:d77d6b625ef55aaaa4ed": {
+    "url": "https://www.designsociety.org/download-publication/42228/ADDRESSING+THE+ISSUE+OF+STIGMA-FREE+DESIGN+THROUGH+CRITICAL+DESIGN+WORKSHOPS",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "7fb4deb88d4b776bed448cd955ae6c816e5dd75dfe177125b2edc6118ac933d0",
+    "license": ""
+  },
   "nordic:nva:d83f8c13a4d22476c14d": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7ec9de-68f0a476-184f-4151-99fe-1310b14c0b35",
     "repo_pdf": "",
@@ -20887,11 +21818,25 @@
     "sha256": "b0ce53635abc4b5fc5522e49a976dfc4b580ed21f48f81545829fa0b2059f263",
     "license": ""
   },
+  "nordic:nva:da6660c94ed48b924201": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdeebe76-f25f764e-e368-4e10-bd1a-29ee2ac0c3d8",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2a0fba5399774af63de7348275286fa8956f16ecb87280b7fb481a54d8769d88",
+    "license": ""
+  },
   "nordic:nva:da7af9aafd1f64895ddd": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7ef4ca-b3bc0a55-2b15-4eb7-8bb9-5485af7fc696",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "94daac2b1d5bd2e5aedd91f94430f40bfa6a391071bda0316c4834c6f8525474",
+    "license": ""
+  },
+  "nordic:nva:da97a6089c707dac1b32": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce1000de-952f96c9-0742-41bd-9c28-1eb92deba338",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f8942a39d7e3b1c28ad367db08067a6ffd386a50cb712edb0bbb43f0905e70b5",
     "license": ""
   },
   "nordic:nva:dc42e94b2eeacee529be": {
@@ -20976,6 +21921,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "dffebf60fd58b0b032a505874fb060a3a21ad3e69291097666e9822fcfc656e1",
+    "license": ""
+  },
+  "nordic:nva:e2f1b2f1a20ab3f80c9e": {
+    "url": "https://hal.science/hal-01938803/document",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "7f06de7d7cb9908e0856cefac3923c6d74cc8727d54ccb9831d0bdcd19fae57c",
     "license": ""
   },
   "nordic:nva:e384ee21430b346b2f6d": {
@@ -21076,6 +22028,13 @@
     "sha256": "57702562ae4ba64467f678083bffa96942232084b1ca753ca1e7ef37b33d3078",
     "license": ""
   },
+  "nordic:nva:eba4e5923692a1720a9e": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0f7bbc-842871e5-319f-4f13-83a5-446d07b1b810",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6018299cb7cc3701f5d86b038b9f0e5aa07efacdb46b80b38efd34fcb7cd7a19",
+    "license": ""
+  },
   "nordic:nva:ebed236dcd83b3c6841a": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7f024f-bb3719fb-1b65-44a5-ae59-190f6f3b30d3",
     "repo_pdf": "",
@@ -21104,6 +22063,13 @@
     "sha256": "e8e1eca869639acd5912853c79bbca103dbc4733ba0f7f12a2c9926bb75e9025",
     "license": ""
   },
+  "nordic:nva:f0548873a959bd981807": {
+    "url": "https://repository.uantwerpen.be/docman/irua/bdb37bmotoMf3",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e5a73ebe6b8eb5dbb540444b7b30499b7cd9edc0071d7e89efce46c893d63593",
+    "license": ""
+  },
   "nordic:nva:f0c20db59c8ba40632b1": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd421d30-c7743285-e1f2-472e-83c2-d12850b6ff7e",
     "repo_pdf": "",
@@ -21125,11 +22091,25 @@
     "sha256": "bbc65ae2c393668fe2722b178062492d544e1b7df3b07d6fd7f334da2e392a07",
     "license": ""
   },
+  "nordic:nva:f396d175ef740aef8b27": {
+    "url": "https://findresearcher.sdu.dk/ws/files/157363864/BEST_EN_2019_ABSTRACT.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0b9405aec1caa152c9484be7632667e1bffb78a766c8378f50f2e8c849e165c9",
+    "license": ""
+  },
   "nordic:nva:f4695dcace92c1dd1cc4": {
     "url": "https://eprints.leedsbeckett.ac.uk/id/eprint/6544/1/UsingAMulti-StakeholderExperience-BasedDesignProcessToCo-DevelopTheCreatingActiveSchoolsFrameworkAM-QUARMBY.pdf",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "505fa9031d89700ce4cc9e02ae5ed9b6fbc3775714054a360206e5d41a413b6f",
+    "license": ""
+  },
+  "nordic:nva:f5cfd52cf009a4401d08": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0e0ef5-84a0f279-632f-4c6d-9d20-375858855966",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5d38e7d83175ee72295e6ade315107ac4afdbebfd5a2a7da2a11f278698ffbf1",
     "license": ""
   },
   "nordic:nva:f609030666fcd9f62799": {
@@ -21151,6 +22131,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "130d002fc3e98460c820aeec3743c314080fdeea43f804f0c5a0e0cd4dac7c25",
+    "license": ""
+  },
+  "nordic:nva:f7e0a242cdc1814b4166": {
+    "url": "https://api.nva.unit.no/publication/file/01a1ce0edea7-08d2a269-c6e0-4df8-b74a-f4ee468dd36b",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d90f70c7305c9e4d0d3265a579c7a619985cd161af65c2cfa49d62a54a6646be",
     "license": ""
   },
   "nordic:nva:f7f7f0308707a323bd3d": {
@@ -21193,6 +22180,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "45487e19371020541d37efd690fd189f29a13556feb05d1e3ff598c3248222f9",
+    "license": ""
+  },
+  "nordic:nva:fcf8a2f57e7577de5b23": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cdee9d4e-2a332a2c-c41a-4008-b2f6-1a9e1a291b95",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4a542c7a39736d61606b47bd6691bb007585bb1faa3d995ed790fdc44bbdf6a4",
     "license": ""
   },
   "nordic:nva:fd54440964e9539ded27": {

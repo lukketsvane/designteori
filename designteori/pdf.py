@@ -515,29 +515,120 @@ def cached_pdf_ok(ident: str, entry: dict | None, cache_dir: Path = PRIVATE_CACH
     return pdf_data(raw) and hashlib.sha256(raw).hexdigest() == entry.get("sha256")
 
 
+_PAYWALL_DOMAINS = (
+    "sciencedirect.com", "tandfonline.com", "dl.acm.org", "springer.com",
+    "wiley.com", "sagepub.com", "ieee.org", "emerald.com", "cambridge.org",
+    "oup.com", "degruyter.com", "mitpressjournals.org", "direct.mit.edu",
+    "iospress.com", "scopus.com", "taylorfrancis.com", "ingentaconnect.com",
+    "jstor.org", "elsevier.com", "brill.com", "intellectbooks.com",
+    "bloomsburycollections.com", "routledge.com", "informaworld.com",
+    "proquest.com", "ebscohost.com",
+)
+_TOC_PDF_RE = re.compile(
+    r"(?:^|[_/-])(?:toc|table[-_]?of[-_]?contents|inhaltsverzeichnis)\.pdf(?:[?#]|$)|/dms/.*_toc\.pdf",
+    re.I,
+)
+_REPO_PDF_PATH_RE = re.compile(
+    r"(?:\.pdf(?:[?#]|$)|/ws/(?:portal)?files/|/files/|/eprint/|/bitstreams?/|/document(?:[/?#]|$)|/smash/get/|viewcontent\.cgi|/download(?:[/?#]|$))",
+    re.I,
+)
+
+
+_OPEN_PURE_PORTAL_HOSTS = frozenset({
+    "vbn.aau.dk",
+    "adk.elsevierpure.com",
+    "research.aalto.fi",
+    "research.cbs.dk",
+    "pure.itu.dk",
+    "portal.findresearcher.sdu.dk",
+    "research.ulapland.fi",
+})
+_OPEN_DSPACE_HANDLE_PREFIXES = ("/10044/", "/10453/", "/2117/")
+
+
+def _is_paywall_url(url: str) -> bool:
+    host = (urlsplit(url).hostname or "").lower().strip(".")
+    return any(host == d or host.endswith("." + d) for d in _PAYWALL_DOMAINS)
+
+
+def _orbit_dtu_backend_url(url: str) -> str | None:
+    m = re.match(r"^https://orbit\.dtu\.dk(?:/ws)?(/files/[^?#]+)(.*)$", url, re.I)
+    if not m:
+        return None
+    suffix = m.group(2).split("#", 1)[0]
+    return f"https://backend.orbit.dtu.dk/ws{m.group(1)}{suffix}"
+
+
+def _ep_liu_url(url: str) -> str | None:
+    m = re.match(r"^https://www\.ep\.liu\.se(/.*)$", url, re.I)
+    return f"https://ep.liu.se{m.group(1)}" if m else None
+
+
+def _preferred_mirror_url(url: str) -> str | None:
+    return _orbit_dtu_backend_url(url) or _ep_liu_url(url)
+
+
+def _open_repo_landing_fallback(url: str) -> bool:
+    u_parts = urlsplit(url)
+    host = (u_parts.hostname or "").lower().strip(".")
+    path_lower = (u_parts.path or "").lower()
+    if host in _OPEN_PURE_PORTAL_HOSTS and ("/publications/" in path_lower or "/files/" in path_lower):
+        return True
+    return host == "hdl.handle.net" and path_lower.startswith(_OPEN_DSPACE_HANDLE_PREFIXES)
+
+
+def _non_fulltext_pdf_url(url: str) -> bool:
+    return bool(_TOC_PDF_RE.search(url) or BOILERPLATE_PDF_RE.search(url))
+
+
 def extract_openalex_work_urls(data: dict) -> list[str]:
     if not isinstance(data, dict):
         return []
     locs = [data.get("best_oa_location"), data.get("primary_location")] + (data.get("locations") or [])
-    candidates = {}
+    candidates: dict[str, tuple[int, int, int]] = {}
+
+    def _add(url: str, rank: int, pos: int) -> None:
+        if not allowed_url(url) or _non_fulltext_pdf_url(url):
+            return
+        variants = []
+        mirror = _preferred_mirror_url(url)
+        if mirror:
+            variants.append((mirror, (rank, pos, 0)))
+            variants.append((url, (rank, pos, 1)))
+        else:
+            variants.append((url, (rank, pos, 0)))
+        for cand_url, key in variants:
+            if allowed_url(cand_url) and (cand_url not in candidates or key < candidates[cand_url]):
+                candidates[cand_url] = key
+
     for pos, loc in enumerate(locs):
-        if not isinstance(loc, dict) or not loc.get("is_oa", False):
+        if not isinstance(loc, dict):
             continue
+        is_oa_loc = bool(loc.get("is_oa", False))
         source = loc.get("source") or {}
         repository = isinstance(source, dict) and source.get("type") == "repository"
-        for raw_link in (loc.get("pdf_url"), loc.get("landing_page_url")):
+        raw_pdf = loc.get("pdf_url")
+        raw_land = loc.get("landing_page_url")
+        if is_oa_loc:
+            for raw_link in (raw_pdf, raw_land):
+                link = candidate_https_url(raw_link)
+                pdf_shaped = direct_pdf_hint(link)
+                rank = 0 if (pdf_shaped and repository) else (1 if pdf_shaped else (2 if repository else 3))
+                _add(link, rank, pos)
+            continue
+        for is_pdf_field, raw_link in ((True, raw_pdf), (False, raw_land)):
             link = candidate_https_url(raw_link)
-            if not allowed_url(link):
+            if not allowed_url(link) or _is_paywall_url(link) or _non_fulltext_pdf_url(link):
                 continue
-            pdf_shaped = direct_pdf_hint(link)
-            rank = 0 if (pdf_shaped and repository) else (1 if pdf_shaped else (2 if repository else 3))
-            key = (rank, pos)
-            if link not in candidates or key < candidates[link]:
-                candidates[link] = key
+            pdf_shaped = direct_pdf_hint(link) or is_pdf_field
+            if not pdf_shaped and not _REPO_PDF_PATH_RE.search(link) and not _open_repo_landing_fallback(link):
+                continue
+            _add(link, 5 if pdf_shaped else 6, pos)
+
     oa = data.get("open_access") or {}
     alternate = candidate_https_url(oa.get("oa_url")) if oa.get("is_oa") else None
-    if allowed_url(alternate) and alternate not in candidates:
-        candidates[alternate] = (4, len(locs))
+    if alternate:
+        _add(alternate, 4, len(locs))
     return [url for url, _ in sorted(candidates.items(), key=lambda item: item[1])][:12]
 
 
@@ -1162,15 +1253,20 @@ def expand_registered_oa_urls(oa_url: str) -> list[str]:
     out: list[str] = []
     m_arxiv = re.match(r"^https://arxiv\.org/abs/([0-9]+\.[0-9]+(?:v\d+)?|[a-z-]+/\d+)(?:[?#].*)?$", u, re.I)
     m_pmc = re.search(r"ncbi\.nlm\.nih\.gov/(?:pmc/)?articles/(?:PMC)?(\d+)", u, re.I)
+    mirror = _preferred_mirror_url(u)
     if m_arxiv:
         out.append(f"https://arxiv.org/pdf/{m_arxiv.group(1)}.pdf")
     elif m_pmc:
         pmcid = f"PMC{m_pmc.group(1)}"
         out.append(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/pdf/")
         out.append(f"https://europepmc.org/backend/ptpmcrender.fcgi?accid={pmcid}&blobtype=pdf")
-    elif ".hal.science/" in u.lower() and not u.lower().rstrip("/").endswith(("/document", ".pdf")):
+    elif re.match(r"^https://(?:[^/]+\.)?(?:hal\.science|hal\.archives-ouvertes\.fr)/", u, re.I):
         base_u = u.split("?", 1)[0].split("#", 1)[0].rstrip("/")
-        out.append(f"{base_u}/document")
+        lower_b = base_u.lower()
+        if "/file/" not in lower_b and not lower_b.endswith(("/document", ".pdf")):
+            out.append(f"{base_u}/document")
+    elif mirror:
+        out.append(mirror)
     if u not in out:
         out.append(u)
     return out
@@ -1257,6 +1353,28 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
     progress = read_json(log_path, {}) or {}
     rows = queue_rows()
     local_oa_map = load_local_openalex_urls()
+    discovered_raw = read_json(cache_dir / "discovered_candidates.json", {}) or {}
+    discovered_dois: dict[str, str] = {}
+    if isinstance(discovered_raw, dict):
+        for wid, info in discovered_raw.items():
+            if not isinstance(info, dict):
+                continue
+            d_val = normalize_doi(info.get("doi"))
+            if d_val:
+                discovered_dois[wid] = d_val
+            extra_urls = [candidate_https_url(u) for u in (info.get("urls") or [])]
+            merged = list(local_oa_map.get(wid, []))
+            for u in extra_urls:
+                for eu in expand_registered_oa_urls(u):
+                    if eu not in merged:
+                        merged.append(eu)
+            if merged:
+                local_oa_map[wid] = merged
+        if discovered_dois:
+            rows = [
+                {**r, "doi": discovered_dois[r["id"]]} if (not r.get("doi") and r["id"] in discovered_dois) else r
+                for r in rows
+            ]
 
     max_bytes = max_mb * 1_000_000
     max_cache_bytes = int(max_cache_gb * 1_000_000_000)
@@ -1271,7 +1389,7 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
     stop_event = threading.Event()
     tried = 0
     dirty = 0
-    used_bytes = sum(int(r.get("bytes", 0)) for r in progress.values() if isinstance(r, dict) and r.get("status") == "pdf-confirmed")
+    used_bytes = sum(p.stat().st_size for p in (cache_dir / "pdf").glob("*.pdf") if p.is_file())
 
     def pace_host(host_key: str = ""):
         key = (host_key or "_default_").lower()
