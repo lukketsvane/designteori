@@ -4,10 +4,10 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const REL = { kind_of: "er ein type", part_of: "er del av", causes_or_enables: "fører til eller gjer mogleg", requires: "krev", precedes: "kjem før", associated_with: "heng saman med", defined_as: "er definert som", differs_from: "skil seg frå", has_property: "har eigenskapen", prescribes: "bør", other: "anna" };
-  const DEF = { defined: "definert", defined_by_citation: "definert ved tilvising", not_stated: "ikkje oppgjeve", stated_none_exists: "teksten seier at det ikkje finst" };
+  const DEF = { defined: "definert", defined_by_citation: "definert ved tilvising", not_stated: "ikkje funnen i delane som er lesne", stated_none_exists: "teksten seier at det ikkje finst" };
   const FORM = { argument: "argument", literature: "litteratur", example: "døme", case: "case", data_collection: "datainnsamling", experiment: "eksperiment", design_work: "designarbeid", practice_reflection: "praksisrefleksjon", modelling: "modellering", use_in_practice: "bruk i praksis", other: "anna" };
   const LOC = { abstract: "samandrag", introduction: "innleiing", conclusion: "konklusjon" };
-  const SUP = { reported: "oppgjeve", not_stated: "ikkje oppgjeve i teksten", stated_untested: "teksten seier at det ikkje er prøvd" };
+  const SUP = { reported: "oppgjeve", not_stated: "ikkje oppgjeve i delane som er lesne", stated_untested: "teksten seier at det ikkje er prøvd" };
   const ROLE = { from: "frå", to: "til", condition: "vilkår", other: "anna" };
   const TROLE = { foundation: "byggjer på", counterpoint: "set seg opp mot", tested: "prøver", extended: "byggjer ut", other: "nemner" };
   let rows = [];
