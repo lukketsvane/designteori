@@ -107,6 +107,7 @@ header a {
   text-decoration: none;
 }
 header a:hover { color: var(--fg); }
+header.stuck { box-shadow: 0 1px 0 var(--hair); }
 
 header nav {
   display: inline-flex;
@@ -226,7 +227,7 @@ input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
 
 select {
   padding: 0 20px 0 0;
-  font-family: var(--mono);
+  font-family: var(--serif);
   font-size: 16px;
   white-space: nowrap;
   overflow: hidden;
@@ -237,7 +238,7 @@ select {
   background-position: right 2px center;
   background-size: 9px 5px;
 }
-@media (hover: hover) { select { font-size: 11px; letter-spacing: .02em; } }
+@media (hover: hover) { select { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; } }
 select:hover { color: var(--fg); }
 select option { background: var(--bg); color: var(--fg); }
 
@@ -267,6 +268,7 @@ input::placeholder { color: var(--dim); }
   text-align: left;
 }
 .btn-line:hover { color: var(--fg); border-color: var(--fg); }
+@media (hover: none) { .btn-line { font-family: var(--serif); font-size: 16px; letter-spacing: 0; } }
 
 .filters {
   display: grid;
@@ -486,14 +488,11 @@ input::placeholder { color: var(--dim); }
 /* ---- kanon sub-nav ---- */
 .subnav {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  gap: 18px;
-  margin: 14px 0 6px;
+  flex-wrap: wrap;
+  gap: 0 18px;
+  margin: 10px 0 6px;
 }
-.subnav::-webkit-scrollbar { display: none; }
+#citBox .item:first-child { border-top: 0; }
 .sub-pill {
   -webkit-appearance: none;
   appearance: none;
@@ -502,7 +501,7 @@ input::placeholder { color: var(--dim); }
   border-radius: 0;
   background: none;
   color: var(--dim);
-  min-height: 32px;
+  min-height: 28px;
   padding: 0;
   font-family: var(--mono);
   font-size: 10px;
@@ -577,8 +576,8 @@ input::placeholder { color: var(--dim); }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 26px;
-  margin-top: 16px;
 }
+.ana-sec:first-child { border-top: 0; padding-top: 0; }
 .ana-sec {
   border-top: 1px solid var(--hair);
   padding-top: 10px;
@@ -641,6 +640,7 @@ input::placeholder { color: var(--dim); }
   border-bottom: 1px solid var(--line);
   white-space: nowrap;
 }
+.tbl-clean th.r { text-align: right; }
 .tbl-clean td {
   padding: 7px 4px;
   border-bottom: 1px solid var(--hair);

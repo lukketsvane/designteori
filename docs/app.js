@@ -552,6 +552,11 @@
       setTab(b.dataset.tab);
     }));
 
+    const hdr = document.querySelector("header");
+    const stick = () => hdr.classList.toggle("stuck", window.scrollY > 2);
+    window.addEventListener("scroll", stick, { passive: true });
+    stick();
+
     $("metricAllBtn").addEventListener("click", () => { S.pdfOnly = false; filterCorpus(); });
     $("metricPdfBtn").addEventListener("click", () => { S.pdfOnly = !S.pdfOnly; filterCorpus(); });
 
