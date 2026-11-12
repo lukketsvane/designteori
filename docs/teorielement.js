@@ -90,9 +90,10 @@
       note = "Radene under er syntetiske døme som viser formatet. Dei er ikkje henta frå korpuset.";
     } else {
       const s = d.stats || {};
-      note = `${rows.length} maskinkoda rader frå ${s.texts || "nokre"} ope lisensierte verk. Radene er ikkje validerte mot handkoding.`;
+      note = `${rows.length} maskinkoda rader frå ${s.texts_with_rows && s.texts ? `${s.texts_with_rows} av ${s.texts}` : (s.texts || "nokre")} ope lisensierte verk. Radene er ikkje validerte mot handkoding.`;
       if (typeof s.retest_share === "number") note += ` ${Math.round(s.retest_share * 100)} % av radene gjekk att då tekstane vart lesne ein gong til.`;
       if (s.dropped_in_review) note += ` ${s.dropped_in_review} rader er tekne ut i ein maskinell kontroll.`;
+      if (d.excerpt_rule) note += ` ${d.excerpt_rule}.`;
     }
     $("teNote").textContent = note;
     ["teRel", "teDef", "teForm"].forEach((id) => $(id).addEventListener("change", render));

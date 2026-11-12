@@ -1,93 +1,3458 @@
 {
-  "schema": "teorielement-rows-0.2",
-  "synthetic": true,
-  "note": "Syntetiske døme som viser formatet. Ingen rad er henta frå korpuset.",
-  "rows": [
+ "schema": "teorielement-rows-0.2",
+ "synthetic": false,
+ "generated": "2026-11-12",
+ "stats": {
+  "texts": 23,
+  "texts_with_rows": 21,
+  "rows": 52,
+  "dropped_in_review": 3,
+  "claims_r1": 55,
+  "claims_r2": 60,
+  "retest_share": 0.67,
+  "excerpts_expanded": 21
+ },
+ "rows": [
+  {
+   "id": "h03-1",
+   "work": {
+    "work_id": "W2756072472",
+    "title": "Perswedo: Introducing Persuasive Principles into the Creative Design Process Through a Design Card-Set",
+    "year": 2017,
+    "doi": "https://doi.org/10.1007/978-3-319-67687-6_31",
+    "license": "cc-by",
+    "authors": [
+     "Xipei Ren",
+     "Yuan Lü",
+     "Harri Oinas-kukkonen A B",
+     "Aarnout Brombacher"
+    ]
+   },
+   "pdf_page": 9,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Although PT theories have been critiqued for prescribing behavioral change strategies [10] and unreflective in defining behavior changes [26], similar to [12], our study reveals the proper inclusion of PT knowledge can inform the design process.",
+   "relation_expression": "can inform",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
     {
-      "id": "syn-1",
-      "work": {"title": "Syntetisk døme 1", "year": null, "doi": "", "license": ""},
-      "pdf_page": 1, "claim_location": "abstract", "attribution": "own",
-      "excerpt": "Medverknad i tidleg fase fører til at brukarane tek eigarskap til løysinga.",
-      "relation_expression": "fører til", "relation_kind": "causes_or_enables",
-      "concepts": [
-        {"term": "medverknad i tidleg fase", "role": "from", "definition_status": "defined", "definition_excerpt": "Med medverknad meiner me at brukarane deltek i avgjerder, ikkje berre i testing."},
-        {"term": "eigarskap til løysinga", "role": "to", "definition_status": "not_stated"}
-      ],
-      "scope": {"status": "stated", "excerpt": "i offentlege tenesteprosjekt"},
-      "explanation": {"status": "stated", "excerpt": "fordi dei ser sine eigne val att i resultatet"},
-      "prediction": {"status": "not_stated"},
-      "support_status": "reported",
-      "support": [{"source": "this_text", "form": "case", "excerpt": "Me følgde tre prosjekt i to år."}],
-      "theories": [{"name": "deltakande design", "role": "foundation"}]
+     "term": "PT knowledge",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
     },
     {
-      "id": "syn-2",
-      "work": {"title": "Syntetisk døme 2", "year": null, "doi": "", "license": ""},
-      "pdf_page": 12, "claim_location": "conclusion", "attribution": "own",
-      "excerpt": "Design gjennom prototypar er ei form for kunnskapsutvikling.",
-      "relation_expression": "er ei form for", "relation_kind": "kind_of",
-      "concepts": [
-        {"term": "design gjennom prototypar", "role": "from", "definition_status": "not_stated"},
-        {"term": "kunnskapsutvikling", "role": "to", "definition_status": "stated_none_exists", "definition_excerpt": "Det finst ingen semje om kva kunnskapsutvikling er i design."}
-      ],
-      "scope": {"status": "not_stated"},
-      "explanation": {"status": "not_stated"},
-      "prediction": {"status": "not_stated"},
-      "support_status": "reported",
-      "support": [{"source": "this_text", "form": "design_work", "excerpt": "Gjennom tre prototypar utforska me kva som skjer når deltakarane får eigne verktøy."}],
-      "theories": []
-    },
-    {
-      "id": "syn-3",
-      "work": {"title": "Syntetisk døme 3", "year": null, "doi": "", "license": ""},
-      "pdf_page": 2, "claim_location": "introduction", "attribution": "adopted",
-      "excerpt": "Designhandling er alltid situert (X 2011).",
-      "relation_expression": "er alltid", "relation_kind": "has_property",
-      "concepts": [
-        {"term": "designhandling", "role": "from", "definition_status": "defined_by_citation", "definition_excerpt": "slik X (2011) definerer omgrepet"},
-        {"term": "situert", "role": "to", "definition_status": "not_stated"}
-      ],
-      "scope": {"status": "not_stated"},
-      "explanation": {"status": "not_stated"},
-      "prediction": {"status": "not_stated"},
-      "support_status": "reported",
-      "support": [{"source": "cited_work", "form": "literature", "excerpt": "Fleire studiar har vist dette (X 2011)."}],
-      "theories": [{"name": "situert handling", "role": "foundation"}]
-    },
-    {
-      "id": "syn-4",
-      "work": {"title": "Syntetisk døme 4", "year": null, "doi": "", "license": ""},
-      "pdf_page": 9, "claim_location": "conclusion", "attribution": "own",
-      "excerpt": "Me føreslår at tidleg visualisering reduserer usemje i tverrfaglege team.",
-      "relation_expression": "reduserer", "relation_kind": "causes_or_enables",
-      "concepts": [
-        {"term": "tidleg visualisering", "role": "from", "definition_status": "not_stated"},
-        {"term": "usemje", "role": "to", "definition_status": "not_stated"},
-        {"term": "tverrfaglege team", "role": "condition", "definition_status": "not_stated"}
-      ],
-      "scope": {"status": "stated", "excerpt": "i tverrfaglege team"},
-      "explanation": {"status": "not_stated"},
-      "prediction": {"status": "stated", "excerpt": "Team som visualiserer tidleg, vil bruke færre møte på å avklare mål."},
-      "support_status": "stated_untested",
-      "support": [],
-      "theories": []
-    },
-    {
-      "id": "syn-5",
-      "work": {"title": "Syntetisk døme 5", "year": null, "doi": "", "license": ""},
-      "pdf_page": 14, "claim_location": "conclusion", "attribution": "own",
-      "excerpt": "Gode tenester bør utformast saman med dei som skal bruke dei.",
-      "relation_expression": "bør utformast saman med", "relation_kind": "prescribes",
-      "concepts": [
-        {"term": "gode tenester", "role": "from", "definition_status": "not_stated"},
-        {"term": "dei som skal bruke dei", "role": "to", "definition_status": "not_stated"}
-      ],
-      "scope": {"status": "not_stated"},
-      "explanation": {"status": "not_stated"},
-      "prediction": {"status": "not_stated"},
-      "support_status": "reported",
-      "support": [{"source": "this_text", "form": "practice_reflection", "excerpt": "Eg ser attende på ti år med eige arbeid i kommunale prosjekt."}],
-      "theories": []
+     "term": "design process",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
     }
-  ]
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "data_collection",
+     "excerpt": "We collected data using a combination of survey and observation methods."
+    }
+   ],
+   "theories": [
+    {
+     "name": "Persuasive Systems Design model",
+     "role": "foundation",
+     "excerpt": "introduces persuasive principles from Persuasive Systems Design model to"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h03-2",
+   "work": {
+    "work_id": "W2756072472",
+    "title": "Perswedo: Introducing Persuasive Principles into the Creative Design Process Through a Design Card-Set",
+    "year": 2017,
+    "doi": "https://doi.org/10.1007/978-3-319-67687-6_31",
+    "license": "cc-by",
+    "authors": [
+     "Xipei Ren",
+     "Yuan Lü",
+     "Harri Oinas-kukkonen A B",
+     "Aarnout Brombacher"
+    ]
+   },
+   "pdf_page": 9,
+   "claim_location": "conclusion",
+   "attribution": "adopted",
+   "adopted_from": "[11]",
+   "excerpt": "More importantly, according to [11], the design cards alone are not a method itself.",
+   "relation_expression": "are not a method itself",
+   "relation_kind": "other",
+   "relation_kind_other": "negated kind_of",
+   "concepts": [
+    {
+     "term": "design cards",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "method",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "cited_work",
+     "form": "literature",
+     "excerpt": "according to [11], the design cards alone are not a method itself."
+    }
+   ],
+   "theories": [
+    {
+     "name": "Persuasive Systems Design model",
+     "role": "foundation",
+     "excerpt": "introduces persuasive principles from Persuasive Systems Design model to"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h04-1",
+   "work": {
+    "work_id": "W2774875954",
+    "title": "Uncertainty Driven Action (UDA) model: A foundation for unifying perspectives on design activity",
+    "year": 2017,
+    "doi": "https://doi.org/10.1017/dsj.2017.28",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Philip J. Cash",
+     "Melanie E. Kreye"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The UDA model conceptualises design activity as a process consisting of three core actions: information action, knowledge-sharing action, and representation action, which are linked via uncertainty perception.",
+   "relation_expression": "which are linked via uncertainty perception",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "information action",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "knowledge-sharing action",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "representation action",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "uncertainty perception",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "literature",
+     "excerpt": "conceptualises overall ‘design activity’ based on a review of existing formalisms described in the literature."
+    }
+   ],
+   "theories": [
+    {
+     "name": "Activity Theory",
+     "role": "foundation",
+     "excerpt": "This definition builds on Activity Theory (Leont’ev 1981), which describes human activity as the unity of behaviour and cognition"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h04-2",
+   "work": {
+    "work_id": "W2774875954",
+    "title": "Uncertainty Driven Action (UDA) model: A foundation for unifying perspectives on design activity",
+    "year": 2017,
+    "doi": "https://doi.org/10.1017/dsj.2017.28",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Philip J. Cash",
+     "Melanie E. Kreye"
+    ]
+   },
+   "pdf_page": 31,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Uncertainty perception is a driver and antecedent of design activity, connecting progression across information, knowledge-sharing, and representation actions.",
+   "relation_expression": "is a driver and antecedent of",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "uncertainty perception",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "design activity",
+     "role": "to",
+     "definition_status": "defined",
+     "definition_excerpt": "a general definition of design activity is adopted: design activity is a goal directed system where cognition, behaviour, and motivation are integrated, with respect to the ‘bringing-into-being’ of a design artefact"
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "uncertainty perception generally motivates and mediates progression across actions"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "stated_untested",
+   "support": [],
+   "theories": [
+    {
+     "name": "Activity Theory",
+     "role": "foundation",
+     "excerpt": "This definition builds on Activity Theory (Leont’ev 1981), which describes human activity as the unity of behaviour and cognition"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h04-3",
+   "work": {
+    "work_id": "W2774875954",
+    "title": "Uncertainty Driven Action (UDA) model: A foundation for unifying perspectives on design activity",
+    "year": 2017,
+    "doi": "https://doi.org/10.1017/dsj.2017.28",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Philip J. Cash",
+     "Melanie E. Kreye"
+    ]
+   },
+   "pdf_page": 33,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The progression of uncertainty perception (level and nature) and activity determines the design outcome.",
+   "relation_expression": "determines",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "uncertainty perception",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "design outcome",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Activity Theory",
+     "role": "foundation",
+     "excerpt": "This definition builds on Activity Theory (Leont’ev 1981), which describes human activity as the unity of behaviour and cognition"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h05-1",
+   "work": {
+    "work_id": "W2982281212",
+    "title": "The Use of Design Thinking in Transdisciplinary Research and Innovation Consortia: Challenges, Enablers, and Benefits",
+    "year": 2019,
+    "doi": "https://doi.org/10.24840/2183-0606_007.003_0006",
+    "license": "CC BY 3.0",
+    "authors": [
+     "Antje Gonera",
+     "Reinhold Pabst"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We suggest that complex RIC benefit from an intermediary (DT) role translating business needs into research questions, and research results into understandable and business-relevant information and innovation.",
+   "relation_expression": "benefit from",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "intermediary (DT) role",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "complex RIC",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Double Diamond Model",
+     "role": "foundation",
+     "excerpt": "We planned and researched the use of DT in RIC according to the Double Diamond Model and its phases as our project facilitation framework and theoretical lens."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h05-2",
+   "work": {
+    "work_id": "W2982281212",
+    "title": "The Use of Design Thinking in Transdisciplinary Research and Innovation Consortia: Challenges, Enablers, and Benefits",
+    "year": 2019,
+    "doi": "https://doi.org/10.24840/2183-0606_007.003_0006",
+    "license": "CC BY 3.0",
+    "authors": [
+     "Antje Gonera",
+     "Reinhold Pabst"
+    ]
+   },
+   "pdf_page": 20,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The use of DT was challenging when first introduced to RIC as DT principles are contradictory to scientist’s way of thinking and working.",
+   "relation_expression": "are contradictory to",
+   "relation_kind": "differs_from",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "DT principles",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "scientist’s way of thinking",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "stated",
+    "excerpt": "when first introduced to RIC"
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "as DT principles are contradictory to scientist’s way of thinking and working"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "We identified unique empirically categorized challenges and enablers for using DT in joint academia – industry RIC."
+    }
+   ],
+   "theories": [
+    {
+     "name": "Double Diamond Model",
+     "role": "foundation",
+     "excerpt": "We planned and researched the use of DT in RIC according to the Double Diamond Model and its phases as our project facilitation framework and theoretical lens."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h06-1",
+   "work": {
+    "work_id": "W2995635751",
+    "title": "Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research",
+    "year": 2019,
+    "doi": "https://doi.org/10.31129/lumat.7.3.421",
+    "license": "CC BY-NC 4.0",
+    "authors": [
+     "Maija Katariina Aksela"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The co-design model used could be a way to bridge the newest research and innovations into praxis for supporting the curriculum at the school level and for promoting teachers’ professional development by forming creative and diverse learning communities, in which all partners can learn from each other through sharing.",
+   "relation_expression": "could be a way to bridge",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "co-design model",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "praxis",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "As a case, a national LUMA2020 development program (2019–2020), organized by the"
+    }
+   ],
+   "theories": [
+    {
+     "name": "Edelson’s design-based research model",
+     "role": "foundation",
+     "excerpt": "The Edelson’s design-based research model used in the program offered a systematic framework or a map for codesigning both the action plan and its implementation."
+    },
+    {
+     "name": "Design-based research (DBR)",
+     "role": "foundation",
+     "excerpt": "Design-based research (DBR) used as a design framework in the LUMA2020 program"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h06-2",
+   "work": {
+    "work_id": "W2995635751",
+    "title": "Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research",
+    "year": 2019,
+    "doi": "https://doi.org/10.31129/lumat.7.3.421",
+    "license": "CC BY-NC 4.0",
+    "authors": [
+     "Maija Katariina Aksela"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Enhancing social creativity (e.g. Fischer et al, 2005) and learning through a co-design approach with multi-stakeholders (e.g. teachers, students, scientists, teacher educators or industry specialists), could be a way to tackle multi-faceted challenges in science education",
+   "relation_expression": "could be a way to tackle",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "co-design approach",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "science education",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Edelson’s design-based research model",
+     "role": "foundation",
+     "excerpt": "The Edelson’s design-based research model used in the program offered a systematic framework or a map for codesigning both the action plan and its implementation."
+    },
+    {
+     "name": "Design-based research (DBR)",
+     "role": "foundation",
+     "excerpt": "Design-based research (DBR) used as a design framework in the LUMA2020 program"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h06-3",
+   "work": {
+    "work_id": "W2995635751",
+    "title": "Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research",
+    "year": 2019,
+    "doi": "https://doi.org/10.31129/lumat.7.3.421",
+    "license": "CC BY-NC 4.0",
+    "authors": [
+     "Maija Katariina Aksela"
+    ]
+   },
+   "pdf_page": 18,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "7 Conclusions The Edelson’s design-based research model (DBR) used in the program can offer a systematic framework or a map for co-designing both the action plan and its implementation.",
+   "relation_expression": "can offer a systematic framework or a map for",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "design-based research model",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "co-designing",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Edelson’s design-based research model",
+     "role": "foundation",
+     "excerpt": "The Edelson’s design-based research model used in the program offered a systematic framework or a map for codesigning both the action plan and its implementation."
+    },
+    {
+     "name": "Design-based research (DBR)",
+     "role": "foundation",
+     "excerpt": "Design-based research (DBR) used as a design framework in the LUMA2020 program"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h06-4",
+   "work": {
+    "work_id": "W2995635751",
+    "title": "Towards student-centred solutions and pedagogical innovations in science education through co-design approach within design-based research",
+    "year": 2019,
+    "doi": "https://doi.org/10.31129/lumat.7.3.421",
+    "license": "CC BY-NC 4.0",
+    "authors": [
+     "Maija Katariina Aksela"
+    ]
+   },
+   "pdf_page": 18,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Guided face-to-face communication in the workshops or digital creative learning spaces as a medium for social, creative thinking could be useful for facilitating the codesign approach as in the LUMA2020 program.",
+   "relation_expression": "could be useful for facilitating",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "face-to-face communication",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "codesign approach",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Edelson’s design-based research model",
+     "role": "foundation",
+     "excerpt": "The Edelson’s design-based research model used in the program offered a systematic framework or a map for codesigning both the action plan and its implementation."
+    },
+    {
+     "name": "Design-based research (DBR)",
+     "role": "foundation",
+     "excerpt": "Design-based research (DBR) used as a design framework in the LUMA2020 program"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h07-1",
+   "work": {
+    "work_id": "W3117690266",
+    "title": "An integrated model for designing of technical systems: another step to coherence between theory and practice",
+    "year": 2020,
+    "doi": "https://doi.org/10.1088/1757-899x/977/1/012018",
+    "license": "cc-by",
+    "authors": [
+     "B Angelov",
+     "Valentina Haralanova",
+     "Asim Abdel El Sheikh Ahmed"
+    ]
+   },
+   "pdf_page": 6,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The design of a new technical system is considered to be an integral part of the first stage of the technical system's life cycle - production planning.",
+   "relation_expression": "is considered to be an integral part of",
+   "relation_kind": "part_of",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "design",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "life cycle",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [],
+   "retest": true
+  },
+  {
+   "id": "h08-1",
+   "work": {
+    "work_id": "W3183081787",
+    "title": "Integrating perspectives of patients, healthcare professionals, system developers and academics in the co-design of a digital information tool",
+    "year": 2021,
+    "doi": "https://doi.org/10.1371/journal.pone.0253448",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Annika Grynne",
+     "Maria Browall",
+     "Sofi Fristedt",
+     "Karin Ahlberg",
+     "Frida Smith"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Conclusions Facilitating collaboration, structured PD activities can help researchers, healthcare professionals and patients to co-design patient information that meets the end users’ needs.",
+   "relation_expression": "can help",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "PD activities",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "patient information",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "participatory design (PD) methodology",
+     "role": "foundation",
+     "excerpt": "In this article, we describe the use of participatory design (PD) methodology in the development of a new digital information tool"
+    },
+    {
+     "name": "a protocol developed by Elwyn [33]",
+     "role": "foundation",
+     "excerpt": "combined a protocol developed by Elwyn [33] was successfully applied"
+    },
+    {
+     "name": "multi-level interdisciplinary framework [40]",
+     "role": "other",
+     "excerpt": "consideration will be given to the 6 domains of the multi-level interdisciplinary framework [40]"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h08-2",
+   "work": {
+    "work_id": "W3183081787",
+    "title": "Integrating perspectives of patients, healthcare professionals, system developers and academics in the co-design of a digital information tool",
+    "year": 2021,
+    "doi": "https://doi.org/10.1371/journal.pone.0253448",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Annika Grynne",
+     "Maria Browall",
+     "Sofi Fristedt",
+     "Karin Ahlberg",
+     "Frida Smith"
+    ]
+   },
+   "pdf_page": 12,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "What we can conclude from our research is that involving different stakeholders who are the end users throughout the research process, although time-consuming, is worthwhile, as this approach had a positive effect on the rigor, relevance, and reach of the project",
+   "relation_expression": "had a positive effect on",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "stakeholders",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "rigor",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "We have demonstrated that involving stakeholders in co-designing a digital information tool with VR-technology enables the information to be tailored according to the patient’s individual needs and style of learning."
+    }
+   ],
+   "theories": [
+    {
+     "name": "participatory design (PD) methodology",
+     "role": "foundation",
+     "excerpt": "In this article, we describe the use of participatory design (PD) methodology in the development of a new digital information tool"
+    },
+    {
+     "name": "a protocol developed by Elwyn [33]",
+     "role": "foundation",
+     "excerpt": "combined a protocol developed by Elwyn [33] was successfully applied"
+    },
+    {
+     "name": "multi-level interdisciplinary framework [40]",
+     "role": "other",
+     "excerpt": "consideration will be given to the 6 domains of the multi-level interdisciplinary framework [40]"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h09-1",
+   "work": {
+    "work_id": "W4307994144",
+    "title": "A quick review of ethics, design thinking, gender, and AI development",
+    "year": 2022,
+    "doi": "https://doi.org/10.1080/21650349.2022.2136762",
+    "license": "CC BY-NC-ND 4.0",
+    "authors": [
+     "Aila Kronqvist",
+     "Rebekah Ann Rousi"
+    ]
+   },
+   "pdf_page": 22,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "This mode of approach connects design thinking as a method, to a more cognitive scientific understanding of design thinking as cognition through design – meaning that the thought in and behind the processes informs the design outcome, and a multidisciplinary design team represents an assemblage of collective cognition.",
+   "relation_expression": "informs",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "thought",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "design outcome",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "critical theory",
+     "role": "foundation",
+     "excerpt": "Against a background of critical theory and gender studies that describe and problematise gender"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h10-1",
+   "work": {
+    "work_id": "W4311715142",
+    "title": "Design Thinking as a Master Idea",
+    "year": 2022,
+    "doi": "https://doi.org/10.7557/13.6718",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Hilde Marie Pettersen",
+     "Turid Moldenæs"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "DESIGN THINKING AS A MASTER IDEA Turid Moldenæs and Hilde M. Pettersen Abstract In this article, we show that Design Thinking can be understood as a master idea; a widespread idea that has achieved a particularly high status and legitimacy.",
+   "relation_expression": "can be understood as",
+   "relation_kind": "kind_of",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "Design Thinking",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "master idea",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "rationalized myth",
+     "role": "foundation",
+     "excerpt": "From our professional standpoint in the discipline of organizational theory, we regard Design Thinking as a rationalized myth that is spread, not because of its proven or documented effectiveness, but because of the belief in its effectiveness (cf. Meyer and Rowan 1977)."
+    },
+    {
+     "name": "Master ideas",
+     "role": "foundation",
+     "excerpt": "Master ideas are ideas that have achieved a particularly high degree of legitimacy across sectors and countries (Røvik and Pettersen, 2014)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h10-2",
+   "work": {
+    "work_id": "W4311715142",
+    "title": "Design Thinking as a Master Idea",
+    "year": 2022,
+    "doi": "https://doi.org/10.7557/13.6718",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Hilde Marie Pettersen",
+     "Turid Moldenæs"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "DESIGN THINKING AS A MASTER IDEA Turid Moldenæs and Hilde M. Pettersen Abstract In this article, we show that Design Thinking can be understood as a master idea; a widespread idea that has achieved a particularly high status and legitimacy. It has in turn given legitimacy to other organizational recipes and standards.",
+   "relation_expression": "has in turn given legitimacy to",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "Design Thinking",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "organizational recipes and standards",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "rationalized myth",
+     "role": "foundation",
+     "excerpt": "From our professional standpoint in the discipline of organizational theory, we regard Design Thinking as a rationalized myth that is spread, not because of its proven or documented effectiveness, but because of the belief in its effectiveness (cf. Meyer and Rowan 1977)."
+    },
+    {
+     "name": "Master ideas",
+     "role": "foundation",
+     "excerpt": "Master ideas are ideas that have achieved a particularly high degree of legitimacy across sectors and countries (Røvik and Pettersen, 2014)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h10-3",
+   "work": {
+    "work_id": "W4311715142",
+    "title": "Design Thinking as a Master Idea",
+    "year": 2022,
+    "doi": "https://doi.org/10.7557/13.6718",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Hilde Marie Pettersen",
+     "Turid Moldenæs"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The expansive dissemination of Design Thinking can be understood as a result of the idea being legitimized as a generic solution, that it appears as scientifically documented, and that it is authorized via symbioses and networks between reputable researchers, research communities, consulting as well as industrial companies and by public authorities.",
+   "relation_expression": "can be understood as a result of",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "legitimized",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "expansive dissemination",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "rationalized myth",
+     "role": "foundation",
+     "excerpt": "From our professional standpoint in the discipline of organizational theory, we regard Design Thinking as a rationalized myth that is spread, not because of its proven or documented effectiveness, but because of the belief in its effectiveness (cf. Meyer and Rowan 1977)."
+    },
+    {
+     "name": "Master ideas",
+     "role": "foundation",
+     "excerpt": "Master ideas are ideas that have achieved a particularly high degree of legitimacy across sectors and countries (Røvik and Pettersen, 2014)."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h10-4",
+   "work": {
+    "work_id": "W4311715142",
+    "title": "Design Thinking as a Master Idea",
+    "year": 2022,
+    "doi": "https://doi.org/10.7557/13.6718",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Hilde Marie Pettersen",
+     "Turid Moldenæs"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Nevertheless, we believe that Design Thinking is a rationalized myth primarily driven by its extremely generic nature.",
+   "relation_expression": "is a rationalized myth",
+   "relation_kind": "kind_of",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "Design Thinking",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "rationalized myth",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "primarily driven by its extremely generic nature"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "rationalized myth",
+     "role": "foundation",
+     "excerpt": "From our professional standpoint in the discipline of organizational theory, we regard Design Thinking as a rationalized myth that is spread, not because of its proven or documented effectiveness, but because of the belief in its effectiveness (cf. Meyer and Rowan 1977)."
+    },
+    {
+     "name": "Master ideas",
+     "role": "foundation",
+     "excerpt": "Master ideas are ideas that have achieved a particularly high degree of legitimacy across sectors and countries (Røvik and Pettersen, 2014)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h11-1",
+   "work": {
+    "work_id": "W4321436228",
+    "title": "Supporting and understanding students’ collaborative reflection-in-action during design-based learning",
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/s10798-023-09814-0",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Zhongya Zhang",
+     "Tilde M. Bekker",
+     "Panos Markopoulos",
+     "Helle Marie Skovbjerg"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Therefore, a tool aiming at scaffolding reflection-in-action should enable young students’ continual reflection-in-action and prevent them from the phenomena of fake reflection-in-action mentioned earlier.",
+   "relation_expression": "should enable",
+   "relation_kind": "prescribes",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "tool",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "reflection-in-action",
+     "role": "to",
+     "definition_status": "defined_by_citation",
+     "definition_excerpt": "reflection-in-action as defined by Schön."
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Schön’s construct of reflection-in-action",
+     "role": "foundation",
+     "excerpt": "based on Schön’s construct of reflection-in-action in the design domain (Schön, 1987)."
+    },
+    {
+     "name": "Boud’s construct of reflection activity",
+     "role": "counterpoint",
+     "excerpt": "Some researchers’ perspective on reflection is based on Boud’s construct of reflection activity"
+    },
+    {
+     "name": "peripheral technology",
+     "role": "foundation",
+     "excerpt": "This spirit of designing is consistent with the concept of “peripheral technology” (Kimbell, 2016)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h11-2",
+   "work": {
+    "work_id": "W4321436228",
+    "title": "Supporting and understanding students’ collaborative reflection-in-action during design-based learning",
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/s10798-023-09814-0",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Zhongya Zhang",
+     "Tilde M. Bekker",
+     "Panos Markopoulos",
+     "Helle Marie Skovbjerg"
+    ]
+   },
+   "pdf_page": 34,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Conclusion Engaging students in reflection-in-action can enhance their awareness of what they are doing and improve their learning outcomes.",
+   "relation_expression": "can enhance",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "reflection-in-action",
+     "role": "from",
+     "definition_status": "defined_by_citation",
+     "definition_excerpt": "reflection-in-action as defined by Schön."
+    },
+    {
+     "term": "awareness",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "learning outcomes",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Schön’s construct of reflection-in-action",
+     "role": "foundation",
+     "excerpt": "based on Schön’s construct of reflection-in-action in the design domain (Schön, 1987)."
+    },
+    {
+     "name": "Boud’s construct of reflection activity",
+     "role": "counterpoint",
+     "excerpt": "Some researchers’ perspective on reflection is based on Boud’s construct of reflection activity"
+    },
+    {
+     "name": "peripheral technology",
+     "role": "foundation",
+     "excerpt": "This spirit of designing is consistent with the concept of “peripheral technology” (Kimbell, 2016)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h11-3",
+   "work": {
+    "work_id": "W4321436228",
+    "title": "Supporting and understanding students’ collaborative reflection-in-action during design-based learning",
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/s10798-023-09814-0",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Zhongya Zhang",
+     "Tilde M. Bekker",
+     "Panos Markopoulos",
+     "Helle Marie Skovbjerg"
+    ]
+   },
+   "pdf_page": 34,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Giving visual guidance to accompany the video recording system can provide a joint reflection-in-action space during the learning process.",
+   "relation_expression": "can provide",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "visual guidance",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "reflection-in-action",
+     "role": "to",
+     "definition_status": "defined_by_citation",
+     "definition_excerpt": "reflection-in-action as defined by Schön."
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Schön’s construct of reflection-in-action",
+     "role": "foundation",
+     "excerpt": "based on Schön’s construct of reflection-in-action in the design domain (Schön, 1987)."
+    },
+    {
+     "name": "Boud’s construct of reflection activity",
+     "role": "counterpoint",
+     "excerpt": "Some researchers’ perspective on reflection is based on Boud’s construct of reflection activity"
+    },
+    {
+     "name": "peripheral technology",
+     "role": "foundation",
+     "excerpt": "This spirit of designing is consistent with the concept of “peripheral technology” (Kimbell, 2016)."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h12-1",
+   "work": {
+    "work_id": "W4322492190",
+    "title": "Challenges of participatory design in apartment buildings’ renovation projects in Finland",
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/s10901-023-10016-2",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Anu Soikkeli",
+     "Emmi Santamäki",
+     "Oona Hynninen",
+     "Saara Äijälä"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "From the resi dents’ perspective, participation only becomes participatory when the participant gains the experience of influencing the development and its outcomes.",
+   "relation_expression": "participatory when the participant gains",
+   "relation_kind": "requires",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "participatory",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "experience",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "user-centered design",
+     "role": "counterpoint",
+     "excerpt": "closer to user-centered design methods than genuine participatory design."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h12-2",
+   "work": {
+    "work_id": "W4322492190",
+    "title": "Challenges of participatory design in apartment buildings’ renovation projects in Finland",
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/s10901-023-10016-2",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Anu Soikkeli",
+     "Emmi Santamäki",
+     "Oona Hynninen",
+     "Saara Äijälä"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "The designer always uses power.",
+   "relation_expression": "always uses",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "designer",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "power",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "user-centered design",
+     "role": "counterpoint",
+     "excerpt": "closer to user-centered design methods than genuine participatory design."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h13-1",
+   "work": {
+    "work_id": "W4383652568",
+    "title": "Substituting Animals with Biohybrid Robots: Speculative Interactions with Animal-Robot Hybrids",
+    "year": 2023,
+    "doi": "https://doi.org/10.1145/3563703.3596641",
+    "license": "cc-by",
+    "authors": [
+     "Ziming Wang",
+     "Ned Barker",
+     "Yiqian Wu",
+     "Morten Fjeld"
+    ]
+   },
+   "pdf_page": 5,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Whilst it is outside the scope of this provocation paper to outline our methodology for exploring this question, we suggest that speculative approaches are needed in HRI for they: (1) generate new questions [3] that can be taken forward in iterative research activities and design processes",
+   "relation_expression": "are needed in HRI for they",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "speculative approaches",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "new questions",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "HRI",
+     "role": "condition",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "stated",
+    "excerpt": "are needed in HRI for they"
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "(1) generate new questions [3] that can be taken forward in iterative research activities and design processes"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Living Machines",
+     "role": "foundation",
+     "excerpt": "inject the idea of Living Machines and the animal-robot analogy to situate our concept"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h14-1",
+   "work": {
+    "work_id": "W4399115158",
+    "title": "Hacc-Man: An Arcade Game for Jailbreaking LLMs",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3665432",
+    "license": "cc-by",
+    "authors": [
+     "Matheus Valentim",
+     "Jeanette Falk",
+     "Nanna Inie"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "This creates monumental possibilities of automation and accessibility of computing, but also raises severe security and safety threats: When everyone can interact with LLMs, everyone can potentially break into the systems running LLMs.",
+   "relation_expression": "can potentially break into",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "LLMs",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "systems",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "creative problem solving",
+     "role": "foundation",
+     "excerpt": "Such strategies fall under what is known as creative problem solving, a framework in the field of creativity which describes"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h14-2",
+   "work": {
+    "work_id": "W4399115158",
+    "title": "Hacc-Man: An Arcade Game for Jailbreaking LLMs",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3665432",
+    "license": "cc-by",
+    "authors": [
+     "Matheus Valentim",
+     "Jeanette Falk",
+     "Nanna Inie"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Jailbreaking is at the intersection between creative problem solving and LLM security.",
+   "relation_expression": "at the intersection between",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "Jailbreaking",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "creative problem solving",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "LLM security",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "creative problem solving",
+     "role": "foundation",
+     "excerpt": "Such strategies fall under what is known as creative problem solving, a framework in the field of creativity which describes"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h15-1",
+   "work": {
+    "work_id": "W4399151584",
+    "title": "DanceGen: Supporting Choreography Ideation and Prototyping with Generative AI",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661594",
+    "license": "cc-by",
+    "authors": [
+     "Yimeng Liu",
+     "Misha Sra"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "introduction",
+   "attribution": "adopted",
+   "adopted_from": "prior research [14, 64]",
+   "excerpt": "Such artifacts can potentially spark creativity, as investigated by prior research [14, 64].",
+   "relation_expression": "can potentially spark",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "artifacts",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "creativity",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "cited_work",
+     "form": "literature",
+     "excerpt": "as investigated by prior research [14, 64]"
+    }
+   ],
+   "theories": [
+    {
+     "name": "MDM",
+     "role": "foundation",
+     "excerpt": "Our AI model is a fine-tuned version of the human motion generation model, MDM [74"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h15-2",
+   "work": {
+    "work_id": "W4399151584",
+    "title": "DanceGen: Supporting Choreography Ideation and Prototyping with Generative AI",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661594",
+    "license": "cc-by",
+    "authors": [
+     "Yimeng Liu",
+     "Misha Sra"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "However, most of these AI methods fail to allow the iterative editing of generated results, a crucial need in the preparation stage of the choreography process.",
+   "relation_expression": "fail to allow",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "AI methods",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "iterative editing",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "MDM",
+     "role": "foundation",
+     "excerpt": "Our AI model is a fine-tuned version of the human motion generation model, MDM [74"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h16-1",
+   "work": {
+    "work_id": "W4400142515",
+    "title": "Taking the bizarre seriously: dreams as a material for interaction design",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661562",
+    "license": "cc-by",
+    "authors": [
+     "Sofie Krogh Bønlykke",
+     "Kamma Amalie Lind Madsen",
+     "Tom Jenkins"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "This paper expands sleep technology to address more complex notions of sleep, proposing dream technology as a path for reflective practices that focus on nightly dreams rather than hours slept.",
+   "relation_expression": "as a path for",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "dream technology",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "reflective practices",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "RtD framework",
+     "role": "foundation",
+     "excerpt": "in an RtD framework to investigate the nature of dreaming."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h16-2",
+   "work": {
+    "work_id": "W4400142515",
+    "title": "Taking the bizarre seriously: dreams as a material for interaction design",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661562",
+    "license": "cc-by",
+    "authors": [
+     "Sofie Krogh Bønlykke",
+     "Kamma Amalie Lind Madsen",
+     "Tom Jenkins"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We feel that dreams might be an interesting proxy to imagine designing for other kinds of similarly confounded and confusing information.",
+   "relation_expression": "an interesting proxy to imagine designing for",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "dreams",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "information",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "RtD framework",
+     "role": "foundation",
+     "excerpt": "in an RtD framework to investigate the nature of dreaming."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h16-3",
+   "work": {
+    "work_id": "W4400142515",
+    "title": "Taking the bizarre seriously: dreams as a material for interaction design",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661562",
+    "license": "cc-by",
+    "authors": [
+     "Sofie Krogh Bønlykke",
+     "Kamma Amalie Lind Madsen",
+     "Tom Jenkins"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "8 CONCLUSION Dreams are contradictory, individual, and hard to grasp.",
+   "relation_expression": "are contradictory, individual, and hard to grasp",
+   "relation_kind": "has_property",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "dreams",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "contradictory",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "RtD framework",
+     "role": "foundation",
+     "excerpt": "in an RtD framework to investigate the nature of dreaming."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h16-4",
+   "work": {
+    "work_id": "W4400142515",
+    "title": "Taking the bizarre seriously: dreams as a material for interaction design",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661562",
+    "license": "cc-by",
+    "authors": [
+     "Sofie Krogh Bønlykke",
+     "Kamma Amalie Lind Madsen",
+     "Tom Jenkins"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We see potential in using dreaming to understand designing with other forms of underdetermined, and confounding data by engaging in collective speculation, embracing and expressing the",
+   "relation_expression": "using dreaming to understand",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "dreaming",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "data",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "RtD framework",
+     "role": "foundation",
+     "excerpt": "in an RtD framework to investigate the nature of dreaming."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h17-1",
+   "work": {
+    "work_id": "W4400206427",
+    "title": "Why Movement-Based Design!? Exploring Methods and Experiences in MBD✱",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3658399",
+    "license": "cc-by",
+    "authors": [
+     "Vincent van Rheden",
+     "Dennis Reidsma",
+     "Lars Elbæk",
+     "Carine Lallemand",
+     "Laia Turmo Vidal",
+     "Andrii Matviienko",
+     "Don Samitha Elvitigala",
+     "Florian Daiber",
+     "Fabio Zambetta",
+     "Florian Mueller"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "DIS Companion ’24, July 01–05, 2024, IT University of Copenhagen, Denmark ABSTRACT The rise of movement-based design (MBD) is fueled by the integra tion of computer technology into the movement of the everyday.",
+   "relation_expression": "is fueled by",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "computer technology",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "movement-based design",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Method Cards for Movement-based Interaction Design (MeCaMInD)",
+     "role": "foundation",
+     "excerpt": "This workshop builds upon the outcomes of the Method Cards for Movement-based Interaction Design (MeCaMInD) project that focuses on curating a collection of movement-based design methods"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h17-2",
+   "work": {
+    "work_id": "W4400206427",
+    "title": "Why Movement-Based Design!? Exploring Methods and Experiences in MBD✱",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3658399",
+    "license": "cc-by",
+    "authors": [
+     "Vincent van Rheden",
+     "Dennis Reidsma",
+     "Lars Elbæk",
+     "Carine Lallemand",
+     "Laia Turmo Vidal",
+     "Andrii Matviienko",
+     "Don Samitha Elvitigala",
+     "Florian Daiber",
+     "Fabio Zambetta",
+     "Florian Mueller"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "In MBD, the body is not just a vessel for interaction but a source of creativity and innovation in its own right.",
+   "relation_expression": "is not just a vessel for interaction but a source of creativity",
+   "relation_kind": "has_property",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "body",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "creativity",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Method Cards for Movement-based Interaction Design (MeCaMInD)",
+     "role": "foundation",
+     "excerpt": "This workshop builds upon the outcomes of the Method Cards for Movement-based Interaction Design (MeCaMInD) project that focuses on curating a collection of movement-based design methods"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h17-3",
+   "work": {
+    "work_id": "W4400206427",
+    "title": "Why Movement-Based Design!? Exploring Methods and Experiences in MBD✱",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3658399",
+    "license": "cc-by",
+    "authors": [
+     "Vincent van Rheden",
+     "Dennis Reidsma",
+     "Lars Elbæk",
+     "Carine Lallemand",
+     "Laia Turmo Vidal",
+     "Andrii Matviienko",
+     "Don Samitha Elvitigala",
+     "Florian Daiber",
+     "Fabio Zambetta",
+     "Florian Mueller"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "By engaging the body as a source of creativity, we can enrich our interactions with tech nology, promoting physical activity, health, joy and enhancing the “naturalness” of these interactions.",
+   "relation_expression": "we can enrich our interactions with",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "body",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "interactions",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "creativity",
+     "role": "other",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Method Cards for Movement-based Interaction Design (MeCaMInD)",
+     "role": "foundation",
+     "excerpt": "This workshop builds upon the outcomes of the Method Cards for Movement-based Interaction Design (MeCaMInD) project that focuses on curating a collection of movement-based design methods"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h18-1",
+   "work": {
+    "work_id": "W4400206586",
+    "title": "Things Are Cheap, Hurrah! Towards an Alternative Aesthetic of Consumption",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3663729",
+    "license": "cc-by",
+    "authors": [
+     "Sacha Prudon",
+     "Stephan S.A.G. Wensveen",
+     "Daniela C. A. Pigosso",
+     "Lenneke Kuijer"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "to consumer objects is the source of the completely overblown consumption patterns currently seen among affluent populations.",
+   "relation_expression": "is the source of",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "consumer objects",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "consumption patterns",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "argument",
+     "excerpt": "In this provocation, we will argue that a similar line of thinking applied"
+    }
+   ],
+   "theories": [
+    {
+     "name": "Cheap Art Manifesto",
+     "role": "foundation",
+     "excerpt": "In their 1984 Cheap Art Manifesto, the Bread and Puppet Theater rightly argues for the merits of art that is"
+    },
+    {
+     "name": "care theory",
+     "role": "foundation",
+     "excerpt": "KEYWORDS Aesthetics, consumption, rebound effects, care theory, post-growth"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h18-2",
+   "work": {
+    "work_id": "W4400206586",
+    "title": "Things Are Cheap, Hurrah! Towards an Alternative Aesthetic of Consumption",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3663729",
+    "license": "cc-by",
+    "authors": [
+     "Sacha Prudon",
+     "Stephan S.A.G. Wensveen",
+     "Daniela C. A. Pigosso",
+     "Lenneke Kuijer"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We take an aesthetic perspective, from which we consider the creation, consumption, and disposal of things under capitalism to be part of the same aesthetic pattern.",
+   "relation_expression": "to be part of the same aesthetic pattern",
+   "relation_kind": "part_of",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "creation",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "consumption",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "disposal",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "aesthetic pattern",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Cheap Art Manifesto",
+     "role": "foundation",
+     "excerpt": "In their 1984 Cheap Art Manifesto, the Bread and Puppet Theater rightly argues for the merits of art that is"
+    },
+    {
+     "name": "care theory",
+     "role": "foundation",
+     "excerpt": "KEYWORDS Aesthetics, consumption, rebound effects, care theory, post-growth"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h18-3",
+   "work": {
+    "work_id": "W4400206586",
+    "title": "Things Are Cheap, Hurrah! Towards an Alternative Aesthetic of Consumption",
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3663729",
+    "license": "cc-by",
+    "authors": [
+     "Sacha Prudon",
+     "Stephan S.A.G. Wensveen",
+     "Daniela C. A. Pigosso",
+     "Lenneke Kuijer"
+    ]
+   },
+   "pdf_page": 4,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "It is only through design that we can bring about a good life for all.",
+   "relation_expression": "only through design that we can bring about",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "design",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "good life",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Cheap Art Manifesto",
+     "role": "foundation",
+     "excerpt": "In their 1984 Cheap Art Manifesto, the Bread and Puppet Theater rightly argues for the merits of art that is"
+    },
+    {
+     "name": "care theory",
+     "role": "foundation",
+     "excerpt": "KEYWORDS Aesthetics, consumption, rebound effects, care theory, post-growth"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h19-1",
+   "work": {
+    "work_id": "W4403627868",
+    "title": "Co-designing the urban energy transition: A resident-based approach",
+    "year": 2024,
+    "doi": "https://doi.org/10.1016/j.cities.2024.105506",
+    "license": "cc-by",
+    "authors": [
+     "Lars Vikström",
+     "Kristina Ek",
+     "Andrea Luciani",
+     "Agatino Rizzo"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Fostering collaboration, and promoting inclusive decision-making, can lead to more effective and sustainable practices, better regulatory frameworks, and improved outcomes for communities.",
+   "relation_expression": "can lead to",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "collaboration",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "inclusive decision-making",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "sustainable practices",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "framework proposed by Sanders et al. (2010)",
+     "role": "foundation",
+     "excerpt": "Therefore, we used a framework proposed by Sanders et al. (2010) to engage nondesigners in"
+    },
+    {
+     "name": "Arnstein (1969) ladder of participation",
+     "role": "foundation",
+     "excerpt": "This recent innovation could be seen as a step forward in Arnstein (1969) ladder of participation"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h19-2",
+   "work": {
+    "work_id": "W4403627868",
+    "title": "Co-designing the urban energy transition: A resident-based approach",
+    "year": 2024,
+    "doi": "https://doi.org/10.1016/j.cities.2024.105506",
+    "license": "cc-by",
+    "authors": [
+     "Lars Vikström",
+     "Kristina Ek",
+     "Andrea Luciani",
+     "Agatino Rizzo"
+    ]
+   },
+   "pdf_page": 7,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Secondly, by involving inhabitants in the design process we can foster learning opportunities and facilitate the formation of new networks within the community.",
+   "relation_expression": "we can foster",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "inhabitants",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "learning opportunities",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "By actively participating in the design and decision-making process, residents can gain knowledge about energy systems, sustainable practices, and the built environment."
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "framework proposed by Sanders et al. (2010)",
+     "role": "foundation",
+     "excerpt": "Therefore, we used a framework proposed by Sanders et al. (2010) to engage nondesigners in"
+    },
+    {
+     "name": "Arnstein (1969) ladder of participation",
+     "role": "foundation",
+     "excerpt": "This recent innovation could be seen as a step forward in Arnstein (1969) ladder of participation"
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h19-3",
+   "work": {
+    "work_id": "W4403627868",
+    "title": "Co-designing the urban energy transition: A resident-based approach",
+    "year": 2024,
+    "doi": "https://doi.org/10.1016/j.cities.2024.105506",
+    "license": "cc-by",
+    "authors": [
+     "Lars Vikström",
+     "Kristina Ek",
+     "Andrea Luciani",
+     "Agatino Rizzo"
+    ]
+   },
+   "pdf_page": 7,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Starting and developing the participatory process at an intermediate, district or neighborhood scale, rather than at a large regional scale or single-family house scale, can help address these diverse contexts more effectively.",
+   "relation_expression": "can help address",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "participatory process",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "diverse contexts",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "By focusing on an intermediate or neighborhood scale, the participatory process can directly address the specific climate, architectural styles, cultural practices, and political dynamics of the area."
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "argument",
+     "excerpt": "The reasons why an intermediate or neighborhood scale is beneficial for participatory processes are, among others:"
+    }
+   ],
+   "theories": [
+    {
+     "name": "framework proposed by Sanders et al. (2010)",
+     "role": "foundation",
+     "excerpt": "Therefore, we used a framework proposed by Sanders et al. (2010) to engage nondesigners in"
+    },
+    {
+     "name": "Arnstein (1969) ladder of participation",
+     "role": "foundation",
+     "excerpt": "This recent innovation could be seen as a step forward in Arnstein (1969) ladder of participation"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h20-1",
+   "work": {
+    "work_id": "W4412017470",
+    "title": "The Art of Mechamimicry: Designing Prototyping Tools for Human-Robot Interaction",
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3715336.3735429",
+    "license": "cc-by",
+    "authors": [
+     "James Dwyer",
+     "Stine S. Johansen",
+     "Markus Rittenbruch",
+     "Jared W Donovan",
+     "Rafael Gómez"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Virtual 219 human–robot interaction scenarios without relying on fully operational systems reduces the technical threshold for participation.",
+   "relation_expression": "reduces",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "human–robot interaction scenarios",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "technical threshold",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "without relying on fully operational systems"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Matthews and Wensveen’s framework for understanding prototypes in design research",
+     "role": "foundation",
+     "excerpt": "The workshop process aligned closely with Matthews and Wensveen’s framework for understanding prototypes in design research"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h20-2",
+   "work": {
+    "work_id": "W4412017470",
+    "title": "The Art of Mechamimicry: Designing Prototyping Tools for Human-Robot Interaction",
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3715336.3735429",
+    "license": "cc-by",
+    "authors": [
+     "James Dwyer",
+     "Stine S. Johansen",
+     "Markus Rittenbruch",
+     "Jared W Donovan",
+     "Rafael Gómez"
+    ]
+   },
+   "pdf_page": 13,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "It demonstrates how reliable, reusable, adaptable, and accessible prototyping tools, when coupled with reflective, interdisciplinary design practices, can support the development of robotic systems that are more closely aligned with the needs, practices, and insights of those who will ultimately work with them.",
+   "relation_expression": "can support the development of",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "prototyping tools",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "robotic systems",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "interdisciplinary design practices",
+     "role": "condition",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "stated",
+    "excerpt": "when coupled with reflective, interdisciplinary design practices"
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Matthews and Wensveen’s framework for understanding prototypes in design research",
+     "role": "foundation",
+     "excerpt": "The workshop process aligned closely with Matthews and Wensveen’s framework for understanding prototypes in design research"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h21-1",
+   "work": {
+    "work_id": "W4412045118",
+    "title": "Paradoxes, Tensions and Challenges in Decentering the Human",
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3715668.3734160",
+    "license": "cc-by",
+    "authors": [
+     "Rosan Chow",
+     "Judith Dörrenbächer",
+     "Anton Poikolainen Rosén",
+     "Daisy Yoo",
+     "Eva Wiman Eriksson",
+     "Marc Hassenzahl"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "In this sense, de-centering the human is not possible (when designing).",
+   "relation_expression": "is not possible",
+   "relation_kind": "has_property",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "de-centering the human",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "designing",
+     "role": "condition",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "stated",
+    "excerpt": "(when designing)"
+   },
+   "explanation": {
+    "status": "stated",
+    "excerpt": "humans are bound to their own bodies when seeing, experiencing, interacting with, and creating meanings of the world"
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Human-Centered-Design (HCD)",
+     "role": "counterpoint",
+     "excerpt": "proposing Human-Centered-Design (HCD). Although not unknown to the HCI communities, his theory of HCD does not figure much in the MTHD discourse."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h21-2",
+   "work": {
+    "work_id": "W4412045118",
+    "title": "Paradoxes, Tensions and Challenges in Decentering the Human",
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3715668.3734160",
+    "license": "cc-by",
+    "authors": [
+     "Rosan Chow",
+     "Judith Dörrenbächer",
+     "Anton Poikolainen Rosén",
+     "Daisy Yoo",
+     "Eva Wiman Eriksson",
+     "Marc Hassenzahl"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We do want to differentiate between the value position of a “narcissistic-egoistic anthropocentrism” and the condition of an “embodied anthropocentrism”; as arguably, the differentiation might carry implications for resolving some methodological challenges in MTHD.",
+   "relation_expression": "differentiate between the value position of a",
+   "relation_kind": "differs_from",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "narcissistic-egoistic anthropocentrism",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "embodied anthropocentrism",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "stated",
+    "excerpt": "the differentiation might carry implications for resolving some methodological challenges in MTHD."
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Human-Centered-Design (HCD)",
+     "role": "counterpoint",
+     "excerpt": "proposing Human-Centered-Design (HCD). Although not unknown to the HCI communities, his theory of HCD does not figure much in the MTHD discourse."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h21-3",
+   "work": {
+    "work_id": "W4412045118",
+    "title": "Paradoxes, Tensions and Challenges in Decentering the Human",
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3715668.3734160",
+    "license": "cc-by",
+    "authors": [
+     "Rosan Chow",
+     "Judith Dörrenbächer",
+     "Anton Poikolainen Rosén",
+     "Daisy Yoo",
+     "Eva Wiman Eriksson",
+     "Marc Hassenzahl"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "It seems that not only “embodied anthropocentrism” is inescapable, but it is also essential to MTHD practices.",
+   "relation_expression": "is also essential to MTHD practices",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "embodied anthropocentrism",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "MTHD practices",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "not_stated",
+   "support": [],
+   "theories": [
+    {
+     "name": "Human-Centered-Design (HCD)",
+     "role": "counterpoint",
+     "excerpt": "proposing Human-Centered-Design (HCD). Although not unknown to the HCI communities, his theory of HCD does not figure much in the MTHD discourse."
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h22-1",
+   "work": {
+    "work_id": "W4416250669",
+    "title": "Reshaping Higher Education Designs and Futures: Postdigital Co-design with Generative Artificial Intelligence",
+    "year": 2025,
+    "doi": "https://doi.org/10.1007/s42438-025-00595-4",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Sandris Zeivots",
+     "Alison Casey",
+     "Tiffany Winchester",
+     "Jack Webster",
+     "Xin Wang",
+     "Linus Tan",
+     "Wina Smeenk",
+     "Frank Paul Schulte",
+     "Antonia Scholkmann",
+     "Belinda Paulovich",
+     "Diego Muñoz",
+     "Joanne Mignone",
+     "Lilia Mantai",
+     "Stefan Hrastinski",
+     "Rebecca Godwin",
+     "Olov Engwall",
+     "Henrik Dindas",
+     "Marieke van Dijk",
+     "Laura Ann Chubb",
+     "Chrysi Rapanta",
+     "Jimmy Jaldemark",
+     "Sarah Hayes"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Across these sections, we show how GenAI unsettles assumptions of collaboration, knowing, and agency, foregrounding co-design as a site of ongoing material, ethical, and epistemic negotiation.",
+   "relation_expression": "unsettles assumptions of",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "GenAI",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "assumptions",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "(2) 11 situated contributions from educators, researchers, and designers worldwide, each offering"
+    }
+   ],
+   "theories": [
+    {
+     "name": "endelecheia",
+     "role": "foundation",
+     "excerpt": "The adoption of endelecheia as a guiding framework, or philosophical compass, has significant pedagogical implications."
+    },
+    {
+     "name": "Postdigital inquiry",
+     "role": "foundation",
+     "excerpt": "Postdigital inquiry emphasises the exploration of entanglement rather than separation between digital and non-digital, human and non-human"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h22-2",
+   "work": {
+    "work_id": "W4416250669",
+    "title": "Reshaping Higher Education Designs and Futures: Postdigital Co-design with Generative Artificial Intelligence",
+    "year": 2025,
+    "doi": "https://doi.org/10.1007/s42438-025-00595-4",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Sandris Zeivots",
+     "Alison Casey",
+     "Tiffany Winchester",
+     "Jack Webster",
+     "Xin Wang",
+     "Linus Tan",
+     "Wina Smeenk",
+     "Frank Paul Schulte",
+     "Antonia Scholkmann",
+     "Belinda Paulovich",
+     "Diego Muñoz",
+     "Joanne Mignone",
+     "Lilia Mantai",
+     "Stefan Hrastinski",
+     "Rebecca Godwin",
+     "Olov Engwall",
+     "Henrik Dindas",
+     "Marieke van Dijk",
+     "Laura Ann Chubb",
+     "Chrysi Rapanta",
+     "Jimmy Jaldemark",
+     "Sarah Hayes"
+    ]
+   },
+   "pdf_page": 1,
+   "claim_location": "abstract",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "We argue that postdigital co-design with GenAI reframes educational design as a collective practice of imagining, contesting, and shaping futures that extend beyond human knowing.",
+   "relation_expression": "reframes educational design as",
+   "relation_kind": "other",
+   "relation_kind_other": "reframes as",
+   "concepts": [
+    {
+     "term": "educational design",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "collective practice",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "(2) 11 situated contributions from educators, researchers, and designers worldwide, each offering"
+    }
+   ],
+   "theories": [
+    {
+     "name": "endelecheia",
+     "role": "foundation",
+     "excerpt": "The adoption of endelecheia as a guiding framework, or philosophical compass, has significant pedagogical implications."
+    },
+    {
+     "name": "Postdigital inquiry",
+     "role": "foundation",
+     "excerpt": "Postdigital inquiry emphasises the exploration of entanglement rather than separation between digital and non-digital, human and non-human"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h22-3",
+   "work": {
+    "work_id": "W4416250669",
+    "title": "Reshaping Higher Education Designs and Futures: Postdigital Co-design with Generative Artificial Intelligence",
+    "year": 2025,
+    "doi": "https://doi.org/10.1007/s42438-025-00595-4",
+    "license": "CC BY 4.0",
+    "authors": [
+     "Sandris Zeivots",
+     "Alison Casey",
+     "Tiffany Winchester",
+     "Jack Webster",
+     "Xin Wang",
+     "Linus Tan",
+     "Wina Smeenk",
+     "Frank Paul Schulte",
+     "Antonia Scholkmann",
+     "Belinda Paulovich",
+     "Diego Muñoz",
+     "Joanne Mignone",
+     "Lilia Mantai",
+     "Stefan Hrastinski",
+     "Rebecca Godwin",
+     "Olov Engwall",
+     "Henrik Dindas",
+     "Marieke van Dijk",
+     "Laura Ann Chubb",
+     "Chrysi Rapanta",
+     "Jimmy Jaldemark",
+     "Sarah Hayes"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "From this perspective, co-design with GenAI is not a matter of incorporating a new technological tool but of reconceptualising co-design as a practice shaped by and shaping complex assemblages of humans, technologies, and cultural contexts.",
+   "relation_expression": "shaped by and shaping",
+   "relation_kind": "associated_with",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "co-design",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "assemblages",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "(2) 11 situated contributions from educators, researchers, and designers worldwide, each offering practice-based accounts of co-design with GenAI"
+    }
+   ],
+   "theories": [
+    {
+     "name": "endelecheia",
+     "role": "foundation",
+     "excerpt": "The adoption of endelecheia as a guiding framework, or philosophical compass, has significant pedagogical implications."
+    },
+    {
+     "name": "Postdigital inquiry",
+     "role": "foundation",
+     "excerpt": "Postdigital inquiry emphasises the exploration of entanglement rather than separation between digital and non-digital, human and non-human"
+    }
+   ],
+   "retest": true
+  },
+  {
+   "id": "h23-1",
+   "work": {
+    "work_id": "W7163645561",
+    "title": "Speculating the Impacts of Mediated Social Touch Technology",
+    "year": 2026,
+    "doi": "https://doi.org/10.1145/3800645.3812947",
+    "license": "cc-by",
+    "authors": [
+     "Russian",
+     "Tim Moesgen",
+     "Myung Jin Kim",
+     "Xinyan Yu",
+     "Naoki Kameyama",
+     "Anusha Indrajith Withana",
+     "Marius Hoggenmüeller",
+     "Luke Hespanhol"
+    ]
+   },
+   "pdf_page": 2,
+   "claim_location": "introduction",
+   "attribution": "adopted",
+   "adopted_from": "[7, 25]",
+   "excerpt": "Touch differs fundamentally from other sensory modalities: it is inherently embodied, intimate, and deeply embedded in social and cultural norms [7, 25].",
+   "relation_expression": "differs fundamentally from",
+   "relation_kind": "differs_from",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "Touch",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "sensory modalities",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "cited_work",
+     "form": "literature",
+     "excerpt": "Touch differs fundamentally from other sensory modalities: it is inherently embodied, intimate, and deeply embedded in social and cultural norms [7, 25]."
+    }
+   ],
+   "theories": [
+    {
+     "name": "recording–synthesising–reproducing (RSR) pipeline",
+     "role": "foundation",
+     "excerpt": "recording–synthesising–reproducing (RSR) pipeline as an analytical lens [12, 32, 46] to examine these challenges across different stages of the MST design process."
+    }
+   ],
+   "retest": false
+  },
+  {
+   "id": "h23-2",
+   "work": {
+    "work_id": "W7163645561",
+    "title": "Speculating the Impacts of Mediated Social Touch Technology",
+    "year": 2026,
+    "doi": "https://doi.org/10.1145/3800645.3812947",
+    "license": "cc-by",
+    "authors": [
+     "Russian",
+     "Tim Moesgen",
+     "Myung Jin Kim",
+     "Xinyan Yu",
+     "Naoki Kameyama",
+     "Anusha Indrajith Withana",
+     "Marius Hoggenmüeller",
+     "Luke Hespanhol"
+    ]
+   },
+   "pdf_page": 14,
+   "claim_location": "conclusion",
+   "attribution": "own",
+   "adopted_from": null,
+   "excerpt": "Through three distinctive challenges—encoded knowledge, complicated consent, and persistent touch—we demonstrated how the pipeline can help haptics researchers and developers identify where challenges emerge and how they might be considered at different stages of MST development.",
+   "relation_expression": "can help haptics researchers and developers identify where challenges emerge",
+   "relation_kind": "causes_or_enables",
+   "relation_kind_other": null,
+   "concepts": [
+    {
+     "term": "pipeline",
+     "role": "from",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    },
+    {
+     "term": "challenges",
+     "role": "to",
+     "definition_status": "not_stated",
+     "definition_excerpt": null
+    }
+   ],
+   "scope": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "explanation": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "prediction": {
+    "status": "not_stated",
+    "excerpt": null
+   },
+   "support_status": "reported",
+   "support": [
+    {
+     "source": "this_text",
+     "form": "case",
+     "excerpt": "We took a step further by adopting the RSR pipeline as an analytical lens to map the challenges and strategies that emerged from our participants’ speculations [46]."
+    }
+   ],
+   "theories": [
+    {
+     "name": "recording–synthesising–reproducing (RSR) pipeline",
+     "role": "foundation",
+     "excerpt": "recording–synthesising–reproducing (RSR) pipeline as an analytical lens [12, 32, 46] to examine these challenges across different stages of the MST design process."
+    }
+   ],
+   "retest": false
+  }
+ ],
+ "excerpt_rule": "Utdraga er utvida til heile setningar (maks 400 teikn)"
 }
