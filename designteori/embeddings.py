@@ -10,6 +10,7 @@ Supports two official Google DeepMind embedding backends:
 """
 from __future__ import annotations
 
+import heapq
 import json
 import math
 import os
@@ -591,26 +592,48 @@ def embed_fulltext_chunks(*, model: str = LOCAL_GEMMA_MODEL, dims: int = 256,
 
 
 def dense_hits(db: sqlite3.Connection, vector: list[float] | np.ndarray,
-               *, model: str = LOCAL_GEMMA_MODEL, dims: int = 256, limit: int = 50) -> list[tuple[str, float]]:
+               *, model: str = LOCAL_GEMMA_MODEL, dims: int = 256, limit: int = 50,
+               batch_rows: int = 4096) -> list[tuple[str, float]]:
+    """Return top-`limit` (chunk_id, cosine_score) hits using bounded streaming memory."""
+    if limit <= 0:
+        return []
     m = model_name(model)
     packed = pack_vector(vector, dims)
     q = np.frombuffer(packed, dtype="<f4")
-    rows = db.execute(
+    expected_bytes = dims * 4
+    cur = db.execute(
         "SELECT chunk_id, vector FROM embeddings WHERE model=? AND dimensions=?",
         (m, dims),
-    ).fetchall()
-    if not rows:
-        return []
-    valid_ids = []
-    blobs = []
-    for cid, blob in rows:
-        if len(blob) == dims * 4:
-            valid_ids.append(cid)
-            blobs.append(np.frombuffer(blob, dtype="<f4"))
-    if not blobs:
-        return []
-    mat = np.vstack(blobs)
-    scores = mat @ q
-    top_idx = np.argsort(scores)[::-1][:limit]
-    return [(valid_ids[i], float(scores[i])) for i in top_idx]
+    )
+    heap: list[tuple[float, int, str]] = []
+    seen = 0
+    try:
+        while True:
+            batch = cur.fetchmany(batch_rows)
+            if not batch:
+                break
+            valid_ids: list[str] = []
+            valid_blobs: list[bytes] = []
+            for cid, blob in batch:
+                if blob is not None and len(blob) == expected_bytes:
+                    valid_ids.append(cid)
+                    valid_blobs.append(blob if isinstance(blob, bytes) else bytes(blob))
+            if not valid_ids:
+                continue
+            mat = np.frombuffer(b"".join(valid_blobs), dtype="<f4").reshape(len(valid_ids), dims)
+            scores = mat @ q
+            n_valid = len(valid_ids)
+            cand_idx = np.argpartition(-scores, limit - 1)[:limit] if n_valid > limit else range(n_valid)
+            for i in cand_idx:
+                idx = int(i)
+                entry = (float(scores[idx]), -(seen + idx), valid_ids[idx])
+                if len(heap) < limit:
+                    heapq.heappush(heap, entry)
+                elif entry > heap[0]:
+                    heapq.heapreplace(heap, entry)
+            seen += n_valid
+    finally:
+        cur.close()
+    heap.sort(key=lambda item: (-item[0], -item[1]))
+    return [(cid, score) for score, _, cid in heap]
 

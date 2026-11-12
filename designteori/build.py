@@ -373,6 +373,8 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
         for wid, info in rm_items.items():
             if not re.fullmatch(r"[a-f0-9]{64}", str(info.get("sha256") or "")):
                 errors.append(f"Invalid sha256 in pdf/manifest.json for {wid}")
+            if info.get("file_sha256") and not re.fullmatch(r"[a-f0-9]{64}", str(info.get("file_sha256"))):
+                errors.append(f"Invalid file_sha256 in pdf/manifest.json for {wid}")
             if int(info.get("bytes") or 0) > 50_000_000:
                 errors.append(f"PDF exceeds GitHub 50 MB cap in pdf/manifest.json: {wid}")
             if not has_explicit_open_license(info.get("license")):

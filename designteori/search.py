@@ -21,6 +21,7 @@ from . import (
 )
 from .embeddings import (
     DEFAULT_MODEL,
+    dense_hits,
     dequantize_int8,
     model_name,
     query_embedding,
@@ -146,7 +147,7 @@ def search_corpus(
 
     # 3. Full-text PDF chunk FTS5 + dense Google chunk embeddings (`corpus.sqlite`)
     if fulltext and Path(corpus_db).is_file():
-        conn = sqlite3.connect(f"file:{Path(corpus_db).as_posix()}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"file:{Path(corpus_db).as_posix()}?mode=ro", uri=True, timeout=60.0)
         try:
             if mode in ("hybrid", "lexical") and fts_q:
                 rows = conn.execute("""
@@ -175,30 +176,31 @@ def search_corpus(
                     qn = float(np.linalg.norm(q_cvec))
                     if qn > 1e-12:
                         q_cvec = q_cvec / qn
-                        emb_rows = conn.execute("""
-                            SELECT e.chunk_id, wd.work_id, c.page, substr(c.text, 1, 280), e.vector
-                            FROM embeddings e
-                            JOIN chunks c ON c.chunk_id = e.chunk_id
-                            JOIN work_documents wd ON wd.sha256 = c.sha256
-                            WHERE e.model=? AND e.dimensions=?
-                        """, (m_clean, c_dims)).fetchall()
-                        if emb_rows:
-                            blobs = b"".join(r[4] for r in emb_rows)
-                            c_mat = np.frombuffer(blobs, dtype="<f4").reshape(len(emb_rows), c_dims)
-                            c_sims = c_mat @ q_cvec
-                            tk = min(200, len(emb_rows))
-                            t_idx = np.argpartition(-c_sims, tk - 1)[:tk]
-                            t_idx = t_idx[np.argsort(-c_sims[t_idx])]
-                            for i in t_idx:
-                                _, wid, page, preview, _ = emb_rows[int(i)]
-                                chunk_semantic_ranked.append(wid)
-                                if wid not in best_excerpts:
-                                    best_excerpts[wid] = {
-                                        "page": page,
-                                        "snippet": preview.strip() + " …",
-                                        "match": "fulltext-semantic",
-                                        "chunk_cosine": round(float(c_sims[int(i)]), 4),
-                                    }
+                        hits = dense_hits(conn, q_cvec, model=m_clean, dims=c_dims, limit=200)
+                        if hits:
+                            placeholders = ",".join("?" for _ in hits)
+                            meta_rows = conn.execute(
+                                f"""
+                                SELECT c.chunk_id, wd.work_id, c.page, substr(c.text, 1, 280)
+                                FROM chunks c
+                                JOIN work_documents wd ON wd.sha256 = c.sha256
+                                WHERE c.chunk_id IN ({placeholders})
+                                """,
+                                [cid for cid, _ in hits],
+                            ).fetchall()
+                            by_chunk: dict[str, list[tuple[str, int, str]]] = defaultdict(list)
+                            for cid, wid, page, preview in meta_rows:
+                                by_chunk[cid].append((wid, page, preview))
+                            for cid, sim in hits:
+                                for wid, page, preview in by_chunk.get(cid, ()):
+                                    chunk_semantic_ranked.append(wid)
+                                    if wid not in best_excerpts:
+                                        best_excerpts[wid] = {
+                                            "page": page,
+                                            "snippet": (preview or "").strip() + " …",
+                                            "match": "fulltext-semantic",
+                                            "chunk_cosine": round(float(sim), 4),
+                                        }
         finally:
             conn.close()
 

@@ -91,7 +91,8 @@ def extract_pages(path: Path) -> tuple[list[str], str]:
 def connection(path: Path = PRIVATE_CORPUS_DB) -> sqlite3.Connection:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(path)
+    db = sqlite3.connect(path, timeout=60.0)
+    db.execute("PRAGMA busy_timeout=60000")
     db.execute("PRAGMA foreign_keys=ON")
     db.execute("PRAGMA journal_mode=WAL")
     db.executescript("""

@@ -174,7 +174,7 @@ def main(argv: list[str] | None = None) -> int:
     p_pdf.add_argument("--host-delay", type=float, default=1.0)
     p_pdf.add_argument("--email", default="")
     p_pdf.add_argument("--max-mb", type=int, default=90)
-    p_pdf.add_argument("--max-repo-file-mb", type=float, default=95.0)
+    p_pdf.add_argument("--max-repo-file-mb", type=float, default=50.0)
     p_pdf.add_argument("--max-cache-gb", type=float, default=25.0)
     p_pdf.add_argument("--max-repo-gb", type=float, default=50.0)
     p_pdf.add_argument("--min-free-gb", type=float, default=6.0)
