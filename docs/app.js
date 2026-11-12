@@ -303,7 +303,7 @@
           </div>
           ${isExp ? renderInlineDetail(w) : ""}
         </article>`;
-    }).join("") || `<p style="padding:24px 0;color:var(--muted);">Ingen treff.</p>`;
+    }).join("") || `<p style="padding:24px 0;color:var(--dim);">Ingen treff.</p>`;
   }
 
   function renderInlineDetail(w) {
@@ -324,13 +324,13 @@
                   ${sw.pdf ? ` · <a class="act-pdf" href="${esc(sw.pdf)}" target="_blank" rel="noopener">PDF</a>` : ""}
                 </span>
                 <span class="score">${c.toFixed(2)}</span>
-              </div>`).join("") || `<div class="detail-row" style="color:var(--muted);">Lastar vektorindeks…</div>`}
+              </div>`).join("") || `<div class="detail-row" style="color:var(--dim);">Lastar vektorindeks…</div>`}
           </div>
           <div class="detail-sec">
             <h4>Siteringskoplingar i korpuset (${(ctx.cited_by || []).length} inn, ${(ctx.cites || []).length} ut)</h4>
             ${citedBy.map((cw) => `<div class="detail-row"><span>Sitert av: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></span></div>`).join("")}
             ${cites.map((cw) => `<div class="detail-row"><span>Siterer: <a href="#" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></span></div>`).join("")}
-            ${!citedBy.length && !cites.length ? `<div class="detail-row" style="color:var(--muted);">${esc(w.id)} · ${esc(w.source || "")}</div>` : ""}
+            ${!citedBy.length && !cites.length ? `<div class="detail-row" style="color:var(--dim);">${esc(w.id)} · ${esc(w.source || "")}</div>` : ""}
           </div>
         </div>
       </div>`;
@@ -423,7 +423,7 @@
     const cs = S.semMap?.clusters || [];
     const total = S.semMap?.points?.length || 0;
     $("mapLegend").innerHTML =
-      `<div class="cluster-row ${S.clusterFilter === -1 ? "active" : ""}" data-cl="-1"><span><span class="swatch" style="background:#888;"></span>Alle klynger</span><span>${fmt(total)}</span></div>` +
+      `<div class="cluster-row ${S.clusterFilter === -1 ? "active" : ""}" data-cl="-1"><span><span class="swatch" style="background:var(--dim);"></span>Alle klynger</span><span>${fmt(total)}</span></div>` +
       cs.map((c, i) => `<div class="cluster-row ${S.clusterFilter === c.id ? "active" : ""}" data-cl="${c.id}"><span><span class="swatch" style="background:${COLORS[i % COLORS.length]};"></span>${esc(c.label)}</span><span>${fmt(c.size || "")}</span></div>`).join("");
   }
 
@@ -437,7 +437,10 @@
     cv.width = W * dpr; cv.height = H * dpr;
     const ctx = cv.getContext("2d");
     ctx.scale(dpr, dpr);
-    ctx.fillStyle = "#141413";
+    const css = getComputedStyle(document.documentElement);
+    const bg = css.getPropertyValue("--bg").trim() || "#fff";
+    const dim = css.getPropertyValue("--dim").trim() || "#767676";
+    ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
     const mode = $("mapMode").value;
@@ -448,7 +451,7 @@
       const sx = cx + p.x * sc, sy = cy - p.y * sc;
       p._sx = sx; p._sy = sy;
       if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
-      ctx.fillStyle = mode === "country" ? (CC_COLORS[p.cc] || "#888") : mode === "pdf" ? (p.pdf ? "#10b981" : "#52524e") : COLORS[p.c % COLORS.length];
+      ctx.fillStyle = mode === "country" ? (CC_COLORS[p.cc] || dim) : mode === "pdf" ? (p.pdf ? css.getPropertyValue("--fg").trim() : dim) : COLORS[p.c % COLORS.length];
       ctx.globalAlpha = p.pdf ? 0.92 : 0.65;
       ctx.beginPath();
       ctx.arc(sx, sy, p.pdf ? 2.9 : 2.1, 0, Math.PI * 2);
@@ -505,7 +508,7 @@
           <div class="table-wrap">
             <table class="tbl-clean">
               <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
-              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--muted);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
+              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--dim);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
             </table>
           </div>
         </div>
@@ -608,6 +611,7 @@
 
     const cv = $("semCanvas");
     window.addEventListener("resize", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
     cv.addEventListener("wheel", (e) => {
       e.preventDefault();
       S.zoom = Math.min(12, Math.max(0.8, S.zoom * (e.deltaY < 0 ? 1.18 : 0.85)));

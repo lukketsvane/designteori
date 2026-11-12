@@ -3,23 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="light">
-  <title>DESIGNTEORI</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>designteori · Iver Raknes Finne</title>
   <meta name="description" content="Nordisk designteori og designforsking 1900–2026. Publikasjonar, fulltekst-PDF, siteringar og semantisk søk.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <a class="brand" href="#korpus" data-tab="korpus">DESIGNTEORI</a>
-    <nav aria-label="Meny">
-      <button class="nav-btn active" data-tab="korpus" type="button">Katalog</button>
-      <button class="nav-btn" data-tab="siteringar" type="button">Kanon</button>
-      <button class="nav-btn" data-tab="kart" type="button">Kart</button>
-      <button class="nav-btn" data-tab="analyse" type="button">Analyse</button>
+  <header class="bar">
+    <nav class="tabs" aria-label="Meny">
+      <button class="nav-btn active" data-tab="korpus" type="button">katalog</button>
+      <button class="nav-btn" data-tab="siteringar" type="button">kanon</button>
+      <button class="nav-btn" data-tab="kart" type="button">kart</button>
+      <button class="nav-btn" data-tab="analyse" type="button">analyse</button>
     </nav>
+    <a href="https://iverfinne.no">iverfinne.no</a>
   </header>
 
   <main>
+    <h1 class="section-title page-title"><a class="brand" href="#korpus" data-tab="korpus">designteori</a></h1>
     <section id="view-korpus" class="view active">
       <div class="metrics">
         <button class="metric metric-btn active-metric" id="metricAllBtn" type="button">
