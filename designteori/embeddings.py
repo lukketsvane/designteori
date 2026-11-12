@@ -29,6 +29,7 @@ from . import (
     PRIVATE_CACHE,
     PRIVATE_CORPUS_DB,
     now_iso,
+    read_json,
     write_json,
 )
 
@@ -438,24 +439,53 @@ def export_public_semantic_index(works: list[dict], vectors: np.ndarray, *, dims
     }
 
 
+def _active_corpus_work_ids() -> set[str] | None:
+    """Return all work IDs in the active strict corpus manifests, or None if missing."""
+    ids: set[str] = set()
+    for fname in ("publications.json", "nordic_additions.json"):
+        rows = read_json(DOCS_DATA_DIR / fname, None)
+        if isinstance(rows, list):
+            ids.update(str(row["id"]) for row in rows if isinstance(row, dict) and row.get("id"))
+    return ids or None
+
+
 def eligible_chunks(db: sqlite3.Connection, model: str, dims: int,
-                    *, include_unreviewed: bool = False, limit: int = 0) -> list[tuple]:
+                    *, include_unreviewed: bool = False,
+                    active_work_ids: set[str] | list[str] | tuple[str, ...] | None = None,
+                    limit: int = 0) -> list[tuple]:
     restriction = "" if include_unreviewed else """
       AND EXISTS (
         SELECT 1 FROM work_documents wd JOIN works w ON w.work_id=wd.work_id
         WHERE wd.sha256=c.sha256 AND w.rights LIKE 'CC %'
           AND w.rights NOT LIKE '%-ND%' AND w.rights NOT LIKE '% ND%'
       )"""
-    sql = """
+    active_filter = ""
+    title_filter = ""
+    if active_work_ids is not None:
+        db.execute("DROP TABLE IF EXISTS temp._active_work_ids")
+        db.execute("CREATE TEMP TABLE _active_work_ids (work_id TEXT PRIMARY KEY)")
+        db.executemany(
+            "INSERT OR IGNORE INTO temp._active_work_ids (work_id) VALUES (?)",
+            [(str(wid),) for wid in active_work_ids if wid],
+        )
+        active_filter = """
+          AND EXISTS (
+            SELECT 1 FROM work_documents wd
+            JOIN temp._active_work_ids aw ON aw.work_id=wd.work_id
+            WHERE wd.sha256=c.sha256
+          )"""
+        title_filter = " AND EXISTS (SELECT 1 FROM temp._active_work_ids aw WHERE aw.work_id=wd.work_id)"
+
+    sql = f"""
         SELECT c.chunk_id, c.text_hash, c.text,
                COALESCE((SELECT w.title FROM work_documents wd JOIN works w ON w.work_id=wd.work_id
-                         WHERE wd.sha256=c.sha256 LIMIT 1), '')
+                         WHERE wd.sha256=c.sha256{title_filter} LIMIT 1), '')
         FROM chunks c
         JOIN documents d ON d.sha256=c.sha256
         LEFT JOIN embeddings e ON e.chunk_id=c.chunk_id AND e.model=? AND e.dimensions=?
         WHERE d.quality='extracted'
           AND (e.chunk_id IS NULL OR e.text_hash <> c.text_hash)
-    """ + restriction + " ORDER BY c.chunk_id"
+    """ + restriction + active_filter + " ORDER BY c.chunk_id"
     params: list = [model_name(model), dims]
     if limit > 0:
         sql += " LIMIT ?"
@@ -465,7 +495,8 @@ def eligible_chunks(db: sqlite3.Connection, model: str, dims: int,
 
 def embed_fulltext_chunks(*, model: str = LOCAL_GEMMA_MODEL, dims: int = 256,
                           limit: int = 0, batch: int = 64, pause: float = 0.0,
-                          include_unreviewed: bool = True, consent_cloud: bool = False,
+                          include_unreviewed: bool = True, active_only: bool = True,
+                          consent_cloud: bool = False,
                           db_path: Path = PRIVATE_CORPUS_DB) -> dict:
     from .fulltext import connection as corpus_connection
 
@@ -480,8 +511,16 @@ def embed_fulltext_chunks(*, model: str = LOCAL_GEMMA_MODEL, dims: int = 256,
         # all locally cached OA fulltexts can be embedded safely on-device.
         pass
 
+    active_ids = _active_corpus_work_ids() if active_only else None
     db = corpus_connection(db_path)
-    rows = eligible_chunks(db, m, dims, include_unreviewed=include_unreviewed, limit=limit)
+    rows = eligible_chunks(
+        db,
+        m,
+        dims,
+        include_unreviewed=include_unreviewed,
+        active_work_ids=active_ids,
+        limit=limit,
+    )
     complete = 0
     step = max(batch, 128) if is_local_gemma(m) else batch
     for offset in range(0, len(rows), step):

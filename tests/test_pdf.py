@@ -10,6 +10,7 @@ from unittest.mock import patch
 from designteori.pdf import (
     _normalize_candidate,
     allowed_url,
+    cache_path,
     cached_pdf_ok,
     candidate_https_url,
     extract_diva_query,
@@ -17,6 +18,7 @@ from designteori.pdf import (
     extract_nva_uuid,
     extract_openalex_work_urls,
     expand_registered_oa_urls,
+    has_explicit_open_license,
     is_bot_challenge_html,
     parse_core_urls,
     parse_diva_export_csv,
@@ -28,6 +30,7 @@ from designteori.pdf import (
     pdf_data,
     repo_pdf_filename,
     safe_public_link,
+    sync_repo_pdf_folder,
     synthesized_oa_urls,
     unwrap_pdf_payload,
 )
@@ -178,6 +181,7 @@ class TestPdfPipeline(unittest.TestCase):
         self.assertEqual(core, ["https://core.ac.uk/download/489513693.pdf"])
 
         self.assertTrue(is_bot_challenge_html(b"<html><script src='/.within.website/x/cmd/anubis.js'></script></html>"))
+        self.assertTrue(is_bot_challenge_html(b"<html><head><title>Preparing to download ...</title></head></html>"))
         self.assertFalse(is_bot_challenge_html(b"<html><body><h1>Article</h1></body></html>"))
 
         oai_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
@@ -229,6 +233,80 @@ class TestPdfPipeline(unittest.TestCase):
         pmc_urls = expand_registered_oa_urls("https://pmc.ncbi.nlm.nih.gov/articles/12290142")
         self.assertIn("https://pmc.ncbi.nlm.nih.gov/articles/PMC12290142/pdf/", pmc_urls)
         self.assertIn("https://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC12290142&blobtype=pdf", pmc_urls)
+
+    def test_sync_repo_pdf_license_and_size_gates(self):
+        self.assertTrue(has_explicit_open_license("CC BY 4.0"))
+        self.assertTrue(has_explicit_open_license("cc-by"))
+        self.assertTrue(has_explicit_open_license("CC BY-NC-ND 4.0"))
+        self.assertTrue(has_explicit_open_license("cc0"))
+        self.assertTrue(has_explicit_open_license("public-domain"))
+        self.assertFalse(has_explicit_open_license(""))
+        self.assertFalse(has_explicit_open_license("other-oa"))
+        self.assertFalse(has_explicit_open_license("implied-oa"))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / "cache"
+            docs = root / "docs"
+            pdf_dir = root / "pdf"
+            (cache / "pdf").mkdir(parents=True)
+            docs.mkdir(parents=True)
+            pdf_dir.mkdir(parents=True)
+
+            good_bytes = b"%PDF-1.7\n" + (b"A" * 1000) + b"\n%%EOF\n"
+            unlic_bytes = b"%PDF-1.7\n" + (b"B" * 1000) + b"\n%%EOF\n"
+            big_bytes = b"%PDF-1.7\n" + (b"C" * 3000) + b"\n%%EOF\n"
+
+            def _put(wid: str, blob: bytes, lic: str = "") -> dict:
+                sha = hashlib.sha256(blob).hexdigest()
+                cache_path(wid, cache).write_bytes(blob)
+                return {
+                    "status": "pdf-confirmed",
+                    "sha256": sha,
+                    "bytes": len(blob),
+                    "url": f"https://example.org/{wid}.pdf",
+                    "license": lic,
+                }
+
+            progress = {
+                "W1": _put("W1", good_bytes, "CC BY 4.0"),
+                "W2": _put("W2", unlic_bytes, ""),
+                "W3": _put("W3", big_bytes, "CC BY 4.0"),
+                "W4": _put("W4", unlic_bytes, "other-oa"),
+            }
+            import json
+            (cache / "progress.json").write_text(json.dumps(progress), encoding="utf-8")
+            (docs / "source_links.json").write_text("{}", encoding="utf-8")
+            # Pre-seed an unlicensed file in `pdf/` + `manifest.json` to ensure it gets pruned
+            (pdf_dir / "W2.pdf").write_bytes(unlic_bytes)
+            (pdf_dir / "manifest.json").write_text(json.dumps({
+                "items": {
+                    "W2": {
+                        "file": "pdf/W2.pdf",
+                        "sha256": progress["W2"]["sha256"],
+                        "bytes": len(unlic_bytes),
+                        "source_url": "https://example.org/W2.pdf",
+                        "license": "",
+                    }
+                }
+            }), encoding="utf-8")
+
+            rows = [
+                {"id": wid, "priority": "high", "license": lic}
+                for wid, lic in [("W1", "CC BY 4.0"), ("W2", ""), ("W3", "CC BY 4.0"), ("W4", "other-oa")]
+            ]
+            with patch("designteori.pdf.queue_rows", return_value=rows), \
+                 patch("designteori.pdf.DOCS_DATA_DIR", docs):
+                res = sync_repo_pdf_folder(cache, pdf_dir, max_file_mb=0.002)
+
+            self.assertEqual(res["repo_pdf_count"], 1)
+            self.assertTrue((pdf_dir / "W1.pdf").is_file())
+            self.assertFalse((pdf_dir / "W2.pdf").exists())
+            self.assertFalse((pdf_dir / "W3.pdf").exists())
+            self.assertFalse((pdf_dir / "W4.pdf").exists())
+            man = json.loads((pdf_dir / "manifest.json").read_text(encoding="utf-8"))["items"]
+            self.assertEqual(list(man.keys()), ["W1"])
+            self.assertEqual(man["W1"]["license"], "CC BY 4.0")
 
 
 if __name__ == "__main__":

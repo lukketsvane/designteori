@@ -4,8 +4,9 @@ from __future__ import annotations
 import hashlib
 import re
 import sqlite3
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
+import threading
 
 from . import (
     DOCS_DATA_DIR,
@@ -59,16 +60,24 @@ def chunks_for_page(text: str, *, target: int = 2300, overlap: int = 300, minimu
     return spans
 
 
+_FITZ_LOCK = threading.Lock()
+
+
 def extract_pages(path: Path) -> tuple[list[str], str]:
     try:
         try:
             import pymupdf as fitz
         except ImportError:
             import fitz
-        with fitz.open(path) as pdf:
-            if pdf.needs_pass:
-                raise ValueError("Encrypted PDF: password needed")
-            return [normalized(page.get_text(sort=True)) for page in pdf], "pymupdf"
+        # MuPDF C-biblioteket er ikkje trådsikkert ved samstundes ThreadPoolExecutor-opning,
+        # og sort=True kan henge i O(N^2) geometri-sortering på komplekse vektor-PDF-ar.
+        with _FITZ_LOCK:
+            if hasattr(fitz, "TOOLS") and hasattr(fitz.TOOLS, "mupdf_display_errors"):
+                fitz.TOOLS.mupdf_display_errors(False)
+            with fitz.open(path) as pdf:
+                if pdf.needs_pass:
+                    raise ValueError("Encrypted PDF: password needed")
+                return [normalized(page.get_text("text")) for page in pdf], "pymupdf"
     except ImportError:
         pass
     from pypdf import PdfReader
@@ -180,7 +189,10 @@ def index_all_pdfs(*, db_path: Path = PRIVATE_CORPUS_DB, cache_dir: Path = PRIVA
             repo_pdf = ROOT / info["file"] if info.get("file") else None
             chosen = cache_pdf if cache_pdf.is_file() else (repo_pdf if repo_pdf and repo_pdf.is_file() else None)
             if chosen is not None:
-                sources[wid] = (chosen, info.get("sha256", ""), info.get("source_url", ""))
+                expected = info.get("sha256", "")
+                if chosen == repo_pdf and info.get("file_sha256"):
+                    expected = info["file_sha256"]  # repo copy is compressed; original lives in cache
+                sources[wid] = (chosen, expected, info.get("source_url", ""))
     for wid, rec in progress.items():
         if wid not in sources and isinstance(rec, dict) and rec.get("status") == "pdf-confirmed":
             pdf_file = cache_dir / "pdf" / (hashlib.sha256(wid.encode("utf-8")).hexdigest()[:24] + ".pdf")
@@ -220,19 +232,27 @@ def index_all_pdfs(*, db_path: Path = PRIVATE_CORPUS_DB, cache_dir: Path = PRIVA
             to_extract.append((wid, pdf_file, checksum, url))
     conn.commit()
 
-    for batch_start in range(0, len(to_extract), 64):
-        batch = to_extract[batch_start:batch_start + 64]
+    for batch_start in range(0, len(to_extract), 32):
+        batch = to_extract[batch_start:batch_start + 32]
         tasks = [(wid, p, c, 3000) for wid, p, c, _ in batch]
         url_map = {wid: u for wid, _, _, u in batch}
         extracted_batch = []
-        with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
-            futures = [(t[0], pool.submit(_extract_worker, t)) for t in tasks]
-            for wid, fut in futures:
+        if workers <= 1:
+            for t in tasks:
                 try:
-                    extracted_batch.append(fut.result())
+                    extracted_batch.append(_extract_worker(t))
                 except Exception as exc:
                     failed += 1
-                    print("PDF_EXTRACT_ERR", wid, type(exc).__name__, str(exc)[:120], flush=True)
+                    print("PDF_EXTRACT_ERR", t[0], type(exc).__name__, str(exc)[:120], flush=True)
+        else:
+            with ProcessPoolExecutor(max_workers=workers) as pool:
+                futures = [(t[0], pool.submit(_extract_worker, t)) for t in tasks]
+                for wid, fut in futures:
+                    try:
+                        extracted_batch.append(fut.result())
+                    except Exception as exc:
+                        failed += 1
+                        print("PDF_EXTRACT_ERR", wid, type(exc).__name__, str(exc)[:120], flush=True)
 
         ts = now_iso()
         with conn:
@@ -280,6 +300,7 @@ def index_all_pdfs(*, db_path: Path = PRIVATE_CORPUS_DB, cache_dir: Path = PRIVA
                 ))
                 conn.execute("INSERT OR IGNORE INTO work_documents VALUES(?,?,?)", (wid, digest, url_map.get(wid, "")))
                 done += 1
+        print(f"PDF_INDEX_BATCH {done + failed}/{len(to_extract)} done={done} failed={failed}", flush=True)
 
     total_docs = conn.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
     total_chunks = conn.execute("SELECT COUNT(*) FROM chunks").fetchone()[0]

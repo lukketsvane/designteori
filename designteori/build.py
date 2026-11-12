@@ -364,6 +364,8 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
     repo_manifest_file = PDF_DIR / "manifest.json"
     repo_pdf_count = 0
     if repo_manifest_file.is_file():
+        from .pdf import has_explicit_open_license
+
         rm_data = read_json(repo_manifest_file, {}) or {}
         rm_items = rm_data.get("items") or {}
         repo_pdf_count = len(rm_items)
@@ -371,8 +373,10 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
         for wid, info in rm_items.items():
             if not re.fullmatch(r"[a-f0-9]{64}", str(info.get("sha256") or "")):
                 errors.append(f"Invalid sha256 in pdf/manifest.json for {wid}")
-            if int(info.get("bytes") or 0) > 98_000_000:
-                errors.append(f"PDF exceeds GitHub 98 MB cap in pdf/manifest.json: {wid}")
+            if int(info.get("bytes") or 0) > 50_000_000:
+                errors.append(f"PDF exceeds GitHub 50 MB cap in pdf/manifest.json: {wid}")
+            if not has_explicit_open_license(info.get("license")):
+                errors.append(f"Unlicensed or non-CC PDF in pdf/manifest.json: {wid}")
             if local_pdfs:
                 fpath = ROOT / str(info.get("file") or "")
                 if not fpath.is_file() or fpath.stat().st_size != int(info.get("bytes") or -1):

@@ -102,6 +102,7 @@ def is_bot_challenge_html(data: bytes) -> bool:
         "challenges.cloudflare.com",
         "cf-browser-verification",
         "<title>just a moment...</title>",
+        "<title>preparing to download ...</title>",
         "_cf_chl_opt",
     )
     return any(m in head for m in markers)
@@ -319,6 +320,8 @@ def pdf_candidates_from_html(data: bytes, landing: str) -> list[str]:
         absolute = candidate_https_url(urljoin(landing, value))
         if not allowed_url(absolute) or BOILERPLATE_PDF_RE.search(absolute):
             continue
+        if re.search(r"\.(?:png|jpe?g|gif|svg|webp|ico|css|js)(?:[?#]|$)", urlsplit(absolute).path or "", re.I):
+            continue
         ojs_match = re.match(r"^(https://[^?#]+/article)/view/(\d+/\d+(?:[/?#].*)?)$", absolute, re.I)
         if ojs_match:
             direct_ojs = ojs_match.group(1) + "/download/" + ojs_match.group(2)
@@ -342,9 +345,18 @@ def repo_pdf_filename(ident: str) -> str:
     return f"{slug}_{short_hash}.pdf"
 
 
+EXPLICIT_OPEN_LICENSE_RE = re.compile(r"^(?:cc[\s_-]|cc0\b|public[-_\s]?domain\b)", re.I)
+
+
+def has_explicit_open_license(value: str | None) -> bool:
+    """Return True when `value` declares an explicit CC, CC0, or public-domain license."""
+    return bool(EXPLICIT_OPEN_LICENSE_RE.match(str(value or "").strip()))
+
+
 def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DIR,
-                         *, max_file_mb: float = 95.0, max_repo_gb: float = 50.0) -> dict:
-    """Sync all verified OA PDFs into the repository's `pdf/` directory + `pdf/manifest.json`."""
+                         *, max_file_mb: float = 50.0, max_repo_gb: float = 50.0,
+                         require_explicit_license: bool = True) -> dict:
+    """Sync verified OA PDFs into `pdf/` + `pdf/manifest.json`, keeping only licensed files <= 50 MB by default."""
     from collections import Counter
 
     pdf_dir = Path(pdf_dir)
@@ -402,6 +414,9 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
             sha = info.get("sha256", "")
             if sha in boilerplate_shas or BOILERPLATE_PDF_RE.search(str(info.get("source_url") or "")):
                 continue
+            lic = str(info.get("license") or valid_meta[wid].get("license") or "").strip()[:120]
+            if require_explicit_license and not has_explicit_open_license(lic):
+                continue
             fname = Path(str(info.get("file", ""))).name or repo_pdf_filename(wid)
             fpath = pdf_dir / fname
             if fpath.is_file() and 500 <= fpath.stat().st_size <= max_file_bytes:
@@ -411,8 +426,13 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
                     "sha256": sha,
                     "bytes": sz,
                     "source_url": info.get("source_url", ""),
-                    "license": info.get("license", ""),
+                    "license": lic,
                 }
+                # Keep compression provenance: `sha256` stays the hash of the original download,
+                # `file_sha256` is the hash of the (compressed) file actually stored in `pdf/`.
+                for extra in ("file_sha256", "original_bytes", "compression"):
+                    if info.get(extra):
+                        manifest_items[wid][extra] = info[extra]
                 total_bytes += sz
 
     # 2. Sync all verified OA PDFs from `PRIVATE_CACHE / "pdf"`
@@ -423,6 +443,9 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
         if rec.get("status") != "pdf-confirmed":
             continue
         if rec.get("sha256") in boilerplate_shas or BOILERPLATE_PDF_RE.search(str(rec.get("url") or "")):
+            continue
+        lic = str(rec.get("license") or valid_meta[wid].get("license") or "").strip()[:120]
+        if require_explicit_license and not has_explicit_open_license(lic):
             continue
         src = cache_path(wid, cache_dir)
         if not src.is_file():
@@ -450,7 +473,7 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
             except OSError:
                 shutil.copy2(src, dst)
         url = rec.get("url", "") if safe_public_link(rec.get("url")) else ""
-        lic = str(rec.get("license") or "")[:120]
+        lic = str(rec.get("license") or valid_meta[wid].get("license") or "").strip()[:120]
         manifest_items[wid] = {
             "file": f"pdf/{fname}",
             "sha256": digest,

@@ -14,7 +14,9 @@ class TestBuiltCorpusIntegrity(unittest.TestCase):
         self.assertTrue(result["ok"])
         self.assertGreaterEqual(result["openalex_works"], 3_500)
         self.assertGreater(result["nordic_candidates"], 1_000)
-        self.assertGreaterEqual(result["repo_pdfs"], 1_000)
+        self.assertGreaterEqual(result["repo_pdfs"], 20)
+        pdf_status = read_json(DOCS_DATA_DIR / "pdf_status.json", {}) or {}
+        self.assertGreaterEqual(pdf_status.get("public_verified_pdf_links", 0), 3_000)
         self.assertEqual(
             result["embedded_works"],
             result["openalex_works"] + result["nordic_candidates"],

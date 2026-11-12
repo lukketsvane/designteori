@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-12T00:42:37.646147+00:00",
+  "generated_at": "2026-11-12T03:43:41.457290+00:00",
   "metadata_source": "OpenAlex (1900–2026 Nordic design corpus: flagship venues, academies, multilingual queries & citation frontier)",
   "total": 4694,
   "automatic_title_inclusion": 4694,
   "manual_review_queue": 0,
   "article_records": 2283,
   "review_records": 17,
-  "local_pdf": 1463,
+  "local_pdf": 23,
   "high_priority_for_manual_review": 361,
   "country_memberships": {
     "DK": 1801,

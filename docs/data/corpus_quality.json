@@ -20,7 +20,7 @@
       "with_authors": 1721,
       "with_doi": 659,
       "with_open_access_url": 1738,
-      "with_repo_pdf": 125,
+      "with_repo_pdf": 0,
       "with_year": 1738
     },
     "openalex_primary_1900_2026": {
@@ -50,7 +50,7 @@
       "with_authors": 4694,
       "with_doi": 4123,
       "with_open_access_url": 3180,
-      "with_repo_pdf": 1463,
+      "with_repo_pdf": 23,
       "with_year": 4694
     }
   },
