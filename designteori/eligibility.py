@@ -87,12 +87,14 @@ FORBIDDEN_VENUES_RE = re.compile(
     r"lecture notes in geoinformation|international journal of business|journal of marketing|"
     r"engineering applications of artificial intelligence|physical review|pubmed|"
     r"studies in health technology|journal of biomedical informatics|"
-    r"sykepleien|tidsskrift for den norske legeforening|nordisk sygeplejeforskning)\b",
+    r"sykepleien|tidsskrift for den norske legeforening|nordisk sygeplejeforskning|"
+    r"jmir|perioperative|daimi report series|student papers)\b",
     re.I,
 )
 
 HARD_NON_DESIGN_RE = re.compile(
     r"(?:^(?:online guest lecture|guest lecture|paper presentation|keynote:|panel:|poster:)\b|"
+    r"^(?:review|editorial|preface|foreword|erratum|corrigendum)$|"
     r"\b(?:trial design|study design|research design|experimental design|survey design|"
     r"questionnaire design|sampling design|curriculum design|instructional design|"
     r"design science research|mechanical engineering design|"
@@ -114,6 +116,8 @@ HARD_NON_DESIGN_RE = re.compile(
     r"miljøterapi|fosterovervåking|hjemmeføds\w*|sykeplei\w*|pasient\w*|medication adherence|"
     r"dialysis|clinical|hospital|shared decision-making|"
     r"infection risk|waiting time|dynamic capabilities|entrepreneurship|"
+    r"bioengineering|autonomous ship|uudelleen\s*muotoilu|rooftop tent|"
+    r"engaging by design|"
     r"design and analysis of (?:experiments|algorithms|clinical|randomized|computer))\b)",
     re.I,
 )

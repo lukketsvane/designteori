@@ -30,6 +30,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
 
 def cmd_harvest_pdf(args: argparse.Namespace) -> int:
     from designteori.pdf import (
+        DEFAULT_UNPAYWALL_EMAIL,
         audit_private_cache,
         harvest_pdfs,
         merge_local_cache,
@@ -45,11 +46,15 @@ def cmd_harvest_pdf(args: argparse.Namespace) -> int:
             limit=args.limit,
             workers=args.workers,
             host_delay=args.host_delay,
+            email=args.email or DEFAULT_UNPAYWALL_EMAIL,
             max_mb=args.max_mb,
             max_cache_gb=args.max_cache_gb,
             min_free_gb=args.min_free_gb,
             retry_failed=args.retry_failed,
             lookup_openalex=not args.no_openalex,
+            lookup_core=not args.no_core,
+            lookup_semantic_scholar=not args.no_s2,
+            new_sources_only=args.new_sources_only,
         )
     if not args.no_sync_repo:
         out["repo_pdf"] = sync_repo_pdf_folder(max_file_mb=args.max_repo_file_mb, max_repo_gb=args.max_repo_gb)
@@ -167,13 +172,17 @@ def main(argv: list[str] | None = None) -> int:
     p_pdf.add_argument("--limit", type=int, default=8000)
     p_pdf.add_argument("--workers", type=int, default=12)
     p_pdf.add_argument("--host-delay", type=float, default=1.0)
-    p_pdf.add_argument("--max-mb", type=int, default=45)
+    p_pdf.add_argument("--email", default="")
+    p_pdf.add_argument("--max-mb", type=int, default=90)
     p_pdf.add_argument("--max-repo-file-mb", type=float, default=95.0)
     p_pdf.add_argument("--max-cache-gb", type=float, default=25.0)
     p_pdf.add_argument("--max-repo-gb", type=float, default=50.0)
     p_pdf.add_argument("--min-free-gb", type=float, default=6.0)
     p_pdf.add_argument("--retry-failed", action="store_true")
     p_pdf.add_argument("--no-openalex", action="store_true")
+    p_pdf.add_argument("--no-core", action="store_true")
+    p_pdf.add_argument("--no-s2", action="store_true")
+    p_pdf.add_argument("--new-sources-only", action="store_true")
     p_pdf.add_argument("--no-sync-repo", action="store_true")
     p_pdf.add_argument("--catalog-only", action="store_true")
     p_pdf.add_argument("--merge-from", default="")

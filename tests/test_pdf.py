@@ -8,10 +8,21 @@ from pathlib import Path
 from unittest.mock import patch
 
 from designteori.pdf import (
+    _normalize_candidate,
     allowed_url,
     cached_pdf_ok,
     candidate_https_url,
+    extract_diva_query,
+    extract_dspace_handle,
+    extract_nva_uuid,
     extract_openalex_work_urls,
+    is_bot_challenge_html,
+    parse_core_urls,
+    parse_diva_export_csv,
+    parse_dspace_bitstream_urls,
+    parse_nva_publication_artifacts,
+    parse_oai_ojs_records,
+    parse_openaire_urls,
     pdf_candidates_from_html,
     pdf_data,
     repo_pdf_filename,
@@ -90,6 +101,121 @@ class TestPdfPipeline(unittest.TestCase):
             self.assertTrue(cached_pdf_ok(wid, rec, tdir))
             rec_bad = {**rec, "sha256": "0" * 64}
             self.assertFalse(cached_pdf_ok(wid, rec_bad, tdir))
+
+    def test_nva_dspace_openaire_core_parsers_and_bot_detection(self):
+        self.assertEqual(
+            extract_nva_uuid("https://nva.sikt.no/registration/0198cc7bb7cc-1f4942f7-74e5-465f-9470-d142a0880c74"),
+            "0198cc7bb7cc-1f4942f7-74e5-465f-9470-d142a0880c74",
+        )
+        self.assertEqual(extract_nva_uuid("https://api.nva.unit.no/publication/file/abc"), "")
+        files, links = parse_nva_publication_artifacts({
+            "associatedArtifacts": [
+                {"type": "OpenFile", "mimeType": "application/pdf", "allowedOperations": ["read-metadata"], "identifier": "embargoed"},
+                {
+                    "type": "OpenFile",
+                    "mimeType": "application/pdf",
+                    "allowedOperations": ["download", "read-metadata"],
+                    "identifier": "open-pdf-1",
+                    "license": {"value": "https://creativecommons.org/licenses/by/4.0/"},
+                },
+                {"type": "AssociatedLink", "id": "https://example.org/paper.pdf"},
+            ]
+        })
+        self.assertEqual([f["identifier"] for f in files], ["open-pdf-1"])
+        self.assertEqual(files[0]["license"], "https://creativecommons.org/licenses/by/4.0/")
+        self.assertEqual(links, ["https://example.org/paper.pdf"])
+
+        presigned = "https://s3.eu-north-1.amazonaws.com/bucket/file.pdf?X-Amz-Signature=deadbeef"
+        alias = "https://api.nva.unit.no/publication/file/open-pdf-1"
+        cand = _normalize_candidate({"url": presigned, "public_url": alias, "license": "CC-BY"})
+        self.assertFalse(safe_public_link(cand["url"]))
+        self.assertTrue(safe_public_link(cand["public_url"]))
+
+        self.assertEqual(
+            extract_dspace_handle("https://aaltodoc.aalto.fi/handle/123456789/145475"),
+            ("aaltodoc.aalto.fi", "123456789/145475", ""),
+        )
+        bit_urls = parse_dspace_bitstream_urls({
+            "_embedded": {
+                "bitstreams": [
+                    {"name": "license.txt", "sizeBytes": 120, "_links": {"content": {"href": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/1/content"}}},
+                    {"name": "thesis.pdf", "sizeBytes": 500000, "_links": {"content": {"href": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/2/content"}}},
+                ]
+            }
+        }, "aaltodoc.aalto.fi")
+        self.assertEqual(bit_urls, ["https://aaltodoc.aalto.fi/server/api/core/bitstreams/2/content"])
+
+        oa_urls = parse_openaire_urls({
+            "response": {
+                "results": {
+                    "result": {
+                        "metadata": {
+                            "oaf:entity": {
+                                "oaf:result": {
+                                    "children": {
+                                        "result": [
+                                            {"instance": {"accessright": {"@classid": "CLOSED"}, "url": {"$": "https://closed.example/a.pdf"}}},
+                                            {"instance": {"accessright": {"@classid": "OPEN"}, "webresource": {"url": {"$": "https://aaltodoc.aalto.fi/handle/123456789/145475"}}}},
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        self.assertEqual(oa_urls, ["https://aaltodoc.aalto.fi/handle/123456789/145475"])
+
+        core = parse_core_urls({
+            "results": [
+                {"doi": "10.9999/wrong", "downloadUrl": "https://core.ac.uk/download/1.pdf"},
+                {"doi": "https://doi.org/10.21606/NORDES.2021.1", "downloadUrl": "https://core.ac.uk/download/489513693.pdf"},
+            ]
+        }, "10.21606/nordes.2021.1")
+        self.assertEqual(core, ["https://core.ac.uk/download/489513693.pdf"])
+
+        self.assertTrue(is_bot_challenge_html(b"<html><script src='/.within.website/x/cmd/anubis.js'></script></html>"))
+        self.assertFalse(is_bot_challenge_html(b"<html><body><h1>Article</h1></body></html>"))
+
+        oai_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
+        <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+          <ListRecords>
+            <record>
+              <header><identifier>oai:archive.nordes.org:article/618</identifier></header>
+              <metadata>
+                <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+                  <dc:title>RETHINKING SCALE - RELATIONALITY, PLACE, AND CRITICAL ZONE</dc:title>
+                  <dc:identifier>https://archive.nordes.org/index.php/n13/article/view/618</dc:identifier>
+                  <dc:identifier>10.21606/nordes.2025.618</dc:identifier>
+                  <dc:relation>https://archive.nordes.org/index.php/n13/article/view/618/585</dc:relation>
+                </oai_dc:dc>
+              </metadata>
+            </record>
+          </ListRecords>
+        </OAI-PMH>"""
+        by_doi, by_title, token = parse_oai_ojs_records(oai_xml)
+        self.assertEqual(token, "")
+        self.assertEqual(by_doi["10.21606/nordes.2025.618"][0], "https://archive.nordes.org/index.php/n13/article/download/618/585")
+        self.assertIn("rethinking scale relationality place and critical zone", by_title)
+
+        self.assertEqual(
+            extract_diva_query("https://urn.kb.se/resolve?urn=urn:nbn:se:liu:diva-211651"),
+            "urn:nbn:se:liu:diva-211651",
+        )
+        self.assertEqual(
+            extract_diva_query("https://uu.diva-portal.org/smash/get/diva2:2075907/FULLTEXT01.pdf"),
+            "diva2:2075907",
+        )
+        diva_csv = (
+            "PID,NBN,FullTextLink,Urls\n"
+            "999,urn:nbn:se:other:diva-1,https://example.org/other.pdf,\n"
+            "1937243,urn:nbn:se:liu:diva-211651,http://liu.diva-portal.org/smash/get/diva2:1937243/FULLTEXT02.pdf,\n"
+        )
+        self.assertEqual(
+            parse_diva_export_csv(diva_csv, "urn:nbn:se:liu:diva-211651"),
+            ["https://liu.diva-portal.org/smash/get/diva2:1937243/FULLTEXT02.pdf"],
+        )
 
 
 if __name__ == "__main__":

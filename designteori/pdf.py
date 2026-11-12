@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import ipaddress
 import json
 import os
@@ -21,6 +22,13 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urljoin, urlsplit
 from urllib.request import HTTPCookieProcessor, HTTPRedirectHandler, Request, build_opener
+
+try:
+    import truststore
+
+    truststore.inject_into_ssl()
+except Exception:
+    pass
 
 from . import (
     DOCS_DATA_DIR,
@@ -48,12 +56,46 @@ OA_DOI_PREFIXES = (
     "10.5617/", "10.5324/", "10.15845/", "10.23865/", "10.24834/",
     "10.33350/", "10.23995/", "10.30673/", "10.33134/", "10.16993/",
     "10.21435/", "10.1016/j.sheji.", "10.1017/pds.", "10.1017/dsi.",
-    "10.3390/", "10.3389/", "10.1371/", "10.1186/",
+    "10.3390/", "10.3389/", "10.1371/", "10.1186/", "10.55612/",
 )
 QUEUE_FIELDS = (
     "id", "doi", "title", "year", "kind", "source", "oa_url",
     "scope", "priority", "archived", "candidate_status",
 )
+DEFAULT_UNPAYWALL_EMAIL = "designteori-research@outlook.com"
+DSPACE_API_HOSTS = (
+    "aaltodoc.aalto.fi",
+    "gupea.ub.gu.se",
+    "helda.helsinki.fi",
+    "erepo.uef.fi",
+    "taju.uniarts.fi",
+)
+API_HOST_MIN_DELAYS = {
+    "api.semanticscholar.org": 15.0,
+    "api.core.ac.uk": 2.0,
+    "api.openaire.eu": 0.4,
+    "api.nva.unit.no": 0.25,
+    "api.unpaywall.org": 0.15,
+    "www.diva-portal.org": 0.5,
+}
+NO_DOI_PREFIXES = ("10.7577/", "10.5617/", "10.5324/", "10.15845/", "10.23865/", "10.18261/")
+
+
+class BotChallengeError(Exception):
+    """Raised when a remote host presents a CAPTCHA, PoW, or anti-bot gate."""
+
+
+def is_bot_challenge_html(data: bytes) -> bool:
+    head = data[:8192].decode("utf-8", "ignore").lower()
+    markers = (
+        "/.within.website/",
+        "making sure you're not a bot",
+        "challenges.cloudflare.com",
+        "cf-browser-verification",
+        "<title>just a moment...</title>",
+        "_cf_chl_opt",
+    )
+    return any(m in head for m in markers)
 
 
 def candidate_https_url(link: object) -> str:
@@ -172,7 +214,14 @@ def safely_encoded_url(link: object) -> str:
     return quote(value, safe=":/?#[]@!$&'()*+,;=%-._~")
 
 
-def safe_request(url: str, limit: int = 26_000_000, accept: str = "application/pdf,*/*;q=0.5") -> tuple[bytes, str, str]:
+def safe_request(
+    url: str,
+    limit: int = 90_000_000,
+    accept: str = "application/pdf,*/*;q=0.5",
+    timeout: int = 45,
+    data: bytes | None = None,
+    content_type: str = "",
+) -> tuple[bytes, str, str]:
     opener = build_opener(NoRedirect, HTTPCookieProcessor(CookieJar()))
     visited: dict[str, int] = defaultdict(int)
     for _ in range(MAX_REDIRECTS + 1):
@@ -180,9 +229,12 @@ def safe_request(url: str, limit: int = 26_000_000, accept: str = "application/p
         if not allowed_url(url) or not public_dns(urlsplit(url).hostname) or visited[url] >= 2:
             raise ValueError("unsafe URL or redirect")
         visited[url] += 1
-        req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
+        headers = {"User-Agent": USER_AGENT, "Accept": accept}
+        if content_type:
+            headers["Content-Type"] = content_type
+        req = Request(url, data=data, headers=headers)
         try:
-            response = opener.open(req, timeout=25)
+            response = opener.open(req, timeout=timeout)
         except HTTPError as error:
             if error.code in (301, 302, 303, 307, 308):
                 target = error.headers.get("Location")
@@ -191,9 +243,15 @@ def safe_request(url: str, limit: int = 26_000_000, accept: str = "application/p
                     raise ValueError("redirect without Location") from error
                 url = candidate_https_url(urljoin(url, target))
                 continue
+            cf_mit = (error.headers.get("cf-mitigated") or "").lower()
+            if cf_mit == "challenge":
+                error.close()
+                raise BotChallengeError(f"Cloudflare challenge on {urlsplit(url).hostname}") from error
             raise
         with response:
             status = getattr(response, "status", 200)
+            if status == 202:
+                raise BotChallengeError(f"HTTP 202 anti-bot gate on {urlsplit(url).hostname}")
             if status != 200:
                 raise ValueError("HTTP " + str(status))
             declared = response.headers.get("Content-Length")
@@ -367,12 +425,13 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
             except OSError:
                 shutil.copy2(src, dst)
         url = rec.get("url", "") if safe_public_link(rec.get("url")) else ""
+        lic = str(rec.get("license") or "")[:120]
         manifest_items[wid] = {
             "file": f"pdf/{fname}",
             "sha256": digest,
             "bytes": sz,
             "source_url": url,
-            "license": "",
+            "license": lic,
         }
         total_bytes += sz
         added += 1
@@ -561,6 +620,445 @@ def semantic_scholar_urls(doi: str) -> list[str]:
     return [url] if allowed_url(url) else []
 
 
+def extract_nva_uuid(link: object) -> str:
+    m = re.search(
+        r"^https://(?:nva\.sikt\.no/registration|api\.nva\.unit\.no/publication)/([0-9a-f]+(?:-[0-9a-f]+){3,})(?:[/?#]|$)",
+        str(link or "").strip(),
+        re.I,
+    )
+    return m.group(1) if m else ""
+
+
+def parse_nva_publication_artifacts(pub: dict) -> tuple[list[dict], list[str]]:
+    if not isinstance(pub, dict):
+        return [], []
+    files: list[dict] = []
+    links: list[str] = []
+    for art in pub.get("associatedArtifacts") or []:
+        if not isinstance(art, dict):
+            continue
+        atype = art.get("type")
+        if atype == "OpenFile" and "download" in (art.get("allowedOperations") or []) and not art.get("administrativeAgreement"):
+            mime = str(art.get("mimeType") or "").lower()
+            name = str(art.get("name") or "").lower()
+            if "pdf" not in mime and not name.endswith(".pdf") and mime:
+                continue
+            fid = str(art.get("identifier") or "").strip()
+            if not fid:
+                continue
+            lic_obj = art.get("license") or {}
+            lic = str(lic_obj.get("value") or lic_obj.get("name") or "").strip() if isinstance(lic_obj, dict) else ""
+            files.append({"identifier": fid, "license": lic, "is_pdf": ("pdf" in mime or name.endswith(".pdf"))})
+        elif atype == "AssociatedLink":
+            u = candidate_https_url(art.get("id"))
+            if allowed_url(u) and (direct_pdf_hint(u) or "doi.org/" in u or "handle.net/" in u) and u not in links:
+                links.append(u)
+    files.sort(key=lambda item: not item["is_pdf"])
+    return files, links
+
+
+def _nva_resolve_files(pub_uuid: str, pub: dict, pause_fn=None) -> list[dict]:
+    files, links = parse_nva_publication_artifacts(pub)
+    cands: list[dict] = []
+    for f in files[:4]:
+        if pause_fn:
+            pause_fn("api.nva.unit.no")
+        ep = f"https://api.nva.unit.no/publication/{quote(pub_uuid, safe='')}/filelink/{quote(f['identifier'], safe='')}"
+        payload, _, _ = safe_request(ep, limit=500_000, accept="application/json")
+        fl = json.loads(payload.decode("utf-8"))
+        presigned = candidate_https_url(fl.get("id") if isinstance(fl, dict) else "")
+        alias = candidate_https_url(fl.get("alias") if isinstance(fl, dict) else "")
+        pub_url = alias if safe_public_link(alias) else f"https://nva.sikt.no/registration/{pub_uuid}"
+        fetch_u = presigned if allowed_url(presigned) else (alias if allowed_url(alias) else "")
+        if fetch_u:
+            cands.append({"url": fetch_u, "public_url": pub_url, "license": f["license"]})
+    for u in links[:4]:
+        cands.append({"url": u, "public_url": u, "license": ""})
+    return cands
+
+
+def nva_publication_candidates(pub_uuid: str, pause_fn=None) -> list[dict]:
+    if not pub_uuid:
+        return []
+    if pause_fn:
+        pause_fn("api.nva.unit.no")
+    ep = f"https://api.nva.unit.no/publication/{quote(pub_uuid, safe='')}"
+    payload, _, _ = safe_request(ep, limit=1_500_000, accept="application/json")
+    return _nva_resolve_files(pub_uuid, json.loads(payload.decode("utf-8")), pause_fn=pause_fn)
+
+
+def nva_search_candidates(doi: str, pause_fn=None) -> list[dict]:
+    short = normalize_doi(doi)
+    if not short:
+        return []
+    ep = f"https://api.nva.unit.no/search/resources?query={quote(short, safe='')}&results=5"
+    payload, _, _ = safe_request(ep, limit=1_500_000, accept="application/json")
+    data = json.loads(payload.decode("utf-8"))
+    out: list[dict] = []
+    for hit in (data.get("hits") or []) if isinstance(data, dict) else []:
+        if not isinstance(hit, dict):
+            continue
+        ref_doi = normalize_doi(((hit.get("entityDescription") or {}).get("reference") or {}).get("doi"))
+        if ref_doi != short:
+            continue
+        pub_uuid = str(hit.get("identifier") or "").strip()
+        if pub_uuid:
+            out.extend(_nva_resolve_files(pub_uuid, hit, pause_fn=pause_fn))
+    return out[:6]
+
+
+def extract_dspace_handle(link: object) -> tuple[str, str, str]:
+    text = candidate_https_url(link)
+    if not allowed_url(text):
+        return "", "", ""
+    u = urlsplit(text)
+    host = (u.hostname or "").lower()
+    if host not in DSPACE_API_HOSTS:
+        return "", "", ""
+    m_item = re.search(r"/items/([0-9a-f]{8}-[0-9a-f-]{27,})(?:[/?#]|$)", u.path or "", re.I)
+    if m_item:
+        return host, "", m_item.group(1)
+    m_hdl = re.search(r"/handle/(\d+/[^/?#]+)(?:[/?#]|$)", u.path or "", re.I)
+    if m_hdl:
+        return host, m_hdl.group(1), ""
+    return "", "", ""
+
+
+def parse_dspace_bitstream_urls(bitstreams_json: dict, host: str) -> list[str]:
+    if not isinstance(bitstreams_json, dict):
+        return []
+    bs = ((bitstreams_json.get("_embedded") or {}).get("bitstreams")) or []
+    ranked: list[tuple[bool, int, str]] = []
+    for bit in bs:
+        if not isinstance(bit, dict):
+            continue
+        name = str(bit.get("name") or "").lower()
+        size = int(bit.get("sizeBytes") or 0)
+        if name.endswith((".txt", ".xml", ".jpg", ".png")) or "license" in name:
+            continue
+        href = candidate_https_url(((bit.get("_links") or {}).get("content") or {}).get("href"))
+        if not allowed_url(href) or (urlsplit(href).hostname or "").lower() != host.lower():
+            continue
+        ranked.append((not name.endswith(".pdf"), -size, href))
+    ranked.sort()
+    return [href for _, _, href in ranked[:6]]
+
+
+def dspace_api_urls(link: str, pause_fn=None) -> list[str]:
+    host, handle, item_uuid = extract_dspace_handle(link)
+    if not host:
+        return []
+    if pause_fn:
+        pause_fn(host)
+    if item_uuid:
+        ep = f"https://{host}/server/api/core/items/{quote(item_uuid, safe='')}/bundles"
+        b_payload, _, _ = safe_request(ep, limit=1_000_000, accept="application/json")
+    else:
+        ep = f"https://{host}/server/api/pid/find?id={quote(handle, safe='/')}"
+        item_payload, _, _ = safe_request(ep, limit=1_000_000, accept="application/json")
+        item_json = json.loads(item_payload.decode("utf-8"))
+        bundles_href = candidate_https_url(((item_json.get("_links") or {}).get("bundles") or {}).get("href"))
+        if not allowed_url(bundles_href) or (urlsplit(bundles_href).hostname or "").lower() != host:
+            return []
+        if pause_fn:
+            pause_fn(host)
+        b_payload, _, _ = safe_request(bundles_href, limit=1_000_000, accept="application/json")
+    bundles = ((json.loads(b_payload.decode("utf-8")).get("_embedded") or {}).get("bundles")) or []
+    out: list[str] = []
+    for b in bundles:
+        if not isinstance(b, dict) or str(b.get("name") or "").upper() != "ORIGINAL":
+            continue
+        bit_href = candidate_https_url(((b.get("_links") or {}).get("bitstreams") or {}).get("href"))
+        if not allowed_url(bit_href) or (urlsplit(bit_href).hostname or "").lower() != host:
+            continue
+        if pause_fn:
+            pause_fn(host)
+        bs_payload, _, _ = safe_request(bit_href, limit=1_000_000, accept="application/json")
+        for u in parse_dspace_bitstream_urls(json.loads(bs_payload.decode("utf-8")), host):
+            if u not in out:
+                out.append(u)
+    return out[:6]
+
+
+def _as_list(val: object) -> list:
+    if val is None:
+        return []
+    return val if isinstance(val, list) else [val]
+
+
+def parse_openaire_urls(data: dict) -> list[str]:
+    results = (((data.get("response") or {}).get("results") or {}) if isinstance(data, dict) else {}).get("result")
+    ranked: list[tuple[int, str]] = []
+    seen: set[str] = set()
+    for res in _as_list(results):
+        if not isinstance(res, dict):
+            continue
+        oaf_res = ((res.get("metadata") or {}).get("oaf:entity") or {}).get("oaf:result") or {}
+        if not isinstance(oaf_res, dict):
+            continue
+        containers = [oaf_res] + _as_list((oaf_res.get("children") or {}).get("result"))
+        for item in containers:
+            if not isinstance(item, dict):
+                continue
+            for inst in _as_list(item.get("instance")):
+                if not isinstance(inst, dict):
+                    continue
+                acc = str(((inst.get("accessright") or {}).get("@classid") or "")).upper()
+                if acc and acc != "OPEN":
+                    continue
+                raw_urls = []
+                if isinstance(inst.get("url"), dict):
+                    raw_urls.append(inst["url"].get("$"))
+                for wr in _as_list(inst.get("webresource")):
+                    if isinstance(wr, dict) and isinstance(wr.get("url"), dict):
+                        raw_urls.append(wr["url"].get("$"))
+                for raw_u in raw_urls:
+                    c = candidate_https_url(raw_u)
+                    if not allowed_url(c) or c in seen:
+                        continue
+                    seen.add(c)
+                    h = (urlsplit(c).hostname or "").lower()
+                    blocked_hint = ("dl.designresearchsociety.org" in h or "research.aalto.fi" in h)
+                    rank = (2 if blocked_hint else (0 if direct_pdf_hint(c) else 1))
+                    ranked.append((rank, c))
+    ranked.sort()
+    return [u for _, u in ranked[:8]]
+
+
+def openaire_urls(doi: str) -> list[str]:
+    short = normalize_doi(doi)
+    if not short:
+        return []
+    ep = f"https://api.openaire.eu/search/publications?doi={quote(short, safe='')}&format=json"
+    payload, _, _ = safe_request(ep, limit=1_500_000, accept="application/json")
+    return parse_openaire_urls(json.loads(payload.decode("utf-8")))
+
+
+def parse_core_urls(data: dict, short_doi: str) -> list[str]:
+    if not isinstance(data, dict) or not short_doi:
+        return []
+    out: list[str] = []
+    for item in data.get("results") or []:
+        if not isinstance(item, dict):
+            continue
+        item_doi = normalize_doi(item.get("doi"))
+        if item_doi != short_doi:
+            id_matches = any(
+                isinstance(ident, dict) and normalize_doi(ident.get("identifier")) == short_doi
+                for ident in (item.get("identifiers") or [])
+            )
+            if not id_matches:
+                continue
+        cands = [item.get("downloadUrl")] + list(item.get("sourceFulltextUrls") or [])
+        for l in item.get("links") or []:
+            if isinstance(l, dict) and l.get("type") == "download":
+                cands.append(l.get("url"))
+        for raw_u in cands:
+            c = candidate_https_url(raw_u)
+            if allowed_url(c) and c not in out:
+                out.append(c)
+    return out[:6]
+
+
+def core_urls(doi: str) -> list[str]:
+    short = normalize_doi(doi)
+    if not short:
+        return []
+    ep = f"https://api.core.ac.uk/v3/search/works/?q=doi%3A%22{quote(short, safe='')}%22&limit=5"
+    payload, _, _ = safe_request(ep, limit=1_500_000, accept="application/json")
+    return parse_core_urls(json.loads(payload.decode("utf-8")), short)
+
+
+def _norm_oai_title(raw: object) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", str(raw or "").lower())).strip()
+
+
+def parse_oai_ojs_records(xml_bytes: bytes) -> tuple[dict[str, list[str]], dict[str, list[str]], str]:
+    import xml.etree.ElementTree as ET
+
+    root = ET.fromstring(xml_bytes)
+    ns = {"oai": "http://www.openarchives.org/OAI/2.0/"}
+    by_doi: dict[str, list[str]] = defaultdict(list)
+    by_title: dict[str, list[str]] = defaultdict(list)
+    for rec in root.findall(".//oai:record", ns):
+        hdr = rec.find("oai:header", ns)
+        if hdr is not None and hdr.attrib.get("status") == "deleted":
+            continue
+        titles = [e.text.strip() for e in rec.iter("{http://purl.org/dc/elements/1.1/}title") if e.text and e.text.strip()]
+        ids = [e.text.strip() for e in rec.iter("{http://purl.org/dc/elements/1.1/}identifier") if e.text and e.text.strip()]
+        rels = [e.text.strip() for e in rec.iter("{http://purl.org/dc/elements/1.1/}relation") if e.text and e.text.strip()]
+        urls: list[str] = []
+        for raw_u in rels + ids:
+            cand = candidate_https_url(raw_u)
+            if allowed_url(cand):
+                dl = re.sub(r"/article/view/(\d+/\d+(?:[/?#].*)?)$", r"/article/download/\1", cand, flags=re.I)
+                if allowed_url(dl) and dl not in urls:
+                    urls.append(dl)
+                if cand not in urls:
+                    urls.append(cand)
+        if not urls:
+            continue
+        for raw_id in ids:
+            nd = normalize_doi(raw_id)
+            if nd:
+                for u in urls:
+                    if u not in by_doi[nd]:
+                        by_doi[nd].append(u)
+        for raw_t in titles:
+            nt = _norm_oai_title(raw_t)
+            if len(nt) >= 18 and len(nt.split()) >= 3:
+                for u in urls:
+                    if u not in by_title[nt]:
+                        by_title[nt].append(u)
+    rt = root.find(".//oai:resumptionToken", ns)
+    next_token = rt.text.strip() if rt is not None and rt.text else ""
+    return dict(by_doi), dict(by_title), next_token
+
+
+def oai_ojs_prefetch(
+    endpoint: str = "https://archive.nordes.org/index.php/index/oai",
+    pause_fn=None,
+) -> tuple[dict[str, list[str]], dict[str, list[str]]]:
+    by_doi: dict[str, list[str]] = defaultdict(list)
+    by_title: dict[str, list[str]] = defaultdict(list)
+    host = (urlsplit(endpoint).hostname or "").lower()
+    token = ""
+    for _ in range(30):
+        u = f"{endpoint}?verb=ListRecords&resumptionToken={quote(token, safe='')}" if token else f"{endpoint}?verb=ListRecords&metadataPrefix=oai_dc"
+        try:
+            if pause_fn and host:
+                pause_fn(host)
+            payload, _, _ = safe_request(u, limit=6_000_000, accept="application/xml,text/xml")
+            d_map, t_map, token = parse_oai_ojs_records(payload)
+            for k, lst in d_map.items():
+                for item in lst:
+                    if item not in by_doi[k]:
+                        by_doi[k].append(item)
+            for k, lst in t_map.items():
+                for item in lst:
+                    if item not in by_title[k]:
+                        by_title[k].append(item)
+            if not token:
+                break
+        except Exception:
+            break
+    return dict(by_doi), dict(by_title)
+
+
+def extract_diva_query(oa_url: object, ident: object = "") -> str:
+    for raw in (oa_url, ident):
+        s = str(raw or "").strip()
+        if not s:
+            continue
+        m_urn = re.search(r"(urn:nbn:se:[a-z0-9_:.-]+)", s, re.I)
+        if m_urn:
+            return m_urn.group(1)
+        m_pid = re.search(r"diva2:(\d+)", s, re.I)
+        if m_pid:
+            return f"diva2:{m_pid.group(1)}"
+    return ""
+
+
+def parse_diva_export_csv(csv_text: str, target_urn_or_pid: str = "") -> list[str]:
+    if not csv_text or not csv_text.strip():
+        return []
+    target = str(target_urn_or_pid or "").strip().lower()
+    target_pid = target.split("diva2:", 1)[1] if target.startswith("diva2:") else ""
+    out: list[str] = []
+    reader = csv.DictReader(io.StringIO(csv_text.lstrip("\ufeff")))
+    for row in reader:
+        if not isinstance(row, dict):
+            continue
+        if target:
+            nbn = str(row.get("NBN") or "").strip().lower()
+            pid = str(row.get("PID") or "").strip().lower()
+            if nbn != target and (not target_pid or pid != target_pid) and pid != target:
+                continue
+        raw_blobs = f"{row.get('FullTextLink') or ''} ; {row.get('Urls') or ''}"
+        for tok in re.split(r"[\s;]+", raw_blobs):
+            c = candidate_https_url(tok)
+            if allowed_url(c) and c not in out:
+                out.append(c)
+    return out[:6]
+
+
+def diva_export_urls(oa_url: str, ident: str = "", pause_fn=None) -> list[str]:
+    q = extract_diva_query(oa_url, ident)
+    if not q:
+        return []
+    if pause_fn:
+        pause_fn("www.diva-portal.org")
+    aq = quote(json.dumps([[{"freeText": q}]]))
+    ep = (
+        "https://www.diva-portal.org/smash/export.jsf?format=csvall2&addFilename=false"
+        f"&aq={aq}&aqe=[]&aq2=[[]]&onlyFullText=false&noOfRows=5"
+    )
+    payload, _, _ = safe_request(ep, limit=500_000, accept="text/csv,*/*")
+    return parse_diva_export_csv(payload.decode("utf-8-sig", "replace"), q)
+
+
+def semantic_scholar_batch_prefetch(dois: list[str], pause_fn=None) -> dict[str, list[dict[str, str]]]:
+    clean = sorted({d for raw in dois if (d := normalize_doi(raw))})
+    prefetched: dict[str, list[dict[str, str]]] = {}
+    ep = "https://api.semanticscholar.org/graph/v1/paper/batch?fields=openAccessPdf,isOpenAccess,externalIds"
+    for idx in range(0, len(clean), 100):
+        chunk = clean[idx:idx + 100]
+        body = json.dumps({"ids": [f"DOI:{d}" for d in chunk]}).encode("utf-8")
+        for attempt in range(3):
+            try:
+                if pause_fn:
+                    pause_fn("api.semanticscholar.org")
+                payload, _, _ = safe_request(ep, limit=4_000_000, accept="application/json", data=body, content_type="application/json")
+                items = json.loads(payload.decode("utf-8"))
+                if not isinstance(items, list):
+                    break
+                for req_doi, item in zip(chunk, items):
+                    prefetched[req_doi] = []
+                    if not isinstance(item, dict):
+                        continue
+                    oa_obj = item.get("openAccessPdf") or {}
+                    u = candidate_https_url(oa_obj.get("url") if isinstance(oa_obj, dict) else "")
+                    if allowed_url(u):
+                        lic = str((oa_obj.get("license") or "") if isinstance(oa_obj, dict) else "").strip()
+                        prefetched[req_doi] = [{"url": u, "public_url": u, "license": lic}]
+                break
+            except Exception as exc:
+                if isinstance(exc, HTTPError) and exc.code == 429 and attempt < 2:
+                    time.sleep(25.0)
+                    continue
+                if isinstance(exc, HTTPError) and exc.code in (403, 429):
+                    return prefetched
+                break
+    return prefetched
+
+
+def core_batch_prefetch(dois: list[str], pause_fn=None) -> dict[str, list[str]]:
+    high_val = ("10.21606/", "10.1080/", "10.1016/", "10.1145/", "10.1007/", "10.1386/", "10.1162/")
+    clean = sorted({d for raw in dois if (d := normalize_doi(raw)) and '"' not in d}, key=lambda d: (not d.startswith(high_val), d))
+    prefetched: dict[str, list[str]] = {}
+    for idx in range(0, len(clean), 20):
+        chunk = clean[idx:idx + 20]
+        q = " OR ".join(f'doi:"{d}"' for d in chunk)
+        ep = f"https://api.core.ac.uk/v3/search/works/?q={quote(q, safe='')}&limit=100"
+        for attempt in range(3):
+            try:
+                if pause_fn:
+                    pause_fn("api.core.ac.uk")
+                payload, _, _ = safe_request(ep, limit=4_000_000, accept="application/json")
+                data = json.loads(payload.decode("utf-8"))
+                for d in chunk:
+                    prefetched[d] = parse_core_urls(data, d)
+                break
+            except Exception as exc:
+                if isinstance(exc, HTTPError) and exc.code in (429, 503) and attempt < 2:
+                    time.sleep(12.0 if attempt == 0 else 20.0)
+                    continue
+                if isinstance(exc, HTTPError) and exc.code in (403, 429):
+                    return prefetched
+                break
+    return prefetched
+
+
 def queue_rows() -> list[dict]:
     repo_manifest = (read_json(PDF_DIR / "manifest.json", {}) or {}).get("items", {}) or {}
     archived = set(repo_manifest.keys())
@@ -584,6 +1082,7 @@ def queue_rows() -> list[dict]:
             "source": w.get("source") or "",
             "oa_url": oa,
             "scope": w.get("scope") or "",
+            "countries": w.get("countries") or ([w["source_country"]] if w.get("source_country") else []),
             "priority": w.get("review_priority") or "",
             "archived": "yes" if ident in archived else "no",
             "candidate_status": "archived" if ident in archived else (
@@ -649,11 +1148,52 @@ def load_local_openalex_urls(db_path: Path = RAW_SQLITE) -> dict[str, list[str]]
     return mapping
 
 
+def _normalize_candidate(item: object, fallback_public: str = "") -> dict[str, str]:
+    if isinstance(item, dict):
+        u = candidate_https_url(item.get("url"))
+        pub = candidate_https_url(item.get("public_url") or fallback_public or u)
+        lic = str(item.get("license") or "").strip()[:120]
+        return {"url": u, "public_url": pub, "license": lic}
+    u = candidate_https_url(item)
+    return {"url": u, "public_url": candidate_https_url(fallback_public or u), "license": ""}
+
+
+def _deferred_retry_rank(row: dict, prev: dict) -> tuple[int, int]:
+    reason = str(prev.get("reason") or "")
+    url_hint = (row.get("oa_url") or "").lower()
+    if any(k in reason for k in ("CERTIFICATE_VERIFY_FAILED", "timed out", "size cap", "interrupted")):
+        return 0, 0
+    if "11250/" in url_hint or any(h in url_hint for h in DSPACE_API_HOSTS):
+        return 1, 0
+    if row.get("doi") and ("403" in reason or "No direct PDF" in reason or "202" in reason):
+        return 2, 0
+    return 3, 1
+
+
+def _discover_followup_candidates(payload: bytes, landing: str, mime: str, pause_fn=None) -> list[dict[str, str]]:
+    if extract_nva_uuid(landing):
+        cands = nva_publication_candidates(extract_nva_uuid(landing), pause_fn=pause_fn)
+        if cands:
+            return cands
+    if extract_dspace_handle(landing)[0]:
+        ds = dspace_api_urls(landing, pause_fn=pause_fn)
+        if ds:
+            return [_normalize_candidate(u) for u in ds]
+    prefix = payload[:4096].lstrip().lower()
+    if "html" in mime.lower() or b"<html" in prefix or b"<!doctype html" in prefix:
+        return [_normalize_candidate(u) for u in pdf_candidates_from_html(payload, landing)]
+    return []
+
+
 def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.0,
-                 email: str = "", max_mb: int = 45, max_cache_gb: float = 25.0,
+                 email: str = DEFAULT_UNPAYWALL_EMAIL, max_mb: int = 90, max_cache_gb: float = 25.0,
                  min_free_gb: float = 6.0, retry_failed: bool = False,
                  lookup_openalex: bool = True, lookup_europepmc: bool = True,
-                 lookup_crossref: bool = True, lookup_semantic_scholar: bool = False,
+                 lookup_crossref: bool = True, lookup_semantic_scholar: bool = True,
+                 lookup_openaire: bool = True, lookup_core: bool = True,
+                 lookup_nva_search: bool = True, lookup_nordes_oai: bool = True,
+                 lookup_diva_export: bool = True,
+                 new_sources_only: bool = False,
                  cache_dir: Path = PRIVATE_CACHE) -> int:
     cache_dir.mkdir(parents=True, exist_ok=True)
     (cache_dir / "pdf").mkdir(exist_ok=True)
@@ -681,15 +1221,39 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
 
     def pace_host(host_key: str = ""):
         key = (host_key or "_default_").lower()
+        target_delay = max(host_delay, API_HOST_MIN_DELAYS.get(key, 0.0))
         with host_locks_guard:
             lock = host_locks.setdefault(key, threading.Lock())
         with lock:
-            wait = max(0.0, host_delay - (time.monotonic() - host_last[key]))
+            wait = max(0.0, target_delay - (time.monotonic() - host_last[key]))
             if wait > 0:
                 time.sleep(wait)
             host_last[key] = time.monotonic()
 
-    any_api = bool(email or lookup_openalex or lookup_europepmc or lookup_crossref or lookup_semantic_scholar)
+    nordes_by_doi: dict[str, list[str]] = {}
+    nordes_by_title: dict[str, list[str]] = {}
+    if lookup_nordes_oai:
+        print("NORDES_OAI_PREFETCH_START", flush=True)
+        nordes_by_doi, nordes_by_title = oai_ojs_prefetch(pause_fn=pace_host)
+        print("NORDES_OAI_PREFETCH_DONE", len(nordes_by_doi), len(nordes_by_title), flush=True)
+
+    def _nordes_hits(row: dict) -> list[str]:
+        hits: list[str] = []
+        nd = normalize_doi(row.get("doi"))
+        if nd and nd in nordes_by_doi:
+            hits.extend(nordes_by_doi[nd])
+        nt = _norm_oai_title(row.get("title"))
+        if nt and nt in nordes_by_title:
+            for u in nordes_by_title[nt]:
+                if u not in hits:
+                    hits.append(u)
+        return hits
+
+    any_api = bool(
+        email or lookup_openalex or lookup_europepmc or lookup_crossref
+        or lookup_semantic_scholar or lookup_openaire or lookup_core or lookup_nva_search
+        or lookup_nordes_oai or lookup_diva_export
+    )
     untried_green_rows = []
     unvisited_rows = []
     deferred_rows = []
@@ -704,34 +1268,76 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                 continue
             progress.pop(ident, None)
             st = None
-        prim_oa = candidate_https_url(row["oa_url"])
-        alt_local = [u for u in local_oa_map.get(ident, []) if u != prim_oa and "doi.org/" not in u]
-        if alt_local and not prev.get("local_oa_checked"):
-            untried_green_rows.append(row)
-            if len(untried_green_rows) >= limit:
-                break
-            continue
+        has_nordes = bool(_nordes_hits(row))
+        has_diva = bool(lookup_diva_export and extract_diva_query(row.get("oa_url"), ident))
+        if new_sources_only:
+            if not has_nordes and not has_diva and not (row.get("doi") and (lookup_semantic_scholar or lookup_core)):
+                continue
+        else:
+            prim_oa = candidate_https_url(row["oa_url"])
+            alt_local = [u for u in local_oa_map.get(ident, []) if u != prim_oa and "doi.org/" not in u]
+            if (alt_local and not prev.get("local_oa_checked")) or has_nordes:
+                untried_green_rows.append(row)
+                if len(untried_green_rows) >= limit:
+                    break
+                continue
         if st == "failed" and not retry_failed:
             continue
-        if not row["oa_url"] and not local_oa_map.get(ident) and not (any_api and row["doi"]):
+        if not has_nordes and not has_diva and not row["oa_url"] and not local_oa_map.get(ident) and not (any_api and row["doi"]):
             continue
-        if st == "deferred":
-            deferred_rows.append(row)
+        if st == "deferred" or (st == "failed" and retry_failed):
+            rank = (-1, 0) if (has_nordes or has_diva) else _deferred_retry_rank(row, prev)
+            deferred_rows.append((rank, row))
         else:
             unvisited_rows.append(row)
             if len(untried_green_rows) + len(unvisited_rows) >= limit:
                 break
-    eligible = (untried_green_rows + unvisited_rows + deferred_rows)[:limit]
+    deferred_rows.sort(key=lambda item: item[0])
+    eligible = (untried_green_rows + unvisited_rows + [r for _, r in deferred_rows])[:limit]
 
     prefetched_oa = {}
-    if lookup_openalex and eligible:
+    if lookup_openalex and not new_sources_only and eligible:
         dois = [r["doi"] for r in eligible if r.get("doi") and r["id"] not in local_oa_map]
         if dois:
             print("OPENALEX_PREFETCH_START", len(dois), flush=True)
             prefetched_oa = openalex_batch_prefetch(dois, pause_fn=pace_host)
             print("OPENALEX_PREFETCH_DONE", len(prefetched_oa), flush=True)
 
-    sources = ("local_openalex", "registered", "synthesized", "unpaywall", "openalex", "europepmc", "crossref", "semantic_scholar")
+    prefetched_s2 = {}
+    if lookup_semantic_scholar and eligible:
+        all_dois = [r["doi"] for r in eligible if r.get("doi") and not _nordes_hits(r)]
+        if all_dois:
+            print("S2_PREFETCH_START", len(all_dois), flush=True)
+            prefetched_s2 = semantic_scholar_batch_prefetch(all_dois, pause_fn=pace_host)
+            print("S2_PREFETCH_DONE", len(prefetched_s2), sum(1 for v in prefetched_s2.values() if v), flush=True)
+
+    prefetched_core = {}
+    if lookup_core and eligible:
+        all_dois = [r["doi"] for r in eligible if r.get("doi") and not _nordes_hits(r) and not prefetched_s2.get(normalize_doi(r["doi"]))]
+        if all_dois:
+            print("CORE_PREFETCH_START", len(all_dois), flush=True)
+            prefetched_core = core_batch_prefetch(all_dois, pause_fn=pace_host)
+            print("CORE_PREFETCH_DONE", len(prefetched_core), sum(1 for v in prefetched_core.values() if v), flush=True)
+
+    if new_sources_only:
+        sources = ("nordes_oai", "diva_export", "semantic_scholar", "core")
+    else:
+        sources = (
+            "local_openalex",
+            "nordes_oai",
+            "diva_export",
+            "registered",
+            "unpaywall",
+            "openaire",
+            "openalex",
+            "synthesized",
+            "nva_search",
+            "europepmc",
+            "crossref",
+            "semantic_scholar",
+            "core",
+        )
+    api_sources = {"semantic_scholar", "unpaywall", "openalex", "europepmc", "crossref", "openaire", "core", "nva_search", "diva_export"}
 
     def process_one(row: dict):
         nonlocal tried, used_bytes, dirty
@@ -754,7 +1360,58 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
         success = None
         deferred = False
         why = "No direct PDF at public OA sources"
-        seen = set()
+        seen: set[str] = set()
+
+        def try_direct_fetch(cand: dict[str, str], allow_followup: bool) -> tuple[bytes, str, str] | None:
+            nonlocal deferred, why
+            target = cand["url"]
+            if not allowed_url(target) or target in seen:
+                return None
+            host = (urlsplit(target).hostname or "").lower()
+            with state_lock:
+                if host in blocked_hosts:
+                    deferred = True
+                    return None
+            seen.add(target)
+            try:
+                pace_host(host)
+                payload, landing, mime = safe_request(target, limit=max_bytes)
+            except BotChallengeError as exc:
+                why = f"BotChallenge: {str(exc)[:120]}"
+                with state_lock:
+                    blocked_hosts.add(host)
+                deferred = True
+                return None
+            except Exception as exc:
+                why = f"{type(exc).__name__}: {str(exc)[:140]}"
+                if isinstance(exc, HTTPError) and exc.code == 429:
+                    with state_lock:
+                        blocked_hosts.add(host)
+                    deferred = True
+                return None
+
+            lhost = (urlsplit(landing).hostname or "").lower()
+            if pdf_data(payload):
+                pub_url = cand["public_url"] if (safe_public_link(cand["public_url"]) and not safe_public_link(landing)) else landing
+                return payload, pub_url, cand["license"]
+
+            if is_bot_challenge_html(payload):
+                why = f"BotChallenge: {lhost or host}"
+                with state_lock:
+                    blocked_hosts.add(host)
+                    if lhost:
+                        blocked_hosts.add(lhost)
+                deferred = True
+                return None
+
+            if not allow_followup:
+                return None
+
+            for sub in _discover_followup_candidates(payload, landing, mime, pause_fn=pace_host):
+                res = try_direct_fetch(sub, allow_followup=False)
+                if res:
+                    return res
+            return None
 
         for src in sources:
             if success or stop_event.is_set():
@@ -765,98 +1422,92 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     continue
             try:
                 if src == "local_openalex":
-                    cands = local_oa_map.get(ident, [])
+                    raw_cands = local_oa_map.get(ident, [])
+                elif src == "nordes_oai":
+                    raw_cands = _nordes_hits(row)
+                elif src == "diva_export":
+                    if not lookup_diva_export or not extract_diva_query(row.get("oa_url"), ident):
+                        continue
+                    raw_cands = diva_export_urls(row.get("oa_url") or "", ident, pause_fn=pace_host)
                 elif src == "registered":
-                    cands = expand_registered_oa_urls(row["oa_url"]) if row["oa_url"] else []
-                elif src == "synthesized":
-                    cands = synthesized_oa_urls(row["doi"]) if row["doi"] else []
+                    raw_cands = expand_registered_oa_urls(row["oa_url"]) if row["oa_url"] else []
                 elif src == "unpaywall":
                     if not email or not row["doi"]:
                         continue
                     pace_host("api.unpaywall.org")
-                    cands = unpaywall_urls(row["doi"], email)
+                    raw_cands = unpaywall_urls(row["doi"], email)
+                elif src == "openaire":
+                    if not lookup_openaire or not row["doi"]:
+                        continue
+                    pace_host("api.openaire.eu")
+                    raw_cands = openaire_urls(row["doi"])
                 elif src == "openalex":
                     if not lookup_openalex or not row["doi"] or ident in local_oa_map:
                         continue
                     nd = normalize_doi(row["doi"])
                     if nd in prefetched_oa:
-                        cands = prefetched_oa[nd]
+                        raw_cands = prefetched_oa[nd]
                     else:
                         pace_host("api.openalex.org")
-                        cands = openalex_urls(row["doi"])
+                        raw_cands = openalex_urls(row["doi"])
+                elif src == "synthesized":
+                    raw_cands = synthesized_oa_urls(row["doi"]) if row["doi"] else []
+                elif src == "nva_search":
+                    nd = normalize_doi(row["doi"])
+                    if not lookup_nva_search or not nd or ("NO" not in (row.get("countries") or []) and not nd.startswith(NO_DOI_PREFIXES)):
+                        continue
+                    pace_host("api.nva.unit.no")
+                    raw_cands = nva_search_candidates(row["doi"], pause_fn=pace_host)
                 elif src == "europepmc":
                     if not lookup_europepmc or not row["doi"]:
                         continue
                     pace_host("www.ebi.ac.uk")
-                    cands = europepmc_urls(row["doi"])
+                    raw_cands = europepmc_urls(row["doi"])
                 elif src == "crossref":
                     if not lookup_crossref or not row["doi"]:
                         continue
                     pace_host("api.crossref.org")
-                    cands = crossref_urls(row["doi"])
-                else:
+                    raw_cands = crossref_urls(row["doi"])
+                elif src == "semantic_scholar":
                     if not lookup_semantic_scholar or not row["doi"]:
                         continue
-                    pace_host("api.semanticscholar.org")
-                    cands = semantic_scholar_urls(row["doi"])
+                    nd = normalize_doi(row["doi"])
+                    if nd in prefetched_s2:
+                        raw_cands = prefetched_s2[nd]
+                    elif prefetched_s2:
+                        deferred = True
+                        continue
+                    else:
+                        pace_host("api.semanticscholar.org")
+                        raw_cands = semantic_scholar_urls(row["doi"])
+                elif src == "core":
+                    if not lookup_core or not row["doi"]:
+                        continue
+                    nd = normalize_doi(row["doi"])
+                    if nd in prefetched_core:
+                        raw_cands = prefetched_core[nd]
+                    elif prefetched_core:
+                        deferred = True
+                        continue
+                    else:
+                        pace_host("api.core.ac.uk")
+                        raw_cands = core_urls(row["doi"])
             except Exception as exc:
-                if isinstance(exc, HTTPError) and exc.code in (403, 429) and src in ("semantic_scholar", "unpaywall", "openalex", "europepmc", "crossref"):
+                if isinstance(exc, HTTPError) and exc.code in (403, 429) and src in api_sources:
                     with state_lock:
                         blocked_sources.add(src)
                     deferred = True
                 continue
 
-            for raw_target in cands[:10]:
-                target = candidate_https_url(raw_target)
-                if not allowed_url(target) or target in seen:
-                    continue
-                host = urlsplit(target).hostname
-                with state_lock:
-                    if host in blocked_hosts:
-                        deferred = True
-                        continue
-                seen.add(target)
-                try:
-                    pace_host(host or "")
-                    payload, landing, mime = safe_request(target, limit=max_bytes)
-                    if pdf_data(payload):
-                        success = (payload, landing)
-                        break
-                    prefix = payload[:4096].lstrip().lower()
-                    if "html" not in mime.lower() and b"<html" not in prefix and b"<!doctype html" not in prefix:
-                        continue
-                    for dest in pdf_candidates_from_html(payload, landing):
-                        if dest in seen:
-                            continue
-                        dhost = urlsplit(dest).hostname
-                        with state_lock:
-                            if dhost in blocked_hosts:
-                                deferred = True
-                                continue
-                        seen.add(dest)
-                        try:
-                            pace_host(dhost or "")
-                            cand_bytes, resolved, _ = safe_request(dest, limit=max_bytes)
-                            if pdf_data(cand_bytes):
-                                success = (cand_bytes, resolved)
-                                break
-                        except Exception as exc2:
-                            why = f"{type(exc2).__name__}: {str(exc2)[:140]}"
-                            if isinstance(exc2, HTTPError) and exc2.code == 429:
-                                with state_lock:
-                                    blocked_hosts.add(dhost or "")
-                                deferred = True
-                    if success:
-                        break
-                except Exception as exc:
-                    why = f"{type(exc).__name__}: {str(exc)[:140]}"
-                    if isinstance(exc, HTTPError) and exc.code == 429:
-                        with state_lock:
-                            blocked_hosts.add(host or "")
-                        deferred = True
+            for raw_item in raw_cands[:10]:
+                cand = _normalize_candidate(raw_item, row["oa_url"])
+                res = try_direct_fetch(cand, allow_followup=True)
+                if res:
+                    success = res
+                    break
 
         if success:
-            payload, final_url = success
+            payload, final_url, lic = success
             sha = hashlib.sha256(payload).hexdigest()
             pdf_file = cache_path(ident, cache_dir)
             tmp = pdf_file.with_suffix(f".pdf.partial.{threading.get_ident()}")
@@ -868,6 +1519,7 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     "url": final_url,
                     "sha256": sha,
                     "bytes": len(payload),
+                    "license": lic,
                     "local_oa_checked": True,
                     "checked_at": now_iso(),
                 }
@@ -999,7 +1651,7 @@ def publish_pdf_catalog(cache_dir: Path = PRIVATE_CACHE, *, sync_repo_pdfs: bool
                 "repo_pdf": "",
                 "status": "verified-oa-link",
                 "sha256": row["sha256"],
-                "license": "",
+                "license": str(row.get("license") or "")[:120],
             }
 
     pdf_status = {
@@ -1045,7 +1697,7 @@ def publish_pdf_catalog(cache_dir: Path = PRIVATE_CACHE, *, sync_repo_pdfs: bool
             "verified_oa_pdf": verified_pdf,
             "public_pdf_url": mirror_url,
             "oa_location_unverified": best_oa,
-            "license": rm.get("license", "") if rm else "",
+            "license": (rm.get("license", "") if rm else "") or (conf.get("license", "") if conf else ""),
             "document_sha256": rm["sha256"] if rm else (conf.get("sha256", "") if conf else ""),
             "document_bytes": rm["bytes"] if rm else 0,
             "access_status": (
