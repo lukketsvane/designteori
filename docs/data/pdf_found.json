@@ -2862,6 +2862,13 @@
     "sha256": "24cf841d3bfa706887074e73a5d90aecea5415fbf79c96f35915b57dd3ed4823",
     "license": ""
   },
+  "W2172137528": {
+    "url": "https://www.servdes.org/wp/wp-content/uploads/2014/06/Morelli-N.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a509284f4757465a6b7a91263d2a48a1794203a30d33e562b3f415c79f745244",
+    "license": ""
+  },
   "W2175642350": {
     "url": "https://research-api.cbs.dk/ws/files/44058330/dorthe_mejlhede_design_research_art_based_publishersversion.pdf",
     "repo_pdf": "",
@@ -3919,6 +3926,20 @@
     "sha256": "28d2043895c9d2dae654de0349af1e483d3b655a0b1fb03380d560824953dd05",
     "license": ""
   },
+  "W2549653725": {
+    "url": "https://ep.liu.se/ecp/125/026/ecp16125026.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "055d6e63d4c5a0b5262e45f89714957164f2c2fa28893b928d238e23b722998f",
+    "license": ""
+  },
+  "W2550081921": {
+    "url": "https://ep.liu.se/ecp/125/011/ecp16125011.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a406ef925eb11bf633ee91dcda498443f552a6630fad91ce1b8a8166e7fb64e8",
+    "license": ""
+  },
   "W2550710887": {
     "url": "https://ep.liu.se/ecp/125/013/ecp16125013.pdf",
     "repo_pdf": "",
@@ -3938,6 +3959,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "9576f96100fe4c1ac9c6fab6e103fd83d26ec636046b74eaaa8b3a9b6b04977e",
+    "license": ""
+  },
+  "W2552410089": {
+    "url": "https://ep.liu.se/ecp/125/045/ecp16125045.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0b1b6a6b94422419306b2170ba8c24817447b54455409320d7879bc325c260f6",
     "license": ""
   },
   "W2552678960": {
@@ -3975,6 +4003,13 @@
     "sha256": "3b3f369c3f503383fa82c6ff4e14163fde9ae00cfdaaac0c064dc7c21eda987b",
     "license": ""
   },
+  "W2555114217": {
+    "url": "https://www.servdes.org/wp/wp-content/uploads/2014/06/Gudiksen-SK-Brandt-E.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "51f4d50ff2779cef181e45b613f1f6bceaa8e9205623dd2d7833bb1e4702e670",
+    "license": ""
+  },
   "W2556092227": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:970919/FULLTEXT01.pdf",
     "repo_pdf": "",
@@ -3994,6 +4029,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "71c584c66860d7f409f1362c8411bee01b69ce86c687ff5b27aea047acfab01c",
+    "license": ""
+  },
+  "W2558376789": {
+    "url": "https://www.servdes.org/wp/wp-content/uploads/2014/06/Hyv%C3%A4rinen-J-Lee-JJ-Mattelm%C3%A4ki-T.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4c8db67acdf5425f278512b609dfc0127cb0d5133dc000e099b2c903aa4cd69e",
     "license": ""
   },
   "W2558778546": {
@@ -5305,6 +5347,13 @@
     "sha256": "50fbeb0bed25976703ce01961cb63af3cda7eb4431e2f417098c9ec18d8c5da7",
     "license": ""
   },
+  "W2801022547": {
+    "url": "https://ep.liu.se/ecp/150/014/ecp18150014.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "bd6cdd70454835912a8ebe9c7d66a171f12c840018f8f22c01fc6f9f4fe3d05b",
+    "license": ""
+  },
   "W2802652143": {
     "url": "https://arkitekturforskning.net/na/article/download/1139/654908",
     "repo_pdf": "",
@@ -5611,6 +5660,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "c68fbcf97603e7d3652677017b7ddfe64d9d7cf246338ee1bc5930927d1d4dfe",
+    "license": ""
+  },
+  "W2890204702": {
+    "url": "https://ep.liu.se/ecp/150/075/ecp18150075.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8cb67ebbe137b164ef2b2a1c904f80921e9621c02de2b5a9a646fb9442a3a959",
     "license": ""
   },
   "W2891207606": {
@@ -6976,6 +7032,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7fa062a45be911b4cb1cf1b6b585174a350b37841542e5d23ad0bb22a82272b5",
+    "license": ""
+  },
+  "W2980374954": {
+    "url": "https://ep.liu.se/ecp/150/100/ecp18150100.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "deceadbb1bdef36df3926e64ff5c06503225d436e31967a516bb7c264c409c76",
     "license": ""
   },
   "W2980388915": {
@@ -9036,6 +9099,13 @@
     "sha256": "71ef47298ac4b5b562749b1141f4fd8c2e20c7409dc72fb30e6d3f1594159adb",
     "license": ""
   },
+  "W3165385227": {
+    "url": "https://servdes2020.s3-ap-southeast-2.amazonaws.com/uploads/assets/ServDes2020_FullProceedings.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "06057fc612204388dd04fc886a8cec5a9d52a857afa49393e8928867727f00fd",
+    "license": ""
+  },
   "W3165980835": {
     "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2021.675325/pdf",
     "repo_pdf": "",
@@ -10751,6 +10821,13 @@
     "sha256": "0e86230d1b8c45aa18c0be8132796496c9828cd9d68a096f494d9f92e33a3a2c",
     "license": ""
   },
+  "W4285378198": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/606/573",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1748e93533d278a41ae574d0677d4b81b5002a46b9d71a5540ae418a43a9096c",
+    "license": ""
+  },
   "W4285378212": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/603/570",
     "repo_pdf": "",
@@ -10833,6 +10910,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "04ff55082609fea8a0383ab5f2f41965cce2083d3ec4c60211d341046560aef4",
+    "license": ""
+  },
+  "W4285378265": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/578/546",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "937dbd98e1b98c709e497c6139ac671fc755d7527cd1da4dff9f5f01bd493199",
     "license": ""
   },
   "W4285378266": {
@@ -11045,6 +11129,13 @@
     "sha256": "8df3ea4fc06acaa216e1599b2289b1064520de953894e143c237be6a94ab2572",
     "license": ""
   },
+  "W4298023431": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/207/190",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "4676524baa85d622cebbe93a1aa6575a19f8731139d6844cbe25ad9e3e0173d3",
+    "license": ""
+  },
   "W4298034570": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/128/112",
     "repo_pdf": "",
@@ -11057,6 +11148,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "448a755dbc0136d5fd36c9c914c8233e3d10611e8678045081d552000f29aa43",
+    "license": ""
+  },
+  "W4298852427": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/385/364",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "26ba977157881c8a137315eb041485d249342695cb380e7a7302bed12b573515",
     "license": ""
   },
   "W4299306967": {
@@ -14496,6 +14594,13 @@
     "sha256": "0cb5b077daa861419f78a14ae0d22003c2adaf325669d229377966c411abdb97",
     "license": ""
   },
+  "W4409579133": {
+    "url": "https://journals.oslomet.no/formakademisk/article/download/1409/1261",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "004667d373e86d0a311d3947edfaa93896de028f51b93075591bdab0e6e9538a",
+    "license": ""
+  },
   "W4409579183": {
     "url": "https://www.jld.edu.au/article/download/140/140-386-1-PB.pdf",
     "repo_pdf": "",
@@ -14907,6 +15012,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "e9ffcf598427d1045634a35accf549d50f18de4a1ab1b491c7778a7c8ada9993",
+    "license": ""
+  },
+  "W4412230205": {
+    "url": "https://ep.liu.se/ecp/173/001/ecp20173001.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2512bc41df41e27442ff97227fd30e8eee8c1617ec2cd283b2d3cfe88d7b0206",
     "license": ""
   },
   "W4412231769": {
@@ -15448,6 +15560,20 @@
     "sha256": "c7c2adc1ba7eb617f5804b4ceb1b53ca748ebffc2d50d8d99de09e3dee3566fd",
     "license": ""
   },
+  "W4415123830": {
+    "url": "https://ep.liu.se/ecp/173/041/ecp20173041.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "705cdb5226f4e88a0b78ef09b44d0dd84dfd40c78e078f99906d20d05893474a",
+    "license": ""
+  },
+  "W4415123843": {
+    "url": "https://ep.liu.se/ecp/173/047/ecp20173047.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2152209ce942e919fd990cb1ead4c77213cf230f1eda7459e2de581e9b697183",
+    "license": ""
+  },
   "W4415123849": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:1575761/FULLTEXT02.pdf",
     "repo_pdf": "",
@@ -15460,6 +15586,41 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "57f3eb9918b3579da4a85ce9d20b6374a2b78fb4b8de79dc7b11337775fe171d",
+    "license": ""
+  },
+  "W4415123863": {
+    "url": "https://ep.liu.se/ecp/173/006/ecp20173006.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "21b964ce56d87b4456b899abb0e3c03be6551f08096113e86e5844faadd11d16",
+    "license": ""
+  },
+  "W4415123865": {
+    "url": "https://ep.liu.se/ecp/173/074/ecp20173074.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "20e256f681a505346fb049035af3cf0b5c439fcc7ce6fbf16c34808827761cb3",
+    "license": ""
+  },
+  "W4415123866": {
+    "url": "https://ep.liu.se/ecp/173/062/ecp20173062.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "26dcecb2d24a6d1357883e7348690ec9f11f064c81315818ba4d2e96e6dfe278",
+    "license": ""
+  },
+  "W4415123904": {
+    "url": "https://ep.liu.se/ecp/173/067/ecp20173067.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8ac2f4d641550423612f427157fb8134570921c6efed466a9ff9d17b19697e3c",
+    "license": ""
+  },
+  "W4415123982": {
+    "url": "https://ep.liu.se/ecp/173/005/ecp20173005.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5fde206580059db93c382ed547df101231a2832c4a773a5943247e7bbb911dc8",
     "license": ""
   },
   "W4415124081": {
@@ -15476,11 +15637,46 @@
     "sha256": "3b3ff8ea10eff596f31fe839998645580557fc91247301da1e3d84e036b0d4d7",
     "license": ""
   },
+  "W4415124106": {
+    "url": "https://ep.liu.se/ecp/173/036/ecp20173036.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0c9474541a80f553b4d7bbda8fcc992b078983fdefdaf00f9732244828da3f47",
+    "license": ""
+  },
+  "W4415124256": {
+    "url": "https://www.servdes.org/pdf/2010/haukkamaa-yliraisanenseppanen-timonen.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "86f15655e8a602913f083f38b9e7a812af975e7b86cdeb31eb0cad2cfb425f9a",
+    "license": ""
+  },
+  "W4415124331": {
+    "url": "https://www.servdes.org/pdf/2010/anderman-frosen.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "92e8cc7fb1a2b30640f897d9dbbe53f799b4750f0be4371188c7fdd563d6ce99",
+    "license": ""
+  },
+  "W4415124867": {
+    "url": "https://ep.liu.se/ecp/173/079/ecp20173079.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b0dafdccb859a18a49c6ed550e0cbd0ad00da4bc933f8b2258f437c2749dd8e5",
+    "license": ""
+  },
   "W4415124991": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/81746697-6f08-495c-bbd5-5d3a51c9148e/content",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "d268a344178d282da8e6fbaca2ccbb69482f390853ad77bc18a8c1d58ab09f85",
+    "license": ""
+  },
+  "W4415125708": {
+    "url": "https://ep.liu.se/ecp/173/027/ecp20173027.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "a9aa88976eb076b95fee5ab310f885372cb0c1bf1cdb80b487ac788bc7a78fe7",
     "license": ""
   },
   "W4415361512": {
@@ -16841,11 +17037,25 @@
     "sha256": "83d3a81486cdfb363df8e956854e914c612d3d4572989a59eafdc8cf09d710df",
     "license": ""
   },
+  "W839622522": {
+    "url": "https://www.servdes.org/pdf/2010/holmlid.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1ba62cb332aead3202fc124f640fbd05198145453b47f9e268b3f180a6d80848",
+    "license": ""
+  },
   "W853401814": {
     "url": "https://trepo.tuni.fi/bitstream/handle/10024/65467/D-2007-8.pdf;jsessionid=48A3CD7C9D1A6B694E9392021EED7E2A?sequence=1",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "6a8632c73a2a5ec2217656a82c77951a72bed75996d378b44e5d21890b74c632",
+    "license": ""
+  },
+  "W857480100": {
+    "url": "https://www.ijdesign.org/index.php/IJDesign/article/viewFile/1087/604",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b709e688bdbc33bc8b7a3d977de0d3935ef6e4515a65feeac4fe2432ad5ae051",
     "license": ""
   },
   "W8873600": {
@@ -17758,6 +17968,13 @@
     "sha256": "664d9ac9af322b2d14d6ca68f3d470d423f624db2fcedd4da624c9c13f3f74fb",
     "license": ""
   },
+  "nordic:nordes:04bfcf711f3b576621b2": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/146/129",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0a0f0fba36598f69d34d8d6f5cb5dccec1f191d9c2a4992b1dabc463485354d1",
+    "license": ""
+  },
   "nordic:nordes:04e991fce6470f132b48": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/542/510",
     "repo_pdf": "",
@@ -17800,6 +18017,13 @@
     "sha256": "6d48b355c76d15d758d5adcd81a8099805d6d9bef40f11f8a0a29ebc3090b0c3",
     "license": ""
   },
+  "nordic:nordes:0b7597c50e4bf819f477": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/230/213",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "fe54a2a060384f3c255a399b53e4a435cfd507d8a874087dea5e5232ed5d6a7b",
+    "license": ""
+  },
   "nordic:nordes:0b8728931faa772f0ba4": {
     "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/e55c6d24-1d39-4b00-92e3-29ee3a707db5/content",
     "repo_pdf": "",
@@ -17840,6 +18064,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7e790c43761644c45470c93f3ffd145c00b9648e700dff96f1350c25cdc809cb",
+    "license": ""
+  },
+  "nordic:nordes:0db920d3e2718880c447": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/367/344",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "14feb80966934a4363b1bd5ea8311f37ac14480d3c3782ef12e304c3b31e411a",
+    "license": ""
+  },
+  "nordic:nordes:0debe9da79c747cb181f": {
+    "url": "https://servdes.org/pdf/2012/nisula.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e66c93b2fd5d5710decb3ee01baa53c228c1dec3d6ff53bb6802dcf79222a32c",
     "license": ""
   },
   "nordic:nordes:0e606349b9143f427def": {
@@ -17889,6 +18127,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "3f4338d5b7d79c86ce95afffebb0f12c74be7ad8992a6f3c3d4ecec2987a22b2",
+    "license": ""
+  },
+  "nordic:nordes:13c86f2e34c27bdca047": {
+    "url": "https://ep.liu.se/ecp/150/004/ecp18150004.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "665a9116f8efbaa111a365da4c2113c23dc83700d08a4a1c16b2c19b4cf0fbbc",
     "license": ""
   },
   "nordic:nordes:13e88810fc7175379d1f": {
@@ -17945,6 +18190,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "223d5eb0305cfd74cf8c0af78bc1e74e45bb86fb2ae53c9fce4ef741eec36dfa",
+    "license": ""
+  },
+  "nordic:nordes:1c60f442185df5ae047f": {
+    "url": "https://ep.liu.se/ecp/150/050/ecp18150050.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "11acbcf53941d28220a5e307c5aca8ac2b29d9bfa925a8ade0f4d7709c194e05",
     "license": ""
   },
   "nordic:nordes:1d99131391722b7edf66": {
@@ -18213,6 +18465,13 @@
     "sha256": "acd2bccbcfe4fa65048e5f7db3fad6c19815efcf885cf739060cb12c97d87dec",
     "license": ""
   },
+  "nordic:nordes:39f6d167a2abec3f3aa7": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/360/338",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "9b99bd55193001adea2dc8c6be0481388b13d0dd16aa4f215d1c37d903c96fcf",
+    "license": ""
+  },
   "nordic:nordes:3af1d858e26f8e2b9df9": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/429/404",
     "repo_pdf": "",
@@ -18297,6 +18556,13 @@
     "sha256": "477f59b0196ae811908a5d8ac75b705bf9fdc7c05ae02efb492153fca1f3ae9d",
     "license": ""
   },
+  "nordic:nordes:49dbc2cd0471bb244d6c": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/67/51",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "0495a0253e87a2ec47c1c91e8c8189fa3056aa1560338ded6a849f0ab1b790d6",
+    "license": ""
+  },
   "nordic:nordes:4aa9e05d7357e22fb0ea": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/86/70",
     "repo_pdf": "",
@@ -18358,6 +18624,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "3d992438094a554af7cf302753740442925b0bf744da4efdc8b686634a0274bf",
+    "license": ""
+  },
+  "nordic:nordes:50b5f85befa8b1e1adc9": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/210/193",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5f6a3be7d929443110032e5eed5225cdfaddfc51b967e73f024b830939085573",
     "license": ""
   },
   "nordic:nordes:50e86757546a19471023": {
@@ -18521,6 +18794,13 @@
     "sha256": "c68a0387c4786fc09eeee6317867b603559bc4488a2cd46f36d31da830dcd20e",
     "license": ""
   },
+  "nordic:nordes:60693749eeda37841b43": {
+    "url": "https://servdes.org/pdf/2009/gloppen.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "ebaf5ccc120b7123728fd69b59409cbc585fbe0ca42092dd0e8027420e9e7225",
+    "license": ""
+  },
   "nordic:nordes:60fe45e3271e4422f017": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/81/65",
     "repo_pdf": "",
@@ -18612,6 +18892,13 @@
     "sha256": "f19ceb54f540173d31479ea3bccdd550bc5403eccd3c94cfd3fbc16aa272c0da",
     "license": ""
   },
+  "nordic:nordes:74fda151cad95c81cc96": {
+    "url": "https://servdes.org/pdf/2012/nakki.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "095291565e5cb4e1bf7680bc4f7542cf49ef247f9f01894978acf790d27b55a7",
+    "license": ""
+  },
   "nordic:nordes:767ce74e72cf0e2bbaaa": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/502/471",
     "repo_pdf": "",
@@ -18701,6 +18988,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "a290d17bd566435823009ee3349b380154881e283f45ef427841ae7078a62f02",
+    "license": ""
+  },
+  "nordic:nordes:807151df9c751d1b19ff": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/235/218",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c1e63d82807600d6556bf6a1e0953caa8c423611d5ecad0a6e13c40e07ad825e",
     "license": ""
   },
   "nordic:nordes:808eea58693841ad9d6e": {
@@ -18927,6 +19221,13 @@
     "sha256": "5ef00a0bf93bf2fa5714299eebe8a0414ea6776d8b086cf9ae40622ad5dab3f2",
     "license": ""
   },
+  "nordic:nordes:9e0756a9d30062cc60ed": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/337/317",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f90c381a2ae293199521fa50da655b10d67811b4627c19901c9e83554b07eabc",
+    "license": ""
+  },
   "nordic:nordes:9fb025b6467e7999efa9": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/444/416",
     "repo_pdf": "",
@@ -19130,6 +19431,13 @@
     "sha256": "6ef372cf69b36978770cfa311c274b5e6331c264724b5e0b741eea56a2f19105",
     "license": ""
   },
+  "nordic:nordes:b447ebee884e363f4281": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/363/340",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "5dffb6a6a603e717cb1e0f151fa80bade5c4ddf287827989aa96cc7ed4102a12",
+    "license": ""
+  },
   "nordic:nordes:b53b5040632b63891d4f": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/398/376",
     "repo_pdf": "",
@@ -19235,6 +19543,13 @@
     "sha256": "ed69ba8f5f572bb8eb93239df39c9ae943d2527dfec29356062dbe933db7a315",
     "license": ""
   },
+  "nordic:nordes:bed262626bdc29dfeac9": {
+    "url": "https://servdes.org/pdf/2012/kronkvist-jarvinen-leinonen.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "35067f4ab5791afa37afd7137ef816d7792c27df04ace8b03fc99302b81f077d",
+    "license": ""
+  },
   "nordic:nordes:bfb8c4cb7689b0535e6b": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/225/208",
     "repo_pdf": "",
@@ -19268,6 +19583,20 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "7bac83d488b36e708503fb01d49cf0ad0223eb33819c6b59be1c3d00cf879ca4",
+    "license": ""
+  },
+  "nordic:nordes:c4bfae3d4e57d918b358": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/196/179",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2a365a3387a2e305523faff6e934497c1f7047d409f6714bc14bad8563767a2e",
+    "license": ""
+  },
+  "nordic:nordes:c4dccc4f4e09fe55f899": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/366/343",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2988839ddfd28fd3e973b5de567063ff8c5da9946f1f2c51c353f616d8e10bc7",
     "license": ""
   },
   "nordic:nordes:c5006eac749c34a015ab": {
@@ -19417,6 +19746,13 @@
     "sha256": "e32a60a6a9fbf6e937eac341f77b3aea7bb2108748139ac75683dd860e930e82",
     "license": ""
   },
+  "nordic:nordes:d3cf26970cefb48b7cc9": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/211/194",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "138059c3f7b63dbf48ac6b4a0753c5ea82e8b04c64e818ca02e026097144c224",
+    "license": ""
+  },
   "nordic:nordes:d4899790396417c9860c": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/463/434",
     "repo_pdf": "",
@@ -19438,11 +19774,25 @@
     "sha256": "e1ffb976bb0ee382a2f697cce17b80d1fd52d2618c66783394772bb2861eebb7",
     "license": ""
   },
+  "nordic:nordes:d739474c2c4eb12112b7": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/503/472",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "123dc7ba21ed39147d9a1606a2427692784e3b5acf2c614c00d2e88cbf1c39ab",
+    "license": ""
+  },
   "nordic:nordes:d9675f7c3b381d0ecfca": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/74/58",
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "d8d863620d60717e2f86aa1e038a5dbda8a53ea28a0059c76c6075fefa256ce6",
+    "license": ""
+  },
+  "nordic:nordes:d97175f5896acfc160fb": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/562/530",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "372cc3066a993f1272daf74307a25696a2146e62726aef165e087ccc66cd3156",
     "license": ""
   },
   "nordic:nordes:d98cda26f5811d8c5d41": {
@@ -19536,6 +19886,13 @@
     "sha256": "044b74172df033cc3ed11bbb6c94ec5b1c6ba17b463c9932095912ed20ec070b",
     "license": ""
   },
+  "nordic:nordes:e1996b757bf9334967cc": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/212/195",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "aac82a7c62f77301da3df989f4cd1c6d2e036df175ac3bfd3a349f39a8c19c06",
+    "license": ""
+  },
   "nordic:nordes:e3b276ffe35b831ae4cd": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/48/39",
     "repo_pdf": "",
@@ -19548,6 +19905,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "6acf79da70d8deab832dbe25784409001d3d6dc4deafab9de7c9a9ff4f7674a7",
+    "license": ""
+  },
+  "nordic:nordes:e85e610547d7f1d3a063": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/458/429",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "6ffadd6fb7fed41e16b0b60d5b0b3beaced00360af24e4ebd6b2228da60242e8",
     "license": ""
   },
   "nordic:nordes:e87a961dd098b28ded8f": {
@@ -19662,6 +20026,13 @@
     "sha256": "386b38caa4194e1adcea196ce8509b8e3e73d700c100f70e2d0dfdea02b219d9",
     "license": ""
   },
+  "nordic:nordes:f30f3baf802ab1c70752": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/171/154",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "61d31d6f0e83c866d2bcb63a9f9f7c1db5f62f64cfefc0bf004252f919d681c8",
+    "license": ""
+  },
   "nordic:nordes:f30fcf6d047e73620fb0": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/537/505",
     "repo_pdf": "",
@@ -19730,6 +20101,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "f4cae2ff85b40566adb3a3f237b036eb622d834fd567e2f2daacf0c9d3197dc7",
+    "license": ""
+  },
+  "nordic:nordes:fada83b8fcba0666a957": {
+    "url": "https://archive.nordes.org/index.php/n13/article/download/356/334",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "cf5dc6b589df01a48a063c9bf0ef0c688f965790415bda3cef866753683fa16a",
     "license": ""
   },
   "nordic:nordes:fb02da6c1b9f8f887586": {
@@ -19970,6 +20348,13 @@
     "sha256": "46262f1de44aa1b2cf8b30d8d6e0cd21e06d98541deda467f5acf6281c834969",
     "license": ""
   },
+  "nordic:nva:16dfc0816525f7c88ba5": {
+    "url": "https://ep.liu.se/ecp/173/041/ecp20173041.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "705cdb5226f4e88a0b78ef09b44d0dd84dfd40c78e078f99906d20d05893474a",
+    "license": ""
+  },
   "nordic:nva:173f783baa16494c6683": {
     "url": "https://helda.helsinki.fi/server/api/core/bitstreams/fbcd435b-399e-4d50-9b8d-e3d1ac587312/content",
     "repo_pdf": "",
@@ -20124,6 +20509,13 @@
     "sha256": "5db629928101ebe971100b2b2b5569906c9f1161032001f907d3fd23e8bb6ce0",
     "license": ""
   },
+  "nordic:nva:22867ca253174c09b31f": {
+    "url": "https://servdes.org/pdf/2010/drummond-currie.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8c636b4e61e8a3c86d253feccb30bb2c9d3d2ea9932e9b1f679bfbd6aa79653c",
+    "license": ""
+  },
   "nordic:nva:24cb0740b5b10f5ad153": {
     "url": "https://hdl.handle.net/11250/5158754",
     "repo_pdf": "",
@@ -20220,6 +20612,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "4c4dcb3507df4b1cea362e4b2e8206393755c87c5d7b1ac8b7d34c02fd4a9d64",
+    "license": ""
+  },
+  "nordic:nva:2d9b6440d6ce40142d56": {
+    "url": "https://www.ijdesign.org/index.php/IJDesign/article/viewFile/1054/468",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "7a0106eaadcdf36afef0b99937a7204bd8f1863968c7b3fa230c6135b521913a",
     "license": ""
   },
   "nordic:nva:2e309794e4038ebe1d30": {
@@ -20600,6 +20999,13 @@
     "sha256": "bfb1060d96143cd74f4de2ea83f0abcba2e599d3a217c8998f99a64f7eb64042",
     "license": ""
   },
+  "nordic:nva:4b6bbed5782de7d19e62": {
+    "url": "https://servdes.org/pdf/2012/kaptelinin-uden.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c7eda4699a2a0c301c6d46e00cc764805e226761ab84cc15f897de46e8f90593",
+    "license": ""
+  },
   "nordic:nva:4be0f7016f5c76dcdaa0": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7f2719-4f4e395a-e528-43c8-a4be-4d3ccf0ad313",
     "repo_pdf": "",
@@ -20691,6 +21097,13 @@
     "sha256": "079e4fbf5eef6d48856ac294335a842f205e386e9011f2a6da76a000840ff421",
     "license": ""
   },
+  "nordic:nva:56e3c7f613432f1d4b54": {
+    "url": "https://ep.liu.se/ecp/125/026/ecp16125026.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "055d6e63d4c5a0b5262e45f89714957164f2c2fa28893b928d238e23b722998f",
+    "license": ""
+  },
   "nordic:nva:591bc297f55d908d4b5f": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd4128bf-975a75c2-b66b-4ead-9f68-20be50b1d32e",
     "repo_pdf": "",
@@ -20745,6 +21158,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "b46bacfce5a91037964d5b8303fee523a618e673b9b7a00ef4978c526a0fe4d8",
+    "license": ""
+  },
+  "nordic:nva:5fea16eee3f51d144509": {
+    "url": "https://ep.liu.se/ecp/173/006/ecp20173006.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "21b964ce56d87b4456b899abb0e3c03be6551f08096113e86e5844faadd11d16",
     "license": ""
   },
   "nordic:nva:6074123a0b7aef524e7e": {
@@ -20978,6 +21398,13 @@
     "sha256": "6c8b9be3f66d92667030826df883eb4319051950dc184a08c573389c85f7bbdc",
     "license": ""
   },
+  "nordic:nva:721f71891089820f83c2": {
+    "url": "https://ep.liu.se/ecp/173/074/ecp20173074.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "20e256f681a505346fb049035af3cf0b5c439fcc7ce6fbf16c34808827761cb3",
+    "license": ""
+  },
   "nordic:nva:72bb6ecce5f7522297ca": {
     "url": "https://ceur-ws.org/Vol-1574/paper2.pdf",
     "repo_pdf": "",
@@ -21067,6 +21494,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "0532d0045be3e32b796d5fd525a4e2fb0ef3bf75afae7316e0d217c01410bddd",
+    "license": ""
+  },
+  "nordic:nva:7e99db92d855ac506258": {
+    "url": "https://ep.liu.se/ecp/125/026/ecp16125026.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "055d6e63d4c5a0b5262e45f89714957164f2c2fa28893b928d238e23b722998f",
     "license": ""
   },
   "nordic:nva:7fa95c4143d7a0cfee85": {
@@ -22028,6 +22462,13 @@
     "sha256": "a83a33c989a92b3cbe0d9773ada447029369ce04940f4395b51a0e81c03bcb5b",
     "license": ""
   },
+  "nordic:nva:de1c88cf60f1b370e2c7": {
+    "url": "https://servdes.org/pdf/2010/drummond-currie.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8c636b4e61e8a3c86d253feccb30bb2c9d3d2ea9932e9b1f679bfbd6aa79653c",
+    "license": ""
+  },
   "nordic:nva:de3d6a5a5756943e5b96": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd42ff07-091b48d4-62f7-4ed7-b940-2bcf79f57190",
     "repo_pdf": "",
@@ -22264,6 +22705,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "505fa9031d89700ce4cc9e02ae5ed9b6fbc3775714054a360206e5d41a413b6f",
+    "license": ""
+  },
+  "nordic:nva:f563da6bb5091f367d2f": {
+    "url": "https://ep.liu.se/ecp/173/067/ecp20173067.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "8ac2f4d641550423612f427157fb8134570921c6efed466a9ff9d17b19697e3c",
     "license": ""
   },
   "nordic:nva:f5cfd52cf009a4401d08": {
