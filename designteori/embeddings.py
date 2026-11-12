@@ -121,14 +121,21 @@ def ensure_local_gemma(model_dir: Path = MODEL_CACHE_DIR):
 
     tokenizer = Tokenizer.from_file(str(model_dir / "tokenizer.json"))
     opts = ort.SessionOptions()
-    phys_threads = max(4, min(8, (os.cpu_count() or 8) // 2))
-    opts.intra_op_num_threads = phys_threads
-    opts.inter_op_num_threads = 2
+    opts.log_severity_level = 3
+    avail = set(ort.get_available_providers())
+    if "DmlExecutionProvider" in avail and os.environ.get("DESIGNTEORI_ORT_CPU") != "1":
+        opts.enable_mem_pattern = False
+        providers = ["DmlExecutionProvider", "CPUExecutionProvider"]
+    else:
+        phys_threads = max(4, min(8, (os.cpu_count() or 8) // 2))
+        opts.intra_op_num_threads = phys_threads
+        opts.inter_op_num_threads = 2
+        providers = ["CPUExecutionProvider"]
     opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
     session = ort.InferenceSession(
         str(model_dir / "onnx" / "model_quantized.onnx"),
         sess_options=opts,
-        providers=["CPUExecutionProvider"],
+        providers=providers,
     )
     _LOCAL_ENGINE_CACHE[key] = (tokenizer, session)
     return tokenizer, session
@@ -522,7 +529,11 @@ def embed_fulltext_chunks(*, model: str = LOCAL_GEMMA_MODEL, dims: int = 256,
         limit=limit,
     )
     complete = 0
-    step = max(batch, 128) if is_local_gemma(m) else batch
+    if is_local_gemma(m):
+        _, local_sess = ensure_local_gemma()
+        step = max(batch * 8, 512) if "DmlExecutionProvider" in local_sess.get_providers() else max(batch, 128)
+    else:
+        step = batch
     for offset in range(0, len(rows), step):
         batch_rows = rows[offset:offset + step]
         texts = [r[2] for r in batch_rows]
