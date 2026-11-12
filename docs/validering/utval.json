@@ -1,0 +1,658 @@
+{
+ "seed": 20261112,
+ "codebook": "0.2 (regel H)",
+ "built": "2026-11-12",
+ "part_a": {
+  "n_eligible": 22,
+  "excluded": {
+   "h01": "PDF med skrifttypekoding, maskinlesinga er ugyldig"
+  },
+  "texts": [
+   {
+    "label": "A1",
+    "text_id": "h05",
+    "work_id": "W2982281212",
+    "pages": [
+     1,
+     2,
+     3,
+     20,
+     21,
+     22
+    ]
+   },
+   {
+    "label": "A2",
+    "text_id": "h08",
+    "work_id": "W3183081787",
+    "pages": [
+     1,
+     2,
+     3,
+     9,
+     10,
+     12,
+     13
+    ]
+   },
+   {
+    "label": "A3",
+    "text_id": "h09",
+    "work_id": "W4307994144",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     20,
+     21,
+     22,
+     24,
+     25
+    ]
+   },
+   {
+    "label": "A4",
+    "text_id": "h14",
+    "work_id": "W4399115158",
+    "pages": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   {
+    "label": "A5",
+    "text_id": "h18",
+    "work_id": "W4400206586",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "label": "A6",
+    "text_id": "h23",
+    "work_id": "W7163645561",
+    "pages": [
+     1,
+     2,
+     3,
+     13,
+     14
+    ]
+   }
+  ]
+ },
+ "part_b": {
+  "items": [
+   {
+    "item": "h03-1",
+    "text_id": "h03",
+    "work_id": "W2756072472",
+    "pdf_page": 9
+   },
+   {
+    "item": "h03-2",
+    "text_id": "h03",
+    "work_id": "W2756072472",
+    "pdf_page": 9
+   },
+   {
+    "item": "h04-1",
+    "text_id": "h04",
+    "work_id": "W2774875954",
+    "pdf_page": 1
+   },
+   {
+    "item": "h04-2",
+    "text_id": "h04",
+    "work_id": "W2774875954",
+    "pdf_page": 31
+   },
+   {
+    "item": "h04-3",
+    "text_id": "h04",
+    "work_id": "W2774875954",
+    "pdf_page": 33
+   },
+   {
+    "item": "h05-1",
+    "text_id": "h05",
+    "work_id": "W2982281212",
+    "pdf_page": 1
+   },
+   {
+    "item": "h05-2",
+    "text_id": "h05",
+    "work_id": "W2982281212",
+    "pdf_page": 20
+   },
+   {
+    "item": "h06-1",
+    "text_id": "h06",
+    "work_id": "W2995635751",
+    "pdf_page": 1
+   },
+   {
+    "item": "h06-2",
+    "text_id": "h06",
+    "work_id": "W2995635751",
+    "pdf_page": 1
+   },
+   {
+    "item": "h06-3",
+    "text_id": "h06",
+    "work_id": "W2995635751",
+    "pdf_page": 18
+   },
+   {
+    "item": "h06-4",
+    "text_id": "h06",
+    "work_id": "W2995635751",
+    "pdf_page": 18
+   },
+   {
+    "item": "h07-1",
+    "text_id": "h07",
+    "work_id": "W3117690266",
+    "pdf_page": 6
+   },
+   {
+    "item": "h08-1",
+    "text_id": "h08",
+    "work_id": "W3183081787",
+    "pdf_page": 1
+   },
+   {
+    "item": "h08-2",
+    "text_id": "h08",
+    "work_id": "W3183081787",
+    "pdf_page": 12
+   },
+   {
+    "item": "h09-1",
+    "text_id": "h09",
+    "work_id": "W4307994144",
+    "pdf_page": 22
+   },
+   {
+    "item": "h10-1",
+    "text_id": "h10",
+    "work_id": "W4311715142",
+    "pdf_page": 1
+   },
+   {
+    "item": "h10-2",
+    "text_id": "h10",
+    "work_id": "W4311715142",
+    "pdf_page": 1
+   },
+   {
+    "item": "h10-3",
+    "text_id": "h10",
+    "work_id": "W4311715142",
+    "pdf_page": 13
+   },
+   {
+    "item": "h10-4",
+    "text_id": "h10",
+    "work_id": "W4311715142",
+    "pdf_page": 13
+   },
+   {
+    "item": "h11-1",
+    "text_id": "h11",
+    "work_id": "W4321436228",
+    "pdf_page": 2
+   },
+   {
+    "item": "h11-2",
+    "text_id": "h11",
+    "work_id": "W4321436228",
+    "pdf_page": 34
+   },
+   {
+    "item": "h11-3",
+    "text_id": "h11",
+    "work_id": "W4321436228",
+    "pdf_page": 34
+   },
+   {
+    "item": "h12-1",
+    "text_id": "h12",
+    "work_id": "W4322492190",
+    "pdf_page": 1
+   },
+   {
+    "item": "h12-2",
+    "text_id": "h12",
+    "work_id": "W4322492190",
+    "pdf_page": 13
+   },
+   {
+    "item": "h13-1",
+    "text_id": "h13",
+    "work_id": "W4383652568",
+    "pdf_page": 5
+   },
+   {
+    "item": "h14-1",
+    "text_id": "h14",
+    "work_id": "W4399115158",
+    "pdf_page": 1
+   },
+   {
+    "item": "h14-2",
+    "text_id": "h14",
+    "work_id": "W4399115158",
+    "pdf_page": 1
+   },
+   {
+    "item": "h15-1",
+    "text_id": "h15",
+    "work_id": "W4399151584",
+    "pdf_page": 1
+   },
+   {
+    "item": "h15-2",
+    "text_id": "h15",
+    "work_id": "W4399151584",
+    "pdf_page": 1
+   },
+   {
+    "item": "h16-1",
+    "text_id": "h16",
+    "work_id": "W4400142515",
+    "pdf_page": 1
+   },
+   {
+    "item": "h16-2",
+    "text_id": "h16",
+    "work_id": "W4400142515",
+    "pdf_page": 1
+   },
+   {
+    "item": "h16-3",
+    "text_id": "h16",
+    "work_id": "W4400142515",
+    "pdf_page": 13
+   },
+   {
+    "item": "h16-4",
+    "text_id": "h16",
+    "work_id": "W4400142515",
+    "pdf_page": 13
+   },
+   {
+    "item": "h17-1",
+    "text_id": "h17",
+    "work_id": "W4400206427",
+    "pdf_page": 2
+   },
+   {
+    "item": "h17-2",
+    "text_id": "h17",
+    "work_id": "W4400206427",
+    "pdf_page": 2
+   },
+   {
+    "item": "h17-3",
+    "text_id": "h17",
+    "work_id": "W4400206427",
+    "pdf_page": 2
+   },
+   {
+    "item": "h18-1",
+    "text_id": "h18",
+    "work_id": "W4400206586",
+    "pdf_page": 2
+   },
+   {
+    "item": "h18-2",
+    "text_id": "h18",
+    "work_id": "W4400206586",
+    "pdf_page": 2
+   },
+   {
+    "item": "h18-3",
+    "text_id": "h18",
+    "work_id": "W4400206586",
+    "pdf_page": 4
+   },
+   {
+    "item": "h19-1",
+    "text_id": "h19",
+    "work_id": "W4403627868",
+    "pdf_page": 1
+   },
+   {
+    "item": "h19-2",
+    "text_id": "h19",
+    "work_id": "W4403627868",
+    "pdf_page": 7
+   },
+   {
+    "item": "h19-3",
+    "text_id": "h19",
+    "work_id": "W4403627868",
+    "pdf_page": 7
+   },
+   {
+    "item": "h20-1",
+    "text_id": "h20",
+    "work_id": "W4412017470",
+    "pdf_page": 13
+   },
+   {
+    "item": "h20-2",
+    "text_id": "h20",
+    "work_id": "W4412017470",
+    "pdf_page": 13
+   },
+   {
+    "item": "h21-1",
+    "text_id": "h21",
+    "work_id": "W4412045118",
+    "pdf_page": 2
+   },
+   {
+    "item": "h21-2",
+    "text_id": "h21",
+    "work_id": "W4412045118",
+    "pdf_page": 2
+   },
+   {
+    "item": "h21-3",
+    "text_id": "h21",
+    "work_id": "W4412045118",
+    "pdf_page": 2
+   },
+   {
+    "item": "h22-1",
+    "text_id": "h22",
+    "work_id": "W4416250669",
+    "pdf_page": 1
+   },
+   {
+    "item": "h22-2",
+    "text_id": "h22",
+    "work_id": "W4416250669",
+    "pdf_page": 1
+   },
+   {
+    "item": "h22-3",
+    "text_id": "h22",
+    "work_id": "W4416250669",
+    "pdf_page": 2
+   },
+   {
+    "item": "h23-1",
+    "text_id": "h23",
+    "work_id": "W7163645561",
+    "pdf_page": 2
+   },
+   {
+    "item": "h23-2",
+    "text_id": "h23",
+    "work_id": "W7163645561",
+    "pdf_page": 14
+   }
+  ],
+  "texts": [
+   {
+    "text_id": "h03",
+    "work_id": "W2756072472",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   {
+    "text_id": "h04",
+    "work_id": "W2774875954",
+    "pages": [
+     1,
+     2,
+     30,
+     31,
+     33,
+     34
+    ]
+   },
+   {
+    "text_id": "h05",
+    "work_id": "W2982281212",
+    "pages": [
+     1,
+     2,
+     3,
+     20,
+     21,
+     22
+    ]
+   },
+   {
+    "text_id": "h06",
+    "work_id": "W2995635751",
+    "pages": [
+     1,
+     2,
+     18,
+     19
+    ]
+   },
+   {
+    "text_id": "h07",
+    "work_id": "W3117690266",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   {
+    "text_id": "h08",
+    "work_id": "W3183081787",
+    "pages": [
+     1,
+     2,
+     3,
+     9,
+     10,
+     12,
+     13
+    ]
+   },
+   {
+    "text_id": "h09",
+    "work_id": "W4307994144",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     20,
+     21,
+     22,
+     24,
+     25
+    ]
+   },
+   {
+    "text_id": "h10",
+    "work_id": "W4311715142",
+    "pages": [
+     1,
+     2,
+     13,
+     14
+    ]
+   },
+   {
+    "text_id": "h11",
+    "work_id": "W4321436228",
+    "pages": [
+     1,
+     2,
+     30,
+     31,
+     34,
+     35
+    ]
+   },
+   {
+    "text_id": "h12",
+    "work_id": "W4322492190",
+    "pages": [
+     1,
+     2,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   {
+    "text_id": "h13",
+    "work_id": "W4383652568",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "text_id": "h14",
+    "work_id": "W4399115158",
+    "pages": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   {
+    "text_id": "h15",
+    "work_id": "W4399151584",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   {
+    "text_id": "h16",
+    "work_id": "W4400142515",
+    "pages": [
+     1,
+     2,
+     12,
+     13,
+     14
+    ]
+   },
+   {
+    "text_id": "h17",
+    "work_id": "W4400206427",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   },
+   {
+    "text_id": "h18",
+    "work_id": "W4400206586",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "text_id": "h19",
+    "work_id": "W4403627868",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "text_id": "h20",
+    "work_id": "W4412017470",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     10,
+     11,
+     13,
+     14
+    ]
+   },
+   {
+    "text_id": "h21",
+    "work_id": "W4412045118",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   },
+   {
+    "text_id": "h22",
+    "work_id": "W4416250669",
+    "pages": [
+     1,
+     2,
+     19,
+     20
+    ]
+   },
+   {
+    "text_id": "h23",
+    "work_id": "W7163645561",
+    "pages": [
+     1,
+     2,
+     3,
+     13,
+     14
+    ]
+   }
+  ]
+ }
+}

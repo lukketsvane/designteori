@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="nn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Validering av teorielementbasen</title>
+<style>
+:root{color-scheme:light dark}
+body{font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;max-width:46rem;margin:0 auto;padding:1.2rem 1rem 4rem}
+h1{font-size:1.5rem;line-height:1.25} h2{font-size:1.15rem;margin-top:2.2rem}
+.tw{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:.9rem}
+td,th{border:1px solid rgba(127,127,127,.4);padding:.35rem .5rem;vertical-align:top;text-align:left}
+code{font-size:.9em} .box{border:1px solid rgba(127,127,127,.5);padding:.2rem .9rem;border-radius:6px}
+li{margin:.3rem 0}
+</style></head><body>
+<p><a href="../#teorielement">← Teorielement</a></p>
+<h1>Validering av teorielementbasen</h1>
+<p>Rettleiing for kodarar, 12.11.2026.</p>
+<p>Teorielementbasen registrerer hovudpåstandane i nordisk designforsking: kva omgrep ein påstand bind saman, korleis teksten definerer omgrepa, kva samanheng han påstår, og korleis teksten seier at påstanden er støtta. Radene som ligg ute, er koda av ein språkmodell. Du kodar eit utval av dei same tekstane utan å sjå kodinga til modellen eller til den andre kodaren. Etterpå reknar me ut samsvaret for kvart felt.</p>
+<p>Det finst ingen fasit. Der kodarane er usamde, kan det vere kodeboka som er uklår, og då er det eit funn. Skriv i kommentarfeltet når ein regel er vanskeleg å bruke.</p>
+<div class="box"><p><strong>Før du byrjar</strong></p><ul>
+<li>Ikkje opne fana «teori» på nettstaden før du har levert begge delane. Der ligg kodinga til modellen.</li>
+<li>Gjer del A ferdig og lever han før du opnar del B. Del B viser kva utdrag modellen har valt.</li>
+<li>Ikkje snakk med den andre kodaren om tekstane før begge har levert.</li></ul></div>
+
+<h2>Kodeark</h2>
+<ul>
+<li><a href="kodeark-del-a.xlsx">Del A</a>: 6 tekstar. Du finn hovudpåstandane sjølv. Om lag 45 minutt per tekst.</li>
+<li><a href="kodeark-del-b.xlsx">Del B</a>: 52 utdrag frå 21 tekstar. Du kodar felta for kvart utdrag. Om lag 7 minutt per utdrag.</li>
+</ul>
+<p>Tidene er overslag. Noter minutta du faktisk brukar, så blir det neste utvalet rett dimensjonert. Lagre arka med bokstaven din i filnamnet (til dømes <code>kodeark-del-a-A.xlsx</code>) og send dei til den som gav deg oppgåva.</p>
+
+<h2>Grunnreglar</h2>
+<ul>
+<li><strong>Skildre, ikkje dømme.</strong> Ingen felt spør om ein påstand er god, sann, ny eller godt støtta.</li>
+<li><strong>Teksten er einaste kjelde.</strong> Du registrerer berre det teksten seier, ikkje det du veit om feltet eller forfattaren.</li>
+<li><strong>Ordrett.</strong> Utdrag er teksten sine eigne ord på originalspråket. Kopier frå PDF-en, og skriv ikkje om.</li>
+<li><strong>Tre statusar.</strong> Teksten oppgir det (<code>stated</code>, med utdrag), teksten oppgir det ikkje (<code>not_stated</code>), eller teksten seier sjølv at det ikkje finst (<code>stated_none_exists</code>, med utdrag). Du sluttar aldri frå «ikkje oppgjeve» til «finst ikkje».</li>
+<li><strong>Tradisjonen sine eigne vilkår.</strong> Designarbeid og refleksjon over eigen praksis er eigne former for støtte, ikkje manglande støtte.</li>
+<li><strong>PDF-side</strong> er sidetalet PDF-lesaren viser (første side i fila er 1), ikkje det trykte sidetalet.</li>
+</ul>
+
+<h2>Kva er ein påstand?</h2>
+<p>Ein teoretisk påstand er ei utsegn som oppfyller alle tre vilkåra:</p>
+<ol>
+<li><strong>Omgrep.</strong> Ho bind saman minst to omgrep, eller gir eitt omgrep ein eigenskap eller ei klassetilhøyring. Personar, prosjekt, einskilde gjenstandar og datasett er ikkje omgrep.</li>
+<li><strong>Utover tilfellet.</strong> Ho gjeld meir enn det einskilde tilfellet. «I dette prosjektet vart deltakarane …» er skildring. «Deltakarar i slike prosessar …» går utover tilfellet.</li>
+<li><strong>Haldning.</strong> Forfattarane set ho fram som si eiga, eller tek ho eksplisitt over som premiss. Referat utan stillingtaking er ikkje ein påstand.</li>
+</ol>
+<p>Dette er ikkje påstandar: skildring av ein einskild case, metode- og utvalsskildring, litteraturreferat utan stillingtaking, målformuleringar («denne artikkelen undersøkjer …»), retoriske spørsmål og ynske om vidare forsking.</p>
+<p><strong>Hovudpåstand.</strong> Basen dekkjer berre påstandar som står i samandraget, i bidragsformuleringa i innleiinga eller i konklusjonen (eller den avsluttande diskusjonen), og som blir sette fram der som eit hovudpoeng i teksten.</p>
+<p>Grensetilfelle:</p>
+<ul>
+<li>Ein definisjon teksten føreslår som eige bidrag («me definerer X som Y») er ein påstand (<code>defined_as</code>).</li>
+<li>Fleire samanhengar i éi setning gir éi rad per samanheng.</li>
+<li>Same påstand fleire stader gir éi rad. Vel den mest eksplisitte førekomsten.</li>
+<li>Normative utsegner («designarar bør …») er påstandar når dei tre vilkåra er oppfylte (<code>prescribes</code>).</li>
+<li>«Ei tilnærming med A gir B» er ein påstand. «Me brukte metode A» er skildring.</li>
+<li>Ein hypotese er ein påstand berre når teksten formulerer han som ei utsegn om ein samanheng.</li>
+</ul>
+
+<h2>Del A: finn hovudpåstandane</h2>
+<ol>
+<li>Opne PDF-en og les sidene som står i fana «Tekstar». Det er samandraget, innleiinga og konklusjonen, og modellen har lese dei same sidene.</li>
+<li>For kvar hovudpåstand kopierer du utdraget som uttrykkjer påstanden best, inn i fana «Påstandar». Bruk heile setningar og maks 400 teikn. Alle omgrepa i påstanden skal stå i utdraget.</li>
+<li>Skriv PDF-sida og kvar utdraget står (<code>claim_location</code>).</li>
+<li>Finn du ingen hovudpåstandar, eller finn du ein hovudpåstand utanfor sidene, skriv du det i kommentarfeltet for teksten.</li>
+<li>Noter minutta du brukte på teksten.</li>
+</ol>
+
+<h2>Del B: kod felta</h2>
+<p>Kvar rad i fana «Påstandar» er eit utdrag modellen har valt. Kolonnen «heile setninga» viser samanhengen når utdraget er kortare enn setninga. Opne PDF-en og les sidene som står i fana «Tekstar» før du kodar utdraga frå teksten.</p>
+<ol>
+<li><code>is_claim</code>: Er utdraget ein påstand etter dei tre vilkåra? Ved 0 står resten av rada tom.</li>
+<li><code>is_headline</code>: Blir påstanden sett fram som eit hovudpoeng?</li>
+<li><code>claim_location</code> og <code>attribution</code>.</li>
+<li><code>relation_expression</code>: det korte uttrykket i utdraget som seier korleis omgrepa heng saman (ordrett, maks 80 teikn). <code>relation_kind</code>: vel den smalaste verdien ordlyden støttar. Les aldri inn retning, årsak eller nødvendigheit som teksten ikkje oppgir.</li>
+<li>Fana «Omgrep»: to til seks omgrep per påstand, slik teksten skriv dei, i den kortaste forma teksten sjølv brukar («deltaking», ikkje «auka deltaking i tidlege fasar»). Omgrepet skal stå i utdraget. Vel rolle. Søk så i heile PDF-en (Ctrl+F) på omgrepet og bøyingsformene før du set definisjonsstatus. Ei setning av typen «X er Y» utan definisjonsmarkør er ein påstand, ikkje ein definisjon. Gir teksten fleire definisjonar, vel du den mest eksplisitte.</li>
+<li><code>support_status</code> og fana «Støtte»: éi rad per form. Registrer berre det teksten koplar til denne påstanden, og berre det som står på sidene du les. Du vurderer ikkje kor god støtta er.</li>
+<li><code>scope</code>, <code>explanation</code> og <code>prediction</code>: sjå tabellen under. Les dei frå dei same sidene.</li>
+<li>Fana «Teoriar» er valfri: teoriar, rammeverk, modellar eller namngjevne tilnærmingar som teksten sjølv seier at han byggjer på, prøver, byggjer ut eller argumenterer mot. Éi rad per namn, slik det står i teksten.</li>
+<li>Noter minutt per utdrag om du kan.</li>
+</ol>
+
+<h2>Verdiar</h2>
+<div class="tw"><table><thead><tr><th>Felt</th><th>Verdi</th><th>Tyding</th></tr></thead><tbody><tr><td><code>is_claim</code></td><td><code>1</code></td><td>Utdraget er ein teoretisk påstand: det bind saman minst to omgrep (eller gir eitt omgrep ein eigenskap eller ei klasse), gjeld utover det einskilde tilfellet, og forfattarane set det fram som sitt eige eller tek det eksplisitt over.</td></tr><tr><td><code>is_claim</code></td><td><code>0</code></td><td>Utdraget er ikkje ein påstand (skildring av eit einskilt tilfelle, metode, referat utan stillingtaking, målformulering, spørsmål). Resten av rada står tom.</td></tr><tr><td><code>is_headline</code></td><td><code>1</code></td><td>Påstanden blir sett fram som eit hovudpoeng i teksten (i samandraget, i bidragsformuleringa i innleiinga eller i konklusjonen).</td></tr><tr><td><code>is_headline</code></td><td><code>0</code></td><td>Utdraget er ein påstand, men blir ikkje sett fram som eit hovudpoeng.</td></tr><tr><td><code>claim_location</code></td><td><code>abstract</code></td><td>Utdraget står i samandraget.</td></tr><tr><td><code>claim_location</code></td><td><code>introduction</code></td><td>Utdraget står i innleiinga.</td></tr><tr><td><code>claim_location</code></td><td><code>conclusion</code></td><td>Utdraget står i konklusjonen eller den avsluttande diskusjonen.</td></tr><tr><td><code>attribution</code></td><td><code>own</code></td><td>Teksten set påstanden fram som sin eigen.</td></tr><tr><td><code>attribution</code></td><td><code>adopted</code></td><td>Setninga viser sjølv til ei kjelde for påstanden, og teksten brukar han vidare. Skriv kjelda slik ho står, i adopted_from_as_written.</td></tr><tr><td><code>relation_kind</code></td><td><code>kind_of</code></td><td>from er ein type av to.</td></tr><tr><td><code>relation_kind</code></td><td><code>part_of</code></td><td>from er ein del av to.</td></tr><tr><td><code>relation_kind</code></td><td><code>causes_or_enables</code></td><td>from fører til, gjer mogleg, hindrar eller påverkar to.</td></tr><tr><td><code>relation_kind</code></td><td><code>requires</code></td><td>from krev, føreset eller avheng av to.</td></tr><tr><td><code>relation_kind</code></td><td><code>precedes</code></td><td>from kjem før to i tid eller i ein prosess.</td></tr><tr><td><code>relation_kind</code></td><td><code>associated_with</code></td><td>from og to heng saman, og teksten seier ikkje meir. Bruk denne ved vag ordlyd.</td></tr><tr><td><code>relation_kind</code></td><td><code>defined_as</code></td><td>from er omgrepet, to er definisjonen. Berre når definisjonen er eit eige bidrag i teksten.</td></tr><tr><td><code>relation_kind</code></td><td><code>differs_from</code></td><td>from blir skild frå eller sett opp mot to.</td></tr><tr><td><code>relation_kind</code></td><td><code>has_property</code></td><td>Ein eigenskap blir tillagd eitt omgrep (from er omgrepet, to er eigenskapen).</td></tr><tr><td><code>relation_kind</code></td><td><code>prescribes</code></td><td>from bør ha, gjere eller vere to (normativt).</td></tr><tr><td><code>relation_kind</code></td><td><code>other</code></td><td>Ingen av dei ti over. Skriv maks fem ord i relation_kind_other.</td></tr><tr><td><code>role</code></td><td><code>from</code></td><td>Omgrepet samanhengen går ut frå.</td></tr><tr><td><code>role</code></td><td><code>to</code></td><td>Omgrepet samanhengen går til.</td></tr><tr><td><code>role</code></td><td><code>condition</code></td><td>Omgrep som avgrensar når påstanden gjeld («i tidleg fase»).</td></tr><tr><td><code>role</code></td><td><code>other</code></td><td>Andre omgrep i påstanden.</td></tr><tr><td><code>definition_status</code></td><td><code>defined</code></td><td>Teksten gir ordlyden til ein definisjon og markerer han som definisjon («X er definert som», «med X meiner me», «me forstår X som»). Lim inn definisjonen (maks 400 teikn) og skriv sida.</td></tr><tr><td><code>definition_status</code></td><td><code>defined_by_citation</code></td><td>Teksten viser til ei kjelde for definisjonen utan å gje ordlyden («slik X (2011) definerer»). Lim inn tilvisinga og skriv kjelda i cited_as_written.</td></tr><tr><td><code>definition_status</code></td><td><code>not_stated</code></td><td>Teksten brukar omgrepet, og du har søkt i heile PDF-en utan å finne definisjon eller tilvising.</td></tr><tr><td><code>definition_status</code></td><td><code>stated_none_exists</code></td><td>Teksten seier sjølv at omgrepet ikkje har ein felles eller fast definisjon, eller at det blir halde ope med vilje. Lim inn utsegna.</td></tr><tr><td><code>support_status</code></td><td><code>reported</code></td><td>Teksten skildrar minst éin måte denne påstanden er støtta, utforska eller prøvd på. Fyll ut fana «Støtte».</td></tr><tr><td><code>support_status</code></td><td><code>not_stated</code></td><td>Teksten seier ikkje korleis påstanden er støtta. Det er ikkje det same som at han er ustøtta.</td></tr><tr><td><code>support_status</code></td><td><code>stated_untested</code></td><td>Teksten seier sjølv at påstanden er førebels, ikkje prøvd eller ein hypotese. Lim inn utsegna i untested_utdrag.</td></tr><tr><td><code>source</code></td><td><code>this_text</code></td><td>Teksten gjer eller skildrar det sjølv.</td></tr><tr><td><code>source</code></td><td><code>cited_work</code></td><td>Teksten viser til at andre har gjort det.</td></tr><tr><td><code>form</code></td><td><code>argument</code></td><td>Grunngjeve resonnement, omgrepsanalyse, historisk eller kritisk analyse utan nye data.</td></tr><tr><td><code>form</code></td><td><code>literature</code></td><td>Støtte frå litteratur (gjennomgang eller syntese av andre sine funn).</td></tr><tr><td><code>form</code></td><td><code>example</code></td><td>Illustrerande døme eller vignett.</td></tr><tr><td><code>form</code></td><td><code>case</code></td><td>Empirisk case, éin eller fleire, analysert.</td></tr><tr><td><code>form</code></td><td><code>data_collection</code></td><td>Data frå folk, stader eller gjenstandar (intervju, observasjon, spørjeundersøking, logg, måling, workshop som datakjelde).</td></tr><tr><td><code>form</code></td><td><code>experiment</code></td><td>Manipulasjon med samanlikning eller kontroll, i laboratorium eller felt.</td></tr><tr><td><code>form</code></td><td><code>design_work</code></td><td>Påstanden er utforska ved å lage, utvikle eller vise noko (artefakt, prototype, tiltak, utstilling, studiopraksis).</td></tr><tr><td><code>form</code></td><td><code>practice_reflection</code></td><td>Refleksjon over eigen praksis (praksisbasert og kunstnarisk utviklingsarbeid).</td></tr><tr><td><code>form</code></td><td><code>modelling</code></td><td>Formell, berekningsbasert eller simulert modellering.</td></tr><tr><td><code>form</code></td><td><code>use_in_practice</code></td><td>Påstanden eller ramma er brukt i undervising, næringsliv eller annan praksis, og bruken er skildra.</td></tr><tr><td><code>form</code></td><td><code>other</code></td><td>Noko anna. Skriv kva i form_other.</td></tr><tr><td><code>scope</code></td><td></td><td>Kvar eller når teksten seier at påstanden gjeld (område, populasjon, kontekst, grenser).</td></tr><tr><td><code>explanation</code></td><td></td><td>Korleis eller kvifor samanhengen finst, slik teksten seier det (ein grunn eller mekanisme, ofte markert med «fordi», «gjennom», «ved at»).</td></tr><tr><td><code>prediction</code></td><td></td><td>Kva teksten seier vil, kan eller bør skje dersom påstanden held (proposisjon, hypotese, forventning eller implikasjon, sett fram som det).</td></tr><tr><td><code>scope, explanation, prediction</code></td><td><code>stated</code></td><td>Teksten oppgir det. Lim inn utdraget.</td></tr><tr><td><code>scope, explanation, prediction</code></td><td><code>not_stated</code></td><td>Teksten oppgir det ikkje på sidene du les.</td></tr><tr><td><code>scope, explanation, prediction</code></td><td><code>stated_none_exists</code></td><td>Teksten seier sjølv at det ikkje finst (til dømes at påstanden gjeld utan avgrensing). Lim inn utsegna.</td></tr><tr><td><code>teori: role</code></td><td><code>foundation</code></td><td>Teksten byggjer på teorien eller brukar han som linse.</td></tr><tr><td><code>teori: role</code></td><td><code>counterpoint</code></td><td>Teksten argumenterer mot teorien eller set seg opp mot han.</td></tr><tr><td><code>teori: role</code></td><td><code>tested</code></td><td>Teksten prøver teorien eller føreseiingar frå han.</td></tr><tr><td><code>teori: role</code></td><td><code>extended</code></td><td>Teksten byggjer ut eller presiserer teorien.</td></tr><tr><td><code>teori: role</code></td><td><code>other</code></td><td>Teorien er nemnd som grunnlag på anna vis.</td></tr></tbody></table></div>
+
+<h2>Slik blir samsvaret rekna</h2>
+<ul>
+<li>Del A: to utdrag tel som same påstand når minst halvparten av orda i det kortaste òg står i det andre. For kvart par av kodarar, modellen medrekna, reknar me presisjon, gjenfinning og F1.</li>
+<li>Del B, felt med éin verdi: prosent samsvar, Cohen's κ for kvart par, Krippendorff's α for alle kodarane og fordelinga av verdiar. Konfidensintervalla kjem frå bootstrap over tekstar.</li>
+<li>Del B, omgrep og støtteformer: Jaccard-likskap per påstand. Definisjonsstatus og rolle blir samanlikna for omgrep som begge kodarane har registrert.</li>
+<li>Utvalet står i <a href="utval.json">utval.json</a>.</li>
+</ul>
+<p>Kva grenser som skal gjelde for å kalle eit felt validert, er ikkje avgjort.</p>
+</body></html>
