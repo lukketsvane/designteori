@@ -360,6 +360,9 @@ def sync_repo_pdf_folder(cache_dir: Path = PRIVATE_CACHE, pdf_dir: Path = PDF_DI
     from collections import Counter
 
     pdf_dir = Path(pdf_dir)
+    cache_dir = Path(cache_dir)
+    if pdf_dir.resolve() == (cache_dir / "pdf").resolve():
+        return {"skipped": True, "reason": "pdf_dir resolves to cache_dir/pdf (junction link)"}
     pdf_dir.mkdir(parents=True, exist_ok=True)
     max_file_bytes = int(max_file_mb * 1_000_000)
     max_repo_bytes = int(max_repo_gb * 1_000_000_000)

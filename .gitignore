@@ -11,3 +11,8 @@ data/*.sqlite-shm
 data/*.sqlite-wal
 data/oa_fulltexts_private/
 doi_liste.csv
+
+# Exclude local cached PDFs from git tracking while preserving repository manifest
+pdf/*
+!pdf/manifest.json
+
