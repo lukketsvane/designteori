@@ -9,6 +9,7 @@
   const LOC = { abstract: "samandrag", introduction: "innleiing", conclusion: "konklusjon" };
   const SUP = { reported: "oppgjeve", not_stated: "ikkje oppgjeve i teksten", stated_untested: "teksten seier at det ikkje er prøvd" };
   const ROLE = { from: "frå", to: "til", condition: "vilkår", other: "anna" };
+  const TROLE = { foundation: "byggjer på", counterpoint: "set seg opp mot", tested: "prøver", extended: "byggjer ut", other: "nemner" };
   let rows = [];
 
   function fill(id, map, first) {
@@ -16,6 +17,8 @@
     if (!el) return;
     el.innerHTML = `<option value="">${first}</option>` + Object.keys(map).map((k) => `<option value="${k}">${esc(map[k])}</option>`).join("");
   }
+
+  const qlink = (s) => `<a href="#teorielement" class="te-q" data-q="${esc(s)}">${esc(s)}</a>`;
 
   function stated(label, o) {
     if (o && o.status === "stated") return `<div class="te-line"><span class="te-k">${label}</span>«${esc(o.excerpt)}»</div>`;
@@ -25,19 +28,25 @@
 
   function rowHtml(r) {
     const w = r.work || {};
+    const au = Array.isArray(w.authors) && w.authors.length ? w.authors.slice(0, 3).join(", ") + (w.authors.length > 3 ? " mfl." : "") : "";
     const doi = w.doi ? ` · <a href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : "";
-    const cons = (r.concepts || []).map((c) => `${esc(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}; ${DEF[c.definition_status] || esc(c.definition_status)})</span>`).join(" · ");
+    const lic = w.license ? ` · ${esc(w.license)}` : "";
+    const cons = (r.concepts || []).map((c) => `${qlink(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}; ${DEF[c.definition_status] || esc(c.definition_status)})</span>`).join(" · ");
     const sup = (r.support || []).map((s) => FORM[s.form] || esc(s.form)).join(", ");
-    const th = (r.theories || []).map((t) => esc(t.name)).join(", ");
-    const meta = esc(w.title || "") + (w.year ? ` (${esc(w.year)})` : "") + (r.pdf_page ? ` · s. ${esc(r.pdf_page)}` : "") + (r.claim_location ? ` · ${LOC[r.claim_location] || esc(r.claim_location)}` : "") + doi;
+    const th = (r.theories || []).map((t) => `${TROLE[t.role] || esc(t.role)} ${qlink(t.name)}`).join(" · ");
+    const att = r.attribution === "adopted" ? "overteken" + (r.adopted_from ? ` frå ${esc(r.adopted_from)}` : "") : r.attribution === "own" ? "eigen" : "";
+    const rel = r.relation_kind === "other" && r.relation_kind_other ? esc(r.relation_kind_other) : (REL[r.relation_kind] || esc(r.relation_kind));
+    const rt = r.retest === true ? "påstanden gjekk att då teksten vart lesen ein gong til" : r.retest === false ? "påstanden gjekk ikkje att då teksten vart lesen ein gong til" : "";
+    const meta = (au ? `${esc(au)}: ` : "") + esc(w.title || "") + (w.year ? ` (${esc(w.year)})` : "") + (r.pdf_page ? ` · s. ${esc(r.pdf_page)}` : "") + (r.claim_location ? ` · ${LOC[r.claim_location] || esc(r.claim_location)}` : "") + doi + lic;
     return `<div class="te-row">
       <div class="te-ex">«${esc(r.excerpt)}»</div>
       <div class="te-meta">${meta}</div>
-      <div class="te-line"><span class="te-k">samanheng</span>${REL[r.relation_kind] || esc(r.relation_kind)}${r.relation_expression ? ` («${esc(r.relation_expression)}»)` : ""}</div>
+      <div class="te-line"><span class="te-k">samanheng</span>${rel}${r.relation_expression ? ` («${esc(r.relation_expression)}»)` : ""}${att ? ` · ${att}` : ""}</div>
       <div class="te-line"><span class="te-k">omgrep</span>${cons}</div>
       ${stated("bruksområde", r.scope)}${stated("forklaring", r.explanation)}${stated("føreseiing", r.prediction)}
       <div class="te-line"><span class="te-k">prøvd</span>${SUP[r.support_status] || esc(r.support_status)}${sup ? `: ${sup}` : ""}</div>
       ${th ? `<div class="te-line"><span class="te-k">teori</span>${th}</div>` : ""}
+      ${rt ? `<div class="te-line te-dim"><span class="te-k">maskinkoding</span>${rt}</div>` : ""}
     </div>`;
   }
 
@@ -57,7 +66,7 @@
   async function init() {
     if (!$("teList")) return;
     const st = document.createElement("style");
-    st.textContent = ".te-row{padding:14px 0;border-top:1px solid var(--line,rgba(127,127,127,.3))}.te-ex{line-height:1.45}.te-meta,.te-line{font-size:12.5px;margin-top:6px;line-height:1.45}.te-meta,.te-dim,.te-note{color:var(--dim,#767676)}.te-k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}.te-note{font-size:12.5px;margin:10px 0}.te-p{font-size:14px;line-height:1.5;margin:0 0 10px}";
+    st.textContent = ".te-row{padding:14px 0;border-top:1px solid var(--line,rgba(127,127,127,.3))}.te-ex{line-height:1.45}.te-meta,.te-line{font-size:12.5px;margin-top:6px;line-height:1.45}.te-meta,.te-dim,.te-note{color:var(--dim,#767676)}.te-k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}.te-note{font-size:12.5px;margin:10px 0}.te-p{font-size:14px;line-height:1.5;margin:0 0 10px}.te-q{color:inherit;text-decoration:underline dotted;text-underline-offset:2px}";
     document.head.appendChild(st);
     fill("teRel", REL, "Alle samanhengar");
     fill("teDef", DEF, "Alle definisjonsstatusar");
@@ -67,17 +76,36 @@
     if (!d || !Array.isArray(d.rows)) { $("teCount").textContent = "Radene kunne ikkje lastast."; return; }
     rows = d.rows;
     for (const r of rows) {
-      const parts = [r.excerpt, r.relation_expression, (r.work || {}).title];
+      const w = r.work || {};
+      const parts = [r.excerpt, r.relation_expression, r.relation_kind_other, r.adopted_from, w.title];
+      if (Array.isArray(w.authors)) parts.push(w.authors.join(" "));
       for (const c of r.concepts || []) parts.push(c.term, c.definition_excerpt);
       for (const t of r.theories || []) parts.push(t.name);
       for (const k of ["scope", "explanation", "prediction"]) if (r[k] && r[k].excerpt) parts.push(r[k].excerpt);
       for (const s of r.support || []) parts.push(s.excerpt);
       r._q = parts.filter(Boolean).join(" ").toLowerCase();
     }
-    if (d.synthetic) $("teNote").textContent = "Radene under er syntetiske døme som viser formatet. Dei er ikkje henta frå korpuset.";
+    let note = "";
+    if (d.synthetic) {
+      note = "Radene under er syntetiske døme som viser formatet. Dei er ikkje henta frå korpuset.";
+    } else {
+      const s = d.stats || {};
+      note = `${rows.length} maskinkoda rader frå ${s.texts || "nokre"} ope lisensierte verk. Radene er ikkje validerte mot handkoding.`;
+      if (typeof s.retest_share === "number") note += ` ${Math.round(s.retest_share * 100)} % av radene gjekk att då tekstane vart lesne ein gong til.`;
+      if (s.dropped_in_review) note += ` ${s.dropped_in_review} rader er tekne ut i ein maskinell kontroll.`;
+    }
+    $("teNote").textContent = note;
     ["teRel", "teDef", "teForm"].forEach((id) => $(id).addEventListener("change", render));
     let tmr = null;
     $("teQ").addEventListener("input", () => { clearTimeout(tmr); tmr = setTimeout(render, 90); });
+    $("teList").addEventListener("click", (e) => {
+      const a = e.target && e.target.closest ? e.target.closest("a.te-q") : null;
+      if (!a) return;
+      e.preventDefault();
+      $("teQ").value = a.getAttribute("data-q") || "";
+      render();
+      $("teQ").scrollIntoView({ block: "center" });
+    });
     render();
   }
 
