@@ -167,6 +167,13 @@
     "sha256": "9affc2e882fffa0574419d2386e9b8a1ecba4b88e8a97298be931e74dd065b98",
     "license": ""
   },
+  "W1524934970": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cda26c9a-d9ae4252-9db5-4c22-8ce1-116b930e3de2",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W1524934970.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "c0af17b9ec27ed89c0c99a4a9537f59810aec25d322a5bb7a18f6086d66f01d0",
+    "license": ""
+  },
   "W1528715128": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/245/228",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W1528715128.pdf",
@@ -312,6 +319,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W1555926962.pdf",
     "status": "in-repo-pdf",
     "sha256": "8df3ea4fc06acaa216e1599b2289b1064520de953894e143c237be6a94ab2572",
+    "license": ""
+  },
+  "W1556727215": {
+    "url": "https://eprints.qut.edu.au/49018/1/49018S_Abstract.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W1556727215.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "74861240884de9a6786918ef0f8856a8187e070aedbd965fb7a2bb8eb826e222",
     "license": ""
   },
   "W1557578320": {
@@ -792,8 +806,8 @@
   },
   "W1854499750": {
     "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/3976/19714",
-    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W1854499750.pdf",
-    "status": "in-repo-pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
     "sha256": "75e187002813c9e6135785ec46fac5baa0498f7f00e7c74be07b5b96b4666edc",
     "license": ""
   },
@@ -2106,6 +2120,13 @@
     "sha256": "9712040c9f39a854eec89e171bb566c5362ac19c03fa63def62e9c32720d70bd",
     "license": ""
   },
+  "W2102379297": {
+    "url": "https://direct.mit.edu/desi/article-pdf/27/2/90/1714879/desi_a_00079-morelli.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2102379297.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "59391396b848cd5cd025c806ca384848e6fef53abdc93dd064244f427cfb3a95",
+    "license": ""
+  },
   "W2103275826": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/253/236",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2103275826.pdf",
@@ -3317,6 +3338,13 @@
     "sha256": "b31ab286858eb3c9825039127a2dd8e6b57358b224b06716a744cc460dbe6be6",
     "license": ""
   },
+  "W2464935582": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9f16ef-9fac6222-9b08-49d4-a545-f3fa9a897acd",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2464935582.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "37216819d2d4539a417a7b6a22ed7b4462736e5965b466d3585adb006daa83a7",
+    "license": ""
+  },
   "W2471157195": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd417845-bc7e1a72-5d07-4f86-833b-9e89ebb5d0f2",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2471157195.pdf",
@@ -3406,6 +3434,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2507029218.pdf",
     "status": "in-repo-pdf",
     "sha256": "7ab66c84e92497a33493ebabbd0bb24113b37c924190e68178ac871675053192",
+    "license": ""
+  },
+  "W2507071414": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9ce9e1-1e401e5f-f06f-449c-aeac-281ce08409c4",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2507071414.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "101c2de68f4e95988237c7a82f176a7e775fc8963044fc0f54dda310223fc152",
     "license": ""
   },
   "W2508096428": {
@@ -3518,6 +3553,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2526293950.pdf",
     "status": "in-repo-pdf",
     "sha256": "7ca82346ae612ac56b859deb64d701901b92a711a5b14128ecd7d7f6356f58e0",
+    "license": ""
+  },
+  "W2527516009": {
+    "url": "https://annals-csis.org/proceedings/2016/pliks/306.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2527516009.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "c20d63ddc8c8672f5fd9ccc24858875fc96cd559ab529a47d381d93785d5e2b2",
     "license": ""
   },
   "W2528613198": {
@@ -4586,8 +4628,8 @@
   },
   "W2767726539": {
     "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/3976/19714",
-    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2767726539.pdf",
-    "status": "in-repo-pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
     "sha256": "75e187002813c9e6135785ec46fac5baa0498f7f00e7c74be07b5b96b4666edc",
     "license": ""
   },
@@ -4715,6 +4757,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2782946092.pdf",
     "status": "in-repo-pdf",
     "sha256": "aac48eac4fcacf6825fe2baea98d16c06d91b50d4279aacd8276725149d101dd",
+    "license": ""
+  },
+  "W2782992782": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9949b4-e96581e1-8e2b-4d81-af2c-e53e39075c09",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2782992782.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "f8edfdf7b60dff771f9ef2c0f4135595aa9c4d0775db7ce65c33436a1ab870af",
     "license": ""
   },
   "W2784047722": {
@@ -4897,6 +4946,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2807543295.pdf",
     "status": "in-repo-pdf",
     "sha256": "57647f994895e2cdd9fce38c89f79bbf855ca29983e3cc06745c32c2b3376176",
+    "license": ""
+  },
+  "W2808166676": {
+    "url": "https://cdm21054.contentdm.oclc.org/digital/api/collection/IR/id/8417/download",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W2808166676.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "9937e40366c5b03cdf0678a8b800a0be69361c30d48f92554f2e7da3ff417ab4",
     "license": ""
   },
   "W2808200642": {
@@ -6684,6 +6740,13 @@
     "sha256": "81bb8aa4146d2cc59a84f1491c54abb2bb36e7beb7447da5b19c0d3c4761d966",
     "license": ""
   },
+  "W3001243385": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/205208184/sustainability_12_00911.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3001243385.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "ac9fd26a70b749852af48ecc37364929eaf0b7aa77c157ae1f9434ba7f523d22",
+    "license": ""
+  },
   "W3002900903": {
     "url": "https://findresearcher.sdu.dk/ws/files/168994944/Breunig_Kallestrup_Translating_hygge.pdf",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3002900903.pdf",
@@ -7937,6 +8000,13 @@
     "sha256": "5d498c0abce413d87f80feca08b0a32f258812cf8213622ad6f4f8ac311b4c95",
     "license": ""
   },
+  "W3119919223": {
+    "url": "https://deustoteka.deusto.es/server/api/core/bitstreams/694ec295-cf25-45a0-b87b-8a904749ed53/content",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3119919223.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "0babc2a381b065afe42c398dec0d229a25f27e2f3fb494602be3f3f50c6354fe",
+    "license": ""
+  },
   "W3120155712": {
     "url": "https://revistas.unisinos.br/index.php/sdrj/article/download/sdrj.2020.133.18/60748238",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3120155712.pdf",
@@ -8476,6 +8546,13 @@
     "sha256": "1355fcb60a883f2d61bf69d969bc5f76e7462c7580407d451452092189dac187",
     "license": ""
   },
+  "W3170766070": {
+    "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/3976/19714",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "75e187002813c9e6135785ec46fac5baa0498f7f00e7c74be07b5b96b4666edc",
+    "license": ""
+  },
   "W3173822433": {
     "url": "https://revistas.unisinos.br/index.php/sdrj/article/download/sdrj.2021.141.26/60748468",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3173822433.pdf",
@@ -8495,6 +8572,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3174022813.pdf",
     "status": "in-repo-pdf",
     "sha256": "4c1d2ec62ac83f9a109f6a915e278f56a9cc6fdcacb4c7f8827c8a5aba38ca02",
+    "license": ""
+  },
+  "W3174511727": {
+    "url": "https://backend.orbit.dtu.dk/ws/files/296763606/Causality_and_interpretation_a_new_design_model_inspired_by_the_Aristotelian_legacy.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W3174511727.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "05b5d106a084996d5000d3a38fe1b602fe5795caf48d259d927aa718662a2f82",
     "license": ""
   },
   "W3175076537": {
@@ -9603,6 +9687,13 @@
     "sha256": "56040ca1bc9b6bf7fabc60921a344ed2cfb7c4c02ffa3b3740c7f853790d4815",
     "license": ""
   },
+  "W4232948194": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9b1678-5a1760d9-a6fc-45a9-8270-5a8e42d23fbc",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4232948194.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "fcfc43ff38aa7edffc85ae66995a781c86d71143e859607cbb94fa3871a7cc94",
+    "license": ""
+  },
   "W4234211434": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/2973/2984",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4234211434.pdf",
@@ -9631,6 +9722,13 @@
     "sha256": "24a1e5ce02318cb93c4f7e5985d5dc043f58247f8a4b1935535135786d9b0ef2",
     "license": ""
   },
+  "W4245754375": {
+    "url": "https://helda.helsinki.fi/server/api/core/bitstreams/a31ab204-ee19-404e-917d-f261b714661b/content",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4245754375.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "2e685013b2d7f6e60b265a90ff21207a46b3b2efd9d381ad7389db32d1978c0e",
+    "license": ""
+  },
   "W4249137107": {
     "url": "https://ris.utwente.nl/ws/files/278795130/Marinescu2021data_driven.pdf",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4249137107.pdf",
@@ -9643,6 +9741,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4252085477.pdf",
     "status": "in-repo-pdf",
     "sha256": "feb983705cc98e7ea903a1539914a4262838f6c632fe16cf6c642ecc088d647b",
+    "license": ""
+  },
+  "W4252530511": {
+    "url": "https://scholarworks.iu.edu/journals/index.php/artifact/article/download/3976/19714",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "75e187002813c9e6135785ec46fac5baa0498f7f00e7c74be07b5b96b4666edc",
     "license": ""
   },
   "W4254992665": {
@@ -11309,6 +11414,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4382314900.pdf",
     "status": "in-repo-pdf",
     "sha256": "a163c3889c1d53be62fc3b7c91e8251aee19de4a53d34eab7967fd7df370bc1a",
+    "license": ""
+  },
+  "W4382877378": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9c719f-b075a366-dea7-41f1-954d-1161f622bd4f",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4382877378.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "5f018fb02fb35bc40a0453e8f74844ab4eb2ac506e864b6646cd54944905c51b",
     "license": ""
   },
   "W4383336664": {
@@ -13166,6 +13278,13 @@
     "sha256": "288c48cd29b3b41a2d0939926c772291f1ec8bafb95e99bef22cd1b78bc15779",
     "license": ""
   },
+  "W4400610587": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd94466e-a989105b-7284-498f-b010-dcf3aef89e45",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4400610587.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "85af317cc2e25e74b8a3a5d1abbd5ee004f32b41fa98f248b82878c7b70a10b0",
+    "license": ""
+  },
   "W4400785842": {
     "url": "https://assets-eu.researchsquare.com/files/rs-1980652/v1/7604772f-5c51-4712-81b2-568636133f30.pdf?c=1677884361",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4400785842.pdf",
@@ -13817,6 +13936,13 @@
     "sha256": "b7b1a9a40398dbe4d8445e5b817b9c745e182050ecd1c4c6591bae2ea5ad450c",
     "license": ""
   },
+  "W4409579063": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9b887b-47e74ce4-0a34-44c0-ac58-f915a1305020",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4409579063.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "0cb5b077daa861419f78a14ae0d22003c2adaf325669d229377966c411abdb97",
+    "license": ""
+  },
   "W4409579183": {
     "url": "https://www.jld.edu.au/article/download/140/140-386-1-PB.pdf",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4409579183.pdf",
@@ -13857,6 +13983,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4410192096.pdf",
     "status": "in-repo-pdf",
     "sha256": "ef01e3026e10a2977f2150f0bdf85a6f44621a48692a93de277fdb52f8773b1b",
+    "license": ""
+  },
+  "W4410362980": {
+    "url": "https://idus.us.es/server/api/core/bitstreams/d8041563-2f98-4581-8351-1665b9e7fa80/content",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W4410362980.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "7cddfcef091fe85f85adde0241bb67ad38cc07d495ec6285020e7f77231b6f1f",
     "license": ""
   },
   "W4410453144": {
@@ -15012,6 +15145,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W7128915853.pdf",
     "status": "in-repo-pdf",
     "sha256": "6f1328701cd520816a621f68f1e5ee287bce2cbcef64f31032a100e46e20309b",
+    "license": ""
+  },
+  "W7129761268": {
+    "url": "https://mimesisjournals.com/ojs/index.php/aisthesis/article/download/5768/4359",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/W7129761268.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "4f2d6fc6ea46df8ca906405bef68e9c31c916c62348d9d7aba34150baf78628d",
     "license": ""
   },
   "W7130725753": {
@@ -16398,6 +16538,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_diva_76d1a16c16dff2847e58_149eb24f.pdf",
     "status": "in-repo-pdf",
     "sha256": "79bcbb7830475d5c9342b97477a13ac84bb09d0a5674fcb0406b53b204a1baf3",
+    "license": ""
+  },
+  "nordic:diva:77cfb4a162fad2e7f1a3": {
+    "url": "https://helda.helsinki.fi/server/api/core/bitstreams/c0ed1690-6ad5-4e38-a386-4e35656a90ba/content",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_diva_77cfb4a162fad2e7f1a3_d2c62e9b.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "f1985603aa8cb3356863efcb22eacf371e50886761a20e8319d008a1f047ef1d",
     "license": ""
   },
   "nordic:diva:7abe05eb8831098f30ca": {
@@ -19025,6 +19172,13 @@
     "sha256": "ce8d08383c8a639d30d2a6146356e1d0596910fcedc73260d4545ad8336088f3",
     "license": ""
   },
+  "nordic:nva:07bf9e6030960d9f0618": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9cb323-90b5f531-f333-4ba9-a7d1-4763d2f2696c",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_07bf9e6030960d9f0618_49951e23.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "4a710e3f8ddf0f782648aa2a0fb5d3eca7312e138410da259157b0641f019555",
+    "license": ""
+  },
   "nordic:nva:0a7bb394d4c7516e02d3": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd7f7d2e-840f0745-342f-48b7-a361-4c135447324f",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_0a7bb394d4c7516e02d3_9bb09fa2.pdf",
@@ -19436,6 +19590,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_35e60be8b290069799a9_6b1ad51d.pdf",
     "status": "in-repo-pdf",
     "sha256": "4c13f4a5cf7775ed490b5a5b076e6857df0791d674e1b1234973f74ca79165f0",
+    "license": ""
+  },
+  "nordic:nva:38295128cd9038f1e3e5": {
+    "url": "https://www.fhi.no/globalassets/dokumenterfiler/rapporter/2009-og-eldre/rapport_0720_arkitektur_helse.pdf",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_38295128cd9038f1e3e5_f4379278.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "2c6cfab09a0dd9f71ce28234b1c620ea5d7e82f8916943de77d8be889317ebda",
     "license": ""
   },
   "nordic:nva:38fc6e94835d45afcfc5": {
@@ -20320,6 +20481,13 @@
     "sha256": "8dbd375546d03d79b166d9c5ab70c95f506ae0fbfb11d58b57461a70505c3565",
     "license": ""
   },
+  "nordic:nva:a305e7b4593bc428a708": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9cc1d9-aa98f3dd-b642-4ea7-9d3c-fd494d27d2ca",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_a305e7b4593bc428a708_38ffdb2d.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "4683d9a5d1ca9d666026ccfdec231271c49f852fbf7917f8db382fedfaf499e5",
+    "license": ""
+  },
   "nordic:nva:a34e5257c42ff323771e": {
     "url": "https://api.nva.unit.no/publication/file/01a1cd40bfa7-92417fef-08e5-459b-959d-ae7826c989f9",
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_a34e5257c42ff323771e_50f5281c.pdf",
@@ -20535,6 +20703,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_c012cdc036a8ee612587_faa9ada2.pdf",
     "status": "in-repo-pdf",
     "sha256": "2d8b5922ed8817f930fa188c17d4ec3e59e80f072d612adf57c6797368d5a0b4",
+    "license": ""
+  },
+  "nordic:nva:c06f2b1f8339da249d0f": {
+    "url": "https://api.nva.unit.no/publication/file/01a1cd9cb706-b658a8d0-ed55-4a60-87db-00f8ac2ce540",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_c06f2b1f8339da249d0f_c67a73ba.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "6b10d8d9fc19588880d31f18899df91ace4256daa58cedb76249f74ef2fe2931",
     "license": ""
   },
   "nordic:nva:c3dc5726d24fb77ea794": {
@@ -20801,6 +20976,13 @@
     "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_da7af9aafd1f64895ddd_6d31efba.pdf",
     "status": "in-repo-pdf",
     "sha256": "94daac2b1d5bd2e5aedd91f94430f40bfa6a391071bda0316c4834c6f8525474",
+    "license": ""
+  },
+  "nordic:nva:dc42e94b2eeacee529be": {
+    "url": "https://aura.abdn.ac.uk/server/api/core/bitstreams/2d903105-5304-40e2-ae04-ca72dd264a0e/content",
+    "repo_pdf": "https://raw.githubusercontent.com/lukketsvane/designteori/main/pdf/nordic_nva_dc42e94b2eeacee529be_8e377f95.pdf",
+    "status": "in-repo-pdf",
+    "sha256": "4ba43a09301b6526da5adbdf19a65e9bf8192585ee32bde2e4053cc69fe3b0c1",
     "license": ""
   },
   "nordic:nva:dd2bc98b1e9d7c6ccceb": {
