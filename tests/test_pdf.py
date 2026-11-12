@@ -16,6 +16,7 @@ from designteori.pdf import (
     extract_dspace_handle,
     extract_nva_uuid,
     extract_openalex_work_urls,
+    expand_registered_oa_urls,
     is_bot_challenge_html,
     parse_core_urls,
     parse_diva_export_csv,
@@ -28,6 +29,7 @@ from designteori.pdf import (
     repo_pdf_filename,
     safe_public_link,
     synthesized_oa_urls,
+    unwrap_pdf_payload,
 )
 
 
@@ -216,6 +218,17 @@ class TestPdfPipeline(unittest.TestCase):
             parse_diva_export_csv(diva_csv, "urn:nbn:se:liu:diva-211651"),
             ["https://liu.diva-portal.org/smash/get/diva2:1937243/FULLTEXT02.pdf"],
         )
+
+        inner_pdf = b"%PDF-1.7\n" + (b"0" * 600) + b"\n%%EOF\n"
+        wrapped = b"----abc\r\nContent-Disposition: form-data\r\n\r\n" + inner_pdf + b"\r\n----abc--\r\n"
+        self.assertFalse(pdf_data(wrapped))
+        unwrapped = unwrap_pdf_payload(wrapped)
+        self.assertTrue(pdf_data(unwrapped))
+        self.assertTrue(unwrapped.startswith(b"%PDF-1.7"))
+
+        pmc_urls = expand_registered_oa_urls("https://pmc.ncbi.nlm.nih.gov/articles/12290142")
+        self.assertIn("https://pmc.ncbi.nlm.nih.gov/articles/PMC12290142/pdf/", pmc_urls)
+        self.assertIn("https://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC12290142&blobtype=pdf", pmc_urls)
 
 
 if __name__ == "__main__":

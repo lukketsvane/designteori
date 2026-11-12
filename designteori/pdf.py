@@ -72,11 +72,20 @@ DSPACE_API_HOSTS = (
 )
 API_HOST_MIN_DELAYS = {
     "api.semanticscholar.org": 15.0,
-    "api.core.ac.uk": 2.0,
+    "api.core.ac.uk": 1.0,
     "api.openaire.eu": 0.4,
     "api.nva.unit.no": 0.25,
     "api.unpaywall.org": 0.15,
     "www.diva-portal.org": 0.5,
+}
+BLOCK_EXEMPT_REDIRECTORS = {
+    "doi.org",
+    "dx.doi.org",
+    "hdl.handle.net",
+    "urn.kb.se",
+    "www.urn.kb.se",
+    "nva.sikt.no",
+    "api.nva.unit.no",
 }
 NO_DOI_PREFIXES = ("10.7577/", "10.5617/", "10.5324/", "10.15845/", "10.23865/", "10.18261/")
 
@@ -273,6 +282,22 @@ def safe_request(
 
 def pdf_data(data: bytes) -> bool:
     return len(data) > 500 and data.lstrip()[:4] == b"%PDF" and b"%%EOF" in data[-4096:]
+
+
+def unwrap_pdf_payload(data: bytes) -> bytes:
+    """Strip HTTP multipart wrapper that older DSpace instances saved around PDF bitstreams."""
+    if pdf_data(data):
+        return data
+    if b"Content-Disposition:" not in data[:1024]:
+        return data
+    idx = data.find(b"%PDF-", 0, 2048)
+    end = data.rfind(b"%%EOF", idx) if idx > 0 else -1
+    if idx <= 0 or end <= idx:
+        return data
+    nl = data.find(b"\n", end)
+    stop = nl + 1 if 0 <= nl - end <= 16 else end + 5
+    inner = data[idx:stop]
+    return inner if pdf_data(inner) else data
 
 
 def direct_pdf_hint(link: object) -> bool:
@@ -1032,31 +1057,35 @@ def semantic_scholar_batch_prefetch(dois: list[str], pause_fn=None) -> dict[str,
     return prefetched
 
 
-def core_batch_prefetch(dois: list[str], pause_fn=None) -> dict[str, list[str]]:
+def core_batch_prefetch(dois: list[str], pause_fn=None, cache_path: Path | None = None) -> dict[str, list[str]]:
     high_val = ("10.21606/", "10.1080/", "10.1016/", "10.1145/", "10.1007/", "10.1386/", "10.1162/")
     clean = sorted({d for raw in dois if (d := normalize_doi(raw)) and '"' not in d}, key=lambda d: (not d.startswith(high_val), d))
-    prefetched: dict[str, list[str]] = {}
-    for idx in range(0, len(clean), 20):
-        chunk = clean[idx:idx + 20]
+    cached: dict[str, list[str]] = (read_json(cache_path, {}) or {}) if cache_path else {}
+    todo = [d for d in clean if d not in cached]
+    for idx in range(0, len(todo), 80):
+        chunk = todo[idx:idx + 80]
         q = " OR ".join(f'doi:"{d}"' for d in chunk)
-        ep = f"https://api.core.ac.uk/v3/search/works/?q={quote(q, safe='')}&limit=100"
-        for attempt in range(3):
-            try:
-                if pause_fn:
-                    pause_fn("api.core.ac.uk")
-                payload, _, _ = safe_request(ep, limit=4_000_000, accept="application/json")
-                data = json.loads(payload.decode("utf-8"))
-                for d in chunk:
-                    prefetched[d] = parse_core_urls(data, d)
+        body = json.dumps({"q": q, "limit": 100}).encode("utf-8")
+        try:
+            if pause_fn:
+                pause_fn("api.core.ac.uk")
+            payload, _, _ = safe_request(
+                "https://api.core.ac.uk/v3/search/works",
+                limit=4_000_000,
+                accept="application/json",
+                data=body,
+                content_type="application/json",
+            )
+            data = json.loads(payload.decode("utf-8"))
+            for d in chunk:
+                cached[d] = parse_core_urls(data, d)
+            if cache_path:
+                write_json(cache_path, cached)
+        except Exception as exc:
+            if isinstance(exc, HTTPError) and exc.code in (403, 429):
                 break
-            except Exception as exc:
-                if isinstance(exc, HTTPError) and exc.code in (429, 503) and attempt < 2:
-                    time.sleep(12.0 if attempt == 0 else 20.0)
-                    continue
-                if isinstance(exc, HTTPError) and exc.code in (403, 429):
-                    return prefetched
-                break
-    return prefetched
+            continue
+    return {d: cached[d] for d in clean if d in cached}
 
 
 def queue_rows() -> list[dict]:
@@ -1109,11 +1138,13 @@ def expand_registered_oa_urls(oa_url: str) -> list[str]:
         return []
     out: list[str] = []
     m_arxiv = re.match(r"^https://arxiv\.org/abs/([0-9]+\.[0-9]+(?:v\d+)?|[a-z-]+/\d+)(?:[?#].*)?$", u, re.I)
-    m_pmc = re.search(r"ncbi\.nlm\.nih\.gov/(?:pmc/)?articles/(PMC\d+)", u, re.I)
+    m_pmc = re.search(r"ncbi\.nlm\.nih\.gov/(?:pmc/)?articles/(?:PMC)?(\d+)", u, re.I)
     if m_arxiv:
         out.append(f"https://arxiv.org/pdf/{m_arxiv.group(1)}.pdf")
     elif m_pmc:
-        out.append(f"https://europepmc.org/backend/ptpmcrender.fcgi?accid={m_pmc.group(1).upper()}&blobtype=pdf")
+        pmcid = f"PMC{m_pmc.group(1)}"
+        out.append(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/pdf/")
+        out.append(f"https://europepmc.org/backend/ptpmcrender.fcgi?accid={pmcid}&blobtype=pdf")
     elif ".hal.science/" in u.lower() and not u.lower().rstrip("/").endswith(("/document", ".pdf")):
         base_u = u.split("?", 1)[0].split("#", 1)[0].rstrip("/")
         out.append(f"{base_u}/document")
@@ -1249,6 +1280,29 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     hits.append(u)
         return hits
 
+    def _row_diva_queries(row: dict) -> list[str]:
+        qs: list[str] = []
+        ident = row.get("id") or ""
+        for cand_u in [row.get("oa_url"), *local_oa_map.get(ident, [])]:
+            q = extract_diva_query(cand_u, ident)
+            if q and q not in qs:
+                qs.append(q)
+        if not qs:
+            q = extract_diva_query("", ident)
+            if q:
+                qs.append(q)
+        return qs
+
+    def _has_repo_retry_candidate(row: dict) -> bool:
+        repo_hints = (
+            "hdl.handle.net/", "trepo.tuni.fi/", "nva.sikt.no/", "helda.helsinki.fi/",
+            "aaltodoc.aalto.fi/", "gupea.ub.gu.se/", "erepo.uef.fi/", "taju.uniarts.fi/",
+            "ncbi.nlm.nih.gov/", "arxiv.org/", "hal.science/",
+        )
+        ident = row.get("id") or ""
+        urls = [row.get("oa_url") or "", *local_oa_map.get(ident, [])]
+        return any(h in str(u).lower() for u in urls for h in repo_hints)
+
     any_api = bool(
         email or lookup_openalex or lookup_europepmc or lookup_crossref
         or lookup_semantic_scholar or lookup_openaire or lookup_core or lookup_nva_search
@@ -1264,14 +1318,15 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
         prev = progress.get(ident) or {}
         st = prev.get("status")
         if st == "pdf-confirmed":
-            if cached_pdf_ok(ident, prev, cache_dir):
+            if cached_pdf_ok(ident, prev, cache_dir) and not BOILERPLATE_PDF_RE.search(prev.get("url") or ""):
                 continue
             progress.pop(ident, None)
             st = None
         has_nordes = bool(_nordes_hits(row))
-        has_diva = bool(lookup_diva_export and extract_diva_query(row.get("oa_url"), ident))
+        has_diva = bool(lookup_diva_export and _row_diva_queries(row))
+        has_repo_retry = _has_repo_retry_candidate(row)
         if new_sources_only:
-            if not has_nordes and not has_diva and not (row.get("doi") and (lookup_semantic_scholar or lookup_core)):
+            if not has_nordes and not has_diva and not has_repo_retry and not (row.get("doi") and (lookup_semantic_scholar or lookup_core)):
                 continue
         else:
             prim_oa = candidate_https_url(row["oa_url"])
@@ -1283,10 +1338,10 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                 continue
         if st == "failed" and not retry_failed:
             continue
-        if not has_nordes and not has_diva and not row["oa_url"] and not local_oa_map.get(ident) and not (any_api and row["doi"]):
+        if not has_nordes and not has_diva and not has_repo_retry and not row["oa_url"] and not local_oa_map.get(ident) and not (any_api and row["doi"]):
             continue
         if st == "deferred" or (st == "failed" and retry_failed):
-            rank = (-1, 0) if (has_nordes or has_diva) else _deferred_retry_rank(row, prev)
+            rank = (-1, 0) if (has_nordes or has_diva or has_repo_retry) else _deferred_retry_rank(row, prev)
             deferred_rows.append((rank, row))
         else:
             unvisited_rows.append(row)
@@ -1316,11 +1371,11 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
         all_dois = [r["doi"] for r in eligible if r.get("doi") and not _nordes_hits(r) and not prefetched_s2.get(normalize_doi(r["doi"]))]
         if all_dois:
             print("CORE_PREFETCH_START", len(all_dois), flush=True)
-            prefetched_core = core_batch_prefetch(all_dois, pause_fn=pace_host)
+            prefetched_core = core_batch_prefetch(all_dois, pause_fn=pace_host, cache_path=cache_dir / "core_prefetch.json")
             print("CORE_PREFETCH_DONE", len(prefetched_core), sum(1 for v in prefetched_core.values() if v), flush=True)
 
     if new_sources_only:
-        sources = ("nordes_oai", "diva_export", "semantic_scholar", "core")
+        sources = ("nordes_oai", "diva_export", "local_openalex", "registered", "semantic_scholar", "core")
     else:
         sources = (
             "local_openalex",
@@ -1362,6 +1417,13 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
         why = "No direct PDF at public OA sources"
         seen: set[str] = set()
 
+        def _note_blocked_host(h: str) -> None:
+            hl = (h or "").lower().strip()
+            if not hl or hl in BLOCK_EXEMPT_REDIRECTORS or hl.endswith(".amazonaws.com"):
+                return
+            with state_lock:
+                blocked_hosts.add(hl)
+
         def try_direct_fetch(cand: dict[str, str], allow_followup: bool) -> tuple[bytes, str, str] | None:
             nonlocal deferred, why
             target = cand["url"]
@@ -1378,29 +1440,27 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                 payload, landing, mime = safe_request(target, limit=max_bytes)
             except BotChallengeError as exc:
                 why = f"BotChallenge: {str(exc)[:120]}"
-                with state_lock:
-                    blocked_hosts.add(host)
+                m_bh = re.search(r"on ([a-z0-9.-]+)$", str(exc), re.I)
+                _note_blocked_host(m_bh.group(1) if m_bh else host)
                 deferred = True
                 return None
             except Exception as exc:
                 why = f"{type(exc).__name__}: {str(exc)[:140]}"
                 if isinstance(exc, HTTPError) and exc.code == 429:
-                    with state_lock:
-                        blocked_hosts.add(host)
+                    err_h = (urlsplit(getattr(exc, "url", "") or target).hostname or host).lower()
+                    _note_blocked_host(err_h)
                     deferred = True
                 return None
 
             lhost = (urlsplit(landing).hostname or "").lower()
+            payload = unwrap_pdf_payload(payload)
             if pdf_data(payload):
                 pub_url = cand["public_url"] if (safe_public_link(cand["public_url"]) and not safe_public_link(landing)) else landing
                 return payload, pub_url, cand["license"]
 
             if is_bot_challenge_html(payload):
                 why = f"BotChallenge: {lhost or host}"
-                with state_lock:
-                    blocked_hosts.add(host)
-                    if lhost:
-                        blocked_hosts.add(lhost)
+                _note_blocked_host(lhost or host)
                 deferred = True
                 return None
 
@@ -1422,13 +1482,22 @@ def harvest_pdfs(*, limit: int = 8000, workers: int = 12, host_delay: float = 1.
                     continue
             try:
                 if src == "local_openalex":
-                    raw_cands = local_oa_map.get(ident, [])
+                    raw_cands = []
+                    for u in local_oa_map.get(ident, []):
+                        for eu in expand_registered_oa_urls(u):
+                            if eu not in raw_cands:
+                                raw_cands.append(eu)
                 elif src == "nordes_oai":
                     raw_cands = _nordes_hits(row)
                 elif src == "diva_export":
-                    if not lookup_diva_export or not extract_diva_query(row.get("oa_url"), ident):
+                    dqs = _row_diva_queries(row) if lookup_diva_export else []
+                    if not dqs:
                         continue
-                    raw_cands = diva_export_urls(row.get("oa_url") or "", ident, pause_fn=pace_host)
+                    raw_cands = []
+                    for dq in dqs[:3]:
+                        for u in diva_export_urls(dq, ident, pause_fn=pace_host):
+                            if u not in raw_cands:
+                                raw_cands.append(u)
                 elif src == "registered":
                     raw_cands = expand_registered_oa_urls(row["oa_url"]) if row["oa_url"] else []
                 elif src == "unpaywall":
