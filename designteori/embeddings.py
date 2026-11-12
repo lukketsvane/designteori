@@ -460,39 +460,54 @@ def eligible_chunks(db: sqlite3.Connection, model: str, dims: int,
                     *, include_unreviewed: bool = False,
                     active_work_ids: set[str] | list[str] | tuple[str, ...] | None = None,
                     limit: int = 0) -> list[tuple]:
-    restriction = "" if include_unreviewed else """
-      AND EXISTS (
-        SELECT 1 FROM work_documents wd JOIN works w ON w.work_id=wd.work_id
-        WHERE wd.sha256=c.sha256 AND w.rights LIKE 'CC %'
-          AND w.rights NOT LIKE '%-ND%' AND w.rights NOT LIKE '% ND%'
-      )"""
-    active_filter = ""
-    title_filter = ""
+    # Precompute per-document eligibility and title once per sha256 so SQLite drives
+    # through idx_chunks_document(sha256, page) instead of scanning work_documents per chunk.
+    db.execute("DROP TABLE IF EXISTS temp._eligible_docs")
+    db.execute("DROP TABLE IF EXISTS temp._active_work_ids")
+    rights_sql = "" if include_unreviewed else (
+        " AND w.rights LIKE 'CC %' AND w.rights NOT LIKE '%-ND%' AND w.rights NOT LIKE '% ND%'"
+    )
     if active_work_ids is not None:
-        db.execute("DROP TABLE IF EXISTS temp._active_work_ids")
         db.execute("CREATE TEMP TABLE _active_work_ids (work_id TEXT PRIMARY KEY)")
         db.executemany(
             "INSERT OR IGNORE INTO temp._active_work_ids (work_id) VALUES (?)",
             [(str(wid),) for wid in active_work_ids if wid],
         )
-        active_filter = """
-          AND EXISTS (
-            SELECT 1 FROM work_documents wd
-            JOIN temp._active_work_ids aw ON aw.work_id=wd.work_id
-            WHERE wd.sha256=c.sha256
-          )"""
-        title_filter = " AND EXISTS (SELECT 1 FROM temp._active_work_ids aw WHERE aw.work_id=wd.work_id)"
+        source_join = (
+            "FROM temp._active_work_ids aw "
+            "JOIN work_documents wd ON wd.work_id = aw.work_id "
+            "LEFT JOIN works w ON w.work_id = wd.work_id"
+        )
+        require_doc_match = True
+    else:
+        join_kw = "JOIN" if not include_unreviewed else "LEFT JOIN"
+        source_join = f"FROM work_documents wd {join_kw} works w ON w.work_id = wd.work_id"
+        require_doc_match = not include_unreviewed
+
+    db.execute("CREATE TEMP TABLE _eligible_docs (sha256 TEXT PRIMARY KEY, title TEXT)")
+    db.execute(f"""
+        INSERT OR IGNORE INTO temp._eligible_docs (sha256, title)
+        SELECT wd.sha256, COALESCE(MIN(NULLIF(w.title, '')), '')
+        {source_join}
+        WHERE 1=1{rights_sql}
+        GROUP BY wd.sha256
+    """)
+    join_docs = (
+        "JOIN temp._eligible_docs ed ON ed.sha256 = c.sha256"
+        if require_doc_match else
+        "LEFT JOIN temp._eligible_docs ed ON ed.sha256 = c.sha256"
+    )
 
     sql = f"""
-        SELECT c.chunk_id, c.text_hash, c.text,
-               COALESCE((SELECT w.title FROM work_documents wd JOIN works w ON w.work_id=wd.work_id
-                         WHERE wd.sha256=c.sha256{title_filter} LIMIT 1), '')
+        SELECT c.chunk_id, c.text_hash, c.text, COALESCE(ed.title, '')
         FROM chunks c
-        JOIN documents d ON d.sha256=c.sha256
-        LEFT JOIN embeddings e ON e.chunk_id=c.chunk_id AND e.model=? AND e.dimensions=?
-        WHERE d.quality='extracted'
+        JOIN documents d ON d.sha256 = c.sha256
+        {join_docs}
+        LEFT JOIN embeddings e ON e.chunk_id = c.chunk_id AND e.model = ? AND e.dimensions = ?
+        WHERE d.quality = 'extracted'
           AND (e.chunk_id IS NULL OR e.text_hash <> c.text_hash)
-    """ + restriction + active_filter + " ORDER BY c.chunk_id"
+        ORDER BY c.chunk_id
+    """
     params: list = [model_name(model), dims]
     if limit > 0:
         sql += " LIMIT ?"
