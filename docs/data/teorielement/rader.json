@@ -10,7 +10,9 @@
   "claims_r1": 55,
   "claims_r2": 60,
   "retest_share": 0.67,
-  "excerpts_expanded": 21
+  "excerpts_expanded": 21,
+  "concepts": 104,
+  "definitions_found": 10
  },
  "rows": [
   {
@@ -170,26 +172,30 @@
     {
      "term": "information action",
      "role": "other",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "Information action can be defined as dealing with data parts and their manipulation (Court 1997).",
+     "definition_page": 19
     },
     {
      "term": "knowledge-sharing action",
      "role": "other",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "Knowledge-sharing action can be defined as dealing with the creation and development of shared understanding (Dong 2005).",
+     "definition_page": 20
     },
     {
      "term": "representation action",
      "role": "other",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "Representation action can be defined as dealing with the perception and manipulation of external representations of information (Scaife & Rogers 1996; Wilson 2002).",
+     "definition_page": 21
     },
     {
      "term": "uncertainty perception",
      "role": "other",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "uncertainty perception, which is defined as: a designers’ perceived lack of understanding with respect to the design task and its context (Ball et al. 1997; Kreye, Goh & Newnes 2011)",
+     "definition_page": 3
     }
    ],
    "scope": {
@@ -246,14 +252,16 @@
     {
      "term": "uncertainty perception",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "uncertainty perception, which is defined as: a designers’ perceived lack of understanding with respect to the design task and its context (Ball et al. 1997; Kreye, Goh & Newnes 2011)",
+     "definition_page": 3
     },
     {
      "term": "design activity",
      "role": "to",
      "definition_status": "defined",
-     "definition_excerpt": "a general definition of design activity is adopted: design activity is a goal directed system where cognition, behaviour, and motivation are integrated, with respect to the ‘bringing-into-being’ of a design artefact"
+     "definition_excerpt": "a general definition of design activity is adopted: design activity is a goal directed system where cognition, behaviour, and motivation are integrated, with respect to the ‘bringing-into-being’ of a design artefact",
+     "definition_page": 2
     }
    ],
    "scope": {
@@ -304,8 +312,9 @@
     {
      "term": "uncertainty perception",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "uncertainty perception, which is defined as: a designers’ perceived lack of understanding with respect to the design task and its context (Ball et al. 1997; Kreye, Goh & Newnes 2011)",
+     "definition_page": 3
     },
     {
      "term": "design outcome",
@@ -551,8 +560,9 @@
     {
      "term": "co-design approach",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "The co-design approach can be seen as social (collective) creativity applied across the entire span of a design process (Sanders & Stappers, 2008).",
+     "definition_page": 6
     },
     {
      "term": "science education",
@@ -997,14 +1007,16 @@
     {
      "term": "Design Thinking",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "stated_none_exists",
+     "definition_excerpt": "While Dunne (2018) describes Design Thinking as notoriously difficult to define, Brenner et al. (2016) and Auernhammer and Roth (2021) state that it remains highly unclear what Design Thinking is.",
+     "definition_page": 8
     },
     {
      "term": "master idea",
      "role": "to",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "Master ideas are ideas that have achieved a particularly high degree of legitimacy across sectors and countries (Røvik and Pettersen, 2014).",
+     "definition_page": 2
     }
    ],
    "scope": {
@@ -1060,8 +1072,9 @@
     {
      "term": "Design Thinking",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "stated_none_exists",
+     "definition_excerpt": "While Dunne (2018) describes Design Thinking as notoriously difficult to define, Brenner et al. (2016) and Auernhammer and Roth (2021) state that it remains highly unclear what Design Thinking is.",
+     "definition_page": 8
     },
     {
      "term": "organizational recipes and standards",
@@ -1186,8 +1199,9 @@
     {
      "term": "Design Thinking",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "stated_none_exists",
+     "definition_excerpt": "While Dunne (2018) describes Design Thinking as notoriously difficult to define, Brenner et al. (2016) and Auernhammer and Roth (2021) state that it remains highly unclear what Design Thinking is.",
+     "definition_page": 8
     },
     {
      "term": "rationalized myth",
@@ -1258,7 +1272,8 @@
      "term": "reflection-in-action",
      "role": "to",
      "definition_status": "defined_by_citation",
-     "definition_excerpt": "reflection-in-action as defined by Schön."
+     "definition_excerpt": "reflection-in-action as defined by Schön.",
+     "definition_page": 2
     }
    ],
    "scope": {
@@ -1322,7 +1337,8 @@
      "term": "reflection-in-action",
      "role": "from",
      "definition_status": "defined_by_citation",
-     "definition_excerpt": "reflection-in-action as defined by Schön."
+     "definition_excerpt": "reflection-in-action as defined by Schön.",
+     "definition_page": 2
     },
     {
      "term": "awareness",
@@ -1404,7 +1420,8 @@
      "term": "reflection-in-action",
      "role": "to",
      "definition_status": "defined_by_citation",
-     "definition_excerpt": "reflection-in-action as defined by Schön."
+     "definition_excerpt": "reflection-in-action as defined by Schön.",
+     "definition_page": 2
     }
    ],
    "scope": {
@@ -3269,8 +3286,9 @@
     {
      "term": "co-design",
      "role": "from",
-     "definition_status": "not_stated",
-     "definition_excerpt": null
+     "definition_status": "defined",
+     "definition_excerpt": "Co-design has been understood as an inclusive, iterative, and relational approach to educational design and transformation",
+     "definition_page": 2
     },
     {
      "term": "assemblages",
@@ -3454,5 +3472,6 @@
    "retest": false
   }
  ],
- "excerpt_rule": "Utdraga er utvida til heile setningar (maks 400 teikn)"
+ "excerpt_rule": "Utdraga er utvida til heile setningar (maks 400 teikn)",
+ "definition_rule": "Definisjonar er søkte i heile teksten med faste mønster (til dømes «defined as», «refers to», «understood as»), og treffa er vurderte av ein modell. «Ikkje funnen i søk» tyder at søket ikkje gav treff, ikkje at teksten manglar ein definisjon"
 }

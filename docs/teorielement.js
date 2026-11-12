@@ -4,7 +4,7 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const REL = { kind_of: "er ein type", part_of: "er del av", causes_or_enables: "fører til eller gjer mogleg", requires: "krev", precedes: "kjem før", associated_with: "heng saman med", defined_as: "er definert som", differs_from: "skil seg frå", has_property: "har eigenskapen", prescribes: "bør", other: "anna" };
-  const DEF = { defined: "definert", defined_by_citation: "definert ved tilvising", not_stated: "ikkje funnen i delane som er lesne", stated_none_exists: "teksten seier at det ikkje finst" };
+  const DEF = { defined: "definert", defined_by_citation: "definert ved tilvising", not_stated: "ikkje funnen i søk", stated_none_exists: "teksten seier at det ikkje finst" };
   const FORM = { argument: "argument", literature: "litteratur", example: "døme", case: "case", data_collection: "datainnsamling", experiment: "eksperiment", design_work: "designarbeid", practice_reflection: "praksisrefleksjon", modelling: "modellering", use_in_practice: "bruk i praksis", other: "anna" };
   const LOC = { abstract: "samandrag", introduction: "innleiing", conclusion: "konklusjon" };
   const SUP = { reported: "oppgjeve", not_stated: "ikkje oppgjeve i delane som er lesne", stated_untested: "teksten seier at det ikkje er prøvd" };
@@ -23,7 +23,7 @@
   function stated(label, o) {
     if (o && o.status === "stated") return `<div class="te-line"><span class="te-k">${label}</span>«${esc(o.excerpt)}»</div>`;
     if (o && o.status === "stated_none_exists") return `<div class="te-line"><span class="te-k">${label}</span>teksten seier at det ikkje finst: «${esc(o.excerpt)}»</div>`;
-    return `<div class="te-line te-dim"><span class="te-k">${label}</span>ikkje oppgjeve i teksten</div>`;
+    return `<div class="te-line te-dim"><span class="te-k">${label}</span>ikkje oppgjeve i delane som er lesne</div>`;
   }
 
   function rowHtml(r) {
@@ -32,6 +32,7 @@
     const doi = w.doi ? ` · <a href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : "";
     const lic = w.license ? ` · ${esc(w.license)}` : "";
     const cons = (r.concepts || []).map((c) => `${qlink(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}; ${DEF[c.definition_status] || esc(c.definition_status)})</span>`).join(" · ");
+    const defs = (r.concepts || []).filter((c) => c.definition_excerpt).map((c) => `<div class="te-line"><span class="te-k">definisjon</span>${esc(c.term)} <span class="te-dim">(${DEF[c.definition_status] || esc(c.definition_status)}${c.definition_page ? `, s. ${esc(c.definition_page)}` : ""})</span>: «${esc(c.definition_excerpt)}»</div>`).join("");
     const sup = (r.support || []).map((s) => FORM[s.form] || esc(s.form)).join(", ");
     const th = (r.theories || []).map((t) => `${TROLE[t.role] || esc(t.role)} ${qlink(t.name)}`).join(" · ");
     const att = r.attribution === "adopted" ? "overteken" + (r.adopted_from ? ` frå ${esc(r.adopted_from)}` : "") : r.attribution === "own" ? "eigen" : "";
@@ -42,7 +43,7 @@
       <div class="te-ex">«${esc(r.excerpt)}»</div>
       <div class="te-meta">${meta}</div>
       <div class="te-line"><span class="te-k">samanheng</span>${rel}${r.relation_expression ? ` («${esc(r.relation_expression)}»)` : ""}${att ? ` · ${att}` : ""}</div>
-      <div class="te-line"><span class="te-k">omgrep</span>${cons}</div>
+      <div class="te-line"><span class="te-k">omgrep</span>${cons}</div>${defs}
       ${stated("bruksområde", r.scope)}${stated("forklaring", r.explanation)}${stated("føreseiing", r.prediction)}
       <div class="te-line"><span class="te-k">prøvd</span>${SUP[r.support_status] || esc(r.support_status)}${sup ? `: ${sup}` : ""}</div>
       ${th ? `<div class="te-line"><span class="te-k">teori</span>${th}</div>` : ""}
@@ -94,6 +95,7 @@
       if (typeof s.retest_share === "number") note += ` ${Math.round(s.retest_share * 100)} % av radene gjekk att då tekstane vart lesne ein gong til.`;
       if (s.dropped_in_review) note += ` ${s.dropped_in_review} rader er tekne ut i ein maskinell kontroll.`;
       if (d.excerpt_rule) note += ` ${d.excerpt_rule}.`;
+      if (d.definition_rule) note += ` ${d.definition_rule}.`;
     }
     $("teNote").textContent = note;
     ["teRel", "teDef", "teForm"].forEach((id) => $(id).addEventListener("change", render));
