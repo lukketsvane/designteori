@@ -47,7 +47,7 @@ from . import (
 
 HOST_DENY = ("sci-hub", "libgen", "annas-archive", "z-library", "silkstart.s3.amazonaws.com")
 BOILERPLATE_PDF_RE = re.compile(
-    r"(?:dataprotection|data[-_]protection|tietosuoja|privacy[-_]?policy|cookie[-_]?policy|terms[-_]and[-_]conditions)",
+    r"(?:dataprotection|data[-_]protection|tietosuoja|privacy[-_]?(?:policy|statement)|dp[-_]?policy|cookie[-_]?policy|terms[-_]and[-_]conditions)",
     re.I,
 )
 MAX_REDIRECTS = 8
@@ -542,6 +542,16 @@ _OPEN_PURE_PORTAL_HOSTS = frozenset({
     "pure.itu.dk",
     "portal.findresearcher.sdu.dk",
     "research.ulapland.fi",
+    "cris.maastrichtuniversity.nl",
+})
+_OPEN_DSPACE_REPO_HOSTS = frozenset({
+    "aaltodoc.aalto.fi",
+    "trepo.tuni.fi",
+    "osuva.uwasa.fi",
+    "helda.helsinki.fi",
+    "erepo.uef.fi",
+    "taju.uniarts.fi",
+    "jyx.jyu.fi",
 })
 _OPEN_DSPACE_HANDLE_PREFIXES = ("/10044/", "/10453/", "/2117/")
 
@@ -573,6 +583,8 @@ def _open_repo_landing_fallback(url: str) -> bool:
     host = (u_parts.hostname or "").lower().strip(".")
     path_lower = (u_parts.path or "").lower()
     if host in _OPEN_PURE_PORTAL_HOSTS and ("/publications/" in path_lower or "/files/" in path_lower):
+        return True
+    if host in _OPEN_DSPACE_REPO_HOSTS and ("/handle/" in path_lower or "/items/" in path_lower or "/bitstream" in path_lower):
         return True
     return host == "hdl.handle.net" and path_lower.startswith(_OPEN_DSPACE_HANDLE_PREFIXES)
 

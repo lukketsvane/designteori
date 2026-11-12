@@ -389,6 +389,23 @@ class TestPdfPipeline(unittest.TestCase):
         ):
             self.assertNotIn(blocked, urls)
 
+        urls2 = extract_openalex_work_urls({
+            "locations": [
+                {"is_oa": False, "landing_page_url": "https://aaltodoc.aalto.fi/handle/123456789/119186"},
+                {"is_oa": False, "landing_page_url": "https://trepo.tuni.fi/handle/10024/219467"},
+                {"is_oa": False, "landing_page_url": "https://osuva.uwasa.fi/handle/10024/17899"},
+                {"is_oa": False, "landing_page_url": "https://cris.maastrichtuniversity.nl/en/publications/study"},
+                {"is_oa": False, "pdf_url": "https://www.maastrichtuniversity.nl/sites/default/files/general_privacy_statement_um.pdf"},
+                {"is_oa": False, "pdf_url": "https://www.strath.ac.uk/media/ps/strategyandpolicy/DP_Policy.pdf"},
+            ],
+        })
+        self.assertEqual(urls2, [
+            "https://aaltodoc.aalto.fi/handle/123456789/119186",
+            "https://trepo.tuni.fi/handle/10024/219467",
+            "https://osuva.uwasa.fi/handle/10024/17899",
+            "https://cris.maastrichtuniversity.nl/en/publications/study",
+        ])
+
 
 if __name__ == "__main__":
     unittest.main()

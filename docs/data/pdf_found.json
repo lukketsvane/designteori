@@ -1294,6 +1294,13 @@
     "sha256": "0abc5a279b24fc90dfeb0768e34b7d5d1e98f5ccfd394f47b50ec59295eaedb8",
     "license": ""
   },
+  "W1989997890": {
+    "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/e4136ec8-ada7-4006-9039-7e341be88e60/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "706c6a4011172dbaf75221ca5535c2f51bdb91d1d4ff878a43da12321e2eda7c",
+    "license": ""
+  },
   "W1991039297": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/119/108",
     "repo_pdf": "",
@@ -2288,6 +2295,13 @@
     "sha256": "f3f4973c800e661a661e28d40f4a43aa5e98702ccf7cffe2a9e732de542a1ce5",
     "license": ""
   },
+  "W2114944548": {
+    "url": "https://www.sciencedirect.com/science/article/pii/S1071581914001232/pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "224156e860aa3cf19b5c09d43c034eadf754f33886fafacd53670277ef20cb72",
+    "license": ""
+  },
   "W2116133360": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/110/94",
     "repo_pdf": "",
@@ -2792,6 +2806,13 @@
     "sha256": "537988589442b1e1645fae3bf65b8fbaab4ffb030600d1a6f4042cba5da9d706",
     "license": ""
   },
+  "W2166593067": {
+    "url": "https://figshare.com/articles/Understanding_Experience_in_Interactive_Systems/6470606",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "b330f1cabdd4b9cdad413661372b1d5d95d763d05c240a09973df2d7addb4f74",
+    "license": ""
+  },
   "W2166823091": {
     "url": "https://archive.nordes.org/index.php/n13/article/download/147/130",
     "repo_pdf": "",
@@ -3009,6 +3030,13 @@
     "sha256": "b2192e60b34a8ed01bec351fbf94c102331b72745d0ca9328467bc4fedee80d3",
     "license": ""
   },
+  "W2205874525": {
+    "url": "https://figshare.com/articles/journal_contribution/Layered_scenario_mapping_a_multidimensional_mapping_technique_for_collaborative_design/1568132",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "eb07ac84ac1902623f9f1e98900819baf67083f0f879d9fc19b997b2db67032b",
+    "license": ""
+  },
   "W2206712461": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/962/1437",
     "repo_pdf": "",
@@ -3205,6 +3233,13 @@
     "sha256": "6fd6e7a028183a0443d1151e178de0218e599cb5a0c5bc1a0985573911e9ee73",
     "license": ""
   },
+  "W2258469520": {
+    "url": "https://hdl.handle.net/2381/32028",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "71bd76a0e6dd5b60e25f145612513e51a4139d96a60c2e77577274649b036be6",
+    "license": ""
+  },
   "W2259173466": {
     "url": "https://inria.hal.science/hal-01609400/document",
     "repo_pdf": "",
@@ -3252,6 +3287,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "8c7b8a5c64096733551153df1a5bb606a1e04a80841e2d8df0b3076425d86cb0",
+    "license": ""
+  },
+  "W2283569051": {
+    "url": "https://figshare.com/articles/conference_contribution/The_role_of_designers_in_increasing_competitiveness/10126937",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "e80ab9504134d155a285c5311a88695f339322a96863f05191844761cc735a9f",
     "license": ""
   },
   "W2290098293": {
@@ -3714,6 +3756,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "5167efdea29d9bc8fd5e97dd568b9af320e275e75b6e6cb5279eb9ea6a25116d",
+    "license": ""
+  },
+  "W2513711910": {
+    "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/58822b0f-eb26-443b-be13-c5c69c1aede2/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "c0809be75819a44e617da39f4061f37f51275090a1a0899efe2df56eb384c96b",
     "license": ""
   },
   "W2515468182": {
@@ -4248,6 +4297,13 @@
     "sha256": "e0414dbf9ac52b520be6cb7751a129eb79931a9cccc6a64b638ede41178d1718",
     "license": ""
   },
+  "W2605981386": {
+    "url": "https://dspace.lboro.ac.uk/2134/24429",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "89d98b5e4d6d39a2b013811143334b8b2e0ef0b9e3180a7792550b751d606661",
+    "license": ""
+  },
   "W2609627805": {
     "url": "https://zenodo.org/records/2605109/files/DE14-Durall.pdf",
     "repo_pdf": "",
@@ -4512,6 +4568,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "96edb8a446bd1c48286bb6d181ed3c34e82ff252e479a1db57aef39674d4e28c",
+    "license": ""
+  },
+  "W2734181063": {
+    "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/fa678fe1-6896-4516-9290-948ddecee81f/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f1ef007f2a61ba56181acd55c62fcd28a58149bd04907a3503a099e8adc85abb",
     "license": ""
   },
   "W2736105879": {
@@ -5879,6 +5942,13 @@
     "sha256": "1cf1f52adb0f834c98a216ed7a234b46b40b47369b9d092ea3322a21c623a3ec",
     "license": ""
   },
+  "W2907145557": {
+    "url": "https://jespersimonsen.dk/Downloads/IRIS-38%20Keynote%20abstract.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d8812529819364a38c52c9d7862a41325131b4250380ed4583ce169667cf9d3a",
+    "license": ""
+  },
   "W2907175401": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/2574/3055",
     "repo_pdf": "",
@@ -5954,6 +6024,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "75b499c3dfe5037fd44385b5c67f07fc9146cca76a6f666436dd19a00428d8c2",
+    "license": ""
+  },
+  "W2912853823": {
+    "url": "https://figshare.com/articles/journal_contribution/Design_and_social_innovation_at_the_margins_finding_and_making_cultures_of_plurality/23465075",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "f99243a6ef216be7a6bdcd7ed1c2caf4231fa6cd5f09e47e5f34e6c667b8a07a",
     "license": ""
   },
   "W2913210181": {
@@ -6304,6 +6381,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "4f24fbcc33ecbd62ce4ef217b70c81496158962c4582145ae92839043a76e0ab",
+    "license": ""
+  },
+  "W2947720255": {
+    "url": "https://www.tandfonline.com/doi/pdf/10.1080/14606925.2019.1594951?needAccess=true&role=button",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "22fa639228fab1097c429247a71935ac8516ea6e935031ae191f30fd14eebbf1",
     "license": ""
   },
   "W2947788106": {
@@ -7039,6 +7123,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "19761018038d6978001938eee56bbc461bb3bb305987af74d783bb07719f6bbd",
+    "license": ""
+  },
+  "W2994871791": {
+    "url": "https://aaltodoc.aalto.fi/server/api/core/bitstreams/b1a57576-f0c4-4094-aca8-1339f71e3f02/content",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "88800c9153d156c176c033478c815e4029c1d48c0a749c6738f735a26be3b15e",
     "license": ""
   },
   "W2995100871": {
@@ -8504,6 +8595,13 @@
     "sha256": "196318ca0a179a8a00d4d43331745d0d9f83d653b495faf62711a43869f8db94",
     "license": ""
   },
+  "W3130691010": {
+    "url": "https://trepo.tuni.fi/bitstream/handle/10024/219467/Designing_Gaming_Wearables.pdf;jsessionid=8261DBBA0940070F171E1B5A558FC7DB?sequence=1",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "08654371a3b93ea3b1746164b94a1b6c94e5dc3330d5d298074b1251e6bba1b5",
+    "license": ""
+  },
   "W3131624293": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/4193/3800",
     "repo_pdf": "",
@@ -8971,6 +9069,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "b6c15dedcc93557ebe55e4ba8d2cc299bfb49ddf05b8f0aabaf4ba4d21fd8d3b",
+    "license": ""
+  },
+  "W3169833017": {
+    "url": "https://www.iiisci.org/Journal/pdv/sci/pdfs/IP110LL20.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "deef59d50a859d72cca065a07cb53aa0b334b15ecd899ed7633794435fb88bfa",
     "license": ""
   },
   "W3169947369": {
@@ -10310,6 +10415,13 @@
     "sha256": "b7af7f33dcedd324abb9554f03a703e6e0ec4769bbb64525ccfe422502cf5685",
     "license": ""
   },
+  "W4281781762": {
+    "url": "https://dl.designresearchsociety.org/cgi/viewcontent.cgi?article=2770&context=drs-conference-papers",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1eefa1eb98f286ea9e7b8bd1ec38f5233d62f188ed3271d11b99799321754bcb",
+    "license": ""
+  },
   "W4281799883": {
     "url": "https://researcher.itu.dk/ws/files/86911930/3532106.3533477.pdf",
     "repo_pdf": "",
@@ -10826,6 +10938,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "ab8738d912062d8ef5156c1d100eaa58d2ebcefb87049d272277e14ae3ac3550",
+    "license": ""
+  },
+  "W4291803503": {
+    "url": "https://iris.unitn.it/bitstream/11572/354095/1/Reworlding%20PDC%20FINAL.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "dc9fa55c01ff396595814b670ce8af6b6b44a15d052a1a9511818c474f00fa5b",
     "license": ""
   },
   "W4291803527": {
@@ -11911,6 +12030,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "6bfca2d6b7d1a13c66af9ea22d7b799f7dfe1031f6c4169ce29f717fdce7deeb",
+    "license": ""
+  },
+  "W4383652276": {
+    "url": "https://trepo.tuni.fi/bitstream/handle/10024/206869/The_WildTech_Experience.pdf;jsessionid=43B2CE129F6DB8C13A5ABC0E1B3ABDEC?sequence=1",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "597994fe8cca38c0f2331bc324cff309e548a7a49282ccaa8da82b1822a35efa",
     "license": ""
   },
   "W4383652568": {
@@ -15469,6 +15595,13 @@
     "sha256": "7079a57426dc5157693684a0f2b2ee995a6ec33b67bc1d865543883baadf1483",
     "license": ""
   },
+  "W609175746": {
+    "url": "https://dl.designresearchsociety.org/cgi/viewcontent.cgi?article=1244&context=learnxdesign",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "2b054b881b3e822df77ea65fcf38e72ffa337715bd4e811d21cd0de498328835",
+    "license": ""
+  },
   "W614058307": {
     "url": "https://liu.diva-portal.org/smash/get/diva2:819320/FULLTEXT01.pdf",
     "repo_pdf": "",
@@ -17357,6 +17490,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "cf487f39db1134b6dc1f83aae36ae00b282f268baf80254eb2c078b90bd8ecbc",
+    "license": ""
+  },
+  "nordic:iris:ab5685f8d81450653c04": {
+    "url": "https://ep.liu.se/ecp/138/053/ecp17138053.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "70d93db4513f7b93d5f960329ebb0abbdf72d2cc934e6d9e830046e061741eee",
     "license": ""
   },
   "nordic:iris:e858e7e2a02d73925da0": {
@@ -20628,6 +20768,13 @@
     "sha256": "36913934423d06aeff3af6a7e6abe6131a33653735a5cb396776c360b73e67da",
     "license": ""
   },
+  "nordic:nva:635d3eb6f5d7603c54d2": {
+    "url": "https://www.ijdesign.org/index.php/IJDesign/article/download/5772/1078",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "d4e7c28d8596bef9ac2006e491a05bb76999cbf1c6c3304931bfdba6f2fe2367",
+    "license": ""
+  },
   "nordic:nva:6369864e9b5b326e6f7a": {
     "url": "https://journals.oslomet.no/index.php/formakademisk/article/download/189/185",
     "repo_pdf": "",
@@ -21025,6 +21172,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "fe46d5991b933e5da892a4939a2b11d8f2da19cfe36a6f6d7d43731b3d47ceeb",
+    "license": ""
+  },
+  "nordic:nva:88148b5f7cd2feb2fcd8": {
+    "url": "https://gispoint.de/fileadmin/user_upload/paper_gis_open/DLA_2022/537724036.pdf",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "82741b8906b4e378562a36d2f5649b303f7eea241000c3d49ec4ddd997c82740",
     "license": ""
   },
   "nordic:nva:88e9f49c13c76cac9b92": {
@@ -21494,6 +21648,13 @@
     "repo_pdf": "",
     "status": "verified-oa-link",
     "sha256": "2d8b5922ed8817f930fa188c17d4ec3e59e80f072d612adf57c6797368d5a0b4",
+    "license": ""
+  },
+  "nordic:nva:c05cfd7a0cf8e24c7ba4": {
+    "url": "https://www.ijdesign.org/index.php/IJDesign/article/download/5374/1092",
+    "repo_pdf": "",
+    "status": "verified-oa-link",
+    "sha256": "1d0e97f1664a5995515c3a41447312589be796b49fa8b5acc48ed36775808214",
     "license": ""
   },
   "nordic:nva:c06f2b1f8339da249d0f": {
