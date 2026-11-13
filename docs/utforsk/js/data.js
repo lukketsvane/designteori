@@ -100,7 +100,7 @@ export function verdsAtlas() {
   if (atlas) return atlas;
   atlas = (async () => {
     try {
-      const r = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json");
+      const r = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json", { integrity: "sha256-BDQs3B4wFrzX2xYw3pVoTWe3n+PIxGAyHoeu9GlQI5Q=" });
       if (!r.ok) throw new Error();
       return { ok: true, data: await r.json() };
     } catch (e) {

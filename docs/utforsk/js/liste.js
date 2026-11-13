@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke } from "./hjelp.js?v=1";
-import * as T from "./tilstand.js?v=1";
-import * as data from "./data.js?v=1";
-import { hentSamandrag } from "./samandrag.js?v=1";
+import { esc, fmt, kutt, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke } from "./hjelp.js?v=20";
+import * as T from "./tilstand.js?v=20";
+import * as data from "./data.js?v=20";
+import { hentSamandrag } from "./samandrag.js?v=20";
 
 const { S, D } = T;
 let api = null;
@@ -68,7 +68,10 @@ export function init(a) {
   });
   el.liste.addEventListener("pointerleave", () => api.merk(aktivI()));
   el.liste.addEventListener("keydown", tast);
-  el.liste.addEventListener("focus", () => { if (aktiv < 0 && rekkje.length) settAktiv(0); else api.merk(aktivI()); });
+  // A pointer press focuses the list too; re-rendering rows then would swallow the click.
+  let pekarNed = false;
+  el.liste.addEventListener("pointerdown", () => { pekarNed = true; setTimeout(() => { pekarNed = false; }, 400); });
+  el.liste.addEventListener("focus", () => { if (aktiv < 0 && rekkje.length && !pekarNed) settAktiv(0); else api.merk(aktivI()); });
   el.liste.addEventListener("blur", () => api.merk(null));
   el.tom.addEventListener("click", (e) => { const b = e.target.closest("button[data-fjern]"); if (b) T.fjern(b.dataset.fjern); });
   el.detalj.addEventListener("click", detaljKlikk);
@@ -109,7 +112,9 @@ function lagRekkje() {
     for (const i of ORDNAR[sort]) if (u[i]) ut[c++] = i;
   }
   rekkje = ut;
+  rekkjeVersjon++;
 }
+let rekkjeVersjon = 0;
 
 // ---------- render ----------
 export function oppdater(s, e) {
@@ -146,8 +151,18 @@ let sisteVindauge = "";
 function teiknRader(tving) {
   const top = el.liste.scrollTop, hh = el.liste.clientHeight || 600;
   const a = Math.max(0, Math.floor(top / H) - 10), b = Math.min(rekkje.length, Math.ceil((top + hh) / H) + 10);
-  const key = `${a}-${b}-${aktiv}-${lenkeStatus}`;
-  if (!tving && key === sisteVindauge) return;
+  const key = `${a}-${b}-${lenkeStatus}-${rekkjeVersjon}`;
+  if (key === sisteVindauge && (!tving || tving === "aktiv")) {
+    // same rows: only move the active marker, so a click in progress keeps its target
+    for (const r of el.hoyde.children) {
+      const p = +r.getAttribute("aria-posinset") - 1;
+      r.classList.toggle("aktiv", p === aktiv);
+      r.setAttribute("aria-selected", String(p === aktiv));
+    }
+    if (aktiv >= 0) el.liste.setAttribute("aria-activedescendant", `rad-${rekkje[aktiv]}`);
+    else el.liste.removeAttribute("aria-activedescendant");
+    return;
+  }
   sisteVindauge = key;
   const v = D.verk;
   let html = "";
@@ -156,7 +171,7 @@ function teiknRader(tving) {
     const f = D.kol.forf[i];
     const forf = f.length ? v.forfattarar[f[0]].namn + (f.length > 1 ? " m.fl." : "") : "Ukjend forfattar";
     const kanal = D.kanal[i] >= 0 ? v.kanalar[D.kanal[i]].namn : D.lenker && D.lenker.kjelde[i] ? D.lenker.kjelde[i] : (D.lag[i] ? "Arkiv" : "");
-    html += `<div class="rad${p === aktiv ? " aktiv" : ""}" role="option" id="rad-${i}" data-i="${i}" aria-selected="${p === aktiv}" aria-posinset="${p + 1}" aria-setsize="${rekkje.length}" style="transform:translateY(${p * H}px)">
+    html += `<div class="rad${p === aktiv ? " aktiv" : ""}" role="option" id="rad-${i}" data-i="${i}" aria-label="${esc(D.kol.tittel[i])}, ${esc(forf)}, ${D.ar[i]}${[", open PDF", ", lenke", ", berre DOI", ""][D.pdf[i]]}" aria-selected="${p === aktiv}" aria-posinset="${p + 1}" aria-setsize="${rekkje.length}" style="transform:translateY(${p * H}px)">
       <div class="rad-tekst"><span class="rad-tittel">${esc(D.kol.tittel[i])}</span><span class="rad-meta">${esc(forf)} · ${D.ar[i]}${kanal ? " · " + esc(kutt(kanal, 60)) : ""}</span></div>
       <div class="rad-hogre">${merke(i)}${D.sit[i] >= 0 ? `<span class="rad-sit" title="Siteringar (OpenAlex)">${fmt(D.sit[i])}</span>` : ""}</div>
     </div>`;
@@ -198,7 +213,7 @@ function settAktiv(p) {
   const top = aktiv * H, hh = el.liste.clientHeight;
   if (top < el.liste.scrollTop) el.liste.scrollTop = top;
   else if (top + H > el.liste.scrollTop + hh) el.liste.scrollTop = top + H - hh;
-  teiknRader(true);
+  teiknRader("aktiv");
   const i = rekkje[aktiv];
   api.merk(i);
   annonserMerke(`${D.kol.tittel[i]}, ${D.ar[i]}`);
@@ -334,6 +349,14 @@ async function fyllSamandrag(i, id) {
     k.className = "dim";
     k.textContent = `Kjelde: ${r.kjelde}`;
     b.append(p, k);
+    if (r.lenkje) {
+      const a = document.createElement("a");
+      a.href = r.lenkje; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.textContent = "Opne PDF-en samandraget er trekt frå";
+      const q = document.createElement("p");
+      q.append(a);
+      b.append(q);
+    }
   } else {
     b.innerHTML = `<p class="dim">Samandrag er ikkje publisert her. Sjå utgjevarsida.</p><p><a href="${esc(KATALOG_LENKE(id))}">Opne i katalogen</a></p>`;
   }
@@ -373,7 +396,8 @@ function detaljKlikk(e) {
   if (d.handling === "lista") return api.lukkVerk();
   if (d.handling === "lenker") { lenkeStatus = "ingen"; return sikreLenker(); }
   if (d.handling === "nabolag") return api.nabolag(S.verk);
-  if (d.handling === "lik") return T.endre((s) => { s.f.lik = s.verk; s.vis = s.vis === "kart" ? s.vis : "kart"; });
+  // "these ten": the work and its ten neighbours, on their own (other filters would hide some of them)
+  if (d.handling === "lik") return T.endre((s) => { s.f = T.tomeFilter(); s.f.lik = s.verk; s.vis = "kart"; });
   if (d.forf) return T.veksle("forf", d.forf, { erstatt: true });
   if (d.inst) return T.veksle("inst", d.inst, { erstatt: true });
   if (d.kanal) return T.veksle("kanal", d.kanal, { erstatt: true });
@@ -412,7 +436,7 @@ function drag() {
     aktivDrag = true; dratt = false;
     y0 = e.clientY; h0 = el.p.getBoundingClientRect().height; t0 = performance.now();
     sisteY = y0; sisteT = t0; fart = 0;
-    el.handtak.setPointerCapture(e.pointerId);
+    try { el.handtak.setPointerCapture(e.pointerId); } catch (err) { /* pointer already gone */ }
     el.p.classList.add("utan-anim");
   });
   el.handtak.addEventListener("pointermove", (e) => {

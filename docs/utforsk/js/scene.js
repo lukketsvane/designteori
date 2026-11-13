@@ -1,7 +1,7 @@
 // Canvas scene shared by Kart, Nett, Verda and the Siteringar map: base and overlay
 // canvas with dpr, d3.zoom, pointer and touch rules, tooltip and pinned card,
 // lasso, keyboard pan/zoom, focus-ring cycling, zoom buttons.
-import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=1";
+import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=20";
 
 const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
 
@@ -19,7 +19,7 @@ export function lagScene(flate, o) {
   const base = flate.querySelector(".lag-base"), over = flate.querySelector(".lag-over");
   const cb = base.getContext("2d"), co = over.getContext("2d");
   const [VW, VH] = o.verd;
-  const sc = { w: 1, h: 1, dpr: 1, s0: 1, ox: 0, oy: 0, t: d3.zoomIdentity, K: 1, TX: 0, TY: 0, k: 1, fokusId: null, hoverId: null };
+  const sc = { rf: 1, w: 1, h: 1, dpr: 1, s0: 1, ox: 0, oy: 0, t: d3.zoomIdentity, K: 1, TX: 0, TY: 0, k: 1, fokusId: null, hoverId: null };
   const teiknTider = [];
 
   function oppdaterSc() {
@@ -68,16 +68,35 @@ export function lagScene(flate, o) {
   function storleik() {
     const r = flate.getBoundingClientRect();
     const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
-    const z = sc.w > 1 ? zNo() : null;
+    // keep the reader's zoom; the home view (identity) refits to the new size and panels
+    const heime = Math.abs(sc.t.k - 1) < 1e-3 && Math.abs(sc.t.x) < 0.5 && Math.abs(sc.t.y) < 0.5;
+    const z = sc.w > 1 && !heime ? zNo() : null;
     sc.w = w; sc.h = h; sc.dpr = DPR();
+    // mark sizes are tuned for a drawing about 860 px across; smaller drawings get smaller marks
+    sc.rf = Math.max(0.5, Math.min(1, Math.min(w, h) / 860));
     for (const c of [base, over]) {
       c.width = Math.round(w * sc.dpr); c.height = Math.round(h * sc.dpr);
       c.style.width = `${w}px`; c.style.height = `${h}px`;
     }
     const m = o.marg != null ? o.marg : 0.04;
-    sc.s0 = Math.min(w / VW, h / VH) * (1 - 2 * m);
-    sc.ox = (w - VW * sc.s0) / 2; sc.oy = (h - VH * sc.s0) / 2;
-    zoom.extent([[0, 0], [w, h]]).translateExtent([[-w * 2, -h * 2], [w * 3, h * 3]]);
+    // the home view fits o.heim() (a box in world units) or the whole world
+    const hb = o.heim ? o.heim() : [0, 0, VW, VH];
+    const bw = Math.max(1, hb[2] - hb[0]), bh = Math.max(1, hb[3] - hb[1]);
+    sc.s0 = Math.min(w / bw, h / bh) * (1 - 2 * m);
+    sc.ox = (w - bw * sc.s0) / 2 - hb[0] * sc.s0; sc.oy = (h - bh * sc.s0) / 2 - hb[1] * sc.s0;
+    // a floating legend on the left and a side panel on the right: centre the drawing in
+    // the space between them when there is room
+    const lg = flate.querySelector(":scope > .teikn-wrap");
+    const sp = flate.querySelector(":scope > .sidepanel:not([hidden])");
+    const padL = lg && lg.offsetWidth ? lg.offsetWidth + 16 : 0;
+    const padR = sp && sp.offsetWidth ? sp.offsetWidth + 16 : 0;
+    if (padL + padR) {
+      const fri = w - bw * sc.s0;
+      if (fri > padL + padR) sc.ox = padL + (w - padL - padR - bw * sc.s0) / 2 - hb[0] * sc.s0;
+      else if (padR && fri > padR) sc.ox = (w - padR - bw * sc.s0) / 2 - hb[0] * sc.s0;
+      else if (padL && fri > padL) sc.ox = padL + (w - padL - bw * sc.s0) / 2 - hb[0] * sc.s0;
+    }
+    zoom.extent([[0, 0], [w, h]]).translateExtent(o.fri ? [[-Infinity, -Infinity], [Infinity, Infinity]] : [[-w * 2, -h * 2], [w * 3, h * 3]]);
     if (z) settZ(z, 0, true); else { oppdaterSc(); }
     teikn();
   }
@@ -96,7 +115,7 @@ export function lagScene(flate, o) {
       oppdaterSc();
       if (o.vedZoomRask) o.vedZoomRask(sc);
       teikn();
-      if (!stilleZoom && o.vedZoom) o.vedZoom(zNo());
+      if (!stilleZoom && o.vedZoom) { const t = ev.transform; o.vedZoom(Math.abs(t.k - 1) < 1e-3 && Math.abs(t.x) < 0.5 && Math.abs(t.y) < 0.5 ? null : zNo()); }
     });
   let stilleZoom = false;
   const sel = d3.select(over);
@@ -195,7 +214,7 @@ export function lagScene(flate, o) {
       sc.hoverId = null; teiknOverlay();
       return;
     }
-    if (kort.ope && kort.id === hit.id) { o.tapHandling(hit, ev); return; }
+    if (kort.ope && kort.id === hit.id) { kort.lukk(); o.tapHandling(hit, ev); return; }
     const k = o.kort(hit);
     sc.hoverId = hit.id;
     if (o.hoverEndra) o.hoverEndra(hit);
@@ -207,7 +226,7 @@ export function lagScene(flate, o) {
   let lasso = null, lassoNettoFerdig = false;
   function startLasso(ev) {
     ev.preventDefault();
-    over.setPointerCapture(ev.pointerId);
+    try { over.setPointerCapture(ev.pointerId); } catch (e) { /* pointer already gone */ }
     lasso = { id: ev.pointerId, pkt: [lokal(ev)] };
     tooltip.skjul();
   }
@@ -297,6 +316,7 @@ export function lagScene(flate, o) {
 
   const ro = new ResizeObserver(() => storleik());
   ro.observe(flate);
+  flate.addEventListener("utforsk:teikn", () => storleik());
 
   return {
     sc, base, over, teikn, teiknOverlay, storleik, zNo,

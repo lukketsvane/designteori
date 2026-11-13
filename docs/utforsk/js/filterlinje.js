@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal } from "./hjelp.js?v=1";
-import * as T from "./tilstand.js?v=1";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal } from "./hjelp.js?v=20";
+import * as T from "./tilstand.js?v=20";
 
 const { S, D } = T;
 let el = {};
@@ -63,16 +63,18 @@ export function init() {
   };
   el.brukKo = () => { if (ko != null) { const q = ko; ko = null; T.endre((s) => { s.f.q = q.trim(); }, { hist: "kont:q", utsett: 300 }); } el.sok.placeholder = "Søk i tittel, forfattar, kanal, institusjon"; };
   el.sok.addEventListener("input", () => { brukSok(el.sok.value); visForslag(); });
-  el.sok.addEventListener("focus", () => { T.sikre("tid.json").then(() => visForslag()); });
+  // suggestions: words in titles (tid.json) and cited works (siteringar.json), loaded on first focus
+  el.sok.addEventListener("focus", () => { T.sikre("tid.json").then(() => visForslag()); T.sikre("siteringar.json").then(() => visForslag()); });
   el.sok.addEventListener("blur", () => { T.avsluttGest("q"); setTimeout(() => { if (!el.forslag.contains(document.activeElement)) lukkForslag(); }, 150); });
   el.sok.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown" && !el.forslag.hidden) { const b = el.forslag.querySelector("button"); if (b) { b.focus(); e.preventDefault(); } }
     else if (e.key === "Enter") { clearTimeout(sokTid); if (T.sokKlar()) T.endre((s) => { s.f.q = el.sok.value.trim(); }); T.avsluttGest("q"); lukkForslag(); }
   });
+  el.avbrytSok = () => { clearTimeout(sokTid); clearTimeout(slutTid); ko = null; };
   el.forslag.addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-term]");
+    const b = e.target.closest("button[data-term], button[data-kanon]");
     if (!b) return;
-    veljTerm(b.dataset.term);
+    if (b.dataset.kanon) veljKanon(b.dataset.kanon); else veljTerm(b.dataset.term);
   });
   el.forslag.addEventListener("keydown", (e) => {
     const bs = [...el.forslag.querySelectorAll("button")];
@@ -209,27 +211,62 @@ function teiknPop(p, heilt) {
 // ---------- term suggestions (amendments 2, 22) ----------
 function visForslag() {
   const q = el.sok.value.trim();
-  if (!T.harFil("tid.json") || q.length < 2) { lukkForslag(); return; }
-  const key = termNokkel(q), fk = fold(key), utan = fk.replace(/ /g, "");
-  const td = D.tidd, ut = [];
-  const sett = new Set();
-  for (const pass of [0, 1]) {
-    for (let t = 0; t < td.termar.k.length && ut.length < 3; t++) {
-      const f = D.termFold[t];
-      const ok = pass === 0 ? f.startsWith(fk) || (utan && f.startsWith(utan)) : f.includes(fk);
-      if (ok && !sett.has(t)) { sett.add(t); ut.push(t); }
+  if (q.length < 2) { lukkForslag(); return; }
+  const ut = [];
+  if (T.harFil("tid.json")) {
+    const key = termNokkel(q), fk = fold(key), utan = fk.replace(/ /g, "");
+    const td = D.tidd;
+    const sett = new Set();
+    for (const pass of [0, 1]) {
+      for (let t = 0; t < td.termar.k.length && sett.size < 3; t++) {
+        const f = D.termFold[t];
+        const ok = pass === 0 ? f.startsWith(fk) || (utan && f.startsWith(utan)) : f.includes(fk);
+        if (ok && !sett.has(t)) { sett.add(t); ut.push(`<li role="option"><button type="button" data-term="${esc(td.termar.k[t])}">Ord i titlar: <b>${esc(td.termar.vis[t])}</b> · ${fmt(td.termar.df[t])} titlar</button></li>`); }
+      }
     }
   }
+  for (const v of sitertForslag(q)) {
+    ut.push(`<li role="option"><button type="button" data-kanon="${esc(T.nodeKey(v))}" aria-label="Sitert verk: ${esc(T.merkelapp(v))}, ${esc(T.nodeTittel(v))}, sitert av ${fmt(D.nSitert[v])} verk i korpuset. Vel verka som siterer det.">Sitert verk: <b>${esc(T.merkelapp(v))}</b> ${esc(kutt(T.nodeTittel(v), 46))} · sitert av ${fmt(D.nSitert[v])} verk</button></li>`);
+  }
   if (!ut.length) { lukkForslag(); return; }
-  el.forslag.innerHTML = ut.map((t) => `<li role="option"><button type="button" data-term="${esc(td.termar.k[t])}">Ord i titlar: <b>${esc(td.termar.vis[t])}</b> · ${fmt(td.termar.df[t])} titlar</button></li>`).join("");
+  el.forslag.innerHTML = ut.join("");
   el.forslag.hidden = false;
+}
+// Cited works (corpus works and cited items outside it) whose title has every typed word
+// as a word prefix; at most 3, most cited first. Choosing one selects the works citing it.
+let sitertOrd = null;
+function sitertForslag(q) {
+  if (!T.harFil("siteringar.json")) return [];
+  const tok = T.sokTokens(q).map((t) => t.p);
+  if (!tok.length) return [];
+  if (!sitertOrd) {
+    sitertOrd = [];
+    const NM = D.n + D.m;
+    for (let v = 0; v < NM; v++) if (D.nSitert[v] >= 3) sitertOrd.push({ v, ord: fold(T.nodeTittel(v)).split(/[^\p{L}\p{N}]+/u).filter(Boolean) });
+    sitertOrd.sort((a, b) => D.nSitert[b.v] - D.nSitert[a.v] || a.v - b.v);
+  }
+  const ut = [];
+  for (const x of sitertOrd) {
+    if (tok.every((p) => x.ord.some((w) => w.startsWith(p)))) { ut.push(x.v); if (ut.length >= 3) break; }
+  }
+  return ut;
+}
+function veljKanon(key) {
+  lukkForslag();
+  if (el.avbrytSok) el.avbrytSok();
+  el.sok.value = "";
+  T.endre((s) => { s.f.kanon = new Set([key]); s.f.q = ""; });
+  el.sok.focus();
 }
 function lukkForslag() { if (el.forslag) { el.forslag.hidden = true; el.forslag.innerHTML = ""; } }
 export const forslagOpe = () => el.forslag && !el.forslag.hidden;
 export function lukkForslagListe() { const o = forslagOpe(); lukkForslag(); if (o) el.sok.focus(); return o; }
 function veljTerm(key) {
   lukkForslag();
-  T.endre((s) => { s.f.term.add(key); });
+  // the word replaces the typed search: it is the exact version of what was typed
+  if (el.avbrytSok) el.avbrytSok();
+  el.sok.value = "";
+  T.endre((s) => { s.f.term.add(key); s.f.q = ""; });
   el.sok.focus();
 }
 export function fokuserSok() { if (smal() && !panelOpe()) {} el.sok.focus(); el.sok.select(); }
@@ -318,6 +355,7 @@ export function oppdater() {
   el.sokinfo.textContent = S.f.q && toks.length ? `Søkjer etter: ${toks.map((t) => t.p + "*").join(", ")}` : "";
   const chips = T.chipar();
   el.knapp.textContent = `Filter (${chips.length})`;
+  el.panel.querySelector(".panel-tittel").textContent = `Filter · ${fmt(T.valt)} verk`;
   teiknChipar(chips);
 }
 

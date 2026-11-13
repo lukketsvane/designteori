@@ -1,9 +1,10 @@
 // window.__utforsk: state, measuring and self-checks (6.5, amendment 45).
-import * as T from "./tilstand.js?v=1";
-import * as data from "./data.js?v=1";
-import { PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, ANNA_LAND, KGR_FARGE, PALETTE_GRUPPE, PALETTE_ORD, FADE, FADE_ALFA, BG, cie76, kontrast, blandHex, overlappPar, rorsle, fmt } from "./hjelp.js?v=1";
+import * as T from "./tilstand.js?v=20";
+import * as data from "./data.js?v=20";
+import { PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, ANNA_LAND, KGR_FARGE, PALETTE_GRUPPE, PALETTE_ORD, FADE, FADE_ALFA, BG, cie76, kontrast, blandHex, overlappPar, rorsle, fmt } from "./hjelp.js?v=20";
 
-const venteRamme = () => new Promise((r) => requestAnimationFrame(r));
+// A frame, or 40 ms when the page is hidden and rAF does not run.
+const venteRamme = () => new Promise((r) => { let ferdig = false; const f = (t) => { if (!ferdig) { ferdig = true; r(t == null ? performance.now() : t); } }; requestAnimationFrame(f); setTimeout(() => f(null), 40); });
 const p95 = (a) => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(s.length * 0.95))] : 0; };
 const snitt = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
 const r2 = (x) => Math.round(x * 100) / 100;
@@ -22,13 +23,14 @@ export function initMaal({ visingar, liste, filterlinje }) {
       const k = t0.k * (1 + 0.5 * Math.sin(f / 12));
       const t = d3.zoomIdentity.translate(t0.x + 40 * Math.sin(f / 9) + (1 - k / t0.k) * sc.sc.w / 2, t0.y + 30 * Math.cos(f / 11) + (1 - k / t0.k) * sc.sc.h / 2).scale(k);
       sc.sel.call(sc.zoomBehaviour.transform, t);
+      sc.tvingTeikn();
       ts.push(await venteRamme());
     }
     sc.sel.call(sc.zoomBehaviour.transform, t0);
     const iv = [];
     for (let i = 1; i < ts.length; i++) iv.push(ts[i] - ts[i - 1]);
     const tt = sc.teiknTider.slice(start);
-    return { rammer, snitt_ms: r2(snitt(iv)), p95_ms: r2(p95(iv)), teikn_snitt_ms: r2(snitt(tt)), teikn_p95_ms: r2(p95(tt)) };
+    return { rammer, synleg: document.visibilityState === "visible", snitt_ms: r2(snitt(iv)), p95_ms: r2(p95(iv)), teikn_snitt_ms: r2(snitt(tt)), teikn_p95_ms: r2(p95(tt)) };
   }
 
   async function filter({ gonger = 10 } = {}) {
@@ -83,7 +85,8 @@ export function initMaal({ visingar, liste, filterlinje }) {
       tip.hidden = true;
       const t0 = performance.now();
       sc.over.dispatchEvent(new PointerEvent("pointermove", { clientX: r.left + px, clientY: r.top + py, pointerType: "mouse", bubbles: true }));
-      while (tip.hidden && performance.now() - t0 < 200) await venteRamme();
+      const sc2 = sc; void sc2;
+      while (tip.hidden && performance.now() - t0 < 200) await new Promise((r) => setTimeout(r, 0));
       if (!tip.hidden) tider.push(performance.now() - t0);
     }
     sc.over.dispatchEvent(new PointerEvent("pointerleave", { pointerType: "mouse" }));
@@ -98,11 +101,11 @@ export function initMaal({ visingar, liste, filterlinje }) {
     const ut = {};
     const z0 = sc ? sc.zNo() : null;
     for (const k of sc ? [1, 3, 8] : [1]) {
-      if (sc) { sc.settZ([k, z0[1], z0[2]], 0, true); await venteRamme(); await venteRamme(); await venteRamme(); }
+      if (sc) { sc.settZ([k, z0[1], z0[2]], 0, true); sc.teikn(); sc.tvingTeikn(); await venteRamme(); sc.teikn(); sc.tvingTeikn(); }
       const l = v.mod.etikettar();
       ut[`k${k}`] = { etikettar: l.length, overlapp: overlappPar(l) };
     }
-    if (sc) sc.settZ(z0, 0, true);
+    if (sc) { sc.settZ(z0, 0, true); sc.teikn(); sc.tvingTeikn(); }
     return ut;
   }
 

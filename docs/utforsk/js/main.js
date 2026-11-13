@@ -1,22 +1,22 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=1";
-import * as data from "./data.js?v=1";
-import * as T from "./tilstand.js?v=1";
-import * as filterlinje from "./filterlinje.js?v=1";
-import * as liste from "./liste.js?v=1";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=1";
-import { initMaal } from "./maal.js?v=1";
+import * as hjelp from "./hjelp.js?v=20";
+import * as data from "./data.js?v=20";
+import * as T from "./tilstand.js?v=20";
+import * as filterlinje from "./filterlinje.js?v=20";
+import * as liste from "./liste.js?v=20";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=20";
+import { initMaal } from "./maal.js?v=20";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=1"),
-  nett: () => import("./visningar/nett.js?v=1"),
-  verda: () => import("./visningar/verda.js?v=1"),
-  siteringar: () => import("./visningar/siteringar.js?v=1"),
-  tid: () => import("./visningar/tid.js?v=1"),
+  kart: () => import("./visningar/kart.js?v=20"),
+  nett: () => import("./visningar/nett.js?v=20"),
+  verda: () => import("./visningar/verda.js?v=20"),
+  siteringar: () => import("./visningar/siteringar.js?v=20"),
+  tid: () => import("./visningar/tid.js?v=20"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}
@@ -27,11 +27,17 @@ window.addEventListener("error", (e) => { if (e && e.message && !errLogga.has(e.
 window.addEventListener("unhandledrejection", (e) => { console.error("Utforsk:", e.reason); e.preventDefault(); });
 
 async function start() {
+  settFane(T.lesHash(location.hash).vis);
   const sm = document.getElementById("startmelding");
+  // without the manifest the files load without their version suffix; the page still works
   const m = await data.lastManifest();
-  if (!m.ok) { sm.innerHTML = `<p>Kunne ikkje laste manifest.json.</p><button type="button" class="knapp" onclick="location.reload()">Prøv igjen</button>`; return; }
+  if (!m.ok) console.info("Utforsk: manifest.json kunne ikkje lastast; hentar filene utan versjonsmerke.");
   const r = await data.last("verk.json", { hoy: true });
-  if (!r.ok) { sm.innerHTML = `<p>Kunne ikkje laste verk.json.</p><button type="button" class="knapp" onclick="location.reload()">Prøv igjen</button>`; return; }
+  if (!r.ok) {
+    sm.innerHTML = `<p>Kunne ikkje laste verk.json.</p><button type="button" class="knapp">Prøv igjen</button>`;
+    sm.querySelector("button").addEventListener("click", () => location.reload());
+    return;
+  }
   T.forbredVerk(r.data);
   T.fraUrl({ start: true });
   sm.remove();
@@ -74,7 +80,11 @@ function feil(id, e) {
   const v = visingar[id];
   const k = `${id}:${e && e.message}`;
   if (!errLogga.has(k)) { errLogga.add(k); console.error(`Utforsk (${id}):`, e); }
-  if (v && v.ramme) hjelp.visMelding(v.ramme, { tittel: `Kunne ikkje teikne ${NAMN[id]}.`, knapp: { tekst: "Prøv igjen", gjer: () => { hjelp.visMelding(v.ramme, null); oppdaterVis(id, alleEndringar()); } } });
+  if (v && v.ramme) hjelp.visMelding(v.ramme, { tittel: `Kunne ikkje teikne ${NAMN[id]}.`, knapp: { tekst: "Prøv igjen", gjer: () => {
+    hjelp.visMelding(v.ramme, null);
+    if (v.klar) oppdaterVis(id, alleEndringar());
+    else { v.lastar = null; lastVis(id).then(() => { if (S.vis === id) visVis(id); }); }
+  } } });
 }
 const alleEndringar = () => ({ filter: true, vis: true, verk: true, sort: true, visning: new Set(["kart.farge", "nett.modus", "sit.del", "sit.ego", "sit.straum", "tid.termar", "tid.tv"]), dims: T.DIMS });
 
@@ -82,7 +92,10 @@ function oppdaterVis(id, e) {
   const v = visingar[id];
   if (!v || !v.klar) return;
   const t0 = performance.now();
-  try { v.mod.oppdater(S, e); } catch (err) { feil(id, err); }
+  try {
+    const p = v.mod.oppdater(S, e);
+    if (p && typeof p.catch === "function") p.catch((err) => feil(id, err));
+  } catch (err) { feil(id, err); }
   v.sisteTid = performance.now() - t0;
   tomTilstand(id);
 }
@@ -160,7 +173,8 @@ async function lastVis(id) {
     }
     hjelp.visMelding(r, null);
     try {
-      await mod.init(v.el, api(id));
+      if (!v.initert) { await mod.init(v.el, api(id)); v.initert = true; }
+      if (id === "kart" || id === "nett" || id === "verda") r.settTeiknFlyt(true);
       v.mod = mod;
       v.klar = true;
       v.skitten = true;
@@ -180,7 +194,7 @@ const api = (id) => ({
 });
 
 function vedEndring(s, e) {
-  if (e.filter || e.vis || e.verk || e.sort || e.popstate) filterlinje.oppdater();
+  if (e.filter || e.vis || e.verk || e.sort || e.popstate) filterlinje.oppdater(e);
   liste.oppdater(s, e);
   if (e.vis) { settFane(s.vis); visVis(s.vis); }
   for (const [id, v] of Object.entries(visingar)) {
@@ -211,6 +225,8 @@ document.querySelector(".faner").addEventListener("keydown", (e) => {
   faner[j].focus();
   e.preventDefault();
 });
+
+document.getElementById("hopp").addEventListener("click", () => { if (smal()) liste.settArk("halv"); liste.fokusListe(); });
 
 // ---------- copy link ----------
 const kopier = document.getElementById("kopier");

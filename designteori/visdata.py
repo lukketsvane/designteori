@@ -114,7 +114,18 @@ PRESET_NAMN = {
     "industrial-product": "Industridesign", "urban-architecture": "By og arkitektur",
 }
 # A reviewed name may replace the automatic one here (key = preset key). Set after reading tema-sjekk.md.
-TEMA_NAMN_OVERSTYRING: dict[str, str] = {}
+# Reviewed 2026-11-13 against the 8 titles nearest each centroid and the c-TF-IDF terms (tema-sjekk.md). The keys
+# stay the nearest preset (they are only identifiers in the URL); the names say what the cluster holds.
+TEMA_NAMN_OVERSTYRING: dict[str, str] = {
+    "research-through-design": "Co-design og casestudiar",
+    "critical-speculative": "Systemdesign og undervising",
+    "participatory-design": "Nordisk designforsking",
+    "interaction-hci-ai": "Deltakande design",
+    "aesthetics-form": "Interaksjonsdesign og brukarar",
+    "design-history-nordic": "Relasjonelt design og framtider",
+    "craft-materiality-textile": "Handverk og fagdidaktikk",
+    "industrial-product": "Tenestedesign på norsk",
+}
 
 # Short names for the largest institutions, keyed by OpenAlex institution id (amendment 69).
 KORT_NAMN = {
@@ -135,7 +146,12 @@ STORE_INSTITUSJONAR = 30
 KORT_MAKS = 28
 
 # Nynorsk names of a few city names that OpenAlex gives in English.
-BYNAMN = {"Copenhagen": "København", "Gothenburg": "Göteborg", "Reykjavik": "Reykjavík", "Helsinki": "Helsinki"}
+BYNAMN = {
+    "Copenhagen": "København", "Gothenburg": "Göteborg", "Reykjavik": "Reykjavík", "Malmo": "Malmö", "Vaxjo": "Växjö",
+    "Milan": "Milano", "Stord / Soerstokken": "Stord", "Struer Municipality": "Struer", "Holar": "Hólar",
+}
+# Nordic places must lie inside this box (Greenland and the Faroes included); OpenAlex has a few wrong coordinates.
+NORDISK_RAMME = (53.0, 84.0, -75.0, 35.0)  # lat min, lat max, lon min, lon max
 
 TERM_MIN_DF = 5
 TERM_MAKS_DEL = 0.4
@@ -747,7 +763,8 @@ def bygg_tema(V: np.ndarray, indeks: dict, T: Ns, seed: int = 42) -> Ns:
         namn = TEMA_NAMN_OVERSTYRING.get(key, PRESET_NAMN.get(key, key))
         ord_ = vel_ord(skår[:, j], M[:, j], T, 5)
         tema_lst.append({"k": key, "namn": namn, "ord": ord_, "n": int((tema == j).sum()),
-                         "sentroide": [round(float(x), 4) for x in senter[j]], "_cos": c})
+                         "sentroide": [round(float(x), 4) for x in senter[j]], "_cos": c,
+                         "_auto": PRESET_NAMN.get(key, key)})
     # sub-themes
     under = np.full(n, -1, dtype=np.int64)
     under_lst = []
@@ -845,7 +862,7 @@ def tsne(V: np.ndarray, idx: np.ndarray, sim: np.ndarray, iterasjonar: int, seed
     if kontrollpunkt is not None and kontrollpunkt.exists():
         try:
             z = np.load(kontrollpunkt, allow_pickle=False)
-            if str(z["avtrykk"]) == avtrykk and int(z["it"]) < iterasjonar:
+            if str(z["avtrykk"]) == avtrykk and int(z["it"]) <= iterasjonar:
                 Y, uY, gains, start = z["Y"], z["uY"], z["gains"], int(z["it"])
                 logg(f"t-SNE: held fram frå kontrollpunkt ved iterasjon {start}")
         except Exception as exc:  # noqa: BLE001
@@ -914,6 +931,36 @@ def normaliser_kart(Y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 # ---------------------------------------------------------------------------
 # Step 5: networks and layouts (5.5, amendment 74)
 # ---------------------------------------------------------------------------
+
+OVERLAPP_REST: dict[str, int] = {}
+SPRING_BUFFER: dict = {}
+SPRING_BUFFER_STI: Path | None = None
+
+
+def lagre_spring_buffer() -> None:
+    """Keep finished spring layouts on disk so that a crash later in the build does not cost minutes again."""
+    if SPRING_BUFFER_STI is None:
+        return
+    import pickle
+
+    tmp = SPRING_BUFFER_STI.with_name(SPRING_BUFFER_STI.name + ".tmp")
+    with open(tmp, "wb") as fh:
+        pickle.dump(SPRING_BUFFER, fh)
+    os.replace(tmp, SPRING_BUFFER_STI)
+
+
+def les_spring_buffer(sti: Path) -> None:
+    global SPRING_BUFFER_STI
+    SPRING_BUFFER_STI = sti
+    if sti.exists():
+        import pickle
+
+        try:
+            with open(sti, "rb") as fh:
+                SPRING_BUFFER.update(pickle.load(fh))
+        except Exception as exc:  # noqa: BLE001
+            logg(f"spring-buffer ikkje lesen ({exc})")
+
 
 PX_ENHET = KART_STORLEIK / 900.0  # map units per pixel for a view about 900 px wide at k = 1
 
@@ -985,12 +1032,9 @@ def pakk_sirklar(storleik: list[int], gap: float) -> np.ndarray:
     return senter
 
 
-def fjern_overlapp(P: np.ndarray, r: np.ndarray, passes: int = 400) -> tuple[np.ndarray, int]:
-    """Vectorised push-apart until no two circles overlap. Returns positions and the number of passes used."""
+def _fjern_overlapp_tett(P: np.ndarray, r: np.ndarray, passes: int) -> tuple[np.ndarray, int]:
+    """Dense fallback when scipy is missing (small graphs only)."""
     n = len(P)
-    if n < 2:
-        return P, 0
-    P = P.copy()
     idx = np.arange(n)
     sgn = np.where(idx[:, None] < idx[None, :], 1.0, -1.0)
     ang = (idx[:, None] + idx[None, :]) * 2.399963229728653
@@ -1009,9 +1053,48 @@ def fjern_overlapp(P: np.ndarray, r: np.ndarray, passes: int = 400) -> tuple[np.
         d_safe = np.where(nul, 1.0, dist)
         ux = np.where(nul, sgn * np.cos(ang), dx / d_safe)
         uy = np.where(nul, sgn * np.sin(ang), dy / d_safe)
-        skyv = np.where(mask, ov * 0.5, 0.0)
+        skyv = np.where(mask, ov * 0.55, 0.0)
         P[:, 0] += (skyv * ux).sum(1)
         P[:, 1] += (skyv * uy).sum(1)
+    return P, brukt
+
+
+def fjern_overlapp(P: np.ndarray, r: np.ndarray, passes: int = 400) -> tuple[np.ndarray, int]:
+    """Push apart until no two circles overlap (vectorised, candidate pairs from a k-d tree).
+
+    Returns the positions and the number of passes used.
+    """
+    n = len(P)
+    if n < 2:
+        return P, 0
+    P = P.copy()
+    try:
+        from scipy.spatial import cKDTree
+    except ImportError:  # pragma: no cover
+        return _fjern_overlapp_tett(P, r, passes)
+    rmaks = float(r.max())
+    brukt = 0
+    for brukt in range(1, passes + 1):
+        par = cKDTree(P).query_pairs(2.0 * rmaks, output_type="ndarray")
+        if len(par) == 0:
+            return P, brukt - 1
+        i, j = par[:, 0], par[:, 1]
+        dx = P[i, 0] - P[j, 0]
+        dy = P[i, 1] - P[j, 1]
+        dist = np.hypot(dx, dy)
+        ov = r[i] + r[j] - dist
+        m = ov > 0
+        if not m.any():
+            return P, brukt - 1
+        i, j, dx, dy, dist, ov = i[m], j[m], dx[m], dy[m], dist[m], ov[m]
+        nul = dist < 1e-9
+        ang = (i + j) * 2.399963229728653
+        d_safe = np.where(nul, 1.0, dist)
+        ux = np.where(nul, np.cos(ang), dx / d_safe)
+        uy = np.where(nul, np.sin(ang), dy / d_safe)
+        s = ov * 0.55
+        P[:, 0] += np.bincount(i, weights=s * ux, minlength=n) - np.bincount(j, weights=s * ux, minlength=n)
+        P[:, 1] += np.bincount(i, weights=s * uy, minlength=n) - np.bincount(j, weights=s * uy, minlength=n)
     return P, brukt
 
 
@@ -1019,9 +1102,17 @@ def tel_overlapp(P: np.ndarray, r: np.ndarray) -> int:
     n = len(P)
     if n < 2:
         return 0
-    d = np.hypot(P[:, 0, None] - P[None, :, 0], P[:, 1, None] - P[None, :, 1])
-    np.fill_diagonal(d, np.inf)
-    return int(((r[:, None] + r[None, :] - d) > 1e-6).sum() // 2)
+    try:
+        from scipy.spatial import cKDTree
+    except ImportError:  # pragma: no cover
+        d = np.hypot(P[:, 0, None] - P[None, :, 0], P[:, 1, None] - P[None, :, 1])
+        np.fill_diagonal(d, np.inf)
+        return int(((r[:, None] + r[None, :] - d) > 1e-6).sum() // 2)
+    par = cKDTree(P).query_pairs(2.0 * float(r.max()), output_type="ndarray")
+    if len(par) == 0:
+        return 0
+    d = np.hypot(P[par[:, 0], 0] - P[par[:, 1], 0], P[par[:, 0], 1] - P[par[:, 1], 1])
+    return int(((r[par[:, 0]] + r[par[:, 1]] - d) > 1e-6).sum())
 
 
 def tilpass_ramme(P: np.ndarray, margin: float = 0.04) -> np.ndarray:
@@ -1057,16 +1148,25 @@ def utforming(n: int, kantar, radius_px: np.ndarray, vekt_kol: int = 2, seed: in
         elif len(g) == 2:
             p = np.array([[-0.5, 0.0], [0.5, 0.0]])
         else:
-            G = nx.Graph()
-            G.add_nodes_from(g)
-            for e in kant_per[c]:
-                G.add_edge(e[0], e[1], sw=math.sqrt(e[vekt_kol]))
-            t0 = time.time()
-            pos = nx.spring_layout(G, k=1.2 / math.sqrt(len(g)), weight="sw", iterations=500, seed=seed)
-            p = np.asarray([pos[a] for a in g], dtype=np.float64)
-            logg(f"{namn}: komponent {c} med {len(g)} nodar lagt ut på {time.time() - t0:.1f}s")
+            nokkel = hashlib.sha1(repr((g, [(e[0], e[1], e[vekt_kol]) for e in kant_per[c]], seed, nx.__version__)).encode()).hexdigest()
+            if nokkel in SPRING_BUFFER:
+                p = SPRING_BUFFER[nokkel]
+            else:
+                G = nx.Graph()
+                G.add_nodes_from(g)
+                for e in kant_per[c]:
+                    G.add_edge(e[0], e[1], sw=math.sqrt(e[vekt_kol]))
+                t0 = time.time()
+                pos = nx.spring_layout(G, k=1.2 / math.sqrt(len(g)), weight="sw", iterations=500, seed=seed)
+                p = np.asarray([pos[a] for a in g], dtype=np.float64)
+                SPRING_BUFFER[nokkel] = p
+                lagre_spring_buffer()
+                logg(f"{namn}: komponent {c} med {len(g)} nodar lagt ut på {time.time() - t0:.1f}s")
         p = p - p.mean(0)
-        m = np.sqrt((p * p).sum(1)).max()
+        avst = np.sqrt((p * p).sum(1))
+        # large components have a few far-flung leaf nodes: size the circle by the 98th percentile so that the
+        # dense core is not made tiny by them (the overlap pass cleans up any collision with a neighbour)
+        m = np.quantile(avst, 0.98) if len(g) >= 50 else avst.max()
         lokal.append(p / m if m > 0 else p)
     storleik = [len(g) for g in komp]
     gap = 0.05 * math.sqrt(storleik[0])
@@ -1084,12 +1184,13 @@ def utforming(n: int, kantar, radius_px: np.ndarray, vekt_kol: int = 2, seed: in
     P = tilpass_ramme(P)
     r_units = (radius_px + 2.0) * PX_ENHET
     gjenstar = 0
-    for runde in range(8):
+    for runde in range(4):
         P, brukt = fjern_overlapp(P, r_units)
         P = tilpass_ramme(P)
         gjenstar = tel_overlapp(P, r_units)
         if gjenstar == 0:
             break
+    OVERLAPP_REST[namn] = gjenstar
     logg(f"{namn}: {len(komp)} komponentar, overlapp att etter fjerning: {gjenstar}")
     P = np.clip(np.rint(P), 0, KART_STORLEIK)
     ids = [0] * n
@@ -1137,6 +1238,39 @@ def bygg_nett(K: Ns, modus: str, namn: str, gjenbruk: dict | None = None) -> dic
 
 PARTIKLAR = {"van", "von", "de", "der", "del"}
 INSTITUSJON_RE = re.compile(r"univers|institut|associat|college|school")
+
+
+# Classics whose OpenAlex records carry a reviewer, an editor or no author, so that one
+# book became several nodes labelled with the wrong name ("Stewart 1984" for Schön's
+# The Reflective Practitioner). Checked by hand against the cited_canon rows on
+# 2026-11-13. Every title key listed (canonical key and aliases) becomes one node,
+# whatever the first author, labelled "{namn} {år}".
+KJELDE_RETTING: dict[str, tuple[str, int, tuple[str, ...]]] = {
+    "reflectivepractitionerhowprofessionalsthinkinaction": ("Schön", 1983, ("reflectivepractitioner",)),
+    "educatingthereflectivepractitioner": ("Schön", 1987, (
+        "educatingthereflectivepractitionertowardanewdesignforteachingandlearningintheprofessions",)),
+    "designerlywaysofknowing": ("Cross", 1982, ()),
+    "designatwork": ("Greenbaum", 1991, ()),
+    "workorienteddesignofcomputerartifacts": ("Ehn", 1988, ()),
+    "designsforthepluriverse": ("Escobar", 2018, (
+        "designsforthepluriverseradicalinterdependenceautonomyandthemakingofworlds",)),
+    "designfortherealworld": ("Papanek", 1971, ("designfortherealworldhumanecologyandsocialchange",)),
+    "situatedlearning": ("Lave", 1991, ("situatedlearninglegitimateperipheralparticipation",)),
+    "thoughtfulinteractiondesign": ("Löwgren", 2004, (
+        "thoughtfulinteractiondesignadesignperspectiveoninformationtechnology",)),
+    "speculativeeverythingdesignfictionandsocialdreaming": ("Dunne", 2013, ()),
+    "designwayintentionalchangeinanunpredictableworld": ("Nelson", 2003, (
+        "designwayintentionalchangeinanunpredictableworldfoundationsandfundamentalsofdesigncompetence",)),
+    "engineeringdesignasystematicapproach": ("Pahl", 1984, ()),
+    "sciencesoftheartificial": ("Simon", 1969, ()),
+    "designofeverydaythings": ("Norman", 1988, ("designofeverydaythingsrevisedandexpandededition",)),
+    "tacitdimension": ("Polanyi", 1966, ()),
+}
+KJELDE_ALIAS: dict[str, str] = {}
+for _k, (_n, _a, _alias) in KJELDE_RETTING.items():
+    KJELDE_ALIAS[_k] = _k
+    for _x in _alias:
+        KJELDE_ALIAS[_x] = _k
 
 
 def tittelnokkel(t: object) -> str:
@@ -1229,7 +1363,9 @@ def bygg_siteringar(db: sqlite3.Connection, K: Ns) -> Ns:
     for cid in sorted(ikkje_korpus):
         r = ikkje_korpus[cid]
         tk = tittelnokkel(r["tittel"])
-        if not tk:
+        if tk in KJELDE_ALIAS:
+            grupper[(KJELDE_ALIAS[tk], "*")].append(cid)
+        elif not tk:
             grupper[("~" + cid, "")].append(cid)
         else:
             grupper[(tk, forste_etternamn_fold(r["forf"]))].append(cid)
@@ -1276,12 +1412,15 @@ def bygg_siteringar(db: sqlite3.Connection, K: Ns) -> Ns:
             canon_til_node[cid] = n + j
         aar = [canon[c]["ar"] for c in medl if canon[c]["ar"]]
         ar_ = min(aar) if aar else None
+        rett = KJELDE_RETTING.get(nykl[0]) if nykl[1] == "*" else None
+        if rett:
+            ar_ = rett[1]
         kanalnamn = next((canon[c]["kjelde"] for c in medl if canon[c]["kjelde"]), "")
         doi_ = next((canon[c]["doi"] for c in medl if canon[c]["doi"]), "")
         land = sorted({K.la_idx[c] for cid in medl for c in canon[cid]["land"] if c in K.la_idx})
         kj["k"].append(rep["id"])
         kj["tittel"].append(rep["tittel"])
-        kj["merkelapp"].append(merkelapp(rep["forf"], ar_, rep["tittel"]))
+        kj["merkelapp"].append(f"{rett[0]} {rett[1]}" if rett else merkelapp(rep["forf"], ar_, rep["tittel"]))
         kj["ar"].append(ar_)
         kj["kanalnamn"].append(kanalnamn)
         kj["kgr"].append(kanal_gruppe(kanalnamn))
@@ -1530,10 +1669,11 @@ def hent_stader(ids: list[str], raa_sti: Path) -> dict:
         att = [i for i in mangla if i not in resultat and i not in utan]
         if att:
             logg(f"stader: {len(att)} institusjonar utan svar etter enkeltoppslag")
-    raa["henta"] = now_iso()
-    raa["resultat"] = {k: resultat[k] for k in sorted(resultat)}
-    raa["utan_svar"] = sorted(utan)
-    skriv_bytes(raa_sti, json_bytes(raa))
+    if mangla:
+        raa["henta"] = now_iso()
+        raa["resultat"] = {k: resultat[k] for k in sorted(resultat)}
+        raa["utan_svar"] = sorted(utan)
+        skriv_bytes(raa_sti, json_bytes(raa))
     rest = [i for i in ids if i not in resultat and i not in utan]
     if rest:
         logg(f"stader: att å hente ({len(rest)}): {' '.join(rest[:30])}{' …' if len(rest) > 30 else ''}")
@@ -1572,6 +1712,7 @@ def bygg_stader(K: Ns, kj: dict | None) -> dict:
     plassar: dict[str, list[dict]] = collections.defaultdict(list)  # base key -> real places
     inst_til: list[tuple[str, int] | None] = []
     omtrentleg = 0
+    utanfor: list[str] = []
     for d in K.institusjonar:
         e = kjinst.get(d["k"])
         approx = False
@@ -1583,6 +1724,12 @@ def bygg_stader(K: Ns, kj: dict | None) -> dict:
             e = {"by": LANDNAMN.get(d["land"], d["land"]), "land": d["land"], "lat": sentrum[0], "lon": sentrum[1]}
             approx = True
             omtrentleg += 1
+        if e["land"] in {k for k, _ in LAND_NORDISK} and not (
+            NORDISK_RAMME[0] <= e["lat"] <= NORDISK_RAMME[1] and NORDISK_RAMME[2] <= e["lon"] <= NORDISK_RAMME[3]
+        ):
+            utanfor.append(d["k"])
+            inst_til.append(None)
+            continue
         by = BYNAMN.get(e["by"], e["by"])
         cc = e["land"].lower()
         base = cc + "-" + (re.sub(r"[^a-z0-9]+", "-", fold(by)).strip("-") or "ukjend")
@@ -1625,7 +1772,7 @@ def bygg_stader(K: Ns, kj: dict | None) -> dict:
           "kjelde": "OpenAlex institutions API (CC0)" if kj and kjinst else "landsentrum (omtrentleg, API utilgjengeleg)",
           "stader": stader, "inst_stad": inst_stad,
           "tal": {"institusjonar": len(K.institusjonar), "med_stad": med, "stader": len(stader),
-                  "omtrentlege_institusjonar": omtrentleg}}
+                  "omtrentlege_institusjonar": omtrentleg, "utanfor_land": len(utanfor)}}
     return ut
 
 
@@ -1645,7 +1792,7 @@ FORVENTA = {
     "nett_forf_noder": 1824, "nett_forf_kantar": 4970, "forfattarar_totalt": 8921, "referansar": 109116,
     "siterande_verk": 3554, "referansar_kjent_mal_rader": 31123, "referansar_til_korpus": 6611,
     "referansar_til_kanon": 24512, "sjolvsiteringar": 27, "pdf_verifisert": 3262, "pdf_ikkje_stadfest": 1387,
-    "pdf_doi": 1439, "pdf_ingen": 344, "kanalar": 846, "samandrag": 3916,
+    "pdf_doi": 1439, "pdf_ingen": 344, "kanalar": 846, "samandrag": 4209,
 }
 
 
@@ -1739,6 +1886,8 @@ def skriv_tema_sjekk(sti: Path, K: Ns, tema: Ns, V: np.ndarray) -> None:
         med = np.flatnonzero(tema.tema == j)
         nærast = med[np.argsort(-(V[med] @ tema.senter[j]), kind="stable")[:8]]
         ut.append(f"## {j}: {t['namn']} (`{t['k']}`), {t['n']} verk, cosinus til preset {t['_cos']:.3f}")
+        if t["namn"] != t["_auto"]:
+            ut.append(f"Automatisk namn frå preset: {t['_auto']}; overstyrt etter gjennomgang.")
         ut.append(f"Ord: {', '.join(t['ord'])}")
         ut.append("")
         for i in nærast:
@@ -1770,7 +1919,12 @@ def skriv_data_rapport(sti: Path, tal: dict, filer: dict, avvik: list[str], nota
 
 
 def lag_tal(K: Ns, S: Ns, T: Ns, nett_i: dict, nett_f: dict, stader: dict, db: sqlite3.Connection) -> dict:
-    samandrag = db.execute("select count(*) from works where in_scope = 1 and abstract is not null and length(abstract) >= 50").fetchone()[0]
+    # Talet er det katalogen publiserer (metadata-samandrag pluss uttrekk frå opne PDF-ar), ikkje berre metadata i sqlite.
+    meta = read_json(DOCS_DATA_DIR / "search" / "meta.json", None)
+    if meta and meta.get("counts", {}).get("abs"):
+        samandrag = int(meta["counts"]["abs"].get("o", 0)) + int(meta["counts"]["abs"].get("x", 0))
+    else:
+        samandrag = db.execute("select count(*) from works where in_scope = 1 and abstract is not null and length(abstract) >= 50").fetchone()[0]
     pt = K.lenker["teljar"]
     return {
         "verk": K.n, "openalex": K.n_oa, "arkiv": K.n_arkiv,
@@ -1827,6 +1981,8 @@ def main(argv: list[str] | None = None) -> int:
     notat = Path(args.notatmappe)
     avvik: list[str] = []
     merknader: list[str] = []
+    if notat.exists():
+        les_spring_buffer(notat / "spring_buffer.pkl")
     if not RAW_SQLITE.exists():
         raise SystemExit(f"{RAW_SQLITE} finst ikkje; byggjaren treng databasen")
     db = opne_db()
@@ -1893,6 +2049,12 @@ def main(argv: list[str] | None = None) -> int:
         topp, info = land_topp(K, S)
         logg(f"land_topp: {[K.land_alle[c]['k'] for c in topp]}; {info}")
         logg(f"kart: {len(kart['kantar'])} kantar, {len(kart['grupper'])} grupper")
+        merknader.append(
+            f"KJELDE_RETTING: {len(KJELDE_RETTING)} klassikarar der OpenAlex har meldar, redaktør eller ingen forfattar "
+            "(til dømes Schön 1983, som var delt på «Stewart 1984», «Checkoway 1985», «Bogumil 1985» og «Reflective Practitioner 2014») "
+            "er slått saman til éin node kvar og namngjevne for hand. Lista er i visdata.py; «Artificial Intelligence 2021» og "
+            "«Harvard business 1988» er feilkopla referansar i kjelda og står att urørte. Gamle kanon=-lenker til ein variant "
+            "som ikkje lenger er representant, finn ikkje noden.")
 
     with Steg("stader"):
         kj_sti = ut / "kjelde_stader.json"
@@ -1945,10 +2107,17 @@ def main(argv: list[str] | None = None) -> int:
             "Forfattarnamn: arkivverk skriv «Etternamn, Fornamn», OpenAlex «Fornamn Etternamn», så same person kan vere to nøklar.",
             "Nøklane i kanon og ego (`kjelder.k`) er den representative sitert-id-en; ein ombygging kan endre han, så gamle `kanon=`-lenker kan slutte å virke.",
             f"U+FFFD (øydelagt teikn som alt finst i kjeldebasen): {teikn_fffd(K)}; strengane er behaldne.",
-            f"Verk utan forfattardata (OpenAlex): {K.utan_forfattarar}; forfattarplassar utan id (fekk n:-nøkkel): {K.tomme_id_plassar}.",
+            f"OpenAlex-verk utan forfattarland: {sum(1 for i in range(K.n_oa) if not K.fland_kol[i])} (utan authorships-rader: {K.utan_forfattarar}); forfattarplassar utan id (fekk n:-nøkkel): {K.tomme_id_plassar}.",
+            f"Nettverk: overlapp att etter fjerning av overlapp (ved 900 px brei visning, k = 1): {OVERLAPP_REST}. Forfattarnettet er for tett til å bli fritt for overlapp ved den storleiken; sida kan skalere nodane ned.",
+            "Tillegg til kontrakten: `siteringar.ref_utan[i]` (referansar utan metadata, -1 for arkiv), `siteringar.kart.merkelapp` (unike merkelappar parallelt med `kart.noder`, også for korpusverk), `siteringar.land_topp`, `siteringar.tal.mal_utan_kanal_del`/`mal_utan_land_del`, `manifest.filer.*.gzip`, `tid.tal.min_df`/`maks_df`, `stader.kjelde`.",
+            "`kanalar` har 846 oppføringar: dei 847 i spesifikasjonen tel «Ukjent» som namn, men dei fem verka med det namnet har kanal -1.",
+            "Temaord (`tema.ord`, undertemanamn): c-TF-IDF er vekta med lift (andelen klassen har av ordet delt på andelen av alle ord), elles fekk alle tema generiske ord som «research» og «study». Namna på åtte av ti tema er overstyrte etter gjennomgang (TEMA_NAMN_OVERSTYRING); nøklane er framleis næraste preset.",
+            "Maskina var delt: BLAS-tråder (OPENBLAS_NUM_THREADS=4) vart 10 til 20 gonger tregare enn éin tråd under last frå andre prosessar. Køyr med OPENBLAS_NUM_THREADS=1 om maskina er travel (t-SNE tek då om lag 5 minutt).",
             f"Mogleg dublett (merk & 1): {sum(1 for v in K.merk if v & 1)}; ikkje gjennomgått (merk & 2): {sum(1 for v in K.merk if v & 2)}.",
             f"Kanon-element som ikkje er verk i korpuset: {S.antal_canon_ikkje_korpus}, av dei sitert og slått saman til {S.m} noder ({S.grupper_med_fleire} grupper med fleire variantar).",
             f"t-SNE-vektorar frå {args.vektorar}.",
+            "Forfattarnettet har 1 823 noder og 4 959 kantar mot venta 1 824 og 4 970: verket W2994871791 har to ulike forfattar-id-ar med same namn, og regelen om éin oppføring per namn og verk (endring 51) gir den eine ho mistar verket. n i nettet er rekna frå verk.json, slik at sidas tal stemmer med lista.",
+            f"Stader utanfor landets ramme (feil koordinatar frå OpenAlex, ikkje plasserte): {stader['tal'].get('utanfor_land', 0)}.",
         ]
         skriv_tema_sjekk(mappe / "tema-sjekk.md", K, tema, V)
         skriv_data_rapport(mappe / "data-rapport.md", tal, manifest_filer, avvik, merknader)

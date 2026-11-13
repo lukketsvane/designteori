@@ -246,18 +246,18 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], forrige = 
       l.push(b);
     }
   };
-  const kolliderer = (b, egen) => {
+  const kolliderer = (b, egen, rang) => {
     const x0 = Math.floor(b.x0 / CELL), x1 = Math.floor(b.x1 / CELL), y0 = Math.floor(b.y0 / CELL), y1 = Math.floor(b.y1 / CELL);
     for (let cx = x0; cx <= x1; cx++) for (let cy = y0; cy <= y1; cy++) {
       const l = grid.get(nokkel(cx, cy));
       if (!l) continue;
-      for (const o of l) if (!(o.hindring && o.id === egen) && b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0) return true;
+      for (const o of l) if (!(o.hindring && (o.id === egen || (rang != null && o.rang != null && o.rang >= rang))) && b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0) return true;
     }
     return false;
   };
   for (const o of hindringar) {
     if (o.r <= 0) continue;
-    leggTil({ x0: o.x - o.r, x1: o.x + o.r, y0: o.y - o.r, y1: o.y + o.r, hindring: true, id: o.id });
+    leggTil({ x0: o.x - o.r, x1: o.x + o.r, y0: o.y - o.r, y1: o.y + o.r, hindring: true, id: o.id, rang: o.rang });
   }
   // sticky: previously placed candidates first
   let liste = kandidatar.slice(0, maks * 2);
@@ -278,14 +278,17 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], forrige = 
       { pos: "o", x: k.x - tw / 2, y: k.y - r - th / 2, align: "left" },
       { pos: "u", x: k.x - tw / 2, y: k.y + r + th / 2, align: "left" },
     ];
-    if (k.sentrert) val.unshift({ pos: "s", x: k.x - tw / 2, y: k.y, align: "left" });
+    if (k.sentrert) {
+      const ekstra = [0, th + 4, -(th + 4), 2 * (th + 4), -2 * (th + 4)].map((dy, j) => ({ pos: `s${j}`, x: k.x - tw / 2, y: k.y + dy, align: "left" }));
+      val.unshift(...ekstra);
+    }
     const fp = forrige && forrige.get(k.id);
     if (fp) { const i = val.findIndex((v) => v.pos === fp); if (i > 0) val.unshift(val.splice(i, 1)[0]); }
     for (const v of val) {
       const x0 = v.align === "left" ? v.x : v.x - tw;
       const b = { x0: x0 - pad, x1: x0 + tw + pad, y0: v.y - th / 2 - pad, y1: v.y + th / 2 + pad };
       if (b.x0 < 0 || b.x1 > w || b.y0 < 0 || b.y1 > h) continue;
-      if (kolliderer(b, k.id)) continue;
+      if (kolliderer(b, k.id, k.rang)) continue;
       leggTil(b);
       ut.push({ id: k.id, x: v.x, y: v.y, w: tw, h: th, tekst: k.tekst, font: k.font, align: v.align, pos: v.pos, farge: k.farge, boks: b, data: k.data });
       break;
@@ -362,7 +365,34 @@ export function lagRamme(el, { kontrollTekst } = {}) {
     framdrift: el.querySelector(".framdrift"),
     melding: el.querySelector(".vis-melding"),
   };
+  const wrap = el.querySelector(".teikn-wrap"), heim = el.querySelector(".vis-tekst");
+  // On wide screens the legend of a canvas view floats over the drawing area, so the
+  // drawing gets the height; below 900 px it sits under the line behind "Forklaring".
+  let flyt = false, flytOpe = null, flytMal = null;
+  try { const v = localStorage.getItem("utforsk.forklaring"); if (v) flytOpe = v !== "lukka"; } catch (e) { /* storage blocked */ }
+  const bruk = () => {
+    const f = flyt && !smal();
+    const mal = flytMal || r.flate;
+    // open by default only where the legend leaves room for the drawing
+    if (f && flytOpe == null) flytOpe = (mal.clientWidth || window.innerWidth - 400) >= 1000;
+    if (f && wrap.parentElement !== mal) mal.appendChild(wrap);
+    if (!f && wrap.parentElement !== heim) heim.appendChild(wrap);
+    el.classList.toggle("teikn-flyt", f);
+    const ope = f ? flytOpe : el.classList.contains("teikn-ope");
+    el.classList.toggle("teikn-lukka", f && !flytOpe);
+    r.teiknKnapp.setAttribute("aria-expanded", String(ope));
+    r.teiknKnapp.textContent = f ? (ope ? "Gøym forklaringa" : "Forklaring") : "Forklaring";
+    mal.dispatchEvent(new CustomEvent("utforsk:teikn"));
+  };
+  r.settTeiknFlyt = (v, m) => { flyt = !!v; if (m) flytMal = m; bruk(); };
+  if (typeof matchMedia === "function") matchMedia("(max-width: 899px)").addEventListener("change", bruk);
   r.teiknKnapp.addEventListener("click", () => {
+    if (flyt && !smal()) {
+      flytOpe = !flytOpe;
+      try { localStorage.setItem("utforsk.forklaring", flytOpe ? "ope" : "lukka"); } catch (e) { /* storage blocked */ }
+      bruk();
+      return;
+    }
     const ope = r.teiknKnapp.getAttribute("aria-expanded") !== "true";
     r.teiknKnapp.setAttribute("aria-expanded", String(ope));
     el.classList.toggle("teikn-ope", ope);

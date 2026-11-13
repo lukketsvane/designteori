@@ -1,7 +1,7 @@
 // The selection model: state S, data columns D, masks, utval, facet counts,
 // subscribers, URL hash and history rules. Nothing else mutates S.
-import { fold, termNokkel, kutt } from "./hjelp.js?v=1";
-import * as data from "./data.js?v=1";
+import { fold, termNokkel, kutt } from "./hjelp.js?v=20";
+import * as data from "./data.js?v=20";
 
 export const VISNINGAR = ["kart", "nett", "verda", "siteringar", "tid"];
 const SIT_DELAR = ["saman", "nabolag", "straum", "tid"];
@@ -10,7 +10,7 @@ const FARGAR = ["tema", "land", "kanal", "ar"];
 const SORTAR = ["auto", "sitert", "nyast", "eldst", "tittel", "relevans"];
 export const AR_MIN = 1983, AR_MAX = 2026;
 
-const tomeFilter = () => ({
+export const tomeFilter = () => ({
   ar: null, land: new Set(), tema: new Set(), kanal: new Set(), kgr: new Set(), type: new Set(), lag: new Set(),
   pdf: false, q: "", inst: new Set(), forf: new Set(), fland: new Set(), stad: new Set(), par: null,
   kanon: new Set(), siterer: null, term: new Set(), lik: null, omr: null,
@@ -106,6 +106,9 @@ export function nodeAv(key) {
 export function nodeKey(v) {
   return v < D.n ? D.kol.id[v] : D.sitd.kjelder.k[v - D.n];
 }
+export function nodeTittel(v) {
+  return v < D.n ? D.kol.tittel[v] : D.sitd.kjelder.tittel[v - D.n];
+}
 export function merkelapp(v) {
   if (v >= D.n) return D.sitd.kjelder.merkelapp[v - D.n];
   const f = D.kol.forf[v];
@@ -128,14 +131,19 @@ export function byggSok() {
     for (const f of k.forf[i]) deler.push(v.forfattarar[f].namn);
     if (D.kanal[i] >= 0) deler.push(v.kanalar[D.kanal[i]].namn);
     for (const j of k.inst[i]) deler.push(v.institusjonar[j].namn);
-    const ord = new Set(fold(deler.join(" ")).split(/[^\p{L}\p{N}]+/u));
+    const ord = new Set();
+    for (const w of fold(deler.join(" ")).split(/[^\p{L}\p{N}-]+/u)) {
+      if (!w) continue;
+      if (w.includes("-")) { ord.add(w.replace(/-/g, "")); for (const d of w.split("-")) if (d) ord.add(d); }
+      else ord.add(w);
+    }
     for (const o of ord) {
       if (!o) continue;
       let l = post.get(o);
       if (!l) { l = []; post.set(o, l); }
       l.push(i);
     }
-    tittelOrd[i] = fold(k.tittel[i]).split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+    tittelOrd[i] = fold(k.tittel[i]).split(/[^\p{L}\p{N}-]+/u).flatMap((w) => (w.includes("-") ? [w.replace(/-/g, ""), ...w.split("-")] : [w])).filter(Boolean);
   }
   const ord = [...post.keys()].sort();
   sok = { ord, post, tittelOrd };
@@ -146,7 +154,8 @@ export function klargjerSok() {
   if (aktiv("q")) { rekn(["q"]); meld({ filter: true, dims: ["q"] }); }
 }
 export function sokTokens(q) {
-  const alle = fold(q).split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  // hyphenated words are joined ("co-design" -> "codesign"), as in the haystack
+  const alle = fold(q).split(/[^\p{L}\p{N}-]+/u).map((w) => w.replace(/-/g, "")).filter(Boolean);
   let t = alle.filter((x) => x.length > 3 && !STOPP.has(x));
   if (!t.length) t = alle.filter((x) => x.length >= 2 && !STOPP.has(x));
   t = [...new Set(t)];
@@ -380,13 +389,14 @@ export const abonner = (fn) => { abonnentar.add(fn); return () => abonnentar.del
 let ventande = null;
 function meld(e) {
   if (!ventande) {
-    ventande = { filter: false, vis: false, verk: false, sort: false, visning: new Set(), dims: new Set() };
+    ventande = { filter: false, vis: false, verk: false, sort: false, popstate: false, visning: new Set(), dims: new Set() };
     requestAnimationFrame(() => {
+      if (!ventande) return;
       const ev = ventande; ventande = null;
       for (const fn of abonnentar) { try { fn(S, ev); } catch (err) { console.error(err); } }
     });
   }
-  for (const k of ["filter", "vis", "verk", "sort"]) if (e[k]) ventande[k] = true;
+  for (const k of ["filter", "vis", "verk", "sort", "popstate"]) if (e[k]) ventande[k] = true;
   if (e.visning) for (const x of e.visning) ventande.visning.add(x);
   if (e.dims) for (const x of e.dims) ventande.dims.add(x);
 }
@@ -425,13 +435,19 @@ export function lagHash() {
   const p = [];
   for (const d of DIMS) { const t = dimTekst(d); if (t) p.push(`${d}=${t}`); }
   if (S.verk) p.push(`verk=${encodeURIComponent(S.verk)}`);
-  if (S.kart.farge !== "tema") p.push(`farge=${S.kart.farge}`);
-  if (S.nett.modus !== "inst") p.push(`nett=${S.nett.modus}`);
-  if (S.sit.del !== "saman") p.push(`del=${S.sit.del}`);
-  if (S.sit.ego) p.push(`ego=${encodeURIComponent(S.sit.ego)}`);
-  if (S.sit.straum !== "kanal") p.push(`straum=${S.sit.straum}`);
-  if (S.tid.termarSett) p.push(`t=${S.tid.termar.map(encodeURIComponent).join(",")}`);
-  if (S.tid.tv !== "del") p.push(`tv=${S.tid.tv}`);
+  // view settings go in the link only for the view on screen, so links stay short
+  const v = S.vis;
+  if (v === "kart" && S.kart.farge !== "tema") p.push(`farge=${S.kart.farge}`);
+  if (v === "nett" && S.nett.modus !== "inst") p.push(`nett=${S.nett.modus}`);
+  if (v === "siteringar") {
+    if (S.sit.del !== "saman") p.push(`del=${S.sit.del}`);
+    if (S.sit.ego && S.sit.del === "nabolag") p.push(`ego=${encodeURIComponent(S.sit.ego)}`);
+    if (S.sit.straum !== "kanal" && S.sit.del === "straum") p.push(`straum=${S.sit.straum}`);
+  }
+  if (v === "tid") {
+    if (S.tid.termarSett) p.push(`t=${S.tid.termar.map(encodeURIComponent).join(",")}`);
+    if (S.tid.tv !== "del") p.push(`tv=${S.tid.tv}`);
+  }
   if (S.sort !== "auto") p.push(`sort=${S.sort}`);
   const z = zFor(S.vis);
   if (z) p.push(`z=${z}`);
@@ -459,7 +475,12 @@ export function lesHash(hash) {
     const liste = () => raw.split(",").map((x) => { try { return decodeURIComponent(x); } catch (e) { return ""; } }).filter((x) => x && ID_RE.test(x) || (k === "term" && x));
     const f = ut.f;
     switch (k) {
-      case "ar": { const m = /^(\d{4})-(\d{4})$/.exec(v); if (m && +m[1] <= +m[2]) f.ar = [Math.max(AR_MIN, +m[1]), Math.min(AR_MAX, +m[2])]; else ugyldig(k, v); break; }
+      case "ar": {
+        const m = /^(\d{4})-(\d{4})$/.exec(v);
+        const a = m ? Math.max(AR_MIN, +m[1]) : 0, b = m ? Math.min(AR_MAX, +m[2]) : 0;
+        if (m && a <= b) f.ar = [a, b]; else ugyldig(k, v);
+        break;
+      }
       case "land": f.land = new Set(liste().filter((x) => /^[A-Z]{1,2}$/.test(x))); break;
       case "tema": case "kanal": case "kgr": case "type": case "inst": case "forf": case "fland": case "stad": case "kanon":
         f[k] = new Set(liste()); break;
@@ -491,10 +512,17 @@ export function lesHash(hash) {
   return ut;
 }
 
-function bruk(p) {
-  S.vis = p.vis; S.f = p.f; S.verk = p.verk; S.kart.farge = p.farge; S.nett.modus = p.nett;
-  S.sit.del = p.del; S.sit.ego = p.ego; S.sit.straum = p.straum; S.tid.tv = p.tv; S.sort = p.sort;
-  if (p.t) { S.tid.termar = p.t; S.tid.termarSett = true; } else { S.tid.termarSett = false; S.tid.termar = []; }
+// The link holds the settings of the view on screen only (lagHash); on Back/Forward the
+// other views keep what they had.
+function bruk(p, start) {
+  S.vis = p.vis; S.f = p.f; S.verk = p.verk; S.sort = p.sort;
+  if (start || p.vis === "kart") S.kart.farge = p.farge;
+  if (start || p.vis === "nett") S.nett.modus = p.nett;
+  if (start || p.vis === "siteringar") { S.sit.del = p.del; S.sit.ego = p.ego; S.sit.straum = p.straum; }
+  if (start || p.vis === "tid") {
+    S.tid.tv = p.tv;
+    if (p.t) { S.tid.termar = p.t; S.tid.termarSett = true; } else { S.tid.termarSett = false; S.tid.termar = []; }
+  }
   const z = p.z;
   if (p.vis === "kart") S.kart.z = z;
   else if (p.vis === "nett") S.nett.z = z;
@@ -585,11 +613,12 @@ export function fraUrl({ start = false } = {}) {
   const p = lesHash(location.hash);
   navToken++;
   sisteGest = null;
-  bruk(p);
+  bruk(p, start);
   // validate keys that need verk.json
   const f = S.f, sjekk = (d, map) => { for (const x of [...f[d]]) if (!map.has(x)) { f[d].delete(x); ugyldig(d, x); } };
   sjekk("tema", D.temaIdx); sjekk("kanal", D.kanalIdx); sjekk("kgr", D.kgrIdx); sjekk("type", D.typeIdx);
   sjekk("inst", D.instIdx); sjekk("forf", D.forfIdx); sjekk("fland", D.flandIdx);
+  for (const c of [...f.land]) if (c !== "X" && !D.landIdx.has(c)) { f.land.delete(c); ugyldig("land", c); }
   if (S.verk && !D.idx.has(S.verk)) { ugyldig("verk", S.verk); S.verk = null; }
   if (f.lik && !D.idx.has(f.lik)) { ugyldig("lik", f.lik); f.lik = null; }
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
@@ -672,7 +701,10 @@ export function chipar() {
   for (const k of f.stad) leggTil("stad", k, `Stad: ${stadNamn(k)}`);
   if (f.par) leggTil("par", null, `Stader: ${stadNamn(f.par[0])} og ${stadNamn(f.par[1])}`);
   for (const k of f.kanon) { const nv = D.sitd ? nodeAv(k) : -1; leggTil("kanon", k, `Siterer: ${nv >= 0 ? merkelapp(nv) : k}`); }
-  if (f.siterer) leggTil("siterer", null, `Referansar til: ${D.sitd ? siterarNamn(f.siterer) : f.siterer.nokkel}`);
+  if (f.siterer) {
+    const ka = { kgr: "kanaltype ", land: "forfattarland ", tiar: "verk frå " }[f.siterer.modus] || "";
+    leggTil("siterer", null, `Referansar til ${ka}${D.sitd ? siterarNamn(f.siterer) : f.siterer.nokkel}`);
+  }
   for (const k of f.term) leggTil("term", k, `Ord: ${termVis(k)}`);
   if (f.lik) { const i = D.idx.get(f.lik); leggTil("lik", null, `Liknar: ${kutt(i != null ? D.kol.tittel[i] : f.lik, 30)}`); }
   if (f.omr) leggTil("omr", null, "Område i kartet");

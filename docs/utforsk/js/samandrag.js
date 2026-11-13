@@ -47,7 +47,9 @@ async function fraSkjerv(id) {
   if (!s) { skjervar.delete(namn); return undefined; }
   const x = s[id];
   if (!x || !x.t) return null;
-  return { tekst: String(x.t), kjelde: KJELDE[x.s] || String(x.s || "ukjend") };
+  // Uttrekk frå PDF (s:"x") skal lenkje til kjelda (u), slik rettsregelen krev.
+  const lenkje = x.s === "x" && typeof x.u === "string" && /^https?:\/\/[^\s<>"']+$/i.test(x.u) ? x.u : "";
+  return { tekst: String(x.t), kjelde: KJELDE[x.s] || String(x.s || "ukjend"), lenkje };
 }
 
 async function fraReserve(id) {

@@ -36,7 +36,7 @@ button, input, select { font: inherit; color: inherit; }
 a { color: inherit; text-underline-offset: .16em; text-decoration-thickness: 1px; text-decoration-color: var(--dim); }
 :focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.hopp { position: absolute; left: 8px; top: -60px; z-index: 100; background: #fff; color: #000; padding: 8px 12px; }
+.hopp { position: absolute; left: 8px; top: -60px; z-index: 100; background: #fff; color: #000; padding: 8px 12px; min-height: 44px; border: 0; font-family: var(--mono); font-size: 12px; }
 .hopp:focus { top: 8px; }
 .dim { color: var(--dim); }
 
@@ -73,6 +73,7 @@ a { color: inherit; text-underline-offset: .16em; text-decoration-thickness: 1px
 .seg { -webkit-appearance: none; appearance: none; border: 0; border-right: 1px solid var(--line); background: transparent; min-height: var(--mal); padding: 0 10px; cursor: pointer; font-family: var(--mono); font-size: 12px; color: var(--dim); }
 .seg:last-child { border-right: 0; }
 .seg[aria-checked="true"] { background: #f2f2f2; color: #000; }
+@media (max-width: 899px), (pointer: coarse) { .seg { min-width: 44px; } }
 select { background: var(--flate); border: 1px solid var(--line); border-radius: 3px; min-height: var(--mal); padding: 0 6px; font-family: var(--mono); font-size: 12px; }
 
 /* ---------- header ---------- */
@@ -168,9 +169,21 @@ select { background: var(--flate); border: 1px solid var(--line); border-radius:
 .vis { display: flex; flex-direction: column; flex: 1; min-height: 0; position: relative; }
 .vis-topp { display: flex; align-items: flex-start; gap: 12px; padding: 8px 16px 6px; border-bottom: 1px solid var(--hair); }
 .vis-tekst { flex: 1; min-width: 0; }
-.forklaring { margin: 0; font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.forklaring { margin: 0; font-size: 13px; line-height: 1.4; max-width: 72ch; }
 .teikn-wrap { margin-top: 4px; }
 .teikn-knapp { display: none; }
+/* legend floating over a canvas view (wide screens) */
+.teikn-flyt .teikn-wrap {
+  position: absolute; left: 8px; bottom: 8px; z-index: 4; margin: 0;
+  max-width: min(290px, calc(100% - 80px)); max-height: calc(100% - 64px); overflow: auto;
+  background: rgba(0,0,0,.72); border: 1px solid var(--hair); border-radius: 4px; padding: 2px 8px 6px;
+}
+.teikn-flyt .teikn-knapp { display: inline-flex; min-height: 26px; border: 0; background: none; padding: 0; color: var(--dim); }
+.teikn-flyt .forklaring-teikn { margin-top: 0; flex-direction: column; align-items: flex-start; }
+.teikn-flyt .teikn-post { min-height: 20px; text-align: left; }
+.teikn-flyt .teikn-merk { white-space: normal; }
+.teikn-flyt.teikn-lukka .forklaring-teikn { display: none; }
+.teikn-flyt.teikn-lukka .teikn-wrap { padding-bottom: 4px; }
 .forklaring-teikn { display: flex; flex-wrap: wrap; gap: 0 8px; font-family: var(--mono); font-size: 11px; color: var(--dim); align-items: center; }
 .teikn-post { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; white-space: nowrap; }
 button.teikn-post { -webkit-appearance: none; appearance: none; border: 0; background: none; cursor: pointer; padding: 0 2px; font: inherit; color: inherit; border-radius: 3px; }
@@ -272,9 +285,10 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 @media (hover: hover) { .nabo:hover .nabo-tittel { text-decoration: underline; } }
 
 /* side panels inside views */
-.sidepanel { position: absolute; top: 8px; right: 8px; width: 260px; max-height: calc(100% - 70px); overflow: auto; background: rgba(8,8,8,.92); border: 1px solid var(--line); border-radius: 4px; z-index: 4; font-size: 13px; }
+.sidepanel { position: absolute; top: 8px; right: 8px; width: 260px; max-height: calc(100% - 170px); overflow: auto; background: rgba(8,8,8,.92); border: 1px solid var(--line); border-radius: 4px; z-index: 4; font-size: 13px; }
 .sidepanel-topp { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 10px; font-family: var(--mono); font-size: 11px; color: var(--dim); position: sticky; top: 0; background: rgba(8,8,8,.96); }
 .sidepanel ol { list-style: none; margin: 0; padding: 0 6px 6px; }
+.sidepanel-merk { margin: 0; padding: 0 10px 8px; font-family: var(--mono); font-size: 10px; color: #7a7a7a; }
 .rangrad { display: grid; grid-template-columns: 1fr auto; gap: 2px 6px; align-items: center; padding: 4px; border-radius: 3px; }
 .rangrad button.rang-namn { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; min-height: 28px; font-size: 13px; }
 .rangrad .rang-tal { font-family: var(--mono); font-size: 11px; color: var(--dim); }
@@ -293,6 +307,87 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .brushstripe { touch-action: none; }
 .brushstripe .selection { fill: #fff; fill-opacity: .12; stroke: #fff; stroke-opacity: .6; }
 .brushstripe .overlay { cursor: crosshair; }
+
+/* Tid */
+.tid { position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+.tid-band { flex: 45 1 0; min-height: 230px; position: relative; touch-action: pan-y; }
+.tid-band svg, .tid-ord svg { position: absolute; left: 0; top: 0; }
+.tid-band text, .tid-ord text, .tid-stripe text { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
+.tid .etikett { font-family: var(--serif); font-size: 12px; fill: #e8e8e8; paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round; }
+.tid-stripe { height: 40px; flex: none; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); background: #070707; }
+.tid-stripe svg { display: block; touch-action: none; }
+.stripe-tekst { fill: #7a7a7a; }
+.tid-ordboks { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 16px 0 44px; }
+.ordfelt { position: relative; flex: 0 1 300px; }
+.ordinput { width: 100%; min-height: var(--mal); padding: 0 8px; background: var(--flate); border: 1px solid var(--line); border-radius: 3px; font-size: 16px; }
+.ordforslag { top: calc(100% + 2px); }
+.ordchipar { display: flex; flex-wrap: wrap; gap: 6px; }
+.ordchip { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--f); border-radius: 14px; padding-left: 8px; font-family: var(--mono); font-size: 12px; }
+.ordchip .lenkeknapp[aria-pressed="true"] { font-weight: 600; text-decoration-style: solid; }
+.ordmelding { flex-basis: 100%; margin: 0; font-family: var(--mono); font-size: 11px; color: #ffb38a; min-height: 0; }
+.ordmelding:empty { display: none; }
+.tid-ord { flex: 45 1 0; min-height: 210px; position: relative; touch-action: pan-y; }
+.ord-tom { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0; color: var(--dim); font-family: var(--mono); font-size: 12px; text-align: center; padding: 16px; pointer-events: none; }
+.tid-temachipar { display: flex; flex-wrap: wrap; gap: 0 6px; padding: 2px 16px; font-family: var(--mono); font-size: 11px; color: var(--dim); flex: none; }
+.segment.framheva { box-shadow: 0 0 0 2px #fff; }
+@media (max-width: 899px), (pointer: coarse) { button.teikn-post { min-height: 44px; } }
+@media (max-width: 899px), (pointer: coarse) { .tid-stripe { height: 48px; } .tid-ordboks { padding-left: 12px; } .tid-temachipar .teikn-post { min-height: 44px; } }
+@media (max-width: 599px) { .ordforslag { top: auto; bottom: calc(100% + 2px); } }
+
+/* Siteringar */
+.sit-svg { padding: 0; }
+.ego { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 0.8fr) minmax(0, 1fr); grid-template-areas: "siterer midt sitertav" "liknar liknar liknar"; gap: 14px 48px; padding: 12px 16px 24px; }
+.ego-kol { position: relative; z-index: 1; min-width: 0; }
+.ego-kol[data-kol="siterer"] { grid-area: siterer; }
+.ego-kol[data-kol="sitertav"] { grid-area: sitertav; }
+.ego-kol[data-kol="liknar"] { grid-area: liknar; }
+.ego-kol[data-kol="liknar"] .ego-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 16px; }
+.ego-kol h3 { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--dim); margin: 0 0 6px; }
+.ego-midt { grid-area: midt; position: relative; z-index: 1; }
+.ego-boge { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 0; }
+.ego-kort { border: 1px solid #6a6a6a; border-radius: 4px; padding: 10px 12px; background: #0b0b0b; margin-top: 18px; }
+.ego-kort h3 { font-size: 14px; font-weight: 500; margin: 2px 0 6px; line-height: 1.3; }
+.ego-kort p { margin: 0 0 6px; font-size: 12px; }
+.ego-merk { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+.ego-item { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: 0; border-radius: 3px; padding: 2px 4px; font-size: 12px; min-height: 26px; cursor: pointer; color: var(--fg); }
+.ego-item.ute { opacity: .45; }
+.ego-item.merka { outline: 1px solid #fff; }
+.ego-tekst { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.ego-tekst b { font-weight: 500; }
+@media (hover: hover) { .ego-item:hover { background: #151515; } .bump-node:hover rect:first-child { stroke: #aaa; } }
+.ego-tom { padding: 24px 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; color: var(--dim); margin: 0; }
+.ego-tom .knapp { white-space: normal; text-align: left; height: auto; padding: 8px 12px; }
+.bump text { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
+.bump .bump-hovud { fill: var(--fg); font-size: 12px; }
+.bump .bump-tekst { fill: #e8e8e8; font-family: var(--serif); font-size: 12px; }
+.bump-node { cursor: pointer; outline: none; }
+.bump-node:focus-visible rect:first-child { stroke: #fff; stroke-width: 2; }
+.straum { display: block; touch-action: pan-y; }
+.ministolpar { vertical-align: -2px; margin-right: 4px; }
+.tiar-tabell { padding: 12px 16px 4px; font-size: 13px; max-width: 760px; }
+.tiar-tabell p { margin: 0 0 8px; }
+.tiar-tabell table { border-collapse: collapse; width: 100%; font-family: var(--mono); font-size: 12px; }
+.tiar-tabell th, .tiar-tabell td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--hair); font-weight: 400; vertical-align: top; }
+.tiar-tabell th:first-child { text-align: left; font-family: var(--serif); font-size: 13px; }
+.tiar-tabell thead th { color: var(--dim); font-size: 11px; }
+.tiar-tabell .lenkeknapp { min-height: 28px; }
+@media (max-width: 599px) { .tiar-tabell { padding: 8px 10px; } .tiar-tabell th, .tiar-tabell td { padding: 6px 4px; } .tiar-tabell .lenkeknapp { min-height: 44px; } }
+.sit-rang.lukka ol, .sit-rang.lukka p { display: none; }
+@media (min-width: 900px) { .sit-saman { right: 276px !important; } .sit-rang { top: 8px; bottom: 8px; max-height: none; } }
+@media (max-width: 899px) {
+  .ego { grid-template-columns: minmax(0, 1fr); grid-template-areas: "midt" "siterer" "sitertav" "liknar"; gap: 12px; }
+  .ego-item { min-height: 44px; }
+  .ego-kort { margin-top: 0; }
+  .sidepanel.sit-rang { top: auto; bottom: 8px; }
+}
+
+/* Verda */
+.tidskontroll { display: flex; align-items: center; gap: 12px; padding: 6px 16px; border-top: 1px solid var(--hair); flex: none; flex-wrap: wrap; }
+.tidskontroll .arspor { width: min(360px, 50vw); }
+.tidskontroll .spel { min-height: 44px; min-width: 88px; }
+.tidskontroll .spel[aria-pressed="true"] { background: #f2f2f2; color: #000; }
+.speltekst { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+@media (max-width: 899px) { .tidskontroll { padding: 4px 12px; gap: 8px; } .tidskontroll .arspor { width: calc(100vw - 230px); min-width: 120px; } .tidskontroll .kontroll-namn { display: none; } }
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -321,6 +416,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
   }
   .panel-topp { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #000; padding: 8px 0; z-index: 2; border-bottom: 1px solid var(--hair); }
   .panel-tittel { font-family: var(--mono); font-size: 13px; }
+  body.panel-ope .filterlinje { z-index: 95; }
   .filterpanel .kontroll { flex-direction: column; align-items: stretch; }
   .filterpanel .arslider { flex-wrap: wrap; }
   .filterpanel .arspor { width: 100%; flex: 1 1 100%; order: 3; }
@@ -331,12 +427,16 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
   .chiprad { padding: 2px 12px; min-height: 44px; }
   .hovud { grid-template-columns: minmax(0, 1fr); }
   .visflate { padding-bottom: 64px; }
-  .vis-topp { padding: 6px 12px 4px; flex-wrap: wrap; }
-  .forklaring { font-size: 12px; }
+  .vis-topp { padding: 6px 12px 4px; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+  /* the "Forklaring" button and the view controls share one row under the line */
+  .vis-tekst { display: contents; }
+  .forklaring { font-size: 12px; flex: 1 1 100%; }
+  .teikn-wrap { margin-top: 0; }
+  .teikn-ope .teikn-wrap { flex-basis: 100%; order: 3; }
   .teikn-knapp { display: inline-flex; }
   .forklaring-teikn { display: none; margin-top: 4px; }
   .teikn-ope .forklaring-teikn { display: flex; }
-  .viskontroll { width: 100%; justify-content: flex-start; }
+  .viskontroll { margin-left: auto; justify-content: flex-end; }
   .listepanel {
     position: fixed; left: 0; right: 0; bottom: 0; height: 64px; z-index: 70; border-left: 0;
     border-top: 1px solid var(--line); border-radius: 10px 10px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.7);
@@ -350,10 +450,23 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
   }
   .handtak-strek { width: 40px; height: 4px; border-radius: 2px; background: #555; }
   .ark-peek .listeinnhald { visibility: hidden; }
-  .sidepanel { position: static; width: auto; max-height: none; margin: 0; border-radius: 0; border-left: 0; border-right: 0; }
+  .sidepanel { left: 8px; right: 60px; width: auto; max-height: 45%; }
+  .viskontroll .seg { padding: 0 7px; font-size: 11px; }
+  .ordchip .lenkeknapp { min-height: 44px; }
   .liste-hint { display: none; }
   .zoomknappar { bottom: 10px; }
 }
 @media (max-width: 599px) {
   .chip { font-size: 11px; }
+}
+
+/* Tid on small screens: theme and word chips scroll sideways in one row each,
+   so the bands, the brush strip and the curves stay close together */
+@media (max-width: 899px) {
+  .tid-temachipar { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; padding: 2px 12px; gap: 0 4px; }
+  .tid-temachipar .teikn-post { flex: none; }
+  .tid-ordboks { gap: 4px 8px; padding-right: 12px; }
+  .ordfelt { flex: 1 1 100%; }
+  .ordchipar { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: thin; }
+  .ordchip { flex: none; }
 }
