@@ -123,7 +123,6 @@
     } else if (code === "d") {
       info.label = "Utgjevarside";
       info.href = doiHref(w) || safeHref(item ? item[1] : "") || safeHref([w.oa_url, w.source_url].filter((u) => /^https?:\/\/(dx\.)?doi\.org\//i.test(u || ""))[0]);
-      info.tag = "berre utgjevarside";
       info.help = "Berre DOI-lenkja til utgjevaren er kjend";
     }
     return info;

@@ -744,6 +744,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .acc-h, .acc-v { color: var(--ok); border-color: var(--ok); font-weight: 500; }
 .acc-u { color: var(--warn); border-color: var(--warn); }
 .acc-d, .acc-0 { color: var(--dim); }
+.act-link.acc-d { border-color: transparent; }
 .acc-h:hover, .acc-v:hover, .acc-u:hover { color: var(--fg); }
 
 .tags { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 4px 6px; }
