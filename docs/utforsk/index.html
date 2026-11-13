@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="nn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000000">
+  <title>Utforsk · designteori</title>
+  <meta name="description" content="Utforsk nordisk designforsking: 6 432 verk som kart, nettverk, verdskart, siteringar og tidsliner, med eitt felles utval.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..600;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="utforsk.css?v=1">
+  <script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" integrity="sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=" crossorigin="anonymous"></script>
+  <script type="module" src="js/main.js?v=1"></script>
+</head>
+<body>
+  <a class="hopp" href="#liste">Hopp til lista over verk</a>
+  <header class="topp">
+    <a class="tilbake" href="../">← designteori</a>
+    <h1 class="tittel">Utforsk</h1>
+    <nav class="faner" role="tablist" aria-label="Visingar">
+      <button type="button" role="tab" class="fane" id="fane-kart" data-vis="kart" aria-controls="visflate" aria-selected="true">Kart</button>
+      <button type="button" role="tab" class="fane" id="fane-nett" data-vis="nett" aria-controls="visflate" aria-selected="false" tabindex="-1">Nett</button>
+      <button type="button" role="tab" class="fane" id="fane-verda" data-vis="verda" aria-controls="visflate" aria-selected="false" tabindex="-1">Verda</button>
+      <button type="button" role="tab" class="fane" id="fane-siteringar" data-vis="siteringar" aria-controls="visflate" aria-selected="false" tabindex="-1">Siteringar</button>
+      <button type="button" role="tab" class="fane" id="fane-tid" data-vis="tid" aria-controls="visflate" aria-selected="false" tabindex="-1">Tid</button>
+    </nav>
+    <button type="button" class="knapp kopier" id="kopier" aria-label="Kopier lenke" title="Kopier lenke til denne visinga">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span class="kopier-tekst">Kopier lenke</span>
+    </button>
+  </header>
+  <section class="filterlinje" id="filterlinje" aria-label="Filter"></section>
+  <div class="chiprad" id="chiprad" aria-label="Aktive filter"></div>
+  <main class="hovud">
+    <section class="visflate" id="visflate" role="tabpanel" aria-labelledby="fane-kart">
+      <div class="startmelding" id="startmelding"><p>Lastar verka …</p></div>
+    </section>
+    <aside class="listepanel" id="listepanel" aria-label="Verk i utvalet"></aside>
+  </main>
+  <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+  <div id="kort" class="kort" role="dialog" aria-label="Detalj" hidden></div>
+  <div id="live" class="sr" aria-live="polite"></div>
+  <div id="live-merke" class="sr" aria-live="polite"></div>
+  <noscript><p class="startmelding">Sida treng JavaScript.</p></noscript>
+</body>
+</html>
