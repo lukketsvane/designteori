@@ -1,7 +1,7 @@
 // The selection model: state S, data columns D, masks, utval, facet counts,
 // subscribers, URL hash and history rules. Nothing else mutates S.
-import { fold, termNokkel, kutt } from "./hjelp.js?v=20";
-import * as data from "./data.js?v=20";
+import { fold, termNokkel, kutt } from "./hjelp.js?v=21";
+import * as data from "./data.js?v=21";
 
 export const VISNINGAR = ["kart", "nett", "verda", "siteringar", "tid"];
 const SIT_DELAR = ["saman", "nabolag", "straum", "tid"];
@@ -596,9 +596,16 @@ function lastDim(d) {
     sikre(namn).then((r) => {
       lastar.delete(namn);
       void token;
+      // words from a link that are not in the word list are dropped (like other invalid values),
+      // so the count never shows a filter that cannot match anything
+      if (r.ok && namn === "tid.json") {
+        for (const k of [...S.f.term]) if (!D.termIdx.has(k)) { S.f.term.delete(k); ugyldig("term", k); }
+        const h = lagHash();
+        if (h !== location.hash) history.replaceState(null, "", h);
+      }
       const dims = DIMS.filter((x) => LAT[x] && LAT[x].includes(namn) && aktiv(x));
       if (dims.length) { rekn(dims); meld({ filter: true, dims }); }
-      else if (!r.ok) meld({ filter: true, dims: [] });
+      else meld({ filter: true, dims: [] });
     });
   }
 }
@@ -621,6 +628,7 @@ export function fraUrl({ start = false } = {}) {
   for (const c of [...f.land]) if (c !== "X" && !D.landIdx.has(c)) { f.land.delete(c); ugyldig("land", c); }
   if (S.verk && !D.idx.has(S.verk)) { ugyldig("verk", S.verk); S.verk = null; }
   if (f.lik && !D.idx.has(f.lik)) { ugyldig("lik", f.lik); f.lik = null; }
+  if (D.termIdx) for (const k of [...f.term]) if (!D.termIdx.has(k)) { f.term.delete(k); ugyldig("term", k); }
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
   if (f.q && !sok) byggSok();
   rekn(DIMS);

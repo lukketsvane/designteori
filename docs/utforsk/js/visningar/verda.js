@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle } from "../hjelp.js?v=20";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle } from "../hjelp.js?v=21";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -43,7 +43,7 @@ export default {
       else scene.settZ(null, 600, false);
     });
     // time control
-    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">Spel av</button><span class="speltekst" aria-live="polite"></span></div>`);
+    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">Spel av</button><span class="speltekst" aria-live="polite"></span><span class="tidskontroll-merk">Same årsfilter som øvst på sida.</span></div>`);
     slider = api.filterlinje.lagArSlider(ramme.el.querySelector(".verda-ar"), { id: "verda" });
     ramme.el.querySelector(".spel").addEventListener("click", () => (spel ? stoppSpel() : startSpel()));
     scene.storleik();
@@ -135,7 +135,8 @@ function rekn() {
     let nx = -dy / L, ny = dx / L;
     if ((mx + nx - cx) ** 2 + (my + ny - cy) ** 2 < (mx - nx - cx) ** 2 + (my - ny - cy) ** 2) { nx = -nx; ny = -ny; }
     const qx = mx + nx * 0.18 * L, qy = my + ny * 0.18 * L;
-    return { ...o, x1, y1, x2, y2, qx, qy, x0: Math.min(x1, x2, qx), x3: Math.max(x1, x2, qx), y0: Math.min(y1, y2, qy), y3: Math.max(y1, y2, qy) };
+    const lang = L <= VW * 0.35 ? 1 : Math.max(0.35, 1 - (L - VW * 0.35) / (VW * 0.9));
+    return { ...o, x1, y1, x2, y2, qx, qy, lang, x0: Math.min(x1, x2, qx), x3: Math.max(x1, x2, qx), y0: Math.min(y1, y2, qy), y3: Math.max(y1, y2, qy) };
   });
   bogar.reverse(); // weakest first, strongest drawn on top
 }
@@ -146,19 +147,23 @@ const radius = (p, s, sc) => (3 + 22 * Math.sqrt(s / smax)) * sc.rf * Math.pow(M
 function teiknBase(ctx, sc) {
   sc.setVerd(ctx);
   if (land) {
-    ctx.fillStyle = "#121212"; ctx.fill(land);
-    ctx.fillStyle = "#1b1b1b"; ctx.fill(landNordisk);
-    ctx.strokeStyle = "#2a2a2a"; ctx.lineWidth = 0.6 / sc.K;
-    ctx.stroke(land); ctx.stroke(landNordisk);
+    // land a step above black and coasts visible on an ordinary screen; the Nordic countries lighter
+    ctx.fillStyle = "#1d1d1d"; ctx.fill(land);
+    ctx.fillStyle = "#2b2b2b"; ctx.fill(landNordisk);
+    ctx.strokeStyle = "#4a4a4a"; ctx.lineWidth = 0.7 / sc.K;
+    ctx.stroke(land);
+    ctx.strokeStyle = "#5e5e5e"; ctx.stroke(landNordisk);
   }
   if (!P || !sVal) return;
   const hovStad = typeof sc.hoverId === "number" ? sc.hoverId : null;
   // arcs
   for (const b of bogar) {
     const r = b.w / wmax;
-    let alfa = 0.15 + 0.6 * r, bw = 0.6 + 5 * r ** 0.8;
+    // weak arcs are faint and long arcs (out of the Nordic frame) fainter still, so the strong
+    // links read first instead of a white tangle
+    let alfa = (0.05 + 0.6 * r ** 0.7) * b.lang, bw = 0.6 + 5 * r ** 0.8;
     const aktiv = (hovStad != null && (b.a === hovStad || b.b === hovStad)) || hoverBoge === b;
-    if (aktiv) { alfa = 0.9; bw += 1.5; } else if (hovStad != null || hoverBoge) alfa = 0.05;
+    if (aktiv) { alfa = 0.9; bw += 1.5; } else if (hovStad != null || hoverBoge) alfa = 0.04;
     ctx.globalAlpha = alfa;
     ctx.strokeStyle = "#f2f2f2";
     ctx.lineWidth = bw / sc.K;
@@ -192,12 +197,17 @@ function teiknOverlay(ctx, sc) {
   for (const k of S.f.stad) { const p = D.stadIdx.get(k); if (p != null) ring(ctx, sc, p, 2, 2); }
   if (S.f.par) for (const k of S.f.par) { const p = D.stadIdx.get(k); if (p != null) ring(ctx, sc, p, 2, 2); }
   for (const p of merkStader) ring(ctx, sc, p, 3);
+  const vi = S.verk ? D.idx.get(S.verk) : null;
+  if (vi != null) for (const p of D.verkStader[vi]) ring(ctx, sc, p, 5, 1.5);
   if (typeof sc.hoverId === "number") ring(ctx, sc, sc.hoverId, 2);
   if (typeof sc.fokusId === "number") ring(ctx, sc, sc.fokusId, 4);
-  const inne = P.storst.filter((p) => sVal[p] > 0 && sc.synleg(P.x[p], P.y[p])).sort((a, b) => sVal[b] - sVal[a] || a - b);
+  const inne = P.storst.filter((p) => sVal[p] > 0 && sc.synleg(P.x[p], P.y[p], 30)).sort((a, b) => sVal[b] - sVal[a] || a - b);
   const hind = inne.slice(0, 200).map((p, j) => { const [px, py] = sc.tilSkjerm(P.x[p], P.y[p]); return { id: p, x: px, y: py, r: radius(p, sVal[p], sc), rang: j }; });
-  const kand = inne.slice(0, 40).map((p, j) => { const [px, py] = sc.tilSkjerm(P.x[p], P.y[p]); return { id: p, x: px, y: py, r: radius(p, sVal[p], sc), tekst: T.stadNamn(P.st[p].k), font: "12px Literata, Georgia, serif", h: 15, rang: j }; });
-  etikettar = plasserEtikettar(kand, { w: sc.w, h: sc.h, hindringar: hind, forrige: forrigePlass, maks: 20 });
+  // at deep zoom a bubble can be wider than the gap to its neighbour: a label may then sit on
+  // its own bubble (centred), so the places in view keep their names
+  const djup = sc.k >= 3;
+  const kand = inne.slice(0, 40).map((p, j) => { const [px, py] = sc.tilSkjerm(P.x[p], P.y[p]); return { id: p, x: px, y: py, r: radius(p, sVal[p], sc), tekst: T.stadNamn(P.st[p].k), font: "12px Literata, Georgia, serif", h: 15, rang: j, sentrert: djup }; });
+  etikettar = plasserEtikettar(kand, { w: sc.w, h: sc.h, hindringar: djup ? [] : hind, blokk: sc.dekkaNo(), forrige: forrigePlass, maks: Math.min(40, Math.round(20 * Math.max(1, sc.k ** 0.5))) });
   forrigePlass = new Map(etikettar.map((q) => [q.id, q.pos]));
   teiknEtikettar(ctx, etikettar);
 }
@@ -208,7 +218,9 @@ function finn(px, py, type) {
   const sc = scene.sc;
   const [x, y] = sc.tilVerd(px, py);
   const touch = type !== "mouse";
-  const kand = A.innanfor(P.qt, x, y, 60 / sc.K, (p) => P.x[p], (p) => P.y[p]);
+  // search as far as the largest bubble can reach at this zoom
+  const rMaks = radius(0, smax, sc) + 24;
+  const kand = A.innanfor(P.qt, x, y, rMaks / sc.K, (p) => P.x[p], (p) => P.y[p]);
   const treff = [];
   for (const p of kand) {
     const r = radius(p, Math.max(sVal[p], 1), sc), d = Math.hypot(P.x[p] - x, P.y[p] - y) * sc.K;
@@ -292,7 +304,7 @@ function stoppSpel() {
 
 // ---------- line and legend ----------
 function teiknLinje() {
-  let t = `Stader der forfattarane høyrer til. Boble = verk, boge = felles verk mellom to stader. Berre OpenAlex: ${fmt(P.med || 0)} av ${fmt(T.valt)} verk i utvalet har stad.`;
+  let t = `Stader der forfattarane høyrer til (byen til institusjonen). Boble = verk, og eit verk kan stå i fleire bobler. Boge = felles verk mellom to stader. Berre OpenAlex: ${fmt(P.med || 0)} av ${fmt(T.valt)} verk i utvalet har stad.`;
   if (bogarTotalt > bogar.length) t += ` Viser ${fmt(bogar.length)} av ${fmt(bogarTotalt)} bogar.`;
   if (landFeil) t += " Landkartet kunne ikkje lastast; stadene er rett plasserte.";
   ramme.linje.textContent = t;

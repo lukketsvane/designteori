@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal } from "../hjelp.js?v=20";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal } from "../hjelp.js?v=21";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -13,6 +13,10 @@ let etikettar = [], forrigePlass = new Map();
 let sitOrd;
 let fargeSeg, lassoKnapp, zoomKnapp;
 const ARR = 1, R_MAX = 9;
+let invitasjonBrukt = false;
+// Under this many works in the selection, the bright points are drawn larger and ringed.
+const LITE = 200;
+const liteUtval = () => T.harFilter() && T.valt > 0 && T.valt <= LITE;
 
 const AR_FARGE = (ar) => {
   const t = (Math.max(1990, Math.min(2026, ar)) - 1990) / 36;
@@ -59,7 +63,8 @@ export default {
     });
     scene.storleik();
     if (S.kart.z) scene.settZ(S.kart.z);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => scene.teiknOverlay());
+    // a one-line invitation over the first screen; it goes at the first filter or opened work
+    ramme.flate.insertAdjacentHTML("beforeend", `<p class="invitasjon" hidden>Søk, klikk eit tema eller dra ein ring rundt punkt for å starte.</p>`);
   },
   oppdater(s, e) {
     if (!kat || e.visning.has("kart.farge")) { lagFargar(); fargeSeg.set(S.kart.farge); }
@@ -68,6 +73,11 @@ export default {
     teiknTeikn();
     teiknLinje();
     zoomKnapp.disabled = !(T.valt > 0 && T.valt < D.n);
+    // a small selection is easy to lose among 6 432 dots: the zoom button is then the obvious next step
+    zoomKnapp.classList.toggle("primar", liteUtval());
+    const inv = ramme.flate.querySelector(".invitasjon");
+    if (T.harFilter() || S.verk) invitasjonBrukt = true;
+    if (inv) inv.hidden = invitasjonBrukt;
     scene.teikn();
   },
   storleik() { scene.storleik(); },
@@ -173,7 +183,8 @@ function byggGrupper(anim) {
 
 // ---------- drawing ----------
 function radius(i, sc) {
-  return Math.min(R_MAX, rBase[i] * Math.min(sc.k, 4) ** 0.5);
+  const r = Math.min(R_MAX, rBase[i] * Math.min(sc.k, 4) ** 0.5);
+  return T.utval[i] && liteUtval() ? Math.max(4, r) : r;
 }
 function sti(ctx, ids, sc, vb) {
   const K = sc.K;
@@ -215,6 +226,40 @@ function teiknBase(ctx, sc) {
   if (g.inn) fyllGrupper(g.inn, a);
   if (g.ut) fyllGrupper(g.ut, 1 - a);
   ctx.globalAlpha = 1;
+  if (liteUtval()) teiknLite(ctx, sc, vb, g.inn ? a : 1);
+}
+
+// A small selection: every bright point at least 4 px, with a dark gap and a white ring,
+// so 8 works among 6 432 can be counted by eye.
+function teiknLite(ctx, sc, vb, alfa) {
+  const K = sc.K, s = Math.min(sc.k, 4) ** 0.5;
+  const [x0, y0, x1, y1] = vb;
+  const grupper = grupperLyse();
+  ctx.globalAlpha = alfa;
+  const ring = new Path2D(), svart = new Path2D();
+  for (let k = 0; k < grupper.length; k++) {
+    const ids = grupper[k];
+    if (!ids.length) continue;
+    ctx.fillStyle = katFarge[k];
+    ctx.beginPath();
+    for (let j = 0; j < ids.length; j++) {
+      const i = ids[j], x = D.x[i], y = D.y[i];
+      if (x < x0 || x > x1 || y < y0 || y > y1) continue;
+      const r = Math.max(4, Math.min(R_MAX, rBase[i] * s)) / K;
+      ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832);
+      svart.moveTo(x + r + 1.5 / K, y); svart.arc(x, y, r + 1.5 / K, 0, 6.2832);
+      ring.moveTo(x + r + 3 / K, y); ring.arc(x, y, r + 3 / K, 0, 6.2832);
+    }
+    ctx.fill();
+  }
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 2 / K; ctx.stroke(svart);
+  ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 1.25 / K; ctx.stroke(ring);
+  ctx.globalAlpha = 1;
+}
+function grupperLyse() {
+  const g = grupper;
+  if (!g.inn) return g.lyse;
+  return g.lyse.map((l, k) => Int32Array.from([...l, ...g.inn[k]]));
 }
 
 function ring(ctx, sc, i, ekstra = 3) {
@@ -254,10 +299,9 @@ function lagEtikettar(sc) {
   if (k < 3.0) {
     alfa = k < 2.5 ? 1 : 1 - (k - 2.5) / 0.5;
     const font = `600 ${smalt ? 13 : 15}px Literata, Georgia, serif`;
-    const c = T.harFilter() ? temaTal() : null;
     v.tema.forEach((t, j) => {
       const [px, py] = sc.tilSkjerm(t.lx, t.ly);
-      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: lys(PALETTE_TEMA[j], 0.3), prio: t.n, data: { tema: j, alfa: alfa < 1 ? alfa : null, tal: c ? c[j] : null } });
+      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: lys(PALETTE_TEMA[j], 0.3), prio: t.n, data: { tema: j, alfa: alfa < 1 ? alfa : null } });
     });
   }
   if (k >= 2.5 && k < 6) {
@@ -280,15 +324,9 @@ function lagEtikettar(sc) {
       if (++c >= 40) break;
     }
   }
-  const plass = plasserEtikettar(kand, { w: sc.w, h: sc.h, forrige: forrigePlass, maks: k >= 6 ? 25 : 80 });
+  const plass = plasserEtikettar(kand, { w: sc.w, h: sc.h, blokk: sc.dekkaNo(), forrige: forrigePlass, maks: k >= 6 ? 25 : 80 });
   forrigePlass = new Map(plass.map((p) => [p.id, p.pos]));
   return plass;
-}
-
-function temaTal() {
-  const c = new Int32Array(D.verk.tema.length);
-  for (let i = 0; i < D.n; i++) if (T.utval[i]) c[D.tema[i]]++;
-  return c;
 }
 
 // ---------- picking (amendments 28, 29, 32) ----------

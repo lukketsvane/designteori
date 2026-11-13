@@ -1,7 +1,7 @@
 // Canvas scene shared by Kart, Nett, Verda and the Siteringar map: base and overlay
 // canvas with dpr, d3.zoom, pointer and touch rules, tooltip and pinned card,
 // lasso, keyboard pan/zoom, focus-ring cycling, zoom buttons.
-import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=20";
+import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=21";
 
 const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
 
@@ -61,12 +61,32 @@ export function lagScene(flate, o) {
     teiknTider.push(performance.now() - t0);
     if (teiknTider.length > 400) teiknTider.splice(0, 200);
   }
-  const teikn = () => { ventBase = ventOver = true; if (!raf) raf = requestAnimationFrame(teiknNo); };
+  const teikn = () => { ventBase = ventOver = true; tipsKey = null; if (!raf) raf = requestAnimationFrame(teiknNo); };
   const teiknOverlay = () => { ventOver = true; if (!raf) raf = requestAnimationFrame(teiknNo); };
 
   // ---------- size ----------
+  // Boxes of the controls that float over the drawing (legend, side panel, toolbars), in
+  // canvas px. Labels avoid them, and the home view is fitted to the space they leave.
+  let dekkaTid = 0;
+  function malDekka() {
+    const r = flate.getBoundingClientRect();
+    const ut = [];
+    for (const e of flate.querySelectorAll(":scope > .teikn-wrap, :scope > .sidepanel:not([hidden]), :scope > .verktoy, :scope > .zoomknappar, :scope > .invitasjon:not([hidden])")) {
+      const b = e.getBoundingClientRect();
+      if (!b.width || !b.height) continue;
+      ut.push({ x0: b.left - r.left - 4, y0: b.top - r.top - 4, x1: b.right - r.left + 4, y1: b.bottom - r.top + 4, kind: e.classList.contains("teikn-wrap") ? "teikn" : e.classList.contains("sidepanel") ? "panel" : "verktoy" });
+    }
+    sc.dekka = ut;
+    dekkaTid = performance.now();
+    return ut;
+  }
+  sc.dekka = [];
+  sc.dekkaNo = () => (performance.now() - dekkaTid > 400 ? malDekka() : sc.dekka);
+
   function storleik() {
     const r = flate.getBoundingClientRect();
+    // a hidden view (display:none) reports 0 x 0: keep the last size and transform
+    if (!r.width || !r.height) return;
     const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
     // keep the reader's zoom; the home view (identity) refits to the new size and panels
     const heime = Math.abs(sc.t.k - 1) < 1e-3 && Math.abs(sc.t.x) < 0.5 && Math.abs(sc.t.y) < 0.5;
@@ -82,20 +102,19 @@ export function lagScene(flate, o) {
     // the home view fits o.heim() (a box in world units) or the whole world
     const hb = o.heim ? o.heim() : [0, 0, VW, VH];
     const bw = Math.max(1, hb[2] - hb[0]), bh = Math.max(1, hb[3] - hb[1]);
-    sc.s0 = Math.min(w / bw, h / bh) * (1 - 2 * m);
-    sc.ox = (w - bw * sc.s0) / 2 - hb[0] * sc.s0; sc.oy = (h - bh * sc.s0) / 2 - hb[1] * sc.s0;
-    // a floating legend on the left and a side panel on the right: centre the drawing in
-    // the space between them when there is room
-    const lg = flate.querySelector(":scope > .teikn-wrap");
-    const sp = flate.querySelector(":scope > .sidepanel:not([hidden])");
-    const padL = lg && lg.offsetWidth ? lg.offsetWidth + 16 : 0;
-    const padR = sp && sp.offsetWidth ? sp.offsetWidth + 16 : 0;
-    if (padL + padR) {
-      const fri = w - bw * sc.s0;
-      if (fri > padL + padR) sc.ox = padL + (w - padL - padR - bw * sc.s0) / 2 - hb[0] * sc.s0;
-      else if (padR && fri > padR) sc.ox = (w - padR - bw * sc.s0) / 2 - hb[0] * sc.s0;
-      else if (padL && fri > padL) sc.ox = padL + (w - padL - bw * sc.s0) / 2 - hb[0] * sc.s0;
-    }
+    // A floating legend on the left and a side panel on the right take their width from the
+    // home view: the drawing is fitted to the space between them (when that leaves at least
+    // 40 % of the width), so no mark or label of the home view sits under them.
+    const dk = malDekka();
+    const padL = Math.max(0, ...dk.filter((b) => b.kind === "teikn").map((b) => b.x1 + 8));
+    const padR = Math.max(0, ...dk.filter((b) => b.kind === "panel").map((b) => w - b.x0 + 8));
+    let l = 0, rr = 0;
+    if (w - padL - padR >= w * 0.4) { l = padL; rr = padR; }
+    else if (w - padR >= w * 0.5) rr = padR;
+    else if (w - padL >= w * 0.5) l = padL;
+    const fw = w - l - rr;
+    sc.s0 = Math.min(fw / bw, h / bh) * (1 - 2 * m);
+    sc.ox = l + (fw - bw * sc.s0) / 2 - hb[0] * sc.s0; sc.oy = (h - bh * sc.s0) / 2 - hb[1] * sc.s0;
     zoom.extent([[0, 0], [w, h]]).translateExtent(o.fri ? [[-Infinity, -Infinity], [Infinity, Infinity]] : [[-w * 2, -h * 2], [w * 3, h * 3]]);
     if (z) settZ(z, 0, true); else { oppdaterSc(); }
     teikn();
@@ -150,7 +169,7 @@ export function lagScene(flate, o) {
 
   // ---------- pointer ----------
   let sistePeikar = "mouse";
-  let hoverEv = null, hoverRaf = 0;
+  let hoverEv = null, hoverRaf = 0, tipsKey = null;
   const peikarar = new Set();
   const lokal = (ev) => { const r = over.getBoundingClientRect(); return [ev.clientX - r.left, ev.clientY - r.top]; };
   function hoverNo() {
@@ -166,9 +185,14 @@ export function lagScene(flate, o) {
       teiknOverlay();
     }
     if (hit && !kort.ope) {
-      const html = o.tips(hit);
-      if (html) tooltip.vis(html, ev.clientX, ev.clientY); else tooltip.skjul();
-    } else tooltip.skjul();
+      // the tooltip text is built once per mark (and per redraw), then only moved
+      const key = `${id}|${hit.fleire || 0}`;
+      if (key !== tipsKey || !tooltip.synleg) {
+        tipsKey = key;
+        const html = o.tips(hit);
+        if (html) tooltip.vis(html, ev.clientX, ev.clientY); else { tooltip.skjul(); tipsKey = null; }
+      } else tooltip.flytt(ev.clientX, ev.clientY);
+    } else { tooltip.skjul(); tipsKey = null; }
     over.style.cursor = hit ? "pointer" : (o.peikarFor ? o.peikarFor(px, py) : "") || "";
   }
   over.addEventListener("pointermove", (ev) => {
@@ -252,14 +276,28 @@ export function lagScene(flate, o) {
     lassoNettoFerdig = pkt.length > 2;
     setTimeout(() => { lassoNettoFerdig = false; }, 400);
     teiknOverlay();
-    if (pkt.length < 3) return;
+    const siste = pkt[pkt.length - 1];
+    if (pkt.length < 3) { if (pkt.length > 1) lassoHint(siste); return; }
     let verd = pkt.map(([x, y]) => sc.tilVerd(x, y));
     const [x0, y0, x1, y1] = sc.verdBoks();
     const tol = Math.hypot(x1 - x0, y1 - y0) * 0.015;
     verd = forenkle(verd, tol);
     while (verd.length > 24) verd = forenkle(verd, tolAuke(verd));
-    if (verd.length < 3 || areal(verd) < VW * VH * 0.0001) return;
+    if (verd.length < 3 || areal(verd) < VW * VH * 0.0001) {
+      // a drag with little area: use the box it spans when that is a real box, else say how
+      const xs = pkt.map((p) => p[0]), ys = pkt.map((p) => p[1]);
+      const bx0 = Math.min(...xs), bx1 = Math.max(...xs), by0 = Math.min(...ys), by1 = Math.max(...ys);
+      if (bx1 - bx0 < 16 || by1 - by0 < 16) { lassoHint(siste); return; }
+      verd = [[bx0, by0], [bx1, by0], [bx1, by1], [bx0, by1]].map(([x, y]) => sc.tilVerd(x, y));
+    }
     o.lasso.ferdig(verd.map(([x, y]) => [Math.round(x), Math.round(y)]), sistePeikar);
+  }
+  let hintTid = 0;
+  function lassoHint([x, y]) {
+    const r = over.getBoundingClientRect();
+    tooltip.vis(`<div class="tt-tittel">Teikn ein ring rundt verka</div><div class="tt-meta">Ei rett line har ikkje noko område. Dra rundt punkta, eller dra på skrå for ein firkant.</div>`, r.left + x, r.top + y);
+    clearTimeout(hintTid);
+    hintTid = setTimeout(() => tooltip.skjul(), 2600);
   }
   function avbrytLasso() {
     if (!lasso) return false;
@@ -271,6 +309,8 @@ export function lagScene(flate, o) {
   // ---------- keyboard ----------
   let fokusIdx = -1;
   over.addEventListener("keydown", (ev) => {
+    // leave browser shortcuts alone (Ctrl/Cmd + plus, minus, 0 zoom the page; Alt+Left goes back)
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
     const k = ev.key;
     const steg = 0.1;
     if (k === "ArrowLeft" || k === "ArrowRight" || k === "ArrowUp" || k === "ArrowDown") {

@@ -126,7 +126,8 @@ class TestVerk(unittest.TestCase):
 
     def test_ranges(self):
         k, v = self.kol, self.v
-        self.assertTrue(all(1900 <= a <= 2026 for a in k["ar"]))
+        # the page counts years from 1983 (tilstand.js AR_MIN, kart.js year colours)
+        self.assertTrue(all(1983 <= a <= 2026 for a in k["ar"]))
         self.assertTrue(all(0 <= x <= 10000 for x in k["x"]) and all(0 <= y <= 10000 for y in k["y"]))
         self.assertTrue(all(a in (0, 1) for a in k["lag"]))
         self.assertTrue(all(0 <= t < len(v["typar"]) for t in k["type"]))
@@ -351,6 +352,47 @@ class TestNaboar(unittest.TestCase):
             self.assertTrue(all(0 <= j < N for j in rad))
             self.assertEqual(len(set(rad)), 10)
             self.assertTrue(all(c[q] >= c[q + 1] for q in range(9)), i)
+
+    def _naboar(self):
+        raa = (VIS / "naboar.bin").read_bytes()
+        idx = struct.unpack("<%dH" % (N * 10), raa[: N * 20])
+        return idx, raa[N * 20 :]
+
+    def test_cosines_match_vectors(self):
+        # stored cosine (x/255) against the int8 vectors the neighbours come from
+        vek = (DOCS_DATA_DIR / "semantic_vectors.bin").read_bytes()
+        dim = len(vek) // N
+        self.assertEqual(dim * N, len(vek))
+        idx, cos = self._naboar()
+
+        def v(i):
+            r = struct.unpack("%db" % dim, vek[i * dim : (i + 1) * dim])
+            n = sum(x * x for x in r) ** 0.5 or 1.0
+            return [x / n for x in r]
+
+        rng = random.Random(7)
+        for i in rng.sample(range(N), 60):
+            a = v(i)
+            for q in range(10):
+                j = idx[i * 10 + q]
+                ekte = sum(x * y for x, y in zip(a, v(j)))
+                self.assertAlmostEqual(cos[i * 10 + q] / 255, max(0.0, ekte), delta=0.02, msg=(i, j))
+
+    def test_map_places_neighbours_close(self):
+        # the Kart layout must keep similar works near each other and not collapse
+        k = les("verk.json")["kol"]
+        x, y = k["x"], k["y"]
+        idx, _ = self._naboar()
+        rng = random.Random(11)
+        utval = rng.sample(range(N), 800)
+        nabo = sum(((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2) ** 0.5 for i in utval for j in idx[i * 10 : i * 10 + 10]) / 8000
+        tilf = sum(((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2) ** 0.5 for i in utval for j in rng.sample(range(N), 10)) / 8000
+        self.assertLess(nabo, 0.6 * tilf, (nabo, tilf))
+        for col in (x, y):
+            m = sum(col) / N
+            sd = (sum((c - m) ** 2 for c in col) / N) ** 0.5
+            self.assertGreater(sd, 1000)
+        self.assertGreater(len({(round(a), round(b)) for a, b in zip(x, y)}), N * 0.9)
 
 
 class TestNett(unittest.TestCase):
@@ -713,6 +755,20 @@ class TestSide(unittest.TestCase):
             n_url = len(re.findall(r"https://cdn\.jsdelivr\.net/npm/[^\"'`\s]+\.js", tekst))
             n_sri = len(re.findall(r"sha(?:256|384|512)-", tekst))
             self.assertGreaterEqual(n_sri, n_url, "SRI manglar for skript lasta frå data.js")
+
+    def test_sri_values(self):
+        # the exact hashes published by jsDelivr for these files (amendment 66)
+        venta = {
+            "d3@7.9.0/dist/d3.min.js": "sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=",
+            "d3-sankey@0.12.3/dist/d3-sankey.min.js": "sha256-gobbXWqgScxuilRnCJQ7ed+02q77DM9Cr2dOwO5Mhr4=",
+            "topojson-client@3.1.0/dist/topojson-client.min.js": "sha256-Jc0CrkhsxQY+AhWk5M+xXeg3AMh6xIusTVfcaq8+u4k=",
+            "world-atlas@2.0.2/countries-50m.json": "sha256-BDQs3B4wFrzX2xYw3pVoTWe3n+PIxGAyHoeu9GlQI5Q=",
+        }
+        tekst = (UTFORSK / "index.html").read_text(encoding="utf-8") + (UTFORSK / "js" / "data.js").read_text(encoding="utf-8")
+        for fil, sri in venta.items():
+            m = re.search(re.escape(fil) + r"""[^\n]*?(sha256-[A-Za-z0-9+/=]+)""", tekst)
+            self.assertIsNotNone(m, fil)
+            self.assertEqual(m.group(1), sri, fil)
 
     def test_no_fixture(self):
         self.assertFalse((UTFORSK / "_fixture").exists())

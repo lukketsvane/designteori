@@ -218,6 +218,8 @@ export const kort = {
 // ---------- text measuring and labels ----------
 const malCtx = typeof document !== "undefined" ? document.createElement("canvas").getContext("2d") : null;
 const malCache = new Map();
+// widths measured before the web font arrived are wrong: start over when fonts are ready
+export const tomMalCache = () => malCache.clear();
 export function tekstBreidd(tekst, font) {
   const k = font + "|" + tekst;
   let w = malCache.get(k);
@@ -233,7 +235,7 @@ export function tekstBreidd(tekst, font) {
 // Label placer (2.0 + amendment 33). kandidatar: [{id, x, y, r, tekst, font, h, prio}] in screen px,
 // sorted by priority. hindringar: [{x, y, r}] marks the labels must avoid. forrige: Map id -> pos.
 // Returns [{id, x, y, w, h, tekst, font, align, pos}] where (x, y) is the text anchor (left or right, middle).
-export function plasserEtikettar(kandidatar, { w, h, hindringar = [], forrige = null, maks = 80, pad = 3 } = {}) {
+export function plasserEtikettar(kandidatar, { w, h, hindringar = [], blokk = [], forrige = null, maks = 80, pad = 3 } = {}) {
   const CELL = 64;
   const grid = new Map();
   const nokkel = (cx, cy) => cx * 100003 + cy;
@@ -259,6 +261,8 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], forrige = 
     if (o.r <= 0) continue;
     leggTil({ x0: o.x - o.r, x1: o.x + o.r, y0: o.y - o.r, y1: o.y + o.r, hindring: true, id: o.id, rang: o.rang });
   }
+  // boxes of controls floating over the drawing: no label goes under them
+  for (const b of blokk) leggTil({ x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, hindring: true, id: "\u0000blokk" });
   // sticky: previously placed candidates first
   let liste = kandidatar.slice(0, maks * 2);
   if (forrige && forrige.size) {
@@ -290,7 +294,7 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], forrige = 
       if (b.x0 < 0 || b.x1 > w || b.y0 < 0 || b.y1 > h) continue;
       if (kolliderer(b, k.id, k.rang)) continue;
       leggTil(b);
-      ut.push({ id: k.id, x: v.x, y: v.y, w: tw, h: th, tekst: k.tekst, font: k.font, align: v.align, pos: v.pos, farge: k.farge, boks: b, data: k.data });
+      ut.push({ id: k.id, x: v.x, y: v.y, w: tw, h: th, tekst: k.tekst, font: k.font, align: v.align, pos: v.pos, farge: k.farge, boks: b, data: k.data, bakgrunn: !!k.sentrert });
       break;
     }
   }
@@ -302,11 +306,19 @@ export function teiknEtikettar(ctx, plasserte, { farge = "#f2f2f2", alfa = 1 } =
   ctx.globalAlpha = alfa;
   ctx.textBaseline = "middle";
   ctx.lineJoin = "round";
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = "rgba(0,0,0,0.9)";
   for (const p of plasserte) {
     ctx.font = p.font;
     ctx.textAlign = p.align;
+    // labels set over the middle of a dense area (theme names) get a dark backing
+    if (p.bakgrunn) {
+      const x0 = p.align === "left" ? p.x : p.x - p.w;
+      ctx.fillStyle = "rgba(0,0,0,0.62)";
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(x0 - 5, p.y - p.h / 2 - 1, p.w + 10, p.h + 2, 4); else ctx.rect(x0 - 5, p.y - p.h / 2 - 1, p.w + 10, p.h + 2);
+      ctx.fill();
+    }
     ctx.strokeText(p.tekst, p.x, p.y);
     ctx.fillStyle = p.farge || farge;
     ctx.fillText(p.tekst, p.x, p.y);
@@ -398,6 +410,23 @@ export function lagRamme(el, { kontrollTekst } = {}) {
     el.classList.toggle("teikn-ope", ope);
   });
   return r;
+}
+
+// Rebuild a box (innerHTML) without losing keyboard focus: the focused control, or the one
+// with the same data attributes after the rebuild, or its nearest neighbour, gets focus back.
+const FOKUSERBAR = "button, a[href], input, select, [tabindex]";
+export function bevarFokus(boks, fn) {
+  const a = document.activeElement;
+  let key = null;
+  if (a && a !== boks && boks.contains(a)) key = { tag: a.tagName, data: { ...a.dataset }, idx: [...boks.querySelectorAll(FOKUSERBAR)].indexOf(a) };
+  fn();
+  if (!key || boks.contains(document.activeElement)) return;
+  const alle = [...boks.querySelectorAll(FOKUSERBAR)].filter((e) => !e.hidden && e.tabIndex >= 0);
+  const dk = Object.entries(key.data);
+  const lik = dk.length ? alle.find((e) => e.tagName === key.tag && dk.every(([k, v]) => e.dataset[k] === v)) : null;
+  const m = lik || alle[Math.max(0, Math.min(key.idx, alle.length - 1))];
+  if (m) m.focus({ preventScroll: true });
+  else { if (!boks.hasAttribute("tabindex")) boks.setAttribute("tabindex", "-1"); boks.focus({ preventScroll: true }); }
 }
 
 // Message overlay in a frame: {tittel, tekst, knapp: {tekst, gjer}}; null clears.

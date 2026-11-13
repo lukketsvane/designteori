@@ -82,11 +82,12 @@ select { background: var(--flate); border: 1px solid var(--line); border-radius:
   border-bottom: 1px solid var(--hair); font-family: var(--mono); font-size: 12px;
 }
 .tilbake { color: var(--dim); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
-.tittel { font-family: var(--serif); font-weight: 400; font-size: 18px; margin: 0; }
+.tittel { font-family: var(--mono); font-weight: 400; font-size: 13px; margin: 0; color: var(--fg); text-transform: lowercase; }
 .faner { display: flex; gap: 2px; flex: 1; }
 .fane {
   -webkit-appearance: none; appearance: none; background: none; border: 0; border-bottom: 2px solid transparent;
   min-height: 46px; padding: 0 12px; cursor: pointer; color: var(--dim); font-family: var(--mono); font-size: 13px;
+  text-transform: lowercase;
 }
 .fane[aria-selected="true"] { color: var(--fg); border-bottom-color: #f2f2f2; }
 .kopier { margin-left: auto; }
@@ -155,6 +156,7 @@ select { background: var(--flate); border: 1px solid var(--line); border-radius:
 .teljar b { font-weight: 500; }
 .status { color: var(--dim); white-space: nowrap; }
 .status.feil { color: #ffb38a; }
+.status-knapp { font-family: var(--mono); font-size: 12px; white-space: nowrap; min-height: 28px; color: var(--fg); }
 .chipar { display: flex; gap: 6px; flex: none; }
 .chip { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 14px; padding-left: 10px; white-space: nowrap; background: var(--flate); }
 .chip.feil { border-style: dashed; color: var(--dim); }
@@ -188,15 +190,15 @@ select { background: var(--flate); border: 1px solid var(--line); border-radius:
 .teikn-post { display: inline-flex; align-items: center; gap: 4px; min-height: 24px; white-space: nowrap; }
 button.teikn-post { -webkit-appearance: none; appearance: none; border: 0; background: none; cursor: pointer; padding: 0 2px; font: inherit; color: inherit; border-radius: 3px; }
 button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; }
-.teikn-post .tal { color: #6f6f6f; }
-.teikn-merk { color: #6f6f6f; }
+.teikn-post .tal { color: #a3a3a3; }
+.teikn-merk { color: #a3a3a3; }
 .gradient { display: inline-block; width: 120px; height: 8px; border-radius: 2px; }
 .viskontroll { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; align-items: center; }
 .framdrift { height: 2px; background: var(--hair); }
 .framdrift span { display: block; height: 100%; background: #f2f2f2; width: 0; transition: width .2s; }
 .teikneflate { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .vis-melding, .vis-tom { position: absolute; inset: auto 0 0 0; top: var(--melding-topp, 0); display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 5; }
-.vis-melding .melding-boks, .vis-tom .melding-boks { pointer-events: auto; background: rgba(0,0,0,.82); border: 1px solid var(--line); border-radius: 4px; padding: 14px 18px; max-width: 420px; text-align: center; font-size: 14px; }
+.vis-melding .melding-boks, .vis-tom .melding-boks { pointer-events: auto; background: #050505; border: 1px solid var(--line); border-radius: 4px; padding: 14px 18px; max-width: 420px; text-align: center; font-size: 14px; }
 .melding-boks p { margin: 0 0 8px; }
 .melding-tittel { font-weight: 500; }
 
@@ -206,10 +208,12 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .scene .lag-over:focus-visible { box-shadow: inset 0 0 0 2px #fff; }
 .scene .lag-over.lassomodus { cursor: crosshair; }
 .zoomknappar { position: absolute; right: 10px; bottom: calc(10px + var(--sheet-pad, 0px)); display: flex; flex-direction: column; gap: 4px; z-index: 4; }
-.zoomknappar .knapp { background: rgba(10,10,10,.85); }
+.zoomknappar .knapp { background: rgba(10,10,10,.85); border-color: #2a2a2a; }
 .verktoy { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; z-index: 4; flex-wrap: wrap; justify-content: flex-end; }
-.verktoy .knapp { background: rgba(10,10,10,.85); }
-.verktoy .knapp[aria-pressed="true"] { background: #f2f2f2; color: #000; }
+.verktoy .knapp { background: rgba(10,10,10,.85); border-color: #2a2a2a; }
+.verktoy .knapp[aria-pressed="true"], .verktoy .knapp.primar { background: #f2f2f2; color: #000; border-color: #f2f2f2; }
+.invitasjon { position: absolute; left: 10px; top: 10px; z-index: 3; margin: 0; max-width: calc(100% - 300px); padding: 6px 12px; border-radius: 4px; background: rgba(0,0,0,.78); border: 1px solid var(--hair); font-family: var(--mono); font-size: 12px; color: #cfcfcf; text-align: left; pointer-events: none; }
+@media (max-width: 899px) { .invitasjon { top: auto; bottom: 10px; left: 10px; right: 64px; transform: none; max-width: none; } }
 
 /* tooltip and card */
 .tooltip {
@@ -219,7 +223,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 }
 .tt-tittel { font-weight: 500; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .tt-meta { color: var(--dim); font-family: var(--mono); font-size: 11px; margin-top: 3px; }
-.tt-fot { color: #6f6f6f; font-family: var(--mono); font-size: 10px; margin-top: 5px; }
+.tt-fot { color: #9a9a9a; font-family: var(--mono); font-size: 11px; margin-top: 5px; }
 .kort {
   position: fixed; left: 0; top: 0; z-index: 85; width: min(340px, calc(100vw - 16px));
   background: #111; border: 1px solid #4a4a4a; border-radius: 6px; padding: 12px 12px 10px; font-size: 14px;
@@ -237,7 +241,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .liste-visning { display: flex; flex-direction: column; min-height: 0; flex: 1; }
 .liste-topp { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px 2px; font-family: var(--mono); font-size: 12px; }
 .sortval { display: inline-flex; align-items: center; gap: 6px; color: var(--dim); }
-.liste-hint { margin: 0; padding: 0 12px 6px; font-family: var(--mono); font-size: 10px; color: #6f6f6f; border-bottom: 1px solid var(--hair); }
+.liste-hint { margin: 0; padding: 0 12px 6px; font-family: var(--mono); font-size: 11px; color: #9a9a9a; border-bottom: 1px solid var(--hair); }
 .liste-tom { padding: 16px 12px; color: var(--dim); }
 .liste { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; outline: none; }
 .liste:focus-visible { box-shadow: inset 0 0 0 2px #fff; }
@@ -256,7 +260,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .merke.doi { color: var(--dim); border-color: #2a2a2a; }
 @media (max-width: 599px) {
   .rad { height: 88px; }
-  .merke { position: relative; }
+  .merke { position: relative; min-width: 52px; height: 32px; font-size: 11px; }
   .merke::after { content: ""; position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; transform: translate(-50%, -50%); }
 }
 
@@ -288,7 +292,9 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .sidepanel { position: absolute; top: 8px; right: 8px; width: 260px; max-height: calc(100% - 170px); overflow: auto; background: rgba(8,8,8,.92); border: 1px solid var(--line); border-radius: 4px; z-index: 4; font-size: 13px; }
 .sidepanel-topp { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 10px; font-family: var(--mono); font-size: 11px; color: var(--dim); position: sticky; top: 0; background: rgba(8,8,8,.96); }
 .sidepanel ol { list-style: none; margin: 0; padding: 0 6px 6px; }
-.sidepanel-merk { margin: 0; padding: 0 10px 8px; font-family: var(--mono); font-size: 10px; color: #7a7a7a; }
+.sidepanel-merk { margin: 0; padding: 0 10px 8px; font-family: var(--mono); font-size: 11px; color: #9a9a9a; }
+.rang-nokkel { margin: 0; padding: 0 10px 4px; font-family: var(--mono); font-size: 11px; color: #9a9a9a; display: flex; align-items: center; gap: 6px; }
+.ikkje-kart { font-family: var(--mono); font-size: 10px; color: #9a9a9a; white-space: nowrap; }
 .rangrad { display: grid; grid-template-columns: 1fr auto; gap: 2px 6px; align-items: center; padding: 4px; border-radius: 3px; }
 .rangrad button.rang-namn { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; min-height: 28px; font-size: 13px; }
 .rangrad .rang-tal { font-family: var(--mono); font-size: 11px; color: var(--dim); }
@@ -310,13 +316,15 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 
 /* Tid */
 .tid { position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
-.tid-band { flex: 45 1 0; min-height: 230px; position: relative; touch-action: pan-y; }
+.tid-band { flex: 45 1 0; min-height: 230px; position: relative; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.tid-band path { cursor: pointer; }
+.tid-dragboks { position: absolute; top: 4px; bottom: 4px; background: rgba(255,255,255,.12); border-left: 1px solid #fff; border-right: 1px solid #fff; pointer-events: none; font-family: var(--mono); font-size: 11px; color: #fff; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px; white-space: nowrap; }
 .tid-band svg, .tid-ord svg { position: absolute; left: 0; top: 0; }
 .tid-band text, .tid-ord text, .tid-stripe text { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
 .tid .etikett { font-family: var(--serif); font-size: 12px; fill: #e8e8e8; paint-order: stroke; stroke: #000; stroke-width: 3px; stroke-linejoin: round; }
 .tid-stripe { height: 40px; flex: none; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); background: #070707; }
 .tid-stripe svg { display: block; touch-action: none; }
-.stripe-tekst { fill: #7a7a7a; }
+.stripe-tekst { fill: #9a9a9a; }
 .tid-ordboks { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 16px 0 44px; }
 .ordfelt { position: relative; flex: 0 1 300px; }
 .ordinput { width: 100%; min-height: var(--mal); padding: 0 8px; background: var(--flate); border: 1px solid var(--line); border-radius: 3px; font-size: 16px; }
@@ -363,6 +371,9 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .bump-node { cursor: pointer; outline: none; }
 .bump-node:focus-visible rect:first-child { stroke: #fff; stroke-width: 2; }
 .straum { display: block; touch-action: pan-y; }
+.straum-node:focus, .straum-lenke:focus { outline: none; }
+.straum-node:focus-visible { stroke: #fff; stroke-width: 2px; }
+.straum-lenke:focus-visible { stroke-opacity: .9; }
 .ministolpar { vertical-align: -2px; margin-right: 4px; }
 .tiar-tabell { padding: 12px 16px 4px; font-size: 13px; max-width: 760px; }
 .tiar-tabell p { margin: 0 0 8px; }
@@ -387,6 +398,8 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .tidskontroll .spel { min-height: 44px; min-width: 88px; }
 .tidskontroll .spel[aria-pressed="true"] { background: #f2f2f2; color: #000; }
 .speltekst { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+.tidskontroll-merk { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+@media (max-width: 599px) { .tidskontroll-merk { display: none; } }
 @media (max-width: 899px) { .tidskontroll { padding: 4px 12px; gap: 8px; } .tidskontroll .arspor { width: calc(100vw - 230px); min-width: 120px; } .tidskontroll .kontroll-namn { display: none; } }
 
 /* ---------- reduced motion ---------- */

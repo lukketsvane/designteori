@@ -1,22 +1,22 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=20";
-import * as data from "./data.js?v=20";
-import * as T from "./tilstand.js?v=20";
-import * as filterlinje from "./filterlinje.js?v=20";
-import * as liste from "./liste.js?v=20";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=20";
-import { initMaal } from "./maal.js?v=20";
+import * as hjelp from "./hjelp.js?v=21";
+import * as data from "./data.js?v=21";
+import * as T from "./tilstand.js?v=21";
+import * as filterlinje from "./filterlinje.js?v=21";
+import * as liste from "./liste.js?v=21";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=21";
+import { initMaal } from "./maal.js?v=21";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=20"),
-  nett: () => import("./visningar/nett.js?v=20"),
-  verda: () => import("./visningar/verda.js?v=20"),
-  siteringar: () => import("./visningar/siteringar.js?v=20"),
-  tid: () => import("./visningar/tid.js?v=20"),
+  kart: () => import("./visningar/kart.js?v=21"),
+  nett: () => import("./visningar/nett.js?v=21"),
+  verda: () => import("./visningar/verda.js?v=21"),
+  siteringar: () => import("./visningar/siteringar.js?v=21"),
+  tid: () => import("./visningar/tid.js?v=21"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}
@@ -48,6 +48,11 @@ async function start() {
   settFane(S.vis);
   await visVis(S.vis);
   initMaal({ visingar, liste, filterlinje });
+  // label widths measured with the fallback font are wrong once the web font is in
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
+    hjelp.tomMalCache();
+    for (const v of Object.values(visingar)) if (v.klar && v.mod.scene) { const s = v.mod.scene(); if (s) s.teikn(); }
+  });
   // idle: search index, then links
   const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 60));
   idle(() => {

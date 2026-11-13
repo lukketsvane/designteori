@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal } from "./hjelp.js?v=20";
-import * as T from "./tilstand.js?v=20";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal } from "./hjelp.js?v=21";
+import * as T from "./tilstand.js?v=21";
 
 const { S, D } = T;
 let el = {};
@@ -40,7 +40,7 @@ export function init() {
         </div>
       </div>
       <div class="kontroll kontroll-pdf">
-        <button type="button" class="toggle" id="pdftoggle" aria-pressed="false"><span>Berre open PDF</span><span class="tal" data-tal></span></button>
+        <button type="button" class="toggle" id="pdftoggle" aria-pressed="false" title="Verk med ein stadfest open PDF. Talet tel verk, ikkje filer: same PDF kan høyre til to verk (til dømes same artikkel i arkivet og i OpenAlex)."><span>Berre open PDF</span><span class="tal" data-tal></span></button>
       </div>
     </div>`;
   el = {
@@ -127,6 +127,7 @@ export function init() {
     if (b.dataset.fjern) { T.fjern(b.dataset.fjern, b.dataset.verdi || null); return; }
     if (b.id === "nullstill") { T.nullstillFilter(); return; }
     if (b.dataset.prov) T.provIgjen(b.dataset.prov);
+    if (b.dataset.frase) { if (el.avbrytSok) el.avbrytSok(); el.sok.value = ""; T.endre((s) => { s.f.term.add(b.dataset.frase); s.f.q = ""; }); }
   });
   oppdater();
 }
@@ -174,12 +175,14 @@ function teiknPop(p, heilt) {
     const c = T.fasettal("tema");
     pop.innerHTML = `<p class="pop-tittel">Tema</p>` + v.tema.map((t, j) => `
       <label class="sjekk"><input type="checkbox" data-dim="tema" value="${esc(t.k)}" ${S.f.tema.has(t.k) ? "checked" : ""}>
-      <span class="prikk" style="background:${PALETTE_TEMA[j]}"></span><span class="sjekk-namn">${esc(t.namn)}</span><span class="tal">${fmt(c.get(t.k) || 0)}</span></label>`).join("");
+      <span class="prikk" style="background:${PALETTE_TEMA[j]}"></span><span class="sjekk-namn">${esc(t.namn)}</span><span class="tal" title="${esc(lagDel(j))}">${fmt(c.get(t.k) || 0)}</span></label>`).join("")
+      + `<p class="pop-merk">Tema er grupper av verk med like titlar og emneord. Nokre tema er mest arkivverk (sjå talet med musa over), så å velje dei er nesten å velje lag.</p>`;
   } else if (p === "type") {
     const c = T.fasettal("type");
     pop.innerHTML = `<p class="pop-tittel">Type</p>` + v.typar.map((t) => `
       <label class="sjekk"><input type="checkbox" data-dim="type" value="${esc(t.k)}" ${S.f.type.has(t.k) ? "checked" : ""}>
-      <span class="sjekk-namn">${esc(t.namn)}</span><span class="tal">${fmt(c.get(t.k) || 0)}</span></label>`).join("");
+      <span class="sjekk-namn">${esc(t.namn)}</span><span class="tal">${fmt(c.get(t.k) || 0)}</span></label>`).join("")
+      + `<p class="pop-merk">«Ukjend»: arkivverk der kjelda ikkje oppgir type. Alle OpenAlex-verk har type.</p>`;
   } else if (p === "kanal") {
     const cg = T.fasettal("kgr"), ck = T.fasettal("kanal");
     const sokEl = pop.querySelector(".kanalsok");
@@ -198,7 +201,8 @@ function teiknPop(p, heilt) {
     if (heilt || !sokEl) {
       pop.innerHTML = `${grupper}<p class="pop-tittel">Kanal</p>
         <input type="search" class="kanalsok" placeholder="Skriv for å finne ein kanal" aria-label="Finn kanal" value="${esc(sokv)}" autocomplete="off">
-        <div class="kanalliste">${kanalar}</div><p class="pop-merk">${liste.length > 50 ? `Viser 50 av ${fmt(liste.length)}. Skriv for å finne fleire.` : ""}</p>`;
+        <div class="kanalliste">${kanalar}</div><p class="pop-merk">${liste.length > 50 ? `Viser 50 av ${fmt(liste.length)}. Skriv for å finne fleire.` : ""}</p>
+        <p class="pop-merk">${fmt(utanKanal())} verk har ingen kanal i dataa (mest arkivverk). Same kanal kan stå med fleire skrivemåtar.</p>`;
       if (sokEl && document.activeElement === sokEl) pop.querySelector(".kanalsok").focus();
     }
     if (!heilt && sokEl) {
@@ -206,6 +210,18 @@ function teiknPop(p, heilt) {
       pop.querySelector(".pop-merk").textContent = liste.length > 50 ? `Viser 50 av ${fmt(liste.length)}. Skriv for å finne fleire.` : "";
     }
   }
+}
+
+let utanK = null;
+function utanKanal() { if (utanK == null) { utanK = 0; for (let i = 0; i < D.n; i++) if (D.kanal[i] < 0) utanK++; } return utanK; }
+const lagCache = new Map();
+function lagDel(j) {
+  if (!lagCache.has(j)) {
+    let a = 0, o = 0;
+    for (let i = 0; i < D.n; i++) if (D.tema[i] === j) { if (D.lag[i]) a++; else o++; }
+    lagCache.set(j, `Heile korpuset: ${fmt(o)} OpenAlex, ${fmt(a)} arkiv (${Math.round((100 * a) / Math.max(1, a + o))} % arkiv)`);
+  }
+  return lagCache.get(j);
 }
 
 // ---------- term suggestions (amendments 2, 22) ----------
@@ -326,7 +342,7 @@ export function lagArSlider(rot, { id }) {
 }
 
 // ---------- redraw ----------
-export function oppdater() {
+export function oppdater(e = {}) {
   if (!el.rot) return;
   const v = D.verk;
   for (const s of sliders) s.oppdater();
@@ -350,7 +366,10 @@ export function oppdater() {
     el.rot.querySelector(`#popknapp-${p} [data-aktivtal]`).textContent = n ? ` (${n})` : "";
     teiknPop(p, false);
   }
-  if (document.activeElement !== el.sok && el.sok.value.trim() !== S.f.q) el.sok.value = S.f.q;
+  // Back/Forward always gives the field the value from the link, also while it has focus;
+  // otherwise the next keystroke would silently bring back a search the reader undid
+  if (e.popstate) { if (el.avbrytSok) el.avbrytSok(); if (el.sok.value !== S.f.q) el.sok.value = S.f.q; lukkForslag(); }
+  else if (document.activeElement !== el.sok && el.sok.value.trim() !== S.f.q) el.sok.value = S.f.q;
   const toks = T.sokTokens(S.f.q);
   el.sokinfo.textContent = S.f.q && toks.length ? `Søkjer etter: ${toks.map((t) => t.p + "*").join(", ")}` : "";
   const chips = T.chipar();
@@ -364,11 +383,36 @@ function teiknChipar(chips) {
   const n = D.n;
   const status = [];
   if (T.ventar()) status.push(`<span class="status">Lastar …</span>`);
-  if (S.f.q && T.sokInfo.delvis && T.brukt("q")) status.push(`<span class="status">Delvis treff</span>`);
+  if (S.f.q && T.sokInfo.delvis && T.brukt("q")) {
+    const nt = T.sokInfo.tokens.length;
+    status.push(`<span class="status" title="Færre enn 10 verk hadde alle orda, så lista viser verk med minst ${nt - 1} av dei ${nt}. Dei med alle orda står øvst.">Delvis treff: minst ${fmt(nt - 1)} av ${fmt(nt)} ord</span>`);
+  }
+  // the exact phrase as one click, when it is a word in the title list
+  if (S.f.q && T.sokInfo.tokens.length > 1 && T.harFil("tid.json")) {
+    const key = termNokkel(S.f.q);
+    const t = D.termIdx.get(key) ?? D.termIdx.get(key.replace(/ /g, ""));
+    if (t != null && !S.f.term.has(D.tidd.termar.k[t])) status.push(`<button type="button" class="lenkeknapp status-knapp" data-frase="${esc(D.tidd.termar.k[t])}">Berre «${esc(D.tidd.termar.vis[t])}» i tittelen (${fmt(D.tidd.termar.df[t])})</button>`);
+  }
   for (const d of T.ikkjeIBruk()) status.push(`<span class="status feil">Filteret «${esc(T.DIM_NAMN[d] || d)}» er ikkje i bruk fordi fila kunne ikkje lastast. <button type="button" class="lenkeknapp" data-prov="${d}">Prøv igjen</button></span>`);
+  // keep keyboard focus on the same chip (or its neighbour) when the row is rebuilt
+  const a = document.activeElement;
+  let fokus = null;
+  if (a && rad.contains(a)) {
+    const xs = [...rad.querySelectorAll(".chip-x")];
+    fokus = { id: a.id, fjern: a.dataset.fjern, verdi: a.dataset.verdi, prov: a.dataset.prov, pos: xs.indexOf(a) };
+  }
   rad.innerHTML = `
     <span class="teljar"><b>${fmt(T.valt)}</b> av ${fmt(n)} verk</span>${status.join("")}
     <div class="chipar">${chips.map((c) => `<span class="chip${c.feil ? " feil" : ""}"><span class="chip-tekst">${esc(c.tekst)}</span><button type="button" class="chip-x" data-fjern="${c.dim}" ${c.verdi != null ? `data-verdi="${esc(c.verdi)}"` : ""} aria-label="Fjern ${esc(c.tekst)}">×</button></span>`).join("")}</div>
     ${chips.length ? `<button type="button" class="knapp liten" id="nullstill">Nullstill alt</button>` : ""}`;
+  if (fokus) {
+    let m = null;
+    if (fokus.id) m = rad.querySelector(`#${fokus.id}`);
+    else if (fokus.fjern) m = [...rad.querySelectorAll(".chip-x")].find((b) => b.dataset.fjern === fokus.fjern && (b.dataset.verdi || "") === (fokus.verdi || ""));
+    else if (fokus.prov) m = rad.querySelector(`[data-prov="${fokus.prov}"]`);
+    if (!m && fokus.pos >= 0) { const xs = rad.querySelectorAll(".chip-x"); m = xs[Math.min(fokus.pos, xs.length - 1)] || null; }
+    if (!m) m = rad.querySelector("#nullstill");
+    (m || el.sok).focus({ preventScroll: true });
+  }
   annonser(`${fmt(T.valt)} av ${fmt(n)} verk`);
 }

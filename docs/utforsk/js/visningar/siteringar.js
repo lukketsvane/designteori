@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle } from "../hjelp.js?v=20";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle } from "../hjelp.js?v=21";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -11,6 +11,7 @@ let citers = null;     // reverse CSR {off, til}
 let merkPos = new Set();
 let etikettar = [], forrigePlass = new Map();
 let sankeyStatus = "ingen";
+let naboStatus = "ingen";
 let utvidaKol = new Set();
 const hogreCache = {};
 
@@ -46,6 +47,10 @@ export default {
     });
     ramme.teikn.addEventListener("click", (e) => { const b = e.target.closest("button[data-straum]"); if (b) T.endre((s) => { s.sit.straum = b.dataset.straum; }); });
     el.svg.addEventListener("click", svgKlikk);
+    el.rang.addEventListener("pointerover", rangHover);
+    el.rang.addEventListener("focusin", rangHover);
+    el.rang.addEventListener("pointerleave", () => { if (rangMerk.size) { rangMerk = new Set(); scene.teiknOverlay(); } });
+    el.rang.addEventListener("focusout", (e) => { if (!el.rang.contains(e.relatedTarget) && rangMerk.size) { rangMerk = new Set(); scene.teiknOverlay(); } });
     el.svg.addEventListener("pointerleave", () => tooltip.skjul());
     new ResizeObserver(() => { if (S.sit.del !== "saman") teiknDel(); }).observe(ramme.flate);
     scene.storleik();
@@ -89,7 +94,8 @@ function lagKart() {
   for (const l of naboar) l.sort((u, v) => v[1] - u[1] || u[0] - v[0]);
   const qt = A.lagIndeks(N, (p) => k.x[p], (p) => k.y[p]);
   const storst = Array.from({ length: N }, (_, p) => p).sort((a, b) => n[b] - n[a] || a - b);
-  K = { N, noder: k.noder, x: k.x, y: k.y, gr: k.gr, kantar: k.kantar, grupper: k.grupper, pos, n, naboar, qt, storst };
+  const nMaks = Math.max(...n);
+  K = { N, noder: k.noder, x: k.x, y: k.y, gr: k.gr, kantar: k.kantar, grupper: k.grupper, pos, n, naboar, qt, storst, rMaks: (sc) => (4 + 1.15 * Math.sqrt(nMaks)) * sc.rf * Math.min(sc.k, 3) ** 0.4 };
 }
 function lagCiters() {
   const NM = D.n + D.m, cnt = new Int32Array(NM + 1);
@@ -173,6 +179,7 @@ function teiknOverlay(ctx, sc) {
   sc.setSkjerm(ctx);
   for (const key of S.f.kanon) { const p = K.pos.get(T.nodeAv(key)); if (p != null) ring(ctx, sc, p, 2, 2); }
   for (const p of merkPos) ring(ctx, sc, p, 3);
+  for (const p of rangMerk) ring(ctx, sc, p, 4, 2.5);
   if (typeof sc.hoverId === "number") ring(ctx, sc, sc.hoverId, 2);
   if (typeof sc.fokusId === "number") ring(ctx, sc, sc.fokusId, 4);
   const kand = [], hind = [];
@@ -183,7 +190,7 @@ function teiknOverlay(ctx, sc) {
     const [px, py] = sc.tilSkjerm(K.x[p], K.y[p]);
     kand.push({ id: p, x: px, y: py, r: radius(p, sc), tekst: T.merkelapp(K.noder[p]), font, h: 15, rang: j, farge: lysNode(p) ? "#f2f2f2" : "#9a9a9a" });
   });
-  etikettar = plasserEtikettar(kand, { w: sc.w, h: sc.h, hindringar: hind, forrige: forrigePlass, maks: Math.min(60, Math.round(30 * Math.max(1, sc.k))) });
+  etikettar = plasserEtikettar(kand, { w: sc.w, h: sc.h, hindringar: hind, blokk: sc.dekkaNo(), forrige: forrigePlass, maks: Math.min(60, Math.round(30 * Math.max(1, sc.k))) });
   forrigePlass = new Map(etikettar.map((q) => [q.id, q.pos]));
   teiknEtikettar(ctx, etikettar);
 }
@@ -192,7 +199,7 @@ function finn(px, py, type) {
   const sc = scene.sc;
   const [x, y] = sc.tilVerd(px, py);
   const touch = type !== "mouse";
-  const kand = A.innanfor(K.qt, x, y, 40 / sc.K, (p) => K.x[p], (p) => K.y[p]);
+  const kand = A.innanfor(K.qt, x, y, (K.rMaks(sc) + 24) / sc.K, (p) => K.x[p], (p) => K.y[p]);
   const treff = [];
   for (const p of kand) {
     const d = Math.hypot(K.x[p] - x, K.y[p] - y) * sc.K, r = radius(p, sc);
@@ -274,9 +281,23 @@ function teiknRang() {
   }
   const mx = topp.length ? topp[0][1] : 1;
   const lukka = el.rang.classList.contains("lukka");
-  el.rang.innerHTML = `<div class="sidepanel-topp"><span>Mest sitert av utvalet</span><button type="button" class="knapp liten" data-rang aria-expanded="${!lukka}">${lukka ? "Vis" : "Gøym"}</button></div>
-    ${topp.length ? `<ol>${topp.map(([v, c]) => `<li class="rangrad"><button type="button" class="rang-namn" data-v="${v}" title="${esc(nodeTittel(v))}" aria-label="${esc(T.merkelapp(v))}, ${esc(nodeTittel(v))}: sitert av ${fmt(c)} verk i utvalet. I heile korpuset: ${profilTekst(v)} av dei siterande verka.">${esc(T.merkelapp(v))}</button><span class="rang-tal" title="Del av alle siterande verk i korpuset: ${profilTekst(v)}">${miniStolpar(v)} ${fmt(c)}</span><span class="rang-bar"><span style="width:${Math.round((100 * c) / mx)}%"></span></span></li>`).join("")}</ol>
-      <p class="sidepanel-merk">Tal: verk i utvalet som siterer. Små stolpar: del av alle siterande verk i korpuset i 2000-, 2010- og 2020-åra (lys = 2020-åra).</p>` : `<p class="dim" style="padding:0 10px">Ingen verk i utvalet har referanseliste.</p>`}`;
+  A.hjelp.bevarFokus(el.rang, () => {
+    el.rang.innerHTML = `<div class="sidepanel-topp"><span>Mest sitert av utvalet</span><button type="button" class="knapp liten" data-rang aria-expanded="${!lukka}">${lukka ? "Vis" : "Gøym"}</button></div>
+    ${topp.length ? `<p class="rang-nokkel" aria-hidden="true"><svg width="26" height="8"><rect x="0" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="9" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="18" y="2" width="7" height="6" fill="#e8e8e8"/></svg> 2000-, 2010-, 2020-åra · tal i utvalet</p>
+    <ol>${topp.map(([v, c]) => { const iKart = K.pos.has(v); return `<li class="rangrad"><button type="button" class="rang-namn" data-v="${v}" title="${esc(nodeTittel(v))}${iKart ? "" : ` (ikkje mellom dei ${K.N} i kartet)`}" aria-label="${esc(T.merkelapp(v))}, ${esc(nodeTittel(v))}: sitert av ${fmt(c)} verk i utvalet. I heile korpuset: ${profilTekst(v)} av dei siterande verka.${iKart ? "" : " Ikkje i kartet."}">${esc(T.merkelapp(v))}${iKart ? "" : ` <span class="ikkje-kart">ikkje i kartet</span>`}</button><span class="rang-tal" title="Del av alle siterande verk i korpuset: ${profilTekst(v)}">${miniStolpar(v)} ${fmt(c)}</span><span class="rang-bar"><span style="width:${Math.round((100 * c) / mx)}%"></span></span></li>`; }).join("")}</ol>
+      <p class="sidepanel-merk">Tal: verk i utvalet som siterer. Små stolpar: del av alle siterande verk i korpuset i 2000-, 2010- og 2020-åra (lys = 2020-åra). Peik på eit namn for å finne det i kartet.</p>` : `<p class="dim" style="padding:0 10px">Ingen verk i utvalet har referanseliste.</p>`}`;
+  });
+}
+// hovering (or focusing) a row of the ranked list rings that node in the map, or the row says
+// it is not among the nodes of the map
+let rangMerk = new Set();
+function rangHover(e) {
+  const b = e.target.closest && e.target.closest("button[data-v]");
+  const v = b ? +b.dataset.v : null;
+  const p = v != null ? K.pos.get(v) : null;
+  const ny = new Set(p != null ? [p] : []);
+  if ([...ny].join() !== [...rangMerk].join()) { rangMerk = ny; scene.teiknOverlay(); }
+  if (e.type === "focusin" && p != null && !scene.sc.synleg(K.x[p], K.y[p], -20)) scene.panTilOmUte(K.x[p], K.y[p]);
 }
 
 // ---------- 2. neighbourhood ----------
@@ -310,7 +331,11 @@ function teiknNabolag() {
   const siterer = iKorpus ? Array.from(D.refTil.subarray(D.refOff[v], D.refOff[v + 1])) : [];
   const sitertAv = Array.from(citers.til.subarray(citers.off[v], citers.off[v + 1]));
   const liknar = iKorpus && T.harFil("naboar.bin") ? Array.from(D.nabo.subarray(v * 10, v * 10 + 10)) : [];
-  if (iKorpus && !T.harFil("naboar.bin")) T.sikre("naboar.bin").then(() => { if (S.sit.del === "nabolag") teiknNabolag(); });
+  // load the neighbours once; a failure is said in the column, not retried in a loop
+  if (iKorpus && !T.harFil("naboar.bin") && naboStatus !== "feil" && naboStatus !== "lastar") {
+    naboStatus = "lastar";
+    T.sikre("naboar.bin").then((r) => { naboStatus = r.ok ? "ok" : "feil"; if (S.sit.del === "nabolag" && S.vis === "siteringar") teiknNabolag(); });
+  }
   const kol = (namn, l, key) => {
     const { vist, resten } = key === "liknar" ? { vist: l, resten: [] } : plukk(l);
     const alle = utvidaKol.has(key) ? vist.concat(resten).sort((a, b) => etterAr(a) - etterAr(b) || a - b) : vist;
@@ -327,7 +352,7 @@ function teiknNabolag() {
       <p class="dim">${esc(forf)}${forf ? " · " : ""}${T.malAr(v) || ""}${kanal ? " · " + esc(kutt(kanal, 50)) : ""}</p>
       ${iKorpus ? `<button type="button" class="knapp liten" data-opneverk="${v}">Opne verket</button>` : ""}</div></div>
     ${kol("Sitert av", sitertAv, "sitertav")}
-    ${iKorpus ? kol("Liknar", liknar, "liknar") : ""}
+    ${iKorpus ? (naboStatus === "feil" && !T.harFil("naboar.bin") ? `<section class="ego-kol" data-kol="liknar"><h3>Liknar</h3><p class="dim">Liknande verk kunne ikkje lastast. <button type="button" class="knapp liten" data-provnabo>Prøv igjen</button></p></section>` : kol("Liknar", liknar, "liknar")) : ""}
   </div>`;
   const r = D.sitd.ref_alle[v];
   ramme.linje.textContent = iKorpus && D.lag[v]
@@ -362,14 +387,14 @@ function teiknBogar() {
 async function teiknStraum() {
   el.svg.innerHTML = "";
   if (!window.d3.sankey) {
-    if (sankeyStatus !== "lastar") {
-      sankeyStatus = "lastar";
-      el.svg.innerHTML = `<p class="ego-tom">Lastar straumane …</p>`;
-      const r = await A.data.lastSkript("sankey");
-      sankeyStatus = r.ok ? "ok" : "feil";
-      if (S.sit.del === "straum") teiknStraum();
-    } else el.svg.innerHTML = `<p class="ego-tom">Lastar straumane …</p>`;
-    if (sankeyStatus === "feil") { el.svg.innerHTML = `<div class="ego-tom"><p>Kunne ikkje laste d3-sankey.min.js.</p><button type="button" class="knapp" data-provsankey>Prøv igjen</button></div>`; }
+    // one attempt per "Prøv igjen": a failed load shows the message and stops
+    if (sankeyStatus === "feil") { el.svg.innerHTML = `<div class="ego-tom"><p>Kunne ikkje laste d3-sankey.min.js.</p><button type="button" class="knapp" data-provsankey>Prøv igjen</button></div>`; return; }
+    el.svg.innerHTML = `<p class="ego-tom">Lastar straumane …</p>`;
+    if (sankeyStatus === "lastar") return;
+    sankeyStatus = "lastar";
+    const r = await A.data.lastSkript("sankey");
+    sankeyStatus = r.ok ? "ok" : "feil";
+    if (S.sit.del === "straum" && S.vis === "siteringar") teiknStraum();
     return;
   }
   const modus = S.sit.straum;
@@ -423,7 +448,7 @@ async function teiknStraum() {
   };
   const W = Math.max(320, el.svg.clientWidth), H = Math.max(420, el.svg.clientHeight - 8);
   const linje = () => {
-    let t = `Referansar frå dei ${fmt(T.valt)} verka i utvalet: ${fmt(ref)} frå ${fmt(verkMed.size)} verk har kjent mål; ${fmt(utan)} peikar på verk utan metadata og er ikkje med.`;
+    let t = `Referansar frå dei ${fmt(T.valt)} verka i utvalet: ${fmt(ref)} frå ${fmt(verkMed.size)} verk har kjent mål; ${fmt(utan)} peikar på verk utan metadata og er ikkje med. Sjølvsiteringar er tekne ut, og fleire referansar frå eitt verk til same siterte verk tel éin gong.`;
     if (modus === "land") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar land.`;
     if (modus === "kanal") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar kanal.`;
     if (S.f.siterer) t += ` Straumane viser alle referansane frå dei valde verka, ikkje berre dei til ${T.siterarNamn(S.f.siterer)}.`;
@@ -453,10 +478,21 @@ async function teiknStraum() {
   const svg = d3.select(el.svg).append("svg").attr("width", W).attr("height", H).attr("class", "straum");
   const lenkeSel = svg.append("g").attr("fill", "none").selectAll("path").data(g.links).join("path")
     .attr("d", d3.sankeyLinkHorizontal()).attr("stroke", (d) => fargeFor(d.source.k, "v")).attr("stroke-opacity", 0.45)
-    .attr("stroke-width", (d) => Math.max(1, d.width)).style("cursor", "pointer");
+    .attr("stroke-width", (d) => Math.max(1, d.width)).style("cursor", "pointer")
+    .attr("tabindex", 0).attr("role", "button").attr("class", "straum-lenke")
+    .attr("aria-label", (d) => `${namnFor(d.source.k, "v")} til ${namnFor(d.target.k, "h")}: ${fmt(Math.round(d.value))} referansar. Enter vel begge.`);
   const nodeSel = svg.append("g").selectAll("rect").data(g.nodes).join("rect")
     .attr("x", (d) => d.x0).attr("y", (d) => d.y0).attr("width", (d) => d.x1 - d.x0).attr("height", (d) => Math.max(1, d.y1 - d.y0))
-    .attr("fill", (d) => fargeFor(d.k, d.side)).style("cursor", "pointer");
+    .attr("fill", (d) => fargeFor(d.k, d.side)).style("cursor", "pointer")
+    .attr("tabindex", 0).attr("role", "button").attr("class", "straum-node")
+    .attr("aria-label", (d) => `${d.side === "v" ? "Verk i utvalet" : "Siterte verk"}: ${namnFor(d.k, d.side)}, ${fmt(Math.round(d.value))} referansar. Enter vel.`);
+  // keyboard: Enter or space on a node or a link does what a click does; focus shows the same highlight
+  nodeSel.on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); if (d.side === "v") velVenstre(d.k); else velHogre(d.k); } })
+    .on("focus", (ev, d) => lenkeSel.attr("stroke-opacity", (q) => (q.source === d || q.target === d ? 0.8 : 0.15)))
+    .on("blur", () => lenkeSel.attr("stroke-opacity", 0.45));
+  lenkeSel.on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); velStraum(d.source.k, d.target.k); } })
+    .on("focus", (ev, d) => lenkeSel.attr("stroke-opacity", (q) => (q === d ? 0.8 : 0.15)))
+    .on("blur", () => lenkeSel.attr("stroke-opacity", 0.45));
   svg.append("g").selectAll("text").data(g.nodes).join("text").attr("class", "etikett")
     .attr("x", (d) => (d.side === "v" ? (lab ? d.x0 - 6 : d.x1 + 6) : (lab ? d.x1 + 6 : d.x0 - 6)))
     .attr("y", (d) => (d.y0 + d.y1) / 2 + 4)
@@ -586,6 +622,7 @@ function svgKlikk(e) {
   const t = e.target;
   const b = t.closest("button");
   if (b && b.dataset.provsankey != null) { sankeyStatus = "ingen"; teiknStraum(); return; }
+  if (b && b.dataset.provnabo != null) { naboStatus = "ingen"; teiknNabolag(); return; }
   if (b && b.dataset.v != null && b.closest(".tiar-tabell")) { const v = +b.dataset.v; T.endre((s) => { s.sit.del = "nabolag"; s.sit.ego = T.nodeKey(v); }); return; }
   if (b && b.dataset.nyego) { T.endre((s) => { s.sit.ego = b.dataset.nyego; }); return; }
   if (b && b.dataset.utvid) { utvidaKol.add(b.dataset.utvid); teiknNabolag(); return; }

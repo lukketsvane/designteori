@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE } from "../hjelp.js?v=20";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE } from "../hjelp.js?v=21";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph
@@ -7,6 +7,7 @@ const grafar = {};       // modus -> prepared graph
 let s = null;            // works in selection per node
 let wValt = null;        // Map pairKey -> shared works in selection
 let merkNoder = new Set();
+let opneNoder = new Set(); // nodes of the open work (S.verk)
 let etikettar = [], forrigePlass = new Map();
 let panelOpe = !smal();
 let status = {};
@@ -46,12 +47,15 @@ export default {
       A.hjelp.visMelding(ramme, { tekst: "Lastar nettet …" });
       const r = await T.sikre(fil);
       status[modus] = r.ok ? "ok" : "feil";
+      // the reader may have switched mode while the file was loading: that call drew already
+      if (S.nett.modus !== modus || S.vis !== "nett") { if (r.ok) grafar[modus] = lagGraf(A.data.ferdig(fil), modus); return; }
       if (!r.ok) {
-        A.hjelp.visMelding(ramme, { tittel: `Kunne ikkje laste ${fil}.`, knapp: { tekst: "Prøv igjen", gjer: () => { status[modus] = null; this.oppdater(S, e); } } });
+        A.hjelp.visMelding(ramme, { tittel: `Kunne ikkje laste ${fil}.`, knapp: { tekst: "Prøv igjen", gjer: () => { status[modus] = null; this.oppdater(S, { ...e, vis: true }); } } });
         return;
       }
       A.hjelp.visMelding(ramme, null);
       grafar[modus] = lagGraf(A.data.ferdig(fil), modus);
+      e = { ...e, vis: true };
     }
     const nyGraf = G !== grafar[modus];
     G = grafar[modus];
@@ -61,6 +65,7 @@ export default {
       const z = S.nett.z;
       if (nyGraf && !e.popstate && !e.vis) scene.settZ(null); else scene.settZ(z);
     }
+    verkNoder();
     teiknLinje();
     teiknPartnar();
     if (T.harFilter() && T.valt > 0 && G.medNode === 0) A.hjelp.visMelding(ramme, { tekst: `Ingen av verka i utvalet har ${G.modus === "inst" ? "institusjon" : "forfattar med OpenAlex-id"} i dataa.` });
@@ -80,6 +85,12 @@ export default {
   scene: () => scene,
   etikettar: () => etikettar,
 };
+
+function verkNoder() {
+  opneNoder = new Set();
+  const i = S.verk ? D.idx.get(S.verk) : null;
+  if (i != null && G) for (const p of G.verkNoder(i)) opneNoder.add(p);
+}
 
 function dekt() {
   const ark = document.getElementById("listepanel").getBoundingClientRect();
@@ -112,8 +123,8 @@ function lagGraf(f, modus) {
   const keyPos = new Map(no.ref.map((r, p) => [dict[r].k, p]));
   const qt = A.lagIndeks(N, (p) => no.x[p], (p) => no.y[p]);
   const storst = Array.from({ length: N }, (_, p) => p).sort((a, b) => no.n[b] - no.n[a] || a - b);
-  // home view: the dense middle (4 % to 96 % of the nodes on each axis), not the far satellites
-  const kv = (arr) => { const s = Float64Array.from(arr).sort(); return [s[Math.floor(N * 0.04)], s[Math.ceil(N * 0.96) - 1]]; };
+  // home view: 1 % to 99 % of the nodes on each axis, so the whole network is in the picture
+  const kv = (arr) => { const s = Float64Array.from(arr).sort(); return [s[Math.floor(N * 0.01)], s[Math.ceil(N * 0.99) - 1]]; };
   const [hx0, hx1] = kv(no.x), [hy0, hy1] = kv(no.y);
   const heim = [hx0 - 150, hy0 - 150, hx1 + 150, hy1 + 150];
   return { heim, modus, N, x: no.x, y: no.y, n: no.n, land: no.land, kantar: f.kantar, tal: f.tal, r0, farge, naboar, namn, fulltNamn, key, keyPos, qt, storst, verkNoder: (i) => verkN[i], verkN, dim: modus === "inst" ? "inst" : "forf" };
@@ -139,9 +150,11 @@ function rekn() {
   }
   G.medNode = medNode;
   // works in the selection with any institution / OpenAlex author at all
+  // (authors: at least one with an OpenAlex id, key starting with "A"; name-only keys do not count)
   let harLag = 0;
-  const kol = G.modus === "inst" ? D.kol.inst : D.kol.forf;
-  for (let i = 0; i < D.n; i++) if (u[i] && kol[i].length && (G.modus === "inst" || D.lag[i] === 0)) harLag++;
+  const forf = D.verk.forfattarar;
+  if (G.modus === "inst") { for (let i = 0; i < D.n; i++) if (u[i] && D.kol.inst[i].length) harLag++; }
+  else for (let i = 0; i < D.n; i++) if (u[i] && D.kol.forf[i].some((f) => forf[f].k.charCodeAt(0) === 65)) harLag++;
   G.harLag = harLag;
   G.valdeNoder = new Set([...S.f[G.dim]].map((k) => G.keyPos.get(k)).filter((p) => p != null));
 }
@@ -242,6 +255,7 @@ function teiknOverlay(ctx, sc) {
   sc.setSkjerm(ctx);
   for (const p of G.valdeNoder) ringSkjerm(ctx, sc, p, 2, "#fff", 2);
   for (const p of merkNoder) ringSkjerm(ctx, sc, p, 3);
+  for (const p of opneNoder) ringSkjerm(ctx, sc, p, 5, "#fff", 1.5);
   if (typeof sc.hoverId === "number") ringSkjerm(ctx, sc, sc.hoverId, 2);
   if (typeof sc.fokusId === "number") ringSkjerm(ctx, sc, sc.fokusId, 4);
   etikettar = lagEtikettar(sc);
@@ -269,7 +283,9 @@ function lagEtikettar(sc) {
     const [px, py] = sc.tilSkjerm(G.x[p], G.y[p]);
     kand.push({ id: p, x: px, y: py, r: radius(p, sc), tekst: kutt(G.namn(p), 28), font, h: 15, rang: j });
   });
-  const plass = plasserEtikettar(kand.slice(0, 80), { w: sc.w, h: sc.h, hindringar: hind, forrige: forrigePlass, maks });
+  // the open work's nodes are always named
+  const fast = [...opneNoder].filter((p) => sc.synleg(G.x[p], G.y[p], -4)).map((p) => { const [px, py] = sc.tilSkjerm(G.x[p], G.y[p]); return { id: p, x: px, y: py, r: radius(p, sc) + 5, tekst: kutt(G.namn(p), 28), font, h: 15, rang: -1 }; });
+  const plass = plasserEtikettar(fast.concat(kand.filter((k) => !opneNoder.has(k.id))).slice(0, 80), { w: sc.w, h: sc.h, hindringar: hind, blokk: sc.dekkaNo(), forrige: forrigePlass, maks: maks + fast.length });
   forrigePlass = new Map(plass.map((q) => [q.id, q.pos]));
   return plass;
 }
@@ -329,7 +345,7 @@ function fokusListe() { return G ? G.storst.slice(0, 30).map((p) => ({ id: p, x:
 function teiknPartnar() {
   const el = ramme.flate.querySelector("#nett-partnar");
   const forBreidd = el.hidden ? 0 : el.offsetWidth;
-  teiknPartnarInnhald(el);
+  A.hjelp.bevarFokus(el, () => teiknPartnarInnhald(el));
   if ((el.hidden ? 0 : el.offsetWidth) !== forBreidd) ramme.flate.dispatchEvent(new CustomEvent("utforsk:teikn"));
 }
 function teiknPartnarInnhald(el) {
@@ -379,7 +395,9 @@ function partnarKlikk(e) {
 function teiknLinje() {
   const inst = G.modus === "inst";
   const alle = G.tal.alle, vist = G.tal.vist;
-  const t = `${inst ? "Institusjonar" : "Forfattarar"} som skriv saman. Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre OpenAlex: ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"}.`;
+  let t = `${inst ? "Institusjonar" : "Forfattarar"} som skriv saman. Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre OpenAlex: ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"}.`;
+  if (!inst) t += " Verk der ein person berre står med namn (mest arkivverk) er ikkje talde under personen.";
+  if (S.verk && D.idx.has(S.verk) && !opneNoder.size) t += " Det opne verket har ingen node i nettet.";
   ramme.linje.textContent = t;
   scene.settLabel(t);
   const tel = new Map();

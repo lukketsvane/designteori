@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal } from "../hjelp.js?v=20";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal } from "../hjelp.js?v=21";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -15,6 +15,8 @@ let ordStatus = "ingen"; // ingen | lastar | ok | feil
 let ukjendMelding = "";
 let siste = null;
 let sisteTilpassa = false; // band scale fitted to a small selection: the corpus outline is then not drawn
+let sisteSmaa = false;     // so few works per year that smoothing would invent shapes: steps instead
+let undertrykkKlikk = false;
 
 export default {
   id: "tid",
@@ -24,7 +26,7 @@ export default {
     A = api; T = api.T; D = api.D; S = api.S; ramme = api.ramme; d3 = window.d3;
     ramme.flate.insertAdjacentHTML("beforeend", `
       <div class="tid">
-        <div class="tid-band" aria-label="Tema over tid"><svg></svg></div>
+        <div class="tid-band" role="group" aria-label="Tema over tid. Dra sidelengs over diagrammet for å velje år."><svg></svg><div class="tid-dragboks" hidden></div></div>
         <div class="tid-stripe brushstripe"><svg aria-label="Dra for å velje år"></svg></div>
         <div class="tid-ordboks">
           <div class="ordfelt">
@@ -34,7 +36,7 @@ export default {
           <div class="ordchipar"></div>
           <p class="ordmelding" aria-live="polite"></p>
         </div>
-        <div class="tid-ord" aria-label="Ord over tid"><svg></svg><p class="ord-tom" hidden></p></div>
+        <div class="tid-ord" role="group" aria-label="Ord over tid"><svg></svg><p class="ord-tom" hidden></p></div>
       </div>`);
     el = {
       band: ramme.flate.querySelector(".tid-band"), stripe: ramme.flate.querySelector(".tid-stripe"), ord: ramme.flate.querySelector(".tid-ord"),
@@ -62,10 +64,13 @@ export default {
       if (c) T.veksle("term", c.dataset.filterord);
     });
     new ResizeObserver(() => teikn(false)).observe(ramme.flate);
+    bindBandDrag();
     lastOrd();
   },
   oppdater(s, e) {
     tvSeg.set(S.tid.tv);
+    // Back to an entry without t= in the link: the default words again, not an empty panel
+    if (ordStatus === "ok" && !S.tid.termarSett && !S.tid.termar.length) { T.endre((st) => { st.tid.termar = D.tidd.standard.slice(); }, { hist: "ingen" }); return; }
     teikn(e.filter && !e.popstate);
   },
   merk(i) { merkAr = i == null ? null : D.ar[i]; teiknMerk(); },
@@ -117,7 +122,7 @@ function bindInput() {
     let t = D.termIdx.get(key);
     if (t == null) t = D.termIdx.get(key.replace(/ /g, ""));
     if (t != null) leggTil(t);
-    else { ukjendMelding = `«${q}» finst ikkje i ordlista (ord som står i minst ${D.tidd.tal.min_df} titlar, og ikkje i meir enn 4 av 10).`; lukk(); teikn(false); }
+    else { ukjendMelding = `«${q}» finst ikkje i ordlista: ord på minst 3 bokstavar som står i minst ${D.tidd.tal.min_df} titlar og ikkje i meir enn 4 av 10 (difor manglar «design»).`; lukk(); teikn(false); }
   };
   inp.addEventListener("input", () => { valt = -1; vis(); });
   inp.addEventListener("keydown", (e) => {
@@ -140,10 +145,10 @@ function bandData() {
   for (let i = 0; i < D.n; i++) {
     if (!u[i]) continue;
     const a = D.ar[i];
-    if (a < A0) { foer++; continue; }
-    rows[a - A0][D.tema[i]]++;
+    if (a >= A0) rows[a - A0][D.tema[i]]++;
   }
-  for (let i = 0; i < D.n; i++) if (T.utval[i]) med += D.ar[i] >= A0 ? 1 : 0;
+  // works before 1990 that are in the selection (with the year filter) and so not drawn
+  for (let i = 0; i < D.n; i++) if (T.utval[i]) { if (D.ar[i] >= A0) med++; else foer++; }
   return { rows, foer, med };
 }
 
@@ -171,8 +176,9 @@ function ordData() {
 
 // ---------- drawing ----------
 function marg() {
+  // the right margin holds the band labels: wide enough for the longest theme name
   const w = el.band.clientWidth;
-  const hogre = w >= 600 ? 150 : 16;
+  const hogre = w >= 900 ? 220 : w >= 600 ? 150 : 16;
   return { l: 44, r: hogre, w };
 }
 
@@ -193,8 +199,8 @@ function teikn(anim) {
   teiknOrd();
   teiknMerk();
   // line and legend
-  ramme.linje.textContent = `Verk per år etter tema. ${fmt(T.valt)} verk i utvalet; ${fmt(foer)} verk før 1990 er ikkje med. 2026 er ufullstendig. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
-  ramme.teikn.innerHTML = `<span class="teikn-merk">Bandbreidd: verk per år. ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig.</span>`;
+  ramme.linje.textContent = `Verk per år etter tema. ${fmt(T.valt)} verk i utvalet${foer ? `; ${fmt(foer)} av dei er frå før 1990 og ikkje teikna` : ""}. 2026 er ufullstendig. Dra sidelengs over diagrammet for å velje år. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
+  ramme.teikn.innerHTML = `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig.</span>`;
   void med;
 }
 
@@ -233,7 +239,10 @@ function teiknBand(rows) {
   const ymax = (tilpassa ? selMax : korpusMax) * 0.55;
   const x = d3.scaleLinear().domain([A0, A1]).range([m.l, W - m.r]);
   const y = d3.scaleLinear().domain([-ymax, ymax]).range([H - 6, 8]);
-  const area = d3.area().x((d, j) => x(AR[j])).y0((d) => y(d[0])).y1((d) => y(d[1])).curve(d3.curveMonotoneX);
+  // a small selection (at most a dozen works in its busiest year) is drawn as steps per year:
+  // a smoothed stream through 0, 1, 0 makes diamonds that are not in the data
+  sisteSmaa = T.harFilter() && selMax <= 12;
+  const area = d3.area().x((d, j) => x(AR[j])).y0((d) => y(d[0])).y1((d) => y(d[1])).curve(sisteSmaa ? d3.curveStep : d3.curveMonotoneX);
   // ghost outline
   if (!tilpassa && T.harFilter()) {
     const top = ghost[ghost.length - 1], bot = ghost[0];
@@ -276,7 +285,9 @@ function teiknBand(rows) {
       items.forEach((it, q) => {
         const x0 = x(2025), x1 = W - m.r + 10;
         lg.append("path").attr("d", `M${x0},${it.y}L${x1 - 4},${ys[q]}`).attr("stroke", PALETTE_TEMA[it.s.key]).attr("fill", "none").attr("stroke-width", 1);
-        lg.append("text").attr("class", "etikett").attr("x", x1).attr("y", ys[q] + 4).text(kutt(D.verk.tema[it.s.key].namn, 22))
+        const tx = lg.append("text").attr("class", "etikett").attr("x", x1).attr("y", ys[q] + 4).text(kutt(D.verk.tema[it.s.key].namn, m.r >= 200 ? 34 : 22));
+        tx.append("title").text(D.verk.tema[it.s.key].namn);
+        tx
           .style("cursor", "pointer").on("click", () => T.veksle("tema", D.verk.tema[it.s.key].k));
       });
     }
@@ -295,6 +306,7 @@ function teiknBand(rows) {
     if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel tema · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
   }).on("pointerleave", () => { hoverTema = null; tooltip.skjul(); paths.attr("fill-opacity", 0.92); })
     .on("click", (ev, s) => {
+      if (undertrykkKlikk) return;
       const key = D.verk.tema[s.key].k;
       if (ev.pointerType && ev.pointerType !== "mouse") {
         if (kort.ope && kort.id === `band${s.key}`) { kort.lukk(); T.veksle("tema", key, { erstatt: true }); return; }
@@ -397,8 +409,12 @@ function teiknOrd() {
   });
   // labels at line ends
   const items = kurver.map((k, q) => { const p = [...k.pkt].reverse().find((pp) => pp.v != null && pp.a <= 2025); return p ? { q, k, y: y(p.v), x: x(p.a) } : null; }).filter(Boolean);
-  const ys = mm.r >= 140 ? plasserVertikalt(items, 16, 8, H - 20) : null;
-  if (ys) items.forEach((it, j) => svg.append("text").attr("class", "etikett").attr("x", W - mm.r + 10).attr("y", ys[j] + 4).attr("fill", PALETTE_ORD[it.q % 6]).text(kutt(it.k.vis, 20)));
+  const ys = mm.r >= 140 ? plasserVertikalt(items, 17, 8, H - 20) : null;
+  if (ys) items.forEach((it, j) => {
+    // a thin leader from the end of the line to its label, which is spread to keep 17 px apart
+    svg.append("path").attr("d", `M${it.x + 5},${it.y}L${W - mm.r + 6},${ys[j]}`).attr("stroke", PALETTE_ORD[it.q % 6]).attr("stroke-opacity", 0.6).attr("fill", "none").attr("pointer-events", "none");
+    svg.append("text").attr("class", "etikett").attr("x", W - mm.r + 10).attr("y", ys[j] + 4).attr("fill", PALETTE_ORD[it.q % 6]).text(kutt(it.k.vis, mm.r >= 200 ? 30 : 20));
+  });
   // hover rule
   const regel = svg.append("line").attr("y1", 8).attr("y2", H - 18).attr("stroke", "#fff").attr("stroke-opacity", 0.5).attr("visibility", "hidden").attr("pointer-events", "none");
   svg.on("pointermove", (ev) => {
@@ -414,6 +430,52 @@ function teiknOrd() {
     }).join("");
     if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel">${a}${a === 2026 ? " (ufullstendig)" : ""}</div>${rader}<div class="tt-fot">Klikk ei line: bruk ordet som filter</div>`, ev.clientX, ev.clientY);
   }).on("pointerleave", () => { regel.attr("visibility", "hidden"); tooltip.skjul(); });
+}
+
+// Drag sideways over the band chart to choose years (the strip below does the same).
+function bindBandDrag() {
+  const boks = el.band.querySelector(".tid-dragboks");
+  let drag = null;
+  const lokal = (ev) => ev.clientX - el.band.getBoundingClientRect().left;
+  el.band.addEventListener("pointerdown", (ev) => {
+    if (ev.button || !siste) return;
+    drag = { id: ev.pointerId, x0: lokal(ev), x1: lokal(ev), aktiv: false };
+  });
+  el.band.addEventListener("pointermove", (ev) => {
+    if (!drag || ev.pointerId !== drag.id) return;
+    drag.x1 = lokal(ev);
+    if (!drag.aktiv && Math.abs(drag.x1 - drag.x0) > 6) {
+      drag.aktiv = true;
+      try { el.band.setPointerCapture(ev.pointerId); } catch (e) { /* pointer gone */ }
+      tooltip.skjul();
+    }
+    if (!drag.aktiv) return;
+    const { m, W } = siste;
+    const a = Math.max(m.l, Math.min(drag.x0, drag.x1)), b = Math.min(W - m.r, Math.max(drag.x0, drag.x1));
+    boks.hidden = false;
+    boks.style.left = `${a}px`; boks.style.width = `${Math.max(1, b - a)}px`;
+    const [fa, ta] = arFor(a, b);
+    boks.textContent = `${fa} til ${ta}`;
+    ev.preventDefault();
+  });
+  const slutt = (ev) => {
+    if (!drag || ev.pointerId !== drag.id) return;
+    const d = drag;
+    drag = null;
+    boks.hidden = true;
+    if (!d.aktiv || ev.type === "pointercancel") return;
+    undertrykkKlikk = true;
+    setTimeout(() => { undertrykkKlikk = false; }, 0);
+    const [fa, ta] = arFor(Math.min(d.x0, d.x1), Math.max(d.x0, d.x1));
+    T.endre((s) => { s.f.ar = [fa === A0 ? T.AR_MIN : fa, ta]; });
+  };
+  el.band.addEventListener("pointerup", slutt);
+  el.band.addEventListener("pointercancel", slutt);
+}
+function arFor(a, b) {
+  const x = siste.x;
+  const fa = Math.max(A0, Math.min(A1, Math.round(x.invert(a)))), ta = Math.max(A0, Math.min(A1, Math.round(x.invert(b))));
+  return [Math.min(fa, ta), Math.max(fa, ta)];
 }
 
 function merkeSvg(q, cx, cy) {

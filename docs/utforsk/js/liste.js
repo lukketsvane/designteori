@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke } from "./hjelp.js?v=20";
-import * as T from "./tilstand.js?v=20";
-import * as data from "./data.js?v=20";
-import { hentSamandrag } from "./samandrag.js?v=20";
+import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=21";
+import * as T from "./tilstand.js?v=21";
+import * as data from "./data.js?v=21";
+import { hentSamandrag } from "./samandrag.js?v=21";
 
 const { S, D } = T;
 let api = null;
@@ -66,7 +66,9 @@ export function init(a) {
     const r = e.target.closest(".rad");
     api.merk(r ? +r.dataset.i : null);
   });
-  el.liste.addEventListener("pointerleave", () => api.merk(aktivI()));
+  // the ring for the active row shows only while the list has keyboard focus; otherwise the
+  // map would mark a work that is neither open nor (after a filter change) in the selection
+  el.liste.addEventListener("pointerleave", () => api.merk(listeFokus() ? aktivI() : null));
   el.liste.addEventListener("keydown", tast);
   // A pointer press focuses the list too; re-rendering rows then would swallow the click.
   let pekarNed = false;
@@ -124,6 +126,7 @@ export function oppdater(s, e) {
     aktiv = forI != null ? rekkje.indexOf(forI) : -1;
     if (e.filter) el.liste.scrollTop = 0;
     teiknListe();
+    api.merk(listeFokus() ? aktivI() : null);
   }
   if (e.verk || e.filter) visDetalj();
   if (e.filter || e.verk) teiknHandtak();
@@ -207,6 +210,7 @@ function teiknHandtak() {
 
 // ---------- keyboard ----------
 const aktivI = () => (aktiv >= 0 && aktiv < rekkje.length ? rekkje[aktiv] : null);
+const listeFokus = () => document.activeElement === el.liste;
 function settAktiv(p) {
   if (!rekkje.length) return;
   aktiv = Math.max(0, Math.min(rekkje.length - 1, p));
@@ -274,17 +278,19 @@ function visDetalj() {
   visaVerk = id;
   el.visning.hidden = true;
   el.detalj.hidden = false;
-  el.detalj.innerHTML = detaljHtml(i);
+  if (ny) el.detalj.innerHTML = detaljHtml(i);
+  else { const st = el.detalj.scrollTop; bevarFokus(el.detalj, () => { el.detalj.innerHTML = detaljHtml(i); }); el.detalj.scrollTop = st; }
   if (ny) {
     el.detalj.scrollTop = 0;
     sikreLenker();
-    T.sikre("naboar.bin").then(() => { if (S.verk === id) fyllNaboar(i); });
+    T.sikre("naboar.bin").then((r) => { if (S.verk === id) fyllNaboar(i, r.ok); });
     T.sikre("siteringar.json").then((r) => { if (S.verk === id) fyllSit(i, r.ok); });
     fyllSamandrag(i, id);
     const h = el.detalj.querySelector("h2");
     if (h && !smal()) h.focus({ preventScroll: true });
   } else {
     if (T.harFil("naboar.bin")) fyllNaboar(i);
+    else if (data.filStatus("naboar.bin") === "feil") fyllNaboar(i, false);
     if (T.harFil("siteringar.json")) fyllSit(i, true);
     fyllSamandrag(i, id);
   }
@@ -341,7 +347,7 @@ async function fyllSamandrag(i, id) {
   if (S.verk !== id) return;
   const b = el.detalj.querySelector("[data-samandrag]");
   if (!b) return;
-  if (r && r.tekst) {
+  if (r && r.tekst && !uegnaSamandrag(r.tekst, D.kol.tittel[i])) {
     b.innerHTML = "";
     const p = document.createElement("p");
     p.textContent = r.tekst;
@@ -357,9 +363,20 @@ async function fyllSamandrag(i, id) {
       q.append(a);
       b.append(q);
     }
+  } else if (r && r.tekst) {
+    b.innerHTML = `<p class="dim">Teksten kjelda gir som samandrag, ser ut som byrjinga av artikkelen (dato, tittel eller forfattar), så han er ikkje vist. Sjå utgjevarsida.</p><p><a href="${esc(KATALOG_LENKE(id))}">Opne i katalogen</a></p>`;
   } else {
     b.innerHTML = `<p class="dim">Samandrag er ikkje publisert her. Sjå utgjevarsida.</p><p><a href="${esc(KATALOG_LENKE(id))}">Opne i katalogen</a></p>`;
   }
+}
+
+// A summary text that opens with a date or repeats the title is the first page of the paper
+// (header, title, author note), not a summary.
+const DATO_RE = /^\s*(\d{1,2}[./-]\d{1,2}[./-]\d{2,4}|\d{4}-\d{2}-\d{2}|(jan|feb|mar|apr|may|mai|jun|jul|aug|sep|oct|okt|nov|dec|des)[a-z]*\.?\s+\d{1,2},?\s+\d{4})/i;
+function uegnaSamandrag(t, tittel) {
+  if (DATO_RE.test(t)) return true;
+  const ft = fold(tittel).replace(/[^\p{L}\p{N} ]+/gu, "").slice(0, 40);
+  return ft.length >= 20 && fold(t.slice(0, 300)).replace(/[^\p{L}\p{N} ]+/gu, "").includes(ft);
 }
 
 function fyllSit(i, ok) {
@@ -373,15 +390,21 @@ function fyllSit(i, ok) {
   }
 }
 
-function fyllNaboar(i) {
+function fyllNaboar(i, ok = true) {
   const b = el.detalj.querySelector("[data-naboar]");
   if (!b) return;
+  if (!ok || !D.nabo) {
+    b.innerHTML = `<p class="dim">Liknande verk kunne ikkje lastast.</p><button type="button" class="knapp liten" data-handling="naboar">Prøv igjen</button>`;
+    return;
+  }
   const v = D.verk;
   let html = `<ol class="naboar">`;
   for (let r = 0; r < 10; r++) {
     const j = D.nabo[i * 10 + r], c = D.naboCos[i * 10 + r] / 255;
     const f = D.kol.forf[j];
-    const forf = f.length ? v.forfattarar[f[0]].namn.split(/[ ,]/)[0] : "";
+    // surname, as elsewhere on the page: "Etternamn, Fornamn" (archive) or "Fornamn Etternamn"
+    const nm = f.length ? v.forfattarar[f[0]].namn : "";
+    const forf = nm.includes(",") ? nm.split(",")[0].trim() : nm.trim().split(/\s+/).pop() || "";
     html += `<li><button type="button" class="nabo" data-opne="${j}"><span class="nabo-tittel">${esc(kutt(D.kol.tittel[j], 90))}</span>
       <span class="nabo-meta">${esc(forf)} ${D.ar[j]}</span><span class="likskap" title="Likskap ${Math.round(c * 100)} av 100"><span style="width:${Math.round(c * 100)}%"></span></span></button></li>`;
   }
@@ -395,6 +418,7 @@ function detaljKlikk(e) {
   const d = b.dataset;
   if (d.handling === "lista") return api.lukkVerk();
   if (d.handling === "lenker") { lenkeStatus = "ingen"; return sikreLenker(); }
+  if (d.handling === "naboar") { const id = S.verk, i = D.idx.get(id); return T.sikre("naboar.bin").then((r) => { if (S.verk === id) fyllNaboar(i, r.ok); }); }
   if (d.handling === "nabolag") return api.nabolag(S.verk);
   // "these ten": the work and its ten neighbours, on their own (other filters would hide some of them)
   if (d.handling === "lik") return T.endre((s) => { s.f = T.tomeFilter(); s.f.lik = s.verk; s.vis = "kart"; });
