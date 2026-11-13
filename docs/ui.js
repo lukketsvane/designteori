@@ -113,12 +113,10 @@
       info.label = "Open PDF";
       info.href = safeHref(item ? item[1] : "");
       info.pending = !info.href;
-      info.tag = "kontrollert lenkje, fila ligg hos eigaren";
       info.help = "Adressa er kontrollert og peikar på ei open PDF-fil hos eigaren";
     } else if (code === "u") {
       info.label = "PDF (ikkje kontrollert)";
       info.href = safeHref(item ? item[1] : (w.oa_url || w.source_url));
-      info.tag = "ikkje kontrollert";
       info.help = "Adressa er ikkje kontrollert; ho kan føre til ei utgjevarside eller ein betalingsmur";
     } else if (code === "d") {
       info.label = "Utgjevarside";

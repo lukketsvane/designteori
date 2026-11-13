@@ -784,6 +784,8 @@ progress { width: 70%; height: 10px; vertical-align: middle; }
 .start-links a { display: inline-block; padding: 12px 0; }
 
 .filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+/* Ivers val 13.11.2026: ingen startpanel-knapp, ingen eigen filterlinje, ingen teljarlinje */
+#startPanel, #startOpenBtn, #hitCount { display: none !important; }
 .filter-panel { display: none; }
 .filter-panel.open { display: block; }
 .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }

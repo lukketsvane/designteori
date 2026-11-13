@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <header class="bar">
@@ -64,9 +64,15 @@
       </section>
       <button id="startOpenBtn" class="act act-line" type="button" hidden>Byrjar du i nordisk designforsking?</button>
 
-      <div class="filter-bar">
-        <button id="filterToggle" class="act act-line" type="button" aria-expanded="false" aria-controls="filterPanel">Filter</button>
-        <button id="resetBtn" class="act act-line" type="button" hidden>Nullstill</button>
+      <div class="resultline">
+        <span id="hitCount">Lastar…</span>
+        <span class="result-actions">
+          <button id="filterToggle" class="act act-line" type="button" aria-expanded="false" aria-controls="filterPanel">Filter</button>
+          <button id="resetBtn" class="act act-line" type="button" hidden>Nullstill</button>
+          <button id="copyLinkBtn" class="act act-line" type="button" hidden>Kopier lenkje</button>
+          <button id="exportBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="exportMenu" hidden>Eksporter</button>
+          <button id="listBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="readingPanel">Leseliste (0)</button>
+        </span>
       </div>
       <div id="filterPanel" class="filter-panel">
         <div class="filters">
@@ -124,14 +130,6 @@
       <div id="simBanner" class="sem-active" hidden></div>
       <div id="loadMsg" class="status" role="status" hidden></div>
 
-      <div class="resultline">
-        <span id="hitCount">Lastar…</span>
-        <span class="result-actions">
-          <button id="copyLinkBtn" class="act act-line" type="button" hidden>Kopier lenkje</button>
-          <button id="exportBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="exportMenu" hidden>Eksporter</button>
-          <button id="listBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="readingPanel">Leseliste (0)</button>
-        </span>
-      </div>
       <div id="exportMenu" class="panel" hidden></div>
       <section id="readingPanel" class="panel" aria-label="Leseliste" hidden></section>
       <div id="zeroBox" class="panel" hidden></div>
@@ -259,7 +257,7 @@
     </nav>
   </footer>
 
-  <script src="ui.js?v=1"></script>
+  <script src="ui.js?v=3"></script>
   <script src="search.js?v=1"></script>
   <script src="export.js?v=1"></script>
   <script src="embed.js?v=1"></script>

@@ -12,7 +12,7 @@ test("tilgangsmerkelapp: tekst, lenkje og rel for h, v, u, d og 0", () => {
   assert.ok(h.tag.includes("CC BY-NC-ND 4.0"));
   const v = Ui.accessInfo("v", W, ["v", "https://mau.diva-portal.org/smash/get/diva2:1408077/FULLTEXT01.pdf"]);
   assert.equal(v.label, "Open PDF");
-  assert.equal(v.tag, "kontrollert lenkje, fila ligg hos eigaren");
+  assert.equal(v.tag, "", "knappen seier alt at lenkja er kontrollert");
   const u = Ui.accessInfo("u", W, ["u", "https://example.org/a.pdf"]);
   assert.equal(u.label, "PDF (ikkje kontrollert)");
   assert.ok(u.help.includes("Adressa er ikkje kontrollert; ho kan føre til ei utgjevarside eller ein betalingsmur"));
