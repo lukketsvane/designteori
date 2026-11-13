@@ -1,5 +1,7 @@
 /* FUNN - biletessay om metastudien. Fargevariablar som resten av sida (svart i mørk modus).
-   Landsfargane er Okabe-Ito (trygge for fargeblinde) og har same tyding gjennom heile sida. */
+   Fargenøkkel, fast gjennom sida: landa har Okabe-Ito-fargar; OpenAlex-laget er indigo og arkivlaget karmin;
+   svart (kvitt i mørk modus) er det som er observert eller det figuren handlar om, grått er referanse, venta eller resten;
+   grupper (klynger, samfunn) har eigne fargar med tal eller bokstav og kjem aldri i landsfargane. */
 :root {
   --bg: #fff; --fg: #000; --dim: #6b6b6b; --line: #d2d2d2; --hair: #e8e8e8;
   --soft: #f3f3f3;
@@ -8,7 +10,7 @@
   /* land */
   --DK: #0072b2; --FI: #cc79a7; --IS: #c9a800; --NO: #d55e00; --SE: #009e73; --ANNA: #9a9a9a;
   /* lag og tilstand */
-  --oa: #111; --ark: #9a9a9a;
+  --oa: #4338ca; --ark: #b4233f;
   --ref: #b9b9b9;            /* forventa, nullmodell, referanse */
   --refb: rgba(0, 0, 0, .075);
   --gutter: clamp(16px, 4.5vw, 28px);
@@ -18,13 +20,13 @@
   :root:not([data-theme="light"]) {
     --bg: #000; --fg: #fff; --dim: #8a8a8a; --line: #343434; --hair: #1c1c1c; --soft: #0d0d0d;
     --DK: #3fa4e8; --FI: #e59ac7; --IS: #f0d63a; --NO: #f07a2a; --SE: #21c797; --ANNA: #6e6e6e;
-    --oa: #f0f0f0; --ark: #707070; --ref: #5a5a5a; --refb: rgba(255, 255, 255, .09);
+    --oa: #9aa0ff; --ark: #ff7a90; --ref: #5a5a5a; --refb: rgba(255, 255, 255, .09);
   }
 }
 :root[data-theme="dark"] {
   --bg: #000; --fg: #fff; --dim: #8a8a8a; --line: #343434; --hair: #1c1c1c; --soft: #0d0d0d;
   --DK: #3fa4e8; --FI: #e59ac7; --IS: #f0d63a; --NO: #f07a2a; --SE: #21c797; --ANNA: #6e6e6e;
-  --oa: #f0f0f0; --ark: #707070; --ref: #5a5a5a; --refb: rgba(255, 255, 255, .09);
+  --oa: #9aa0ff; --ark: #ff7a90; --ref: #5a5a5a; --refb: rgba(255, 255, 255, .09);
 }
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
@@ -82,23 +84,23 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter) 4rem; }
 .mount { position: relative; min-height: 220px; }
 .mount.vent::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 100%; min-height: 160px;
   background: repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 24px); opacity: .6; }
-.nem { margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--hair); font: 11.5px/1.5 var(--mono); color: var(--dim); max-width: 60rem; }
+.nem { margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--hair); font: 12px/1.5 var(--mono); color: var(--dim); max-width: 60rem; }
 .duo { display: grid; gap: 0 clamp(24px, 4vw, 56px); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 900px) { .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); } .duo.ujamn { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
 
 /* svart flate for dei tette biletta */
 .svart { background: #000; color: #fff; --bg: #000; --fg: #fff; --dim: #9a9a9a; --line: #343434; --hair: #1c1c1c; --soft: #0d0d0d;
-  --DK: #3fa4e8; --FI: #e59ac7; --IS: #f0d63a; --NO: #f07a2a; --SE: #21c797; --ANNA: #6e6e6e; --oa: #f0f0f0; --ark: #707070; --ref: #5a5a5a; --refb: rgba(255,255,255,.1); }
+  --DK: #3fa4e8; --FI: #e59ac7; --IS: #f0d63a; --NO: #f07a2a; --SE: #21c797; --ANNA: #6e6e6e; --oa: #9aa0ff; --ark: #ff7a90; --ref: #5a5a5a; --refb: rgba(255,255,255,.1); }
 .fig.svart { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); padding: 22px var(--gutter) 14px; }
 @media (min-width: 1160px) { .fig.svart { margin-left: 0; margin-right: 0; border-radius: 10px; padding: 28px 28px 18px; } }
 .svart .nem { border-top-color: #262626; }
 
 /* ---------- SVG-tekst ---------- */
 svg { display: block; max-width: 100%; overflow: visible; }
-svg text { font: 11px/1.2 var(--mono); fill: var(--dim); }
+svg text { font: 12px/1.2 var(--mono); fill: var(--dim); }
 svg text.fg { fill: var(--fg); }
 svg text.b { font-weight: 500; fill: var(--fg); }
-svg text.sm { font-size: 10.5px; }
+svg text.sm { font-size: 11.5px; }
 svg text.halo, .halo { paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
 svg .ax line, svg line.ax { stroke: var(--line); }
 svg .grid line { stroke: var(--hair); }
@@ -118,15 +120,15 @@ svg.hov .mk { opacity: .35; } svg.hov .mk.on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .gy, .gx, .fd { animation: none; } svg .mk { transition: none; } }
 
 /* ---------- kontrollar ---------- */
-.ctl { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 12px; }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--bg); }
+.ctl { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 16px; margin: 0 0 12px; }
+.seg { display: inline-flex; align-self: start; width: fit-content; height: auto; max-width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--bg); }
 .seg button { white-space: nowrap; font: 12px/1 var(--mono); color: var(--dim); background: none; border: 0; border-radius: 999px; padding: 0 12px; min-height: 34px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 .seg button:focus-visible, .chip:focus-visible, a:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .seg + .seg { margin-left: 0; }
 
 /* kjenneteikn: tekst-chips for land */
-.leg { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 10px; font: 11.5px/1.4 var(--mono); color: var(--dim); }
+.leg { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 10px; font: 12px/1.4 var(--mono); color: var(--dim); }
 .leg span { display: inline-flex; align-items: center; gap: 6px; }
 .leg i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
 .leg i.o { background: none !important; border: 1.5px solid currentColor; }
@@ -166,9 +168,26 @@ noscript p { padding: 2rem var(--gutter); }
 .pans { display: grid; gap: 26px clamp(24px, 3.4vw, 48px); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 900px) { .pans.p2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pans.p3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .pans.p21 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } .pans.p12 { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } }
 .pan { min-width: 0; }
-.pan h4 { margin: 0 0 8px; font: 400 11.5px/1.35 var(--mono); color: var(--dim); letter-spacing: .01em; }
-.mount p.sm { margin: 8px 0 0; font: 11.5px/1.5 var(--mono); color: var(--dim); max-width: 46rem; }
+.pan h4 { margin: 0 0 8px; font: 400 12px/1.35 var(--mono); color: var(--dim); letter-spacing: .01em; }
+.mount p.sm { margin: 8px 0 0; font: 12px/1.5 var(--mono); color: var(--dim); max-width: 46rem; }
 .mount p.sm b { color: var(--fg); font-weight: 500; }
 :root { --t1: #e3e3e3; --t2: #b4b4b4; --t3: #7c7c7c; --t4: #202020; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --t1: #262626; --t2: #4d4d4d; --t3: #8c8c8c; --t4: #ececec; } }
-:root[data-theme="dark"] { --t1: #262626; --t2: #4d4d4d; --t3: #8c8c8c; --t4: #ececec; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --t1: #3c3c3c; --t2: #6c6c6c; --t3: #9c9c9c; --t4: #ececec; } }
+:root[data-theme="dark"] { --t1: #3c3c3c; --t2: #6c6c6c; --t3: #9c9c9c; --t4: #ececec; }
+.svart { --t1: #3c3c3c; --t2: #6c6c6c; --t3: #9c9c9c; --t4: #ececec; }
+
+/* fargenøkkel under inngangen */
+.nokkel { max-width: 1120px; margin: 0 auto; padding: 14px var(--gutter) 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font: 12px/1.4 var(--mono); color: var(--dim); }
+.nokkel span { display: inline-flex; align-items: center; gap: 7px; flex: none; }
+.nokkel span.heil { flex-basis: 100%; }
+.nokkel i { width: 11px; height: 11px; border-radius: 2px; display: inline-block; flex: none; }
+.nokkel i.r { border-radius: 50%; }
+.nokkel b { font-weight: 500; color: var(--fg); }
+/* bokstavmerke for klyngane i metastudien (ikkje kartets nummer og fargar) */
+.bokst { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border: 1.5px solid var(--dim); border-radius: 4px; font: 500 11.5px/1 var(--mono); color: var(--fg); flex: none; }
+/* nettverk: breiare første kolonne og mindre mellomrom */
+@media (min-width: 900px) { .pans.net { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 22px 22px; } }
+.fig-tx { max-width: 40rem; }
+.figrad { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.tal-inn { font: 12px/1.5 var(--mono); color: var(--dim); margin: 6px 0 0; max-width: 46rem; }
+.sp-merk { font: 12px/1.4 var(--mono); color: var(--dim); margin: -2px 0 6px; }

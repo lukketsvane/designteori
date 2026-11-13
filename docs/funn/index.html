@@ -17,6 +17,7 @@
 <script defer src="funn-nett.js"></script>
 <script defer src="funn-b.js"></script>
 <script defer src="funn-c.js"></script>
+<script defer src="funn-d.js"></script>
 </head>
 <body>
 
@@ -34,15 +35,23 @@
     <div>
       <p class="stor">6&#8239;432<small>registrerte verk, 1983 til 2026</small></p>
       <ul class="tal">
-        <li><b>87,8&#8239;%</b><span>er frå 2010 og seinare</span></li>
-        <li><b>3,1</b><span>forfattarar per verk 2020–24, mot 1,74 før 2000</span></li>
-        <li><b>3</b><span>er median for registrerte siteringar per verk</span></li>
-        <li><b>4 av 15</b><span>forventingar heldt då dei vart målte</span></li>
+        <li><b>87,8&#8239;%</b><span>er frå 2010 og seinare (begge lag)</span></li>
+        <li><b>3,1</b><span>forfattarar per verk 2020–24, mot 1,74 før 2000 (OpenAlex-laget)</span></li>
+        <li><b>3</b><span>er median for registrerte siteringar per verk (OpenAlex-laget)</span></li>
+        <li><b>76</b><span>funn bak biletet, kvart kontrollert på nytt av ein annan køyring</span></li>
       </ul>
       <a class="ned" href="#materialet">Rull ned ↓</a>
     </div>
   </div>
 </section>
+
+<div class="nokkel" aria-label="Fargenøkkel">
+  <span><i style="background:var(--oa)"></i>OpenAlex-laget</span>
+  <span><i style="background:var(--ark)"></i>arkivlaget</span>
+  <span class="heil"><i style="background:var(--fg)"></i><b>svart</b> er observert, <b>grått</b> er venta eller resten</span>
+  <span><i class="r" style="background:var(--NO)"></i><i class="r" style="background:var(--DK)"></i><i class="r" style="background:var(--SE)"></i>land</span>
+  <span><i class="r" style="background:#b8a4ff"></i><i class="r" style="background:#c6ee5a"></i>grupper har nummer eller bokstav</span>
+</div>
 
 <main>
 <noscript><p>Sida teiknar figurane med JavaScript. Heile rapporten som tekst ligg på <a href="../metaanalyse/">metaanalysesida</a>.</p></noscript>
@@ -52,7 +61,7 @@
   <header><span class="nr">01</span><h2>Materialet</h2></header>
 
   <figure class="fig" id="f01" data-fig="f01">
-    <header><h3>Det meste av det som vart henta låg utanfor feltet</h3><p class="tx">Tre vegar inn i materialet, og kva som er lese i fulltekst.</p></header>
+    <header><h3>Det meste av det som vart henta låg utanfor porten</h3><p class="tx">Tre vegar inn i materialet, og kva som er lese i fulltekst.</p></header>
     <div class="mount" style="min-height:380px"></div><figcaption class="nem"></figcaption>
   </figure>
 
@@ -78,7 +87,7 @@
   <header><span class="nr">02</span><h2>Vekst og samarbeid</h2></header>
 
   <figure class="fig" id="f05" data-fig="f05">
-    <header><h3>Rangeringa mellom landa avheng av kva som tel med</h3></header>
+    <header><h3>Danmark og Sverige ligg øvst under alle teljemåtar, men Noreg og Finland bytar plass</h3></header>
     <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
   </figure>
 
@@ -118,7 +127,7 @@
   </figure>
 
   <figure class="fig" id="f12" data-fig="f12">
-    <header><h3>Registrerte siteringar skil sterkt mellom kanalar, og kanalane skiftar over tid</h3></header>
+    <header><h3>Siteringane skil sterkt mellom kanalar, og kanalane skiftar over tid</h3></header>
     <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
   </figure>
 </section>
@@ -128,7 +137,7 @@
   <header><span class="nr">04</span><h2>Siteringar</h2></header>
 
   <figure class="fig svart" id="f13" data-fig="f13">
-    <header><h3>Dei mest siterte elementa heng saman i sju grupper</h3><p class="tx">Trykk på ein prikk for tittel.</p></header>
+    <header><h3>Dei mest siterte elementa heng saman i sju grupper i éi køyring</h3></header>
     <div class="mount" style="min-height:460px"></div><figcaption class="nem"></figcaption>
   </figure>
 
@@ -143,7 +152,7 @@
       <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
     </figure>
     <figure class="fig" id="f16" data-fig="f16">
-      <header><h3>Ein liten og veksande del av referansane peikar til laget sjølv</h3></header>
+      <header><h3>Ein liten del av referansane peikar til laget sjølv, og delen er høgare for nyare verk</h3></header>
       <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
     </figure>
   </div>
@@ -159,17 +168,17 @@
   <header><span class="nr">05</span><h2>Tema og kart</h2></header>
 
   <figure class="fig svart" id="f18" data-fig="f18">
-    <header><h3>Åtte klynger, men dei ligg tett mot kvarandre</h3><p class="tx">Trykk på ein merkelapp for å opne klynga i kartfana.</p></header>
+    <header><h3>Kartets åtte klynger ligg tett mot kvarandre</h3><p class="tx">Kartets åtte klynger har nummer. Trykk på eit nummer for å opne klynga i kartfana.</p></header>
     <div class="mount" style="min-height:480px"></div><figcaption class="nem"></figcaption>
   </figure>
 
   <figure class="fig" id="f19" data-fig="f19">
-    <header><h3>Strukturen er svak, og kanal forklarer meir av variasjonen enn land eller periode</h3></header>
+    <header><h3>Strukturen er svak i metastudiens ti klynger, og kanal forklarer meir enn land eller periode</h3></header>
     <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
   </figure>
 
   <figure class="fig" id="f20" data-fig="f20">
-    <header><h3>Eitt emne dominerer, og klyngene har skifta over tid</h3></header>
+    <header><h3>Eitt emne dominerer, og metastudiens ti klynger har skifta over tid</h3></header>
     <div class="mount" style="min-height:640px"></div><figcaption class="nem"></figcaption>
   </figure>
 </section>
@@ -183,7 +192,7 @@
       <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
     </figure>
     <figure class="fig" id="f22" data-fig="f22">
-      <header><h3>Fleire omgrep stig enn fell, og dei fleste syner seg først etter 2000</h3></header>
+      <header><h3>Fleire omgrep stig enn fell, og første framtreding følgjer kor mange verk som finst</h3></header>
       <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
     </figure>
   </div>
@@ -219,7 +228,7 @@
   <header><span class="nr">09</span><h2>Femten nye spørsmål</h2></header>
 
   <figure class="fig" id="f26" data-fig="f26">
-    <header><h3>Fire forventingar heldt, åtte heldt ikkje og tre er uavgjorde</h3></header>
+    <header><h3>Fire forventingar heldt, åtte heldt ikkje og tre er uavgjorde</h3><p class="tx">«Heldt» er kjeldas eigen etikett for heile spørsmålet, ikkje summen av stripene: tida-3 heldt med éin treff og to opne stripar, og eininga-3 heldt med to bom.</p></header>
     <div class="mount" style="min-height:900px"></div><figcaption class="nem"></figcaption>
   </figure>
 </section>
@@ -240,11 +249,10 @@
   <header><span class="nr">11</span><h2>Atterhald</h2></header>
   <div class="atterhald">
     <ul>
-      <li>Biletet viser kva som er registrert, ikkje kva som er verdt å lese. Siteringar er registrerte siteringar.</li>
-      <li>Språk og referanselister finst berre for OpenAlex-laget. Arkivlaget manglar begge.</li>
-      <li>2026 er ufullstendig, til 4. november. Mange tal for 2025 og 2026 er førebelse.</li>
+      <li>Biletet viser kva som er registrert, ikkje kva som er verdt å lese.</li>
+      <li>Språkmerke frå metadata og referanselister finst berre for OpenAlex-laget. Arkivlaget manglar begge; i kartet er språket for arkivverka avleidd frå tittel og samandrag.</li>
       <li>Fulltekstutvalet er skeivt. Lesinga av kunnskapsformer og pilotane er gjort av éin kodar eller éin modell, utan kontroll mot menneske.</li>
-      <li>Klyngenamna er våre, ikkje fagfolk sine, og siteringssamfunna flyttar seg mellom køyringar.</li>
+      <li>Klyngenamna er våre, ikkje fagfolk sine. Kartets åtte klynger er kartfana sin eigen serie og høyrer ikkje til dei verifiserte funna.</li>
       <li>Nullmodellar, klyngeanalyse, fulltekstlesing og pilotar er gjevne frå første runde. Tala frå databasen er rekna på nytt. Runde 2 er ikkje med.</li>
     </ul>
   </div>

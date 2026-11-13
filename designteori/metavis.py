@@ -134,7 +134,7 @@ RUNDE1 = {
     },
     # omgrep-4 / omgrep-5: breadth (share of English full texts 2020-25 that use the concept) and anchor share
     "omgrep": {
-        "breidde": [["design process", 72.3], ["design research", 51.0], ["design thinking", 30.5],
+        "breidde": [["design process", 72.3], ["design research", 51.0], ["design thinking", 30.4],
                     ["interaction design", 26.8], ["participatory design", 31.4], ["wicked problem", 12.7],
                     ["more-than-human", 13.7]],
         "breidde_spenn": [["speculative design", 3, 10], ["systemic design", 3, 10], ["universal design", 3, 10],
@@ -302,7 +302,7 @@ TYPE_NAMN = ["artikkel", "konferansebidrag", "bok eller kapittel", "avhandling",
 
 @figur("f01", "materialet", "Frå 24 812 rader til 6 432 verk",
        "Kor mange av dei hente radene vart registrerte verk, og kor mange har fulltekst?", "sankey",
-       "24 812 hente OpenAlex-rader og 2 232 arkivposter; fulltekst talt i den private cachen (berre tal).",
+       "Utanfor scope = utanfor inngangsporten (tidsskriftlista, tittel eller emne); 2 386 verk kom inn på tidsskriftlista. Fulltekst talt i den private cachen (berre tal).",
        ["populasjon-1", "populasjon-2", "populasjon-8", "populasjon-9"])
 def f01(ctx: Ctx):
     n_all = ctx.n_all
@@ -429,7 +429,7 @@ def f03(ctx: Ctx):
 
 @figur("f04", "materialet", "Kven har fulltekst",
        "Kor stor del av verka er lesne som fulltekst, og kven er over- og underrepresenterte?", "knotte-stolpar",
-       "OpenAlex-laget (4 694 verk); fulltekst tyder at ei fil er henta og lesen. Berre tal frå den private cachen.",
+       "OpenAlex-laget (4 694 verk), unnateke arkivraden (1 738 verk). Fulltekst tyder at ei fil er henta og lesen; berre tal frå den private cachen.",
        ["populasjon-8"])
 def f04(ctx: Ctx):
     oa = ctx.oa_list()
@@ -489,7 +489,7 @@ def land_andelar(ws, schema="brok"):
 
 @figur("f05", "vekst", "Land over tid",
        "Korleis er veksten fordelt på land, og kva avheng rangeringa av?", "stabla område",
-       "4 694 OpenAlex-verk (samla utgåve med 1 738 arkivverk). Brøkdelsteljing: eit verk deler seg likt på sine land. Veksten kan ikkje skiljast frå at OpenAlex fekk fleire kjelder.",
+       "4 694 OpenAlex-verk (samla utgåve: 1 738 arkivverk til). Rang 2020–24: heiltal, brøkdel og berre forfattarland. Veksten kan ikkje skiljast frå at OpenAlex fekk fleire kjelder.",
        ["vekst-3", "vekst-4", "vekst-10", "populasjon-6"])
 def f05(ctx: Ctx):
     oa = ctx.oa_list()
@@ -522,7 +522,13 @@ def f05(ctx: Ctx):
     tf = sum(forf.values())
     heil = land_andelar(oa, "heil")
     arkland = collections.Counter(a["source_country"] or "utan" for a in ctx.add)
-    data = {"ar": ar, "oa": {k: [r(x, 2) for x in v] for k, v in frak.items()}, "ark": ark,
+    ws24 = [w for w in oa if w["per"] == 5]
+    h24 = land_andelar(ws24, "heil")
+    b24 = land_andelar(ws24, "brok")
+    th, tb = sum(h24.values()), sum(b24.values())
+    rang = {"periode": "2020–24", "verk": len(ws24), "metodar": ["heil", "brok", "forf"],
+            "del": {k: [pct(h24[k], th), pct(b24[k], tb), pct(forf[k], tf)] for k in NORD}}
+    data = {"rang": rang, "ar": ar, "oa": {k: [r(x, 2) for x in v] for k, v in frak.items()}, "ark": ark,
             "periodar": PER_NAMN, "del_oa": del_oa, "del_samla": del_samla,
             "forf_2020_24": {k: pct(forf[k], tf) for k in NORD},
             "heil": {k: int(heil[k]) for k in NORD}, "heil_sum": int(sum(heil.values())),
@@ -599,7 +605,7 @@ def f06(ctx: Ctx):
 
 @figur("f07", "vekst", "Nordisk samarbeid mot ein nullmodell",
        "Kor ofte skriv nordiske land saman, mot det eit tilfeldig val av institusjonar ville gitt?", "observert mot venta",
-       "1 941 verk med minst to institusjonar med kjent land og eit nordisk land. Nullmodellen er ein målestokk, ikkje ei forklaring.",
+       "OpenAlex-laget: 1 941 verk med minst to institusjonar med kjent land og eit nordisk land. Nullmodellen er ein målestokk, ikkje ei forklaring.",
        ["vekst-8"])
 def f07(ctx: Ctx):
     n = RUNDE1["nullmodell_land"]
@@ -653,7 +659,7 @@ def _institusjonar(ctx: Ctx):
 
 @figur("f08", "vekst", "Institusjonar og forfattarar",
        "Kor konsentrert er feltet på institusjonar og på forfattarar, og kor høyrer forfattarane til feltet?", "små multiplar",
-       "Institusjonar: 4 502 verk med nordisk institusjon, brøkdelskreditt. Forfattarar: 6 033 med OpenAlex-id; scope er sett ved ein tittelport.",
+       "OpenAlex-laget. Institusjonar: 4 502 verk med nordisk institusjon, brøkdelskreditt (anna kreditteljing gir nokre tiendedelar ulikt). Forfattarar: 6 033 med OpenAlex-id.",
        ["vekst-5", "vekst-9", "eininga-2"])
 def f08(ctx: Ctx):
     oa = ctx.oa_list()
@@ -1048,7 +1054,7 @@ def f12(ctx: Ctx):
     sit = []
     for k, namn in vis.items():
         v = by[k]
-        sit.append({"namn": namn, "n": len(v), "median": float(np.median(v)), "usiterte": pct(sum(1 for x in v if x == 0), len(v)),
+        sit.append({"namn": namn, "fam": k, "n": len(v), "median": float(np.median(v)), "usiterte": pct(sum(1 for x in v if x == 0), len(v)),
                     "p25": float(np.percentile(v, 25)), "p75": float(np.percentile(v, 75))})
     stor = sorted(by.items(), key=lambda kv: (-len(kv[1]), kv[0]))[:19]
     alle = [{"namn": k, "n": len(v), "median": float(np.median(v))} for k, v in stor]
@@ -1117,7 +1123,7 @@ def _referansar(ctx: Ctx):
 
 @figur("f13", "siteringar", "Dei mest siterte elementa som nettverk",
        "Kva blir sitert saman, og kor skeivt fordeler referansane seg?", "nettverk og stolpar",
-       "Referansane frå 3 554 OpenAlex-verk med referanseliste (109 116 referansar). Nettverket viser dei 150 mest siterte elementa; kant = sitert saman av minst to verk.",
+       "Referansane frå 3 554 OpenAlex-verk med referanseliste (109 116 referansar). Nettverket viser dei 150 mest siterte elementa i éi Louvain-køyring; kant = sitert saman av minst to verk.",
        ["siteringar-3", "siteringar-4"])
 def f13(ctx: Ctx):
     refs, meta, kanon = _referansar(ctx)
@@ -1258,7 +1264,7 @@ def f15(ctx: Ctx):
 
 @figur("f16", "siteringar", "Kvar referansane går",
        "Kor stor del av referansane frå laget peikar til laget sjølv, til utanforverk og til verk utanfor tabellen?", "stabla stolpar",
-       "109 116 referansar frå 3 554 OpenAlex-verk. Delen til laget er eit golv: bøker og arkivlaget manglar referanselister.",
+       "109 116 referansar frå 3 554 OpenAlex-verk. Delen til laget er eit golv (bøker og arkivlaget manglar referanselister) og kan delvis kome av at laget er tett på nyare år; ikkje testa mot det.",
        ["siteringar-2", "eininga-3"])
 def f16(ctx: Ctx):
     refs, meta, kanon = _referansar(ctx)
@@ -1359,7 +1365,7 @@ TEMA_PER = [("2000–04", 2000, 2004), ("2005–09", 2005, 2009), ("2010–14", 
 
 @figur("f18", "tema", "Kartet over alle verka",
        "Korleis ligg verka i eit semantisk kart, og kor mange tema er det?", "prikkart",
-       "Alle 6 432 verk, eitt verk per prikk; tittel og samandrag gjort om til vektorar (256 tal). Åtte klynger frå kart-fana, ei nyare inndeling enn dei ti i metastudien.",
+       "Alle 6 432 verk, eitt per prikk; tittel og samandrag som vektorar. Kartfana sin eigen serie (åtte klynger), ikkje kontrollert av dei verifiserte funna og ikkje dei ti klyngene i metastudien.",
        ["tema-4", "tema-6"])
 def f18(ctx: Ctx):
     k = ctx.kart
@@ -1370,7 +1376,28 @@ def f18(ctx: Ctx):
         nord = sum(1 for i in idx if k["f"][i] & 4)
         kl.append({"id": c["id"], "namn": c["namn"], "n": c["n"], "lx": c["lx"], "ly": c["ly"], "farge": c["farge"],
                    "ord": c["ord"][:5], "nordisk_sprak": pct(nord, len(idx))})
-    data = {"x": k["x"], "y": k["y"], "k": k["k"], "f": k["f"], "skala": k["skala"], "klynger": kl,
+    ids = k["ids"]
+    add_by = {a["id"]: a for a in ctx.add}
+    land_k, per_k, lag_k = [], [], []
+    for i in range(n):
+        w = ctx.W.get(ids[i])
+        if w is not None:
+            nn = w["an"]
+            land_k.append(NORD.index(nn[0]) if len(nn) == 1 else (5 if len(nn) > 1 else 6))
+            per_k.append(w["per"])
+            lag_k.append(0)
+        else:
+            a = add_by[ids[i]]
+            land_k.append(NORD.index(a["source_country"]) if a["source_country"] in NORD else 6)
+            per_k.append(periode(a["year"]))
+            lag_k.append(1)
+    sp_oa = sum(1 for i in range(n) if lag_k[i] == 0 and k["f"][i] & 4)
+    sp_ark = sum(1 for i in range(n) if lag_k[i] == 1 and k["f"][i] & 4)
+    n_oa = lag_k.count(0)
+    data = {"land": land_k, "per": per_k, "lag": lag_k, "periodar": PER_NAMN,
+            "sprak": {"oa": sp_oa, "ark": sp_ark, "n_oa": n_oa, "n_ark": n - n_oa,
+                      "oa_pct": pct(sp_oa, n_oa), "ark_pct": pct(sp_ark, n - n_oa)},
+            "x": k["x"], "y": k["y"], "k": k["k"], "f": k["f"], "skala": k["skala"], "klynger": kl,
             "flagg": k["flagg"], "lenkje": "../index.html#kart?k=",
             "silhuett": k["tal"]["silhuett"], "silhuett_null": k["tal"]["silhuett_null"],
             "grense_del": k["tal"]["grense_del"], "nordisk_sprak_del_alle": k["tal"]["nordisk_sprak_del_alle"]}
@@ -1382,7 +1409,7 @@ def f18(ctx: Ctx):
 
 @figur("f19", "tema", "Svak struktur, og kva som forklarer variasjonen",
        "Er kartet ti skilde fag, og kva forklarer variasjonen i tekstane?", "stolpar",
-       "3 263 verk med fulltekst i klyngeanalysen (ti klynger): 2 447 OpenAlex-verk og 816 arkivverk. Tekstvektorar; kanal er ikkje årsak.",
+       "3 263 verk med fulltekst i metastudiens klyngeanalyse (ti klynger A–J, ikkje kartets åtte): 2 447 OpenAlex-verk og 816 arkivverk. Tekstvektorar.",
        ["tema-4", "tema-6", "tema-7", "tema-10"])
 def f19(ctx: Ctx):
     t = RUNDE1["tema_forklaring"]
@@ -1463,7 +1490,7 @@ def f20(ctx: Ctx):
 
 @figur("f21", "omgrep", "Breidde og ankerdel for omgrep",
        "Kor mange tekstar bruker eit omgrep, og siterer dei same verket når dei gjer det?", "spreiingsplott",
-       "Engelske fulltekstar 2020–25 (om lag 1 032) for breidde; brukartekstar med referanseliste for ankerdel (til dømes 78 tekstar for wicked problem). Berre omgrep med kontrollerte tal er med.",
+       "Breidde: 1 043 engelske fulltekstar 2020–25 (design thinking 317 av 1 043 = 30,4). Ankerdel: brukartekstar med referanseliste (78 for wicked problem); eit golv, fordi same verk ligg under fleire id-ar.",
        ["omgrep-4", "omgrep-5"])
 def f21(ctx: Ctx):
     o = RUNDE1["omgrep"]
@@ -1501,7 +1528,7 @@ def f21(ctx: Ctx):
 
 @figur("f22", "omgrep", "Kva som stig og fell, og kvar omgrep først syner seg",
        "Kva omgrep har endra del mellom periodane, og følgjer første framtreding dekninga?", "stolpar og punktpar",
-       "Engelske samandrag i OpenAlex-laget (om lag 3 700 verk). Terskel |z| minst 4 og minst dobbel del; nettside-rusk fjerna. Første framtreding i data er ikkje første bruk.",
+       "Engelske samandrag i OpenAlex-laget (om lag 3 700 verk). Terskel |z| minst 4 og minst dobbel del; nettside-rusk fjerna. Første framtreding følgjer kor mange verk som finst, og er ikkje første bruk.",
        ["omgrep-2", "omgrep-3"])
 def f22(ctx: Ctx):
     data = {"overgangar": [{"namn": "≤2009 til 2010–14", "opp": 2, "ned": 0}, {"namn": "2010–14 til 2015–19", "opp": 0, "ned": 0},
@@ -1530,13 +1557,14 @@ def f22(ctx: Ctx):
 
 @figur("f23", "kunnskap", "Kunnskapsformer: kor mange, kva som lèt seg måle, og kva som heng saman",
        "Kva støtteformer bruker tekstane, og kva av dei lèt seg måle med markørar?", "intervall, kappa og matrise",
-       "2 176 engelske OpenAlex-tekstar med fulltekst. Lesing av 80 tekstar (vekta) av éin kodar; markørtest på 40 tekstar. Formene er ikkje rangerte; kodebokrekkjefølgje.",
+       "2 176 engelske OpenAlex-tekstar med fulltekst. Lesing av 80 tekstar (prosentane er vekta; phi er uvekta tal på tekstar) av éin kodar; markørtest på 40 tekstar. Kodebokrekkjefølgje, ikkje rangert.",
        ["kunnskapsformer-1", "kunnskapsformer-2", "kunnskapsformer-3", "kunnskapsformer-4", "kunnskapsformer-5"])
 def f23(ctx: Ctx):
     f = RUNDE1["former"]
     former = [{"kode": f["kode"][i], "namn": f["namn"][i], "lesing": f["lesing_pct"][i], "lo": f["lesing_ci"][i][0],
                "hi": f["lesing_ci"][i][1], "kappa": f["kappa"][i], "malbar": 1 if f["kode"][i] == "data_collection" else 0,
-               "grense": 1 if f["kode"][i] == "argument" else 0} for i in range(len(f["kode"]))]
+               "grense": 1 if f["kode"][i] == "argument" else 0,
+               "ustabil": 1 if f["kode"][i] == "modelling" else 0} for i in range(len(f["kode"]))]
     mk = f["marker"]
     data = {"former": former,
             "marker": {"datainnsamling": {"k": mk["data_collection"][0], "n": mk["data_collection"][1],
@@ -1595,14 +1623,14 @@ def f24(ctx: Ctx):
 
 @figur("f25", "teori", "Teorielement i pilotane: profil og pålitelegheit",
        "Kva viser dei tre pilotane om hovudpåstandar, støtte og om ei andre lesing finn det same?", "intervall og stolpar",
-       "v0.1: 30 av 3 150 fulltekstar i kjernen. v0.3: alle 23 CC-verk (22 lesbare, 52 hovudpåstandar). Éin modell som kodar, ikkje validert mot menneske.",
+       "v0.1: 30 av 3 150 fulltekstar (315 påstandar). v0.3: 23 CC-verk (52 påstandar). Skilnaden v0.1 mot v0.3 følgjer både plukkemåte og tekstutval. Éin modell som kodar, ikkje validert.",
        ["teorielement-1", "teorielement-2", "teorielement-3", "teorielement-4", "teorielement-6", "teorielement-7", "teorielement-8"])
 def f25(ctx: Ctx):
     t = RUNDE1["teori"]
     data = {"utval": t["utval"], "kjerne_lag": t["kjerne_lag"], "kausal": t["kausal"], "stad": t["stad"], "eigne": t["eigne"],
             "stotte": t["stotte"], "omgrep": t["omgrep"], "to_omgrep": [{"namn": a, "k": k, "n": n, "pct": pct(k, n)} for a, k, n in t["to_omgrep"]],
             "teoriar": t["teoriar"], "att": t["att"],
-            "gjenfinning": [{"namn": a, "k": k, "n": n, "pct": pct(k, n, 0)} for a, k, n in t["gjenfinning"]]}
+            "gjenfinning": [{"namn": a, "k": k, "n": n, "pct": pct(k, n, 1)} for a, k, n in t["gjenfinning"]]}
     tal = [T("teorielement-1", "Registrerte CC-verk", 23), T("teorielement-1", "Fulltekstar i kjernen", 3150),
            T("teorielement-1", "CC-verk 2020–26", 17), T("teorielement-1", "CC-verk frå DIS", 9),
            T("teorielement-2", "Kjernen, del av registrerte, prosent", 49), T("teorielement-2", "Kjernen, registrerte verk", 6432),
@@ -1682,6 +1710,8 @@ def _m(v, lo=None, hi=None, namn=None, mid=False):
     return m
 
 
+NEMNAR_SPORSMAL = {'eininga-1': '2 334 utanforståande av 24 812 rader; mellomdelen: forfattarar med minst to verk', 'eininga-2': '6 033 forfattarar i scope; dei to første stripane: forfattarar med minst fem verk', 'eininga-3': '109 116 referansar frå scope; 20 118 utanforverk', 'eininga-4': 'Kanalar med minst 30 verk: 688 av 3 978 verk; begge lag', 'eininga-5': '6 033 forfattarar; institusjonar og land som eigne nett', 'skilja-1': '2 334 utanforståande; midten: 4 949 forfattarar (verk som eining)', 'skilja-2': '3 295 verk 2005 til 2022; 653 utan siteringar', 'skilja-3': 'Fulltekstar; ordtettleik for datainnsamling, praksis og argument', 'skilja-4': 'Språk målt på teksten sjølv; arkivlaget berre fulltekstar', 'skilja-5': '4 080 verk; 29 kanalar med minst 20 verk; 1 278 verk i mindre kanalar kan ikkje vurderast', 'tida-1': '1 981 verk; 254 stayarar og 58 bærarar; 30 ord', 'tida-2': 'Element sitert av minst 8 ulike verk', 'tida-3': '2 754 forfattarar, 1 201 med dedikert inngang', 'tida-4': '6 033 forfattarar; 2 822 med verk på begge sider', 'tida-5': 'Forfattarar per utgåve i fem arenaer; små nemnarar for grunnleggjarane'}
+
 NYE_SPORSMAL = [
     ("eininga-1", "Eininga", "Er «nordisk» ein gradient på personnivå?", [
         _rad("Utanforståande med nordisk rad elles", "prosent", (0, 50), (20, 40), [_m(6.1)], merknad="Øvre grense 23,3 om alle 401 utan landfelt var nordiske."),
@@ -1724,7 +1754,7 @@ NYE_SPORSMAL = [
         _rad("Skandinavisk del i arkivlaget", "prosent", (0, 100), (30, 55), [_m(30.5)]),
         _rad("Midten (10 til 90 % skandinavisk) av fulltekstane", "prosent", (0, 10), (5, None), [_m(3.4, 1.6, 5.2, mid=True)])]),
     ("skilja-5", "Skilja", "Er artikkel mot konferanse ein eigenskap ved teksten eller kanalen?", [
-        _rad("Verk i kanalar med over 90 % same kind", "prosent", (0, 100), (85, None), [_m(95.9)]),
+        _rad("Verk i kanalar med over 90 % same kind", "prosent", (0, 100), (85, None), [_m(95.9, namn="av dei 29 kanalane"), _m(65.9, namn="av alle 4 080")], merknad="95,9 % av verka i dei 29 kanalane med minst 20 verk, men 65,9 % av alle 4 080 verk."),
         _rad("Kanalar med begge slaga over 10 %", "tal", (0, 6), (3, None), [_m(2)], ordtal=True),
         _rad("AUC for kind frå lengd, referansar og forfattarar", "AUC", (0.5, 0.9), (0.60, 0.75), [_m(0.73, namn="alle tre"), _m(0.71, namn="lengd")])]),
     ("tida-1", "Tida", "Endrar folk seg, eller kjem andre folk?", [
@@ -1752,7 +1782,7 @@ NYE_SPORSMAL = [
 
 @figur("f26", "sporsmaal", "Forventing mot utfall, femten nye spørsmål",
        "Heldt forventinga som vart fastsett før målinga, og kor tydeleg?", "forventa intervall mot observert",
-       "15 spørsmål, kvar forventing skriven ned før måling. Skygge = forventa område, merke = observert verdi, strek = intervall. Dommen for kvar stripe er rekna frå tala.",
+       "15 spørsmål, kvar forventing skriven ned før måling. Skygge = forventa område, merke = observert verdi, strek = intervall. Dommen for kvar stripe er rekna frå tala. «Heldt» for eit spørsmål er kjeldas eigen etikett, ikkje summen av stripene.",
        [q[0] for q in NYE_SPORSMAL])
 def f26(ctx: Ctx):
     fasit = {"eininga-1": "failed", "eininga-2": "held", "eininga-3": "held", "eininga-4": "failed", "eininga-5": "failed",
@@ -1761,7 +1791,7 @@ def f26(ctx: Ctx):
     sp = []
     tal = []
     for qid, linse, tittel, rader in NYE_SPORSMAL:
-        sp.append({"id": qid, "linse": linse, "tittel": tittel, "utfall": fasit[qid], "rader": rader})
+        sp.append({"id": qid, "linse": linse, "tittel": tittel, "utfall": fasit[qid], "nemnar": NEMNAR_SPORSMAL[qid], "rader": rader})
         for rd in rader:
             if rd.get("avleidd") or rd.get("ordtal"):
                 continue

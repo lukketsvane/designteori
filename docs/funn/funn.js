@@ -16,6 +16,23 @@
   };
   F.p = (v, d) => F.n(v, d == null ? 1 : d) + " %";
   F.trunc = (s, n) => (s.length > n ? s.slice(0, Math.max(1, n - 1)).trimEnd() + "…" : s);
+  /* bryt ein merkelapp over inntil to linjer (aldri avkorta midt i eit ord utan at tredje linje trengst) */
+  F.wrap = function (t, n, maxl) {
+    maxl = maxl || 2;
+    if (t.length <= n) return [t];
+    const out = []; let cur = "";
+    t.split(" ").forEach((w) => { if (cur && (cur + " " + w).length > n) { out.push(cur); cur = w; } else cur = cur ? cur + " " + w : w; });
+    out.push(cur);
+    if (out.length > maxl) { const keep = out.slice(0, maxl - 1); keep.push(F.trunc(out.slice(maxl - 1).join(" "), n)); return keep; }
+    return out;
+  };
+  F.ramp = function (p, from, to, lo, hi, txt) {
+    const l = F.d("div", { cls: "leg" }, p);
+    F.d("span", { text: lo + " " }, l);
+    const i = F.d("i", null, l); i.style.cssText = "width:70px;height:10px;border-radius:2px;background:linear-gradient(90deg," + from + "," + to + ")";
+    F.d("span", { text: hi + (txt ? "  " + txt : "") }, l);
+    return l;
+  };
 
   /* ---------- DOM ---------- */
   F.s = function (tag, a, p) {
@@ -140,14 +157,24 @@
 
   /* ---------- felles radteikning: knott, punkt med intervall, spenn, stolpe ---------- */
   F.rows = function (p, ctx, o) {
-    const W = ctx.w, pl = 7, pr = 7;
+    const W = ctx.w, pl = 10, pr = 10;
     const x = d3.scaleLinear().domain([o.min == null ? 0 : o.min, o.max]).range([pl, W - pr]).clamp(true);
-    const rowH = o.rowH || 38, gH = o.gH || 30, top = 20;
-    let y = top, groups = 0, last = null;
-    (o.rows || []).forEach((r) => { if (r.group && r.group !== last) { groups++; last = r.group; } });
-    const H = top + o.rows.length * rowH + groups * gH + 6;
-    const svg = F.svg(p, W, H, o.label);
+    const rowH = o.rowH || 38, gH = o.gH || 30, top = 20, lh = 13;
+    const vw = o.valW || 7.3;
     const fm = o.fmt || ((v) => F.n(v, o.d || 0));
+    /* førstegangsrunde: merkelappar, verditekst og rad-høgder */
+    let last = null, H = top + 6;
+    const info = o.rows.map((r) => {
+      const vtxt = r.vtxt != null ? r.vtxt : (r.v != null ? fm(r.v) : (r.lo != null ? fm(r.lo) + "–" + fm(r.hi) : ""));
+      const maxc = Math.max(8, Math.floor((W - vtxt.length * vw - 14) / 7.0));
+      const lines = r.nowrap ? [F.trunc(r.label, maxc)] : F.wrap(r.label, maxc, 2);
+      const h = rowH + (lines.length > 1 ? lh : 0);
+      let gh = 0;
+      if (r.group && r.group !== last) { last = r.group; gh = gH; }
+      H += h + gh;
+      return { vtxt, lines, h, gh };
+    });
+    const svg = F.svg(p, W, H, o.label);
     const ticks = o.ticks || x.ticks(Math.max(2, Math.floor(W / 90)));
     const gr = F.s("g", { cls: "grid" }, svg);
     ticks.forEach((t) => {
@@ -158,21 +185,20 @@
       F.s("line", { x1: x(rf.v), x2: x(rf.v), y1: 12, y2: H - 4, cls: "ref" }, svg);
       if (rf.label) F.s("text", { x: x(rf.v) + (rf.left ? -4 : 4), y: H - 8, "text-anchor": rf.left ? "end" : "start", text: rf.label, cls: "sm halo" }, svg);
     });
-    last = null;
-    const vw = o.valW || 7.0;
-    o.rows.forEach((r) => {
+    let y = top; last = null;
+    o.rows.forEach((r, ri) => {
+      const inf = info[ri];
       if (r.group && r.group !== last) {
         last = r.group;
         F.s("text", { x: 0, y: y + 16, text: r.group.toUpperCase(), cls: "sm", "letter-spacing": ".06em" }, svg);
         y += gH;
       }
-      const vtxt = r.vtxt != null ? r.vtxt : (r.v != null ? fm(r.v) : (r.lo != null ? fm(r.lo) + "–" + fm(r.hi) : ""));
-      const maxc = Math.max(8, Math.floor((W - vtxt.length * vw - 14) / 6.5));
+      const vtxt = inf.vtxt, ex = inf.lines.length > 1 ? lh : 0;
       const g = F.s("g", { cls: "mk fd", tip: r.tip || (r.label + "|" + (r.tiptxt || vtxt)) }, svg);
-      F.s("rect", { x: 0, y: y, width: W, height: rowH - 2, fill: "transparent" }, g);
-      F.s("text", { x: 0, y: y + 12, text: F.trunc(r.label, maxc), cls: "fg", style: "font-size:11.5px" }, g);
+      F.s("rect", { x: 0, y: y, width: W, height: inf.h - 2, fill: "transparent" }, g);
+      inf.lines.forEach((t, k) => F.s("text", { x: 0, y: y + 12 + k * lh, text: t, cls: "fg", style: "font-size:12px" }, g));
       F.s("text", { x: W, y: y + 12, "text-anchor": "end", text: vtxt, cls: r.vcls || "b" }, g);
-      const ty = y + 25, col = r.color || "var(--fg)";
+      const ty = y + 25 + ex, col = r.color || "var(--fg)";
       F.s("line", { x1: pl, x2: W - pr, y1: ty, y2: ty, stroke: "var(--hair)" }, g);
       const mk = r.mark || o.mark || "knob";
       if (mk === "knob") {
@@ -180,7 +206,7 @@
         F.s("circle", { cx: x(r.v), cy: ty, r: r.r || 5.5, fill: col, cls: "fd" }, g);
       } else if (mk === "dot") {
         if (r.lo != null) {
-          F.s("line", { x1: x(r.lo), x2: x(r.hi), y1: ty, y2: ty, stroke: col, "stroke-width": 2.5, cls: "gx" }, g);
+          F.s("line", { x1: x(r.lo), x2: x(r.hi), y1: ty, y2: ty, stroke: col, "stroke-width": 2.5, "stroke-dasharray": r.dashci ? "3 2" : null, cls: "gx" }, g);
           F.s("line", { x1: x(r.lo), x2: x(r.lo), y1: ty - 4, y2: ty + 4, stroke: col, "stroke-width": 1.5 }, g);
           F.s("line", { x1: x(r.hi), x2: x(r.hi), y1: ty - 4, y2: ty + 4, stroke: col, "stroke-width": 1.5 }, g);
         }
@@ -199,7 +225,7 @@
           else F.s("circle", { cx: x(q.v), cy: ty, r: q.r || 5.5, fill: q.hollow ? "var(--bg)" : (q.color || "var(--fg)"), stroke: q.color || "var(--fg)", "stroke-width": 2, cls: "fd" }, g);
         });
       }
-      y += rowH;
+      y += inf.h;
     });
     return { svg, x, H };
   };
@@ -261,7 +287,10 @@
       if (r.group && r.group !== last) { last = r.group; F.s("text", { x: 0, y: y + 17, text: r.group.toUpperCase(), cls: "sm", "letter-spacing": ".06em" }, svg); y += gH; }
       const g = F.s("g", { cls: "mk fd", tip: r.tip || (r.label + "|" + r.vals.map((v, i) => (o.periods ? o.periods[i] + ": " : "") + F.n(v, 1) + " %").join("  ")) }, svg);
       F.s("rect", { x: 0, y: y, width: W, height: rowH - 2, fill: "transparent" }, g);
-      F.s("text", { x: 0, y: y + rowH / 2 + 3, text: F.trunc(r.label, Math.floor(nl / 6.4)), cls: r.flag ? "b" : "", style: "font-size:11.5px" }, g);
+      const bx = r.badge ? 26 : 0;
+      if (r.badge) { F.s("rect", { x: 0, y: y + rowH / 2 - 10, width: 20, height: 20, rx: 4, fill: "none", stroke: "var(--dim)", "stroke-width": 1.5 }, g); F.s("text", { x: 10, y: y + rowH / 2 + 4, "text-anchor": "middle", text: r.badge, cls: "fg", style: "font-weight:500;font-size:11.5px" }, g); }
+      const ll = F.wrap(r.label, Math.floor((nl - bx) / 7.0), 2);
+      ll.forEach((t, k) => F.s("text", { x: bx, y: y + rowH / 2 + 3 + (k - (ll.length - 1) / 2) * 13, text: t, cls: r.flag ? "b" : "fg", style: "font-size:12px" }, g));
       const sx = d3.scaleLinear().domain([0, n - 1]).range([x0 + 4, x1 - 4]);
       const sy = d3.scaleLinear().domain([0, o.perRow ? d3.max(r.vals) * 1.05 || 1 : mx]).range([y + rowH - 5, y + 4]);
       const col = r.flag ? "var(--fg)" : "var(--dim)";
@@ -280,12 +309,13 @@
   };
 
   /* ---------- lasting ---------- */
-  function load(file) {
-    if (!F.cache[file]) F.cache[file] = fetch(file, { cache: "force-cache" }).then((r) => { if (!r.ok) throw new Error(file + " " + r.status); return r.json(); });
+  function load(file, opt) {
+    if (!F.cache[file]) F.cache[file] = fetch(file, opt || { cache: "force-cache" }).then((r) => { if (!r.ok) throw new Error(file + " " + r.status); return r.json(); });
     return F.cache[file];
   }
-  F.load = (f) => load("../data/meta/" + f);
-  F.manifest = () => F.load("manifest.json");
+  /* manifestet hentast alltid på nytt; datafilene får sjekksummen i adressa og kan då bufrast for godt */
+  F.manifest = () => load("../data/meta/manifest.json", { cache: "no-cache" });
+  F.load = (f) => (f === "manifest.json" ? F.manifest() : F.manifest().then((m) => load("../data/meta/" + f + "?v=" + ((m.filer[f] || {}).sha256 || "").slice(0, 12))));
   F.figData = async function (id) {
     const m = await F.manifest();
     const e = m.figurar.find((f) => f.id === id);
@@ -294,7 +324,12 @@
   };
 
   /* ---------- lat teikning ---------- */
-  const figs = [];
+  /* venta høgd per figur (mobil, brei), målt frå ferdig teikna figurar: held sida stabil medan ho blir teikna */
+  F.HOYDE = {f01: [491, 419], f02: [471, 490], f03: [681, 665], f04: [809, 809], f05: [776, 733], f06: [951, 328], f07: [413, 220], f08: [1198, 425], f09: [1316, 492], f10: [1308, 445], f11: [763, 412], f12: [1271, 1246], f13: [812, 994], f14: [891, 496], f15: [564, 546], f16: [602, 602], f17: [604, 284], f18: [1049, 737], f19: [1236, 582], f20: [1572, 937], f21: [564, 543], f22: [803, 787], f23: [1447, 1023], f24: [1218, 784], f25: [1121, 692], f26: [6187, 3869]};
+  function expH(id) {
+    const e = F.HOYDE[id]; if (!e) return 0;
+    return innerWidth < 700 ? e[0] : e[1];
+  }
   async function render(el, first) {
     const id = el.dataset.fig, mount = el.querySelector(".mount");
     const fn = F.fig[id];
@@ -307,12 +342,15 @@
       if (nem && !nem.textContent) nem.textContent = m.nemnar;
       const st = F.st[id] || (F.st[id] = {});
       const ctx = { id, w, mob: w < 520, st, el: mount, fig: el, m, rerender: () => render(el), dark: matchMedia("(prefers-color-scheme: dark)").matches || document.documentElement.dataset.theme === "dark" };
+      const hold = mount.offsetHeight;
+      mount.style.minHeight = hold + "px";
       mount.textContent = "";
-      mount.style.minHeight = "";
       mount.classList.remove("vent");
       await fn(mount, d, ctx);
+      mount.style.minHeight = "";
       mount.dataset.w = w;
       F.rendered.set(id, el);
+      spy();
     } catch (e) {
       console.error(id, e);
       mount.textContent = "";
@@ -323,12 +361,33 @@
   }
   F.render = render;
 
+  let links = [], secs = [];
+  function spy() {
+    const line = Math.min(innerHeight * 0.35, 260);
+    let cur = null;
+    secs.forEach((sc) => { if (sc.getBoundingClientRect().top <= line) cur = sc; });
+    links.forEach((a) => {
+      if (cur && a.getAttribute("href") === "#" + cur.id) {
+        if (a.getAttribute("aria-current") !== "true") { a.setAttribute("aria-current", "true"); a.parentNode.scrollTo({ left: a.offsetLeft - 40, behavior: "smooth" }); }
+      } else a.removeAttribute("aria-current");
+    });
+  }
+
   function init() {
     const els = Array.from(document.querySelectorAll("[data-fig]"));
-    els.forEach((e) => e.querySelector(".mount").classList.add("vent"));
+    els.forEach((e) => {
+      const mt = e.querySelector(".mount");
+      mt.classList.add("vent");
+      const h = expH(e.dataset.fig);
+      if (h) mt.style.minHeight = h + "px";
+    });
+    /* hent manifest og alle seksjonsfiler straks sida er i ro, så teikninga ikkje ventar på nettet */
+    const pre = () => F.manifest().then((m) => Object.keys(m.filer).forEach((f) => F.load(f))).catch(() => {});
+    if (window.requestIdleCallback) requestIdleCallback(pre, { timeout: 1200 }); else setTimeout(pre, 300);
+    F.manifest().catch(() => {});
     const io = new IntersectionObserver((es) => {
       es.forEach((en) => { if (en.isIntersecting) { io.unobserve(en.target); render(en.target, true); watch(en.target); } });
-    }, { rootMargin: "500px 0px" });
+    }, { rootMargin: "900px 0px" });
     els.forEach((e) => io.observe(e));
 
     function watch(el) {
@@ -343,23 +402,21 @@
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redo);
     new MutationObserver(redo).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
-    /* seksjonsmeny */
-    const links = Array.from(document.querySelectorAll(".topp a"));
-    const so = new IntersectionObserver((es) => {
-      es.forEach((en) => {
-        if (!en.isIntersecting) return;
-        links.forEach((a) => a.removeAttribute("aria-current"));
-        const a = links.find((x) => x.getAttribute("href") === "#" + en.target.id);
-        if (a) { a.setAttribute("aria-current", "true"); const nav = a.parentNode; nav.scrollTo({ left: a.offsetLeft - 40, behavior: "smooth" }); }
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    document.querySelectorAll("[data-sek]").forEach((s) => so.observe(s));
+    /* seksjonsmeny: les posisjonen ved kvar rulling og etter kvar teikning, så han følgjer med etter hopp */
+    links = Array.from(document.querySelectorAll(".topp a"));
+    secs = Array.from(document.querySelectorAll("[data-sek]"));
+    addEventListener("scroll", spy, { passive: true });
+    addEventListener("resize", spy);
+    addEventListener("hashchange", () => setTimeout(spy, 60));
+    spy();
     hero();
   }
 
   /* ---------- inngangsbilete: kartet som bakgrunn ---------- */
-  const PAL = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#2fa83a", "#9085e9", "#e66767"];
+  /* klyngefargar: ikkje landsfargane (blå, oransje, grøn, rosa, gul), og alltid med nummer eller bokstav */
+  const PAL = ["#b8a4ff", "#ff5d7a", "#c6ee5a", "#f2f2f2", "#7b86ff", "#e45df2", "#d9c9a3", "#8fb0c8"];
   F.PAL = PAL;
+  F.GPAL = ["#c6ee5a", "#b8a4ff", "#ff5d7a", "#f2f2f2", "#7b86ff", "#e45df2", "#d9c9a3"];
   async function hero() {
     const cv = document.getElementById("hero-kart");
     if (!cv) return;

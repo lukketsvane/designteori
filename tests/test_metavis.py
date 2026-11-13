@@ -390,6 +390,41 @@ class TestAgainstDatabase(unittest.TestCase):
         self.assertEqual(n, fig("f09")["forfattar"]["noder"])
 
 
+class TestRound1Fixes(unittest.TestCase):
+    """Numbers that the pictures must state with their denominator and layer."""
+
+    def test_skilja5_shows_both_denominators(self):
+        q = [x for x in fig("f26")["sporsmal"] if x["id"] == "skilja-5"][0]
+        rad = q["rader"][0]
+        self.assertEqual([m["v"] for m in rad["obs"]], [95.9, 65.9])
+        self.assertIn("4 080", rad["merknad"])
+        self.assertEqual(rad["dom"], "open")  # one mark inside the expected range, one outside
+        self.assertEqual(q["utfall"], "held")
+        for x in fig("f26")["sporsmal"]:
+            self.assertTrue(x["nemnar"].strip(), x["id"])
+
+    def test_language_flag_is_split_by_layer(self):
+        f18 = fig("f18")
+        s = f18["sprak"]
+        self.assertEqual((s["oa"], s["ark"]), (203, 193))
+        self.assertEqual(s["n_oa"] + s["n_ark"], 6432)
+        flagged = sum(1 for v in f18["f"] if v & 4)
+        self.assertEqual(flagged, s["oa"] + s["ark"])
+        self.assertEqual(sum(f18["lag"]), s["n_ark"])
+        for k in ("land", "per", "lag"):
+            self.assertEqual(len(f18[k]), 6432)
+
+    def test_rank_series_matches_stated_shares(self):
+        r = fig("f05")["rang"]
+        for k, v in r["del"].items():
+            self.assertEqual(len(v), 3)
+        for j in range(3):
+            self.assertAlmostEqual(sum(r["del"][k][j] for k in r["del"]), 100.0, delta=0.4)
+        # the verified shares for 2020-24: fractional credit and author countries only
+        self.assertEqual([r["del"]["NO"][1], r["del"]["FI"][1]], [22.4, 19.5])
+        self.assertEqual([r["del"]["NO"][2], r["del"]["FI"][2]], [18.9, 20.4])
+
+
 class TestHelpers(unittest.TestCase):
     def test_number_extraction(self):
         self.assertEqual(sorted(tal_i_tekst("6 432 av 24 812 (87,8 %) og 0,0737")), [0.0737, 87.8, 6432.0, 24812.0])

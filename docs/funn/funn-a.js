@@ -25,8 +25,8 @@
     lay.ft = { x: lay.reg.x, w: ids.ft.n * s, lv: 3 };
     lay.utan = { x: lay.reg.x + lay.ft.w, w: ids.utan.n * s, lv: 3 };
     const Y = [14, 112, 222, 322].map((v, i) => (mob ? v * 1.04 : v * 1)), ln = nh;
-    const colr = { hent_oa: "var(--oa)", hent_ark: "var(--ark)", ut: "var(--hair)", liste: "var(--oa)", andre: "var(--t3)", ark_att: "var(--ark)", fjerna: F.hatch(svg, "var(--ark)"), reg: "var(--fg)", ft: "var(--fg)", utan: F.hatch(svg, "var(--dim)") };
-    const lcol = { hent_oa: "var(--oa)", hent_ark: "var(--ark)", ut: "var(--dim)", liste: "var(--oa)", andre: "var(--t3)", ark_att: "var(--ark)", fjerna: "var(--ark)", reg: "var(--fg)", ft: "var(--fg)", utan: "var(--dim)" };
+    const colr = { hent_oa: "var(--oa)", hent_ark: "var(--ark)", ut: "var(--hair)", liste: "var(--oa)", andre: F.hatch(svg, "var(--oa)"), ark_att: "var(--ark)", fjerna: F.hatch(svg, "var(--ark)"), reg: "var(--fg)", ft: "var(--fg)", utan: F.hatch(svg, "var(--dim)") };
+    const lcol = { hent_oa: "var(--oa)", hent_ark: "var(--ark)", ut: "var(--dim)", liste: "var(--oa)", andre: "var(--oa)", ark_att: "var(--ark)", fjerna: "var(--ark)", reg: "var(--fg)", ft: "var(--fg)", utan: "var(--dim)" };
     const outOff = {}, inOff = {};
     Object.keys(lay).forEach((k) => { outOff[k] = 0; inOff[k] = 0; });
     const nodeOrderOut = { hent_oa: ["ut", "liste", "andre"], hent_ark: ["ark_att", "fjerna"], liste: ["reg"], andre: ["reg"], ark_att: ["reg"], reg: ["ft", "utan"] };
@@ -64,7 +64,7 @@
     [["liste", "Via tidsskriftlista"], ["andre", "Via tittel eller emne"], ["ark_att", "Arkivverk att etter dublettsjekk"], ["fjerna", "Fjerna på DOI-treff"] ].forEach(([k, t]) => {
       const sp = F.d("span", null, leg);
       const i = F.d("i", null, sp);
-      i.style.background = (k === "fjerna" || k === "utan") ? "repeating-linear-gradient(45deg,var(--dim) 0 2px,transparent 2px 5px)" : colr[k];
+      i.style.background = k === "fjerna" ? "repeating-linear-gradient(45deg,var(--ark) 0 2px,transparent 2px 5px)" : (k === "andre" ? "repeating-linear-gradient(45deg,var(--oa) 0 2px,transparent 2px 5px)" : colr[k]);
       sp.appendChild(document.createTextNode(t + " "));
       F.d("b", { text: n0(ids[k].n), style: "color:var(--fg);font-weight:500" }, sp);
     });
@@ -110,7 +110,8 @@
     const lg = F.legend(head, types.map((t, i) => ({ c: i === 3 ? "repeating-linear-gradient(45deg,var(--t3) 0 2px,transparent 2px 5px)" : (i === 5 ? "transparent" : fills[i]), t: nm[i], open: i === 5 })));
     const sv2 = F.svg(m, W, 112, "Slag per lag");
     [["OpenAlex-laget", d.typ_sum_oa, 4694, 4], ["Arkivlaget", d.typ_sum_ark, 1738, 62]].forEach(([nme, arr, tt, y0]) => {
-      F.s("text", { x: 0, y: y0 + 8, text: nme + " ", cls: "fg" }, sv2).appendChild(Object.assign(F.s("tspan", { text: n0(tt), cls: "b" })));
+      F.s("rect", { x: 0, y: y0 - 2, width: 10, height: 10, rx: 2, fill: y0 < 10 ? "var(--oa)" : "var(--ark)" }, sv2);
+      F.s("text", { x: 16, y: y0 + 8, text: nme + " ", cls: "fg" }, sv2).appendChild(Object.assign(F.s("tspan", { text: n0(tt), cls: "b" })));
       let acc = 0;
       arr.forEach((v, i) => {
         if (!v) return;
@@ -158,18 +159,38 @@
       mk(by("Norske verk"), F.cc("NO"), "Land"), mk(by("Svenske verk"), F.cc("SE")), mk(by("Finske verk"), F.cc("FI")), mk(by("Danske verk"), F.cc("DK")),
       mk(by("Før 2000"), null, "Alder"), ].concat(d.periodar.map((p) => mk(p)),
       [mk(by("Bokkapittel"), null, "Slag og siteringar"), mk(by("Artiklar")), mk(by("Minst 100 siteringar")),
-       mk({ namn: "Arkivlaget", n: d.arkiv.n, fulltekst: d.arkiv.fulltekst, del: d.arkiv.del }, "var(--ark)", "Lag")]);
-    F.rows(m, ctx, { rows, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1), refs: [{ v: d.alle.del, label: "alle " + F.p(d.alle.del, 1), left: false }], label: "Del med fulltekst per gruppe", rowH: ctx.mob ? 33 : 34, gH: 26, valW: 7 });
+       mk({ namn: "OpenAlex-laget", n: d.alle.n, fulltekst: d.alle.fulltekst, del: d.alle.del }, "var(--oa)", "Lag"), mk({ namn: "Arkivlaget", n: d.arkiv.n, fulltekst: d.arkiv.fulltekst, del: d.arkiv.del }, "var(--ark)")]);
+    F.rows(m, ctx, { rows, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1), refs: [{ v: d.alle.del, label: "OpenAlex-laget " + F.p(d.alle.del, 1), left: false }], label: "Del med fulltekst per gruppe", rowH: ctx.mob ? 33 : 34, gH: 26, valW: 7 });
   };
 
-  /* ---------- f05: land over tid ---------- */
+  /* ---------- f05: rangering mellom land etter teljemåte, og land over tid ---------- */
   F.fig.f05 = function (m, d, ctx) {
     const st = ctx.st; st.lag = st.lag || "oa"; st.vis = st.vis || "antal";
-    const ctl = F.d("div", { cls: "ctl" }, m);
-    const host = F.d("div", null, m), note = F.d("div", { style: "margin-top:26px" }, m);
+    const W = ctx.w, mob = W < 560;
+    /* A: rang 2020-24 etter tre teljemåtar */
+    F.d("h4", { text: "Rang " + d.rang.periode + ", " + n0(d.rang.verk) + " OpenAlex-verk: same verk, tre teljemåtar", style: "font:400 12px/1.35 var(--mono);color:var(--dim);margin:0 0 8px" }, m);
+    const mt = ["Heile verk per land", "Brøkdel per land", "Berre forfattarland"];
+    const ks = ["NO", "SE", "DK", "FI", "IS"];
+    const rk = {}, dl = d.rang.del;
+    for (let j = 0; j < 3; j++) ks.slice().sort((p, q) => dl[q][j] - dl[p][j]).forEach((k, i) => { (rk[k] = rk[k] || [])[j] = i + 1; });
+    const lw = mob ? 64 : 112, rw = mob ? 64 : 112, hh = 232, pt = 40;
+    const svg = F.svg(m, W, hh, "Rang mellom nordiske land under tre teljemåtar");
+    const xs = [0, 1, 2].map((j) => lw + (W - lw - rw) * j / 2), ys = (r) => pt + (r - 1) * ((hh - pt - 14) / 4);
+    xs.forEach((x, j) => { F.s("line", { x1: x, x2: x, y1: pt - 10, y2: hh - 10, stroke: "var(--hair)" }, svg); F.s("text", { x: Math.min(Math.max(x, 40), W - 40), y: 12, "text-anchor": j === 0 ? "start" : (j === 2 ? "end" : "middle"), text: mob ? ["Heile", "Brøkdel", "Forf.land"][j] : mt[j], cls: "fg", style: "font-size:12px" }, svg); if (j === 0 && mob) F.s("text", { x: 0, y: 26, text: "verk", cls: "sm" }, svg); });
+    ks.forEach((k) => {
+      const c = F.cc(k), pts = rk[k].map((r, j) => [xs[j], ys(r)]);
+      const g = F.s("g", { cls: "mk fd", tip: F.landNamn[k] + "|rang " + rk[k].join(" · ") + "|del " + dl[k].map((v) => F.n(v, 1) + " %").join(" · ") }, svg);
+      F.s("path", { d: d3.line()(pts), fill: "none", stroke: c, "stroke-width": 3, "stroke-linejoin": "round" }, g);
+      pts.forEach((q, j) => { F.s("circle", { cx: q[0], cy: q[1], r: 6, fill: c, stroke: "var(--bg)", "stroke-width": 2 }, g); F.s("text", { x: q[0], y: q[1] + 4, "text-anchor": "middle", text: rk[k][j], style: "fill:#fff;font-size:11px;font-weight:500;pointer-events:none" }, g); });
+      F.s("text", { x: pts[0][0] - 12, y: pts[0][1] + 4, "text-anchor": "end", text: (mob ? k : F.landNamn[k]) + " " + F.n(dl[k][0], 1), cls: "fg", style: "font-size:12px" }, g);
+      F.s("text", { x: pts[2][0] + 12, y: pts[2][1] + 4, text: F.n(dl[k][2], 1) + " " + (mob ? k : F.landNamn[k]), cls: "fg", style: "font-size:12px" }, g);
+    });
+    F.d("p", { cls: "sm", text: "Tala er del av kredittane i prosent. Midtre punkt: " + ks.slice().sort((p, q) => rk[p][1] - rk[q][1]).map((k) => F.landNamn[k] + " " + F.n(dl[k][1], 1)).join(", ") + "." }, m);
+    /* B: land over tid (sekundært) */
+    const ctl = F.d("div", { cls: "ctl", style: "margin-top:34px" }, m);
+    const host = F.d("div", null, m);
     F.seg(ctl, [{ k: "antal", t: "Antal" }, { k: "andel", t: "Andel" }], st.vis, (k) => { st.vis = k; draw(); }, "Vis");
     F.seg(ctl, [{ k: "oa", t: "OpenAlex-laget" }, { k: "samla", t: "Med arkivlaget" }], st.lag, (k) => { st.lag = k; draw(); }, "Lag");
-    const W = ctx.w, mob = W < 560;
     function draw() {
       host.textContent = "";
       const samla = st.lag === "samla", share = st.vis === "andel";
@@ -183,7 +204,7 @@
       const y = d3.scaleLinear().domain([0, ymax]).nice().range([H - pb, pt]);
       F.axisY(svg, y, pl, W - pl - pr, { n: 4, fmt: (v) => (share ? Math.round(v * 100) + "" : n0(v)) });
       [2000, 2005, 2010, 2015, 2020, 2025].forEach((a) => { if (!mob || a % 10 === 0 || a === 2025) F.s("text", { x: x(a), y: H - pb + 14, "text-anchor": "middle", text: a }, svg); });
-      const area = d3.area().x((q) => x(q.data.ar)).y0((q) => y(q[0])).y1((q) => y(q[1])).curve(d3.curveMonotoneX);
+      const area = d3.area().x((q) => x(q.data.ar)).y0((q) => y(q[0])).y1((q) => y(q[1])).curve(d3.curveLinear);
       const hz = F.hatch(svg, "var(--ANNA)");
       stack.forEach((s) => F.s("path", { d: area(s), fill: s.key === "utan" ? hz : F.cc(s.key), opacity: 0.92, cls: "fd" }, svg));
       F.s("rect", { x: x(2025), y: pt, width: x(2026) - x(2025), height: H - pb - pt, fill: "var(--bg)", opacity: 0.45, "pointer-events": "none" }, svg);
@@ -200,12 +221,6 @@
       F.legend(host, keys.filter((k) => k !== "utan").map((k) => ({ c: F.cc(k), t: F.landNamn[k] })).concat(samla ? [{ c: "var(--ANNA)", t: "Arkivverk utan land" }] : []));
     }
     draw();
-    /* kva avgjer rangeringa: Noreg og Finland 2020-24 med tre måtar å telje på */
-    const idx = 5;
-    const no = [d.del_oa.NO[idx], d.del_samla.NO[idx], d.forf_2020_24.NO], fi = [d.del_oa.FI[idx], d.del_samla.FI[idx], d.forf_2020_24.FI];
-    F.d("h4", { text: "Noreg og Finland 2020–24: same verk, tre måtar å telje på (del av verka, prosent)", cls: "", style: "font:400 11.5px/1.35 var(--mono);color:var(--dim);margin:0 0 6px" }, note);
-    const nm = ["Berre OpenAlex-laget", "Med arkivlaget", "Berre forfattarland"];
-    F.rows(note, ctx, { rows: nm.map((t, i) => ({ label: t, vtxt: "NO " + F.n(no[i], 1) + " · FI " + F.n(fi[i], 1), mark: "none", dots: [{ v: no[i], color: "var(--NO)" }, { v: fi[i], color: "var(--FI)" }], linkc: "var(--ref)", tip: t + "|Noreg " + F.n(no[i], 1) + " %|Finland " + F.n(fi[i], 1) + " %" })), min: 0, max: 40, ticks: [0, 10, 20, 30, 40], tfmt: (v) => v + "", rowH: 36, label: "Noreg og Finland med tre måtar å telje på" });
   };
 
   /* ---------- f06: team og grenser ---------- */
@@ -215,10 +230,8 @@
     const keys = [{ k: "ein", name: "ein forfattar", fill: "var(--t1)", ink: "var(--fg)" }, { k: "to", name: "to", fill: "var(--t2)", ink: "var(--fg)" }, { k: "tre", name: "tre", fill: "var(--t3)" }, { k: "fire", name: "fire eller fleire", fill: "var(--t4)", ink: "var(--bg)" }];
     F.stackCols(A, A.w, 240, { cats, keys, vals: d.per, n: d.per.map((q) => q.n), inside: true, label: "Lagstorleik per periode" });
     F.legend(A, keys.map((k) => ({ c: k.fill, t: k.name })));
-    F.lines(B, B.w, 240, { cats: d.periodar, short, series: [{ name: "fleire institusjonar", vals: d.per.map((q) => q.fleire_inst), color: "var(--fg)" }, { name: "nordisk og ikkje-nordisk", vals: d.per.map((q) => q.nord_og_utanfor), color: "var(--dim)", dash: "5 3" }, { name: "to nordiske land eller fleire", vals: d.per.map((q) => q.fleire_nordiske), color: "var(--fg)", dash: "1.5 3", hollow: true }], min: 0, max: 70, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 3, label: "Samarbeid over grenser" });
-    F.legend(B, [{ c: "var(--fg)", ln: "solid", t: "fleire institusjonar" }, { c: "var(--dim)", ln: "dashed", t: "nordisk og ikkje-nordisk" }, { c: "var(--fg)", ln: "dotted", t: "to nordiske land eller fleire" }]);
-    F.lines(C, C.w, 240, { cats: d.periodar, short, series: [{ name: "alle verk", vals: d.per.map((q) => q.snitt), color: "var(--fg)", w: 2.4 }, { name: "artiklar", vals: d.snitt_type.artikkel, color: "var(--dim)", dash: "5 3", w: 1.6 }, { name: "konferansebidrag", vals: d.snitt_type.konferansebidrag, color: "var(--dim)", w: 1.6, hollow: true }], min: 1, max: 4.5, fmt: (v) => F.n(v, 2), yfmt: (v) => F.n(v, 1), n: 3, above: 8, label: "Snitt forfattarar per verk" });
-    F.legend(C, [{ c: "var(--fg)", ln: "solid", t: "alle verk" }, { c: "var(--dim)", ln: "dashed", t: "artiklar" }, { c: "var(--dim)", ln: "solid", t: "konferansebidrag" }]);
+    F.lines(B, B.w, 240, { cats: d.periodar, short, series: [{ name: "fleire institusjonar", vals: d.per.map((q) => q.fleire_inst), color: "var(--fg)" }, { name: "nordisk og utanfor", vals: d.per.map((q) => q.nord_og_utanfor), color: "var(--dim)", dash: "5 3" }, { name: "fleire nordiske land", vals: d.per.map((q) => q.fleire_nordiske), color: "var(--fg)", dash: "1.5 3", hollow: true }], min: 0, max: 70, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 3, labels: true, above: 8, pr: 4, label: "Samarbeid over grenser" });
+    F.lines(C, C.w, 240, { cats: d.periodar, short, series: [{ name: "alle verk", vals: d.per.map((q) => q.snitt), color: "var(--fg)", w: 2.4 }, { name: "artiklar", vals: d.snitt_type.artikkel, color: "var(--dim)", dash: "5 3", w: 1.6 }, { name: "konferansebidrag", vals: d.snitt_type.konferansebidrag, color: "var(--dim)", w: 1.6, hollow: true }], min: 1, max: 4.5, fmt: (v) => F.n(v, 2), yfmt: (v) => F.n(v, 1), n: 3, labels: true, above: 8, label: "Snitt forfattarar per verk" });
     F.d("p", { cls: "sm", text: "Artiklar og konferansebidrag er med frå 2010." }, C);
   };
 
@@ -237,7 +250,6 @@
       F.s("text", { x: x(o.venta) - 6, y: y0 + 29, "text-anchor": "end", text: "venta om lag " + n0(o.venta), cls: "halo" }, svg);
       F.s("text", { x: x(o.obs) + 6, y: y0 + 51, text: "observert " + n0(o.obs), cls: "b" }, svg);
     });
-    F.d("p", { cls: "sm", text: "Observert er " + F.n(d.forhald, 2) + " av venta for verk og " + F.n(d.forhald_par, 2) + " for landpar." }, A);
     const rows = d.utanlandske_par.map((q) => ({ label: q.par, vtxt: n0(q.obs) + " mot " + F.n(q.venta, 1), mark: "none", dots: [{ v: q.venta, color: "var(--ref)", hollow: true }, { v: q.obs, color: "var(--fg)" }], linkc: "var(--ref)", tip: q.par + "|Observert " + n0(q.obs) + "|Venta " + F.n(q.venta, 1) }));
     const mx = d3.max(d.utanlandske_par, (q) => Math.max(q.obs, q.venta)) * 1.15;
     F.rows(B, { w: B.w }, { rows, min: 0, max: Math.ceil(mx / 50) * 50, rowH: 40, label: "Utanlandske par mot venta" });

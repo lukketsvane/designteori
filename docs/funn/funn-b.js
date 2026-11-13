@@ -8,56 +8,41 @@
 
   /* ---------- f10: konsentrasjon ---------- */
   F.fig.f10 = function (m, d, ctx) {
-    const st = ctx.st; st.vis = st.vis || "alle";
-    const ctl = F.d("div", { cls: "ctl" }, m);
-    const [A, B, C] = F.pans(m, 3, "p3", ["Lorenz-kurve: kor samla verka ligg i få kanalar", "Dei ti største kanalane, verk", "Per periode"]);
-    F.seg(ctl, [{ k: "alle", t: "Alle verk" }, { k: "port", t: "Etter port" }], st.vis, (k) => { st.vis = k; lor(); }, "Vis");
-    A.parentNode.insertBefore(ctl, A.parentNode.firstChild);
-    const hostA = F.d("div", null, A);
-    function lor() {
-      hostA.textContent = "";
-      const w = A.w, h = Math.min(w, 330), pl = 32, pb = 24, pt = 8, pr = 6;
-      const svg = F.svg(hostA, w, h, "Lorenz-kurver for kanalfamiliar");
-      const x = d3.scaleLinear().domain([0, 1]).range([pl, w - pr]), y = d3.scaleLinear().domain([0, 1]).range([h - pb, pt]);
-      F.axisY(svg, y, pl, w - pl - pr, { values: [0, 0.5, 1], fmt: (v) => v * 100 + "" });
-      F.axisX(svg, x, h - pb, h - pb - pt, { values: [0, 0.5, 1], fmt: (v) => v * 100 + "" });
-      F.s("line", { x1: x(0), y1: y(0), x2: x(1), y2: y(1), cls: "ref" }, svg);
-      F.s("text", { x: x(1) - 4, y: y(1) + 14, "text-anchor": "end", text: "jamn fordeling", cls: "sm halo" }, svg);
-      F.s("text", { x: pl + (w - pl - pr) / 2, y: h - 1, "text-anchor": "middle", text: "del av kanalfamiliane, minste først (prosent)", cls: "sm" }, svg);
-      const line = (o, col, wd, dash, key, name) => {
-        const pts = o.x.map((v, i) => [x(v), y(o.y[i])]);
-        F.s("path", { d: d3.line()(pts), fill: "none", stroke: col, "stroke-width": wd, "stroke-dasharray": dash || null, "stroke-linejoin": "round", cls: "fd" }, svg);
-        F.s("path", { d: d3.line()(pts), fill: "none", stroke: "transparent", "stroke-width": 14, cls: "mk", tip: name + "|" + n0(o.verk) + " verk i " + n0(o.familiar) + " kanalfamiliar|Gini " + F.n(o.gini, 2) + "|dei ti største har " + F.n(o.topp10, 1) + " %" }, svg);
-      };
-      if (st.vis === "alle") {
-        line(d.alle, "var(--fg)", 2.6, null, "alle", "Alle verk med kanalnamn");
-        F.s("text", { x: x(0.5), y: y(0.1) - 12, "text-anchor": "middle", text: "Gini " + F.n(d.alle.gini, 2), cls: "b halo" }, svg);
-      } else {
-        line(d.liste, "var(--fg)", 2.6, null, "liste", "Via tidsskriftlista");
-        line(d.andre, "var(--dim)", 2.6, "5 3", "andre", "Andre verk");
-        F.s("text", { x: x(0.12), y: y(0.55), text: "via tidsskriftlista", cls: "b halo" }, svg);
-        F.s("text", { x: x(0.12), y: y(0.55) + 13, text: "topp ti " + F.n(d.liste.topp10, 1) + " %", cls: "halo" }, svg);
-        F.s("text", { x: x(0.5), y: y(0.1) - 14, "text-anchor": "middle", text: "andre verk, topp ti " + F.n(d.andre.topp10, 1) + " %", style: "fill:var(--dim)", cls: "halo" }, svg);
-      }
-    }
-    lor();
-    F.d("p", { cls: "sm" }, A).append("Dei ti største kanalfamiliane har ", b(F.p(d.alle.topp10, 1)), " av verka.");
+    const [A, B, C] = F.pans(m, 3, "p3", ["Lorenz-kurver: kor samla verka ligg i få kanalfamiliar", "Dei ti største kanalane, verk", "Per periode"]);
+    const w = A.w, h = Math.min(w, 300), pl = 32, pb = 24, pt = 8, pr = 8;
+    const svg = F.svg(A, w, h, "Lorenz-kurver for kanalfamiliar, alle verk og delt etter inngangsport");
+    const x = d3.scaleLinear().domain([0, 1]).range([pl, w - pr]), y = d3.scaleLinear().domain([0, 1]).range([h - pb, pt]);
+    F.axisY(svg, y, pl, w - pl - pr, { values: [0, 0.5, 1], fmt: (v) => v * 100 + "" });
+    F.axisX(svg, x, h - pb, h - pb - pt, { values: [0, 0.5, 1], fmt: (v) => v * 100 + "" });
+    F.s("line", { x1: x(0), y1: y(0), x2: x(1), y2: y(1), cls: "ref" }, svg);
+    F.s("text", { x: x(0.62), y: y(0.62) + 18, "text-anchor": "start", text: "jamn", cls: "sm halo" }, svg);
+    F.s("text", { x: pl + (w - pl - pr) / 2, y: h - 1, "text-anchor": "middle", text: "del av familiane, minste først (prosent)", cls: "sm" }, svg);
+    const line = (o, col, wd, dash, name) => {
+      const pts = o.x.map((v, i) => [x(v), y(o.y[i])]);
+      F.s("path", { d: d3.line()(pts), fill: "none", stroke: col, "stroke-width": wd, "stroke-dasharray": dash || null, "stroke-linejoin": "round", cls: "fd" }, svg);
+      F.s("path", { d: d3.line()(pts), fill: "none", stroke: "transparent", "stroke-width": 14, cls: "mk", tip: name + "|" + n0(o.verk) + " verk i " + n0(o.familiar) + " kanalfamiliar|Gini " + F.n(o.gini, 2) + "|dei ti største har " + F.n(o.topp10, 1) + " %" }, svg);
+    };
+    line(d.andre, "var(--dim)", 2.6, "5 3", "Andre verk");
+    line(d.liste, "var(--fg)", 2.6, "1.5 3.5", "Via tidsskriftlista");
+    line(d.alle, "var(--fg)", 2.6, null, "Alle verk med kanalnamn");
+    F.legend(A, [{ c: "var(--fg)", ln: "solid", t: "alle verk: topp ti om lag " + n0(Math.floor(d.alle.topp10)) + " %" }, { c: "var(--fg)", ln: "dotted", t: "via tidsskriftlista: " + F.p(d.liste.topp10, 1) }, { c: "var(--dim)", ln: "dashed", t: "andre verk: " + F.p(d.andre.topp10, 1) }]);
+    F.d("p", { cls: "sm" }, A).append("Porten delar materialet i to grupper: ", b(n0(d.inngang.liste)), " verk via tidsskriftlista og ", b(n0(d.inngang.andre)), " andre.");
     /* B */
     F.rows(B, { w: B.w }, { rows: d.topp.map((q) => ({ label: q.namn, v: q.n, vtxt: n0(q.n), color: "var(--fg)", tip: q.namn + "|" + n0(q.n) + " verk" })), max: 500, ticks: [0, 250, 500], mark: "bar", rowH: 32, fmt: (v) => n0(v), label: "Dei ti største kanalane" });
     F.d("p", { cls: "sm" }, B).append("FormAkademisk er ", b(F.p(d.topp[0].n / d.alle.verk * 100, 1)), " av verka med kanalnamn.");
     /* C */
-    F.d("h4", { text: "Del av verka i dei ti største kanalane, prosent" }, C);
-    F.lines(C, C.w, 150, { cats: d.periodar, short, series: [{ name: "topp ti, del av verka", vals: d.per.map((q) => q.topp10), color: "var(--fg)" }], min: 0, max: 100, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 2, above: 10, label: "Topp-ti-del per periode" });
+    F.d("h4", { text: "Del av verka i dei ti største, prosent" }, C);
+    F.lines(C, C.w, 150, { cats: d.periodar, short, series: [{ name: "topp ti", vals: d.per.map((q) => q.topp10), color: "var(--fg)" }], min: 0, max: 100, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 2, above: 10, label: "Topp-ti-del per periode" });
     F.d("h4", { text: "Gini", style: "margin-top:18px" }, C);
     F.lines(C, C.w, 130, { cats: d.periodar, short, series: [{ name: "Gini", vals: d.per.map((q) => q.gini), color: "var(--dim)" }], min: 0, max: 1, fmt: (v) => F.n(v, 2), yfmt: (v) => F.n(v, 1), n: 2, above: 10, label: "Gini per periode" });
-    F.d("p", { cls: "sm" }, C).append("Før 2000 er det berre ", b(n0(d.per[0].n)), " verk.");
+    F.d("p", { cls: "sm" }, C).append("Før 2000 er det berre ", b(n0(d.per[0].n)), " verk, og dei ti største har 67 til 70 %.");
   };
 
   /* ---------- f11: nordiske kanalar ---------- */
   F.fig.f11 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p21", ["Kanalklasse per periode, del av verka (prosent)", "Nordisk del per land, 2000–2026"]);
     const vals = d.per.map((q) => ({ fa: Math.max(0, q["nordisk kanal"] - q.nord_utan_fa_nordes), an: q.nord_utan_fa_nordes, int: q["internasjonal kanal"], fs: q.forlagsserie, rep: q.repositorium, uk: q.ukjend }));
-    const keys = [{ k: "fa", name: "FormAkademisk og Nordes", fill: "var(--fg)", ink: "var(--bg)" }, { k: "an", name: "andre nordiske kanalar", fill: { hatch: "var(--fg)" } }, { k: "int", name: "internasjonal kanal", fill: "var(--t3)", ink: "var(--bg)" }, { k: "fs", name: "forlagsserie", fill: "var(--t2)", ink: "var(--fg)" }, { k: "rep", name: "repositorium", fill: "var(--t1)", ink: "var(--fg)" }, { k: "uk", name: "ukjend", fill: { outline: true } }];
+    const keys = [{ k: "fa", name: "FormAkademisk og Nordes", fill: "var(--fg)", ink: "var(--bg)" }, { k: "an", name: "andre nordiske kanalar", fill: { hatch: "var(--fg)" } }, { k: "int", name: "internasjonal kanal", fill: "var(--t3)", ink: "var(--bg)" }, { k: "fs", name: "forlagsserie", fill: "var(--t2)", ink: "var(--fg)" }, { k: "rep", name: "repositorium", fill: "var(--t1)", ink: "var(--fg)" }, { k: "uk", name: "ukjend kanal (stipla)", fill: { outline: true } }];
     F.stackCols(A, A.w, ctx.mob ? 300 : 340, { cats: d.periodar.map((p) => ({ label: short(p) })), keys, vals, n: d.per.map((q) => q.n), inside: true, label: "Kanalklasse per periode" });
     F.legend(A, keys.map((k) => ({ c: k.k === "an" ? "repeating-linear-gradient(45deg,var(--fg) 0 2px,transparent 2px 5px)" : (k.k === "uk" ? "transparent" : k.fill), t: k.name, open: k.k === "uk" })));
     const rows = d.land.map((l) => ({ label: F.landNamn[l.k] + " · " + n0(l.n) + " verk", vtxt: F.n(l.nordisk, 1) + " → " + F.n(l.nordisk_andre, 1), mark: "none", dots: [{ v: l.nordisk, color: F.cc(l.k) }, { v: l.nordisk_andre, color: F.cc(l.k), hollow: true }], linkc: F.cc(l.k), tip: F.landNamn[l.k] + "|Alle verk: " + F.n(l.nordisk, 1) + " % i nordiske kanalar|Utan verk via tidsskriftlista: " + F.n(l.nordisk_andre, 1) + " %" }));
@@ -68,30 +53,43 @@
 
   /* ---------- f12: siteringar etter kanal; kanalfamiliar over tid ---------- */
   F.fig.f12 = function (m, d, ctx) {
-    const [A, B] = F.pans(m, 2, "p12", ["Registrerte siteringar per verk, verk 2005–2022: median og kvartilar", "Kanalfamiliar etter periode, verk per celle"]);
     const cc = { "Design Studies": "Design Studies", "CoDesign": "CoDesign", "Designing Interactive Systems": "DIS", "FormAkademisk": "FormAkademisk", "Proceedings of DRS": "DRS", "Nordes": "Nordes" };
-    F.rows(A, { w: A.w }, { rows: d.sit.map((q) => ({ label: (cc[q.namn] || q.namn) + " · n " + n0(q.n), v: q.median, lo: q.p25, hi: q.p75, mark: "range", vtxt: "median " + F.n(q.median, q.median % 1 ? 1 : 0), color: "var(--fg)", tip: q.namn + "|n " + n0(q.n) + " verk|median " + F.n(q.median, 1) + ", kvartilar " + F.n(q.p25, 1) + " til " + F.n(q.p75, 1) + "|usiterte " + F.n(q.usiterte, 1) + " %" })), min: 0, max: 80, ticks: [0, 20, 40, 60, 80], tfmt: (v) => v + "", rowH: 40, valW: 7.2, label: "Siteringar per verk etter kanal" });
-    F.d("p", { cls: "sm" }, A).append("Stolpen er første til tredje kvartil, ringen er medianen.");
+    const sixFam = new Set(d.sit.map((q) => q.fam));
+    const famShort = {}; d.sit.forEach((q) => { famShort[q.fam] = cc[q.namn] || q.namn; });
+    const head = (t) => F.d("h4", { text: t, style: "font:500 13px/1.35 var(--mono);color:var(--fg);margin:0 0 8px" }, m);
+    head("Registrerte siteringar skil sterkt mellom seks kanalar");
+    F.d("p", { cls: "tal-inn", text: "Verk 2005–2022 med kanalnamn: median og kvartilar per kanal. Dei same seks er merkte med ring i matrisen under." }, m);
+    const rowsA = d.sit.map((q) => ({ label: (cc[q.namn] || q.namn) + " · n " + n0(q.n), v: q.median, lo: q.p25, hi: q.p75, mark: "range", vtxt: "median " + F.n(q.median, q.median % 1 ? 1 : 0), color: "var(--fg)", tip: q.namn + "|n " + n0(q.n) + " verk|median " + F.n(q.median, 1) + ", kvartilar " + F.n(q.p25, 1) + " til " + F.n(q.p75, 1) + "|usiterte " + F.n(q.usiterte, 1) + " %" }));
+    F.rows(m, { w: ctx.w }, { rows: rowsA, min: 0, max: 80, ticks: [0, 20, 40, 60, 80], tfmt: (v) => v + "", rowH: 36, valW: 7.4, label: "Siteringar per verk etter kanal" });
+    F.d("p", { cls: "sm" }, m).append("Stolpen er første til tredje kvartil, ringen er medianen.");
     /* matrise */
+    const mh = F.d("div", { style: "margin-top:34px" }, m);
+    F.d("h4", { text: "Kanalane skiftar over tid", style: "font:500 13px/1.35 var(--mono);color:var(--fg);margin:0 0 4px" }, mh);
+    F.d("p", { cls: "tal-inn", style: "margin:0 0 10px", text: "Kanalfamiliar med minst 8 verk, sorterte etter første år. Kvar rad er ein familie, kvar celle ein femårsperiode." }, mh);
+    const lg = F.ramp(mh, "color-mix(in srgb, var(--fg) 18%, var(--bg))", "var(--fg)", "1 verk", d3.max(d.matrise, (r) => d3.max(r.per)) + " verk", "per celle");
+    const k2 = F.d("span", null, lg); const mkb = F.d("i", null, k2); mkb.style.cssText = "width:3px;height:12px;background:var(--fg);border-radius:0"; k2.appendChild(document.createTextNode(" verk i alle fire periodar"));
+    const k3 = F.d("span", null, lg); const mkr = F.d("i", { cls: "r" }, k3); mkr.style.cssText = "border:2px solid var(--fg);background:none"; k3.appendChild(document.createTextNode(" ein av dei seks over"));
     const rows = d.matrise.slice().sort((a, c) => a.forste - c.forste || c.n - a.n);
-    const W = B.w, mob = W < 520, rh = mob ? 7.5 : 9, padR = mob ? 98 : 150, padT = 34, padL = 10;
+    const W = ctx.w, mob = W < 520, rh = mob ? 8.5 : 10, padR = mob ? 118 : 190, padT = 30, padL = 14;
     const H = padT + rows.length * rh + 4;
-    const svg = F.svg(B, W, H, "Kanalfamiliar etter periode");
+    const svg = F.svg(mh, W, H, "Kanalfamiliar etter periode");
     const cw = (W - padL - padR) / 4, mx = d3.max(rows, (r) => d3.max(r.per));
     const op = d3.scaleSqrt().domain([0, mx]).range([0.18, 1]);
-    d.matrise_per.forEach((p, i) => F.s("text", { x: padL + cw * i + cw / 2, y: 14, "text-anchor": "middle", text: p, cls: mob ? "sm" : "" }, svg));
+    d.matrise_per.forEach((p, i) => F.s("text", { x: padL + cw * i + cw / 2, y: 14, "text-anchor": "middle", text: p }, svg));
     const labelled = [];
+    const topn = rows.slice().sort((a, c) => c.n - a.n).slice(0, mob ? 8 : 14).map((r) => r.namn);
     rows.forEach((r, ri) => {
-      const y = padT + ri * rh, all4 = r.per.every((v) => v > 0);
+      const y = padT + ri * rh, all4 = r.per.every((v) => v > 0), six = sixFam.has(r.namn);
       const g = F.s("g", { cls: "mk", tip: r.namn + "|" + r.n + " verk, " + r.forste + " til " + r.siste + "|" + d.matrise_per.map((p, i) => p + ": " + r.per[i]).join("  ") }, svg);
       F.s("rect", { x: 0, y, width: W, height: rh, fill: "transparent" }, g);
       if (all4) F.s("rect", { x: 0, y: y + 1, width: 3, height: rh - 2, fill: "var(--fg)" }, g);
       r.per.forEach((v, i) => { if (v > 0) F.s("rect", { x: padL + cw * i + 1, y: y + 0.6, width: cw - 2, height: rh - 1.2, rx: 1, fill: "var(--fg)", opacity: op(v), cls: "fd" }, g); });
-      if (r.n >= (mob ? 45 : 35)) labelled.push({ r, y });
+      if (six) F.s("circle", { cx: padL + cw * 4 + 8, cy: y + rh / 2, r: 4, fill: "none", stroke: "var(--fg)", "stroke-width": 1.6 }, g);
+      if (six || topn.indexOf(r.namn) >= 0) labelled.push({ r, y, six });
     });
-    const ny = F.nudge(labelled.map((q) => ({ y: q.y + rh / 2 + 3.5 })), 11.5, padT + 8, H - 6);
-    labelled.forEach((q, i) => F.s("text", { x: padL + cw * 4 + 6, y: ny[i], text: F.trunc(chShort(q.r.namn), Math.floor((padR - 8) / 6.3)), cls: "sm fg" }, svg));
-    F.d("p", { cls: "sm" }, B).append("Rader sorterte etter første år. Strek til venstre: ", b(d.alle_fire + " familiar"), " har verk i alle fire periodar. ", b(n0(d.nye_2020_24.verk) + " av " + n0(d.nye_2020_24.av)), " verk 2020–24 ligg i familiar frå 2015 eller seinare.");
+    const ny = F.nudge(labelled.map((q) => ({ y: q.y + rh / 2 + 4 })), 13, padT + 8, H - 6);
+    labelled.forEach((q, i) => F.s("text", { x: padL + cw * 4 + 18, y: ny[i], text: F.trunc(famShort[q.r.namn] || chShort(q.r.namn), Math.floor((padR - 20) / 7.0)), cls: q.six ? "fg b" : "fg" }, svg));
+    F.d("p", { cls: "sm" }, mh).append(b(d.alle_fire + " familiar"), " har verk i alle fire periodar. ", b(n0(d.nye_2020_24.verk) + " av " + n0(d.nye_2020_24.av)), " verk 2020–24 ligg i familiar frå 2015 eller seinare.");
   };
 
   /* ---------- f14: skeive siteringar ---------- */
