@@ -40,14 +40,14 @@
     return [
       "<strong>Kva:</strong> " + esc(fmt(f.total)) + " verk om design og designforsking frå Norden" + span + ": " + esc(fmt(f.openalex)) + " henta frå OpenAlex og " + esc(fmt(f.nordic)) + " frå nordiske arkiv" + (srcs ? " (" + srcs + ")" : "") + ".",
       "<strong>Kor sikkert:</strong> Ingen verk er kontrollerte av eit menneske. OpenAlex-verka er valde automatisk etter tittel. " + esc(fmt(f.dup)) + " verk er moglege dublettar og er skjulte som standard; " + esc(fmt(f.unk)) + " arkivverk har ukjend tilknyting.",
-      "<strong>Språk og samandrag:</strong> " + esc(f.pctEn) + " % av verka er på engelsk. " + esc(f.pctAbs) + " % har samandrag. " + esc(fmt(f.nPdf)) + " har ei kontrollert open PDF-lenkje.",
+      "<strong>Språk og samandrag:</strong> " + esc(f.pctEn) + " % av verka er på engelsk. " + esc(f.pctAbs) + " % har samandrag. " + esc(fmt(f.nPdf)) + " har ei kontrollert open PDF-lenkje.",
       "<strong>Manglar:</strong> Fulltekst vert ikkje publisert her. Arkiva er ujamne (Finland har ingen arkivverk), arkivverk har ingen sitattal, og bøker utan open adresse finst berre som referanse.",
     ];
   }
 
   function langNote(c) {
     const f = figures(c);
-    const lead = f.enWord ? f.enWord + " verk er på engelsk." : f.pctEn + " % av verka er på engelsk.";
+    const lead = f.enWord ? f.enWord + " verk er på engelsk." : f.pctEn + " % av verka er på engelsk.";
     return lead + " Søk gjerne på norsk; for beste treff på tvers av språk, slå på språkmodell.";
   }
 
@@ -61,8 +61,8 @@
   const dateOnly = (s) => (s ? String(s).slice(0, 10) : "");
   const CC = { NO: "Noreg", SE: "Sverige", DK: "Danmark", FI: "Finland", IS: "Island" };
   const LANGN = { e: "Engelsk", b: "Bokmål", n: "Nynorsk", d: "Dansk", s: "Svensk", f: "Finsk", o: "Anna", u: "Ukjend" };
-  const SYSTEMS = [["lexical", "Ordsøk"], ["semantic", "Meining"], ["fused", "Samla (med språkmodell)"], ["fallback", "Reservemodus (ord og ordliste)"]];
-  const GROUPS = [["all", "Alle"], ["known-item", "Kjent verk"], ["topical-en", "Emne, engelsk"], ["cross-lingual", "Tvers av språk"], ["dev", "dev"], ["test", "test"]];
+  const SYSTEMS = [["lexical", "Ordsøk"], ["semantic", "Meining"], ["fused", "Med språkmodell"], ["fallback", "Utan språkmodell"]];
+  const GROUPS = [["all", "Alle"], ["known-item", "Kjent verk"], ["topical-en", "Emne, engelsk"], ["cross-lingual", "Tvers av språk"]];
 
   function qualityHtml(q) {
     if (!q || !q.metrics) return "<p>Målt søkjekvalitet er ikkje tilgjengeleg no.</p>";
@@ -71,24 +71,24 @@
       return table(["System"].concat(GROUPS.map((g) => g[1])), SYSTEMS.map(([k, name]) => [name].concat(GROUPS.map(([g]) => {
         const v = m[k] && m[k][g];
         return typeof v === "number" ? v.toFixed(2).replace(".", ",") : "–";
-      }))));
+      }))), "om-q");
     };
     const cav = (q.caveats || []).map((c) => "<li>" + esc(c) + "</li>").join("");
     /* Kva tala tyder for ein vanleg vitjar (utan språkmodell). Alle tal vert lesne frå fila. */
     const val = (key, sys, g) => { const v = q.metrics[key] && q.metrics[key][sys] && q.metrics[key][sys][g]; return typeof v === "number" ? v : null; };
-    const p = (v) => (v == null ? "–" : Math.round(v * 100) + " %");
+    const p = (v) => (v == null ? "–" : Math.round(v * 100) + " %");
     const d2 = (v) => (v == null ? "–" : v.toFixed(2).replace(".", ","));
     const plain = val("success_at_10", "fallback", "all") == null ? "" :
       "<div class=\"om-plain\"><h4>I kva grad kan du stole på søket?</h4><p>Utan språkmodell, som er standard, fann søket minst eitt relevant verk blant dei ti første i " + esc(p(val("success_at_10", "fallback", "all"))) +
       " av testspørjingane. Når du leitar etter eitt enkelt verk du hugsar med eigne ord, er delen " + esc(p(val("success_at_10", "fallback", "known-item"))) +
       " (emnesøk på engelsk: " + esc(p(val("success_at_10", "fallback", "topical-en"))) + "). Med språkmodell er tala " + esc(p(val("success_at_10", "fused", "all"))) + " og " + esc(p(val("success_at_10", "fused", "known-item"))) +
-      ". Samla søk er svakare enn reint meiningssøk for kjende verk (recall@10 " + esc(d2(val("recall_at_10", "fused", "known-item"))) + " mot " + esc(d2(val("recall_at_10", "semantic", "known-item"))) + ").</p>" +
-      "<p>Tala er rettleiing, ikkje garanti: søkereglane vart justerte mot ein tredel av testspørjingane (dev), relevans er vurdert av ein språkmodell ut frå dei same systema, og det er få spørjingar. Prøv fleire ord og både norsk og engelsk dersom du ikkje finn det du leitar etter, og bruk «Liknande» frå eit verk som passar.</p></div>";
-    return "<p>" + esc(fmt(q.n_queries)) + " testspørjingar" + (q.model ? ", modell " + esc(q.model) : "") + ". Relevans er vurdert av ein språkmodell, ikkje av ein domeneekspert. Tala er lesne frå fila <code>search_quality.json</code>.</p>" +
+      ". For kjende verk er søk med språkmodell svakare enn reint meiningssøk (del av relevante verk i topp ti: " + esc(d2(val("recall_at_10", "fused", "known-item"))) + " mot " + esc(d2(val("recall_at_10", "semantic", "known-item"))) + ").</p>" +
+      "<p>Tala er rettleiing, ikkje garanti: søkereglane vart justerte mot ein tredel av testspørjingane, relevans er vurdert av ein språkmodell ut frå dei same systema, og det er få spørjingar. Prøv fleire ord og både norsk og engelsk dersom du ikkje finn det du leitar etter, og bruk «Liknande» frå eit verk som passar.</p></div>";
+    return "<p>" + esc(fmt(q.n_queries)) + " testspørjingar" + (q.model ? ", modell " + esc(q.model) : "") + ". Relevans er vurdert av ein språkmodell, ikkje av ein domeneekspert.</p>" +
       plain +
-      "<h4>Del av relevante verk i topp 10 (recall@10)</h4>" + one("recall_at_10") +
-      "<h4>Del spørjingar med minst eitt relevant verk i topp 10 (success@10)</h4>" + one("success_at_10") +
-      (cav ? "<h4>Avgrensingar</h4><ul class=\"plain\">" + cav + "</ul>" : "");
+      "<h4>Del av relevante verk i topp 10</h4>" + one("recall_at_10") +
+      "<h4>Del spørjingar med minst eitt relevant verk i topp 10</h4>" + one("success_at_10") +
+      (cav ? "<details class=\"om-tek\"><summary>Avgrensingar i målinga (tekniske)</summary><ul class=\"plain\">" + cav + "</ul></details>" : "");
   }
 
   function glossaryHtml(g) {
@@ -114,7 +114,6 @@
     secs.push("<section class=\"om-sec\"><h3>Kva som er med</h3>" +
       "<p>" + esc(fmt(f.total)) + " verk om design og designforsking" + (f.y0 && f.y1 ? ", " + esc(f.y0) + "–" + esc(f.y1) : "") + ". To lag: " + esc(fmt(f.openalex)) + " frå OpenAlex og " + esc(fmt(f.nordic)) + " frå nordiske arkiv.</p>" +
       table(["Kjelde", "Verk"], sources.map((s) => [s.name, fmt(s.n)])) +
-      (Object.keys(countries).length ? table(["Land", "OpenAlex", "Arkiv"], Object.keys(countries).map((k) => [CC[k] || k, fmt(countries[k].openalex), fmt(countries[k].nordic)])) : "") +
       "<p class=\"om-dates\">OpenAlex-uttrekk: " + esc(dateOnly(a.openalex_generated_at) || "ukjend") + ". Søkedata bygd: " + esc(dateOnly(m.built || a.built) || "ukjend") + ".</p></section>");
 
     secs.push("<section class=\"om-sec\"><h3>Korleis verk vart valde, og kva det betyr</h3><ul class=\"plain\">" +

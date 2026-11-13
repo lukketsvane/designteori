@@ -7,8 +7,7 @@
   const { esc, fmt } = U;
 
   const STEP = 50;
-  const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#ec4899", "#84cc16", "#f97316", "#6366f1"];
-  const CC_COLORS = { NO: "#3b82f6", SE: "#eab308", DK: "#ef4444", FI: "#06b6d4", IS: "#a855f7" };
+  const COUNTRY_NAMES = { NO: "Noreg", SE: "Sverige", DK: "Danmark", FI: "Finland", IS: "Island", FO: "Færøyane", GL: "Grønland" };
   const NORDIC_CC = new Set(["NO", "SE", "DK", "FI", "IS", "FO", "GL"]);
   const LS = { model: "designteori.modell", start: "designteori.start", list: "designteori.leseliste.v1" };
   const ISO = { e: "en", b: "nb", n: "nn", d: "da", s: "sv", f: "fi", o: "", u: "" };
@@ -26,7 +25,6 @@
     expandedId: null, openAbs: new Set(), reading: [], peopleAll: false, startOpen: true, filterOpen: false,
     embed: null, modelState: "av", modelMsg: "", modelProgress: 0, modelPanelOpen: false, encTimer: null, encKey: "", encPending: false,
     canon: null, authors: null, citSub: "internal", teLoaded: false,
-    clusterFilter: -1, zoom: 1, panX: 0, panY: 0, semMap: null,
   };
 
   const $ = (id) => document.getElementById(id);
@@ -100,7 +98,6 @@
     $("stWorks").textContent = fmt(ov.total_searchable_works ?? S.works.length);
     if (S.metaOK) $("stPdfs").textContent = fmt(S.counts.pdf_verified_total ?? ((S.counts.acc || {}).h + (S.counts.acc || {}).v));
     else { $("stPdfs").textContent = fmt(ov.repo_pdf_files ?? S.works.filter((w) => w.pdf).length); document.querySelector("#metricPdfBtn .label").textContent = "Fulltekst-PDF i arkivet"; }
-    $("mapTotal").textContent = fmt(S.works.length);
 
     const stored = store.get(LS.start);
     S.startOpen = stored === "skjult" ? false : stored === "open" ? true : !narrow();
@@ -111,7 +108,6 @@
     applyStateToUi();
     showTab(S.st.tab, true);
     runSearch();
-    renderAnalysis();
     renderModelUi();
     scheduleT1();
     if (S.st.q.trim()) startT1(true);
@@ -290,7 +286,7 @@
     if (!S.modelPanelOpen) return;
     const warn = narrow() || lowMem() ? " Stor nedlasting; best på skrivebord." : "";
     if (st === "lastar") {
-      panel.innerHTML = `<p>Lastar språkmodellen. Dette kan ta fleire minutt første gong.</p><p><progress id="modelProg" max="1" value="${esc(S.modelProgress)}"></progress> <span id="modelProgTxt">${Math.round(S.modelProgress * 100)} %</span></p><button type="button" class="act act-block" data-model="cancel">Avbryt</button>`;
+      panel.innerHTML = `<p>Lastar språkmodellen. Dette kan ta fleire minutt første gong.</p><p><progress id="modelProg" max="1" value="${esc(S.modelProgress)}"></progress> <span id="modelProgTxt">${Math.round(S.modelProgress * 100)} %</span></p><button type="button" class="act act-block" data-model="cancel">Avbryt</button>`;
     } else if (st === "klar") {
       panel.innerHTML = `<p>Språkmodellen er på. Søk gir treff etter ord og etter meining, òg på tvers av språk. Kvart søk kan ta nokre sekund.</p><button type="button" class="act act-block" data-model="off">Slå av</button> <button type="button" class="act act-block" data-model="close">Lukk</button>`;
     } else {
@@ -551,7 +547,6 @@
   function renderChips() {
     const st = S.st, c = [];
     const chip = (key, text) => c.push(`<button type="button" class="chip" data-clear="${esc(key)}" aria-label="Fjern: ${esc(text)}">${esc(text)} <span aria-hidden="true">×</span></button>`);
-    if (st.sim) { const w = S.byId.get(st.sim); chip("sim", "Liknande: " + (w ? w.title : st.sim)); }
     if (st.yr && (st.yr[0] || st.yr[1])) chip("yr", `År: ${st.yr[0] || "…"}–${st.yr[1] || "…"}`);
     if (st.kind) chip("kind", "Type: " + $("kindSel").querySelector(`option[value="${st.kind}"]`).textContent);
     if (st.lang) chip("lang", "Språk: " + $("langSel").querySelector(`option[value="${st.lang}"]`).textContent);
@@ -615,16 +610,16 @@
     if (au) sub.push(au);
     if (w.venue || w.source) sub.push(w.venue || w.source);
     if (typeof w.citations === "number" && w.citations > 0) sub.push(`${fmt(w.citations)} sit.`);
-    if (o.pct != null) sub.push(`likskap ${o.pct} %`);
+    if (o.pct != null) sub.push(`likskap ${o.pct} %`);
     let primary = U.accessLinkHtml(info);
     if (!primary && code === "0") {
       const pl = U.publisherLink(w, item);
       if (pl) primary = `<a class="act act-link acc-0" href="${esc(pl.href)}" target="_blank" rel="noopener noreferrer">${esc(pl.label)}</a>`;
     }
     const fl = U.flagInfo(S.meta.flag[i]);
-    const tags = [U.accessTagHtml(info), fl ? `<span class="tag tag-flag" title="${esc(fl.help)}">${esc(fl.label)}</span>` : "", o.pinned ? '<span class="tag tag-pin">Utgangsverk</span>' : ""].filter(Boolean).join(" ");
+    const tags = [U.accessTagHtml(info), fl ? `<span class="tag tag-flag" title="${esc(fl.help)}">${esc(fl.label)}</span>` : ""].filter(Boolean).join(" ");
     const teaser = !absOpen && o.teaser && !S.noAbs ? `<p class="teaser" data-teaser="${esc(id)}">${teaserHtml(i)}</p>` : "";
-    const sims = S.metaOK && S.meta.similar && !o.pinned ? `<button type="button" class="act" data-sim="${esc(id)}">Liknande</button>` : "";
+    const sims = S.metaOK && S.meta.similar && !o.pinned && !detail ? `<button type="button" class="act" data-sim="${esc(id)}">Liknande</button>` : "";
     const absBtn = S.noAbs ? "" : `<button type="button" class="act" data-abs="${esc(id)}" aria-expanded="${absOpen}">Samandrag</button>`;
     return `<article class="item${o.pinned ? " item-pinned" : ""}" data-id="${esc(id)}">
       <div class="meta-col">${esc(w.year || "")}${cc ? `<br>${esc(cc)}` : ""}</div>
@@ -671,18 +666,17 @@
     const info = accInfo(i, w);
     const links = [];
     const doi = U.doiHref(w);
-    if (doi && code !== "d") links.push(`<a class="act act-block" href="${esc(doi)}" target="_blank" rel="noopener noreferrer">Utgjevarside (DOI)</a>`);
+    if (doi && code !== "d" && code !== "0") links.push(`<a class="act act-block" href="${esc(doi)}" target="_blank" rel="noopener noreferrer">Utgjevarside</a>`);
     const src = U.safeHref(w.source_url);
     if (src && src !== info.href) links.push(`<a class="act act-block" href="${esc(src)}" target="_blank" rel="noopener noreferrer">Kjelde i arkivet</a>`);
-    const inList = S.reading.includes(id);
-    const buttons = `<button type="button" class="act act-block" data-copyref="${esc(id)}">Kopier som referanse</button><button type="button" class="act act-block" data-copylink="${esc(id)}">Kopier lenkje til verket</button><button type="button" class="act act-block" data-rl="${esc(id)}" aria-pressed="${inList}">${inList ? "✓ I lista" : "+ Leseliste"}</button>`;
+    const buttons = `<button type="button" class="act act-block" data-copylink="${esc(id)}">Kopier lenkje til verket</button>`;
 
     let simBox = "";
     if (S.metaOK && S.meta.similar) {
       const nb = neighborsOf(i, 6);
       if (S.simFailed) simBox = `<p class="subline">Liknande verk er ikkje tilgjengelege no.</p>`;
       else if (!nb) { ensureSim().then(() => refreshRow(id)); simBox = `<p class="subline">Lastar liknande verk…</p>`; }
-      else simBox = `<ul class="plain detail-list">${nb.map(({ d, pct }) => { const sw = S.works[d]; return `<li><a href="#verk/${esc(encodeURIComponent(sw.id))}" data-jump="${esc(sw.id)}">${esc(sw.year ? sw.year + " · " : "")}${esc(sw.title)}</a> <span class="score" title="${esc(U.SIM_NOTE)}">${pct} %</span></li>`; }).join("")}</ul><button type="button" class="act act-block" data-sim="${esc(id)}">Vis alle 20</button><p class="subline">${esc(U.SIM_NOTE)}.</p>`;
+      else simBox = `<ul class="plain detail-list">${nb.map(({ d, pct }) => { const sw = S.works[d]; return `<li><a href="#verk/${esc(encodeURIComponent(sw.id))}" data-jump="${esc(sw.id)}">${esc(sw.year ? sw.year + " · " : "")}${esc(sw.title)}</a> <span class="score">${pct} %</span></li>`; }).join("")}</ul><button type="button" class="act act-block" data-sim="${esc(id)}">Vis alle 20</button><p class="subline">${esc(U.SIM_NOTE)}.</p>`;
     }
 
     let cit = "";
@@ -691,9 +685,10 @@
       const ctx = S.ctx[id] || {};
       const citedBy = (ctx.cited_by || []).map((x) => S.byId.get(x)).filter(Boolean).slice(0, 6);
       const cites = (ctx.cites || []).map((x) => S.byId.get(x)).filter(Boolean).slice(0, 6);
-      const li = (lbl, cw) => `<li>${lbl} <a href="#verk/${esc(encodeURIComponent(cw.id))}" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></li>`;
+      const li = (cw) => `<li><a href="#verk/${esc(encodeURIComponent(cw.id))}" data-jump="${esc(cw.id)}">${esc(cw.year ? cw.year + " · " : "")}${esc(cw.title)}</a></li>`;
+      const grp = (lbl, arr) => (arr.length ? `<p class="subline">${lbl}</p><ul class="plain detail-list">${arr.map((c) => li(c)).join("")}</ul>` : "");
       cit = `<h4>Siteringar i korpuset (${(ctx.cited_by || []).length} inn, ${(ctx.cites || []).length} ut)</h4>` +
-        (citedBy.length || cites.length ? `<ul class="plain detail-list">${citedBy.map((c) => li("Sitert av:", c)).join("")}${cites.map((c) => li("Siterer:", c)).join("")}</ul>` : `<p class="subline">Ingen siteringar i korpuset.</p>`);
+        (citedBy.length || cites.length ? grp("Sitert av", citedBy) + grp("Siterer", cites) : `<p class="subline">Ingen siteringar i korpuset.</p>`);
     }
 
     return `<div class="inline-detail">
@@ -932,7 +927,7 @@
     S.st.tab = t;
     if (!noHash) { const h = U.buildHash(S.st); S.lastHash = h; history.replaceState(null, "", h); }
     if (t === "siteringar") renderCitations();
-    if (t === "kart") ensureMap();
+    if (t === "analyse") renderAnalysis();
     if (t === "om") loadAbout();
     if (t === "teorielement") loadTeIntro();
     if (changed) window.scrollTo(0, 0);
@@ -973,8 +968,8 @@
 
     if (S.citSub === "internal") {
       const rows = (S.analysis?.citations?.top_internally_cited || []).filter((r) => match(`${r.title} ${(r.authors || []).join(" ")}`));
-      box.innerHTML = rows.map((r) => {
-        const sub = [(r.authors || []).join(", "), `${fmt(r.internal_citations)} nordiske sit.`, `${fmt(r.global_citations)} globalt`].filter(Boolean).join(" · ");
+      box.innerHTML = `<p class="subline">Tal: sitat frå Norden av sitat totalt.</p>` + rows.map((r) => {
+        const sub = [(r.authors || []).join(", "), `${fmt(r.internal_citations)} av ${fmt(r.global_citations)}`].filter(Boolean).join(" · ");
         return `
           <article class="item">
             <div class="meta-col">${esc(r.year || "")}${(r.countries || []).length ? `<br>${esc(r.countries.join(", "))}` : ""}</div>
@@ -991,8 +986,8 @@
     if (S.citSub === "canon") {
       if (!S.canon) S.canon = (await jget("data/cited_canon.json", { items: [] })).items || [];
       const rows = S.canon.filter((r) => match(`${r.title} ${r.authors}`)).slice(0, 150);
-      box.innerHTML = rows.map((r) => {
-        const sub = [r.authors, `Sitert ${fmt(r.nordic_citing_count)} gonger frå Norden`, `${fmt(r.global_citations)} globalt`].filter(Boolean).join(" · ");
+      box.innerHTML = `<p class="subline">Tal: sitat frå Norden av sitat totalt.</p>` + rows.map((r) => {
+        const sub = [r.authors, `${fmt(r.nordic_citing_count)} av ${fmt(r.global_citations)}`].filter(Boolean).join(" · ");
         const doiHref = U.doiHref({ doi: r.doi });
         return `
           <article class="item">
@@ -1001,7 +996,7 @@
               <h3 class="title">${esc(r.title)}</h3>
               <p class="subline">${esc(sub)}</p>
             </div>
-            <div class="actions">${doiHref ? `<a class="act act-link acc-d" href="${esc(doiHref)}" target="_blank" rel="noopener noreferrer">DOI</a>` : ""}</div>
+            <div class="actions">${doiHref ? `<a class="act act-link acc-d" href="${esc(doiHref)}" target="_blank" rel="noopener noreferrer">Utgjevarside</a>` : ""}</div>
           </article>`;
       }).join("");
       return;
@@ -1032,116 +1027,63 @@
           <div class="meta-col">${esc(i.country || "")}</div>
           <div class="main">
             <h3 class="title"><button class="title-btn" type="button" data-inst="${esc(i.id)}">${esc(i.name)}</button></h3>
-            <p class="subline">${fmt(i.works)} designteoretiske verk</p>
+            <p class="subline">${fmt(i.works)} verk</p>
           </div>
         </article>`).join("");
     }
   }
 
-  /* ---------- kart ---------- */
-  async function ensureMap() {
-    if (!S.semMap) {
-      S.semMap = await jget("data/semantic_map.json", { clusters: [], points: [] });
-      $("mapShown").textContent = fmt((S.semMap.points || []).length);
-      renderLegend();
-    }
-    requestAnimationFrame(drawMap);
-  }
-  function renderLegend() {
-    const cs = S.semMap?.clusters || [];
-    const total = S.semMap?.points?.length || 0;
-    $("mapLegend").innerHTML =
-      `<div class="cluster-row ${S.clusterFilter === -1 ? "active" : ""}" data-cl="-1"><span><span class="swatch" style="background:var(--dim);"></span>Alle klynger</span><span>${fmt(total)}</span></div>` +
-      cs.map((c, i) => `<div class="cluster-row ${S.clusterFilter === c.id ? "active" : ""}" data-cl="${esc(c.id)}"><span><span class="swatch" style="background:${COLORS[i % COLORS.length]};"></span>${esc(c.label)}</span><span>${fmt(c.size || "")}</span></div>`).join("");
-  }
-  function drawMap() {
-    const cv = $("semCanvas");
-    if (!cv || !S.semMap) return;
-    cv.style.touchAction = S.zoom > 1.05 ? "none" : "pan-y pinch-zoom";
-    const dpr = window.devicePixelRatio || 1;
-    const rect = cv.getBoundingClientRect();
-    const W = Math.max(280, rect.width), H = rect.height || 340;
-    cv.width = W * dpr; cv.height = H * dpr;
-    const ctx = cv.getContext("2d");
-    ctx.scale(dpr, dpr);
-    const css = getComputedStyle(document.documentElement);
-    const bg = css.getPropertyValue("--bg").trim() || "#fff";
-    const dim = css.getPropertyValue("--dim").trim() || "#767676";
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-    const mode = $("mapMode").value;
-    const pts = S.semMap.points || [];
-    const cx = W / 2 + S.panX, cy = H / 2 + S.panY, sc = Math.min(W, H) * 0.36 * S.zoom;
-    for (const p of pts) {
-      if (S.clusterFilter !== -1 && p.c !== S.clusterFilter) continue;
-      const sx = cx + p.x * sc, sy = cy - p.y * sc;
-      p._sx = sx; p._sy = sy;
-      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
-      ctx.fillStyle = mode === "country" ? (CC_COLORS[p.cc] || dim) : mode === "pdf" ? (p.pdf ? css.getPropertyValue("--fg").trim() : dim) : COLORS[p.c % COLORS.length];
-      ctx.globalAlpha = p.pdf ? 0.92 : 0.65;
-      ctx.beginPath();
-      ctx.arc(sx, sy, p.pdf ? 2.9 : 2.1, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-  }
-  function pickPoint(mx, my) {
-    let best = null, bd = 196;
-    for (const p of S.semMap?.points || []) {
-      if (S.clusterFilter !== -1 && p.c !== S.clusterFilter) continue;
-      const d2 = (p._sx - mx) ** 2 + (p._sy - my) ** 2;
-      if (d2 < bd) { bd = d2; best = p; }
-    }
-    if (best) {
-      const w = S.byId.get(best.id);
-      const yr = w?.year ? `${w.year} · ` : "";
-      const au = (w?.authors || []).slice(0, 3).join(", ");
-      const pdf = w?.pdf ? U.safeHref(w.pdf) : "";
-      $("mapSelectedBar").innerHTML = `<strong>${esc(yr)}${esc(w?.title || best.id)}</strong>${au ? ` · ${esc(au)}` : ""} · <a href="#verk/${esc(encodeURIComponent(best.id))}" data-jump="${esc(best.id)}">Opne i katalog</a>${pdf ? ` · <a href="${esc(pdf)}" target="_blank" rel="noopener noreferrer">PDF</a>` : ""}`;
-    }
-  }
-
   /* ---------- analyse ---------- */
-  function renderAnalysis() {
+  /* Klyngene i analysen er dei same åtte som på kartet: namn og tal frå kart.json, PDF-ane talde i katalogen. */
+  async function kartClusters() {
+    const d = await jget(`data/klynger/kart.json?v=${Math.round(Date.now() / 3600e3)}`, null);
+    if (!d || !Array.isArray(d.klynger) || !Array.isArray(d.ids) || !Array.isArray(d.k)) return [];
+    const pdf = new Map();
+    d.ids.forEach((id, i) => { const w = S.byId.get(id); if (w && w.pdf) pdf.set(d.k[i], (pdf.get(d.k[i]) || 0) + 1); });
+    return d.klynger.map((c) => ({ name: c.namn, n: c.n, pdfs: pdf.get(c.id) || 0 })).sort((a, b) => b.n - a.n);
+  }
+  async function renderAnalysis() {
     const a = S.analysis;
     if (!a) return;
     const decs = a.decades || [];
     const maxD = Math.max(1, ...decs.map((d) => d.total + (d.nordic_archives || 0)));
     const cs = a.countries || [];
-    const cls = a.semantic_clusters || [];
+    const cls = await kartClusters();
     const vens = (a.top_venues || []).slice(0, 15);
     $("anaRoot").innerHTML = `
       <div class="ana-grid">
         <div class="ana-sec">
-          <h3>Publikasjonar og PDF per tiår</h3>
+          <h3>Verk per tiår</h3>
+          <p class="subline">I parentes: verk med PDF i arkivet.</p>
           ${decs.map((d) => {
             const tot = d.total + (d.nordic_archives || 0);
             return `<div class="bar-line"><span>${esc(d.decade)}</span><div class="bar-bg"><div class="bar-a" style="width:${((tot / maxD) * 100).toFixed(1)}%"></div><div class="bar-b" style="width:${((d.pdfs / maxD) * 100).toFixed(1)}%"></div></div><span class="r">${fmt(tot)} (${fmt(d.pdfs)})</span></div>`;
           }).join("")}
         </div>
         <div class="ana-sec">
-          <h3>Landfordeling</h3>
+          <h3>Land</h3>
+          <p class="subline">Open: del av OpenAlex-verka med open tilgang.</p>
           <div class="table-wrap">
             <table class="tbl-clean">
-              <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">OA</th></tr></thead>
-              <tbody>${cs.map((c) => `<tr><td><strong>${esc(c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
+              <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">Open</th></tr></thead>
+              <tbody>${cs.map((c) => `<tr><td><strong>${esc(COUNTRY_NAMES[c.country] || c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)} %</td></tr>`).join("")}</tbody>
             </table>
           </div>
         </div>
-        <div class="ana-sec">
-          <h3>Tematiske klynger</h3>
+        ${cls.length ? `<div class="ana-sec">
+          <h3>Klynger</h3>
           <div class="table-wrap">
             <table class="tbl-clean">
               <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
-              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.label)}</strong><div style="font-size:11.5px;color:var(--dim);">${esc((c.keywords || []).slice(0, 5).join(", "))}</div></td><td class="r">${fmt(c.core_works)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
+              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.name)}</strong></td><td class="r">${fmt(c.n)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
             </table>
           </div>
-        </div>
+        </div>` : ""}
         <div class="ana-sec">
           <h3>Tidsskrift og konferansar</h3>
           <div class="table-wrap">
             <table class="tbl-clean">
-              <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sit.</th></tr></thead>
+              <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sitat</th></tr></thead>
               <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.pdfs)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
             </table>
           </div>
@@ -1215,69 +1157,6 @@
       renderCitations();
     }));
     $("citQ").addEventListener("input", renderCitations);
-
-    $("mapMode").addEventListener("change", drawMap);
-    $("mapReset").addEventListener("click", () => { S.zoom = 1; S.panX = 0; S.panY = 0; drawMap(); });
-    $("mapLegend").addEventListener("click", (e) => {
-      const el = e.target.closest("[data-cl]");
-      if (!el) return;
-      S.clusterFilter = parseInt(el.dataset.cl, 10);
-      renderLegend();
-      drawMap();
-    });
-
-    const cv = $("semCanvas");
-    window.addEventListener("resize", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if ($("view-kart").classList.contains("active")) drawMap(); });
-    cv.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      S.zoom = Math.min(12, Math.max(0.8, S.zoom * (e.deltaY < 0 ? 1.18 : 0.85)));
-      drawMap();
-    }, { passive: false });
-    let drag = false, lx = 0, ly = 0, moved = false, pinchDist = 0;
-    cv.addEventListener("mousedown", (e) => { drag = true; moved = false; lx = e.clientX; ly = e.clientY; });
-    window.addEventListener("mouseup", () => { drag = false; });
-    cv.addEventListener("mousemove", (e) => {
-      if (!drag) return;
-      const dx = e.clientX - lx, dy = e.clientY - ly;
-      if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
-      S.panX += dx; S.panY += dy; lx = e.clientX; ly = e.clientY; drawMap();
-    });
-    cv.addEventListener("click", (e) => {
-      if (moved) return;
-      const r = cv.getBoundingClientRect();
-      pickPoint(e.clientX - r.left, e.clientY - r.top);
-    });
-    cv.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 1) {
-        moved = false; lx = e.touches[0].clientX; ly = e.touches[0].clientY; drag = S.zoom > 1.05;
-      } else if (e.touches.length === 2) {
-        drag = false; moved = true;
-        pinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-      }
-    }, { passive: true });
-    cv.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 2 && pinchDist > 0) {
-        e.preventDefault();
-        const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-        S.zoom = Math.min(12, Math.max(0.8, S.zoom * (d / pinchDist)));
-        pinchDist = d; drawMap();
-      } else if (e.touches.length === 1) {
-        const dx = e.touches[0].clientX - lx, dy = e.touches[0].clientY - ly;
-        if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
-        if (drag && S.zoom > 1.05) {
-          e.preventDefault();
-          S.panX += dx; S.panY += dy; lx = e.touches[0].clientX; ly = e.touches[0].clientY; drawMap();
-        }
-      }
-    }, { passive: false });
-    cv.addEventListener("touchend", (e) => {
-      if (!moved && e.changedTouches.length === 1 && e.touches.length === 0) {
-        const r = cv.getBoundingClientRect();
-        pickPoint(e.changedTouches[0].clientX - r.left, e.changedTouches[0].clientY - r.top);
-      }
-      drag = false; pinchDist = 0;
-    });
 
     document.body.addEventListener("click", onBodyClick);
   }

@@ -152,9 +152,9 @@
   /* Utgjevarlenkje for verk utan samandrag (endring 19): DOI, så adressa frå access.json, så OpenAlex. */
   function publisherLink(w, item) {
     let h = doiHref(w);
-    if (h) return { href: h, label: "Opne hos utgjevaren" };
+    if (h) return { href: h, label: "Utgjevarside" };
     h = safeHref(item ? item[1] : "") || safeHref(w && (w.oa_url || w.source_url));
-    if (h) return { href: h, label: "Opne hos utgjevaren" };
+    if (h) return { href: h, label: "Utgjevarside" };
     h = openAlexHref(w);
     if (h) return { href: h, label: "Opne i OpenAlex" };
     return null;
@@ -203,7 +203,10 @@
   function abstractHtml(entry, opts) {
     opts = opts || {};
     if (!entry) return "";
-    const body = highlight(entry.t, opts.terms, opts.fm, opts.prefix);
+    /* Nokre samandrag frå forlag kjem som «"tekst"--»: sitatteikna og strekane høyrer ikkje til teksten. */
+    let txt = String(entry.t == null ? "" : entry.t).trim();
+    if (/^"/.test(txt) && /"\s*--\s*$/.test(txt)) txt = txt.slice(1).replace(/"\s*--\s*$/, "");
+    const body = highlight(txt, opts.terms, opts.fm, opts.prefix);
     let src;
     if (entry.s === "x") {
       const u = safeHref(entry.u);

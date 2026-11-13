@@ -1,5 +1,5 @@
 /* KART - semantisk kart over korpuset: klynger, underklynger, søk i titlar og fargeval.
-   Tek over #view-kart når skriptet er lasta etter app.js. Det gamle kartet blir gøymt, ikkje fjerna.
+   Fyller #view-kart når skriptet er lasta.
    Klassisk skript (UMD-hale): window.DTKart i nettlesaren, module.exports i node (reine funksjonar). */
 (function () {
   "use strict";
@@ -273,7 +273,8 @@
   function legendHead(d, om) {
     const t = (d && d.tal) || {}, cl = (d && d.klynger) || [], n = cl.length;
     const str = (k) => (om && typeof om[k] === "string" && om[k].trim() ? om[k].trim() : "");
-    const hedge = str("forbehald") || cap(talord(n)) + " grupper som ein algoritme har funne. Feltet er meir eit landskap enn øyar, så fargane viser tyngdepunkt, ikkje skarpe skilje.";
+    /* Berre første setning: at grensene er mjuke står alt i lina over kartet. */
+    const hedge = (str("forbehald") || cap(talord(n)) + " grupper som ein algoritme har funne.").split(/(?<=\.)\s+/)[0].replace(/^(\S+) grupper/, "$1 klynger");
     let lang = str("sprak");
     if (!lang && Number.isInteger(t.nordisk_sprak_klynge) && cl[t.nordisk_sprak_klynge]) {
       lang = "Verk på nordiske språk samlar seg i klynga «" + shortName(cl[t.nordisk_sprak_klynge].namn) + "», så der speler språk like mykje inn som tema.";
@@ -386,7 +387,6 @@
   function boot() {
     const sec = document.getElementById("view-kart");
     if (!sec || sec.querySelector(".kart")) return;
-    sec.classList.add("kart-ny");
     const root = document.createElement("div");
     root.className = "kart";
     root.innerHTML = TEMPLATE;
@@ -458,11 +458,9 @@
     }
     function fail() {
       K.failed = true;
-      el.line.textContent = "Det nye kartet kunne ikkje lastast. Last sida på nytt for å prøve igjen. Under ligg det gamle kartet.";
+      el.line.textContent = "Kartet kunne ikkje lastast. Last sida på nytt for å prøve igjen.";
       el.line.classList.add("kart-feil");
       for (const x of [el.frame, el.styring, el.lgHead, el.legend, el.clList, el.panel, el.om]) x.hidden = true;
-      sec.classList.remove("kart-ny");
-      try { window.dispatchEvent(new Event("resize")); } catch (e) { /* gamalt kart teiknar seg ved neste endring */ }
     }
 
     function setup(d, om) {
@@ -979,6 +977,9 @@
         ? legendHead(K.d, K.om)
         : "Farge etter " + MODE_LABEL[mode] + ". Vel ein farge for å framheve han." + (mode === "ar" || mode === "land" ? " Dei minste gruppene er teikna øvst." : "");
       renderMini();
+      /* Med ei klynge vald viser panelet klynga, og «Vis alle klynger» tek lista tilbake. */
+      const chosen = mode === "klynge" && K.sel >= 0;
+      el.lgHead.hidden = chosen; el.legend.hidden = chosen;
       el.legend.innerHTML = cats.map((c, i) => {
         if (!c || (!c.n && mode !== "klynge")) return "";
         const on = mode === "klynge" ? K.sel === i : K.cat === i;
@@ -1088,18 +1089,15 @@
         el.hint.textContent = "Vald: " + o.namn + ". Lukk det store kartet for å sjå detaljane.";
         return;
       }
-      if (o) {
-        el.hint.innerHTML = `Vald: ${esc(shortName(o.namn))}. <button type="button" class="kp-knapp" data-kd="1">Sjå detaljane rett under kartet</button>`;
-        return;
-      }
+      if (o) { el.hint.textContent = ""; return; }
       el.hint.textContent = fine.matches
         ? "Dra for å flytte. Klikk i kartet og rull, hald Ctrl og rull, eller dobbeltklikk for å zoome. Klikk på ein prikk for å sjå verket."
-        : "Knip for å zoome. Trykk på ein prikk for å sjå verket, eller på eit namn for å sjå klynga.";
+        : "Knip for å zoome. Trykk på ein prikk for å sjå verket.";
     }
     function renderOm(om) {
       if (!om || !Array.isArray(om.bolkar) || !om.bolkar.length) { el.om.hidden = true; return; }
       el.omText.innerHTML = (om.ingress ? `<p>${esc(om.ingress)}</p>` : "") +
-        om.bolkar.map((b) => `<h4>${esc(b && b.tittel)}</h4><p>${esc(b && b.tekst)}</p>`).join("");
+        om.bolkar.map((b) => `${b && b.tittel === "Korleis kartet er laga" ? "" : `<h4>${esc(b && b.tittel)}</h4>`}<p>${esc(b && b.tekst)}</p>`).join("");
       el.om.hidden = false;
     }
 
@@ -1175,7 +1173,7 @@
       let t = null;
       if (f.zone && f.attr) t = [...f.zone.querySelectorAll(`[${f.attr}]`)].find((x) => x.getAttribute(f.attr) === f.val && visible(x)) || null;
       /* Knappen finst ikkje lenger (til dømes «Vis alle klynger» i panelet): panelet om det står, elles klynga i lista. */
-      if (!t && f.zone === el.panel && visible(el.panel)) t = el.panel;
+      if (!t && (f.zone === el.panel || f.zone === el.legend) && visible(el.panel)) t = el.panel;
       if (!t) {
         const k = K.sel >= 0 ? K.sel : f.sel;
         const lists = [el.mini, el.legend, el.clList].filter(visible);
@@ -1337,8 +1335,8 @@
       if (lab && !mouse && !hitLabel(px, py, 0) && hitPoint(px, py, 6) >= 0) lab = null;
       if (lab) {
         hideTip();
-        if (lab.type === "k") { if (K.sel === lab.id && K.sub < 0) clearAll(); else select(lab.id, -1); }
-        else { const u = K.sb.get(lab.id); if (u) select(u.k, u.id); }
+        if (lab.type === "k") { if (K.sel === lab.id && K.sub < 0) clearAll(); else select(lab.id, -1, true); }
+        else { const u = K.sb.get(lab.id); if (u) select(u.k, u.id, true); }
         return;
       }
       /* Eit klikk festar boksen ved verket (som eit trykk på ein telefon); verket blir opna frå boksen eller med Enter.

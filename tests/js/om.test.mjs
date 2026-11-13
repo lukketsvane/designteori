@@ -30,7 +30,7 @@ test("språknotis: «Fire av fem» vert rekna frå meta.counts.lang", () => {
   assert.ok(Om.langNote(COUNTS).startsWith("Ni av ti verk er på engelsk."), Om.langNote(COUNTS)); // 92 % i dag, rekna frå talet
   assert.ok(Om.langNote(Object.assign({}, COUNTS, { lang: { e: 5146, b: 1286 } })).startsWith("Åtte av ti verk"));
   const half = Object.assign({}, COUNTS, { lang: { e: 3000, b: 3432 } });
-  assert.ok(/^\d+ % av verka er på engelsk\./.test(Om.langNote(half)));
+  assert.ok(/^\d+\u00a0% av verka er på engelsk\./.test(Om.langNote(half)));
 });
 
 test("om-fana: seksjonane og tabellane ligg i overflow-wrapper, tal frå fila", () => {

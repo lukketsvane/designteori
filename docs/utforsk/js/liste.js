@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=24";
-import * as T from "./tilstand.js?v=24";
-import * as data from "./data.js?v=24";
-import { hentSamandrag } from "./samandrag.js?v=24";
+import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=25";
+import * as T from "./tilstand.js?v=25";
+import * as data from "./data.js?v=25";
+import { hentSamandrag } from "./samandrag.js?v=25";
 
 const { S, D } = T;
 let api = null;
@@ -209,7 +209,7 @@ function teiknHandtak() {
   const ope = arkTilstand !== "peek";
   // the one place on a phone that says how many works are selected (the chip row does not repeat it)
   const tal = T.valt < D.n ? `${fmt(T.valt)} av ${fmt(D.n)} verk` : `${fmt(D.n)} verk`;
-  el.handtakTekst.textContent = S.verk ? `${tal} · eitt ope` : tal;
+  el.handtakTekst.textContent = tal;
   el.handtak.setAttribute("aria-label", ope ? "Gøym lista" : "Vis lista");
   el.handtak.setAttribute("aria-expanded", String(ope));
 }
@@ -339,12 +339,12 @@ function detaljHtml(i) {
       : `<p class="lenkenotat">Hentar lenke …</p>`;
   } else {
     const u = D.lenker.pdf[i];
-    if (st === 0 && u) lenkerHtml = `<a class="knapp primar" href="${esc(u)}" target="_blank" rel="noopener">Opne PDF</a><span class="lenkenotat">Open PDF, stadfest</span>`;
+    if (st === 0 && u) lenkerHtml = `<a class="knapp primar" href="${esc(u)}" target="_blank" rel="noopener">Opne PDF</a>`;
     else if (st === 1 && u) lenkerHtml = `<a class="knapp" href="${esc(u)}" target="_blank" rel="noopener">Opne lenke</a><span class="lenkenotat">Lenke frå metadata, ikkje stadfest at det er PDF</span>`;
-    else if (st === 2) lenkerHtml = `<span class="lenkenotat">Berre utgjevarside (DOI)</span>`;
+    else if (st === 2) lenkerHtml = "";
     else lenkerHtml = `<span class="lenkenotat">Inga lenke i dataa</span>`;
   }
-  const doi = D.lenker && D.lenker.doi[i] ? `<a class="knapp" href="https://doi.org/${esc(D.lenker.doi[i])}" target="_blank" rel="noopener">DOI</a>` : "";
+  const doi = D.lenker && D.lenker.doi[i] ? `<a class="knapp" href="https://doi.org/${esc(D.lenker.doi[i])}" target="_blank" rel="noopener">Utgjevarside</a>` : "";
   const kjelde = D.lenker && D.lenker.kjelde[i] ? D.lenker.kjelde[i] : "";
   const dubl = D.merk[i] & 4 ? " · Same verk finst òg under ei anna oppføring i korpuset (same PDF, DOI eller tittel)" : D.merk[i] & 1 ? " · Mogleg dublett" : "";
   const sitLinje = D.sit[i] >= 0 ? `Sitert ${fmt(D.sit[i])} gonger (OpenAlex)${dubl}` : `Arkivverk${kjelde ? ` frå ${esc(kjelde)}` : ""}, ikkje gjennomgått${dubl}`;
@@ -435,7 +435,7 @@ function fyllNaboar(i, ok = true) {
     html += `<li><button type="button" class="nabo" data-opne="${j}" aria-label="${esc(D.kol.tittel[j])}, ${esc(forf)} ${D.ar[j]}, likskap ${Math.round(c * 100)} prosent${["", ", open PDF", ", lenke", ", berre DOI"][st + 1] || ""}">
       <span class="nabo-tittel">${esc(kutt(D.kol.tittel[j], 90))}</span>
       <span class="nabo-meta">${esc(forf)} ${D.ar[j]}${merkeOrd ? ` <span class="merke ${merkeKl} lite" aria-hidden="true">${merkeOrd}</span>` : ""}</span>
-      <span class="likskap-rad" aria-hidden="true"><span class="likskap"><span style="width:${Math.round(c * 100)}%"></span></span><span class="likskap-tal">${Math.round(c * 100)} %</span></span></button></li>`;
+      <span class="likskap-rad" aria-hidden="true"><span class="likskap"><span style="width:${Math.round(c * 100)}%"></span></span><span class="likskap-tal">${Math.round(c * 100)} %</span></span></button></li>`;
   }
   html += `</ol><p class="dim nabo-merk">Likskap: kor nær tittel, kanal og emneord ligg (100 % = same). PDF: open og stadfest.</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
   b.innerHTML = html;

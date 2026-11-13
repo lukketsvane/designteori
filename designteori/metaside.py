@@ -22,8 +22,23 @@ PILOT_SECTION = "2.8 Teorielement i pilotane"
 PILOT_BULLET = "**Støtte oppgjeve i delane som er lesne.**"
 
 
+NB = " "
+ORD = (("utanfor scope", "utanfor utvalet"), ("held scope saman", "held utvalet saman"), ("scope-verk", "verk i utvalet"),
+       ("in_scope vart", "Utvalet vart"), ("scope-til-scope-referanse", "referanse innanfor utvalet"), ("frå scope til scope", "frå utvalet til utvalet"),
+       ("Scope vart", "Utvalet vart"), ("i scope", "i utvalet"), ("til scope", "til utvalet"), ("frå scope", "frå utvalet"),
+       ("den private cachen", "det private mellomlageret"))
+
+
+def norm(s: str) -> str:
+    """Uskiljeleg mellomrom i tusenskilje og før prosent, og nynorske ord for scope og cache."""
+    for a, b in ORD:
+        s = s.replace(a, b)
+    s = re.sub(r"(?<![\d,.])\d{1,3}(?: \d{3})+(?!\d)", lambda m: m.group(0).replace(" ", NB), s)
+    return re.sub(r"(?<=\d) %", NB + "%", s)
+
+
 def inline(s: str) -> str:
-    s = html.escape(s, quote=False)
+    s = html.escape(norm(s), quote=False)
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     s = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
@@ -126,35 +141,42 @@ PAGE = """<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Metaanalyse · designteori</title>
 <meta name="description" content="Kva dei registrerte verka i nordisk designforsking viser: populasjon, vekst, kanalar, siteringar, tema, omgrep, kunnskapsformer og teorielement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root{{--bg:#000;--fg:#e8e6e1;--dim:#9a978f;--line:#2b2a27;--acc:#e8e6e1;color-scheme:dark}}
-@media (prefers-color-scheme: light){{:root:not([data-theme="dark"]){{--bg:#fbfaf7;--fg:#1d1c1a;--dim:#6b6860;--line:#dedbd3;color-scheme:light}}}}
-*{{box-sizing:border-box}}
-body{{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,"Iowan Old Style","Times New Roman",serif}}
-main{{max-width:46rem;margin:0 auto;padding:1.4rem 16px 5rem}}
-a{{color:inherit;text-underline-offset:3px}}
-.topp{{display:flex;gap:1rem;flex-wrap:wrap;font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--dim)}}
-.topp a{{text-decoration:none}} .topp a:hover{{color:var(--fg)}}
-h1{{font-size:1.9rem;line-height:1.2;margin:1.6rem 0 .4rem;font-weight:500}}
-h2{{font-size:1.3rem;margin:2.6rem 0 .6rem;padding-top:.8rem;border-top:1px solid var(--line);font-weight:500}}
-h3{{font-size:1.05rem;margin:1.8rem 0 .4rem;font-weight:600}}
+:root{{--bg:#fff;--fg:#000;--dim:#767676;--line:#d2d2d2;--hair:#e8e8e8;--serif:"Literata",Charter,Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;color-scheme:light dark}}
+@media (prefers-color-scheme: dark){{:root{{--bg:#000;--fg:#fff;--dim:#7c7c7c;--line:#343434;--hair:#1c1c1c}}}}
+*{{box-sizing:border-box;-webkit-tap-highlight-color:transparent}}
+html{{-webkit-text-size-adjust:100%;background:var(--bg)}}
+body{{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.55 var(--serif);font-optical-sizing:auto;-webkit-font-smoothing:antialiased}}
+main{{max-width:44rem;margin:0 auto;padding:.4rem max(16px,4.5vw) 5rem}}
+a{{color:inherit;text-underline-offset:.16em;text-decoration-thickness:1px;text-decoration-color:var(--dim)}}
+a:hover{{text-decoration-color:var(--fg)}}
+.topp{{display:flex;gap:18px;flex-wrap:wrap;font:12px/1.4 var(--mono);letter-spacing:.02em;color:var(--dim)}}
+.topp a{{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}} .topp a:hover{{color:var(--fg)}}
+h1{{font-size:1.5rem;line-height:1.25;margin:.8rem 0 .4rem;font-weight:400}}
+h2{{font-size:1.2rem;line-height:1.3;margin:2.4rem 0 .6rem;padding-top:.8rem;border-top:1px solid var(--hair);font-weight:400}}
+h3{{font-size:1.02rem;margin:1.6rem 0 .4rem;font-weight:500}}
 .ingress{{color:var(--dim)}}
 p,li{{overflow-wrap:anywhere}}
 ul,ol{{padding-left:1.3em}} li{{margin:.45rem 0}}
-code{{font-size:.88em}}
-nav.toc{{margin:1.2rem 0;padding:.6rem 1rem;border:1px solid var(--line);border-radius:4px}}
-nav.toc ol{{margin:.3rem 0}} nav.toc a{{text-decoration:none}} nav.toc a:hover{{text-decoration:underline}}
-details.pilot{{border:1px solid var(--line);border-radius:4px;padding:.4rem 1rem;margin:.6rem 0}}
-details.pilot summary{{cursor:pointer;font:15px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--dim)}}
+code{{font:.86em var(--mono)}}
+nav.toc{{margin:1.2rem 0;padding:.4rem 1rem;border:1px solid var(--line);border-radius:4px}}
+nav.toc ol{{list-style:none;margin:0;padding:0}} nav.toc li{{margin:0}}
+nav.toc a{{display:block;padding:.55rem 0;text-decoration:none}} nav.toc a:hover{{text-decoration:underline}}
+details.pilot{{border:1px solid var(--line);border-radius:4px;padding:0 1rem;margin:.6rem 0}}
+details.pilot summary{{cursor:pointer;min-height:44px;display:flex;align-items:center;font:13px/1.5 var(--mono);color:var(--dim)}}
 .merk{{color:var(--dim);font-style:italic}}
 footer{{margin-top:3rem;color:var(--dim);font-size:.9rem}}
+footer a{{display:inline-block;padding:.7rem 0}}
 </style>
 </head>
 <body>
 <main>
-<div class="topp"><a href="../">← katalogen</a><a href="../utforsk/">utforsk</a><a href="#kort">kort</a></div>
+<div class="topp"><a href="../">← katalogen</a><a href="../utforsk/">utforsk</a></div>
 <h1>Kva korpuset viser</h1>
-<p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Ho skildrar kva dei registrerte verka viser, og seier ikkje kva som er god forsking. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho.</p>
+<p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho.</p>
 <nav class="toc" aria-label="Innhald"><ol>{toc}</ol></nav>
 {body}
 <footer>Rekna frå OpenAlex-laget og arkivlaget i dette korpuset, med fulltekst lesen lokalt og aldri publisert. Feil og spørsmål: opne ei sak på <a href="https://github.com/lukketsvane/designteori/issues">GitHub</a>.</footer>

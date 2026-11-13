@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="style.css?v=6">
-  <link rel="stylesheet" href="kart.css?v=1">
+  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="kart.css?v=4">
 </head>
 <body>
   <header class="bar">
@@ -38,11 +38,11 @@
       <div class="metrics">
         <button class="metric metric-btn active-metric" id="metricAllBtn" type="button">
           <span class="num" id="stWorks">…</span>
-          <span class="label">Publikasjonar i designteori</span>
+          <span class="label">Publikasjonar</span>
         </button>
         <button class="metric metric-btn" id="metricPdfBtn" type="button">
           <span class="num" id="stPdfs">…</span>
-          <span class="label">PDF-lenkjer kontrollerte</span>
+          <span class="label">Kontrollerte open PDF</span>
         </button>
       </div>
 
@@ -61,7 +61,7 @@
           <h2 id="startTitle">Byrjar du i nordisk designforsking?</h2>
           <button id="startHideBtn" class="act act-line" type="button">Skjul</button>
         </div>
-        <div id="startChips" class="chips" aria-label="Eksempelsøk"></div>
+        <div id="startChips" class="chips" aria-label="Døme på søk"></div>
         <ul id="startLines" class="plain start-lines"></ul>
         <p id="startLang" class="start-note"></p>
         <p class="start-terms" id="startTerms"></p>
@@ -145,10 +145,9 @@
     </section>
 
     <section id="view-siteringar" class="view">
-      <p class="tab-intro">Mest siterte verk og forfattarar i korpuset.</p>
       <div class="subnav" role="tablist">
-        <button class="sub-pill active" data-sub="internal" type="button">Mest sitert i Norden</button>
-        <button class="sub-pill" data-sub="canon" type="button">Sitert kanon</button>
+        <button class="sub-pill active" data-sub="internal" type="button">Mest sitert</button>
+        <button class="sub-pill" data-sub="canon" type="button">Referansar</button>
         <button class="sub-pill" data-sub="authors" type="button">Forfattarar</button>
         <button class="sub-pill" data-sub="institutions" type="button">Institusjonar</button>
       </div>
@@ -158,25 +157,9 @@
       <div id="citBox"></div>
     </section>
 
-    <section id="view-kart" class="view">
-      <p class="tab-intro">Kart over verk som liknar kvarandre i meining, utan etikettar på enkeltverk; viser <span id="mapShown">…</span> av <span id="mapTotal">…</span>.</p>
-      <div class="filters filters-2 map-controls">
-        <select id="mapMode" aria-label="Fargekoding">
-          <option value="cluster">Farge: klynge</option>
-          <option value="country">Farge: land</option>
-          <option value="pdf">Farge: PDF</option>
-        </select>
-        <button id="mapReset" class="btn-line" type="button">Nullstill utsnitt</button>
-      </div>
-      <div class="map-frame">
-        <canvas id="semCanvas" width="960" height="400"></canvas>
-        <div id="mapSelectedBar" class="map-bar">Trykk på eit punkt for å vise publikasjonen. Knip med to fingrar for zoom.</div>
-      </div>
-      <div id="mapLegend" class="cluster-grid"></div>
-    </section>
+    <section id="view-kart" class="view"></section>
 
     <section id="view-analyse" class="view">
-      <p class="tab-intro">Tal for korpuset: verk per tiår, land, tema og tidsskrift.</p>
       <div id="anaRoot"></div>
     </section>
 
@@ -185,8 +168,8 @@
       <div class="ana-grid">
         <div class="ana-sec">
           <p class="te-p">Ein open base over hovudpåstandar i nordisk designforsking: kva omgrep ein tekst bind saman, korleis teksten definerer dei, kva samanheng han påstår, kvar påstanden skal gjelde, korleis han er forklart og korleis han er prøvd.</p>
-          <p class="te-p">Basen skildrar og feller ingen dom. «Ikkje oppgjeve» er ikkje ein mangel ved teksten. I piloten har modellen berre lese samandrag, innleiing og konklusjon, så «ikkje oppgjeve» gjeld desse delane og ikkje heile teksten. Definisjonar er i tillegg søkte i heile teksten med faste mønster.</p>
-          <p class="te-p">Status: pilot. Over radlista står det kva radene er. Rader frå heile korpuset blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
+          <p class="te-p">Basen skildrar og feller ingen dom. «Ikkje oppgjeve» er ikkje ein mangel ved teksten. I piloten har modellen berre lese samandrag, innleiing og konklusjon, så «ikkje oppgjeve» gjeld desse delane og ikkje heile teksten.</p>
+          <p class="te-p">Status: pilot. Rader frå heile korpuset blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
         </div>
         <div class="ana-sec">
           <h3>Forankring</h3>
@@ -213,21 +196,21 @@
           </div>
         </div>
         <div class="ana-sec">
-          <h3>Pilot: 30 tekstar, maskinkoda, ikkje validert</h3>
+          <h3>Pilot: 30 tekstar, maskinkoda</h3>
           <div class="table-wrap">
             <table class="tbl-clean">
               <tbody>
                 <tr><td>Påstandar</td><td class="r"><strong>315</strong></td></tr>
                 <tr><td>Utdrag funne ordrett i teksten</td><td class="r"><strong>315 av 316</strong></td></tr>
-                <tr><td>Stadfesta ved ny lesing med lokal kontekst</td><td class="r"><strong>81–84 %</strong></td></tr>
-                <tr><td>Same attribusjon ved ny lesing</td><td class="r"><strong>95–98 %</strong></td></tr>
-                <tr><td>Same samanhengstype ved ny lesing</td><td class="r"><strong>76–84 %</strong></td></tr>
-                <tr><td>Påstandar som gjekk att då same tekstar vart lesne to gonger</td><td class="r"><strong>45 %</strong></td></tr>
-                <tr><td>Med regel H (hovudpåstandar, 23 ope lisensierte verk)</td><td class="r"><strong>67 %</strong></td></tr>
+                <tr><td>Stadfesta ved ny lesing med lokal kontekst</td><td class="r"><strong>81–84 %</strong></td></tr>
+                <tr><td>Same attribusjon ved ny lesing</td><td class="r"><strong>95–98 %</strong></td></tr>
+                <tr><td>Same samanhengstype ved ny lesing</td><td class="r"><strong>76–84 %</strong></td></tr>
+                <tr><td>Påstandar som gjekk att då same tekstar vart lesne to gonger</td><td class="r"><strong>45 %</strong></td></tr>
+                <tr><td>Med regel H (hovudpåstandar, 23 ope lisensierte verk)</td><td class="r"><strong>67 %</strong></td></tr>
               </tbody>
             </table>
           </div>
-          <p class="te-note">Talet 45 % er grunnen til at basen er avgrensa til hovudpåstandar. Med regel H gjekk 67 % att, så éi av tre rader skifter framleis mellom to lesingar.</p>
+          <p class="te-note">Talet 45 % er grunnen til at basen er avgrensa til hovudpåstandar. Med regel H skifter framleis éi av tre rader mellom to lesingar.</p>
           <p class="te-note">Ingen rader er koda av menneske enno. To kodarar skal kode blindt: i del A finn dei hovudpåstandane i 6 tekstar sjølve, og i del B kodar dei felta for dei 52 utdraga. Samsvaret blir rekna per felt. <a href="validering/">Rettleiing og kodeark</a>.</p>
         </div>
       </div>
@@ -246,7 +229,6 @@
     </section>
 
     <section id="view-om" class="view">
-      <p class="tab-intro">Kva korpuset dekker, kva det ikkje dekker, og korleis søket verkar.</p>
       <div id="omRoot"><p class="status">Lastar…</p></div>
     </section>
   </main>
@@ -261,14 +243,14 @@
     </nav>
   </footer>
 
-  <script src="ui.js?v=5"></script>
+  <script src="ui.js?v=7"></script>
   <script src="search.js?v=3"></script>
   <script src="export.js?v=3"></script>
   <script src="embed.js?v=1"></script>
-  <script src="om.js?v=3"></script>
-  <script src="app.js?v=3"></script>
-  <script src="kart.js?v=1"></script>
-  <script src="meny.js?v=2"></script>
-  <script src="teorielement.js?v=5"></script>
+  <script src="om.js?v=4"></script>
+  <script src="app.js?v=8"></script>
+  <script src="kart.js?v=4"></script>
+  <script src="meny.js?v=3"></script>
+  <script src="teorielement.js?v=7"></script>
 </body>
 </html>

@@ -282,6 +282,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .detalj-forf { margin: 0 0 6px; font-size: 14px; }
 .detalj-meta { margin: 0 0 8px; font-family: var(--mono); font-size: 12px; color: var(--dim); }
 .detalj-meta .lenkeknapp { color: var(--fg); }
+@media (max-width: 899px), (pointer: coarse) { .detalj-meta .lenkeknapp { display: inline-flex; align-items: center; min-height: 44px; } .detalj-topp .knapp.liten { min-height: 44px; } }
 .detalj-inst { list-style: none; margin: 0 0 10px; padding: 0; font-size: 13px; }
 .detalj-inst li { margin: 2px 0; }
 .detalj-lenker { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 10px 0 14px; }
@@ -428,7 +429,7 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
   .ego { grid-template-columns: minmax(0, 1fr); grid-template-areas: "midt" "siterer" "sitertav" "liknar"; gap: 12px; }
   .ego-item { min-height: 44px; }
   .ego-kort { margin-top: 0; }
-  .sidepanel.sit-rang { top: auto; bottom: 8px; right: 8px; }
+  .sidepanel.sit-rang { top: auto; bottom: 8px; right: 60px; }
   /* opened on a phone the list gets most of the picture: the reader asked for the list */
   .sidepanel.sit-rang:not(.lukka) { max-height: 70%; }
   .sit-rang .rang-valt { padding: 2px 10px 6px; font-size: 12px; }
@@ -447,8 +448,6 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .tidskontroll .spel { min-height: 44px; min-width: 88px; }
 .tidskontroll .spel[aria-pressed="true"] { background: #f2f2f2; color: #000; }
 .speltekst { font-family: var(--mono); font-size: 12px; color: var(--dim); }
-.tidskontroll-merk { font-family: var(--mono); font-size: 11px; color: var(--dim); }
-@media (max-width: 599px) { .tidskontroll-merk { display: none; } }
 @media (max-width: 899px) { .tidskontroll { padding: 4px 12px; gap: 8px; } .tidskontroll .arspor { width: calc(100vw - 230px); min-width: 120px; } .tidskontroll .kontroll-namn { display: none; } }
 
 /* ---------- reduced motion ---------- */

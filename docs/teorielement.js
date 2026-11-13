@@ -23,7 +23,7 @@
   function stated(label, o) {
     if (o && o.status === "stated") return `<div class="te-line"><span class="te-k">${label}</span>«${esc(o.excerpt)}»</div>`;
     if (o && o.status === "stated_none_exists") return `<div class="te-line"><span class="te-k">${label}</span>teksten seier at det ikkje finst: «${esc(o.excerpt)}»</div>`;
-    return `<div class="te-line te-dim"><span class="te-k">${label}</span>ikkje oppgjeve i delane som er lesne</div>`;
+    return "";
   }
 
   function rowHtml(r) {
@@ -31,13 +31,13 @@
     const au = Array.isArray(w.authors) && w.authors.length ? w.authors.slice(0, 3).join(", ") + (w.authors.length > 3 ? " mfl." : "") : "";
     const doi = w.doi ? ` · <a href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : "";
     const lic = w.license ? ` · ${esc(w.license)}` : "";
-    const cons = (r.concepts || []).map((c) => `${qlink(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}; ${DEF[c.definition_status] || esc(c.definition_status)})</span>`).join(" · ");
+    const cons = (r.concepts || []).map((c) => `${qlink(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}${c.definition_status === "not_stated" ? "" : `; ${DEF[c.definition_status] || esc(c.definition_status)}`})</span>`).join(" · ");
     const defs = (r.concepts || []).filter((c) => c.definition_excerpt).map((c) => `<div class="te-line"><span class="te-k">definisjon</span>${esc(c.term)} <span class="te-dim">(${DEF[c.definition_status] || esc(c.definition_status)}${c.definition_page ? `, s. ${esc(c.definition_page)}` : ""})</span>: «${esc(c.definition_excerpt)}»</div>`).join("");
     const sup = (r.support || []).map((s) => FORM[s.form] || esc(s.form)).join(", ");
     const th = (r.theories || []).map((t) => `${TROLE[t.role] || esc(t.role)} ${qlink(t.name)}`).join(" · ");
     const att = r.attribution === "adopted" ? "overteken" + (r.adopted_from ? ` frå ${esc(r.adopted_from)}` : "") : r.attribution === "own" ? "eigen" : "";
     const rel = r.relation_kind === "other" && r.relation_kind_other ? esc(r.relation_kind_other) : (REL[r.relation_kind] || esc(r.relation_kind));
-    const rt = r.retest === true ? "påstanden gjekk att då teksten vart lesen ein gong til" : r.retest === false ? "påstanden gjekk ikkje att då teksten vart lesen ein gong til" : "";
+    const rt = r.retest === false ? "påstanden gjekk ikkje att då teksten vart lesen ein gong til" : "";
     const meta = (au ? `${esc(au)}: ` : "") + esc(w.title || "") + (w.year ? ` (${esc(w.year)})` : "") + (r.pdf_page ? ` · s. ${esc(r.pdf_page)}` : "") + (r.claim_location ? ` · ${LOC[r.claim_location] || esc(r.claim_location)}` : "") + doi + lic;
     return `<div class="te-row">
       <div class="te-ex">«${esc(r.excerpt)}»</div>
@@ -45,7 +45,7 @@
       <div class="te-line"><span class="te-k">samanheng</span>${rel}${r.relation_expression ? ` («${esc(r.relation_expression)}»)` : ""}${att ? ` · ${att}` : ""}</div>
       <div class="te-line"><span class="te-k">omgrep</span>${cons}</div>${defs}
       ${stated("bruksområde", r.scope)}${stated("forklaring", r.explanation)}${stated("føreseiing", r.prediction)}
-      <div class="te-line"><span class="te-k">prøvd</span>${SUP[r.support_status] || esc(r.support_status)}${sup ? `: ${sup}` : ""}</div>
+      ${r.support_status === "not_stated" && !sup ? "" : `<div class="te-line"><span class="te-k">prøvd</span>${SUP[r.support_status] || esc(r.support_status)}${sup ? `: ${sup}` : ""}</div>`}
       ${th ? `<div class="te-line"><span class="te-k">teori</span>${th}</div>` : ""}
       ${rt ? `<div class="te-line te-dim"><span class="te-k">maskinkoding</span>${rt}</div>` : ""}
     </div>`;
@@ -60,7 +60,8 @@
       if (form && !(r.support || []).some((s) => s.form === form)) return false;
       return !q || r._q.indexOf(q) !== -1;
     });
-    $("teCount").textContent = `${hits.length} av ${rows.length} rader`;
+    $("teCount").textContent = hits.length < rows.length ? `${hits.length} av ${rows.length} rader` : "";
+    $("teCount").parentElement.hidden = !$("teCount").textContent;
     $("teList").innerHTML = hits.map(rowHtml).join("");
   }
 
@@ -91,8 +92,7 @@
       note = "Radene under er syntetiske døme som viser formatet. Dei er ikkje henta frå korpuset.";
     } else {
       const s = d.stats || {};
-      note = `${rows.length} maskinkoda rader frå ${s.texts_with_rows && s.texts ? `${s.texts_with_rows} av ${s.texts}` : (s.texts || "nokre")} ope lisensierte verk. Radene er ikkje validerte mot handkoding.`;
-      if (typeof s.retest_share === "number") note += ` ${Math.round(s.retest_share * 100)} % av radene gjekk att då tekstane vart lesne ein gong til.`;
+      note = `${rows.length} maskinkoda rader frå ${s.texts_with_rows && s.texts ? `${s.texts_with_rows} av ${s.texts}` : (s.texts || "nokre")} ope lisensierte verk.`;
       if (s.dropped_in_review) note += ` ${s.dropped_in_review} rader er tekne ut i ein maskinell kontroll.`;
       if (d.excerpt_rule) note += ` ${d.excerpt_rule}.`;
       if (d.definition_rule) note += ` ${d.definition_rule}.`;

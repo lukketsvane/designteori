@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=24";
+import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=25";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -362,7 +362,7 @@ function tiarProfil() {
 }
 const TIAR_NAMN = ["2000-åra", "2010-åra", "2020-åra"];
 function profilDel(v) { const p = tiarProfil(); return [0, 1, 2].map((d) => (p.nT[d] ? (100 * p.c[v * 3 + d]) / p.nT[d] : 0)); }
-function profilTekst(v) { const d = profilDel(v); return TIAR_NAMN.map((t, j) => `${t} ${pst(d[j], 1)} %`).join(", "); }
+function profilTekst(v) { const d = profilDel(v); return TIAR_NAMN.map((t, j) => `${t} ${pst(d[j], 1)} %`).join(", "); }
 function miniStolpar(v, h = 14) {
   const d = profilDel(v), mx = Math.max(...d, 0.001);
   return `<svg class="ministolpar" width="26" height="${h}" aria-hidden="true">${d.map((x, j) => { const bh = Math.max(1, Math.round((h - 1) * x / mx)); return `<rect x="${j * 9}" y="${h - bh}" width="7" height="${bh}" fill="${j === 2 ? "#e8e8e8" : "#8a8a8a"}"/>`; }).join("")}</svg>`;
@@ -421,7 +421,7 @@ function sitertAvProfil(v, sitertAv) {
   }
   const lt = [...land.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0]).slice(0, 5);
   const mx = Math.max(...d, 0.001);
-  const stolpar = TIAR_NAMN.map((t, j) => `<div class="profil-rad"><span>${t}${j === 2 ? "*" : ""}</span><span class="profil-bar"><span style="width:${Math.round((100 * d[j]) / mx)}%"></span></span><span>${fmt(perTiar[j])} av ${fmt(p.nT[j])} (${pst(d[j], 1)} %)</span></div>`).join("");
+  const stolpar = TIAR_NAMN.map((t, j) => `<div class="profil-rad"><span>${t}${j === 2 ? "*" : ""}</span><span class="profil-bar"><span style="width:${Math.round((100 * d[j]) / mx)}%"></span></span><span>${fmt(perTiar[j])} av ${fmt(p.nT[j])} (${pst(d[j], 1)} %)</span></div>`).join("");
   return `<div class="ego-profil"><p class="ego-merk">Sitert av, per tiår (verk med referanseliste)</p>${stolpar}
     <p class="ego-merk">* 2020-åra er ikkje ferdige.${d[2] < d[0] ? " Mindre sitert no enn i 2000-åra." : d[2] > d[0] ? " Meir sitert no enn i 2000-åra." : ""}${sitertAv.length > perTiar[0] + perTiar[1] + perTiar[2] ? ` ${fmt(sitertAv.length - perTiar[0] - perTiar[1] - perTiar[2])} av dei ${fmt(sitertAv.length)} siterande verka er frå før 2000 og står ikkje i stolpane.` : ""} Arkivverk har inga referanseliste og kan ikkje telje som siterande.</p>
     ${lt.length ? `<p class="ego-merk">Forfattarland til dei som siterer: ${lt.map(([j, c]) => `${esc(T.landNamn(D.verk.land_alle[j].k))} ${fmt(c)}`).join(", ")}</p>` : ""}</div>`;
@@ -576,8 +576,8 @@ async function teiknStraum() {
   const W = Math.max(320, el.svg.clientWidth), H = Math.max(420, el.svg.clientHeight - 8);
   const linje = () => {
     let t = `Referansar frå dei ${fmt(T.valt)} verka i utvalet: ${fmt(ref)} frå ${fmt(verkMed.size)} verk har kjent mål; ${fmt(utan)} peikar på verk utan metadata og er ikkje med. Sjølvsiteringar er tekne ut, og fleire referansar frå eitt verk til same siterte verk tel éin gong.`;
-    if (modus === "land") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar land.`;
-    if (modus === "kanal") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar kanal.`;
+    if (modus === "land") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar land.`;
+    if (modus === "kanal") t += ` ${pst((100 * utanMal) / Math.max(1, ref))} % av måla manglar kanal.`;
     if (S.f.siterer) t += ` Straumane viser alle referansane frå dei valde verka, ikkje berre dei til ${T.siterarNamn(S.f.siterer)}.`;
     ramme.linje.textContent = `${t}`;
   };
@@ -711,7 +711,7 @@ function teiknOverTid() {
         <rect x="${x(j)}" y="${y}" width="${boksB}" height="${rad - 12}" rx="3" fill="#141414" stroke="${S.f.kanon.has(T.nodeKey(v)) ? "#fff" : "#333"}"/>
         <rect x="${x(j)}" y="${y + rad - 15}" width="${Math.max(2, (boksB * pst_) / 40)}" height="3" fill="#bdbdbd"/>
         <text x="${x(j) + 6}" y="${y + 16}" class="bump-tekst">${q + 1}. ${esc(kutt(T.merkelapp(v), 18))}</text>
-        <text x="${x(j) + boksB - 6}" y="${y + 16}" text-anchor="end">${pst(pst_)} %</text></g>`;
+        <text x="${x(j) + boksB - 6}" y="${y + 16}" text-anchor="end">${pst(pst_)} %</text></g>`;
     });
   });
   html += `</svg>`;
@@ -744,7 +744,7 @@ function bumpTips(v) {
   if (!info) return "";
   const rader = [...info.verkPerTiar.keys()].sort().map((t) => {
     const n = info.verkPerTiar.get(t), c = (info.tel.get(t) || new Map()).get(v) || 0;
-    return `<div class="tt-meta">${t}-åra: ${fmt(c)} av ${fmt(n)} verk (${pst((100 * c) / Math.max(1, n))} %)</div>`;
+    return `<div class="tt-meta">${t}-åra: ${fmt(c)} av ${fmt(n)} verk (${pst((100 * c) / Math.max(1, n))} %)</div>`;
   }).join("");
   return `<div class="tt-tittel">${esc(T.merkelapp(v))}</div><div class="tt-meta">${esc(kutt(nodeTittel(v), 140))}</div>${rader}<div class="tt-fot">Klikk: vel verka som siterer dette</div>`;
 }

@@ -90,7 +90,7 @@ test("«Ingen samandrag i korpuset»: utgjevarlenkje med DOI først, så tilgang
   const withDoi = Ui.noAbstractHtml(W, ["u", "https://example.org/a.pdf"]);
   assert.ok(withDoi.includes("Ingen samandrag i korpuset"));
   assert.ok(withDoi.includes('href="https://doi.org/10.1/abc"'));
-  assert.ok(withDoi.includes("Opne hos utgjevaren"));
+  assert.ok(withDoi.includes("Utgjevarside"));
   const noDoi = Ui.noAbstractHtml({ id: "W2", title: "t" }, ["v", "https://host.example/f.pdf"]);
   assert.ok(noDoi.includes('href="https://host.example/f.pdf"'));
   const onlyOa = Ui.noAbstractHtml({ id: "W3", title: "t", doi: "", oa_url: "" }, null);

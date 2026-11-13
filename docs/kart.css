@@ -1,8 +1,7 @@
 /* KART - det semantiske kartet (kart.js). Brukar fargevariablane frå style.css. */
 
-/* Det gamle kartet ligg att i sida, men er gøymt når kart.js har teke over fana */
-#view-kart.kart-ny > :not(.kart) { display: none !important; }
 .kart [hidden] { display: none !important; }
+@media (hover: hover) { .kart select { font-size: 13px; } }
 .kart-linje.kart-feil { color: var(--fg); }
 
 .kart-linje {
@@ -43,7 +42,7 @@
   white-space: nowrap;
 }
 .kart-treff-a:hover { text-decoration-color: var(--fg); }
-.kart-kjerne { min-height: 40px; margin: 2px 0 0; font-size: .84rem; color: var(--fg); }
+.kart-kjerne { min-height: 44px; margin: 2px 0 0; font-size: .84rem; color: var(--fg); }
 .kart-kjerne input { width: 18px; height: 18px; }
 
 /* ---- flata ---- */
@@ -284,7 +283,9 @@
   text-transform: uppercase;
   color: var(--dim);
 }
-.kp-sti { margin: 4px 0 0; font-size: .84rem; color: var(--dim); }
+.kp-sti { margin: 4px 0 0; font-size: .84rem; color: var(--dim); display: flex; flex-wrap: wrap; align-items: center; column-gap: .3em; }
+.kp-sti .kp-knapp { min-height: 44px; text-align: left; }
+.kart-hint:empty { display: none; }
 .kp-knapp {
   -webkit-appearance: none; appearance: none; margin: 0; padding: 0; border: 0; background: none;
   font: inherit; color: var(--fg); cursor: pointer;

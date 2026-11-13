@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=24";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=25";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -256,7 +256,7 @@ function teikn(anim) {
   teiknOrd();
   teiknMerk();
   // line and legend
-  ramme.linje.textContent = `Verk per år etter tema. ${fmt(T.valt)} verk i utvalet${foer ? `; ${fmt(foer)} av dei er frå før 1990 og ikkje teikna` : ""}. 2026 er ufullstendig. Dra sidelengs over diagrammet for å velje år. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
+  ramme.linje.textContent = `Verk per år etter tema${foer ? `; ${fmt(foer)} verk frå før 1990 er ikkje teikna` : ""}. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
   const meirOpe = !!(ramme.teikn.querySelector(".teikn-meir") || {}).open;
   settInnhald(ramme.teikn, `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig (${fmt(talAr(2026))} verk mot ${fmt(talAr(2025))} i 2025: innhaustinga er ikkje ferdig, året er ikkje lite).</span>
     <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Tema er grupper av like titlar og kjelder, ikkje emne sett av nokon. Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
@@ -378,7 +378,7 @@ function teiknBand(rows) {
     const key = `${s.key}|${a}`;
     if (key === tipsKey && tooltip.synleg) { tooltip.flytt(ev.clientX, ev.clientY); return; }
     tipsKey = key;
-    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel tema · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
+    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel tema · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
   }).on("pointerleave", () => { hoverTema = null; tipsKey = null; tooltip.skjul(); paths.attr("fill-opacity", (q) => (S.f.tema.size && !S.f.tema.has(D.verk.tema[q.key].k) ? 0.45 : 0.92)); })
     .on("click", (ev, s) => {
       if (undertrykkKlikk) return;
@@ -450,7 +450,7 @@ function teiknOrd() {
   const ymax = d3.max(kurver, (k) => d3.max(k.pkt, (p) => (p.a >= bleik ? p.v : null))) || d3.max(kurver, (k) => d3.max(k.pkt, (p) => p.v)) || 1;
   const y = d3.scaleLinear().domain([0, ymax * 1.1]).nice().range([H - 18, 10]);
   const ay = svg.append("g").attr("class", "akse").attr("transform", `translate(${mm.l},0)`);
-  ay.call(d3.axisLeft(y).ticks(4).tickFormat((d) => (S.tid.tv === "del" ? `${d} %` : d)).tickSize(3));
+  ay.call(d3.axisLeft(y).ticks(4).tickFormat((d) => (S.tid.tv === "del" ? `${d} %` : d)).tickSize(3));
   ay.select(".domain").remove();
   const ax = svg.append("g").attr("class", "akse").attr("transform", `translate(0,${H - 16})`);
   ax.call(d3.axisBottom(x).tickValues(W < 600 ? [1990, 2000, 2010, 2020] : [1990, 2000, 2010, 2020, 2026]).tickFormat(d3.format("d")).tickSize(3));
@@ -509,7 +509,7 @@ function teiknOrd() {
     const j = a - A0;
     const rader = kurver.map((k, q) => {
       const p = k.pkt[j];
-      const v = p.v == null ? "for få verk" : S.tid.tv === "del" ? `${pst(p.v, 1)} %` : fmt(p.v);
+      const v = p.v == null ? "for få verk" : S.tid.tv === "del" ? `${pst(p.v, 1)} %` : fmt(p.v);
       return `<div class="tt-meta"><span class="prikk" style="background:${PALETTE_ORD[q % 6]}"></span>${esc(k.vis)}: ${fmt(p.h)} av ${fmt(mTot[j])} verk (${v})</div>`;
     }).join("");
     const fa = a < bleik ? `<div class="tt-fot">Under 20 verk dette året: delen er usikker (blek line).</div>` : "";

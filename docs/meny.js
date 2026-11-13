@@ -1,5 +1,5 @@
-/* Menyen: «katalog» står fast, resten ligg i ein nedtrekk på smale skjermar (Ivers val 13.11.2026).
-   På breie skjermar viser CSS alle punkta på éi linje, og knappen er skjult. */
+/* Menyen: «katalog» står fast, resten ligg i ein nedtrekk (Ivers val 13.11.2026).
+   Same meny på alle breidder: kolonna er smal òg på ein stor skjerm. */
 (function () {
   "use strict";
   var btn = document.getElementById("navMoreBtn");

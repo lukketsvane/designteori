@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=24";
-import * as T from "./tilstand.js?v=24";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=25";
+import * as T from "./tilstand.js?v=25";
 
 const { S, D } = T;
 let el = {};
@@ -233,7 +233,7 @@ function lagDel(j) {
   if (!lagCache.has(j)) {
     let a = 0, o = 0;
     for (let i = 0; i < D.n; i++) if (D.tema[i] === j) { if (D.lag[i]) a++; else o++; }
-    lagCache.set(j, `Heile korpuset: ${fmt(o)} OpenAlex, ${fmt(a)} arkiv (${Math.round((100 * a) / Math.max(1, a + o))} % arkiv)`);
+    lagCache.set(j, `Heile korpuset: ${fmt(o)} OpenAlex, ${fmt(a)} arkiv (${Math.round((100 * a) / Math.max(1, a + o))} % arkiv)`);
   }
   return lagCache.get(j);
 }
@@ -456,7 +456,7 @@ function teiknChipar(chips) {
     fokus = { id: a.id, fjern: a.dataset.fjern, verdi: a.dataset.verdi, prov: a.dataset.prov, qv: a.dataset.qv ?? a.dataset.qd, frase: a.dataset.frase, pos: xs.indexOf(a) };
   }
   rad.innerHTML = `
-    <span class="teljar"><b>${fmt(T.valt)}</b> av ${fmt(n)} verk</span>${status.join("")}
+    <span class="teljar"><b>${fmt(T.valt)}</b>${T.valt < n ? ` av ${fmt(n)}` : ""} verk</span>${status.join("")}
     <div class="chipar">${chips.map((c) => `<span class="chip${c.feil ? " feil" : ""}"><span class="chip-tekst">${esc(c.tekst)}</span><button type="button" class="chip-x" data-fjern="${c.dim}" ${c.verdi != null ? `data-verdi="${esc(c.verdi)}"` : ""} aria-label="Fjern ${esc(c.tekst)}">×</button></span>`).join("")}</div>
     ${chips.length ? `<button type="button" class="knapp liten" id="nullstill">Nullstill alt</button>` : ""}`;
   rad.classList.toggle("tom", !chips.length && !status.length);

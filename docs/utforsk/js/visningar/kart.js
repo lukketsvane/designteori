@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=24";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=25";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -490,7 +490,7 @@ function fokusListe() {
 // ---------- line and legend ----------
 function teiknLinje() {
   const n = D.n;
-  let t = `Kvart punkt er eitt verk. Verk med lik tittel, kanal og emneord ligg nær kvarandre. ${fmt(T.valt)} av ${fmt(n)} verk i utvalet.`;
+  let t = `Kvart punkt er eitt verk. Verk med lik tittel, kanal og emneord ligg nær kvarandre.${T.harFilter() ? ` ${fmt(T.valt)} av ${fmt(n)} verk i utvalet.` : ""}`;
   if (S.kart.farge === "land") {
     let m = 0;
     for (let i = 0; i < n; i++) if (T.utval[i] && D.landBits[i]) m++;
@@ -529,6 +529,6 @@ function teiknTeikn() {
     if (modus === "tema") html += `<span class="teikn-merk">Tema er grupper av like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre er mest arkivverk eller norskspråklege (Teneste- og systemdesign er nesten berre norsk arkiv).</span>`;
   }
   html += `<span class="teikn-merk">Storleik: siteringar (berre OpenAlex)</span>`;
-  html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;
+  html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;
   settInnhald(ramme.teikn, html);
 }

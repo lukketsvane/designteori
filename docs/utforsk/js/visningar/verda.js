@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=24";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=25";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -44,7 +44,7 @@ export default {
       else scene.settZ(null, 600, false);
     });
     // time control
-    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">Spel av</button><span class="speltekst" aria-live="polite"></span><span class="tidskontroll-merk">Same årsfilter som øvst på sida.</span></div>`);
+    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">Spel av</button><span class="speltekst" aria-live="polite"></span></div>`);
     slider = api.filterlinje.lagArSlider(ramme.el.querySelector(".verda-ar"), { id: "verda" });
     ramme.el.querySelector(".spel").addEventListener("click", () => (spel ? stoppSpel() : startSpel()));
     scene.storleik();
