@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="style.css?v=12">
-  <link rel="stylesheet" href="kart.css?v=4">
+  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="kart.css?v=6">
 </head>
 <body>
   <header class="bar">
@@ -47,7 +47,7 @@
       </div>
 
       <div class="search-wrap">
-        <input type="search" id="qInput" placeholder="Skriv eit emne, ei setning eller ein tittel – norsk eller engelsk" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk" aria-describedby="statusLine">
+        <input type="search" id="qInput" placeholder="Emne, setning eller tittel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk" aria-describedby="statusLine">
       </div>
       <p id="statusLine" class="status" aria-live="polite"></p>
       <div class="model-row">
@@ -81,11 +81,11 @@
       </div>
       <div id="filterPanel" class="filter-panel">
         <div class="filters">
-          <label class="fld"><span class="fld-l">År frå</span><input type="number" id="yrFrom" inputmode="numeric" min="1980" max="2030" placeholder="frå" aria-label="År frå"></label>
-          <label class="fld"><span class="fld-l">År til</span><input type="number" id="yrTo" inputmode="numeric" min="1980" max="2030" placeholder="til" aria-label="År til"></label>
+          <label class="fld"><span class="fld-l">År frå</span><input type="number" id="yrFrom" inputmode="numeric" min="1980" max="2030" placeholder="åååå" aria-label="År frå"></label>
+          <label class="fld"><span class="fld-l">År til</span><input type="number" id="yrTo" inputmode="numeric" min="1980" max="2030" placeholder="åååå" aria-label="År til"></label>
           <label class="fld"><span class="fld-l">Type</span>
             <select id="kindSel" aria-label="Type">
-              <option value="">Alle typar</option>
+              <option value="">Alle</option>
               <option value="article">Artikkel</option>
               <option value="conf">Konferansebidrag</option>
               <option value="chapter">Kapittel</option>
@@ -95,7 +95,7 @@
             </select></label>
           <label class="fld"><span class="fld-l">Språk</span>
             <select id="langSel" aria-label="Språk">
-              <option value="">Alle språk</option>
+              <option value="">Alle</option>
               <option value="e">Engelsk</option>
               <option value="b">Bokmål</option>
               <option value="n">Nynorsk</option>
@@ -105,7 +105,7 @@
             </select></label>
           <label class="fld"><span class="fld-l">Land</span>
             <select id="ccSel" aria-label="Land">
-              <option value="">Alle land</option>
+              <option value="">Alle</option>
               <option value="NO">Noreg</option>
               <option value="SE">Sverige</option>
               <option value="DK">Danmark</option>
@@ -167,9 +167,8 @@
       <p class="tab-intro" id="teIntro">Eit eige forskingsprosjekt om å kode teorielement i <span id="teTexts">nokre</span> tekstar; ikkje ei oversikt over designteoriar. Pilot.</p>
       <div class="ana-grid">
         <div class="ana-sec">
-          <p class="te-p">Ein open base over hovudpåstandar i nordisk designforsking: kva omgrep ein tekst bind saman, korleis teksten definerer dei, kva samanheng han påstår, kvar påstanden skal gjelde, korleis han er forklart og korleis han er prøvd.</p>
-          <p class="te-p">Basen skildrar og feller ingen dom. «Ikkje oppgjeve» er ikkje ein mangel ved teksten. I piloten har modellen berre lese samandrag, innleiing og konklusjon, så «ikkje oppgjeve» gjeld desse delane og ikkje heile teksten.</p>
-          <p class="te-p">Status: pilot. Rader frå heile korpuset blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
+          <p class="te-p">Ein open base over hovudpåstandar i nordisk designforsking. Han skildrar og feller ingen dom. «Ikkje oppgjeve» er ikkje ein mangel ved teksten. I piloten har modellen berre lese samandrag, innleiing og konklusjon, så «ikkje oppgjeve» gjeld desse delane og ikkje heile teksten.</p>
+          <p class="te-p">Rader frå heile korpuset blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
         </div>
         <div class="ana-sec">
           <h3>Forankring</h3>
@@ -196,7 +195,7 @@
           </div>
         </div>
         <div class="ana-sec">
-          <h3>Pilot: 30 tekstar, maskinkoda</h3>
+          <h3>Pilot: 30 tekstar</h3>
           <div class="table-wrap">
             <table class="tbl-clean">
               <tbody>
@@ -206,12 +205,12 @@
                 <tr><td>Same attribusjon ved ny lesing</td><td class="r"><strong>95–98 %</strong></td></tr>
                 <tr><td>Same samanhengstype ved ny lesing</td><td class="r"><strong>76–84 %</strong></td></tr>
                 <tr><td>Påstandar som gjekk att då same tekstar vart lesne to gonger</td><td class="r"><strong>45 %</strong></td></tr>
-                <tr><td>Med regel H (hovudpåstandar, 23 ope lisensierte verk)</td><td class="r"><strong>67 %</strong></td></tr>
+                <tr><td>Med regel H (hovudpåstandar)</td><td class="r"><strong>67 %</strong></td></tr>
               </tbody>
             </table>
           </div>
           <p class="te-note">Talet 45 % er grunnen til at basen er avgrensa til hovudpåstandar. Med regel H skifter framleis éi av tre rader mellom to lesingar.</p>
-          <p class="te-note">Ingen rader er koda av menneske enno. To kodarar skal kode blindt: i del A finn dei hovudpåstandane i 6 tekstar sjølve, og i del B kodar dei felta for dei 52 utdraga. Samsvaret blir rekna per felt. <a href="validering/">Rettleiing og kodeark</a>.</p>
+          <p class="te-note">Ingen rader er koda av menneske enno. To kodarar skal kode blindt: i del A finn dei hovudpåstandane i 6 tekstar sjølve, og i del B kodar dei felta for utdraga. Samsvaret blir rekna per felt. <a href="validering/">Rettleiing og kodeark</a>.</p>
         </div>
       </div>
 
@@ -234,23 +233,22 @@
   </main>
 
   <footer>
-    <span>Nordisk designteori og designforsking (NO, SE, DK, FI, IS)</span>
-    <nav class="footer-links" aria-label="Datafiler">
-      <a href="https://github.com/lukketsvane/designteori/tree/main/pdf">pdf/</a>
-      <a href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">sqlite.gz</a>
-      <a href="data/korpus.csv" download>korpus.csv</a>
-      <a href="https://github.com/lukketsvane/designteori">GitHub</a>
+    <nav class="footer-links" aria-label="Data og kjeldekode">
+      <a href="data/korpus.csv" download>Alle verk som tabell</a>
+      <a href="https://github.com/lukketsvane/designteori/raw/main/data/designteori.sqlite.gz">Database</a>
+      <a href="https://github.com/lukketsvane/designteori/tree/main/pdf">PDF-arkivet</a>
+      <a href="https://github.com/lukketsvane/designteori">Kjeldekode</a>
     </nav>
   </footer>
 
-  <script src="ui.js?v=7"></script>
+  <script src="ui.js?v=8"></script>
   <script src="search.js?v=3"></script>
   <script src="export.js?v=3"></script>
   <script src="embed.js?v=1"></script>
-  <script src="om.js?v=4"></script>
-  <script src="app.js?v=8"></script>
-  <script src="kart.js?v=4"></script>
+  <script src="om.js?v=6"></script>
+  <script src="app.js?v=10"></script>
+  <script src="kart.js?v=5"></script>
   <script src="meny.js?v=3"></script>
-  <script src="teorielement.js?v=7"></script>
+  <script src="teorielement.js?v=8"></script>
 </body>
 </html>

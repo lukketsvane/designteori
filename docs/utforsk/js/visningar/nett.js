@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=25";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=27";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph
@@ -355,7 +355,7 @@ function teiknPartnarInnhald(el) {
   const mx = pa.length ? pa[0][1] : 1;
   el.hidden = false;
   el.innerHTML = `<div class="sidepanel-topp"><span>Skriv saman med: ${esc(kutt(G.namn(p), 24))}</span>
-    <button type="button" class="knapp liten" data-p="veksle" aria-expanded="${panelOpe}">${panelOpe ? "Gøym" : "Vis"}</button></div>
+    <button type="button" class="knapp liten" data-p="veksle" aria-expanded="${panelOpe}">${panelOpe ? "Gøym lista" : "Vis lista"}</button></div>
     ${panelOpe ? (pa.length ? `<ol>${pa.map(([b, w]) => `<li class="rangrad">
       <button type="button" class="rang-namn" data-p="vel" data-b="${b}" title="${esc(G.fulltNamn(b))}">${esc(kutt(G.namn(b), 30))}</button>
       <span class="rang-tal">${fmt(w)} <button type="button" class="knapp liten leggtil" data-p="legg" data-b="${b}" aria-label="Legg ${esc(G.fulltNamn(b))} til i filteret">+</button></span>
@@ -373,7 +373,7 @@ function teiknTopp(el) {
   const ord = G.modus === "inst" ? "institusjonar" : "forfattarar";
   el.hidden = false;
   el.innerHTML = `<div class="sidepanel-topp"><span>${filt ? `Flest verk i utvalet` : `Flest verk`}</span>
-    <button type="button" class="knapp liten" data-p="veksle" aria-expanded="${panelOpe}">${panelOpe ? "Gøym" : "Vis"}</button></div>
+    <button type="button" class="knapp liten" data-p="veksle" aria-expanded="${panelOpe}">${panelOpe ? "Gøym lista" : "Vis lista"}</button></div>
     ${panelOpe ? (pa.length ? `<ol>${pa.map(([b, w]) => `<li class="rangrad">
       <button type="button" class="rang-namn" data-p="velsjolv" data-b="${b}" title="${esc(G.fulltNamn(b))}" aria-label="${esc(G.fulltNamn(b))}, ${fmt(w)} verk: vel og sjå kven dei skriv med">${esc(kutt(G.namn(b), 30))}</button>
       <span class="rang-tal">${fmt(w)} <button type="button" class="knapp liten leggtil" data-p="legg" data-b="${b}" aria-label="Legg ${esc(G.fulltNamn(b))} til i filteret">+</button></span>
@@ -395,7 +395,7 @@ function partnarKlikk(e) {
 function teiknLinje() {
   const inst = G.modus === "inst";
   const alle = G.tal.alle, vist = G.tal.vist;
-  let t = `${inst ? "Institusjonar" : "Forfattarar"} som skriv saman. Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre OpenAlex: ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"}.`;
+  let t = `Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"} (frå OpenAlex).`;
   if (!inst) t += " Berre forfattarar med OpenAlex-id er med: der ein person står med namn utan id (arkivverka, og nokre OpenAlex-verk), er verket ikkje tald under personen, så ein person kan ha fleire verk enn nettet viser.";
   if (S.verk && D.idx.has(S.verk) && !opneNoder.size) t += " Det opne verket har ingen node i nettet.";
   ramme.linje.textContent = t;

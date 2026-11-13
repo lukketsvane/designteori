@@ -248,8 +248,8 @@ test("periodar: delar mot korpuset, korte etikettar og delår", () => {
   assert.equal(Kart.periodSpan("2025–26"), 2);
   assert.equal(Kart.periodSpan("2020–24"), 5);
   assert.equal(Kart.periodSpan("før 2000"), 0);
-  assert.equal(Kart.pctFine(0.024), "2,4 %");
-  assert.equal(Kart.pctFine(0.35), "35 %");
+  assert.equal(Kart.pctFine(0.024), "2,4 %");
+  assert.equal(Kart.pctFine(0.35), "35 %");
   assert.equal(Kart.pctFine(undefined), "");
 });
 

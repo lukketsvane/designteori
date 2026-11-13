@@ -314,7 +314,7 @@
   function pctFine(x) {
     if (!(x >= 0)) return "";
     const p = x * 100;
-    return (p < 10 ? (Math.round(p * 10) / 10).toFixed(1).replace(".", ",") : String(Math.round(p))) + " %";
+    return (p < 10 ? (Math.round(p * 10) / 10).toFixed(1).replace(".", ",") : String(Math.round(p))) + " %";
   }
   /* Merknad når mange i gruppa har berre tittel, men ingen av dei er blant dei sentrale som blir viste. */
   function titleOnlyNote(nTitle, n, shownTitleOnly, what) {
@@ -878,7 +878,7 @@
         const it = items[i], lb = it.lb;
         const k = it.type === "k" ? it.id : it.o.k;
         const dimmed = (K.sel >= 0 && k !== K.sel) || (K.match && K.matchCl && !K.matchCl[k]) || (K.sub >= 0 && it.type === "u" && it.id !== K.sub);
-        ctx.globalAlpha = dimmed ? 0.42 : 1;
+        ctx.globalAlpha = dimmed ? 0.6 : 1;
         ctx.font = lb.font;
         const x0 = r.l + 2 + (lb.dot ? 13 : 0);
         let y = r.t + 1 + lb.lh / 2;
@@ -1057,14 +1057,13 @@
       const ranked = hasRanked(o);
       const what = u ? "gruppa" : "klynga";
       const shown = (o.sentrale || []).slice(0, 5);
-      const shownTB = shown.filter((id) => { const i = K.idx.get(id); return i != null && K.fs[i] & 2; }).length;
-      const tbNote = shown.length ? titleOnlyNote(typeof nTitle === "number" ? nTitle : 0, o.n || members.length, shownTB, what) : "";
       /* Grupper som ikkje er tema (konferansebind, blandingar) og grupper som ikkje kjem att når metoden blir køyrd på nytt. */
       const kind = u && u.slag === "dokument" ? "Denne gruppa er halden saman av dokumenttypen, til dømes konferansebind og innleiingar, ikkje av eit tema."
         : u && u.slag === "blanda" ? "Ei lita, blanda gruppe. Namnet passar midten av gruppa, ikkje alle verka i ho." : "";
       const unstable = u && typeof u.stabilitet === "number" && u.stabilitet < 0.4
         ? `Gruppa er ustabil: køyrer ein metoden på nytt, overlappar ho i snitt berre ${pct(u.stabilitet)} med den gruppa som liknar mest.` : "";
       el.panel.innerHTML =
+        `<button type="button" class="kp-knapp kp-alle" data-kx="alle">← Alle klynger</button>` +
         `<div class="kp-hovud"><span class="kart-sw kp-sw" style="background:${esc(clusterColour(c.id))}"></span><h3>${esc(o.namn || "")}</h3></div>` +
         (u ? `<p class="kp-sti">Underklynge i <button type="button" class="kp-knapp" data-kk="${esc(c.id)}">${esc(c.namn)}</button></p>` : "") +
         `<p class="kp-note kp-namn">${o.namn_sjekka === false ? "Namnet er laga automatisk av dei skiljande orda." : "Namnet er sett for hand ut frå orda og titlane under."} Ingen fagperson har kontrollert det.</p>` +
@@ -1075,11 +1074,10 @@
         (Array.isArray(o.periode) && o.periode.length ? `<h4>Når verka kom ut</h4>${periodBars(o.periode, what)}` : "") +
         `<div class="kp-to"><div><h4>Kanalar</h4>${list(o.kanalar)}</div><div><h4>Land</h4>${list(o.land, countryName)}</div></div>` +
         (shown.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${shown.map((id) => `<li>${workLink(id)}</li>`).join("")}</ol>` +
-          `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først, fordi ein kort tittel åleine lett hamnar nær midten." : ""}${tbNote ? " " + esc(tbNote) : ""}</p>` : "") +
-        (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Grupper av verk med mange felles naboar inne i klynga. Zoom inn for å sjå namna på kartet.${subs.some((s) => s.slag) ? " Grå namn er ikkje tema, men konferansebind eller ei blanding." : ""}</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg${s.slag ? " kart-lg-slag" : ""}" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
+          `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først." : ""}</p>` : "") +
+        (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Zoom inn for å sjå namna på kartet.${subs.some((s) => s.slag) ? " Grå namn er konferansebind eller ei blanding, ikkje tema." : ""}</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg${s.slag ? " kart-lg-slag" : ""}" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
         `<div class="kp-knappar"><a class="act act-block" href="#liste=${ids.map((id) => esc(encodeURIComponent(id))).join("~")}">${ranked ? `Opne dei ${ids.length} mest sentrale i katalogen` : `Opne ${ids.length} verk frå kjernen av ${what}`}</a>` +
-        (u ? `<button type="button" class="act act-block" data-kk="${esc(c.id)}">Tilbake til klynga</button>` : "") +
-        `<button type="button" class="act act-block" data-kx="alle">Vis alle klynger</button></div>`;
+        `</div>`;
       el.panel.hidden = false;
       renderHint();
     }

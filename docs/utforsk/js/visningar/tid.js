@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=25";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=27";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -259,7 +259,7 @@ function teikn(anim) {
   ramme.linje.textContent = `Verk per år etter tema${foer ? `; ${fmt(foer)} verk frå før 1990 er ikkje teikna` : ""}. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
   const meirOpe = !!(ramme.teikn.querySelector(".teikn-meir") || {}).open;
   settInnhald(ramme.teikn, `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig (${fmt(talAr(2026))} verk mot ${fmt(talAr(2025))} i 2025: innhaustinga er ikkje ferdig, året er ikkje lite).</span>
-    <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Tema er grupper av like titlar og kjelder, ikkje emne sett av nokon. Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
+    <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
     <span class="teikn-merk">Orda er talde per språkform: «service design» og «tjenestedesign» er to ord. Eit ord manglar når det står i færre enn ${D.tidd ? D.tidd.tal.min_df : 5} titlar. Ei kurve startar der eit treårsvindauge har minst 20 verk (for heile korpuset i 1993), og ho er blek fram til første år med minst 20 verk i utvalet, for delen i år med få verk kan hoppe mykje.</span></details>`);
   if (meirOpe) ramme.teikn.querySelector(".teikn-meir").open = true;
   void med;

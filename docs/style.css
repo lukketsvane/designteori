@@ -287,7 +287,7 @@ input::placeholder { color: var(--dim); }
   margin: 8px 0;
   border-top: 1px solid var(--hair);
   border-bottom: 1px solid var(--hair);
-  font-size: .88rem;
+  font-size: .9rem;
   min-width: 0;
 }
 .sem-active span { min-width: 0; overflow-wrap: anywhere; }
@@ -663,7 +663,7 @@ code { font-family: var(--mono); font-size: .85em; }
 .plain { list-style: none; margin: 0; padding: 0; }
 .plain li { padding: 4px 0; }
 .warn { color: var(--warn); }
-.tab-intro { margin: 0 0 12px; color: var(--dim); font-size: .88rem; line-height: 1.5; }
+.tab-intro { margin: 0 0 12px; color: var(--dim); font-size: .9rem; line-height: 1.5; }
 
 /* kontrollar: minst 44 px tappflate */
 input[type="search"], input[type="number"], select { height: var(--tap); }
@@ -717,7 +717,7 @@ progress { width: 70%; height: 10px; vertical-align: middle; }
 .chip {
   -webkit-appearance: none; appearance: none; margin: 0; cursor: pointer; background: none; color: var(--fg);
   min-height: var(--tap); padding: 0 14px; border: 1px solid var(--line); border-radius: 22px;
-  font-family: var(--serif); font-size: .88rem; line-height: 1.25; text-align: left; max-width: 100%; overflow-wrap: anywhere;
+  font-family: var(--serif); font-size: .9rem; line-height: 1.25; text-align: left; max-width: 100%; overflow-wrap: anywhere;
 }
 .chip:hover { border-color: var(--fg); }
 .chip-term { font-family: var(--mono); font-size: 11px; }
@@ -857,3 +857,9 @@ nav.tabs { position: relative; }
 .nav-more.open .nav-btn { display: flex; align-items: center; width: 100%; min-height: 44px; padding: 0 16px; text-align: left; }
 /* Teori-fana: innleiingslinja seier det same som teksten under (Ivers val 13.11.2026) */
 #teIntro { display: none !important; }
+
+/* Runde 2 (steg 12): rydding */
+.gl-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.gl-head h4 { margin: 0; }
+.gl-search { flex: none; padding: 0 0 0 12px; }
+.subnav { gap: 0 9px; justify-content: space-between; }

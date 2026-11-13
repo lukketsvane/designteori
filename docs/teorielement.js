@@ -10,6 +10,8 @@
   const SUP = { reported: "oppgjeve", not_stated: "ikkje oppgjeve i delane som er lesne", stated_untested: "teksten seier at det ikkje er prøvd" };
   const ROLE = { from: "frå", to: "til", condition: "vilkår", other: "anna" };
   const TROLE = { foundation: "byggjer på", counterpoint: "set seg opp mot", tested: "prøver", extended: "byggjer ut", other: "nemner" };
+  /* Fri samanhengstype frå kodinga (relation_kind_other) som er kjend og har ei nynorsk form. */
+  const REL_OTHER = { "negated kind_of": "er ikkje ein type" };
   let rows = [];
 
   function fill(id, map, first) {
@@ -26,22 +28,27 @@
     return "";
   }
 
+  function srcHtml(w) {
+    const au = Array.isArray(w.authors) && w.authors.length ? w.authors.slice(0, 3).join(", ") + (w.authors.length > 3 ? " mfl." : "") : "";
+    const doi = w.doi ? ` · <a class="te-doi" href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : "";
+    const lic = w.license ? ` · ${esc(w.license)}` : "";
+    return `<h4 class="te-src">${au ? `${esc(au)}: ` : ""}${esc(w.title || "")}${w.year ? ` (${esc(w.year)})` : ""}${doi}${lic}</h4>`;
+  }
+
   function rowHtml(r) {
     const w = r.work || {};
-    const au = Array.isArray(w.authors) && w.authors.length ? w.authors.slice(0, 3).join(", ") + (w.authors.length > 3 ? " mfl." : "") : "";
-    const doi = w.doi ? ` · <a href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : "";
-    const lic = w.license ? ` · ${esc(w.license)}` : "";
     const cons = (r.concepts || []).map((c) => `${qlink(c.term)} <span class="te-dim">(${ROLE[c.role] || esc(c.role)}${c.definition_status === "not_stated" ? "" : `; ${DEF[c.definition_status] || esc(c.definition_status)}`})</span>`).join(" · ");
     const defs = (r.concepts || []).filter((c) => c.definition_excerpt).map((c) => `<div class="te-line"><span class="te-k">definisjon</span>${esc(c.term)} <span class="te-dim">(${DEF[c.definition_status] || esc(c.definition_status)}${c.definition_page ? `, s. ${esc(c.definition_page)}` : ""})</span>: «${esc(c.definition_excerpt)}»</div>`).join("");
     const sup = (r.support || []).map((s) => FORM[s.form] || esc(s.form)).join(", ");
     const th = (r.theories || []).map((t) => `${TROLE[t.role] || esc(t.role)} ${qlink(t.name)}`).join(" · ");
     const att = r.attribution === "adopted" ? "overteken" + (r.adopted_from ? ` frå ${esc(r.adopted_from)}` : "") : r.attribution === "own" ? "eigen" : "";
-    const rel = r.relation_kind === "other" && r.relation_kind_other ? esc(r.relation_kind_other) : (REL[r.relation_kind] || esc(r.relation_kind));
+    const rel = r.relation_kind === "other" && r.relation_kind_other ? (REL_OTHER[r.relation_kind_other] || esc(r.relation_kind_other)) : (REL[r.relation_kind] || esc(r.relation_kind));
     const rt = r.retest === false ? "påstanden gjekk ikkje att då teksten vart lesen ein gong til" : "";
-    const meta = (au ? `${esc(au)}: ` : "") + esc(w.title || "") + (w.year ? ` (${esc(w.year)})` : "") + (r.pdf_page ? ` · s. ${esc(r.pdf_page)}` : "") + (r.claim_location ? ` · ${LOC[r.claim_location] || esc(r.claim_location)}` : "") + doi + lic;
+    /* Kjeldelinja (forfattarar, tittel, år, DOI, lisens) står éin gong per tekst, i srcHtml. */
+    const meta = [r.pdf_page ? `s. ${esc(r.pdf_page)}` : "", r.claim_location ? (LOC[r.claim_location] || esc(r.claim_location)) : ""].filter(Boolean).join(" · ");
     return `<div class="te-row">
       <div class="te-ex">«${esc(r.excerpt)}»</div>
-      <div class="te-meta">${meta}</div>
+      ${meta ? `<div class="te-meta">${meta}</div>` : ""}
       <div class="te-line"><span class="te-k">samanheng</span>${rel}${r.relation_expression ? ` («${esc(r.relation_expression)}»)` : ""}${att ? ` · ${att}` : ""}</div>
       <div class="te-line"><span class="te-k">omgrep</span>${cons}</div>${defs}
       ${stated("bruksområde", r.scope)}${stated("forklaring", r.explanation)}${stated("føreseiing", r.prediction)}
@@ -62,13 +69,20 @@
     });
     $("teCount").textContent = hits.length < rows.length ? `${hits.length} av ${rows.length} rader` : "";
     $("teCount").parentElement.hidden = !$("teCount").textContent;
-    $("teList").innerHTML = hits.map(rowHtml).join("");
+    /* Radene frå same tekst står saman under éi kjeldelinje. */
+    const groups = new Map();
+    for (const r of hits) {
+      const w = r.work || {}, k = (w.doi || "") + "|" + (w.title || "");
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(r);
+    }
+    $("teList").innerHTML = [...groups.values()].map((g) => `<section class="te-grp">${srcHtml(g[0].work || {})}${g.map(rowHtml).join("")}</section>`).join("");
   }
 
   async function init() {
     if (!$("teList")) return;
     const st = document.createElement("style");
-    st.textContent = ".te-row{padding:14px 0;border-top:1px solid var(--line,rgba(127,127,127,.3))}.te-ex{line-height:1.45}.te-meta,.te-line{font-size:12.5px;margin-top:6px;line-height:1.45}.te-meta,.te-dim,.te-note{color:var(--dim,#767676)}.te-k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}.te-note{font-size:12.5px;margin:10px 0}.te-p{font-size:14px;line-height:1.5;margin:0 0 10px}.te-q{color:inherit;text-decoration:underline dotted;text-underline-offset:2px}";
+    st.textContent = ".te-grp{margin-top:18px}.te-grp:first-child{margin-top:0}.te-src{font-size:13px;font-weight:600;line-height:1.4;margin:0;padding-top:12px;border-top:1px solid var(--line,rgba(127,127,127,.3))}.te-row{padding:10px 0 4px}.te-ex{line-height:1.45}.te-meta,.te-line{font-size:13px;margin-top:6px;line-height:1.45}.te-meta,.te-dim,.te-note{color:var(--dim,#767676)}.te-k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}.te-note{font-size:13px;margin:10px 0}.te-p{font-size:14px;line-height:1.5;margin:0 0 10px}.te-q{color:inherit;text-decoration:underline dotted;text-underline-offset:2px;padding:13px 3px;margin:-13px -3px}.te-doi{display:inline-block;height:44px;line-height:44px;padding:0 8px;margin:-12px 0;vertical-align:middle}";
     document.head.appendChild(st);
     fill("teRel", REL, "Alle samanhengar");
     fill("teDef", DEF, "Alle definisjonsstatusar");

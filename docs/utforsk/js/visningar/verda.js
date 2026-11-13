@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=25";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=27";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -44,7 +44,7 @@ export default {
       else scene.settZ(null, 600, false);
     });
     // time control
-    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">Spel av</button><span class="speltekst" aria-live="polite"></span></div>`);
+    ramme.el.insertAdjacentHTML("beforeend", `<div class="tidskontroll"><div class="verda-ar"></div><button type="button" class="knapp spel" aria-pressed="false">▶ Spel</button><span class="speltekst" aria-live="polite"></span></div>`);
     slider = api.filterlinje.lagArSlider(ramme.el.querySelector(".verda-ar"), { id: "verda" });
     ramme.el.querySelector(".spel").addEventListener("click", () => (spel ? stoppSpel() : startSpel()));
     scene.storleik();
@@ -298,14 +298,14 @@ function stoppSpel() {
   spel = null;
   T.avsluttGest("spel");
   const knapp = ramme.el.querySelector(".spel");
-  knapp.textContent = "Spel av"; knapp.setAttribute("aria-pressed", "false");
+  knapp.textContent = "▶ Spel"; knapp.setAttribute("aria-pressed", "false");
   ramme.el.querySelector(".speltekst").textContent = "";
   return true;
 }
 
 // ---------- line and legend ----------
 function teiknLinje() {
-  let t = `Stader der forfattarane høyrer til (byen til institusjonen). Boble = verk, og eit verk kan stå i fleire bobler. Boge = felles verk mellom to stader. Berre OpenAlex: ${fmt(P.med || 0)} av ${fmt(T.valt)} verk i utvalet har stad.`;
+  let t = `Boble = stad (byen til institusjonen), storleik = verk; eit verk kan stå i fleire. Boge = felles verk mellom to stader. Berre ${fmt(P.med || 0)} av ${fmt(T.valt)} verk i utvalet har stad (frå OpenAlex).`;
   if (bogarTotalt > bogar.length) t += ` Viser ${fmt(bogar.length)} av ${fmt(bogarTotalt)} bogar.`;
   if (landFeil) t += " Landkartet kunne ikkje lastast; stadene er rett plasserte.";
   ramme.linje.textContent = t;

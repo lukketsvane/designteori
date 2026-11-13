@@ -1,12 +1,12 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=25";
-import * as data from "./data.js?v=25";
-import * as T from "./tilstand.js?v=25";
-import * as filterlinje from "./filterlinje.js?v=25";
-import * as liste from "./liste.js?v=25";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=25";
-import { initMaal } from "./maal.js?v=25";
+import * as hjelp from "./hjelp.js?v=27";
+import * as data from "./data.js?v=27";
+import * as T from "./tilstand.js?v=27";
+import * as filterlinje from "./filterlinje.js?v=27";
+import * as liste from "./liste.js?v=27";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=27";
+import { initMaal } from "./maal.js?v=27";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
@@ -14,11 +14,11 @@ const { esc, fmt, kort, tooltip, smal } = hjelp;
 window.__utforskStarta = true;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=25"),
-  nett: () => import("./visningar/nett.js?v=25"),
-  verda: () => import("./visningar/verda.js?v=25"),
-  siteringar: () => import("./visningar/siteringar.js?v=25"),
-  tid: () => import("./visningar/tid.js?v=25"),
+  kart: () => import("./visningar/kart.js?v=27"),
+  nett: () => import("./visningar/nett.js?v=27"),
+  verda: () => import("./visningar/verda.js?v=27"),
+  siteringar: () => import("./visningar/siteringar.js?v=27"),
+  tid: () => import("./visningar/tid.js?v=27"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}
@@ -279,7 +279,7 @@ kopier.addEventListener("click", async () => {
   sp.textContent = "Kopiert";
   kopier.setAttribute("aria-label", "Kopiert");
   hjelp.annonserMerke("Lenka er kopiert");
-  setTimeout(() => { sp.textContent = "Kopier lenke"; kopier.setAttribute("aria-label", "Kopier lenke"); }, 2000);
+  setTimeout(() => { sp.textContent = "Kopier lenkje"; kopier.setAttribute("aria-label", "Kopier lenkje"); }, 2000);
 });
 
 // ---------- global keys (amendment 35) ----------

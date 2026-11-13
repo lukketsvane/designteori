@@ -216,11 +216,13 @@
       src = '<p class="abs-src">Samandrag frå OpenAlex (metadata)</p>';
     }
     const lang = entry.l && entry.l !== "en" ? '<span class="tag tag-lang">samandrag på ' + esc(LANG_NAME[entry.l] || entry.l) + "</span>" : "";
-    return '<div class="abs" data-src="' + esc(entry.s) + '"><p class="abs-text">' + body + "</p>" + src + lang + "</div>";
+    const lg = entry.l && entry.l !== "und" ? ' lang="' + esc(entry.l) + '"' : "";
+    return '<div class="abs" data-src="' + esc(entry.s) + '"><p class="abs-text"' + lg + ">" + body + "</p>" + src + lang + "</div>";
   }
 
-  function noAbstractHtml(w, item) {
-    const pl = publisherLink(w, item);
+  /* noLink: raden har alt same lenkja i handlingsrada, så ho vert ikkje gjentatt her. */
+  function noAbstractHtml(w, item, noLink) {
+    const pl = noLink ? null : publisherLink(w, item);
     return '<div class="abs abs-none"><p class="abs-text">Ingen samandrag i korpuset</p>' + publisherLinkHtml(pl) + "</div>";
   }
 

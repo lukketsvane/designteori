@@ -565,7 +565,7 @@
     b.hidden = false;
     const i = S.pos.get(st.sim);
     const note = i !== undefined && S.meta.abs[i] === "0" && !S.noAbs ? `<p class="subline">Likskapen bygger berre på tittelen for dette verket.</p>` : "";
-    b.innerHTML = `<div class="sim-head"><strong>Liknande: ${esc(w ? w.title : st.sim)}</strong>${note}</div><button type="button" class="act act-block" data-simback="1">Tilbake til førre liste</button>`;
+    b.innerHTML = `<div class="sim-head"><strong>Liknande verk</strong>${note}</div><button type="button" class="act act-block" data-simback="1">Tilbake til førre liste</button>`;
   }
 
   function renderCounter() {
@@ -586,7 +586,7 @@
     el.textContent = t;
     const has = r.list.length > 0 || r.pinned != null;
     $("copyLinkBtn").hidden = !has;
-    $("exportBtn").hidden = !has || S.degraded || r.sim;
+    $("exportBtn").hidden = !has || S.degraded;
     $("listBtn").textContent = `Leseliste (${S.reading.length})`;
     $("listBtn").setAttribute("aria-expanded", String(!$("readingPanel").hidden));
   }
@@ -629,7 +629,7 @@
         ${tags ? `<p class="tags">${tags}</p>` : ""}
         ${teaser}
       </div>
-      <div class="actions">${primary}${absBtn}${sims}<button type="button" class="act" data-rl="${esc(id)}" aria-pressed="${inList}">${inList ? "✓ I lista" : "+ Leseliste"}</button><button type="button" class="act" data-copyref="${esc(id)}">Kopier som referanse</button></div>
+      <div class="actions">${primary}${absBtn}${sims}<button type="button" class="act" data-rl="${esc(id)}" aria-pressed="${inList}">${inList ? "✓ I lista" : "+ Leseliste"}</button></div>
       ${absOpen && !detail ? `<div class="slot">${absBlockHtml(i)}</div>` : ""}
       ${detail ? detailHtml(i) : ""}
     </article>`;
@@ -645,10 +645,12 @@
   function absBlockHtml(i) {
     const w = S.works[i];
     const item = S.access ? S.access[w.id] : null;
-    if (S.meta.abs[i] === "0") return U.noAbstractHtml(w, item);
+    const pl = U.publisherLink(w, item), info = accInfo(i, w);
+    const same = S.meta.acc[i] === "0" || !!(pl && info && info.href === pl.href);
+    if (S.meta.abs[i] === "0") return U.noAbstractHtml(w, item, same);
     const e = shardEntry(i);
     if (e === undefined) { ensureShard(shardOf(i)).then(() => refreshRow(w.id)); return U.abstractStateHtml("loading"); }
-    if (!e) return S.shards.get(shardOf(i)) === false ? U.abstractStateHtml("error") : U.noAbstractHtml(w, item);
+    if (!e) return S.shards.get(shardOf(i)) === false ? U.abstractStateHtml("error") : U.noAbstractHtml(w, item, same);
     return U.abstractHtml(e, { terms: S.hl.terms, fm: Search.FOLD_MAP });
   }
 
@@ -669,7 +671,7 @@
     if (doi && code !== "d" && code !== "0") links.push(`<a class="act act-block" href="${esc(doi)}" target="_blank" rel="noopener noreferrer">Utgjevarside</a>`);
     const src = U.safeHref(w.source_url);
     if (src && src !== info.href) links.push(`<a class="act act-block" href="${esc(src)}" target="_blank" rel="noopener noreferrer">Kjelde i arkivet</a>`);
-    const buttons = `<button type="button" class="act act-block" data-copylink="${esc(id)}">Kopier lenkje til verket</button>`;
+    const buttons = `<button type="button" class="act act-block" data-copylink="${esc(id)}">Kopier lenkje til verket</button><button type="button" class="act act-block" data-copyref="${esc(id)}">Kopier som referanse</button>`;
 
     let simBox = "";
     if (S.metaOK && S.meta.similar) {
@@ -884,7 +886,7 @@
     setTimeout(() => URL.revokeObjectURL(url), 2000);
   }
   function exportButtons(which) {
-    return `<span class="btn-row"><button type="button" class="act act-block" data-export="bibtex" data-which="${which}">BibTeX</button><button type="button" class="act act-block" data-export="ris" data-which="${which}">RIS</button><button type="button" class="act act-block" data-export="csv" data-which="${which}">CSV</button></span>`;
+    return `<span class="btn-row"><button type="button" class="act act-line" data-export="bibtex" data-which="${which}">BibTeX</button><button type="button" class="act act-line" data-export="ris" data-which="${which}">RIS</button><button type="button" class="act act-line" data-export="csv" data-which="${which}">CSV</button></span>`;
   }
   function renderExportMenu() {
     const box = $("exportMenu"), r = S.result;
@@ -902,7 +904,7 @@
     const ids = shared ? shared : S.reading;
     const pos = ids.map((id) => S.pos.get(id)).filter((p) => p !== undefined);
     if (!pos.length) {
-      box.innerHTML = `<h3>${shared ? "Delt leseliste" : "Leseliste"}</h3><p>${shared ? "Ingen av verka i lenkja finst i korpuset." : "Leselista er tom. Trykk «+ Leseliste» på eit verk. Lista vert lagra i denne nettlesaren."}</p>`;
+      box.innerHTML = `${shared ? "<h3>Delt leseliste</h3>" : ""}<p>${shared ? "Ingen av verka i lenkja finst i korpuset." : "Leselista er tom. Trykk «+ Leseliste» på eit verk. Lista vert lagra i denne nettlesaren."}</p>`;
       return;
     }
     const rows = pos.map((i) => {
@@ -910,10 +912,10 @@
       return `<li class="rl-row"><div><button type="button" class="link-row" data-jump="${esc(w.id)}">${esc(w.title)}</button><div class="subline">${esc([w.year, authorsText(w, 3), info.tag].filter(Boolean).join(" · "))}</div></div>${shared ? "" : `<button type="button" class="act" data-rl="${esc(w.id)}" aria-label="Fjern frå leseliste">Fjern</button>`}</li>`;
     }).join("");
     const tooMany = ids.length > 60;
-    box.innerHTML = `<h3>${shared ? `Delt leseliste (${pos.length} verk)` : `Leseliste (${pos.length})`}</h3>
+    box.innerHTML = `<h3>${shared ? "Delt leseliste · " : ""}${pos.length} verk</h3>
       ${shared ? `<button type="button" class="act act-block" data-rlsave="1">Lagre i leselista mi</button>` : ""}
       <ul class="plain rl">${rows}</ul>
-      <div class="btn-row">${exportButtons("leseliste")}<button type="button" class="act act-block" data-rlrefs="1">Kopier alle som referansar</button>${shared ? "" : `<button type="button" class="act act-block" data-rlshare="1">Del lista</button><button type="button" class="act act-block" data-rlclear="1">Tøm lista</button>`}</div>
+      <div class="btn-row">${exportButtons("leseliste")}<button type="button" class="act act-line" data-rlrefs="1">Kopier alle som referansar</button>${shared ? "" : `<button type="button" class="act act-line" data-rlshare="1">Del lista</button><button type="button" class="act act-line" data-rlclear="1">Tøm lista</button>`}</div>
       ${tooMany && !shared ? `<p class="subline">Ei delt liste tek høgst 60 verk; dei 60 første er med.</p>` : ""}`;
   }
 
@@ -968,8 +970,8 @@
 
     if (S.citSub === "internal") {
       const rows = (S.analysis?.citations?.top_internally_cited || []).filter((r) => match(`${r.title} ${(r.authors || []).join(" ")}`));
-      box.innerHTML = `<p class="subline">Tal: sitat frå Norden av sitat totalt.</p>` + rows.map((r) => {
-        const sub = [(r.authors || []).join(", "), `${fmt(r.internal_citations)} av ${fmt(r.global_citations)}`].filter(Boolean).join(" · ");
+      box.innerHTML = rows.map((r) => {
+        const sub = [(r.authors || []).join(", "), `${fmt(r.internal_citations)} nordiske av ${fmt(r.global_citations)} sitat`].filter(Boolean).join(" · ");
         return `
           <article class="item">
             <div class="meta-col">${esc(r.year || "")}${(r.countries || []).length ? `<br>${esc(r.countries.join(", "))}` : ""}</div>
@@ -986,8 +988,8 @@
     if (S.citSub === "canon") {
       if (!S.canon) S.canon = (await jget("data/cited_canon.json", { items: [] })).items || [];
       const rows = S.canon.filter((r) => match(`${r.title} ${r.authors}`)).slice(0, 150);
-      box.innerHTML = `<p class="subline">Tal: sitat frå Norden av sitat totalt.</p>` + rows.map((r) => {
-        const sub = [r.authors, `${fmt(r.nordic_citing_count)} av ${fmt(r.global_citations)}`].filter(Boolean).join(" · ");
+      box.innerHTML = rows.map((r) => {
+        const sub = [r.authors, `${fmt(r.nordic_citing_count)} nordiske av ${fmt(r.global_citations)} sitat`].filter(Boolean).join(" · ");
         const doiHref = U.doiHref({ doi: r.doi });
         return `
           <article class="item">
@@ -1034,21 +1036,12 @@
   }
 
   /* ---------- analyse ---------- */
-  /* Klyngene i analysen er dei same åtte som på kartet: namn og tal frå kart.json, PDF-ane talde i katalogen. */
-  async function kartClusters() {
-    const d = await jget(`data/klynger/kart.json?v=${Math.round(Date.now() / 3600e3)}`, null);
-    if (!d || !Array.isArray(d.klynger) || !Array.isArray(d.ids) || !Array.isArray(d.k)) return [];
-    const pdf = new Map();
-    d.ids.forEach((id, i) => { const w = S.byId.get(id); if (w && w.pdf) pdf.set(d.k[i], (pdf.get(d.k[i]) || 0) + 1); });
-    return d.klynger.map((c) => ({ name: c.namn, n: c.n, pdfs: pdf.get(c.id) || 0 })).sort((a, b) => b.n - a.n);
-  }
   async function renderAnalysis() {
     const a = S.analysis;
     if (!a) return;
     const decs = a.decades || [];
     const maxD = Math.max(1, ...decs.map((d) => d.total + (d.nordic_archives || 0)));
     const cs = a.countries || [];
-    const cls = await kartClusters();
     const vens = (a.top_venues || []).slice(0, 15);
     $("anaRoot").innerHTML = `
       <div class="ana-grid">
@@ -1057,12 +1050,12 @@
           <p class="subline">I parentes: verk med PDF i arkivet.</p>
           ${decs.map((d) => {
             const tot = d.total + (d.nordic_archives || 0);
-            return `<div class="bar-line"><span>${esc(d.decade)}</span><div class="bar-bg"><div class="bar-a" style="width:${((tot / maxD) * 100).toFixed(1)}%"></div><div class="bar-b" style="width:${((d.pdfs / maxD) * 100).toFixed(1)}%"></div></div><span class="r">${fmt(tot)} (${fmt(d.pdfs)})</span></div>`;
+            return `<div class="bar-line"><span>${esc(String(d.decade).replace(/^(\d{4})s$/, "$1-åra"))}</span><div class="bar-bg"><div class="bar-a" style="width:${((tot / maxD) * 100).toFixed(1)}%"></div><div class="bar-b" style="width:${((d.pdfs / maxD) * 100).toFixed(1)}%"></div></div><span class="r">${fmt(tot)} (${fmt(d.pdfs)})</span></div>`;
           }).join("")}
         </div>
         <div class="ana-sec">
-          <h3>Land</h3>
-          <p class="subline">Open: del av OpenAlex-verka med open tilgang.</p>
+          <h3>Verk per land</h3>
+          <p class="subline">OpenAlex og Arkiv er dei to laga i korpuset, talde kvar for seg. Open: del av OpenAlex-verka med open tilgang.</p>
           <div class="table-wrap">
             <table class="tbl-clean">
               <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">Open</th></tr></thead>
@@ -1070,21 +1063,12 @@
             </table>
           </div>
         </div>
-        ${cls.length ? `<div class="ana-sec">
-          <h3>Klynger</h3>
-          <div class="table-wrap">
-            <table class="tbl-clean">
-              <thead><tr><th>Klynge</th><th class="r">Verk</th><th class="r">PDF</th></tr></thead>
-              <tbody>${cls.map((c) => `<tr><td><strong>${esc(c.name)}</strong></td><td class="r">${fmt(c.n)}</td><td class="r">${fmt(c.pdfs)}</td></tr>`).join("")}</tbody>
-            </table>
-          </div>
-        </div>` : ""}
         <div class="ana-sec">
           <h3>Tidsskrift og konferansar</h3>
           <div class="table-wrap">
             <table class="tbl-clean">
-              <thead><tr><th>Kanal</th><th class="r">Verk</th><th class="r">PDF</th><th class="r">Sitat</th></tr></thead>
-              <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.pdfs)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
+              <thead><tr><th>Namn</th><th class="r">Verk</th><th class="r">Sitat</th></tr></thead>
+              <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
             </table>
           </div>
         </div>

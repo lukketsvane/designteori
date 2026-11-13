@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=25";
-import * as T from "./tilstand.js?v=25";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=27";
+import * as T from "./tilstand.js?v=27";
 
 const { S, D } = T;
 let el = {};
@@ -61,7 +61,7 @@ export function init() {
       slutTid = setTimeout(() => T.avsluttGest("q"), 1500);
     }, 200);
   };
-  el.brukKo = () => { if (ko != null) { const q = ko; ko = null; T.endre((s) => { s.f.q = q.trim(); s.f.qv = false; s.f.qd = false; }, { hist: "kont:q", utsett: 300 }); } el.sok.placeholder = "Søk i tittel, forfattar, kanal, institusjon"; };
+  el.brukKo = () => { if (ko != null) { const q = ko; ko = null; T.endre((s) => { s.f.q = q.trim(); s.f.qv = false; s.f.qd = false; }, { hist: "kont:q", utsett: 300 }); } el.sok.placeholder = "Søk i verk"; };
   el.sok.addEventListener("input", () => { brukSok(el.sok.value); visForslag(); });
   // suggestions: words in titles (tid.json) and cited works (siteringar.json), loaded on first focus
   el.sok.addEventListener("focus", () => {
@@ -185,7 +185,7 @@ function teiknPop(p) {
     settInnhald(pop, `<p class="pop-tittel">Tema</p>` + v.tema.map((t, j) => `
       <label class="sjekk"><input type="checkbox" data-dim="tema" value="${esc(t.k)}" ${S.f.tema.has(t.k) ? "checked" : ""}>
       <span class="prikk" style="background:${PALETTE_TEMA[j]}"></span><span class="sjekk-namn">${esc(t.namn)}</span><span class="tal" title="${esc(lagDel(j))}">${fmt(c.get(t.k) || 0)}</span></label>`).join("")
-      + `<p class="pop-merk">Tema er grupper av verk med like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre tema er mest arkivverk eller mest norskspråklege (sjå talet med musa over), så å velje dei er nesten å velje lag eller språk.</p>`);
+      + `<p class="pop-merk">Tema er grupper av like verk, ikkje emne sett av nokon. Nokre er mest arkivverk eller mest norskspråklege, så å velje dei er nesten å velje lag eller språk.</p>`);
     synkSjekk(pop, "tema");
   } else if (p === "type") {
     const c = T.fasettal("type");
@@ -196,7 +196,7 @@ function teiknPop(p) {
     synkSjekk(pop, "type");
   } else if (p === "kanal") {
     if (!pop.querySelector(".kanalsok")) {
-      pop.innerHTML = `<p class="pop-tittel">Kanaltype</p><div class="kgrliste"></div><p class="pop-tittel">Kanal</p>
+      pop.innerHTML = `<p class="pop-tittel">Type kanal</p><div class="kgrliste"></div><p class="pop-tittel">Einskildkanal</p>
         <input type="search" class="kanalsok" placeholder="Skriv for å finne ein kanal" aria-label="Finn kanal" autocomplete="off">
         <div class="kanalliste"></div><p class="pop-merk kanal-fleire"></p>
         <p class="pop-merk">${fmt(utanKanal())} verk har ingen kanal i dataa (mest arkivverk). Same kanal kan stå med fleire skrivemåtar.</p>`;
@@ -456,7 +456,7 @@ function teiknChipar(chips) {
     fokus = { id: a.id, fjern: a.dataset.fjern, verdi: a.dataset.verdi, prov: a.dataset.prov, qv: a.dataset.qv ?? a.dataset.qd, frase: a.dataset.frase, pos: xs.indexOf(a) };
   }
   rad.innerHTML = `
-    <span class="teljar"><b>${fmt(T.valt)}</b>${T.valt < n ? ` av ${fmt(n)}` : ""} verk</span>${status.join("")}
+    ${status.join("")}
     <div class="chipar">${chips.map((c) => `<span class="chip${c.feil ? " feil" : ""}"><span class="chip-tekst">${esc(c.tekst)}</span><button type="button" class="chip-x" data-fjern="${c.dim}" ${c.verdi != null ? `data-verdi="${esc(c.verdi)}"` : ""} aria-label="Fjern ${esc(c.tekst)}">×</button></span>`).join("")}</div>
     ${chips.length ? `<button type="button" class="knapp liten" id="nullstill">Nullstill alt</button>` : ""}`;
   rad.classList.toggle("tom", !chips.length && !status.length);

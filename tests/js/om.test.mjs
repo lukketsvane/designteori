@@ -38,7 +38,7 @@ test("om-fana: seksjonane og tabellane ligg i overflow-wrapper, tal frå fila", 
     n_queries: 26, model: "m", metrics: { recall_at_10: { lexical: { all: 0.31 }, fused: { all: 0.5 } }, success_at_10: { lexical: { all: 0.6 } } }, caveats: ["Vurderaren er ein språkmodell."],
   };
   const html = Om.aboutHtml(COUNTS, { openalex_generated_at: "2026-11-12T03:43:41+00:00", review: { human_checked: 0, kind_unknown: 671, without_citations: 1738, affiliation_unknown: 408 }, countries: { NO: { openalex: 970, nordic: 1161 } } }, quality, { terms: [{ id: "rtd", term: "research through design", nn: "Forklaring.", en: ["RtD"], no: [], q: "research through design" }] }, { built: "2026-11-13T10:06:19+00:00" });
-  for (const h of ["Kva som er med", "Korleis verk vart valde", "Kva som manglar", "Samandrag og PDF", "Språk", "Korleis søket verkar", "Målt søkjekvalitet", "Ordliste", "Data og kjeldekode"]) assert.ok(html.includes(h), h);
+  for (const h of ["Kva som er med", "Korleis verk vart valde", "Kva som manglar", "Samandrag og PDF", "Språk", "Korleis søket verkar", "Målt søkjekvalitet", "Ordliste"]) assert.ok(html.includes(h), h);
   assert.ok(html.includes("2026-11-12"));
   assert.ok(html.includes("2026-11-13"));
   assert.ok(html.includes("0,31"));
@@ -55,5 +55,5 @@ test("ordliste: escapa tekst og søkeknapp", () => {
   assert.ok(!html.includes("<b>t</b>"));
   assert.ok(html.includes("&lt;b&gt;t&lt;/b&gt;"));
   assert.ok(html.includes('data-q="q&quot;q"'));
-  assert.ok(html.includes("Søk på dette"));
+  assert.ok(html.includes(">Søk</button>"));
 });

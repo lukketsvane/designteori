@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=25";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=27";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -436,7 +436,7 @@ function verkHtml(i, fleire) {
   const forf = f.length ? v.forfattarar[f[0]].namn + (f.length > 1 ? " m.fl." : "") : "Ukjend forfattar";
   const kanal = D.kanal[i] >= 0 ? v.kanalar[D.kanal[i]].namn : "";
   const t = v.tema[D.tema[i]];
-  const pdfOrd = ["Open PDF, stadfest", "Lenke, ikkje stadfest", "Berre DOI", "Inga lenke"][D.pdf[i]];
+  const pdfOrd = ["Open PDF, stadfest", "Lenkje, ikkje stadfest", "Berre DOI", "Inga lenkje"][D.pdf[i]];
   const sit = D.sit[i] >= 0 ? `${fmt(D.sit[i])} siteringar` : `Arkiv${D.lenker && D.lenker.kjelde[i] ? ": " + esc(D.lenker.kjelde[i]) : ""}`;
   return `<div class="tt-tittel">${esc(D.kol.tittel[i])}</div>
     <div class="tt-meta">${esc(forf)} · ${D.ar[i]}${kanal ? " · " + esc(kutt(kanal, 50)) : ""}</div>
@@ -526,7 +526,7 @@ function teiknTeikn() {
       return `<button type="button" class="teikn-post" data-dim="${dim}" data-k="${esc(key)}" aria-pressed="${aktiv}">${inner}</button>`;
     }).join("");
     if (modus === "land") html += `<span class="teikn-merk">Land (nordisk tilknyting, elles kjelda). Verk med fleire land tel under kvart land.</span>`;
-    if (modus === "tema") html += `<span class="teikn-merk">Tema er grupper av like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre er mest arkivverk eller norskspråklege (Teneste- og systemdesign er nesten berre norsk arkiv).</span>`;
+    if (modus === "tema") html += `<span class="teikn-merk">Tema er grupper av like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre er mest arkivverk eller norskspråklege (Teneste- og systemdesign er nesten berre norsk arkiv). Inndelinga er ikkje den same som klyngene i kartet på hovudsida.</span>`;
   }
   html += `<span class="teikn-merk">Storleik: siteringar (berre OpenAlex)</span>`;
   html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;

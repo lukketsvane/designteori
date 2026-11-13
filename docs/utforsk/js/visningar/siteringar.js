@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=25";
+import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=27";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -47,7 +47,7 @@ export default {
       const b = e.target.closest("button[data-v]");
       if (b) T.veksle("kanon", T.nodeKey(+b.dataset.v), { erstatt: !(e.shiftKey || e.ctrlKey || e.metaKey) });
       const t = e.target.closest("button[data-rang]");
-      if (t) { el.rang.classList.toggle("lukka"); t.setAttribute("aria-expanded", String(!el.rang.classList.contains("lukka"))); t.textContent = el.rang.classList.contains("lukka") ? "Vis" : "Gøym"; scene.storleik(); }
+      if (t) { el.rang.classList.toggle("lukka"); t.setAttribute("aria-expanded", String(!el.rang.classList.contains("lukka"))); t.textContent = el.rang.classList.contains("lukka") ? "Vis lista" : "Gøym lista"; scene.storleik(); }
     });
     ramme.teikn.addEventListener("click", (e) => { const b = e.target.closest("button[data-straum]"); if (b) T.endre((s) => { s.sit.straum = b.dataset.straum; }); });
     el.svg.addEventListener("click", svgKlikk);
@@ -385,7 +385,7 @@ function teiknRang() {
   const lukka = el.rang.classList.contains("lukka");
   A.hjelp.bevarFokus(el.rang, () => {
     const kv = S.f.kanon.size === 1 ? T.nodeAv([...S.f.kanon][0]) : -1;
-    el.rang.innerHTML = `<div class="sidepanel-topp"><span>Mest sitert av utvalet</span><button type="button" class="knapp liten" data-rang aria-expanded="${!lukka}">${lukka ? "Vis" : "Gøym"}</button></div>
+    el.rang.innerHTML = `<div class="sidepanel-topp"><span>Utvalet siterer mest</span><button type="button" class="knapp liten" data-rang aria-expanded="${!lukka}">${lukka ? "Vis lista" : "Gøym lista"}</button></div>
     ${kv >= 0 ? `<p class="rang-valt">Utvalet: verk som siterer <b>${esc(T.merkelapp(kv))}</b>. <button type="button" class="lenkeknapp" data-nabolag="${kv}">Kven siterer det, per tiår og land</button></p>` : ""}
     ${topp.length ? `<p class="rang-nokkel" aria-hidden="true"><svg width="26" height="8"><rect x="0" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="9" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="18" y="2" width="7" height="6" fill="#e8e8e8"/></svg> 2000-, 2010-, 2020-åra · tal i utvalet</p>
     <ol>${topp.map(([v, c]) => { const iKart = K.pos.has(v); return `<li class="rangrad"><button type="button" class="rang-namn" data-v="${v}" title="${esc(nodeTittel(v))}${iKart ? "" : ` (ikkje mellom dei ${K.N} i kartet)`}" aria-label="${esc(T.merkelapp(v))}, ${esc(nodeTittel(v))}: sitert av ${fmt(c)} verk i utvalet. I heile korpuset: ${profilTekst(v)} av dei siterande verka.${iKart ? "" : " Ikkje i kartet."}">${esc(T.merkelapp(v))}${iKart ? "" : ` <span class="ikkje-kart">ikkje i kartet</span>`}</button><span class="rang-tal" title="Del av alle siterande verk i korpuset: ${profilTekst(v)}">${miniStolpar(v)} ${fmt(c)}</span><button type="button" class="knapp liten rang-nabo" data-nabolag="${v}" aria-label="Opne nabolaget til ${esc(T.merkelapp(v))}: kven siterer det, per tiår og land" title="Nabolag: kven siterer det, per tiår og land">↗</button><span class="rang-bar"><span style="width:${Math.round((100 * c) / mx)}%"></span></span></li>`; }).join("")}</ol>

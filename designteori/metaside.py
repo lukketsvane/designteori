@@ -23,7 +23,10 @@ PILOT_BULLET = "**Støtte oppgjeve i delane som er lesne.**"
 
 
 NB = " "
-ORD = (("utanfor scope", "utanfor utvalet"), ("held scope saman", "held utvalet saman"), ("scope-verk", "verk i utvalet"),
+ORD = (("sitatlista cited_canon", "lista over siterte verk"), ("referansar til cited_canon-element", "referansar til siterte element"),
+       ("cited_canon har dublettoppføringar", "lista over siterte verk har dublettoppføringar"), ("eksisterande semantic_map.json", "det eksisterande semantiske kartet"),
+       ("at kind article og conference-paper skil to sjangrar", "at artiklar og konferansepapir er to ulike sjangrar"),
+       ("utanfor scope", "utanfor utvalet"), ("held scope saman", "held utvalet saman"), ("scope-verk", "verk i utvalet"),
        ("in_scope vart", "Utvalet vart"), ("scope-til-scope-referanse", "referanse innanfor utvalet"), ("frå scope til scope", "frå utvalet til utvalet"),
        ("Scope vart", "Utvalet vart"), ("i scope", "i utvalet"), ("til scope", "til utvalet"), ("frå scope", "frå utvalet"),
        ("den private cachen", "det private mellomlageret"))
@@ -154,7 +157,7 @@ main{{max-width:44rem;margin:0 auto;padding:.4rem max(16px,4.5vw) 5rem}}
 a{{color:inherit;text-underline-offset:.16em;text-decoration-thickness:1px;text-decoration-color:var(--dim)}}
 a:hover{{text-decoration-color:var(--fg)}}
 .topp{{display:flex;gap:18px;flex-wrap:wrap;font:12px/1.4 var(--mono);letter-spacing:.02em;color:var(--dim)}}
-.topp a{{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}} .topp a:hover{{color:var(--fg)}}
+.topp a{{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}} .topp a:hover{{color:var(--fg)}} .topp .ut{{margin-left:auto}}
 h1{{font-size:1.5rem;line-height:1.25;margin:.8rem 0 .4rem;font-weight:400}}
 h2{{font-size:1.2rem;line-height:1.3;margin:2.4rem 0 .6rem;padding-top:.8rem;border-top:1px solid var(--hair);font-weight:400}}
 h3{{font-size:1.02rem;margin:1.6rem 0 .4rem;font-weight:500}}
@@ -162,9 +165,10 @@ h3{{font-size:1.02rem;margin:1.6rem 0 .4rem;font-weight:500}}
 p,li{{overflow-wrap:anywhere}}
 ul,ol{{padding-left:1.3em}} li{{margin:.45rem 0}}
 code{{font:.86em var(--mono)}}
-nav.toc{{margin:1.2rem 0;padding:.4rem 1rem;border:1px solid var(--line);border-radius:4px}}
-nav.toc ol{{list-style:none;margin:0;padding:0}} nav.toc li{{margin:0}}
-nav.toc a{{display:block;padding:.55rem 0;text-decoration:none}} nav.toc a:hover{{text-decoration:underline}}
+details.toc{{margin:1.2rem 0;padding:0 1rem;border:1px solid var(--line);border-radius:4px}}
+details.toc summary{{cursor:pointer;min-height:44px;display:flex;align-items:center;font:13px/1.5 var(--mono);color:var(--dim)}}
+details.toc ol{{list-style:none;margin:0;padding:0 0 .4rem}} details.toc li{{margin:0}}
+details.toc a{{display:flex;align-items:center;min-height:44px;text-decoration:none}} details.toc a:hover{{text-decoration:underline}}
 details.pilot{{border:1px solid var(--line);border-radius:4px;padding:0 1rem;margin:.6rem 0}}
 details.pilot summary{{cursor:pointer;min-height:44px;display:flex;align-items:center;font:13px/1.5 var(--mono);color:var(--dim)}}
 .merk{{color:var(--dim);font-style:italic}}
@@ -174,10 +178,10 @@ footer a{{display:inline-block;padding:.7rem 0}}
 </head>
 <body>
 <main>
-<div class="topp"><a href="../">← katalogen</a><a href="../utforsk/">utforsk</a></div>
+<div class="topp"><a href="../">katalog</a><a href="../utforsk/">utforsk</a><a class="ut" href="https://iverfinne.no">iverfinne.no</a></div>
 <h1>Kva korpuset viser</h1>
-<p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho.</p>
-<nav class="toc" aria-label="Innhald"><ol>{toc}</ol></nav>
+<p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho. Klyngene i teksten høyrer til eit eige kart over verk med fulltekst; dei er ikkje dei same som i kartet på hovudsida eller i Utforsk.</p>
+<details class="toc"><summary>Innhald</summary><nav aria-label="Innhald"><ol>{toc}</ol></nav></details>
 {body}
 <footer>Rekna frå OpenAlex-laget og arkivlaget i dette korpuset, med fulltekst lesen lokalt og aldri publisert. Feil og spørsmål: opne ei sak på <a href="https://github.com/lukketsvane/designteori/issues">GitHub</a>.</footer>
 </main>

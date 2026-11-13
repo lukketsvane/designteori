@@ -79,25 +79,37 @@
     const p = (v) => (v == null ? "–" : Math.round(v * 100) + " %");
     const d2 = (v) => (v == null ? "–" : v.toFixed(2).replace(".", ","));
     const plain = val("success_at_10", "fallback", "all") == null ? "" :
-      "<div class=\"om-plain\"><h4>I kva grad kan du stole på søket?</h4><p>Utan språkmodell, som er standard, fann søket minst eitt relevant verk blant dei ti første i " + esc(p(val("success_at_10", "fallback", "all"))) +
+      "<div class=\"om-plain\"><p>Utan språkmodell, som er standard, fann søket minst eitt relevant verk blant dei ti første i " + esc(p(val("success_at_10", "fallback", "all"))) +
       " av testspørjingane. Når du leitar etter eitt enkelt verk du hugsar med eigne ord, er delen " + esc(p(val("success_at_10", "fallback", "known-item"))) +
       " (emnesøk på engelsk: " + esc(p(val("success_at_10", "fallback", "topical-en"))) + "). Med språkmodell er tala " + esc(p(val("success_at_10", "fused", "all"))) + " og " + esc(p(val("success_at_10", "fused", "known-item"))) +
       ". For kjende verk er søk med språkmodell svakare enn reint meiningssøk (del av relevante verk i topp ti: " + esc(d2(val("recall_at_10", "fused", "known-item"))) + " mot " + esc(d2(val("recall_at_10", "semantic", "known-item"))) + ").</p>" +
       "<p>Tala er rettleiing, ikkje garanti: søkereglane vart justerte mot ein tredel av testspørjingane, relevans er vurdert av ein språkmodell ut frå dei same systema, og det er få spørjingar. Prøv fleire ord og både norsk og engelsk dersom du ikkje finn det du leitar etter, og bruk «Liknande» frå eit verk som passar.</p></div>";
-    return "<p>" + esc(fmt(q.n_queries)) + " testspørjingar" + (q.model ? ", modell " + esc(q.model) : "") + ". Relevans er vurdert av ein språkmodell, ikkje av ein domeneekspert.</p>" +
+    /* Prosenttala står i teksten over; same tal som desimalar, modellnamn og avgrensingar ligg i den samanfelte delen. */
+    return "<p>" + esc(fmt(q.n_queries)) + " testspørjingar. Relevans er vurdert av ein språkmodell, ikkje av ein domeneekspert.</p>" +
       plain +
+      "<details class=\"om-tek\"><summary>Tal og avgrensingar i målinga (tekniske)</summary>" +
+      (q.model ? "<p>Modell: " + esc(q.model) + ".</p>" : "") +
       "<h4>Del av relevante verk i topp 10</h4>" + one("recall_at_10") +
       "<h4>Del spørjingar med minst eitt relevant verk i topp 10</h4>" + one("success_at_10") +
-      (cav ? "<details class=\"om-tek\"><summary>Avgrensingar i målinga (tekniske)</summary><ul class=\"plain\">" + cav + "</ul></details>" : "");
+      (cav ? "<ul class=\"plain\">" + cav + "</ul>" : "") + "</details>";
+  }
+
+  /* «Norsk:»-linja kjem berre med når ho gir noko anna enn oppslagsordet. */
+  function glEq(t) {
+    const same = (x) => String(x).trim().toLowerCase() === String(t.term).trim().toLowerCase();
+    const en = t.en && t.en.length ? "Engelsk: " + esc(t.en.join(", ")) : "";
+    const no = (t.no || []).filter((x) => !same(x));
+    const nb = no.length ? "Norsk: " + esc(no.join(", ")) : "";
+    const s = [en, nb].filter(Boolean).join(" · ");
+    return s ? '<p class="gl-eq">' + s + "</p>" : "";
   }
 
   function glossaryHtml(g) {
     const terms = g && g.terms ? g.terms : [];
     if (!terms.length) return "<p>Ordlista er ikkje tilgjengeleg no.</p>";
     return terms.map((t) =>
-      '<article class="gl-item" id="gl-' + esc(t.id) + '"><h4>' + esc(t.term) + "</h4><p>" + esc(t.nn) + "</p>" +
-      '<p class="gl-eq">' + (t.en && t.en.length ? "Engelsk: " + esc(t.en.join(", ")) : "") + (t.no && t.no.length ? (t.en && t.en.length ? " · " : "") + "Norsk: " + esc(t.no.join(", ")) : "") + "</p>" +
-      '<button type="button" class="act act-block gl-search" data-q="' + esc(t.q || t.term) + '">Søk på dette</button></article>').join("");
+      '<article class="gl-item" id="gl-' + esc(t.id) + '"><div class="gl-head"><h4>' + esc(t.term) + "</h4>" +
+      '<button type="button" class="act act-line gl-search" data-q="' + esc(t.q || t.term) + '" aria-label="Søk på ' + esc(t.term) + '">Søk</button></div><p>' + esc(t.nn) + "</p>" + glEq(t) + "</article>").join("");
   }
 
   /* c: meta.counts, a: about.json eller null, q: search_quality.json eller null, g: glossary.json eller null, m: {built} */
@@ -112,7 +124,7 @@
     const secs = [];
 
     secs.push("<section class=\"om-sec\"><h3>Kva som er med</h3>" +
-      "<p>" + esc(fmt(f.total)) + " verk om design og designforsking" + (f.y0 && f.y1 ? ", " + esc(f.y0) + "–" + esc(f.y1) : "") + ". To lag: " + esc(fmt(f.openalex)) + " frå OpenAlex og " + esc(fmt(f.nordic)) + " frå nordiske arkiv.</p>" +
+      "<p>" + esc(fmt(f.total)) + " verk om design og designforsking" + (f.y0 && f.y1 ? ", " + esc(f.y0) + "–" + esc(f.y1) : "") + ", frå OpenAlex og nordiske arkiv.</p>" +
       table(["Kjelde", "Verk"], sources.map((s) => [s.name, fmt(s.n)])) +
       "<p class=\"om-dates\">OpenAlex-uttrekk: " + esc(dateOnly(a.openalex_generated_at) || "ukjend") + ". Søkedata bygd: " + esc(dateOnly(m.built || a.built) || "ukjend") + ".</p></section>");
 
@@ -125,19 +137,19 @@
 
     secs.push("<section class=\"om-sec\"><h3>Kva som manglar</h3><ul class=\"plain\">" +
       "<li>Fulltekst vert ikkje publisert her, og søket går ikkje i fulltekst.</li>" +
-      "<li>Arkiva er ujamne. Finland har ingen arkivverk. Arkivverk har ingen sitattal og berre tittel i meiningssøket.</li>" +
+      "<li>Arkiva er ujamne. Finland har ingen arkivverk. Arkivverk har berre tittel i meiningssøket.</li>" +
       "<li>Bøker utan open adresse finst berre som referanse.</li></ul></section>");
 
     secs.push("<section class=\"om-sec\"><h3>Samandrag og PDF</h3>" +
       table(["Samandrag", "Verk"], [["Frå OpenAlex (metadata)", fmt(num(abs, "o"))], ["Trekt ut av open PDF (automatisk)", fmt(num(abs, "x"))], ["Ingen samandrag i korpuset", fmt(num(abs, "0"))]]) +
       table(["Tilgang", "Verk"], [
-        ["Open PDF, kopi i arkivet (open lisens)", fmt(num(acc, "h"))],
-        ["Open PDF, kontrollert lenkje (fila ligg hos eigaren)", fmt(num(acc, "v"))],
-        ["PDF, ikkje kontrollert adresse", fmt(num(acc, "u"))],
-        ["Berre utgjevarside (DOI)", fmt(num(acc, "d"))],
+        ["Open PDF (kopi i arkivet)", fmt(num(acc, "h"))],
+        ["Open PDF", fmt(num(acc, "v"))],
+        ["PDF (ikkje kontrollert)", fmt(num(acc, "u"))],
+        ["Utgjevarside", fmt(num(acc, "d"))],
         ["Ingen lenkje", fmt(acc["0"] != null ? acc["0"] : acc.none)],
       ]) +
-      "<p>«Kontrollert» tyder at adressa svarte med ei open PDF-fil då ho vart sjekka. Fila ligg hos eigaren og kan flytte seg. «Ikkje kontrollert» kjem frå metadata og kan føre til ei utgjevarside eller ein betalingsmur.</p></section>");
+      "<p>Namna er dei same som på knappane i katalogen. «Kopi i arkivet» har open lisens. «Open PDF» er kontrollert: adressa svarte med ei open PDF-fil då ho vart sjekka, men fila ligg hos eigaren og kan flytte seg. «Ikkje kontrollert» kjem frå metadata og kan føre til ei utgjevarside eller ein betalingsmur. «Utgjevarside» er berre DOI-lenkja.</p></section>");
 
     const lang = c.lang || {};
     secs.push("<section class=\"om-sec\"><h3>Språk</h3>" +
@@ -150,7 +162,6 @@
     secs.push("<section class=\"om-sec\"><h3>Målt søkjekvalitet</h3>" + qualityHtml(q) + "</section>");
     secs.push("<section class=\"om-sec\" id=\"ordliste\"><h3>Ordliste</h3><div id=\"glossaryBox\">" + glossaryHtml(g) + "</div></section>");
 
-    secs.push("<section class=\"om-sec\"><h3>Data og kjeldekode</h3><p><a href=\"data/korpus.csv\" download>korpus.csv</a> (heile korpuset som tabell) · <a href=\"https://github.com/lukketsvane/designteori\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub-repoet</a></p></section>");
     return secs.join("");
   }
 
