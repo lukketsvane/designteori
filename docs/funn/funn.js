@@ -194,7 +194,7 @@
         y += gH;
       }
       const vtxt = inf.vtxt, ex = inf.lines.length > 1 ? lh : 0;
-      const g = F.s("g", { cls: "mk fd", tip: r.tip || (r.label + "|" + (r.tiptxt || vtxt)) }, svg);
+      const g = F.s("g", { cls: "mk fd", tip: r.tip || (r.label + "|" + (r.tiptxt || vtxt)), opacity: r.fade ? 0.55 : null }, svg);
       F.s("rect", { x: 0, y: y, width: W, height: inf.h - 2, fill: "transparent" }, g);
       inf.lines.forEach((t, k) => F.s("text", { x: 0, y: y + 12 + k * lh, text: t, cls: "fg", style: "font-size:12px" }, g));
       F.s("text", { x: W, y: y + 12, "text-anchor": "end", text: vtxt, cls: r.vcls || "b" }, g);
@@ -325,7 +325,7 @@
 
   /* ---------- lat teikning ---------- */
   /* venta høgd per figur (mobil, brei), målt frå ferdig teikna figurar: held sida stabil medan ho blir teikna */
-  F.HOYDE = {f01: [491, 419], f02: [471, 490], f03: [681, 665], f04: [809, 809], f05: [776, 733], f06: [951, 328], f07: [413, 220], f08: [1198, 425], f09: [1316, 492], f10: [1308, 445], f11: [763, 412], f12: [1271, 1246], f13: [812, 994], f14: [891, 496], f15: [564, 546], f16: [602, 602], f17: [604, 284], f18: [1049, 737], f19: [1236, 582], f20: [1572, 937], f21: [564, 543], f22: [803, 787], f23: [1447, 1023], f24: [1218, 784], f25: [1121, 692], f26: [6187, 3869]};
+  F.HOYDE = {f01: [491, 440], f02: [507, 526], f03: [719, 703], f04: [809, 809], f05: [806, 739], f06: [951, 328], f07: [413, 220], f08: [1268, 431], f09: [718, 846], f10: [1283, 438], f11: [763, 412], f12: [1241, 1236], f13: [812, 981], f14: [970, 496], f15: [600, 564], f16: [602, 602], f17: [604, 284], f18: [1095, 729], f19: [1243, 586], f20: [1197, 589], f21: [618, 579], f22: [816, 803], f23: [1627, 1024], f24: [1218, 784], f25: [1155, 692], f26: [3993, 2399]};
   function expH(id) {
     const e = F.HOYDE[id]; if (!e) return 0;
     return innerWidth < 700 ? e[0] : e[1];
@@ -385,10 +385,46 @@
     const pre = () => F.manifest().then((m) => Object.keys(m.filer).forEach((f) => F.load(f))).catch(() => {});
     if (window.requestIdleCallback) requestIdleCallback(pre, { timeout: 1200 }); else setTimeout(pre, 300);
     F.manifest().catch(() => {});
-    const io = new IntersectionObserver((es) => {
-      es.forEach((en) => { if (en.isIntersecting) { io.unobserve(en.target); render(en.target, true); watch(en.target); } });
-    }, { rootMargin: "900px 0px" });
+    /* alle figurar blir teikna i rekkjefølgje så snart sida er i ro (ei om gongen), og dei som ligg nær skjermen først.
+       Ein figur som ikkje er teikna held plassen sin med målt høgd, så sida skal ikkje hoppe. */
+    const state = new Map();
+    const draw1 = (el) => {
+      if (!state.has(el)) state.set(el, render(el, true).then(() => watch(el)));
+      return state.get(el);
+    };
+    F.ensure = (target) => {
+      /* teikn alle figurar frå toppen og ned til og med målet, så ein hoppar til ein ferdig side */
+      const upto = els.indexOf(target.closest ? (target.closest("[data-fig]") || target) : target);
+      const need = upto >= 0 ? els.slice(0, upto + 1) : els.filter((e) => target.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_PRECEDING);
+      return Promise.all(need.map(draw1));
+    };
+    const io = new IntersectionObserver((es) => { es.forEach((en) => { if (en.isIntersecting) { io.unobserve(en.target); draw1(en.target); } }); }, { rootMargin: "900px 0px" });
     els.forEach((e) => io.observe(e));
+    const rest = () => { const nxt = els.find((e) => !state.has(e)); if (!nxt) return; draw1(nxt).then(() => setTimeout(rest, 30)); };
+    if (window.requestIdleCallback) requestIdleCallback(rest, { timeout: 1500 }); else setTimeout(rest, 400);
+    /* hopp frå meny, figurlenkjer og rutenett: teikn først, rull deretter, så ein landar nøyaktig */
+    const jump = async (hash, push) => {
+      let t = null; try { t = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; } catch (e) { t = null; }
+      if (!t) return false;
+      await F.ensure(t);
+      t.dispatchEvent(new CustomEvent("opna"));
+      t.scrollIntoView({ block: "start", behavior: "instant" });
+      if (push) history.pushState(null, "", hash);
+      if (t.classList.contains("sp")) { t.classList.remove("fokus"); void t.offsetWidth; t.classList.add("fokus"); }
+      spy();
+      return true;
+    };
+    F.jump = jump;
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest("a[href^='#']");
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.getAttribute("href") === "#") return;
+      const h = a.getAttribute("href");
+      if (!document.getElementById(decodeURIComponent(h.slice(1)))) return;
+      e.preventDefault();
+      jump(h, true);
+    });
+    addEventListener("popstate", () => { if (location.hash) jump(location.hash, false); });
+    if (location.hash) setTimeout(() => jump(location.hash, false), 0);
 
     function watch(el) {
       const mount = el.querySelector(".mount");
@@ -407,9 +443,21 @@
     secs = Array.from(document.querySelectorAll("[data-sek]"));
     addEventListener("scroll", spy, { passive: true });
     addEventListener("resize", spy);
-    addEventListener("hashchange", () => setTimeout(spy, 60));
     spy();
     hero();
+    heroTal();
+  }
+
+  /* hero: tal på funn kjem frå manifestet, så sida og dataa seier det same */
+  async function heroTal() {
+    const li = document.querySelector("[data-funn]");
+    if (!li) return;
+    try {
+      const f = (await F.manifest()).funn;
+      if (!f) return;
+      li.querySelector("b").textContent = F.n(f.kontrollerte);
+      li.querySelector("span").textContent = "kontrollerte funn (" + F.n(f.stadfesta) + " stadfesta, " + F.n(f.retta) + " retta); " + F.n(f.teikna) + " av dei er teikna, pluss " + F.n(f.sporsmal) + " spørsmål";
+    } catch (e) { /* den statiske teksten står att */ }
   }
 
   /* ---------- inngangsbilete: kartet som bakgrunn ---------- */

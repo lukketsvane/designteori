@@ -4,6 +4,7 @@
   const F = window.FUNN, n0 = F.n, P = F.p;
   const short = (p) => p.replace(/^før 2000$/, "<2000").replace(/^(\d\d)(\d\d)–(\d\d)$/, "$2–$3");
   const cap = (el, t) => F.d("h4", { text: t }, el);
+  const b = (t) => Object.assign(document.createElement("b"), { textContent: t });
 
   /* ---------- f01: frå rader til verk (vertikal sankey) ---------- */
   F.fig.f01 = function (m, d, ctx) {
@@ -76,7 +77,7 @@
   F.fig.f02 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 560;
     F.legend(m, [{ c: "var(--oa)", t: "OpenAlex-laget" }, { c: "var(--ark)", t: "Arkivlaget" }]);
-    const H = mob ? 190 : 250, pl = 30, pr = 2, pt = 8, pb = 20, strip = 40;
+    const H = mob ? 190 : 250, pl = 30, pr = 2, pt = 8, pb = 20, strip = 54;
     const svg = F.svg(m, W, H + strip + 8, "Verk per år 1983 til 2026 i to lag, med periodesummar");
     const ar = d.ar, tot = ar.map((_, i) => d.oa[i] + d.ark[i]);
     const x = d3.scaleBand().domain(ar).range([pl, W - pr]).paddingInner(0.14).paddingOuter(0);
@@ -99,16 +100,20 @@
       const g = F.s("g", { cls: "mk fd", tip: d.periodar[i] + "|OpenAlex-laget " + n0(d.per_oa[i]) + "|Arkivlaget " + n0(d.per_ark[i]) }, svg);
       F.s("rect", { x: x0 + 1, y: H + 4, width: Math.max(1, x1 - x0 - 2), height: strip - 4, fill: "var(--soft)", stroke: "var(--line)", "stroke-width": 1, rx: 2 }, g);
       if (x1 - x0 > 30) {
-        F.s("text", { x: (x0 + x1) / 2, y: H + 19, "text-anchor": "middle", text: short(d.periodar[i]) }, g);
-        F.s("text", { x: (x0 + x1) / 2, y: H + 33, "text-anchor": "middle", text: n0(d.per_oa[i] + d.per_ark[i]), cls: "b" }, g);
+        /* smale periodar: overskrifta på to linjer, så ho ikkje rennar saman med nabokolonnen */
+        const lab = short(d.periodar[i]), two = x1 - x0 < 58 && lab.indexOf("–") > 0;
+        const lines = two ? [lab.split("–")[0] + "–", lab.split("–")[1]] : [lab];
+        lines.forEach((t, k) => F.s("text", { x: (x0 + x1) / 2, y: H + 17 + k * 12, "text-anchor": "middle", text: t }, g));
+        F.s("text", { x: (x0 + x1) / 2, y: H + 17 + lines.length * 12 + 3, "text-anchor": "middle", text: n0(d.per_oa[i] + d.per_ark[i]), cls: "b", style: two ? "font-size:10.5px" : null }, g);
       }
     });
     /* slag */
     const head = F.d("div", { style: "margin-top:26px" }, m);
+    F.d("h4", { text: "Slag per lag, del av verka (prosent)", style: "font:400 12px/1.35 var(--mono);color:var(--dim);margin:0 0 6px" }, head);
     const types = d.typar, nm = ["artikkel", "konferansebidrag", "bok eller kapittel", "avhandling", "anna", "ukjend"];
-    const fills = ["var(--t4)", "var(--t3)", "var(--t2)", { hatch: "var(--t3)" }, "var(--t1)", { outline: true }];
-    const lg = F.legend(head, types.map((t, i) => ({ c: i === 3 ? "repeating-linear-gradient(45deg,var(--t3) 0 2px,transparent 2px 5px)" : (i === 5 ? "transparent" : fills[i]), t: nm[i], open: i === 5 })));
-    const sv2 = F.svg(m, W, 112, "Slag per lag");
+    const fills = ["var(--k4)", "var(--k3)", "var(--k2)", { hatch: "var(--k3)" }, "var(--k1)", { outline: true }];
+    const lg = F.legend(head, types.map((t, i) => ({ c: i === 3 ? "repeating-linear-gradient(45deg,var(--k3) 0 2px,transparent 2px 5px)" : (i === 5 ? "transparent" : fills[i]), t: nm[i], open: i === 5 })));
+    const sv2 = F.svg(m, W, 112, "Slag per lag, del av verka i kvart lag");
     [["OpenAlex-laget", d.typ_sum_oa, 4694, 4], ["Arkivlaget", d.typ_sum_ark, 1738, 62]].forEach(([nme, arr, tt, y0]) => {
       F.s("rect", { x: 0, y: y0 - 2, width: 10, height: 10, rx: 2, fill: y0 < 10 ? "var(--oa)" : "var(--ark)" }, sv2);
       F.s("text", { x: 16, y: y0 + 8, text: nme + " ", cls: "fg" }, sv2).appendChild(Object.assign(F.s("tspan", { text: n0(tt), cls: "b" })));
@@ -127,25 +132,28 @@
 
   /* ---------- f03: språk ---------- */
   F.fig.f03 = function (m, d, ctx) {
-    const [A, B, C] = F.pans(m, 3, "", ["Språkmerking, 4 694 verk", "Verk på landets eige språk, per land", "FormAkademisk: del som ikkje er engelsk, per periode"]);
-    /* A: to stolpar med utvida del */
-    const W = A.w, svg = F.svg(A, W, 118, "Del av verka som er merkte engelsk");
-    const tt = d.engelsk + d.ikkje_engelsk, wI = (d.ikkje_engelsk / tt) * W;
-    F.s("rect", { x: 0, y: 8, width: W - wI - 1, height: 22, fill: "var(--t3)", cls: "mk gx", tip: "Merkt engelsk|" + n0(d.engelsk) + " av " + n0(tt) + " verk" }, svg);
-    F.s("rect", { x: W - wI, y: 8, width: wI, height: 22, fill: "var(--fg)", cls: "mk", tip: "Merkt anna enn engelsk|" + n0(d.ikkje_engelsk) + " verk" }, svg);
+    const [A, B, C] = F.pans(m, 3, "", ["Språkmerking, 4 694 verk", "Verk på landets eige språk, per land", "FormAkademisk: del som ikkje er engelsk, prosent per periode, med n"]);
+    /* A: to stolpar med utvida del. Kategoriar i blågrøn skala (svart er reservert for observert) */
+    const W = A.w, svg = F.svg(A, W, 128, "Del av verka som er merkte engelsk, og kvar dei ikkje-engelske står");
+    const tt = d.engelsk + d.ikkje_engelsk, wI = Math.max(2, (d.ikkje_engelsk / tt) * W);
+    F.s("rect", { x: 0, y: 8, width: W - wI - 1, height: 22, fill: "var(--k2)", cls: "mk gx", tip: "Merkt engelsk|" + n0(d.engelsk) + " av " + n0(tt) + " verk" }, svg);
+    F.s("rect", { x: W - wI, y: 8, width: wI, height: 22, fill: "var(--k4)", cls: "mk", tip: "Merkt anna enn engelsk|" + n0(d.ikkje_engelsk) + " verk" }, svg);
     F.s("text", { x: 0, y: 46, text: "Engelsk " + n0(d.engelsk), cls: "fg" }, svg);
-    F.s("path", { d: "M" + (W - wI) + ",32 L0,66 M" + W + ",32 L" + W + ",66", stroke: "var(--ref)", fill: "none" }, svg);
+    F.s("text", { x: W, y: 46, "text-anchor": "end", text: "Ikkje engelsk " + n0(d.ikkje_engelsk), cls: "b" }, svg);
+    F.s("path", { d: "M" + (W - wI) + ",31 L" + W + ",31 L" + W + ",64 L0,64 Z", fill: "var(--k4)", opacity: 0.14 }, svg);
     const fa = d.formakademisk.ikkje_engelsk, an = d.ikkje_engelsk - fa;
-    F.s("rect", { x: 0, y: 66, width: (fa / d.ikkje_engelsk) * W - 1, height: 22, fill: "var(--fg)", cls: "mk gx", tip: "FormAkademisk|" + n0(fa) + " av " + n0(d.ikkje_engelsk) + " ikkje-engelske verk" }, svg);
-    F.s("rect", { x: (fa / d.ikkje_engelsk) * W, y: 66, width: (an / d.ikkje_engelsk) * W, height: 22, fill: "var(--fg)", opacity: 0.4, cls: "mk gx", tip: "Andre kanalar|" + n0(an) + " av " + n0(d.ikkje_engelsk) + " ikkje-engelske verk" }, svg);
-    F.s("text", { x: 0, y: 104, text: "Ikkje engelsk " + n0(d.ikkje_engelsk) + ": FormAkademisk " + n0(fa), cls: "fg" }, svg);
+    F.s("rect", { x: 0, y: 64, width: (fa / d.ikkje_engelsk) * W - 1, height: 22, fill: "var(--k4)", cls: "mk gx", tip: "FormAkademisk|" + n0(fa) + " av " + n0(d.ikkje_engelsk) + " ikkje-engelske verk" }, svg);
+    F.s("rect", { x: (fa / d.ikkje_engelsk) * W, y: 64, width: (an / d.ikkje_engelsk) * W, height: 22, fill: F.hatch(svg, "var(--k4)"), stroke: "var(--k4)", "stroke-width": 1, cls: "mk gx", tip: "Andre kanalar|" + n0(an) + " av " + n0(d.ikkje_engelsk) + " ikkje-engelske verk" }, svg);
+    F.s("text", { x: 0, y: 102, text: "FormAkademisk " + n0(fa), cls: "b" }, svg);
+    F.s("text", { x: W, y: 102, "text-anchor": "end", text: "andre kanalar " + n0(an), cls: "fg" }, svg);
+    F.s("text", { x: 0, y: 120, text: "Nedre stolpe: dei " + n0(d.ikkje_engelsk) + " ikkje-engelske, utvida", cls: "sm" }, svg);
     /* B */
     const rows = d.land.map((l) => ({ label: d.land.length && F.landNamn[l.k] + " · " + n0(l.n) + " verk", v: l.del, vtxt: n0(l.eige) + " (" + F.n(l.del, 1) + " %)", color: F.cc(l.k), tip: F.landNamn[l.k] + "|" + n0(l.eige) + " av " + n0(l.n) + " verk med eitt land er på landets eige språk" }));
     F.rows(B, { w: B.w }, { rows, max: 20, ticks: [0, 5, 10, 15, 20], fmt: (v) => F.n(v, 0) + " %", tfmt: (v) => v + " %", label: "Del av verka på landets eige språk", rowH: 36, valW: 7.2 });
     /* C */
-    const ps = d.periodar.slice(2), items = ps.map((p, i) => ({ label: short(p), vals: [d.fa_per_ikkje_engelsk[i + 2]], tip: p + "|" + F.n(d.fa_per_ikkje_engelsk[i + 2], 1) + " % av " + n0(d.fa_per_n[i + 2]) + " FormAkademisk-verk" }));
-    F.cols(C, C.w, 190, { items, max: 100, color: "var(--fg)", fmt: (v) => F.n(v, 0), yfmt: (v) => v + "", ticks: [0, 50, 100], label: "FormAkademisk, del som ikkje er engelsk" });
-    F.d("p", { cls: "sm", text: "Totalt " + n0(d.formakademisk.ikkje_engelsk) + " av " + n0(d.formakademisk.n) + " FormAkademisk-verk." }, C);
+    const ps = d.periodar.slice(2), items = ps.map((p, i) => ({ label: short(p), sub: "n " + n0(d.fa_per_n[i + 2]), fade: d.fa_per_n[i + 2] < 40, vals: [d.fa_per_ikkje_engelsk[i + 2]], tip: p + "|" + F.n(d.fa_per_ikkje_engelsk[i + 2], 1) + " % av " + n0(d.fa_per_n[i + 2]) + " FormAkademisk-verk" }));
+    F.cols(C, C.w, 200, { items, max: 100, color: "var(--k4)", fmt: (v) => F.n(v, 0), yfmt: (v) => v + "", ticks: [0, 50, 100], label: "FormAkademisk, del som ikkje er engelsk, prosent", always: true });
+    F.d("p", { cls: "sm", text: "Totalt " + n0(d.formakademisk.ikkje_engelsk) + " av " + n0(d.formakademisk.n) + " FormAkademisk-verk. Bleike søyler: færre enn 40 verk." }, C);
   };
 
   /* ---------- f04: fulltekst ---------- */
@@ -182,10 +190,12 @@
       const g = F.s("g", { cls: "mk fd", tip: F.landNamn[k] + "|rang " + rk[k].join(" · ") + "|del " + dl[k].map((v) => F.n(v, 1) + " %").join(" · ") }, svg);
       F.s("path", { d: d3.line()(pts), fill: "none", stroke: c, "stroke-width": 3, "stroke-linejoin": "round" }, g);
       pts.forEach((q, j) => { F.s("circle", { cx: q[0], cy: q[1], r: 6, fill: c, stroke: "var(--bg)", "stroke-width": 2 }, g); F.s("text", { x: q[0], y: q[1] + 4, "text-anchor": "middle", text: rk[k][j], style: "fill:#fff;font-size:11px;font-weight:500;pointer-events:none" }, g); });
+      F.s("text", { x: pts[1][0], y: pts[1][1] - 10, "text-anchor": "middle", text: F.n(dl[k][1], 1), cls: "fg halo", style: "font-size:11.5px" }, g);
       F.s("text", { x: pts[0][0] - 12, y: pts[0][1] + 4, "text-anchor": "end", text: (mob ? k : F.landNamn[k]) + " " + F.n(dl[k][0], 1), cls: "fg", style: "font-size:12px" }, g);
       F.s("text", { x: pts[2][0] + 12, y: pts[2][1] + 4, text: F.n(dl[k][2], 1) + " " + (mob ? k : F.landNamn[k]), cls: "fg", style: "font-size:12px" }, g);
     });
-    F.d("p", { cls: "sm", text: "Tala er del av kredittane i prosent. Midtre punkt: " + ks.slice().sort((p, q) => rk[p][1] - rk[q][1]).map((k) => F.landNamn[k] + " " + F.n(dl[k][1], 1)).join(", ") + "." }, m);
+    const sm = d.del_samla, srt = ["NO", "DK", "SE", "FI"].sort((p, q) => sm[q][5] - sm[p][5]);
+    F.d("p", { cls: "sm" }, m).append("Tala er del av kredittane i prosent. ", b("Med arkivlaget"), " (1 738 verk til) er Noreg størst 2020–24: " + srt.map((k) => F.landNamn[k] + " " + F.n(sm[k][5], 1) + " %").join(", ") + ".");
     /* B: land over tid (sekundært) */
     const ctl = F.d("div", { cls: "ctl", style: "margin-top:34px" }, m);
     const host = F.d("div", null, m);
@@ -225,13 +235,13 @@
 
   /* ---------- f06: team og grenser ---------- */
   F.fig.f06 = function (m, d, ctx) {
-    const [A, B, C] = F.pans(m, 3, "p3", ["Lagstorleik per periode, del av verka (prosent)", "Samarbeid over grenser, del av fleirforfattarverk", "Snitt forfattarar per verk"]);
+    const [A, B, C] = F.pans(m, 3, "p3", ["Lagstorleik per periode, del av verka (prosent)", "Samarbeid over grenser, del av fleirforfattarverk (prosent)", "Snitt forfattarar per verk (tal)"]);
     const cats = d.periodar.map((p) => ({ label: short(p) }));
-    const keys = [{ k: "ein", name: "ein forfattar", fill: "var(--t1)", ink: "var(--fg)" }, { k: "to", name: "to", fill: "var(--t2)", ink: "var(--fg)" }, { k: "tre", name: "tre", fill: "var(--t3)" }, { k: "fire", name: "fire eller fleire", fill: "var(--t4)", ink: "var(--bg)" }];
+    const keys = [{ k: "ein", name: "ein forfattar", fill: "var(--k1)", ink: "var(--fg)" }, { k: "to", name: "to", fill: "var(--k2)", ink: "var(--fg)" }, { k: "tre", name: "tre", fill: "var(--k3)", ink: "var(--bg)" }, { k: "fire", name: "fire eller fleire", fill: "var(--k4)", ink: "var(--bg)" }];
     F.stackCols(A, A.w, 240, { cats, keys, vals: d.per, n: d.per.map((q) => q.n), inside: true, label: "Lagstorleik per periode" });
     F.legend(A, keys.map((k) => ({ c: k.fill, t: k.name })));
-    F.lines(B, B.w, 240, { cats: d.periodar, short, series: [{ name: "fleire institusjonar", vals: d.per.map((q) => q.fleire_inst), color: "var(--fg)" }, { name: "nordisk og utanfor", vals: d.per.map((q) => q.nord_og_utanfor), color: "var(--dim)", dash: "5 3" }, { name: "fleire nordiske land", vals: d.per.map((q) => q.fleire_nordiske), color: "var(--fg)", dash: "1.5 3", hollow: true }], min: 0, max: 70, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 3, labels: true, above: 8, pr: 4, label: "Samarbeid over grenser" });
-    F.lines(C, C.w, 240, { cats: d.periodar, short, series: [{ name: "alle verk", vals: d.per.map((q) => q.snitt), color: "var(--fg)", w: 2.4 }, { name: "artiklar", vals: d.snitt_type.artikkel, color: "var(--dim)", dash: "5 3", w: 1.6 }, { name: "konferansebidrag", vals: d.snitt_type.konferansebidrag, color: "var(--dim)", w: 1.6, hollow: true }], min: 1, max: 4.5, fmt: (v) => F.n(v, 2), yfmt: (v) => F.n(v, 1), n: 3, labels: true, above: 8, label: "Snitt forfattarar per verk" });
+    F.lines(B, B.w, 240, { cats: d.periodar, short, series: [{ name: "fleire institusjonar", vals: d.per.map((q) => q.fleire_inst), color: "var(--k4)", w: 2.6 }, { name: "nordisk og utanfor", vals: d.per.map((q) => q.nord_og_utanfor), color: "var(--k3)", dash: "5 3" }, { name: "fleire nordiske land", vals: d.per.map((q) => q.fleire_nordiske), color: "var(--k2)", dash: "1.5 3", hollow: true, w: 2.4 }], min: 0, max: 70, fmt: (v) => F.n(v, 1) + " %", yfmt: (v) => v + "", n: 3, labels: true, above: 8, pr: 4, label: "Samarbeid over grenser" });
+    F.lines(C, C.w, 240, { cats: d.periodar, short, series: [{ name: "alle verk", vals: d.per.map((q) => q.snitt), color: "var(--fg)", w: 2.4, lab: { i: 0, dy: -11, a: "start" } }, { name: "artiklar", vals: d.snitt_type.artikkel, color: "var(--k4)", dash: "5 3", w: 1.8, lab: { i: 3, dy: 18 } }, { name: "konferansebidrag", vals: d.snitt_type.konferansebidrag, color: "var(--k3)", w: 1.8, hollow: true, lab: { i: 3, dx: -8, dy: -7, a: "end" } }], min: 1, max: 4.5, fmt: (v) => F.n(v, 2), yfmt: (v) => F.n(v, 1), n: 3, labels: true, above: 8, label: "Snitt forfattarar per verk" });
     F.d("p", { cls: "sm", text: "Artiklar og konferansebidrag er med frå 2010." }, C);
   };
 
@@ -247,7 +257,10 @@
       F.s("text", { x: 0, y: y0 + 8, text: t, cls: "fg" }, svg);
       F.s("rect", { x: 0, y: y0 + 16, width: x(o.venta), height: 18, fill: hz, stroke: "var(--ref)", cls: "mk gx", tip: t + "|Venta ved tilfeldig val: om lag " + n0(o.venta) }, svg);
       F.s("rect", { x: 0, y: y0 + 38, width: x(o.obs), height: 18, fill: "var(--fg)", cls: "mk gx", tip: t + "|Observert: " + n0(o.obs) }, svg);
-      F.s("text", { x: x(o.venta) - 6, y: y0 + 29, "text-anchor": "end", text: "venta om lag " + n0(o.venta), cls: "halo" }, svg);
+      /* venteverdien står utanfor det skraverte feltet: til høgre for det om det er plass, elles på tittellinja */
+      const vt = "venta om lag " + n0(o.venta);
+      if (W - x(o.venta) - 6 >= vt.length * 6.9) F.s("text", { x: x(o.venta) + 6, y: y0 + 29, text: vt, cls: "halo" }, svg);
+      else F.s("text", { x: W, y: y0 + 8, "text-anchor": "end", text: vt }, svg);
       F.s("text", { x: x(o.obs) + 6, y: y0 + 51, text: "observert " + n0(o.obs), cls: "b" }, svg);
     });
     const rows = d.utanlandske_par.map((q) => ({ label: q.par, vtxt: n0(q.obs) + " mot " + F.n(q.venta, 1), mark: "none", dots: [{ v: q.venta, color: "var(--ref)", hollow: true }, { v: q.obs, color: "var(--fg)" }], linkc: "var(--ref)", tip: q.par + "|Observert " + n0(q.obs) + "|Venta " + F.n(q.venta, 1) }));
@@ -258,9 +271,9 @@
 
   /* ---------- f08: institusjonar og forfattarar ---------- */
   F.fig.f08 = function (m, d, ctx) {
-    const [A, B, C] = F.pans(m, 3, "p3", ["Aktive institusjonar per periode", "Forfattarar: del av forfattarane mot del av plassane", "Del av eigne verk i feltet, forfattarar med minst fem verk"]);
+    const [A, B, C] = F.pans(m, 3, "p3", ["Aktive institusjonar per periode (tal)", "Forfattarar: del av forfattarane mot del av plassane (prosent)", "Del av eigne verk i scope per forfattar, forfattarar med minst fem verk i heile tabellen"]);
     /* A */
-    const cats = d.periodar.map((p, i) => ({ label: short(p), vals: [d.aktive[i]], tip: d.periodar[i] + "|" + d.aktive[i] + " aktive institusjonar|topp ti har " + F.n(d.topp10[i], 1) + " % av verka|" + d.k50[i] + " institusjonar for halvparten" }));
+    const cats = d.periodar.map((p, i) => ({ label: short(p), vlIn: i === 0, vals: [d.aktive[i]], tip: d.periodar[i] + "|" + d.aktive[i] + " aktive institusjonar|topp ti har " + F.n(d.topp10[i], 1) + " % av verka|" + d.k50[i] + " institusjonar for halvparten" }));
     const h1 = F.cols(A, A.w, 130, { items: cats, max: 160, color: "var(--fg)", ticks: [0, 80, 160], yfmt: (v) => v, label: "Aktive institusjonar" });
     F.s("circle", { cx: h1.x(0) + h1.x.bandwidth() / 2, cy: h1.y(42), r: 4.5, fill: "var(--bg)", stroke: "var(--ref)", "stroke-width": 2 }, h1.svg);
     F.d("h4", { text: "Del av verka i dei ti største institusjonane, prosent", style: "margin-top:18px" }, A);
@@ -272,15 +285,17 @@
     const bins = d.forf_hist.map((q) => ({ label: q.namn.replace("10 eller fleire", "10+").replace("10+ ", "10+"), vals: [q.forfattarar / tf * 100, q.plassar / tp * 100], tip: q.namn + " verk|" + n0(q.forfattarar) + " forfattarar (" + F.n(q.forfattarar / tf * 100, 1) + " %)|" + n0(q.plassar) + " forfattarplassar (" + F.n(q.plassar / tp * 100, 1) + " %)" }));
     F.cols(B, B.w, 240, { items: bins, series: [{ name: "forfattarar", color: "var(--fg)" }, { name: "plassar", color: "var(--ref)" }], max: 80, fmt: (v) => F.n(v, 0), ticks: [0, 20, 40, 60, 80], vlMax: 7, label: "Verk per forfattar", yfmt: (v) => v });
     F.legend(B, [{ c: "var(--fg)", t: "forfattarar" }, { c: "var(--ref)", t: "forfattarplassar" }]);
-    F.d("p", { cls: "sm", text: "Verk per forfattar: 1, 2, 3, 4, 5–9, 10 eller fleire. " + n0(d.forf_ge5) + " forfattarar med minst fem verk har " + F.n(d.forf_ge5_plassar / tp * 100, 1) + " % av plassane." }, B);
+    F.d("p", { cls: "sm", text: "Verk per forfattar i scope (4 694 verk): 1, 2, 3, 4, 5–9, 10 eller fleire. " + n0(d.forf_ge5) + " forfattarar har minst fem verk i scope og " + F.n(d.forf_ge5_plassar / tp * 100, 1) + " % av plassane." }, B);
     /* C */
     const g = d.grense, hist = g.hist.map((v, i) => ({ label: F.n(i / 10, 1).replace(",0", "") , vals: [v], color: i < 5 ? "var(--fg)" : "var(--t2)", tip: "Del " + F.n(i / 10, 1) + " til " + F.n((i + 1) / 10, 1) + "|" + v + " forfattarar" }));
     const hh = F.cols(C, C.w, 240, { items: hist, max: 300, color: "var(--fg)", ticks: [0, 100, 200, 300], vl: false, label: "Fordeling av del av eigne verk i feltet", yfmt: (v) => v, pad: 0.1 });
-    const mx = hh.x(0) + (g.median * 10) * hh.x.step() ;
-    F.s("line", { x1: mx, x2: mx, y1: 14, y2: 240 - 24, cls: "ref" }, hh.svg);
-    F.s("text", { x: mx + 4, y: 26, text: "median " + F.n(g.median, 2), cls: "sm halo b" }, hh.svg);
-    F.s("text", { x: C.w - 2, y: 26, "text-anchor": "end", text: F.n(g.under_halv_pct, 1) + " % under halvparten", cls: "sm halo b" }, hh.svg);
-    F.s("text", { x: C.w - 2, y: 39, "text-anchor": "end", text: "(mørke søyler)", cls: "sm halo" }, hh.svg);
-    F.d("p", { cls: "sm", text: n0(g.n_ge5) + " forfattarar. Berre " + F.n(g.rein_pct, 1) + " % har alle verka sine i feltet. Dei under halvparten held " + F.n(g.plassdel_under_halv, 1) + " % av plassane (" + F.n(g.plassdel_under_halv_ge3, 1) + " % blant dei med minst tre verk)." }, C);
+    const mx = hh.x(0) + (g.median * 10) * hh.x.step();
+    const hw = hh.x.step() * 5 - 2;
+    /* to ulike meldingar, to merke: klammer over dei fem mørke søylene, og medianen på strek */
+    F.s("path", { d: "M" + hh.x(0) + ",24 V19 H" + (hh.x(0) + hw) + " V24", fill: "none", stroke: "var(--fg)", "stroke-width": 1.5 }, hh.svg);
+    F.s("text", { x: hh.x(0), y: 12, text: F.n(g.under_halv_pct, 1) + " % har under halvparten", cls: "sm b" }, hh.svg);
+    F.s("line", { x1: mx, x2: mx, y1: 30, y2: 240 - 24, cls: "ref", style: "stroke:var(--fg);stroke-dasharray:3 3" }, hh.svg);
+    F.s("text", { x: mx + 5, y: 44, text: "median " + F.n(g.median, 2), cls: "sm b halo" }, hh.svg);
+    F.d("p", { cls: "sm" }, C).append(b(n0(g.n_ge5) + " av " + n0(d.forf_n) + " forfattarar"), " har minst fem verk i heile tabellen (" + n0(d.tabell_rader) + " rader); søylene viser delen av dei som ligg i scope. Berre " + F.n(g.rein_pct, 1) + " % har alle verka sine i scope. Dei under halvparten held " + F.n(g.plassdel_under_halv, 1) + " % av plassane (" + F.n(g.plassdel_under_halv_ge3, 1) + " % blant dei med minst tre verk). Mørke søyler: under halvparten.");
   };
 })();

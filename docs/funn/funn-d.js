@@ -7,19 +7,21 @@
   const pc = (v) => F.n(v, 1) + " %";
   /* metastudiens ti klynger har bokstavane A til J, aldri kartets nummer 1 til 8 eller kartfargane */
   const LET = "ABCDEFGHIJ";
+  /* overskrift med firkanta bokstavmerke: metastudiens klynger A–J, aldri kartets runde tal 1–8 */
+  const capT = (el, chip, t, mt) => { const h = cap(el, "", mt); const c = F.d("span", { cls: "bokst", text: chip, style: "width:auto;min-width:20px;padding:0 5px;margin-right:8px;vertical-align:1px" }, h); h.appendChild(document.createTextNode(t)); return h; };
 
   /* ---------- f19: svak struktur ---------- */
   F.fig.f19 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
-    cap(L, "Metastudiens ti klynger (A–J): silhuett mot tilfeldig datasky");
+    capT(L, "A–J", "Tekstklynger: silhuett mot tilfeldig datasky");
     F.rows(L, { w: L.w }, { rows: [{ label: "Observert, ti klynger", v: d.silhuett.observert, color: "var(--fg)" }, { label: "Tilfeldig datasky", v: d.silhuett.tilfeldig, color: "var(--ref)" }], max: 0.1, ticks: [0, 0.05, 0.1], tfmt: (v) => F.n(v, 2), fmt: (v) => F.n(v, 4), mark: "bar", rowH: 36, label: "Silhuett" });
     F.d("p", { cls: "sm" }, L).append(b(F.p(d.midt_mellom, 1)), " av verka ligg nesten midt mellom to klyngesenter.");
     cap(L, "Justert R², prosent av variasjonen i tekstvektorane", 22);
     const nm = (s) => s.replace("ti klynger", "ti klynger (A–J)").replace("kanal (12)", "kanal (12 kanalar)").replace(/^./, (c) => c.toUpperCase());
     F.rows(L, { w: L.w }, { rows: d.r2.map((q, i) => ({ label: nm(q.namn), v: q.pct, color: i === 0 ? "var(--fg)" : "var(--t3)", group: i === 0 ? "Alle med fulltekst, n " + n0(d.verk) : null })).concat(d.r2_same.map((q, i) => ({ label: nm(q.namn), v: q.pct, color: "var(--t3)", group: i === 0 ? "Same verk, n 1 435" : null }))), max: 16, ticks: [0, 4, 8, 12, 16], tfmt: (v) => v + "", fmt: (v) => F.n(v, 2) + " %", mark: "bar", rowH: 32, gH: 26, label: "Justert R2" });
     F.d("p", { cls: "sm" }, L).append("Kanal forklarer meir enn land eller periode, men er ikkje årsak.");
-    cap(R, "Den norskspråklege klynga (I) i metastudiens ti: del med nordisk språk, prosent");
+    capT(R, "I", "Den norskspråklege tekstklynga: del med nordisk språk, prosent");
     F.rows(R, { w: R.w }, { rows: [{ label: "I klynge I, n " + d.klynge8.n, v: d.klynge8.nordisk, color: "var(--fg)" }, { label: "Alle verk med fulltekst, n " + n0(d.verk), v: d.klynge8.alle, color: "var(--ref)" }], max: 100, ticks: [0, 50, 100], tfmt: (v) => v + "", fmt: pc, mark: "bar", rowH: 36, label: "Nordisk språk" });
     cap(R, "Kva fulltekstutvalet dekkjer: del av verka med fulltekst, prosent", 24);
     const e = (t, v, g) => ({ label: t, v, color: "var(--fg)", group: g });
@@ -30,18 +32,17 @@
   F.fig.f20 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
-    cap(L, "OpenAlex-emne, dei åtte største, del av " + n0(d.emne_n) + " verk med emne");
-    F.rows(L, { w: L.w }, { rows: d.topp.map((q) => ({ label: q.namn, v: q.pct, vtxt: pc(q.pct), color: "var(--fg)", tip: q.namn + "|" + n0(q.n) + " verk (" + pc(q.pct) + ")" })), max: 40, ticks: [0, 10, 20, 30, 40], tfmt: (v) => v + "", fmt: pc, mark: "bar", rowH: 34, label: "Dei åtte største emna" });
+    const heile = {}; d.topp.forEach((q) => { heile[q.namn] = q.pct; });
+    cap(L, "OpenAlex-emne (engelske namn frå OpenAlex), 13 med minst 30 verk. Søyler: del per femårsperiode, mørke endrar seg. Tal: del av alle " + n0(d.emne_n) + " verk med emne", 0);
+    F.spark(L, { w: L.w }, { rows: d.emne.map((q) => ({ label: q.namn, vals: q.del, flag: !!q.endrar, vtxt: heile[q.namn] != null ? F.n(heile[q.namn], 1) + " %" : " ", tip: q.namn + "|" + d.periodar.map((p, i) => p + ": " + F.n(q.del[i], 1) + " %").join("|") + (heile[q.namn] != null ? "|" + F.n(heile[q.namn], 1) + " % av alle verk med emne" : "") })), kind: "bars", perRow: true, periods: d.periodar, max: 50, rowH: 34, labelW: 210, vw: 84, label: "Emne over tid" });
     F.d("p", { cls: "sm" }, L).append(b(n0(d.ulike_emne)), " ulike emne. ", b(n0(d.mekanisk[0])), " av dei ", n0(d.mekanisk[1]), " i det største emnet ligg under Mechanical Engineering, og domenet Physical Sciences har ", b(pc(d.domene.fysiske[1])), " (", n0(d.domene.fysiske[0]), " verk).");
-    cap(L, "Del per femårsperiode, emne med minst 30 verk (mørke: del som endrar seg)", 26);
-    F.spark(L, { w: L.w }, { rows: d.emne.map((q) => ({ label: q.namn, vals: q.del, flag: !!q.endrar, tip: q.namn + "|" + d.periodar.map((p, i) => p + ": " + F.n(q.del[i], 1) + " %").join("|") })), kind: "bars", perRow: true, periods: d.periodar, max: 50, rowH: 34, labelW: 210, vw: 84, label: "Emne over tid" });
     F.d("p", { cls: "sm" }, L).append("Eit utval på 300 verk har ", b(F.n(d.rikdom_300[0], 1)), " ulike emne i 2005–09 og ", b(F.n(d.rikdom_300[3], 1)), " i 2020–24.");
-    cap(R, "Metastudiens ti klynger (A–J): del av verka i fulltekstutvalet, 2005–09 til 2020–24, prosent");
+    capT(R, "A–J", "Tekstklynger: del av verka i fulltekstutvalet, 2005–09 til 2020–24, prosent");
     const order = ["veks", "fell", "ingen"], gname = { veks: "Veks", fell: "Fell", ingen: "Ingen lineær trend" };
     const rows = [];
     order.forEach((g) => d.klynger.filter((k) => k.retning === g).forEach((k, i) => rows.push({ label: k.namn.replace(/^./, (c) => c.toUpperCase()), badge: LET[k.id], vals: k.del, flag: g === "veks", dash: g === "fell", group: i === 0 ? gname[g] : null, tip: LET[k.id] + " " + k.namn + "|" + d.klyngeperiodar.map((p, j) => p + ": " + F.n(k.del[j], 1) + " %").join("|") + "|" + n0(k.n) + " verk i klynga" })));
     F.spark(R, { w: R.w }, { rows, kind: "line", periods: d.klyngeperiodar, max: 27, rowH: 38, labelW: 210, vw: 92, label: "Klyngeandelar over tid" });
-    F.d("p", { cls: "sm" }, R).append("Heiltrukke linje veks, stipla fell. Bokstavane høyrer til metastudiens klynger og er ikkje kartets nummer.");
+    F.d("p", { cls: "sm" }, R).append("Heiltrukke linje veks, stipla fell.");
   };
 
   /* ---------- f21: breidde og ankerdel, alle omgrep i éin figur ---------- */
@@ -75,20 +76,21 @@
       else F.s("text", { x: labW + aw + gap + 4, y: cy + 4, text: "–", cls: "sm" }, g);
     });
     F.legend(m, [{ c: "var(--fg)", t: "punkt: kontrollert tal", r: true }, { c: "var(--fg)", ln: "dashed", t: "spenn, ikkje punkt" }]);
-    F.d("p", { cls: "sm" }, m).append("– betyr ikkje kontrollert.");
+    F.d("p", { cls: "sm" }, m).append("– betyr ikkje kontrollert. Omgrepa er engelske uttrykk slik dei står i tekstane. Breidda for participatory design og more-than-human er frå skriptutskrifta og står ikkje i funnteksten.");
   };
 
   /* ---------- f22: stig og fall ---------- */
   F.fig.f22 = function (m, d, ctx) {
     const W = ctx.w;
-    cap(m, "Uttrykk som stig og fell frå ein periode til neste (tal på uttrykk)");
+    cap(m, "Uttrykk (frå engelske samandrag) som stig og fell frå ein periode til neste, tal på uttrykk");
     const rows = d.overgangar.map((o) => ({ t: o.namn, up: o.opp, dn: o.ned }));
     const rh = 52, H = rows.length * rh + 4, svg = F.svg(m, W, H, "Stigande og fallande uttrykk per periodesteg");
     const cx = W / 2, sc = d3.scaleLinear().domain([0, 12]).range([0, W / 2 - 36]);
     rows.forEach((r, i) => {
       const y0 = i * rh + 4;
-      F.s("text", { x: 0, y: y0 + 10, text: r.t, cls: "fg" }, svg);
-      const g = F.s("g", { cls: "mk fd", tip: r.t + "|stig " + r.up + "|fell " + r.dn }, svg);
+      const lite = r.up + r.dn <= 2;
+      F.s("text", { x: 0, y: y0 + 10, text: r.t + (lite ? " · få uttrykk" : ""), cls: lite ? "" : "fg" }, svg);
+      const g = F.s("g", { cls: "mk fd", tip: r.t + "|stig " + r.up + "|fell " + r.dn + (lite ? "|svært få uttrykk, les med varsemd" : ""), opacity: lite ? 0.6 : null }, svg);
       const by = y0 + 20, bh = 18;
       F.s("rect", { x: cx, y: by, width: Math.max(r.up ? 2 : 0, sc(r.up)), height: bh, fill: "var(--fg)", cls: "gx" }, g);
       F.s("rect", { x: cx - Math.max(r.dn ? 2 : 0, sc(r.dn)), y: by, width: Math.max(r.dn ? 2 : 0, sc(r.dn)), height: bh, fill: "var(--ref)", cls: "gx" }, g);
@@ -99,8 +101,8 @@
     F.legend(m, [{ c: "var(--ref)", t: "fell" }, { c: "var(--fg)", t: "stig" }]);
     const lb = d.lang_bogen;
     F.d("p", { cls: "sm" }, m).append("Heile bogen " + lb.namn + ": ", b(lb.opp[0] + " til " + lb.opp[1] + " stig"), " og ", b(lb.ned[0] + " til " + lb.ned[1] + " fall"), " (to terskelval).");
-    cap(m, "Tre døme: verk med uttrykket i engelsk samandrag", 18);
-    F.rows(m, ctx, { rows: d.dome.map((q) => ({ label: q.namn + (q.fra_pct ? " (" + F.n(q.fra_pct, 1) + " % → " + F.n(q.til_pct, 1) + " %)" : ""), vtxt: q.fra + " → " + q.til, mark: "none", dots: [{ v: q.fra, color: "var(--fg)", hollow: true }, { v: q.til, color: "var(--fg)" }], linkc: "var(--ref)", tip: q.namn + "|frå " + q.fra + (q.fra_n ? " av om lag " + n0(q.fra_n) : "") + " verk|til " + q.til + (q.til_n ? " av " + n0(q.til_n) : "") + " verk" })), min: 0, max: 160, ticks: [0, 40, 80, 120, 160], tfmt: (v) => v + "", rowH: 44, label: "Tre døme" });
+    cap(m, "Tre døme (engelske uttrykk): verk med uttrykket i engelsk samandrag", 18);
+    F.rows(m, ctx, { rows: d.dome.map((q) => ({ label: q.namn + (q.fra_pct ? " (" + F.n(q.fra_pct, 1) + " % → " + F.n(q.til_pct, 1) + " %)" : ""), vtxt: "tidleg " + q.fra + " / seint " + q.til, mark: "none", dots: [{ v: q.fra, color: "var(--fg)", hollow: true }, { v: q.til, color: "var(--fg)" }], linkc: "var(--ref)", tip: q.namn + "|frå " + q.fra + (q.fra_n ? " av om lag " + n0(q.fra_n) : "") + " verk|til " + q.til + (q.til_n ? " av " + n0(q.til_n) : "") + " verk" })), min: 0, max: 160, ticks: [0, 40, 80, 120, 160], tfmt: (v) => v + "", rowH: 44, label: "Tre døme" });
     F.legend(m, [{ c: "var(--fg)", t: "tidleg", r: true, open: true }, { c: "var(--fg)", t: "seint", r: true }]);
     cap(m, "Første framtreding i data: del av fleirordsuttrykka, prosent", 22);
     const f = d.forste;

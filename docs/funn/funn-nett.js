@@ -30,83 +30,112 @@
     cv.addEventListener("pointerleave", () => { lastIdx = null; onMiss(); });
   }
 
-  /* ---------- f09: tre nettverk ---------- */
+  /* ---------- f09: tre eningar, eitt stort nettverk om gongen ---------- */
   F.fig.f09 = function (m, d, ctx) {
-    const mob = ctx.w < 700;
-    const titles = ["Forfattarar", "Institusjonar", "Land"];
-    const [A, B, C] = F.pans(m, 3, "p3 net", titles);
-    const col = (n) => F.css(m, n);
+    const st = ctx.st; st.tab = st.tab || "forfattar";
+    const wide = ctx.w >= 900;
+    const side = wide ? Math.min(660, Math.round(ctx.w * 0.6)) : ctx.w;
+    const k = Math.max(1, side / 360);
     const white = "#f4f4f4", grey = "#7a7a7a";
     const names = { GB: "Storbritannia", US: "USA", NL: "Nederland", DK: "Danmark", FI: "Finland", IS: "Island", NO: "Noreg", SE: "Sverige" };
+    const fa = d.forfattar, ins = d.institusjon, ld = d.land;
+    const landKey = (lg) => F.legend(lg, F.land.map((l) => ({ c: F.css(m, "--" + l), t: F.landNamn[l], r: true })).concat([{ c: grey, t: "anna land", r: true }]));
+
+    /* oversyn: same mål for dei tre eningane (ein linje per eining, talet på stolpen) */
+    F.d("h4", { text: "Del av eininga i den største samanhengande gruppa, prosent", style: "font:400 12px/1.35 var(--mono);color:var(--dim);margin:0 0 4px" }, m);
+    const sumW = Math.min(ctx.w, 720);
+    const rowsS = [
+      { label: "Forfattarar · " + n0(fa.noder), v: d.stor_pct.forfattar, mark: "bar", color: "var(--fg)", dots: [{ v: d.null_forfattar_pct, color: "var(--ref)", hollow: true }], link: false, tip: "Forfattarar|" + F.n(d.stor_pct.forfattar, 1) + " % i største komponent|nullmodell " + F.n(d.null_forfattar_pct, 1) + " %" },
+      { label: "Institusjonar · " + n0(ins.noder), v: d.stor_pct.institusjon, mark: "bar", color: "var(--fg)", tip: "Institusjonar|" + F.n(d.stor_pct.institusjon, 1) + " % i største komponent" },
+      { label: "Land · " + n0(ld.noder), v: d.stor_pct.land, mark: "bar", color: "var(--fg)", tip: "Land|" + F.n(d.stor_pct.land, 1) + " % i største komponent" }];
+    F.rows(m, { w: sumW }, { rows: rowsS, max: 100, ticks: [0, 50, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1) + " %", rowH: 34, valW: 7.2, label: "Del i største komponent per eining" });
+    F.legend(m, [{ c: "var(--fg)", t: "observert", r: true }, { c: "var(--ref)", t: "nullmodell for forfattarar, " + F.n(d.null_forfattar_pct, 1) + " %", r: true, open: true }]);
+
+    const ctl = F.d("div", { cls: "ctl", style: "margin-top:18px" }, m);
+    F.seg(ctl, [{ k: "forfattar", t: "Forfattarar" }, { k: "institusjon", t: "Institusjonar" }, { k: "land", t: "Land" }], st.tab, (kk) => { st.tab = kk; show(); }, "Eining");
+    const view = F.d("div", { style: wide ? "display:grid;grid-template-columns:" + side + "px minmax(0,1fr);gap:8px 32px;align-items:start" : "" }, m);
 
     function net(host, spec) {
-      const w = host.w, h = w;
+      const w = side, h = side;
       const cvs = canvas(host, w, h, spec.label);
-      const pad = 8, sc = (v) => pad + (v / 10000) * (w - 2 * pad);
+      const pad = 8 * k, sc = (v) => pad + (v / 10000) * (w - 2 * pad);
       const N = spec.x.length, pts = new Array(N);
       for (let i = 0; i < N; i++) pts[i] = { i, px: sc(spec.x[i]), py: sc(spec.y[i]) };
       const c = cvs.base.c;
       c.lineCap = "round";
-      /* kantar */
       c.beginPath();
-      const k = spec.kant, three = spec.three;
-      const stp = three ? 3 : 2;
-      for (let e = 0; e < k.length; e += stp) { const a = pts[k[e]], b = pts[k[e + 1]]; c.moveTo(a.px, a.py); c.lineTo(b.px, b.py); }
+      const kn = spec.kant;
+      for (let e = 0; e < kn.length; e += 2) { const a = pts[kn[e]], b2 = pts[kn[e + 1]]; c.moveTo(a.px, a.py); c.lineTo(b2.px, b2.py); }
       c.strokeStyle = "rgba(255,255,255," + spec.ea + ")"; c.lineWidth = spec.ew; c.stroke();
-      if (spec.heavy) {
-        spec.heavy.forEach((q) => { c.beginPath(); c.moveTo(pts[q[0]].px, pts[q[0]].py); c.lineTo(pts[q[1]].px, pts[q[1]].py); c.strokeStyle = "rgba(255,255,255," + q[3] + ")"; c.lineWidth = q[2]; c.stroke(); });
-      }
-      /* prikkar */
+      /* prikkar med additiv blanding: tette område lyser */
+      if (spec.add) c.globalCompositeOperation = "lighter";
       for (let i = 0; i < N; i++) { c.fillStyle = spec.col(i); c.globalAlpha = spec.alpha ? spec.alpha(i) : 1; c.beginPath(); c.arc(pts[i].px, pts[i].py, spec.r(i), 0, TAU); c.fill(); }
-      c.globalAlpha = 1;
-      if (spec.labels) spec.labels.forEach((q) => { c.font = "500 11px 'IBM Plex Mono', monospace"; c.textAlign = "center"; c.lineWidth = 3.5; c.strokeStyle = "#000"; c.strokeText(q.t, pts[q.i].px, pts[q.i].py - spec.r(q.i) - 4); c.fillStyle = "#fff"; c.fillText(q.t, pts[q.i].px, pts[q.i].py - spec.r(q.i) - 4); });
+      c.globalCompositeOperation = "source-over"; c.globalAlpha = 1;
       const t = cvs.top.c;
       pick(cvs.top.cv, pts, 14, (p, e) => {
         t.clearRect(0, 0, w, h);
         t.beginPath(); t.arc(p.px, p.py, spec.r(p.i) + 3.5, 0, TAU); t.strokeStyle = "#fff"; t.lineWidth = 1.5; t.stroke();
         F.tipAt(e.clientX, e.clientY, spec.tip(p.i), e.pointerType === "touch");
       }, () => { t.clearRect(0, 0, w, h); F.tipHide(); });
+      return pts;
     }
+    /* merkelappar utan overlapp: prøv over, under, til høgre og til venstre, hopp over det som ikkje får plass */
+    function placeLabels(c, items, pts, rr) {
+      const boxes = [];
+      c.font = "500 11px 'IBM Plex Mono', monospace";
+      items.forEach((q) => {
+        const p = pts[q.i], wd = c.measureText(q.t).width + 4, r0 = rr(q.i);
+        const cand = [[p.px - wd / 2, p.py - r0 - 17, "center", p.px, p.py - r0 - 6], [p.px - wd / 2, p.py + r0 + 3, "center", p.px, p.py + r0 + 14], [p.px + r0 + 3, p.py - 7, "left", p.px + r0 + 5, p.py + 4], [p.px - r0 - 3 - wd, p.py - 7, "right", p.px - r0 - 5, p.py + 4]];
+        for (const [bx, by, al, tx, ty] of cand) {
+          if (bx < 0 || bx + wd > side || by < 0 || by + 14 > side) continue;
+          if (boxes.some((o) => bx < o[0] + o[2] && bx + wd > o[0] && by < o[1] + o[3] && by + 14 > o[1])) continue;
+          boxes.push([bx, by, wd, 14]);
+          c.textAlign = al; c.lineWidth = 3.5; c.strokeStyle = "#000"; c.strokeText(q.t, tx, ty); c.fillStyle = q.c || "#fff"; c.fillText(q.t, tx, ty);
+          break;
+        }
+      });
+    }
+    const note = (host, bold, rest) => F.d("p", { cls: "sm" }, host).append(Object.assign(document.createElement("b"), { textContent: bold }), rest);
 
-    /* A: forfattarar, største komponent lyst */
-    const fa = d.forfattar, nF = fa.x.length;
-    const par = new Int32Array(nF); for (let i = 0; i < nF; i++) par[i] = i;
-    const find = (x) => { while (par[x] !== x) { par[x] = par[par[x]]; x = par[x]; } return x; };
-    for (let e = 0; e < fa.kant.length; e += 2) { const a = find(fa.kant[e]), b = find(fa.kant[e + 1]); if (a !== b) par[a] = b; }
-    const size = new Map(); for (let i = 0; i < nF; i++) { const r = find(i); size.set(r, (size.get(r) || 0) + 1); }
-    let big = -1, bs = 0; size.forEach((v, r) => { if (v > bs) { bs = v; big = r; } });
-    net(A, { label: "Medforfattarnettverk for 6 033 forfattarar", x: fa.x, y: fa.y, kant: fa.kant, ea: mob ? 0.11 : 0.12, ew: 0.5, col: (i) => (find(i) === big ? white : grey), r: (i) => 0.8 + Math.min(fa.n[i], 6) * 0.17, alpha: (i) => (find(i) === big ? 0.95 : 0.8),
-      tip: (i) => "Forfattar|" + fa.n[i] + (fa.n[i] === 1 ? " verk" : " verk") + (fa.n[i] >= 9 ? " eller fleire" : "") + " i laget|" + (find(i) === big ? "i største komponent" : "utanfor største komponent") });
-    F.d("p", { cls: "sm" }, A).append(Object.assign(document.createElement("b"), { textContent: F.p(d.stor_pct.forfattar, 1) }), " i største komponent, mot " + F.p(d.null_forfattar_pct, 1) + " i nullmodellen. " + n0(fa.komponentar) + " komponentar, " + n0(fa.aleine) + " aleine. " + F.p(fa.par_fleire_pct, 1) + " av medforfattarpar skriv saman fleire gonger (nullmodell " + F.p(d.par_null_pct, 1) + ").");
-
-    /* B: institusjonar */
-    const ins = d.institusjon, lc = (i) => (ins.land[i] < 5 ? F.css(m, "--" + F.land[ins.land[i]]) : grey);
-    net(B, { label: "Nettverk av 1 090 institusjonar", x: ins.x, y: ins.y, kant: ins.kant, ea: 0.07, ew: 0.45, col: lc, r: (i) => 1 + Math.sqrt(ins.n[i]) * 0.32, alpha: () => 0.9,
-      tip: (i) => "Institusjon|" + ins.n[i] + (ins.n[i] >= 99 ? " eller fleire" : "") + " verk|" + (ins.land[i] < 5 ? F.landNamn[F.land[ins.land[i]]] : "anna land") });
-    F.d("p", { cls: "sm" }, B).append(Object.assign(document.createElement("b"), { textContent: F.p(d.stor_pct.institusjon, 1) }), " i største komponent. " + n0(ins.noder) + " institusjonar. Fargen er landet.");
-
-    /* C: land */
-    const ld = d.land, nL = ld.k.length;
-    const idx = {}; ld.k.forEach((k, i) => (idx[k] = i));
-    const heavy = [], ed = [];
-    for (let e = 0; e < ld.kant.length; e++) { const q = ld.kant[e]; ed.push(q[0], q[1], q[2]); }
-    const lcol = (i) => (F.land.indexOf(ld.k[i]) >= 0 ? F.css(m, "--" + ld.k[i]) : grey);
-    const top = ld.n.map((v, i) => [v, i]).sort((a, b) => b[0] - a[0]).slice(0, 9).map((q) => q[1]);
-    const labs = []; const seen = new Set(top.concat(F.land.map((k) => idx[k]).filter((v) => v != null)));
-    seen.forEach((i) => labs.push({ i, t: ld.k[i] }));
-    const wC = C.w, cvC = canvas(C, wC, wC, "Nettverk av 86 land");
-    (function () {
-      const w = wC, pad = 14, sc = (v) => pad + (v / 10000) * (w - 2 * pad), c = cvC.base.c;
-      const pts = ld.k.map((k, i) => ({ i, px: sc(ld.x[i]), py: sc(ld.y[i]) }));
-      ld.kant.forEach((q) => { c.beginPath(); c.moveTo(pts[q[0]].px, pts[q[0]].py); c.lineTo(pts[q[1]].px, pts[q[1]].py); c.strokeStyle = "rgba(255,255,255," + Math.min(0.5, 0.05 + Math.log10(q[2] + 1) * 0.12) + ")"; c.lineWidth = 0.4 + Math.log10(q[2] + 1) * 0.9; c.stroke(); });
-      const rr = (i) => 1.6 + Math.sqrt(ld.n[i]) * 0.24;
-      pts.forEach((p) => { c.fillStyle = lcol(p.i); c.beginPath(); c.arc(p.px, p.py, rr(p.i), 0, TAU); c.fill(); });
-      const lb = [];
-      labs.forEach((q) => { const p = pts[q.i]; const wd = q.t.length * 7 + 4; const box = [p.px - wd / 2, p.py - rr(q.i) - 16, wd, 13]; if (lb.some((b) => box[0] < b[0] + b[2] && box[0] + box[2] > b[0] && box[1] < b[1] + b[3] && box[1] + box[3] > b[1])) return; lb.push(box); c.font = "500 11px 'IBM Plex Mono', monospace"; c.textAlign = "center"; c.lineWidth = 3.5; c.strokeStyle = "#000"; c.strokeText(q.t, p.px, p.py - rr(q.i) - 5); c.fillStyle = "#fff"; c.fillText(q.t, p.px, p.py - rr(q.i) - 5); });
-      const t = cvC.top.c;
-      pick(cvC.top.cv, pts, 16, (p, e) => { t.clearRect(0, 0, w, w); t.beginPath(); t.arc(p.px, p.py, rr(p.i) + 3.5, 0, TAU); t.strokeStyle = "#fff"; t.lineWidth = 1.5; t.stroke(); F.tipAt(e.clientX, e.clientY, (names[ld.k[p.i]] || ld.k[p.i]) + "|" + n0(ld.n[p.i]) + " verk", e.pointerType === "touch"); }, () => { t.clearRect(0, 0, w, w); F.tipHide(); });
-    })();
-    F.d("p", { cls: "sm" }, C).append(Object.assign(document.createElement("b"), { textContent: n0(ld.stor) + " av " + n0(ld.noder) }), " land i same komponent. Danmark og Sverige delar " + n0(ld.dk_se) + " verk, Island og Finland " + n0(ld.is_fi) + ".");
+    function show() {
+      view.textContent = "";
+      const left = F.d("div", null, view), right = F.d("div", { style: wide ? "padding-top:4px" : "" }, view);
+      if (st.tab === "forfattar") {
+        const nF = fa.x.length, par = new Int32Array(nF); for (let i = 0; i < nF; i++) par[i] = i;
+        const find = (x) => { while (par[x] !== x) { par[x] = par[par[x]]; x = par[x]; } return x; };
+        for (let e = 0; e < fa.kant.length; e += 2) { const a = find(fa.kant[e]), b2 = find(fa.kant[e + 1]); if (a !== b2) par[a] = b2; }
+        const size = new Map(); for (let i = 0; i < nF; i++) { const r = find(i); size.set(r, (size.get(r) || 0) + 1); }
+        let big = -1, bs = 0; size.forEach((v, r) => { if (v > bs) { bs = v; big = r; } });
+        net(left, { label: "Medforfattarnettverk for " + n0(nF) + " forfattarar", x: fa.x, y: fa.y, kant: fa.kant, ea: 0.13, ew: 0.5, add: true, col: (i) => (find(i) === big ? white : grey), r: (i) => (0.8 + Math.min(fa.n[i], 6) * 0.17) * Math.min(k, 1.5), alpha: (i) => (find(i) === big ? 0.5 : 0.7),
+          tip: (i) => "Forfattar|" + fa.n[i] + " verk" + (fa.n[i] >= 9 ? " eller fleire" : "") + " i laget|" + (find(i) === big ? "i største komponent" : "utanfor største komponent") });
+        F.legend(right, [{ c: white, t: "største komponent", r: true }, { c: grey, t: "resten", r: true }]);
+        note(right, F.p(d.stor_pct.forfattar, 1), " i største komponent, mot " + F.p(d.null_forfattar_pct, 1) + " i nullmodellen. " + n0(fa.komponentar) + " komponentar, " + n0(fa.aleine) + " aleine. " + F.p(fa.par_fleire_pct, 1) + " av medforfattarpar skriv saman fleire gonger (nullmodell " + F.p(d.par_null_pct, 1) + ").");
+      } else if (st.tab === "institusjon") {
+        const lc = (i) => (ins.land[i] < 5 ? F.css(m, "--" + F.land[ins.land[i]]) : grey);
+        net(left, { label: "Nettverk av " + n0(ins.noder) + " institusjonar", x: ins.x, y: ins.y, kant: ins.kant, ea: 0.08, ew: 0.45, col: lc, r: (i) => (1 + Math.sqrt(ins.n[i]) * 0.32) * Math.min(k, 1.6), alpha: () => 0.92,
+          tip: (i) => "Institusjon|" + ins.n[i] + (ins.n[i] >= 99 ? " eller fleire" : "") + " verk|" + (ins.land[i] < 5 ? F.landNamn[F.land[ins.land[i]]] : "anna land") });
+        landKey(right);
+        note(right, F.p(d.stor_pct.institusjon, 1), " i største komponent. " + n0(ins.noder) + " institusjonar; fargen er landet, storleiken er talet på verk.");
+      } else {
+        const idx = {}; ld.k.forEach((kk, i) => (idx[kk] = i));
+        const lcol = (i) => (F.land.indexOf(ld.k[i]) >= 0 ? F.css(m, "--" + ld.k[i]) : grey);
+        const rr = (i) => (1.6 + Math.sqrt(ld.n[i]) * 0.24) * Math.min(k, 1.6);
+        const order = ["NO", "SE", "DK", "FI", "IS"].filter((q) => idx[q] != null).map((q) => idx[q]);
+        const top = ld.n.map((v, i) => [v, i]).sort((a, b2) => b2[0] - a[0]).slice(0, 12).map((q) => q[1]).filter((i) => order.indexOf(i) < 0);
+        const w = side;
+        const cvs = canvas(left, w, w, "Nettverk av " + n0(ld.noder) + " land");
+        const pad = 14 * Math.min(k, 1.4), sc = (v) => pad + (v / 10000) * (w - 2 * pad), c = cvs.base.c;
+        const pts = ld.k.map((kk, i) => ({ i, px: sc(ld.x[i]), py: sc(ld.y[i]) }));
+        ld.kant.forEach((q) => { c.beginPath(); c.moveTo(pts[q[0]].px, pts[q[0]].py); c.lineTo(pts[q[1]].px, pts[q[1]].py); c.strokeStyle = "rgba(255,255,255," + Math.min(0.5, 0.05 + Math.log10(q[2] + 1) * 0.12) + ")"; c.lineWidth = (0.4 + Math.log10(q[2] + 1) * 0.9) * Math.min(k, 1.4); c.stroke(); });
+        pts.forEach((p) => { c.fillStyle = lcol(p.i); c.beginPath(); c.arc(p.px, p.py, rr(p.i), 0, TAU); c.fill(); });
+        placeLabels(c, order.map((i) => ({ i, t: ld.k[i], c: lcol(i) })).concat(top.map((i) => ({ i, t: ld.k[i] }))), pts, rr);
+        const t = cvs.top.c;
+        pick(cvs.top.cv, pts, 16, (p, e) => { t.clearRect(0, 0, w, w); t.beginPath(); t.arc(p.px, p.py, rr(p.i) + 3.5, 0, TAU); t.strokeStyle = "#fff"; t.lineWidth = 1.5; t.stroke(); F.tipAt(e.clientX, e.clientY, (names[ld.k[p.i]] || ld.k[p.i]) + "|" + n0(ld.n[p.i]) + " verk", e.pointerType === "touch"); }, () => { t.clearRect(0, 0, w, w); F.tipHide(); });
+        landKey(right);
+        note(right, n0(ld.stor) + " av " + n0(ld.noder), " land i same komponent. Danmark og Sverige delar " + n0(ld.dk_se) + " verk, Island og Finland " + n0(ld.is_fi) + ". Merkelappane er landskodar.");
+      }
+    }
+    show();
   };
 
   /* ---------- f13: samsiteringsnett ---------- */
@@ -216,8 +245,9 @@
     const ov = F.s("svg", { width: w, height: h, viewBox: "0 0 " + w + " " + h, style: "position:absolute;left:0;top:0;z-index:3;pointer-events:none", "aria-label": "Klyngemerke" }, cvs.wrap);
     d.klynger.forEach((k) => {
       const a = F.s("a", { href: d.lenkje + k.id, style: "pointer-events:auto", "aria-label": "Opne klynge " + (k.id + 1) + " i kartfana" }, ov);
-      const g = F.s("g", { cls: "mk", tip: (k.id + 1) + " " + k.namn + "|" + n0(k.n) + " verk" }, a);
+      const g = F.s("g", { cls: "mk kn", tip: (k.id + 1) + " " + k.namn + "|" + n0(k.n) + " verk" }, a);
       const x = sc(k.lx, w), y = sc(k.ly, h);
+      F.s("circle", { cx: x, cy: y, r: 22, fill: "transparent" }, g);
       F.s("circle", { cx: x, cy: y, r: 11, fill: "#000", stroke: kc[k.id], "stroke-width": 2 }, g);
       F.s("text", { x, y: y + 4, "text-anchor": "middle", text: k.id + 1, style: "fill:#fff;font-weight:500;font-size:12px" }, g);
     });
@@ -237,7 +267,7 @@
       const sp = d.sprak;
       const L = (items) => { const l = F.d("div", { cls: "leg", style: "margin:0 0 6px" }, nt); items.forEach((it) => { const s = F.d("span", null, l); const i = F.d("i", { style: "background:" + it[0] + ";border-radius:50%" }, s); s.appendChild(document.createTextNode(it[1])); }); };
       const p = F.d("p", { cls: "sm", style: "margin:0" }, nt);
-      if (st.mode === "klynge") p.append(b("Kartklyngene (åtte): silhuett " + F.n(d.silhuett, 3)), " mot " + F.n(d.silhuett_null, 3) + " i ein tilfeldig datasky. Dei er svakt skilde.");
+      if (st.mode === "klynge") p.append(b("Silhuett " + F.n(d.silhuett, 3)), " mot " + F.n(d.silhuett_null, 3) + " i ein tilfeldig datasky; klyngene er svakt skilde.");
       else if (st.mode === "land") { L(lc.map((c2, i) => [c2, LN[i]])); p.append("Første nordiske land per verk; arkivverk etter kjeldeland.", " Verk med fleire nordiske land er kvite."); }
       else if (st.mode === "periode") { L([[PC[0], d.periodar[0]], [PC[3], d.periodar[3]], [PC[6], d.periodar[6]]]); p.append("Publiseringsperiode. Mørkt er eldst."); }
       else if (st.mode === "lag") { L([[lagc[0], "OpenAlex-laget " + n0(sp.n_oa)], [lagc[1], "arkivlaget " + n0(sp.n_ark)]]); p.append("Arkivverka (lyse) ligg over heile kartet, ikkje i eigne klynger."); }
@@ -246,7 +276,7 @@
     }
     note();
     /* liste over klyngene */
-    F.d("h4", { text: "Kartets åtte klynger", style: "font:400 12px/1.35 var(--mono);color:var(--dim);margin:0 0 6px" }, B);
+    F.d("h4", { text: "Namn og storleik", style: "font:400 12px/1.35 var(--mono);color:var(--dim);margin:0 0 6px" }, B);
     const ul = F.d("ol", { style: "list-style:none;margin:0;padding:0" }, B);
     d.klynger.forEach((k) => {
       const li = F.d("li", { style: "border-top:1px solid var(--hair);padding:9px 0;display:grid;grid-template-columns:26px 1fr;gap:2px 8px;align-items:start;cursor:default" }, ul);

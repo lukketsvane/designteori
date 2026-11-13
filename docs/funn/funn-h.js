@@ -19,7 +19,8 @@
   /* søyler (ein eller fleire seriar). items: [{label, vals:[...], tip, color}] */
   F.cols = function (p, w, h, o) {
     const items = o.items, ns = o.series ? o.series.length : 1;
-    const pl = o.pl == null ? 30 : o.pl, pr = 2, pt = 16, pb = o.pb == null ? 24 : o.pb;
+    const hasSub = items.some((q) => q.sub != null);
+    const pl = o.pl == null ? 30 : o.pl, pr = 2, pt = 16, pb = o.pb == null ? (hasSub ? 38 : 24) : o.pb;
     const svg = F.svg(p, w, h, o.label);
     const x = d3.scaleBand().domain(items.map((_, i) => i)).range([pl, w - pr]).paddingInner(o.pad == null ? 0.22 : o.pad).paddingOuter(0.05);
     const y = d3.scaleLinear().domain([0, o.max]).range([h - pb, pt]);
@@ -38,12 +39,15 @@
         if (v == null) return;
         const c = (o.series ? o.series[k].color : (it.color || o.color)) || "var(--fg)";
         const bx = x(i) + sub(k), bw = sub.bandwidth();
-        F.s("rect", { x: bx, y: y(v), width: bw, height: Math.max(0.8, h - pb - y(v)), fill: fillOf(svg, c), stroke: c.outline || null, cls: "gy" }, g);
+        const hz = it.hatch ? F.hatch(svg, c) : null;
+        F.s("rect", { x: bx, y: y(v), width: bw, height: Math.max(0.8, h - pb - y(v)), fill: hz || fillOf(svg, c), stroke: hz ? c : (c.outline || null), "stroke-width": hz ? 1 : null, opacity: it.fade ? 0.55 : null, cls: "gy" }, g);
         if (o.vl !== false && (ns === 1 || bw > 20) && (items.length <= (o.vlMax || 9) || x.step() > 26)) {
-          F.s("text", { x: bx + bw / 2, y: y(v) - 4, "text-anchor": "middle", text: fm(v), cls: "sm halo" + (o.vb ? " b" : "") }, g);
+          if (it.vlIn) F.s("text", { x: bx + bw / 2, y: h - pb - 4, "text-anchor": "middle", text: fm(v), cls: "sm", style: "fill:var(--bg)" }, g);
+          else F.s("text", { x: bx + bw / 2, y: y(v) - 4, "text-anchor": "middle", text: fm(v), cls: "sm halo" + (o.vb ? " b" : "") }, g);
         }
       });
       if (!(i % skip) || it.always) F.s("text", { x: x(i) + x.bandwidth() / 2, y: h - pb + 14, "text-anchor": "middle", text: it.label }, svg);
+      if (it.sub != null && (!(i % skip) || it.always)) F.s("text", { x: x(i) + x.bandwidth() / 2, y: h - pb + 26, "text-anchor": "middle", text: it.sub, cls: "sm" }, svg);
     });
     return { svg, x, y };
   };
@@ -95,6 +99,10 @@
     const ny = F.nudge(ends, 13, pt + 6, h - pb - 2);
     if (o.labels === true) o.series.forEach((s, i) => {
       const e = ends[i];
+      if (s.lab) { /* eigen plassering: {i: punkt, dx, dy, a: anker} */
+        F.s("text", { x: x(s.lab.i) + (s.lab.dx || 0), y: y(s.vals[s.lab.i]) + (s.lab.dy || 0), "text-anchor": s.lab.a || "middle", text: s.name, cls: "sm halo", style: "fill:" + (s.color || "var(--fg)") }, svg);
+        return;
+      }
       F.s("text", { x: x(e.k) - 2, y: ny[i] - (o.above == null ? 9 : o.above), "text-anchor": "end", text: s.name, cls: "sm halo", style: "fill:" + (s.color || "var(--fg)") }, svg);
     });
     F.xhover(svg, { x0: pl, x1: w - pr, y0: pt, y1: h - pb }, n, (i) => x(i), (i) => o.cats[i] + "|" + o.series.map((s) => (s.vals[i] == null ? null : s.name + " " + fm(s.vals[i]))).filter(Boolean).join("|"));

@@ -21,33 +21,34 @@
     F.rows(B, { w: B.w }, { rows: kr, min: -0.2, max: 1, ticks: [0, 0.25, 0.5, 0.75, 1], tfmt: (v) => F.n(v, 2), fmt: (v) => F.n(v, 2), rowH: 38, valW: 7.4, label: "Kappa per form" });
     F.legend(B, [{ c: "var(--fg)", t: "fylt: målbar, med 95 % intervall", r: true }, { c: "var(--fg)", t: "ring: ikkje målbar eller ustabil (modellering: 3 positive)", r: true, open: true }]);
     F.d("p", { cls: "sm" }, B).append("Berre datainnsamling er målbar: kappa ", b("0,75"), " (0,52–0,95), presisjon ", b("0,83"), ", gjenfinning ", b("0,95"), ". Argument er eit grensetilfelle.");
-    /* matrise */
+    /* kva former står saman: bogediagram på svart flate, alle par, sterkaste par med tal */
     const sec = F.d("div", { style: "margin-top:34px;max-width:680px" }, m);
     cap(sec, "Kva former står saman: phi mellom former, " + d.per_tekst.n + " lesne tekstar (uvekta tal på tekstar)");
+    const plate = F.d("div", { cls: "plate" }, sec);
     const codes = d.kodar.filter((k) => d.phi.some((p) => p.a === k || p.b === k));
     const lab = { argument: "argument", literature: "litteratur", example: "eksempel", case: "case", data_collection: "datainnsamling", design_work: "designarbeid", practice_reflection: "praksisrefleksjon", use_in_practice: "bruk i praksis" };
-    const W = Math.min(ctx.w, 680), labW = Math.max.apply(null, codes.map((k) => (lab[k] || k).length)) * 7.4 + 12, cs = Math.min(50, (W - labW - 8) / codes.length), H = cs * codes.length + 8;
-    const svg = F.svg(sec, W, H, "Samførekomst mellom kunnskapsformer");
+    const share = {}; d.former.forEach((q) => { share[q.kode] = q.lesing; });
+    const W = Math.min(ctx.w, 680) - 28, mob = W < 420;
+    const labW = Math.max.apply(null, codes.map((k) => (lab[k] || k).length)) * 7 + 22, rh = mob ? 36 : 44, H = rh * codes.length + 6;
+    const svg = F.svg(plate, W, H, "Samførekomst mellom kunnskapsformer som bogediagram");
     const idx = {}; codes.forEach((k, i) => (idx[k] = i));
-    codes.forEach((k, i) => {
-      F.s("text", { x: labW - 8, y: i * cs + cs / 2 + 4, "text-anchor": "end", text: lab[k] || k, cls: "fg" }, svg);
-      F.s("line", { x1: labW, x2: labW + (i + 1) * cs, y1: i * cs + cs, y2: i * cs + cs, stroke: "var(--hair)" }, svg);
-      F.s("line", { x1: labW + i * cs + cs, x2: labW + i * cs + cs, y1: i * cs, y2: H - 8, stroke: "var(--hair)" }, svg);
-    });
-    d.phi.forEach((p) => {
-      let i = idx[p.a], j = idx[p.b]; if (i < j) { const t = i; i = j; j = t; }
-      const cxp = labW + j * cs + cs / 2, cyp = i * cs + cs / 2, r = Math.max(2, Math.sqrt(Math.abs(p.phi)) * cs * 0.46), small = p.n < 5;
+    const yy = (i) => 14 + i * rh, x0 = labW;
+    const prs = d.phi.slice().sort((p, q) => Math.abs(p.phi) - Math.abs(q.phi));
+    prs.forEach((p) => {
+      let i = idx[p.a], j = idx[p.b]; if (i > j) { const t = i; i = j; j = t; }
+      const r = (yy(j) - yy(i)) / 2, ab = Math.abs(p.phi), neg = p.phi < 0, small = p.n < 5;
+      const dpath = "M" + x0 + "," + yy(i) + " A" + r + "," + r + " 0 0 1 " + x0 + "," + yy(j);
       const g = F.s("g", { cls: "mk fd", tip: (lab[p.a] || p.a) + " og " + (lab[p.b] || p.b) + "|phi " + F.n(p.phi, 2) + "|" + p.n + " tekstar har begge" + (small ? "|lite tal, usikkert" : "") }, svg);
-      F.s("rect", { x: cxp - cs / 2, y: cyp - cs / 2, width: cs, height: cs, fill: "transparent" }, g);
-      F.s("circle", { cx: cxp, cy: cyp, r, fill: p.phi >= 0 ? "var(--fg)" : "var(--bg)", stroke: "var(--fg)", "stroke-width": p.phi >= 0 ? 0 : 1.6, "stroke-dasharray": small ? "2.5 2" : null, opacity: p.phi >= 0 ? 0.25 + Math.abs(p.phi) * 1.4 : 1 }, g);
-      if (small) F.s("circle", { cx: cxp, cy: cyp, r: Math.max(r, 3) + 2.5, fill: "none", stroke: "var(--dim)", "stroke-width": 1, "stroke-dasharray": "2 2" }, g);
+      F.s("path", { d: dpath, fill: "none", stroke: "transparent", "stroke-width": 13 }, g);
+      F.s("path", { d: dpath, fill: "none", stroke: neg ? "#9a9a9a" : "#fff", "stroke-opacity": neg ? 0.8 : Math.min(1, 0.3 + ab * 1.3), "stroke-width": 1.2 + ab * (neg ? 5 : 9), "stroke-dasharray": small ? "1.5 3.5" : (neg ? "5 3" : null), "stroke-linecap": small ? "round" : "butt" }, g);
+      if (ab >= 0.33) F.s("text", { x: x0 + r + 6, y: (yy(i) + yy(j)) / 2 + 4, text: F.n(p.phi, 2), cls: "sm halo b" }, g);
     });
-    /* tala står under diagonalen: strek med verdi for dei sterkaste */
-    d.phi.filter((p) => Math.abs(p.phi) >= 0.33).forEach((p) => {
-      let i = idx[p.a], j = idx[p.b]; if (i < j) { const t = i; i = j; j = t; }
-      F.s("text", { x: labW + j * cs + cs - 2, y: i * cs + cs - 3, "text-anchor": "end", text: F.n(p.phi, 2).replace("−0,", "−.").replace(/^0,/, "."), cls: "sm halo b", "pointer-events": "none" }, svg);
+    codes.forEach((k, i) => {
+      F.s("text", { x: x0 - 14, y: yy(i) + 4, "text-anchor": "end", text: lab[k] || k, cls: "fg" }, svg);
+      F.s("circle", { cx: x0, cy: yy(i), r: 3 + Math.sqrt(share[k] || 0) * 0.5, fill: "#fff" }, svg);
     });
-    F.legend(sec, [{ c: "var(--fg)", t: "saman oftare enn tilfeldig", r: true }, { c: "var(--fg)", t: "saman sjeldnare", r: true, open: true }, { c: "var(--dim)", t: "stipla ring: færre enn 5 tekstar har begge", r: true, open: true }]);
+    F.legend(plate, [{ c: "#fff", ln: "solid", t: "oftare saman enn tilfeldig" }, { c: "#9a9a9a", ln: "dashed", t: "sjeldnare saman" }, { c: "#fff", ln: "dotted", t: "færre enn 5 tekstar har begge" }]);
+    F.d("p", { cls: "sm", style: "color:var(--dim);margin:2px 0 0" }, plate).textContent = "Tjukkleik: styrken på phi. Prikkstorleik: del av tekstane som har forma.";
     F.d("p", { cls: "sm" }, sec).append(b(d.per_tekst.tre_pluss + " av " + d.per_tekst.n), " tekstar har tre eller fleire former, snitt ", b(F.n(d.per_tekst.snitt, 2)), ". Éin kodar, ukontrollert.");
   };
 
@@ -59,18 +60,18 @@
     F.rows(A, { w: A.w }, { rows: rowsA, min: 0, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", rowH: 36, gH: 26, valW: 7, label: "Datainnsamlingsmarkørar over tid" });
     const rowsB = d.kjelde.map((q, i) => dot(Object.assign({}, q, { namn: q.namn.replace("Nordic design research conference", "Nordes").replace("Proceedings of ", "").replace("Participatory Design Conference", "PDC").replace("Designing Interactive Systems", "DIS") }), i === 0 ? "Kjelde, minst 40 tekstar" : null))
       .concat(d.land.map((q, i) => dot(q, i === 0 ? "Land, verk med eitt land" : null, { color: F.cc({ Danmark: "DK", Finland: "FI", Noreg: "NO", Sverige: "SE" }[q.namn]) })))
-      .concat(d.innan_kjelde.map((q, i) => ({ label: q.namn.replace("Nordic design research conference", "Nordes"), vtxt: F.n(q.for, 1) + " → " + F.n(q.etter, 1), mark: "none", dots: [{ v: q.for, color: "var(--fg)", hollow: true }, { v: q.etter, color: "var(--fg)" }], linkc: "var(--ref)", group: i === 0 ? "Endring innan kjelde, før til etter 2015" : null, tip: q.namn + "|før 2015: " + F.n(q.for, 1) + " %|frå 2015: " + F.n(q.etter, 1) + " %" })));
+      .concat(d.innan_kjelde.map((q, i) => ({ label: q.namn.replace("Nordic design research conference", "Nordes"), vtxt: "før " + F.n(q.for, 1) + " / etter " + F.n(q.etter, 1), mark: "none", dots: [{ v: q.for, color: "var(--fg)", hollow: true }, { v: q.etter, color: "var(--fg)" }], linkc: "var(--ref)", group: i === 0 ? "Endring innan kjelde, før til etter 2015" : null, tip: q.namn + "|før 2015: " + F.n(q.for, 1) + " %|frå 2015: " + F.n(q.etter, 1) + " %" })));
     F.rows(B, { w: B.w }, { rows: rowsB, min: 0, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", rowH: 34, gH: 26, valW: 7, label: "Datainnsamlingsmarkørar etter kjelde og land" });
     F.d("p", { cls: "sm" }, B).append("Markør for datainnsamling er ikkje kvalitet: å ha samla inn data er ikkje det same som at ein påstand er støtta av dei.");
   };
 
   /* ---------- f25: teorielement i pilotane ---------- */
   F.fig.f25 = function (m, d, ctx) {
-    const [A, B] = F.pans(m, 2, "p2", ["Profil: del av påstandane, prosent (95 % intervall)", "Pålitelegheit: andre lesing av same tekstar"]);
+    const [A, B] = F.pans(m, 2, "p2", ["Profil: del av påstandane, prosent (95 % intervall)", "Pålitelegheit: andre lesing av same " + d.utval.lesbare + " lesbare tekstar"]);
     const iv = (label, a, group, extra) => Object.assign({ label, v: a[0], lo: a[1], hi: a[2], mark: "dot", color: "var(--fg)", vtxt: F.n(a[0], 0), group, tip: label + "|" + F.n(a[0], 0) + " % (" + F.n(a[1], 0) + " til " + F.n(a[2], 0) + ")" }, extra || {});
     const k = d.kausal, rowsA = [
-      iv("Pilot v0.1, " + k.v01[3] + " påstandar", k.v01.slice(0, 3), "Påstanden er «causes or enables»"),
-      iv("Pilot v0.3, " + k.v03[3] + " påstandar", k.v03.slice(0, 3), null, { color: "var(--fg)" }),
+      iv("Pilot v0.1, " + k.v01[3] + " påstandar frå " + d.utval.v01 + " tekstar", k.v01.slice(0, 3), "Påstanden er «causes or enables»"),
+      iv("Pilot v0.3, " + k.v03[3] + " påstandar frå " + d.utval.lesbare + " tekstar", k.v03.slice(0, 3), null, { color: "var(--fg)" }),
       { label: "Andre lesing, v0.3", v: k.les2, mark: "dot", open: true, vtxt: F.n(k.les2, 0), color: "var(--dim)", tip: "Andre lesing|" + k.les2 + " %|skilnad " + F.n(k.diff[0], 1) + " poeng (" + k.diff[1] + " til +" + k.diff[2] + ")" },
       iv("I konklusjonen", d.stad.konklusjon, "Kvar påstanden står"),
       { label: "I samandraget", v: d.stad.samandrag, mark: "dot", vtxt: F.n(d.stad.samandrag, 0), color: "var(--fg)" },
@@ -88,15 +89,18 @@
       .concat(g.map((q, i) => bar("Gjenfinning, " + q.namn, q.k, q.n, i === 0 ? "Gjenfinning etter stad" : null)));
     F.rows(B, { w: B.w }, { rows: rowsB, min: 0, max: 100, ticks: [0, 50, 100], tfmt: (v) => v + "", rowH: 34, gH: 26, label: "Pålitelegheit" });
     F.d("p", { cls: "sm" }, B).append("Kappa for samanhengstype ", b(F.n(a.kappa, 2)), ". Skilnaden i «causes or enables» mellom lesingane er ", b(F.n(k.diff[0], 1) + " poeng"), " (", k.diff[1], " til +", k.diff[2], ").");
-    F.d("p", { cls: "sm" }, A).append("v0.1 (", b("31 %"), " av 315) og v0.3 (", b("56 %"), " av 52) kan ikkje samanliknast: skilnaden følgjer både plukkemåte og tekstutval, og dei to kan ikkje skiljast med desse data.");
+    F.d("p", { cls: "sm" }, A).append("v0.1 (", b("31 %"), " av 315 påstandar) og v0.3 (", b("56 %"), " av 52, frå " + d.utval.lesbare + " lesbare av " + d.utval.v03 + " CC-verk) kan ikkje samanliknast: skilnaden følgjer både plukkemåte og tekstutval, og dei to kan ikkje skiljast med desse data.");
   };
 
   /* ---------- f26: femten spørsmål ---------- */
   F.fig.f26 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 760;
     const oname = d.namn;
-    /* inngangsbilete: femten flater */
+    /* inngangsbilete: femten flater, med forklaringa rett over, så den står på første skjermen */
     const ov = F.d("div", { style: "margin:0 0 6px" }, m);
+    const legd = F.d("div", { cls: "leg", style: "margin:0 0 6px" }, ov);
+    [["var(--fg)", "heldt", false], ["var(--fg)", "heldt ikkje", true], ["var(--dim)", "uavgjort", true]].forEach(([c, t, o], i) => { const s = F.d("span", null, legd); const ii = F.d("i", { cls: o ? "o" : "" }, s); ii.style.background = c; ii.style.color = c; if (i === 2) ii.style.borderStyle = "dashed"; s.appendChild(document.createTextNode(t)); });
+    F.d("p", { cls: "sm", style: "margin:0 0 12px" }, ov).textContent = "Flate: dommen for spørsmålet. Prikkane er stripene: fylt er treff, open er bom, stipla er ikkje avgjort. Trykk på ei flate for å opne spørsmålet. I korta er skygga felt det forventa området og svart merke det observerte.";
     const lin = ["Eininga", "Skilja", "Tida"];
     const cw = mob ? Math.floor((W - 2) / 5) : 74, rh = 64, left = mob ? 0 : 84;
     const svg0 = F.svg(ov, mob ? W : Math.min(W, left + cw * 5 + 8), 3 * (rh + 14), "Oversyn over femten spørsmål");
@@ -116,14 +120,12 @@
         F.s("text", { x: x0 + cw / 2 - 1, y: y0 + hh - 10, "text-anchor": "middle", text: q.id.split("-")[1], style: "fill:" + (q.utfall === "held" ? "var(--bg)" : "var(--fg)") }, g);
       });
     });
-    const legd = F.d("div", { cls: "leg", style: "margin-top:12px" }, ov);
-    [["var(--fg)", "heldt", false], ["var(--fg)", "heldt ikkje", true], ["var(--dim)", "uavgjort", true]].forEach(([c, t, o], i) => { const s = F.d("span", null, legd); const ii = F.d("i", { cls: o ? "o" : "" }, s); ii.style.background = c; ii.style.color = c; if (i === 2) ii.style.borderStyle = "dashed"; s.appendChild(document.createTextNode(t)); });
-    F.d("p", { cls: "sm", text: "Prikkane er stripene: fylt er treff, open er bom, stipla er ikkje avgjort. I korta er skygga felt det forventa området og svart merke det observerte." }, ov);
     lin.forEach((l) => {
       F.d("div", { cls: "sp-linse", text: l }, m);
       const grid = F.d("div", { cls: "sp-grid" }, m);
       d.sporsmal.filter((q) => q.linse === l).forEach((q) => card(grid, q));
     });
+    /* eitt kort per spørsmål: tittel, dom og den første stripa. Resten opnar ved trykk (eller frå flata over). */
     function card(grid, q) {
       const el = F.d("section", { cls: "sp", id: "sp-" + q.id }, grid);
       const h = F.d("h4", null, el);
@@ -131,75 +133,84 @@
       F.d("em", { text: oname[q.utfall], cls: q.utfall }, h);
       F.d("p", { cls: "sp-merk", text: q.nemnar }, el);
       const w = Math.floor(el.getBoundingClientRect().width) || (mob ? W : W / 2 - 24);
-      const heights = [], lines = [];
-      const cpl = Math.floor((w - 40) / 7.1);
-      const notes = [], legs = [];
-      q.rader.forEach((r) => { const t = r.namn; const l1 = t.length <= cpl ? [t] : wrap(t, cpl); lines.push(l1); const nt = ((r.avleidd ? "Utleidd tal. " : "") + (r.merknad || "")).trim(); const nl = nt ? F.wrap(nt, Math.floor((w - 4) / 7.0), 3) : []; notes.push(nl); const lgt = r.obs.length > 1 ? F.wrap(r.obs.map((o, k) => ["●", "◆", "■", "▲", "✚"][k % 5] + " " + (o.namn || "") + " " + F.n(o.v, Math.abs(o.v) < 1 && o.v % 0.1 ? 2 : (o.v % 1 ? 1 : 0))).join("   "), Math.floor((w - 4) / 7.0), 2) : []; legs.push(lgt); heights.push(l1.length * 14 + 64 + (lgt.length ? lgt.length * 14 + 4 : 0) + (nl.length ? nl.length * 14 + 10 : 0)); });
-      const H = heights.reduce((a, c) => a + c, 0) + 4;
-      const svg = F.svg(el, w, H, q.tittel);
-      let y = 2;
-      q.rader.forEach((r, ri) => {
-        const L = lines[ri], domC = "var(--fg)";
-        const g = F.s("g", { cls: "mk" }, svg);
-        const unit = r.eining === "prosent" ? " %" : (r.eining === "del" || r.eining === "forhold" || r.eining === "indeks" || r.eining === "poeng" || r.eining === "rho" || r.eining === "AUC" || r.eining === "tal" || r.eining === "gonger" ? "" : " " + r.eining);
-        L.forEach((t, k) => F.s("text", { x: 0, y: y + 11 + k * 14, text: t, cls: "fg", style: "font-size:12px" }, g));
-        /* dom */
-        const dx = w - 4, dy = y + 7;
-        const gl = F.s("g", { tip: (r.dom === "treff" ? "Treff" : (r.dom === "bom" ? "Bom" : "Ikkje avgjort")) + "|" + vtxt(r) }, svg);
-        F.s("circle", { cx: dx - 6, cy: dy, r: 6, fill: r.dom === "treff" ? "var(--fg)" : "transparent", stroke: "var(--fg)", "stroke-width": 1.5, "stroke-dasharray": r.dom === "open" ? "2.5 2" : null }, gl);
-        /* akse */
-        const ty = y + L.length * 14 + 31, px0 = 6, px1 = w - 6;
-        const x = d3.scaleLinear().domain(r.akse).range([px0, px1]);
-        F.s("line", { x1: px0, x2: px1, y1: ty, y2: ty, stroke: "var(--line)" }, svg);
-        const vn = r.venta;
-        const lo = vn.lo == null ? r.akse[0] : vn.lo, hi = vn.hi == null ? r.akse[1] : vn.hi;
-        if (vn.tilnaerma && vn.lo === vn.hi) {
-          F.s("line", { x1: x(vn.lo), x2: x(vn.lo), y1: ty - 11, y2: ty + 11, stroke: "var(--ref)", "stroke-width": 3 }, svg);
-          F.s("text", { x: x(vn.lo) + 6, y: ty + 20, text: "om lag", cls: "sm" }, svg);
-        } else {
-          const gid = "gd" + q.id + ri;
-          const defs = svg.querySelector("defs") || svg.insertBefore(F.s("defs"), svg.firstChild);
-          if (vn.lo == null || vn.hi == null) {
-            const lg = F.s("linearGradient", { id: gid, x1: vn.lo == null ? 1 : 0, x2: vn.lo == null ? 0 : 1, y1: 0, y2: 0 }, defs);
-            F.s("stop", { offset: "0", "stop-color": "var(--ref)", "stop-opacity": 0.42 }, lg);
-            F.s("stop", { offset: "1", "stop-color": "var(--ref)", "stop-opacity": 0.04 }, lg);
-          }
-          F.s("rect", { x: x(lo), y: ty - 12, width: Math.max(2, x(hi) - x(lo)), height: 24, rx: 2, fill: (vn.lo == null || vn.hi == null) ? "url(#" + gid + ")" : "var(--ref)", opacity: (vn.lo == null || vn.hi == null) ? 1 : 0.32, cls: "fd" }, svg);
-          if (vn.lo != null) F.s("line", { x1: x(lo), x2: x(lo), y1: ty - 12, y2: ty + 12, stroke: "var(--ref)", "stroke-width": 1.4 }, svg);
-          if (vn.hi != null) F.s("line", { x1: x(hi), x2: x(hi), y1: ty - 12, y2: ty + 12, stroke: "var(--ref)", "stroke-width": 1.4 }, svg);
+      const more = F.d("div", { id: "sp-" + q.id + "-meir", hidden: "hidden" }, el);
+      q.rader.forEach((r, ri) => strip(ri === 0 ? el : more, q, r, ri, w));
+      if (q.rader.length > 1) {
+        const btn = F.d("button", { type: "button", cls: "sp-meir", "aria-expanded": "false", "aria-controls": "sp-" + q.id + "-meir" }, el);
+        const set = (open) => { more.hidden = !open; btn.setAttribute("aria-expanded", String(open)); btn.textContent = open ? "Vis berre første stripe" : "Vis dei " + (q.rader.length - 1) + " andre stripene"; };
+        set(false);
+        btn.addEventListener("click", () => set(more.hidden));
+        el.addEventListener("opna", () => set(true));
+      }
+    }
+    function strip(host, q, r, ri, w) {
+      const t = r.namn, cpl = Math.floor((w - 40) / 7.1);
+      const L = t.length <= cpl ? [t] : wrap(t, cpl);
+      const nt = ((r.avleidd ? "Utleidd tal. " : "") + (r.merknad || "")).trim(), nl = nt ? F.wrap(nt, Math.floor((w - 4) / 7.0), 3) : [];
+      const lg = r.obs.length > 1 ? F.wrap(r.obs.map((o, k) => ["●", "◆", "■", "▲", "✚"][k % 5] + " " + (o.namn || "") + " " + F.n(o.v, Math.abs(o.v) < 1 && o.v % 0.1 ? 2 : (o.v % 1 ? 1 : 0))).join("   "), Math.floor((w - 4) / 7.0), 2) : [];
+      const H = L.length * 14 + 64 + (lg.length ? lg.length * 14 + 4 : 0) + (nl.length ? nl.length * 14 + 10 : 0);
+      const svg = F.svg(host, w, H, q.tittel + ": " + t);
+      const y = 2, domC = "var(--fg)";
+      const g = F.s("g", { cls: "mk" }, svg);
+      const unit = r.eining === "prosent" ? " %" : (["del", "forhold", "indeks", "poeng", "rho", "AUC", "tal", "gonger"].indexOf(r.eining) >= 0 ? "" : " " + r.eining);
+      L.forEach((tx, k) => F.s("text", { x: 0, y: y + 11 + k * 14, text: tx, cls: "fg", style: "font-size:12px" }, g));
+      /* dom */
+      const dx = w - 4, dy = y + 7;
+      const gl = F.s("g", { tip: (r.dom === "treff" ? "Treff" : (r.dom === "bom" ? "Bom" : "Ikkje avgjort")) + "|" + vtxt(r) }, svg);
+      F.s("circle", { cx: dx - 6, cy: dy, r: 6, fill: r.dom === "treff" ? domC : "transparent", stroke: domC, "stroke-width": 1.5, "stroke-dasharray": r.dom === "open" ? "2.5 2" : null }, gl);
+      /* akse: lik breidd i alle kort, berre endepunkta er merkte */
+      const ty = y + L.length * 14 + 31, px0 = 6, px1 = w - 6;
+      const x = d3.scaleLinear().domain(r.akse).range([px0, px1]);
+      F.s("line", { x1: px0, x2: px1, y1: ty, y2: ty, stroke: "var(--line)" }, svg);
+      const vn = r.venta;
+      const lo = vn.lo == null ? r.akse[0] : vn.lo, hi = vn.hi == null ? r.akse[1] : vn.hi;
+      if (vn.tilnaerma && vn.lo === vn.hi) {
+        /* «om lag»: eit stipla felt rundt tala (± 5, same felt som dommen reknar med), ikkje ei strek utan breidd */
+        const a0 = Math.max(r.akse[0], vn.lo - 5), a1 = Math.min(r.akse[1], vn.hi + 5);
+        F.s("rect", { x: x(a0), y: ty - 12, width: Math.max(2, x(a1) - x(a0)), height: 24, rx: 2, fill: F.hatch(svg, "var(--dim)"), stroke: "var(--ref)", "stroke-width": 1.2, "stroke-dasharray": "3 2", opacity: 0.8 }, svg);
+        F.s("line", { x1: x(vn.lo), x2: x(vn.lo), y1: ty - 12, y2: ty + 12, stroke: "var(--ref)", "stroke-width": 1.4 }, svg);
+        const olt = "om lag " + F.n(vn.lo, 0) + " ± 5", right = x(a1) + 6 + olt.length * 6.9 < px1 - 46;
+        F.s("text", { x: right ? x(a1) + 6 : x(a0) - 6, y: ty + 20, "text-anchor": right ? "start" : "end", text: olt, cls: "sm" }, svg);
+      } else {
+        const gid = "gd" + q.id + ri;
+        const defs = svg.querySelector("defs") || svg.insertBefore(F.s("defs"), svg.firstChild);
+        if (vn.lo == null || vn.hi == null) {
+          const lgd = F.s("linearGradient", { id: gid, x1: vn.lo == null ? 1 : 0, x2: vn.lo == null ? 0 : 1, y1: 0, y2: 0 }, defs);
+          F.s("stop", { offset: "0", "stop-color": "var(--ref)", "stop-opacity": 0.42 }, lgd);
+          F.s("stop", { offset: "1", "stop-color": "var(--ref)", "stop-opacity": 0.04 }, lgd);
         }
-        /* observert */
-        const shapes = ["circle", "diamond", "square", "tri", "cross"];
-        let lastLx = null;
-        r.obs.slice().sort((a, c) => a.v - c.v).forEach((o) => {
-          const k = r.obs.indexOf(o);
-          const xo = x(Math.max(r.akse[0], Math.min(r.akse[1], o.v)));
-          if (o.lo != null && o.hi != null && !(o.lo === o.hi)) {
-            F.s("line", { x1: x(Math.max(r.akse[0], o.lo)), x2: x(Math.min(r.akse[1], o.hi)), y1: ty, y2: ty, stroke: "var(--fg)", "stroke-width": 2.2 }, svg);
-            F.s("line", { x1: x(Math.max(r.akse[0], o.lo)), x2: x(Math.max(r.akse[0], o.lo)), y1: ty - 5, y2: ty + 5, stroke: "var(--fg)", "stroke-width": 1.4 }, svg);
-            F.s("line", { x1: x(Math.min(r.akse[1], o.hi)), x2: x(Math.min(r.akse[1], o.hi)), y1: ty - 5, y2: ty + 5, stroke: "var(--fg)", "stroke-width": 1.4 }, svg);
-          }
-          marker(svg, shapes[k % 5], xo, ty, o.mid ? true : false);
-          const txt = F.n(o.v, Math.abs(o.v) < 1 && o.v % 0.1 ? 2 : (o.v % 1 ? 1 : 0));
-          const lx = Math.max(14, Math.min(w - 14, xo));
-          const close = lastLx != null && Math.abs(lx - lastLx) < 34;
-          F.s("text", { x: lx, y: ty - 17 - (close ? 13 : 0), "text-anchor": "middle", text: txt, cls: "b halo" }, svg);
-          lastLx = close ? null : lx;
-        });
-        /* akseendar */
-        const fmtA = (v) => F.n(v, v % 1 ? 1 : 0);
-        F.s("text", { x: px0, y: ty + 24, text: fmtA(r.akse[0]), cls: "sm" }, svg);
-        F.s("text", { x: px1, y: ty + 24, "text-anchor": "end", text: fmtA(r.akse[1]) + unit, cls: "sm" }, svg);
-        legs[ri].forEach((t, k) => F.s("text", { x: 0, y: ty + 40 + k * 14, text: t, cls: "sm fg" }, svg));
-        /* skyggeforklaring i tips */
-        const tip = r.namn + "|forventa " + vtxtV(vn, unit) + "|observert " + r.obs.map((o) => (o.namn ? o.namn + " " : "") + F.n(o.v, 2) + (o.lo != null && o.lo !== o.hi ? " (" + F.n(o.lo, 2) + " til " + F.n(o.hi, 2) + ")" : "") + unit).join(", ") + (r.merknad ? "|" + r.merknad : "") + (r.avleidd ? "|Utleidd tal" : "");
-        g.setAttribute("data-tip", tip);
-        F.s("rect", { x: 0, y: y, width: w, height: heights[ri], fill: "transparent" }, g);
-        notes[ri].forEach((t, k) => F.s("text", { x: 0, y: ty + 40 + (legs[ri].length ? legs[ri].length * 14 + 4 : 0) + k * 14, text: t, cls: "sm" }, svg));
-        y += heights[ri];
-        F.s("line", { x1: 0, x2: w, y1: y - 6, y2: y - 6, stroke: "var(--hair)" }, svg);
-        if (r.merknad) { /* merknad kjem i verktøyhint */ }
+        F.s("rect", { x: x(lo), y: ty - 12, width: Math.max(2, x(hi) - x(lo)), height: 24, rx: 2, fill: (vn.lo == null || vn.hi == null) ? "url(#" + gid + ")" : "var(--ref)", opacity: (vn.lo == null || vn.hi == null) ? 1 : 0.32, cls: "fd" }, svg);
+        if (vn.lo != null) F.s("line", { x1: x(lo), x2: x(lo), y1: ty - 12, y2: ty + 12, stroke: "var(--ref)", "stroke-width": 1.4 }, svg);
+        if (vn.hi != null) F.s("line", { x1: x(hi), x2: x(hi), y1: ty - 12, y2: ty + 12, stroke: "var(--ref)", "stroke-width": 1.4 }, svg);
+      }
+      /* observert */
+      const shapes = ["circle", "diamond", "square", "tri", "cross"];
+      let lastLx = null;
+      r.obs.slice().sort((a, c) => a.v - c.v).forEach((o) => {
+        const k = r.obs.indexOf(o);
+        const xo = x(Math.max(r.akse[0], Math.min(r.akse[1], o.v)));
+        if (o.lo != null && o.hi != null && !(o.lo === o.hi)) {
+          F.s("line", { x1: x(Math.max(r.akse[0], o.lo)), x2: x(Math.min(r.akse[1], o.hi)), y1: ty, y2: ty, stroke: "var(--fg)", "stroke-width": 2.2 }, svg);
+          F.s("line", { x1: x(Math.max(r.akse[0], o.lo)), x2: x(Math.max(r.akse[0], o.lo)), y1: ty - 5, y2: ty + 5, stroke: "var(--fg)", "stroke-width": 1.4 }, svg);
+          F.s("line", { x1: x(Math.min(r.akse[1], o.hi)), x2: x(Math.min(r.akse[1], o.hi)), y1: ty - 5, y2: ty + 5, stroke: "var(--fg)", "stroke-width": 1.4 }, svg);
+        }
+        marker(svg, shapes[k % 5], xo, ty, o.mid ? true : false);
+        const txt = F.n(o.v, Math.abs(o.v) < 1 && o.v % 0.1 ? 2 : (o.v % 1 ? 1 : 0));
+        const lx = Math.max(14, Math.min(w - 14, xo));
+        const close = lastLx != null && Math.abs(lx - lastLx) < 34;
+        F.s("text", { x: lx, y: ty - 17 - (close ? 13 : 0), "text-anchor": "middle", text: txt, cls: "b halo" }, svg);
+        lastLx = close ? null : lx;
       });
+      /* akseendar */
+      const fmtA = (v) => F.n(v, v % 1 ? 1 : 0);
+      F.s("text", { x: px0, y: ty + 24, text: fmtA(r.akse[0]), cls: "sm" }, svg);
+      F.s("text", { x: px1, y: ty + 24, "text-anchor": "end", text: fmtA(r.akse[1]) + unit, cls: "sm" }, svg);
+      lg.forEach((tx, k) => F.s("text", { x: 0, y: ty + 40 + k * 14, text: tx, cls: "sm fg" }, svg));
+      const tip = r.namn + "|forventa " + vtxtV(vn, unit) + "|observert " + r.obs.map((o) => (o.namn ? o.namn + " " : "") + F.n(o.v, 2) + (o.lo != null && o.lo !== o.hi ? " (" + F.n(o.lo, 2) + " til " + F.n(o.hi, 2) + ")" : "") + unit).join(", ") + (r.merknad ? "|" + r.merknad : "") + (r.avleidd ? "|Utleidd tal" : "");
+      g.setAttribute("data-tip", tip);
+      F.s("rect", { x: 0, y: y, width: w, height: H, fill: "transparent" }, g);
+      nl.forEach((tx, k) => F.s("text", { x: 0, y: ty + 40 + (lg.length ? lg.length * 14 + 4 : 0) + k * 14, text: tx, cls: "sm" }, svg));
+      F.s("line", { x1: 0, x2: w, y1: H - 6, y2: H - 6, stroke: "var(--hair)" }, svg);
     }
     function wrap(t, n) {
       const words = t.split(" "); const out = []; let cur = "";

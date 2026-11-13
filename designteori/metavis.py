@@ -302,7 +302,7 @@ TYPE_NAMN = ["artikkel", "konferansebidrag", "bok eller kapittel", "avhandling",
 
 @figur("f01", "materialet", "Frå 24 812 rader til 6 432 verk",
        "Kor mange av dei hente radene vart registrerte verk, og kor mange har fulltekst?", "sankey",
-       "Utanfor scope = utanfor inngangsporten (tidsskriftlista, tittel eller emne); 2 386 verk kom inn på tidsskriftlista. Fulltekst talt i den private cachen (berre tal).",
+       "Utanfor scope = utanfor inngangsporten. 6 432 er ei øvre grense: om lag 86 arkivverk har same tittel som eit OpenAlex-verk. Fulltekst talt i den private cachen (berre tal).",
        ["populasjon-1", "populasjon-2", "populasjon-8", "populasjon-9"])
 def f01(ctx: Ctx):
     n_all = ctx.n_all
@@ -659,7 +659,7 @@ def _institusjonar(ctx: Ctx):
 
 @figur("f08", "vekst", "Institusjonar og forfattarar",
        "Kor konsentrert er feltet på institusjonar og på forfattarar, og kor høyrer forfattarane til feltet?", "små multiplar",
-       "OpenAlex-laget. Institusjonar: 4 502 verk med nordisk institusjon, brøkdelskreditt (anna kreditteljing gir nokre tiendedelar ulikt). Forfattarar: 6 033 med OpenAlex-id.",
+       "OpenAlex-laget. Institusjonar: 4 502 verk med nordisk institusjon, brøkdelskreditt. Forfattarar: 6 033 med OpenAlex-id; «minst fem verk» tel i scope i dei to første felta og i heile tabellen i det siste.",
        ["vekst-5", "vekst-9", "eininga-2"])
 def f08(ctx: Ctx):
     oa = ctx.oa_list()
@@ -699,7 +699,7 @@ def f08(ctx: Ctx):
             "type_del": {"universitet og høgskular": 85.4, "kunst- og designskular": 10.7, "forskingsinstitutt og organisasjonar": 2.5,
                          "føretak og studio": 1.2, "anna": 0.3},
             "forf_hist": hist, "forf_n": len(forf), "forf_plassar": slottar,
-            "forf_ge5": len(ge5), "forf_ge5_plassar": sum(ge5),
+            "forf_ge5": len(ge5), "forf_ge5_plassar": sum(ge5), "tabell_rader": ctx.n_all,
             "grense": {"n_ge5": len(andel5), "hist": andel_h, "rein_pct": pct(sum(1 for x in andel5 if x == 1), len(andel5)),
                        "median": r(float(np.median(andel5)), 2), "under_halv_pct": pct(sum(1 for x in andel5 if x < 0.5), len(andel5)),
                        "plassdel_under_halv": pct(under_halv, sl_alle), "plassdel_under_halv_ge3": pct(under3, sl3),
@@ -1366,7 +1366,7 @@ TEMA_PER = [("2000–04", 2000, 2004), ("2005–09", 2005, 2009), ("2010–14", 
 @figur("f18", "tema", "Kartet over alle verka",
        "Korleis ligg verka i eit semantisk kart, og kor mange tema er det?", "prikkart",
        "Alle 6 432 verk, eitt per prikk; tittel og samandrag som vektorar. Kartfana sin eigen serie (åtte klynger), ikkje kontrollert av dei verifiserte funna og ikkje dei ti klyngene i metastudien.",
-       ["tema-4", "tema-6"])
+       [])
 def f18(ctx: Ctx):
     k = ctx.kart
     n = len(k["ids"])
@@ -1409,7 +1409,7 @@ def f18(ctx: Ctx):
 
 @figur("f19", "tema", "Svak struktur, og kva som forklarer variasjonen",
        "Er kartet ti skilde fag, og kva forklarer variasjonen i tekstane?", "stolpar",
-       "3 263 verk med fulltekst i metastudiens klyngeanalyse (ti klynger A–J, ikkje kartets åtte): 2 447 OpenAlex-verk og 816 arkivverk. Tekstvektorar.",
+       "3 263 verk med fulltekst (delmengd av dei 3 272 i f01) i metastudiens klyngeanalyse (ti klynger A–J, ikkje kartets åtte): 2 447 OpenAlex-verk og 816 arkivverk. Tekstvektorar.",
        ["tema-4", "tema-6", "tema-7", "tema-10"])
 def f19(ctx: Ctx):
     t = RUNDE1["tema_forklaring"]
@@ -1623,11 +1623,11 @@ def f24(ctx: Ctx):
 
 @figur("f25", "teori", "Teorielement i pilotane: profil og pålitelegheit",
        "Kva viser dei tre pilotane om hovudpåstandar, støtte og om ei andre lesing finn det same?", "intervall og stolpar",
-       "v0.1: 30 av 3 150 fulltekstar (315 påstandar). v0.3: 23 CC-verk (52 påstandar). Skilnaden v0.1 mot v0.3 følgjer både plukkemåte og tekstutval. Éin modell som kodar, ikkje validert.",
+       "v0.1: 30 av 3 150 fulltekstar (315 påstandar). v0.3: 52 hovudpåstandar frå 22 lesbare av 23 CC-verk. 3 150 er ein delmengd av dei 3 272 fulltekstverka i f01. Éin modell som kodar, ikkje validert.",
        ["teorielement-1", "teorielement-2", "teorielement-3", "teorielement-4", "teorielement-6", "teorielement-7", "teorielement-8"])
 def f25(ctx: Ctx):
     t = RUNDE1["teori"]
-    data = {"utval": t["utval"], "kjerne_lag": t["kjerne_lag"], "kausal": t["kausal"], "stad": t["stad"], "eigne": t["eigne"],
+    data = {"utval": dict(t["utval"], lesbare=22, fulltekst_alle=3272), "kjerne_lag": t["kjerne_lag"], "kausal": t["kausal"], "stad": t["stad"], "eigne": t["eigne"],
             "stotte": t["stotte"], "omgrep": t["omgrep"], "to_omgrep": [{"namn": a, "k": k, "n": n, "pct": pct(k, n)} for a, k, n in t["to_omgrep"]],
             "teoriar": t["teoriar"], "att": t["att"],
             "gjenfinning": [{"namn": a, "k": k, "n": n, "pct": pct(k, n, 1)} for a, k, n in t["gjenfinning"]]}
@@ -1710,7 +1710,7 @@ def _m(v, lo=None, hi=None, namn=None, mid=False):
     return m
 
 
-NEMNAR_SPORSMAL = {'eininga-1': '2 334 utanforståande av 24 812 rader; mellomdelen: forfattarar med minst to verk', 'eininga-2': '6 033 forfattarar i scope; dei to første stripane: forfattarar med minst fem verk', 'eininga-3': '109 116 referansar frå scope; 20 118 utanforverk', 'eininga-4': 'Kanalar med minst 30 verk: 688 av 3 978 verk; begge lag', 'eininga-5': '6 033 forfattarar; institusjonar og land som eigne nett', 'skilja-1': '2 334 utanforståande; midten: 4 949 forfattarar (verk som eining)', 'skilja-2': '3 295 verk 2005 til 2022; 653 utan siteringar', 'skilja-3': 'Fulltekstar; ordtettleik for datainnsamling, praksis og argument', 'skilja-4': 'Språk målt på teksten sjølv; arkivlaget berre fulltekstar', 'skilja-5': '4 080 verk; 29 kanalar med minst 20 verk; 1 278 verk i mindre kanalar kan ikkje vurderast', 'tida-1': '1 981 verk; 254 stayarar og 58 bærarar; 30 ord', 'tida-2': 'Element sitert av minst 8 ulike verk', 'tida-3': '2 754 forfattarar, 1 201 med dedikert inngang', 'tida-4': '6 033 forfattarar; 2 822 med verk på begge sider', 'tida-5': 'Forfattarar per utgåve i fem arenaer; små nemnarar for grunnleggjarane'}
+NEMNAR_SPORSMAL = {'eininga-1': '2 334 utanforståande av 24 812 rader; mellomdelen: forfattarar med minst to verk', 'eininga-2': '6 033 forfattarar i scope; dei to første stripane: forfattarar med minst fem verk', 'eininga-3': '109 116 referansar frå scope; 20 118 utanforverk', 'eininga-4': 'Kanalar med minst 30 verk: 688 av 3 978 verk (begge lag). Nordes i odde år: 221 av 221 i OpenAlex-laget', 'eininga-5': '6 033 forfattarar; institusjonar og land som eigne nett', 'skilja-1': '2 334 utanforståande; midten: 4 949 forfattarar (verk som eining)', 'skilja-2': '3 295 verk 2005 til 2022; 653 utan siteringar', 'skilja-3': 'Fulltekstar; ordtettleik for datainnsamling, praksis og argument', 'skilja-4': 'Språk målt på teksten sjølv; arkivlaget berre fulltekstar', 'skilja-5': '4 080 verk; 29 kanalar med minst 20 verk; 1 278 verk i mindre kanalar kan ikkje vurderast', 'tida-1': '1 981 verk; 254 stayarar og 58 bærarar; 30 ord', 'tida-2': 'Element sitert av minst 8 ulike verk', 'tida-3': '2 754 forfattarar, 1 201 med dedikert inngang', 'tida-4': '6 033 forfattarar; 2 822 med verk på begge sider', 'tida-5': 'Forfattarar per utgåve i fem arenaer; små nemnarar for grunnleggjarane'}
 
 NYE_SPORSMAL = [
     ("eininga-1", "Eininga", "Er «nordisk» ein gradient på personnivå?", [
@@ -1727,7 +1727,7 @@ NYE_SPORSMAL = [
         _rad("Utanforverk med minst fem siterande utan designord i tittelen", "prosent", (0, 100), (50, None), [_m(58.5, 58, 59, mid=True)]),
         _rad("Referansar til utanforverk mot til scope", "forhold", (0, 3), (1, None), [_m(0.73)], avleidd=True, venta_ord=True)]),
     ("eininga-4", "Eininga", "Kor mykje sagtann gir kanalar som kjem annakvart år?", [
-        _rad("Nordes-verk i odde år", "prosent", (0, 100), (90, None), [_m(100)], avleidd=True),
+        _rad("Nordes-verk i odde år, OpenAlex-laget (arkivlaget 95)", "prosent", (0, 100), (90, None), [_m(100)], avleidd=True),
         _rad("Delen av verka i skeive kanalar (minst 30 verk)", "prosent", (0, 40), (15, 30), [_m(17.3, 17.3, 21.1)]),
         _rad("Tal skeive kanalar med minst 30 verk", "tal", (0, 10), (5, None), [_m(4)], ordtal=True)]),
     ("eininga-5", "Eininga", "Kor samanhengande er medforfattarnettet etter eining?", [
@@ -1831,6 +1831,16 @@ def sjekk_tekst(obj, sti="") -> None:
             sjekk_tekst(v, sti + "[%d]" % i)
 
 
+FUNN_TOTALT = {"totalt": 76, "stadfesta": 30, "retta": 45, "ukontrollerbar": 1, "sporsmal": 15}
+
+
+def funn_tal(manifest_fig: list[dict]) -> dict:
+    """The counts the hero shows: 76 findings, of which 75 were checked again (30 confirmed, 45 adjusted, 1 could not
+    be checked) and ``teikna`` are drawn in at least one figure. The 15 new questions are counted separately."""
+    teikna = {fid for f in manifest_fig if f["id"] != "f26" for fid in f["finn"] if not re.match(r"(eininga|skilja|tida)-", fid)}
+    return dict(FUNN_TOTALT, kontrollerte=FUNN_TOTALT["stadfesta"] + FUNN_TOTALT["retta"], teikna=len(teikna))
+
+
 def build(only: list[str] | None = None, ut_mappe: Path | None = None) -> dict:
     ut = ut_mappe or META_DIR
     ut.mkdir(parents=True, exist_ok=True)
@@ -1853,7 +1863,7 @@ def build(only: list[str] | None = None, ut_mappe: Path | None = None) -> dict:
         b = dump(obj)
         (ut / (namn + ".json")).write_bytes(b)
         filer[namn + ".json"] = {"bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
-    manifest = {"format": FORMAT, "filer": filer, "figurar": manifest_fig,
+    manifest = {"format": FORMAT, "filer": filer, "figurar": manifest_fig, "funn": funn_tal(manifest_fig),
                 "kjelder": ["data/nordic_design_research.sqlite", "docs/data/nordic_additions.json",
                             "docs/data/nordic_status.json", "docs/data/vis/*.json", "docs/data/klynger/kart.json",
                             "steg6-metaanalyse/funn-samla.json (verifiserte funn)"]}

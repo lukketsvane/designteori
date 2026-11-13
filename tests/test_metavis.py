@@ -1,7 +1,7 @@
 """Tests for the figure data in docs/data/meta/ (built by designteori/metavis.py).
 
 The tests read the published files and the copy of the verified findings in tests/fixtures/funn-samla.json
-(76 findings; the corrected claim for adjusted ones; 15 new questions with the expectation fixed before the
+(76 findings, 75 of them checked again; the corrected claim for adjusted ones; 15 new questions with the expectation fixed before the
 measurement). Checks that need the private database are skipped when it is absent (CI has no database).
 Standard library only, apart from importing designteori.metavis for the verdict rule (that module needs numpy
 at import, which CI installs).
@@ -132,7 +132,12 @@ class TestManifest(unittest.TestCase):
             # every figure carries its denominator and layer in one short line
             self.assertLessEqual(len(f["nemnar"]), 260, f["id"])
             self.assertTrue(re.search(r"\d", f["nemnar"]), f["id"])
-            self.assertTrue(f["finn"], f["id"])
+            if f["id"] == "f18":
+                # the map's own series: none of the verified findings states it, so none is cited
+                self.assertEqual(f["finn"], [])
+                self.assertTrue(all(t.get("kjelde") == "kart" for t in f["tal"]))
+            else:
+                self.assertTrue(f["finn"], f["id"])
             self.assertTrue(f["tal"], f["id"])
         # no figure is in a section file without being in the manifest
         for s in SEKSJONAR:
@@ -423,6 +428,91 @@ class TestRound1Fixes(unittest.TestCase):
         # the verified shares for 2020-24: fractional credit and author countries only
         self.assertEqual([r["del"]["NO"][1], r["del"]["FI"][1]], [22.4, 19.5])
         self.assertEqual([r["del"]["NO"][2], r["del"]["FI"][2]], [18.9, 20.4])
+
+
+class TestRunde2(unittest.TestCase):
+    """What the page says about itself and about which population a number belongs to."""
+
+    def test_hero_counts_of_the_findings(self):
+        funn = les("manifest.json")["funn"]
+        stat = [x["status"] for x in fasit()["funn"]]
+        self.assertEqual(funn["totalt"], len(stat))
+        self.assertEqual(funn["stadfesta"], stat.count("confirmed"))
+        self.assertEqual(funn["retta"], stat.count("adjusted"))
+        self.assertEqual(funn["ukontrollerbar"], stat.count("unverifiable"))
+        # 75 are checked (the unverifiable one is not), 59 of them are drawn, and the 15 questions are separate
+        self.assertEqual(funn["kontrollerte"], funn["stadfesta"] + funn["retta"])
+        self.assertEqual((funn["totalt"], funn["kontrollerte"], funn["stadfesta"], funn["retta"]), (76, 75, 30, 45))
+        self.assertEqual(funn["sporsmal"], len(fasit()["nye_sporsmal"]))
+        brukt = {fid for f in les("manifest.json")["figurar"] if f["id"] != "f26" for fid in f["finn"]}
+        teikna = {x["id"] for x in fasit()["funn"] if x["id"] in brukt}
+        self.assertEqual(funn["teikna"], len(teikna))
+        self.assertEqual(funn["teikna"], 59)
+        self.assertEqual({x["id"] for x in fasit()["funn"]} - teikna - {"omgrep-6"},
+                         {"kanalar-3", "kunnskapsformer-9", "omgrep-1", "omgrep-7", "omgrep-8", "omgrep-9", "populasjon-3",
+                          "populasjon-7", "siteringar-5", "tema-3", "tema-5", "tema-9", "teorielement-5", "teorielement-9",
+                          "teorielement-10", "vekst-2"})
+
+    def test_figures_state_their_layer_and_population(self):
+        nem = {f["id"]: f["nemnar"] for f in les("manifest.json")["figurar"]}
+        self.assertIn("øvre grense", nem["f01"])
+        self.assertIn("22 lesbare av 23 CC-verk", nem["f25"])
+        self.assertNotIn("23 CC-verk (52", nem["f25"])
+        self.assertIn("i heile tabellen", nem["f08"])
+        js = (DOCS_DATA_DIR.parent / "funn" / "funn-a.js").read_text(encoding="utf-8")
+        self.assertIn("har minst fem verk i heile tabellen (", js)   # the panel states its own base: 1 390 of 6 033, 24 812 rows
+        self.assertIn("delmengd av dei 3 272", nem["f19"])
+        self.assertIn("3 272", nem["f25"])
+        stripe = [r["namn"] for q in fig("f26")["sporsmal"] if q["id"] == "eininga-4" for r in q["rader"]]
+        self.assertTrue(any("OpenAlex-laget" in n and "arkivlaget 95" in n for n in stripe))
+
+    def test_forfattar_populations_in_f08(self):
+        f08 = fig("f08")
+        self.assertEqual(f08["tabell_rader"], 24812)
+        self.assertEqual(f08["forf_n"], 6033)
+        self.assertEqual(f08["forf_ge5"], 441)           # at least five works in scope (4 694 works)
+        self.assertEqual(f08["grense"]["n_ge5"], 1390)   # at least five works anywhere in the table
+        self.assertEqual(f08["grense"]["rein_pct"], 2.4)
+        self.assertEqual(f08["grense"]["under_halv_pct"], 67.4)
+
+    def test_f25_counts_texts_not_registered_works(self):
+        u = fig("f25")["utval"]
+        self.assertEqual((u["lesbare"], u["v03"]), (22, 23))
+        self.assertIn("22 CC-tekstar", kravtekst("teorielement-3"))
+        self.assertEqual(fig("f25")["kausal"]["v03"][3], 52)
+
+    def test_cluster_letter_and_number_are_the_same_cluster(self):
+        # tema-6 calls it "klynge 8" (279 works); the page calls it I (the ninth letter, id 8). Never both on screen.
+        kl = {k["id"]: k for k in fig("f20")["klynger"]}
+        self.assertEqual(len(kl), 10)
+        self.assertEqual("ABCDEFGHIJ"[8], "I")
+        self.assertEqual(kl[8]["n"], fig("f19")["klynge8"]["n"])
+        self.assertEqual(kl[8]["n"], 279)
+        self.assertIn("Klynge 8", kravtekst("tema-6"))
+        self.assertIn("279", kravtekst("tema-6"))
+
+    def test_f05_archive_layer_makes_norway_largest(self):
+        d = fig("f05")
+        i = d["periodar"].index("2020–24")
+        sm = {k: v[i] for k, v in d["del_samla"].items()}
+        self.assertEqual(max(sm, key=sm.get), "NO")
+        self.assertEqual((sm["NO"], sm["DK"], sm["SE"], sm["FI"]), (34.5, 25.7, 21.4, 15.4))
+        self.assertIn("34,5 %", kravtekst("vekst-4"))
+        oa = d["rang"]["del"]
+        for j in range(3):
+            self.assertEqual(sorted(oa, key=lambda k: -oa[k][j])[:2], ["DK", "SE"])
+
+    def test_page_text(self):
+        html = (DOCS_DATA_DIR.parent / "funn" / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn("76</b>", html)
+        self.assertNotIn("funn bak biletet", html)
+        self.assertIn("I OpenAlex-laget ligg Danmark og Sverige øvst under tre teljemåtar", html)
+        self.assertIn("med arkivlaget er Noreg størst", html)
+        self.assertIn("Tekstklynger, bokstav A–J", html)
+        self.assertIn("Kartklynger, tal 1–8", html)
+        f18 = html[html.index('id="f18"'):html.index('id="f19"')]
+        self.assertEqual(f18.count("åtte klynger"), 1)
+        self.assertNotIn("—", html)
 
 
 class TestHelpers(unittest.TestCase):

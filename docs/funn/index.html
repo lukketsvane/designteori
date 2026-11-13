@@ -38,7 +38,7 @@
         <li><b>87,8&#8239;%</b><span>er frå 2010 og seinare (begge lag)</span></li>
         <li><b>3,1</b><span>forfattarar per verk 2020–24, mot 1,74 før 2000 (OpenAlex-laget)</span></li>
         <li><b>3</b><span>er median for registrerte siteringar per verk (OpenAlex-laget)</span></li>
-        <li><b>76</b><span>funn bak biletet, kvart kontrollert på nytt av ein annan køyring</span></li>
+        <li data-funn><b>75</b><span>kontrollerte funn (30 stadfesta, 45 retta); 59 av dei er teikna, pluss 15 spørsmål</span></li>
       </ul>
       <a class="ned" href="#materialet">Rull ned ↓</a>
     </div>
@@ -48,10 +48,26 @@
 <div class="nokkel" aria-label="Fargenøkkel">
   <span><i style="background:var(--oa)"></i>OpenAlex-laget</span>
   <span><i style="background:var(--ark)"></i>arkivlaget</span>
-  <span class="heil"><i style="background:var(--fg)"></i><b>svart</b> er observert, <b>grått</b> er venta eller resten</span>
-  <span><i class="r" style="background:var(--NO)"></i><i class="r" style="background:var(--DK)"></i><i class="r" style="background:var(--SE)"></i>land</span>
-  <span><i class="r" style="background:#b8a4ff"></i><i class="r" style="background:#c6ee5a"></i>grupper har nummer eller bokstav</span>
+  <span class="heil"><i style="background:var(--fg)"></i><b>svart</b> er observert, <i style="background:var(--ref)"></i><b>grått</b> er venta eller resten, <i style="background:var(--k2)"></i><i style="background:var(--k4)"></i><b>blågrøn skala</b> er kategoriar</span>
+  <span><i class="r" style="background:var(--NO)"></i><i class="r" style="background:var(--DK)"></i><i class="r" style="background:var(--SE)"></i><i class="r" style="background:var(--FI)"></i><i class="r" style="background:var(--IS)"></i>land</span>
+  <span><i class="r" style="background:#b8a4ff"></i>kartklynge (tal)</span>
+  <span><i style="background:var(--soft);border:1.5px solid var(--dim)"></i>tekstklynge (bokstav)</span>
 </div>
+<details class="ordliste">
+  <summary>Ordliste: Lorenz, Gini, silhuett, NMI, kappa med fleire</summary>
+  <dl>
+    <dt>Lorenz-kurve</dt><dd>Viser kor jamt noko er fordelt. Ei rett diagonal er heilt jamt; jo lenger kurva bøyer ned under, jo meir ligg på få.</dd>
+    <dt>Gini</dt><dd>Eitt tal for det same, frå 0 (jamt) til 1 (alt hos éin).</dd>
+    <dt>Silhuett</dt><dd>Kor tydeleg skilde klyngene er, frå −1 til 1. Nær 0 tyder at grensene er uklare.</dd>
+    <dt>Nullmodell</dt><dd>Tilfeldig utval som målestokk: kva ein ville sett utan nokon samanheng.</dd>
+    <dt>NMI og ARI</dt><dd>Kor mykje to inndelingar av dei same verka samsvarer, frå 0 til 1. ARI er justert for tilfeldig samsvar.</dd>
+    <dt>Louvain</dt><dd>Metode som finn samfunn i eit nettverk ved å samle dei som heng tettast saman.</dd>
+    <dt>Spearman og phi</dt><dd>Mål på samvariasjon: Spearman for rangering, phi for to ja/nei-trekk. 0 er ingen samanheng.</dd>
+    <dt>Kappa</dt><dd>Samsvar mellom to lesingar, justert for tilfeldig samsvar. 1 er full samsvar, 0 er som tilfeldig.</dd>
+    <dt>|z|</dt><dd>Kor sterkt ein skilnad skil seg frå tilfeldig variasjon; 4 eller meir er brukt som terskel.</dd>
+    <dt>Scope og lag</dt><dd>Scope er verk som kom inn gjennom inngangsporten. Laga er OpenAlex (4 694 verk) og arkivet (1 738).</dd>
+  </dl>
+</details>
 
 <main>
 <noscript><p>Sida teiknar figurane med JavaScript. Heile rapporten som tekst ligg på <a href="../metaanalyse/">metaanalysesida</a>.</p></noscript>
@@ -87,7 +103,7 @@
   <header><span class="nr">02</span><h2>Vekst og samarbeid</h2></header>
 
   <figure class="fig" id="f05" data-fig="f05">
-    <header><h3>Danmark og Sverige ligg øvst under alle teljemåtar, men Noreg og Finland bytar plass</h3></header>
+    <header><h3>I OpenAlex-laget ligg Danmark og Sverige øvst under tre teljemåtar, og Noreg og Finland bytar plass; med arkivlaget er Noreg størst</h3></header>
     <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
   </figure>
 
@@ -167,8 +183,13 @@
 <section class="sek" id="tema" data-sek>
   <header><span class="nr">05</span><h2>Tema og kart</h2></header>
 
+  <div class="serie" role="note">
+    <div><span class="kart-nr">1</span><span><b>Kartklynger, tal 1–8.</b> Åtte grupper i kartet over alle verk, frå tittel og samandrag. Prikkar på svart.</span></div>
+    <div><span class="bokst">A</span><span><b>Tekstklynger, bokstav A–J.</b> Ti grupper i fulltekstene til 3 263 verk. Firkanta merke. Silhuett er rekna for kvar serie for seg.</span></div>
+  </div>
+
   <figure class="fig svart" id="f18" data-fig="f18">
-    <header><h3>Kartets åtte klynger ligg tett mot kvarandre</h3><p class="tx">Kartets åtte klynger har nummer. Trykk på eit nummer for å opne klynga i kartfana.</p></header>
+    <header><h3>Kartets åtte klynger ligg tett mot kvarandre</h3><p class="tx">Trykk på eit nummer for å opne klynga i kartfana.<span class="utanfor">ikkje eit verifisert funn</span></p></header>
     <div class="mount" style="min-height:480px"></div><figcaption class="nem"></figcaption>
   </figure>
 
