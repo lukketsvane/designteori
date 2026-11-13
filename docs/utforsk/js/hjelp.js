@@ -27,7 +27,8 @@ export function fold(s) {
 }
 
 // Term key, the same function as the builder (5.8, amendment 49).
-const TOKRE = /[\p{L}\p{N}_\p{M}][\p{L}\p{N}_\p{M}'’-]*[\p{L}\p{N}_\p{M}]|[\p{L}\p{N}_\p{M}]/gu;
+// as Python's \w: letters, numbers and _, no combining marks (lowercase İ leaves one)
+const TOKRE = /[\p{L}\p{N}_][\p{L}\p{N}_'’-]*[\p{L}\p{N}_]|[\p{L}\p{N}_]/gu;
 export function termNokkel(s) {
   const t = String(s || "").normalize("NFC").toLowerCase();
   const toks = t.match(TOKRE) || [];

@@ -6,7 +6,11 @@ text helpers (that module needs numpy at import, which CI installs).
 """
 from __future__ import annotations
 
+import base64
 import gzip
+import shutil
+import subprocess
+import tempfile
 import hashlib
 import json
 import random
@@ -455,6 +459,13 @@ class TestStader(unittest.TestCase):
             self.assertTrue(KEY_RE.match(p["k"]), p)
             self.assertTrue(p["by"])
         self.assertEqual(len({p["k"] for p in s["stader"]}), len(s["stader"]))
+        # Nordic places lie inside their country's box (a lat/lon swap or a wrong sign fails)
+        boks = {"NO": (57.5, 81.0, 4.0, 34.0), "SE": (55.0, 69.5, 10.5, 24.5), "DK": (54.4, 58.0, 7.8, 15.5),
+                "FI": (59.5, 70.5, 19.0, 32.0), "IS": (63.0, 67.0, -25.0, -13.0)}
+        for p in s["stader"]:
+            if p["land"] in boks:
+                la0, la1, lo0, lo1 = boks[p["land"]]
+                self.assertTrue(la0 <= p["lat"] <= la1 and lo0 <= p["lon"] <= lo1, p)
         self.assertTrue(all(-1 <= x < len(s["stader"]) for x in s["inst_stad"]))
         med = sum(1 for x in s["inst_stad"] if x >= 0)
         self.assertGreaterEqual(med, 0.95 * len(s["inst_stad"]))
@@ -722,6 +733,9 @@ class TestMotDatabase(unittest.TestCase):
 
 ALLOWED_CDN = ("d3@7.9.0", "d3-sankey@0.12.3", "topojson-client@3.1.0", "world-atlas@2.0.2")
 HTTPS_RE = re.compile(r"https://[^\s\"'`)<>\\]+")
+# any absolute or protocol-relative URL in markup or code
+URL_RE = re.compile(r"""(?:https?:)?//[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s"'`)<>\\]*""")
+NODE = shutil.which("node")
 
 
 @unittest.skipUnless((UTFORSK / "index.html").exists(), "docs/utforsk/index.html is not present yet")
@@ -743,6 +757,68 @@ class TestSide(unittest.TestCase):
                 if p.suffix == ".js" and url.startswith("https://") and "w3.org" in url:
                     continue
                 self.fail(f"{p.name}: ikkje tillaten URL {url}")
+
+    def test_no_http_or_protocol_relative_urls(self):
+        for p in self.filer:
+            tekst = p.read_text(encoding="utf-8")
+            for url in URL_RE.findall(tekst):
+                if url.startswith("https://"):
+                    continue  # judged by test_https_urls
+                if "w3.org" in url:
+                    continue  # SVG namespace
+                self.fail(f"{p.name}: URL utan https {url}")
+
+    def test_ids_used_by_scripts_exist(self):
+        js = UTFORSK / "js"
+        if not js.exists():
+            self.skipTest("js/ is missing")
+        html = (UTFORSK / "index.html").read_text(encoding="utf-8")
+        kode = "\n".join(p.read_text(encoding="utf-8") for p in js.rglob("*.js"))
+        finst = set(re.findall(r'\bid="([^"$]+)"', html)) | set(re.findall(r'\bid="([A-Za-z][\w-]*)"', kode))
+        brukte = set(re.findall(r"""getElementById\(\s*["']([^"']+)["']\s*\)""", kode))
+        brukte |= set(re.findall(r"""querySelector\(\s*["']#([A-Za-z][\w-]*)["']\s*\)""", kode))
+        self.assertTrue(brukte)
+        manglar = sorted(brukte - finst)
+        self.assertEqual(manglar, [], f"id-ar som skripta bruker, men som ikkje finst: {manglar}")
+        # the ids main.js needs at start are in the page itself
+        for i in ("startmelding", "visflate", "chiprad", "listepanel", "filterlinje", "kort", "tooltip", "live", "live-merke", "kopier", "hopp"):
+            self.assertIn(f'id="{i}"', html, i)
+
+    @unittest.skipUnless(NODE, "node finst ikkje")
+    def test_js_syntax(self):
+        for p in sorted((UTFORSK / "js").rglob("*.js")):
+            r = subprocess.run([NODE, "--check", str(p)], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, f"{p.name}: {r.stderr}")
+
+    @unittest.skipUnless(NODE, "node finst ikkje")
+    def test_js_fold_matches_builder(self):
+        from designteori.visdata import fold, termnokkel
+
+        v = les("verk.json")
+        tekstar = list(v["kol"]["tittel"]) + [d["namn"] for d in v["forfattarar"]] + [d["namn"] for d in v["kanalar"]]
+        tekstar += ["Malmö", "Þórður Ærø", "Straße", "håndverk", "co-design", "Research-through-Design", "Łódź đ œuvre"]
+        kjelde = (UTFORSK / "js" / "hjelp.js").read_text(encoding="utf-8")
+        modul = "data:text/javascript;base64," + base64.b64encode(kjelde.encode("utf-8")).decode("ascii")
+        skript = (
+            "import { readFileSync, writeFileSync } from 'node:fs';\n"
+            f"const h = await import({json.dumps(modul)});\n"
+            "const inn = JSON.parse(readFileSync(process.argv[2], 'utf8'));\n"
+            "writeFileSync(process.argv[3], JSON.stringify(inn.map((t) => [h.fold(t), h.termNokkel(t)])));\n"
+        )
+        with tempfile.TemporaryDirectory() as d:
+            ds = Path(d)
+            (ds / "k.mjs").write_text(skript, encoding="utf-8")
+            (ds / "inn.json").write_text(json.dumps(tekstar, ensure_ascii=False), encoding="utf-8")
+            r = subprocess.run([NODE, str(ds / "k.mjs"), str(ds / "inn.json"), str(ds / "ut.json")], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            ut = json.loads((ds / "ut.json").read_text(encoding="utf-8"))
+        avvik = [(t, a, fold(t)) for t, (a, _) in zip(tekstar, ut) if a != fold(t)]
+        self.assertEqual(avvik[:5], [], f"{len(avvik)} fold-avvik")
+        avvik = [(t, b, termnokkel(t)) for t, (_, b) in zip(tekstar, ut) if b != termnokkel(t)]
+        self.assertEqual(avvik[:5], [], f"{len(avvik)} termnøkkel-avvik")
+        self.assertEqual(fold("Þórður Ærø"), "thordur aero")
+        self.assertEqual(fold("håndverk"), "handverk")
+        self.assertEqual(fold("Straße"), "strasse")
 
     def test_sri_on_cdn_scripts(self):
         html = (UTFORSK / "index.html").read_text(encoding="utf-8")
