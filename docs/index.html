@@ -11,18 +11,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <header class="bar">
     <nav class="tabs" aria-label="Meny">
       <button class="nav-btn active" data-tab="korpus" type="button">katalog</button>
-      <button class="nav-btn" data-tab="siteringar" type="button">kanon</button>
-      <button class="nav-btn" data-tab="kart" type="button">kart</button>
-      <button class="nav-btn" data-tab="analyse" type="button">analyse</button>
-      <button class="nav-btn" data-tab="teorielement" type="button">teori</button>
-      <button class="nav-btn" data-tab="om" type="button">om</button>
-      <a class="nav-btn" href="metaanalyse/">metaanalyse</a>
+      <button class="nav-more-btn" id="navMoreBtn" type="button" aria-expanded="false" aria-controls="navMore">meir ▾</button>
+      <div class="nav-more" id="navMore">
+        <button class="nav-btn" data-tab="siteringar" type="button">kanon</button>
+        <button class="nav-btn" data-tab="kart" type="button">kart</button>
+        <button class="nav-btn" data-tab="analyse" type="button">analyse</button>
+        <button class="nav-btn" data-tab="teorielement" type="button">teori</button>
+        <button class="nav-btn" data-tab="om" type="button">om</button>
+        <a class="nav-btn" href="metaanalyse/">metaanalyse</a>
+      </div>
     </nav>
     <a href="https://iverfinne.no">iverfinne.no</a>
   </header>
@@ -179,7 +182,6 @@
       <p class="tab-intro" id="teIntro">Eit eige forskingsprosjekt om å kode teorielement i <span id="teTexts">nokre</span> tekstar; ikkje ei oversikt over designteoriar. Pilot.</p>
       <div class="ana-grid">
         <div class="ana-sec">
-          <h3>Teorielement</h3>
           <p class="te-p">Ein open base over hovudpåstandar i nordisk designforsking: kva omgrep ein tekst bind saman, korleis teksten definerer dei, kva samanheng han påstår, kvar påstanden skal gjelde, korleis han er forklart og korleis han er prøvd.</p>
           <p class="te-p">Basen skildrar og feller ingen dom. «Ikkje oppgjeve» er ikkje ein mangel ved teksten. I piloten har modellen berre lese samandrag, innleiing og konklusjon, så «ikkje oppgjeve» gjeld desse delane og ikkje heile teksten. Definisjonar er i tillegg søkte i heile teksten med faste mønster.</p>
           <p class="te-p">Status: pilot. Over radlista står det kva radene er. Rader frå heile korpuset blir lagde ut når kodinga er validert mot handkoding og det rettslege grunnlaget for korte sitat er avklart.</p>
@@ -263,6 +265,7 @@
   <script src="embed.js?v=1"></script>
   <script src="om.js?v=1"></script>
   <script src="app.js?v=1"></script>
+  <script src="meny.js?v=2"></script>
   <script src="teorielement.js?v=5"></script>
 </body>
 </html>

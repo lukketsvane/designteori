@@ -881,3 +881,27 @@ header a { min-height: var(--tap); font-size: 11px; }
   .filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .fld-l { margin-top: 2px; }
 }
+
+/* Meny: «katalog» fast, resten i nedtrekk på smale skjermar (Ivers val 13.11.2026) */
+.nav-more-btn {
+  -webkit-appearance: none; appearance: none; margin: 0; border: 0; background: none;
+  color: var(--dim); font: inherit; cursor: pointer; white-space: nowrap;
+  min-height: var(--tap, 44px); min-width: var(--tap, 44px); padding: 0 8px; font-size: 11px;
+}
+.nav-more-btn:hover, .nav-more-btn.active, .nav-more-btn[aria-expanded="true"] { color: var(--fg); }
+@media (max-width: 699px) {
+  nav.tabs { position: relative; }
+  .nav-more { display: none; }
+  .nav-more.open {
+    display: flex; flex-direction: column; position: absolute; top: 100%;
+    left: 0; z-index: 40;
+    min-width: 12rem; padding: 6px 0; background: var(--bg); border: 1px solid var(--hair);
+  }
+  .nav-more.open .nav-btn { display: flex; align-items: center; width: 100%; min-height: 44px; padding: 0 16px; text-align: left; }
+}
+@media (min-width: 700px) {
+  .nav-more-btn { display: none; }
+  .nav-more { display: contents; }
+}
+/* Teori-fana: innleiingslinja seier det same som teksten under (Ivers val 13.11.2026) */
+#teIntro { display: none !important; }
