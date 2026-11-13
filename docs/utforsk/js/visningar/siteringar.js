@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=23";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=24";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -38,6 +38,7 @@ export default {
       fokusListe: () => K.storst.slice(0, 30).map((p) => ({ id: p, x: K.x[p], y: K.y[p] })),
       fokusHandling: (id) => velKanon(id, false),
       dekkaEkstra: () => [el.rang],
+      heim: heimBoks,
       feil: api.feil,
     });
     el.rang.addEventListener("click", (e) => {
@@ -67,8 +68,19 @@ export default {
     el.svg.hidden = saman;
     // the map is resized only when it comes into sight or the part changed (not per filter)
     if (saman) {
-      if (e.vis || e.popstate || e.visning.has("sit.del")) scene.storleik();
-      if (e.popstate || e.vis) scene.settZ(S.sit.z);
+      // a new map (the selection's own, or back to the corpus map) starts at its home view
+      const bytt = kartByte;
+      if (bytt) {
+        kartByte = false;
+        // the home box changed: fit it first, then keep a zoom from the link only on Back/Forward
+        scene.settZ(null, 0, true);
+        scene.storleik();
+        if ((e.popstate || e.vis) && S.sit.z) scene.settZ(S.sit.z);
+        else if (S.sit.z) T.settZoom("siteringar", null);
+      } else {
+        if (e.vis || e.popstate || e.visning.has("sit.del")) scene.storleik();
+        if (e.popstate || e.vis) scene.settZ(S.sit.z);
+      }
       scene.teikn();
     }
     teiknDel();
@@ -88,19 +100,77 @@ export default {
 };
 
 // ---------- data ----------
-function lagKart() {
-  const k = D.sitd.kart;
+let KG = null;   // the precomputed map of the whole corpus
+let lokalNokkel = "";
+function byggK(k, n) {
   const N = k.noder.length;
   const pos = new Map(k.noder.map((v, p) => [v, p]));
-  const n = k.noder.map((v) => D.nSitert[v]);
   const naboar = Array.from({ length: N }, () => []);
   for (const [a, b, c, w] of k.kantar) { naboar[a].push([b, w, c]); naboar[b].push([a, w, c]); }
   for (const l of naboar) l.sort((u, v) => v[1] - u[1] || u[0] - v[0]);
   const qt = A.lagIndeks(N, (p) => k.x[p], (p) => k.y[p]);
   const storst = Array.from({ length: N }, (_, p) => p).sort((a, b) => n[b] - n[a] || a - b);
-  const nMaks = Math.max(...n);
-  K = { N, noder: k.noder, x: k.x, y: k.y, gr: k.gr, kantar: k.kantar, grupper: k.grupper, pos, n, naboar, qt, storst, rMaks: (sc) => (4 + 1.15 * Math.sqrt(nMaks)) * sc.rf * Math.min(sc.k, 3) ** 0.4 };
+  const nMaks = Math.max(1, ...n);
+  return { N, noder: k.noder, x: k.x, y: k.y, gr: k.gr, kantar: k.kantar, grupper: k.grupper, pos, n, naboar, qt, storst, lokal: !!k.lokal, rMaks: (sc) => (4 + 1.15 * Math.sqrt(nMaks)) * sc.rf * Math.min(sc.k, 3) ** 0.4 };
 }
+function lagKart() {
+  const k = D.sitd.kart;
+  KG = byggK(k, k.noder.map((v) => D.nSitert[v]));
+  K = KG;
+}
+// A small selection gets its own map: the items its works cite most, linked where at least two
+// works in the selection cite both, laid out with a force layout. The whole-corpus map would
+// show what the corpus cites (Dunne, Escobar) with the selection's own items missing.
+const LOKAL_MAKS_VERK = 1500, LOKAL_NODAR = 45;
+function lagLokal() {
+  if (!T.harFilter() || T.valt > LOKAL_MAKS_VERK || K_medRef < 2) return null;
+  const NM = D.n + D.m;
+  const min = K_medRef >= 12 ? 2 : 1;
+  const kand = [];
+  for (let v = 0; v < NM; v++) if (sAlle[v] >= min && !utanTittel(v)) kand.push(v);
+  if (kand.length < 6) return null;
+  kand.sort((a, b) => sAlle[b] - sAlle[a] || D.nSitert[b] - D.nSitert[a] || a - b);
+  const noder = kand.slice(0, LOKAL_NODAR);
+  const nokkel = noder.join(",");
+  if (nokkel === lokalNokkel && K && K.lokal) return K;
+  const pos = new Map(noder.map((v, p) => [v, p]));
+  // co-citation inside the selection
+  const par = new Map();
+  for (let i = 0; i < D.n; i++) {
+    if (!T.utval[i]) continue;
+    const ps = [];
+    for (let r = D.refOff[i]; r < D.refOff[i + 1]; r++) { const p = pos.get(D.refTil[r]); if (p != null) ps.push(p); }
+    for (let a = 0; a < ps.length; a++) for (let b = a + 1; b < ps.length; b++) {
+      const lo = Math.min(ps[a], ps[b]), hi = Math.max(ps[a], ps[b]), key = lo * 1000 + hi;
+      par.set(key, (par.get(key) || 0) + 1);
+    }
+  }
+  const minPar = K_medRef >= 12 ? 2 : 1;
+  let cMaks = 1;
+  for (const c of par.values()) if (c > cMaks) cMaks = c;
+  const kantar = [];
+  for (const [key, c] of par) if (c >= minPar) kantar.push([Math.floor(key / 1000), key % 1000, c, c / cMaks]);
+  // layout: deterministic (d3 starts nodes on a phyllotaxis spiral), 300 ticks, no animation
+  const nodar = noder.map((v, p) => ({ p, r: 6 + 2.2 * Math.sqrt(sAlle[v]) }));
+  const lenker = kantar.map(([a, b, , w]) => ({ source: a, target: b, w }));
+  const sim = d3.forceSimulation(nodar)
+    .force("link", d3.forceLink(lenker).distance((l) => 60 - 30 * l.w).strength((l) => 0.15 + 0.6 * l.w))
+    .force("charge", d3.forceManyBody().strength(-90))
+    .force("x", d3.forceX(0).strength(0.07)).force("y", d3.forceY(0).strength(0.07))
+    .force("collide", d3.forceCollide((d) => d.r + 4))
+    .stop();
+  for (let t = 0; t < 300; t++) sim.tick();
+  const xs = nodar.map((d) => d.x), ys = nodar.map((d) => d.y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const s = 8000 / Math.max(1, x1 - x0, y1 - y0);
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const x = Float64Array.from(xs, (v) => 5000 + (v - cx) * s), y = Float64Array.from(ys, (v) => 5000 + (v - cy) * s);
+  // keep the group colours of the corpus map where the item is in it; the rest are grey
+  const gr = noder.map((v) => { const p = KG.pos.get(v); return p != null ? KG.gr[p] : 99; });
+  lokalNokkel = nokkel;
+  return byggK({ noder, x, y, gr, kantar, grupper: KG.grupper, lokal: true }, noder.map((v) => sAlle[v]));
+}
+let K_medRef = 0;
 function lagCiters() {
   const NM = D.n + D.m, cnt = new Int32Array(NM + 1);
   for (let r = 0; r < D.refTil.length; r++) cnt[D.refTil[r] + 1]++;
@@ -119,10 +189,25 @@ function reknUtval() {
     if (D.sitd.ref_alle[i] > 0) med++;
     for (let r = a; r < b; r++) sAlle[D.refTil[r]]++;
   }
+  K_medRef = med;
+  const forK = K;
+  K = lagLokal() || KG;
+  if (K !== forK) { kartByte = true; forrigePlass = new Map(); merkPos = new Set(); rangMerk = new Set(); }
   sNode = K.noder.map((v) => sAlle[v]);
   K.medRef = med;
 }
-const gruppeFarge = (g) => (g < PALETTE_GRUPPE.length ? PALETTE_GRUPPE[g] : "#9a9a9a");
+let kartByte = false;
+// the box the home view fits: the box around the nodes of the map in use, so the graph fills
+// the free area (not the whole square world, which leaves empty bands)
+function heimBoks() {
+  if (!K || !K.N) return [0, 0, 10000, 10000];
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (let p = 0; p < K.N; p++) { x0 = Math.min(x0, K.x[p]); x1 = Math.max(x1, K.x[p]); y0 = Math.min(y0, K.y[p]); y1 = Math.max(y1, K.y[p]); }
+  // room for the largest circle and a label beside it
+  const pad = Math.max(250, 0.06 * Math.max(x1 - x0, y1 - y0));
+  return [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
+}
+const gruppeFarge = (g) => (g < PALETTE_GRUPPE.length ? PALETTE_GRUPPE[g] : g === 99 ? "#d6d6d6" : "#9a9a9a");
 const lysNode = (p) => !T.harFilter() || sNode[p] > 0;
 const radius = (p, sc) => (4 + 1.15 * Math.sqrt(K.n[p])) * sc.rf * Math.min(sc.k, 3) ** 0.4;
 function felles() {
@@ -220,7 +305,7 @@ function nodeHtml(p, fleire) {
   const v = K.noder[p];
   const saman = K.naboar[p].slice(0, 3).map(([b]) => esc(T.merkelapp(K.noder[b]))).join(", ");
   return `<div class="tt-tittel">${esc(T.merkelapp(v))}</div><div class="tt-meta">${esc(kutt(nodeTittel(v), 160))}</div>
-    <div class="tt-meta">Sitert av ${fmt(K.n[p])} verk i korpuset (${fmt(sNode[p])} i utvalet)</div>
+    <div class="tt-meta">Sitert av ${fmt(D.nSitert[v])} verk i korpuset (${fmt(sNode[p])} i utvalet)</div>
     ${saman ? `<div class="tt-meta">Mest sitert saman med: ${saman}</div>` : ""}
     <div class="tt-meta"><span class="prikk" style="background:${gruppeFarge(K.gr[p])}"></span>Gruppe: ${esc(K.grupper[K.gr[p]] ? K.grupper[K.gr[p]].namn : "")}</div>
     ${fleire ? `<div class="tt-fot">+${fmt(fleire)} til her</div>` : ""}`;
@@ -236,16 +321,27 @@ function kortFor(h) {
   ] };
 }
 function teiknSamanLinje() {
-  const t = `Dei ${K.N} mest siterte verka. Linje = sitert saman av minst 2 verk. ${fmt(K.medRef)} av ${fmt(T.valt)} verk i utvalet har referanseliste.`;
+  const lok = K.lokal;
+  const min2 = K.medRef >= 12;
+  const t = lok
+    ? `Det utvalet siterer mest: ${K.N} verk, kvart sitert av minst ${min2 ? 2 : 1} verk i utvalet. Linje = sitert saman av minst ${min2 ? 2 : 1} verk i utvalet. ${fmt(K.medRef)} av ${fmt(T.valt)} verk i utvalet har referanseliste.`
+    : `Dei ${K.N} mest siterte verka i heile korpuset${T.harFilter() && K.medRef ? "; det utvalet siterer er lyst" : ""}. Linje = sitert saman av minst 2 verk. ${fmt(K.medRef)} av ${fmt(T.valt)} verk i utvalet har referanseliste.`;
   ramme.linje.textContent = t;
   scene.settLabel(t);
-  const tel = new Map();
-  K.gr.forEach((g) => tel.set(g, (tel.get(g) || 0) + 1));
-  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-merk">Grupper av verk som ofte blir siterte saman (ikkje tema):</span>` +
-    K.grupper.map((g, j) => `<span class="teikn-post"><span class="prikk" style="background:${gruppeFarge(j)}"></span>${esc(g.namn)} <span class="tal">${fmt(g.n)}</span></span>`).join("") +
-    `<span class="teikn-merk">Storleik: verk i korpuset som siterer.</span>`);
-  if (T.harFilter() && T.valt > 0 && K.medRef === 0) A.hjelp.visMelding(ramme, { tekst: "Ingen av verka i utvalet har referanseliste i dataa." });
-  else A.hjelp.visMelding(ramme, null);
+  const brukt = new Set(K.gr);
+  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-merk">Grupper av verk som ofte blir siterte saman i heile korpuset (ikkje tema):</span>` +
+    K.grupper.map((g, j) => (lok && !brukt.has(j) ? "" : `<span class="teikn-post"><span class="prikk" style="background:${gruppeFarge(j)}"></span>${esc(g.namn)} <span class="tal">${fmt(g.n)}</span></span>`)).join("") +
+    (lok && brukt.has(99) ? `<span class="teikn-post"><span class="prikk" style="background:${gruppeFarge(99)}"></span>Ikkje i korpuskartet</span>` : "") +
+    `<span class="teikn-merk">Storleik: ${lok ? "verk i utvalet som siterer" : "verk i korpuset som siterer"}.</span>`);
+  if (T.harFilter() && T.valt > 0 && K.medRef === 0) {
+    // a strict word search can leave works without reference lists: offer the wider set here too
+    const si = T.sokInfo;
+    const vid = S.f.q && !S.f.qv && si && si.tokens && si.tokens.length > 1 && si.minst1 > si.streng;
+    A.hjelp.visMelding(ramme, {
+      tekst: "Ingen av verka i utvalet har referanseliste i dataa (arkivverk har ingen).",
+      knapp: vid ? { tekst: `Vis ${fmt(si.minst1)} med minst eitt av orda`, gjer: () => T.endre((s) => { s.f.qv = true; }) } : null,
+    });
+  } else A.hjelp.visMelding(ramme, null);
 }
 // How often each node is cited, decade by decade, over the whole corpus: the share of all
 // citing works (with reference lists) from the 2000s, 2010s and 2020s that cite it. Used where
@@ -327,7 +423,7 @@ function sitertAvProfil(v, sitertAv) {
   const mx = Math.max(...d, 0.001);
   const stolpar = TIAR_NAMN.map((t, j) => `<div class="profil-rad"><span>${t}${j === 2 ? "*" : ""}</span><span class="profil-bar"><span style="width:${Math.round((100 * d[j]) / mx)}%"></span></span><span>${fmt(perTiar[j])} av ${fmt(p.nT[j])} (${pst(d[j], 1)} %)</span></div>`).join("");
   return `<div class="ego-profil"><p class="ego-merk">Sitert av, per tiår (verk med referanseliste)</p>${stolpar}
-    <p class="ego-merk">* 2020-åra er ikkje ferdige.${d[2] < d[0] ? " Mindre sitert no enn i 2000-åra." : d[2] > d[0] ? " Meir sitert no enn i 2000-åra." : ""}</p>
+    <p class="ego-merk">* 2020-åra er ikkje ferdige.${d[2] < d[0] ? " Mindre sitert no enn i 2000-åra." : d[2] > d[0] ? " Meir sitert no enn i 2000-åra." : ""}${sitertAv.length > perTiar[0] + perTiar[1] + perTiar[2] ? ` ${fmt(sitertAv.length - perTiar[0] - perTiar[1] - perTiar[2])} av dei ${fmt(sitertAv.length)} siterande verka er frå før 2000 og står ikkje i stolpane.` : ""} Arkivverk har inga referanseliste og kan ikkje telje som siterande.</p>
     ${lt.length ? `<p class="ego-merk">Forfattarland til dei som siterer: ${lt.map(([j, c]) => `${esc(T.landNamn(D.verk.land_alle[j].k))} ${fmt(c)}`).join(", ")}</p>` : ""}</div>`;
 }
 function etterAr(v) { const a = T.malAr(v); return a == null ? 9999 : a; }

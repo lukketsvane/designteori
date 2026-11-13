@@ -140,10 +140,43 @@ class KartFil(unittest.TestCase):
                     self.assertTrue(0 < n <= c["n"])
 
     def test_flagg(self):
+        from designteori.klynger import NORDISKE_SPRAK
+
         abs_ = self.meta["abs"]
+        lang = self.meta["lang"]
         for i, f in enumerate(self.kart["f"]):
-            self.assertIn(f, (0, 1, 2, 3))
+            self.assertTrue(0 <= f < 16, i)
             self.assertEqual(bool(f & 2), abs_[i] == "0", i)
+            self.assertEqual(bool(f & 4), lang[i] in NORDISKE_SPRAK, i)
+            self.assertEqual(bool(f & 8), lang[i] == "e", i)
+
+    def test_sentrale60(self):
+        # ranked in the text space by klynger.skildre: row numbers into ids, unique, members of the group, works with
+        # an abstract before title-only works
+        tb = [a == "0" for a in self.meta["abs"]]
+        for gruppe, felt in ((self.kart["klynger"], "k"), (self.kart["under"], "u")):
+            for c in gruppe:
+                s = c["sentrale60"]
+                self.assertTrue(1 <= len(s) <= 60)
+                self.assertEqual(len(set(s)), len(s))
+                for i in s:
+                    self.assertEqual(self.kart[felt][i], c["id"])
+                flagg = [tb[i] for i in s]
+                self.assertEqual(flagg, sorted(flagg), (felt, c["id"]))
+                vist = [self.kart["ids"][i] for i in s[: len(c["sentrale"])]]
+                self.assertEqual(vist, c["sentrale"])
+
+    def test_farge_og_sprak(self):
+        from designteori.klynger import PALETT_PLASSAR
+
+        plassar = [c["farge"] for c in self.kart["klynger"]]
+        self.assertEqual(len(set(plassar)), len(plassar))
+        self.assertTrue(all(0 <= p < PALETT_PLASSAR for p in plassar))
+        for c in self.kart["klynger"] + self.kart["under"]:
+            self.assertTrue(0 <= c["nordisk"] <= 1)
+        t = self.kart["tal"]
+        self.assertEqual(max(c["nordisk"] for c in self.kart["klynger"]),
+                         self.kart["klynger"][t["nordisk_sprak_klynge"]]["nordisk"])
 
     def test_ingen_lang_tekst(self):
         for sti, s in strengar({k: v for k, v in self.kart.items() if k != "ids"}):
@@ -173,6 +206,8 @@ class OmFil(unittest.TestCase):
         om = les(KLYNGER / "om.json")
         self.assertEqual(om["versjon"], 1)
         self.assertTrue(om["tittel"] and om["ingress"])
+        self.assertTrue(20 < len(om["linje"]) < 260)
+        self.assertIn("nordiske språk", om["linje"])
         self.assertGreaterEqual(len(om["bolkar"]), 4)
         for sti, s in strengar(om):
             self.assertNotIn("—", s, sti)

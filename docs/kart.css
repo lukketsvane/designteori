@@ -22,6 +22,16 @@
   line-height: 1.45;
   color: var(--dim);
 }
+.kart-treff-a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--dim);
+  text-underline-offset: .18em;
+  white-space: nowrap;
+}
+.kart-treff-a:hover { text-decoration-color: var(--fg); }
+.kart-kjerne { min-height: 40px; margin: 2px 0 0; font-size: .84rem; color: var(--fg); }
+.kart-kjerne input { width: 18px; height: 18px; }
 
 /* ---- flata ---- */
 .kart-ramme {
@@ -75,8 +85,8 @@
 .kart-zoom button {
   -webkit-appearance: none;
   appearance: none;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   margin: 0;
   padding: 0;
   border: 1px solid var(--line);
@@ -97,6 +107,7 @@
   padding: 0 calc(var(--page-gutter) - 10px) 0 var(--page-gutter);
   border-top: 1px solid var(--hair);
 }
+.kart-hint .kp-knapp { min-height: 0; color: var(--fg); }
 .kart-hint {
   flex: 1 1 auto;
   margin: 0;
@@ -106,6 +117,11 @@
   color: var(--dim);
 }
 .kart-linjeverk .act { flex: 0 0 auto; }
+@media (max-width: 560px) {
+  .kart-linjeverk { flex-wrap: wrap; gap: 0 4px; }
+  .kart-hint { flex: 1 1 100%; padding-bottom: 0; }
+  .kart-linjeverk .act:first-of-type { margin-left: auto; }
+}
 
 /* ---- tips ved eit verk ---- */
 .kart-tips {
@@ -142,7 +158,17 @@
 .kt-m, .kt-o { font-family: var(--mono); font-size: 10px; letter-spacing: .02em; color: var(--dim); }
 .kt-k { color: var(--fg); }
 .kt-u { color: var(--dim); }
-.kt-f { color: var(--dim); font-size: .74rem; }
+.kt-fl { display: flex; flex-wrap: wrap; gap: 4px; }
+.kt-f {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .02em;
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0 5px;
+  line-height: 1.6;
+}
 .kt-o { margin-top: 2px; }
 .kart-tips.kt-pinned .kt-o { color: var(--fg); text-decoration: underline; text-underline-offset: .2em; }
 
@@ -207,10 +233,15 @@
 
 /* ---- panel for vald klynge ---- */
 .kart-panel {
-  margin: 18px 0 8px;
+  margin: 14px 0 8px;
   padding-top: 12px;
   border-top: 1px solid var(--fg);
+  scroll-margin-top: 64px;
 }
+.kart-panel:focus { outline: none; }
+.kart-panel:focus-visible { outline: 1px solid var(--dim); outline-offset: 4px; }
+.kp-namn { margin: 6px 0 0; }
+.kp-sprak { color: var(--fg); }
 .kart-panel[hidden] { display: none; }
 .kp-hovud { display: flex; align-items: baseline; gap: 2px; }
 .kp-hovud h3 { margin: 0; font-size: 1.2rem; font-weight: 400; line-height: 1.3; }
@@ -329,6 +360,41 @@
 }
 .kart-stor .kart-flate { flex: 1 1 auto; aspect-ratio: auto; max-height: none; min-height: 0; height: auto; }
 .kart-stor .kart-linjeverk { flex: 0 0 auto; }
+.kart-stor .kart-styring { flex: 0 0 auto; padding: 8px var(--page-gutter) 4px; border-bottom: 1px solid var(--hair); }
+.kart-stor .kart-kjerne { min-height: 32px; }
+.kart-stor .kart-treff { margin-top: 2px; }
+
+/* ---- kompakt forklaring i det store kartet ---- */
+.kart-mini {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 6px var(--page-gutter);
+  border-top: 1px solid var(--hair);
+  scrollbar-width: thin;
+}
+.kart-chip {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: .78rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.kart-chip .kart-sw { margin-right: 6px; }
+.kart-chip.on { border-color: var(--fg); font-weight: 500; }
+.kart-chip:focus-visible { outline: 1px solid var(--dim); outline-offset: 1px; }
 html.kart-stor-open, html.kart-stor-open body { overflow: hidden; }
 
 @media (forced-colors: active) {

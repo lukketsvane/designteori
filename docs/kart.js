@@ -6,21 +6,24 @@
 
   /* ---------- reine hjelparar (testa i tests/js/kart.test.mjs) ---------- */
   const FOLD_MAP = { "æ": "ae", "ø": "o", "ð": "d", "þ": "th", "ß": "ss", "đ": "d", "ł": "l", "œ": "oe" };
-  const MODES = ["klynge", "ar", "land", "kanal"];
-  const MODE_LABEL = { klynge: "klynge", ar: "år", land: "land", kanal: "kanal" };
+  const MODES = ["klynge", "ar", "land", "kanal", "sprak"];
+  const MODE_LABEL = { klynge: "klynge", ar: "år", land: "land", kanal: "kanal", sprak: "språk" };
 
   /* Kategorisk palett: åtte fargar, validerte for lys og mørk flate (fargeblinde naboar ΔE ≥ 8). */
   const PAL = {
     light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
     dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
   };
-  /* Klynge -> fargeplass, vald slik at klynger som grensar mest mot kvarandre i kartet får fargar som skil seg best. */
+  /* Reserve for kart.json utan fargeplass (farge): klynge -> plass for dei åtte klyngene frå bygget 13.11.2026. */
   const SLOT8 = [5, 7, 4, 0, 6, 3, 1, 2];
-  /* Sekvensiell blå for år: eldst lys, nyast mørk (lys modus); omvendt i mørk modus. */
+  /* År: trinnvis skala der kvar periode skiftar både kulør og lysstyrke (gull, grøn, blågrøn, blå, fiolett),
+     så nabotrinn er lette å skilje. Eldst først. */
   const SEQ = {
-    light: ["#86b6ef", "#5598e7", "#3987e5", "#2a78d6", "#1c5cab", "#184f95", "#0d366b"],
-    dark: ["#184f95", "#1c5cab", "#256abf", "#3987e5", "#6da7ec", "#9ec5f4", "#cde2fb"],
+    light: ["#c08a00", "#7d9a1e", "#2f9a5c", "#14837f", "#2369b0", "#4648a8", "#5e2a84"],
+    dark: ["#f0c040", "#b5d24a", "#5ccc8a", "#3fc0c0", "#62a4ea", "#9490ee", "#c58ae0"],
   };
+  const LANGS = [["Engelsk", 8], ["Nordiske språk", 4], ["Anna eller ukjent", 0]];
+  const LANG_SLOTS = [0, 1, -1];
   const COUNTRIES = [["NO", "Noreg"], ["DK", "Danmark"], ["SE", "Sverige"], ["FI", "Finland"], ["IS", "Island"]];
   const COUNTRY_SLOTS = [0, 1, 2, 3, 4, 6];
   const VENUES = [
@@ -47,11 +50,30 @@
     return o.normalize("NFKD").replace(/[̀-ͯ]/g, "");
   }
   function queryTokens(q) { return fold(q).split(/[^\p{L}\p{N}]+/u).filter(Boolean); }
-  /* Alle orda i spørjinga må finnast i den folda tittelen (som delstreng). null = inga spørjing. */
+  /* Tittelen folda til « ord ord ord» (mellomrom framfor kvart ord), slik makeMatcher les han. */
+  function foldTitle(t) { return " " + queryTokens(t).join(" "); }
+  /* Kvart ord i spørjinga må vere starten på eit ord i tittelen («art» finn «arts», ikkje «participatory»).
+     Tek ein folda tittel frå foldTitle. null = inga spørjing. */
   function makeMatcher(q) {
-    const toks = queryTokens(q);
+    const toks = queryTokens(q).map((t) => " " + t);
     if (!toks.length) return null;
-    return (foldedTitle) => { for (const t of toks) if (foldedTitle.indexOf(t) < 0) return false; return true; };
+    return (folded) => { for (const t of toks) if (folded.indexOf(t) < 0) return false; return true; };
+  }
+  /* Lenkje frå eit søk til katalogen: få treff som liste over verka, mange som søk på same ord. */
+  function hitsHref(q, ids) {
+    if (ids && ids.length && ids.length <= 60) return "#liste=" + ids.map(encodeURIComponent).join("~");
+    return "#korpus?q=" + encodeURIComponent(String(q || "").trim());
+  }
+  function langIndex(flag) {
+    for (let i = 0; i < LANGS.length - 1; i++) if (flag & LANGS[i][1]) return i;
+    return LANGS.length - 1;
+  }
+  /* Fargeplass for ei klynge: frå dataa (farge), elles reserven SLOT8 for eit kart med åtte klynger. -1 = ingen farge. */
+  function clusterSlot(c, nClusters) {
+    if (!c) return -1;
+    if (Number.isInteger(c.farge) && c.farge >= 0 && c.farge < 8) return c.farge;
+    if (nClusters === 8 && c.id >= 0 && c.id < 8) return SLOT8[c.id];
+    return c.id >= 0 && c.id < 8 ? c.id : -1;
   }
 
   function periodIndex(year, n) {
@@ -87,6 +109,7 @@
     }
     return st;
   }
+  function intersects(a, b, gap) { return a.l < b.r + gap && a.r > b.l - gap && a.t < b.b + gap && a.b > b.t - gap; }
   function buildKartHash(st) {
     const p = [];
     if (st.k >= 0) p.push("k=" + st.k);
@@ -111,23 +134,27 @@
 
   /* Etikettplassering: items i prioritert rekkjefølgje, {x, y, w, h} med (x, y) som midtpunkt.
      Ein etikett med midtpunkt utanfor flata blir ikkje vist; elles blir han skyvd inn på flata.
-     Prøver midt, over og under; kolliderer alle, blir han gøymd. Gir rektangel eller null per item. */
-  function placeLabels(items, W, H, gap) {
+     Prøver midt, over og under; kolliderer alle, blir han gøymd. Gir rektangel eller null per item.
+     reserved: rektangel {l, t, r, b} som ingen etikett får dekkje (til dømes zoomknappane). */
+  function placeLabels(items, W, H, gap, reserved) {
     gap = gap == null ? 3 : gap;
-    const placed = [];
+    const placed = (reserved || []).slice();
     const out = new Array(items.length).fill(null);
     for (let i = 0; i < items.length; i++) {
       const it = items[i];
       if (!(it.x >= 0 && it.x <= W && it.y >= 0 && it.y <= H)) continue;
       if (it.w > W - 4 || it.h > H - 4) continue;
       const tries = [0, -0.6 * it.h - gap, 0.6 * it.h + gap, -it.h - 2 * gap, it.h + 2 * gap];
-      for (const dy of tries) {
-        let l = it.x - it.w / 2, t = it.y - it.h / 2 + dy;
+      /* Først rett over eller under punktet, så litt til sides (ein tredel av breidda). */
+      const moves = [];
+      for (const dx of [0, it.w / 3, -it.w / 3]) for (const dy of tries) moves.push([dx, dy]);
+      for (const [dx, dy] of moves) {
+        let l = it.x - it.w / 2 + dx, t = it.y - it.h / 2 + dy;
         l = Math.max(2, Math.min(W - 2 - it.w, l));
         t = Math.max(2, Math.min(H - 2 - it.h, t));
         const r = { l, t, r: l + it.w, b: t + it.h };
         let hit = false;
-        for (const p of placed) if (r.l < p.r + gap && r.r > p.l - gap && r.t < p.b + gap && r.b > p.t - gap) { hit = true; break; }
+        for (const p of placed) if (intersects(r, p, gap)) { hit = true; break; }
         if (!hit) { placed.push(r); out[i] = r; break; }
       }
     }
@@ -181,12 +208,16 @@
     return { left: l, top: t };
   }
 
-  /* Dei mest sentrale verka i ei gruppe, til lenkja til katalogen (høgst limit).
-     Brukar ei ferdig liste frå dataa om ho finst (sentrale60); elles dei fem sentrale frå analysen,
-     så verk som ikkje ligg på ei grense, sorterte etter avstand i kartet til midten av dei fem. */
+  /* Verk til lenkja til katalogen (høgst limit).
+     Brukar den ferdige lista frå dataa om ho finst (sentrale60, rangert i tekstrommet; radnummer i ids eller id-ar).
+     Elles (eldre kart.json): dei fem sentrale frå analysen, så verk som ikkje ligg på ei grense, sorterte etter
+     avstand i kartet til midten av dei fem. Det er kjernen i biletet, ikkje sentralitet i tekstrommet. */
+  function hasRanked(grp) { return !!grp && Array.isArray(grp.sentrale60) && grp.sentrale60.length > 0; }
   function centralIds(d, grp, members, idIndex, limit) {
     limit = limit || 60;
-    if (Array.isArray(grp.sentrale60) && grp.sentrale60.length) return grp.sentrale60.slice(0, limit);
+    if (hasRanked(grp)) {
+      return grp.sentrale60.slice(0, limit).map((v) => (typeof v === "number" ? d.ids[v] : v)).filter((v) => typeof v === "string");
+    }
     const out = (grp.sentrale || []).slice(0, limit), seen = new Set(out);
     let mx = 0, my = 0, m = 0;
     for (const id of out) { const i = idIndex.get(id); if (i != null) { mx += d.x[i]; my += d.y[i]; m++; } }
@@ -230,16 +261,23 @@
     if (om && typeof om.linje === "string" && om.linje.trim()) return om.linje.trim();
     const t = (d && d.tal) || {};
     const n = t.verk || (d && d.ids ? d.ids.length : 0);
-    const k = t.klynger || (d && d.klynger ? d.klynger.length : 0);
-    let s = fmt(n) + " verk. Kvar prikk er eitt verk, og verk som liknar kvarandre i tema, ligg nær kvarandre. Ein algoritme har delt verka i " + k + " klynger.";
-    if (typeof t.grense_del === "number") s += " Grensene er mjuke: " + pct(t.grense_del) + " av verka ligg på ei grense mellom klynger.";
+    let s = fmt(n) + " verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre.";
+    if (typeof t.nordisk_sprak_del_av_nordiske === "number") s += " Språk speler òg inn: " + pct(t.nordisk_sprak_del_av_nordiske) + " av verka på nordiske språk ligg i éi klynge.";
+    if (typeof t.grense_del === "number") s += " Grensene er mjuke: " + pct(t.grense_del) + " av verka ligg mellom klynger.";
     return s;
+  }
+  /* Ei line i panelet når ei gruppe er mykje meir nordiskspråkleg enn korpuset (minst dobbel del og minst 20 %). */
+  function languageNote(share, base, what) {
+    if (typeof share !== "number" || typeof base !== "number" || !(share >= 0.2) || share < 2 * base) return "";
+    return pct(share) + " av verka i " + what + " er på eit nordisk språk, mot " + pct(base) + " i heile korpuset. " +
+      "Ein del av det som held " + what + " saman, er difor språket, ikkje berre temaet.";
   }
 
   const API = {
-    MODES, PAL, SEQ, SLOT8, COUNTRIES, VENUES,
-    esc, fmt, fold, queryTokens, makeMatcher, periodIndex, countryIndex, venueIndex,
-    parseKartHash, buildKartHash, wrapLines, placeLabels, shortName, buildGrid, nearest, clampBox, centralIds, validData, luminance, introLine,
+    MODES, PAL, SEQ, SLOT8, COUNTRIES, VENUES, LANGS,
+    esc, fmt, fold, foldTitle, queryTokens, makeMatcher, hitsHref, periodIndex, countryIndex, venueIndex, langIndex, clusterSlot,
+    parseKartHash, buildKartHash, wrapLines, placeLabels, shortName, buildGrid, nearest, clampBox, hasRanked, centralIds, validData,
+    luminance, introLine, languageNote,
   };
   if (typeof module === "object" && module.exports) { module.exports = API; return; }
   window.DTKart = API;
@@ -250,16 +288,20 @@
   const ZMAX = 40;
   const TEMPLATE = `
     <p class="kart-linje"></p>
-    <div class="kart-kontroll">
-      <input type="search" class="kart-sok" placeholder="Finn titlar på kartet" aria-label="Finn titlar på kartet" autocomplete="off" spellcheck="false">
-      <select class="kart-farge" aria-label="Farge etter">
-        <option value="klynge">Farge: klynge</option>
-        <option value="ar">Farge: år</option>
-        <option value="land">Farge: land</option>
-        <option value="kanal">Farge: kanal</option>
-      </select>
+    <div class="kart-styring">
+      <div class="kart-kontroll">
+        <input type="search" class="kart-sok" placeholder="Finn titlar" aria-label="Finn titlar på kartet" autocomplete="off" spellcheck="false">
+        <select class="kart-farge" aria-label="Farge etter">
+          <option value="klynge">Farge: klynge</option>
+          <option value="ar">Farge: år</option>
+          <option value="land">Farge: land</option>
+          <option value="kanal">Farge: kanal</option>
+          <option value="sprak">Farge: språk</option>
+        </select>
+      </div>
+      <label class="check kart-kjerne"><input type="checkbox" class="kart-kjerne-av"> Tone ned verk som ligg mellom klynger</label>
+      <p class="kart-treff" aria-live="polite"><span class="kart-treff-t"></span> <a class="kart-treff-a" hidden></a></p>
     </div>
-    <p class="kart-treff" aria-live="polite"></p>
     <div class="kart-ramme">
       <div class="kart-flate">
         <canvas tabindex="0" role="img" aria-label="Kart over verka i korpuset"></canvas>
@@ -270,16 +312,17 @@
         <a class="kart-tips" hidden></a>
         <p class="kart-status" role="status">Lastar kartet…</p>
       </div>
+      <div class="kart-mini" role="group" aria-label="Fargeforklaring" hidden></div>
       <div class="kart-linjeverk">
         <p class="kart-hint"></p>
-        <button type="button" class="act" data-kz="null">Nullstill</button>
+        <button type="button" class="act" data-kz="null">Nullstill utsnitt</button>
         <button type="button" class="act" data-kz="stor" aria-pressed="false">Stort kart</button>
       </div>
     </div>
+    <div class="kart-panel" hidden tabindex="-1"></div>
     <p class="kart-lg-hovud"></p>
     <div class="kart-forklaring" role="group" aria-label="Fargeforklaring"></div>
     <div class="kart-klynger" role="group" aria-label="Klynger" hidden></div>
-    <div class="kart-panel" hidden></div>
     <details class="kart-om" hidden><summary>Korleis kartet er laga</summary><div class="kart-om-tekst"></div></details>`;
 
   function boot() {
@@ -293,18 +336,19 @@
     const $ = (s) => root.querySelector(s);
     const el = {
       line: $(".kart-linje"), search: $(".kart-sok"), mode: $(".kart-farge"), hits: $(".kart-treff"),
+      hitsT: $(".kart-treff-t"), hitsA: $(".kart-treff-a"), styring: $(".kart-styring"), core: $(".kart-kjerne-av"),
       frame: $(".kart-ramme"), wrap: $(".kart-flate"), cv: $("canvas"), tip: $(".kart-tips"), status: $(".kart-status"),
       hint: $(".kart-hint"), big: $('[data-kz="stor"]'), lgHead: $(".kart-lg-hovud"), legend: $(".kart-forklaring"),
-      panel: $(".kart-panel"), om: $(".kart-om"), clList: $(".kart-klynger"), omText: $(".kart-om-tekst"),
+      panel: $(".kart-panel"), om: $(".kart-om"), clList: $(".kart-klynger"), omText: $(".kart-om-tekst"), mini: $(".kart-mini"),
     };
     const fine = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : { matches: true };
 
     const K = {
       started: false, d: null, n: 0, xs: null, ys: null, ks: null, us: null, fs: null, grid: null, idx: new Map(),
       cl: [], sb: new Map(), subsOf: [], members: [], works: null, worksFailed: false,
-      mode: "klynge", sel: -1, sub: -1, cat: -1, match: null, matchCl: null, matchN: 0,
-      focus: null, cats: {}, catIdx: {},
-      W: 0, H: 0, dpr: 1, s0: 1, z: 1, cx: 0, cy: 0, bx: null,
+      mode: "klynge", sel: -1, sub: -1, cat: -1, match: null, matchCl: null, matchN: 0, matchIds: null,
+      focus: null, cats: {}, catIdx: {}, coreOnly: false, dens: null, densKey: "",
+      W: 0, H: 0, dpr: 1, s0: 1, z: 1, cx: 0, cy: 0, bx: null, moving: 0, engaged: false, bigSave: null,
       theme: null, raf: 0, hover: -1, pinned: -1, placed: [], measure: new Map(), lines: new Map(), lastDraw: 0,
     };
 
@@ -316,10 +360,12 @@
       K.theme = { bg, fg: g("--fg", "#000000"), dim: g("--dim", "#767676"), line: g("--line", "#d2d2d2"), dark: luminance(bg) < 0.4 };
     }
     const pal = () => PAL[K.theme.dark ? "dark" : "light"];
+    let warnedSlot = false;
     function clusterColour(id) {
       if (id < 0) return K.theme.dim;
-      const slot = K.cl.length === 8 ? SLOT8[id] : id;
-      return slot != null && slot < 8 ? pal()[slot] : K.theme.dim;
+      const slot = clusterSlot(K.cl[id], K.cl.length);
+      if (slot < 0 && !warnedSlot) { warnedSlot = true; try { console.warn("kart.js: klynge " + id + " har ingen fargeplass (farge) i kart.json; ho blir grå."); } catch (e) { /* ingen konsoll */ } }
+      return slot >= 0 ? pal()[slot] : K.theme.dim;
     }
     function catColour(mode, i) {
       const P = pal();
@@ -330,6 +376,7 @@
       }
       if (mode === "land") return i < COUNTRY_SLOTS.length ? P[COUNTRY_SLOTS[i]] : K.theme.dim;
       if (mode === "kanal") return i <= VENUES.length ? P[i] : K.theme.dim;
+      if (mode === "sprak") return LANG_SLOTS[i] >= 0 ? P[LANG_SLOTS[i]] : K.theme.dim;
       return K.theme.dim;
     }
 
@@ -354,7 +401,7 @@
       K.failed = true;
       el.line.textContent = "Det nye kartet kunne ikkje lastast. Last sida på nytt for å prøve igjen. Under ligg det gamle kartet.";
       el.line.classList.add("kart-feil");
-      for (const x of [el.frame, root.querySelector(".kart-kontroll"), el.hits, el.lgHead, el.legend, el.clList, el.panel, el.om]) x.hidden = true;
+      for (const x of [el.frame, el.styring, el.lgHead, el.legend, el.clList, el.panel, el.om]) x.hidden = true;
       sec.classList.remove("kart-ny");
       try { window.dispatchEvent(new Event("resize")); } catch (e) { /* gamalt kart teiknar seg ved neste endring */ }
     }
@@ -381,6 +428,16 @@
       K.cx = (g.minx + g.maxx) / 2; K.cy = (g.miny + g.maxy) / 2;
       K.cats.klynge = K.cl.map((c) => ({ name: c.namn || "Klynge " + c.id, n: c.n || K.members[c.id].length }));
       K.catIdx.klynge = K.ks;
+      /* Språk står i flagga (4 nordisk, 8 engelsk). Eit eldre kart.json utan dei får ikkje fargevalet. */
+      if (K.fs.some((f) => f & 12)) {
+        const li = new Uint8Array(n), cl = new Array(LANGS.length).fill(0);
+        for (let i = 0; i < n; i++) { li[i] = langIndex(K.fs[i]); cl[li[i]]++; }
+        K.catIdx.sprak = li;
+        K.cats.sprak = LANGS.map((l, i) => ({ name: l[0], n: cl[i] }));
+      } else {
+        const o = el.mode.querySelector('option[value="sprak"]');
+        if (o) o.remove();
+      }
       K.focus = new Uint8Array(n).fill(1);
 
       el.line.textContent = introLine(d, om);
@@ -434,7 +491,7 @@
     /* ---------- tilstand ---------- */
     function applyState(st, write) {
       if (!K.d) return;
-      K.mode = MODES.indexOf(st.f) >= 0 ? st.f : "klynge";
+      K.mode = MODES.indexOf(st.f) >= 0 && (st.f !== "sprak" || K.catIdx.sprak) ? st.f : "klynge";
       el.mode.value = K.mode;
       let k = st.k >= 0 && K.cl[st.k] ? st.k : -1, u = st.u >= 0 && K.sb.has(st.u) ? st.u : -1;
       if (u >= 0 && k !== K.sb.get(u).k) k = K.sb.get(u).k;
@@ -455,10 +512,19 @@
         f[i] = (K.sel < 0 || K.ks[i] === K.sel) && (K.sub < 0 || K.us[i] === K.sub) && (K.cat < 0 || (ci && ci[i] === K.cat)) ? 1 : 0;
       }
     }
-    function select(k, u) {
+    function select(k, u, reveal) {
       K.sel = k; K.sub = u == null ? -1 : u;
       if (K.mode === "klynge") K.cat = -1;
       computeFocus(); renderLegend(); renderPanel(); writeHash(); schedule();
+      if (reveal) revealPanel();
+    }
+    /* Valt frå ei liste under kartet: panelet står rett under kartet, over lista, så det kan liggje utanfor skjermen. */
+    function revealPanel() {
+      if (el.panel.hidden || el.frame.classList.contains("kart-stor")) return;
+      const r = el.panel.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < 56 || r.top > vh - 120) {
+        try { el.panel.scrollIntoView({ block: "start", behavior: "smooth" }); } catch (e) { el.panel.scrollIntoView(true); }
+      }
     }
     function clearAll() {
       K.sel = -1; K.sub = -1; K.cat = -1;
@@ -470,31 +536,36 @@
     function runSearch() {
       if (!K.d) return;
       const m = makeMatcher(el.search.value);
-      if (!m || !K.works) { K.match = null; K.matchN = 0; K.matchCl = null; renderHits(); renderLegend(); schedule(); return; }
-      const n = K.n, match = new Uint8Array(n), per = new Array(K.cl.length).fill(0);
+      if (!m || !K.works) { K.match = null; K.matchN = 0; K.matchCl = null; K.matchIds = null; renderHits(); renderLegend(); schedule(); return; }
+      const n = K.n, match = new Uint8Array(n), per = new Array(K.cl.length).fill(0), ids = [];
       let c = 0;
       for (let i = 0; i < n; i++) {
         const w = K.works[i];
         if (!w) continue;
-        if (w.f == null) w.f = fold(w.t);
-        if (m(w.f)) { match[i] = 1; c++; if (per[K.ks[i]] != null) per[K.ks[i]]++; }
+        if (w.f == null) w.f = foldTitle(w.t);
+        if (m(w.f)) { match[i] = 1; c++; if (per[K.ks[i]] != null) per[K.ks[i]]++; if (ids.length <= 60) ids.push(K.d.ids[i]); }
       }
-      K.match = match; K.matchN = c; K.matchCl = per;
+      K.match = match; K.matchN = c; K.matchCl = per; K.matchIds = ids;
       renderHits(); renderLegend(); schedule();
     }
     function renderHits() {
       const q = el.search.value.trim();
-      let s = "";
+      let s = "", href = "", label = "";
       if (q && !K.works) s = K.worksFailed ? "Titlane kunne ikkje lastast, så søket verkar ikkje no." : "Lastar titlar…";
       else if (q && K.match) {
-        if (!K.matchN) s = "Ingen titlar passar.";
+        if (!K.matchN) s = "Ingen titlar passar. Søket finn ord som byrjar slik i titlane.";
         else {
           const top = K.matchCl.map((v, id) => [id, v]).filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]);
           s = fmt(K.matchN) + (K.matchN === 1 ? " tittel passar" : " titlar passar") + ", i " + top.length + (top.length === 1 ? " klynge" : " klynger") + ". " +
-            "Flest i " + top.slice(0, 2).map((x) => "«" + (K.cl[x[0]].namn || "") + "» (" + fmt(x[1]) + ")").join(" og ") + ".";
+            (top.length === 1 ? "Alle i " : "Flest i ") + top.slice(0, 2).map((x) => "«" + (K.cl[x[0]].namn || "") + "» (" + fmt(x[1]) + ")").join(" og ") + ".";
+          if (K.matchN > K.n * 0.3) s += " Ordet er vanleg, så treffa ligg over heile kartet.";
+          href = hitsHref(q, K.matchN <= 60 ? K.matchIds : null);
+          label = K.matchN <= 60 ? (K.matchN === 1 ? "Opne treffet i katalogen" : "Opne dei " + fmt(K.matchN) + " treffa i katalogen") : "Søk etter «" + q + "» i katalogen";
         }
       }
-      el.hits.textContent = s;
+      el.hitsT.textContent = s;
+      el.hitsA.hidden = !href;
+      if (href) { el.hitsA.href = href; el.hitsA.textContent = label; } else el.hitsA.removeAttribute("href");
       el.hits.hidden = !s;
     }
 
@@ -527,7 +598,7 @@
       K.z = Math.max(1, Math.min(ZMAX, K.z * f));
       const s = scale();
       K.cx = dx - (px - K.W / 2) / s; K.cy = dy - (py - K.H / 2) / s;
-      clampView(); hideTip(); schedule();
+      clampView(); hideTip(); moved(); schedule();
     }
     function resetView() {
       K.z = 1; K.cx = (K.bx.minx + K.bx.maxx) / 2; K.cy = (K.bx.miny + K.bx.maxy) / 2;
@@ -561,7 +632,10 @@
     }
     function labelItems(ctx) {
       const d = K.d, maxK = Math.min(190, K.W * 0.46), maxU = Math.min(150, K.W * 0.38);
-      const cls = d.klynger.slice().sort((a, b) => ((b.id === K.sel) - (a.id === K.sel)) || b.n - a.n).map((c) => labelBox(ctx, "k", c, maxK));
+      /* Når det ikkje er plass til alle namna, vinn klyngene med tydelegast kjerne (kjerne = del av verka som ikkje
+         ligg på ei grense): eit namn i eit samanhengande område seier meir enn eit namn midt i ei blanding. */
+      const prio = (c) => (typeof c.kjerne === "number" ? c.kjerne : 0);
+      const cls = d.klynger.slice().sort((a, b) => ((b.id === K.sel) - (a.id === K.sel)) || prio(b) - prio(a) || b.n - a.n).map((c) => labelBox(ctx, "k", c, maxK));
       const showSubs = K.z >= SUBZ;
       const subs = (d.under || []).filter((u) => (showSubs && (K.sel < 0 || u.k === K.sel)) || u.k === K.sel || u.id === K.sub)
         .filter((u) => typeof u.lx === "number")
@@ -590,29 +664,44 @@
       const ci = K.catIdx[K.mode];
       const modeReady = !!ci;
       const cats = K.cats[K.mode] || [];
-      const anyF = K.sel >= 0 || K.sub >= 0 || K.cat >= 0, match = K.match, focus = K.focus;
-      const faded = new Path2D(), ring = match ? new Path2D() : null;
-      const buckets = new Array(cats.length + 2);
-      const xs = K.xs, ys = K.ys, TAU = Math.PI * 2;
+      const anyF = K.sel >= 0 || K.sub >= 0 || K.cat >= 0, match = K.match, focus = K.focus, fs = K.fs, core = K.coreOnly;
+      /* Små prikkar og prikkar i rørsle blir teikna som firkantar (fillRect): same flate, langt mindre rasterarbeid.
+         Rundingar berre når kartet står i ro og prikkane er store nok til at forma syner. */
+      const sq = K.moving > 0 || r < 2.4;
+      if (!K.moving) drawDensity(ctx, s, ox, oy); // tettleikslaget kostar ~3 ms skalert; det kjem att når kartet står i ro
+      const xs = K.xs, ys = K.ys, TAU = Math.PI * 2, nb = cats.length + 2;
+      const code = K.code && K.code.length === n ? K.code : (K.code = new Int16Array(n));
+      const sxa = K.sxa && K.sxa.length === n ? K.sxa : (K.sxa = new Float32Array(n)), sya = K.sya && K.sya.length === n ? K.sya : (K.sya = new Float32Array(n));
+      const used = new Uint8Array(nb);
+      let nFaded = 0;
       for (let i = 0; i < n; i++) {
         const sx = ox + xs[i] * s, sy = oy + ys[i] * s;
-        if (sx < -6 || sx > W + 6 || sy < -6 || sy > H + 6) continue;
-        if ((anyF && !focus[i]) || (match && !match[i])) { faded.moveTo(sx + rf, sy); faded.arc(sx, sy, rf, 0, TAU); continue; }
+        sxa[i] = sx; sya[i] = sy;
+        if (sx < -6 || sx > W + 6 || sy < -6 || sy > H + 6) { code[i] = -1; continue; }
+        if ((anyF && !focus[i]) || (match && !match[i]) || (core && fs[i] & 1)) { code[i] = -2; nFaded++; continue; }
         const c = modeReady ? ci[i] : cats.length + 1;
-        let p = buckets[c];
-        if (!p) p = buckets[c] = new Path2D();
-        p.moveTo(sx + r, sy); p.arc(sx, sy, r, 0, TAU);
-        if (ring) { ring.moveTo(sx + r + 1.8, sy); ring.arc(sx, sy, r + 1.8, 0, TAU); }
+        code[i] = c; used[c] = 1;
       }
-      ctx.fillStyle = T.dim;
-      ctx.globalAlpha = T.dark ? 0.32 : 0.22;
-      ctx.fill(faded);
-      if (ring) { ctx.globalAlpha = 1; ctx.fillStyle = T.fg; ctx.fill(ring); }
+      const paint = (want, rad) => {
+        if (sq) {
+          const side = rad * 1.77, h = side / 2;
+          for (let i = 0; i < n; i++) if (code[i] === want) ctx.fillRect(sxa[i] - h, sya[i] - h, side, side);
+        } else {
+          ctx.beginPath();
+          for (let i = 0; i < n; i++) if (code[i] === want) { ctx.moveTo(sxa[i] + rad, sya[i]); ctx.arc(sxa[i], sya[i], rad, 0, TAU); }
+          ctx.fill();
+        }
+      };
+      if (nFaded) { ctx.fillStyle = T.dim; ctx.globalAlpha = T.dark ? 0.32 : 0.22; paint(-2, rf); }
+      if (match) {
+        ctx.globalAlpha = 1; ctx.fillStyle = T.fg;
+        for (let c = 0; c < nb; c++) if (used[c]) paint(c, r + 1.8);
+      }
       ctx.globalAlpha = match || anyF ? 1 : (T.dark ? 0.85 : 0.8);
-      for (let c = 0; c < buckets.length; c++) {
-        if (!buckets[c]) continue;
+      for (let c = 0; c < nb; c++) {
+        if (!used[c]) continue;
         ctx.fillStyle = modeReady ? catColour(K.mode, c) : T.dim;
-        ctx.fill(buckets[c]);
+        paint(c, r);
       }
       ctx.globalAlpha = 1;
       const hv = K.pinned >= 0 ? K.pinned : K.hover;
@@ -625,10 +714,69 @@
       K.lastDraw = performance.now() - t0;
     }
 
+    /* Tettleik: eit svakt, glatta lag under prikkane som viser kvar verka ligg tettast når prikkane dekkjer
+       kvarandre. Rekna éin gong (128 x 128 ruter i datarommet, gaussisk glatting) og skalert med utsnittet. */
+    function rgbOf(c) {
+      const s = String(c || "").trim();
+      let m;
+      if ((m = /^#([0-9a-f]{3})$/i.exec(s))) return m[1].split("").map((h) => parseInt(h + h, 16));
+      if ((m = /^#([0-9a-f]{6})/i.exec(s))) return [0, 2, 4].map((o) => parseInt(m[1].slice(o, o + 2), 16));
+      if ((m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/i.exec(s))) return [+m[1], +m[2], +m[3]];
+      return [128, 128, 128];
+    }
+    function buildDensity() {
+      const G = 128, b = K.bx, pad = 6;
+      const w = Math.max(1, b.maxx - b.minx), h = Math.max(1, b.maxy - b.miny), cell = Math.max(w, h) / (G - 2 * pad);
+      const x0 = b.minx - pad * cell, y0 = b.miny - pad * cell;
+      const g = new Float32Array(G * G);
+      for (let i = 0; i < K.n; i++) {
+        const cx = Math.floor((K.xs[i] - x0) / cell), cy = Math.floor((K.ys[i] - y0) / cell);
+        if (cx >= 0 && cx < G && cy >= 0 && cy < G) g[cy * G + cx]++;
+      }
+      const sig = 1.8, rad = 5, ker = [];
+      let ks = 0;
+      for (let d = -rad; d <= rad; d++) { const v = Math.exp(-(d * d) / (2 * sig * sig)); ker.push(v); ks += v; }
+      const tmp = new Float32Array(G * G), out = new Float32Array(G * G);
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        let a = 0;
+        for (let d = -rad; d <= rad; d++) { const xx = x + d; if (xx >= 0 && xx < G) a += g[y * G + xx] * ker[d + rad]; }
+        tmp[y * G + x] = a / ks;
+      }
+      let max = 0;
+      for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
+        let a = 0;
+        for (let d = -rad; d <= rad; d++) { const yy = y + d; if (yy >= 0 && yy < G) a += tmp[yy * G + x] * ker[d + rad]; }
+        out[y * G + x] = a / ks;
+        if (a / ks > max) max = a / ks;
+      }
+      const cv = document.createElement("canvas");
+      cv.width = G; cv.height = G;
+      const c2 = cv.getContext("2d"), img = c2.createImageData(G, G), [R, Gc, B] = rgbOf(K.theme.fg);
+      for (let p = 0; p < G * G; p++) {
+        const v = max ? out[p] / max : 0;
+        /* fem trinn, så tette område får ein synleg kant utan å teikne skarpe grenser */
+        const step = Math.floor(Math.pow(v, 0.8) * 5) / 5;
+        img.data[p * 4] = R; img.data[p * 4 + 1] = Gc; img.data[p * 4 + 2] = B; img.data[p * 4 + 3] = Math.round(step * 255);
+      }
+      c2.putImageData(img, 0, 0);
+      return { cv, x0, y0, size: G * cell };
+    }
+    function drawDensity(ctx, s, ox, oy) {
+      const key = K.theme.fg + "|" + K.n;
+      if (!K.dens || K.densKey !== key) { K.dens = buildDensity(); K.densKey = key; }
+      const D = K.dens;
+      ctx.save();
+      ctx.imageSmoothingEnabled = true;
+      ctx.globalAlpha = (K.coreOnly ? 0.2 : 0.1) * (K.theme.dark ? 1.3 : 1);
+      ctx.drawImage(D.cv, ox + D.x0 * s, oy + D.y0 * s, D.size * s, D.size * s);
+      ctx.restore();
+    }
+
     function drawLabels(ctx) {
       const T = K.theme;
       const items = labelItems(ctx);
-      const rects = placeLabels(items, K.W, K.H, 4);
+      /* Hjørnet med zoomknappane (8 px inn, to knappar på 44 px) skal ingen namn dekkje. */
+      const rects = placeLabels(items, K.W, K.H, 4, [{ l: K.W - 56, t: 0, r: K.W, b: 104 }]);
       K.placed = [];
       ctx.textBaseline = "middle";
       ctx.lineJoin = "round";
@@ -655,10 +803,12 @@
     }
 
     /* ---------- treff-testing ---------- */
-    function hitLabel(px, py) {
+    /* pad: kor mange px utanfor teksten eit trykk enno tel som treff på namnet. */
+    function hitLabel(px, py, pad) {
+      pad = pad == null ? 3 : pad;
       for (let i = K.placed.length - 1; i >= 0; i--) {
         const p = K.placed[i], r = p.r;
-        if (px >= r.l - 3 && px <= r.r + 3 && py >= r.t - 3 && py <= r.b + 3) return p;
+        if (px >= r.l - pad && px <= r.r + pad && py >= r.t - pad && py <= r.b + pad) return p;
       }
       return null;
     }
@@ -666,7 +816,8 @@
       if (!K.grid) return -1;
       const [qx, qy] = toData(px, py);
       const anyF = K.sel >= 0 || K.sub >= 0 || K.cat >= 0;
-      return nearest(K.grid, K.xs, K.ys, qx, qy, radPx / scale(), (i) => ((anyF && !K.focus[i]) || (K.match && !K.match[i]) ? 4 : 1));
+      return nearest(K.grid, K.xs, K.ys, qx, qy, radPx / scale(),
+        (i) => ((anyF && !K.focus[i]) || (K.match && !K.match[i]) || (K.coreOnly && K.fs[i] & 1) ? 4 : 1));
     }
 
     /* ---------- tips ---------- */
@@ -675,14 +826,15 @@
       const id = K.d.ids[i], w = K.works ? K.works[i] : null;
       const c = K.cl[K.ks[i]], u = K.sb.get(K.us[i]);
       const meta = [w && w.y ? String(w.y) : "", w ? w.v : ""].filter(Boolean).join(" · ");
+      /* Korte merke; title gir forklaringa med peikar, og «Om kartet» forklarer dei i lengre form. */
       const flags = [];
-      if (K.fs[i] & 2) flags.push("Berre tittel: verket har ikkje samandrag, så plasseringa byggjer på tittelen.");
-      if (K.fs[i] & 1) flags.push("Grenseverk: færre enn halvparten av dei næraste naboane er i same klynge.");
+      if (K.fs[i] & 2) flags.push(["berre tittel", "Verket har ikkje samandrag, så plasseringa byggjer på tittelen."]);
+      if (K.fs[i] & 1) flags.push(["mellom klynger", "Færre enn halvparten av dei næraste naboane er i same klynge."]);
       el.tip.innerHTML =
         `<strong class="kt-t">${esc(w ? w.t : id)}</strong>` +
         (meta ? `<span class="kt-m">${esc(meta)}</span>` : "") +
         `<span class="kt-k"><i class="kart-sw" style="background:${esc(clusterColour(c ? c.id : -1))}"></i>${esc(c ? c.namn : "")}${u ? ` <span class="kt-u">› ${esc(u.namn)}</span>` : ""}</span>` +
-        flags.map((f) => `<span class="kt-f">${esc(f)}</span>`).join("") +
+        (flags.length ? `<span class="kt-fl">${flags.map((f) => `<span class="kt-f" title="${esc(f[1])}">${esc(f[0])}</span>`).join("")}</span>` : "") +
         `<span class="kt-o">${fine.matches ? "Klikk på prikken" : "Trykk her"} for å opne verket i katalogen</span>`;
       el.tip.href = "#verk/" + encodeURIComponent(id);
       el.tip.setAttribute("data-jump", id);
@@ -717,6 +869,7 @@
       if (!cats) {
         el.lgHead.textContent = K.worksFailed ? "Data for denne fargen kunne ikkje lastast." : "Lastar data for farge etter " + MODE_LABEL[mode] + "…";
         el.legend.innerHTML = "";
+        renderMini();
         return;
       }
       const hitsFor = (i) => {
@@ -729,6 +882,7 @@
       el.lgHead.textContent = mode === "klynge"
         ? K.cl.filter(Boolean).length + " klynger. Vel ei klynge for å sjå kva ho består av."
         : "Farge etter " + MODE_LABEL[mode] + ". Vel ein farge for å framheve han.";
+      renderMini();
       el.legend.innerHTML = cats.map((c, i) => {
         if (!c || (!c.n && mode !== "klynge")) return "";
         const on = mode === "klynge" ? K.sel === i : K.cat === i;
@@ -744,6 +898,22 @@
         K.cl.map((c, i) => c ? `<button type="button" class="kart-lg${K.sel === i ? " on" : ""}${K.match && !(K.matchCl[i] || 0) ? " kart-lg-av" : ""}" data-kk="${esc(i)}" aria-pressed="${K.sel === i}">` +
           `<span class="kart-lg-n">${esc(c.namn || "Klynge " + i)}</span><span class="kart-lg-c">${fmt(c.n || 0)}${K.match ? ` · <b>${fmt(K.matchCl[i] || 0)} treff</b>` : ""}</span></button>` : "").join("") + `</div>`;
       el.clList.hidden = false;
+    }
+
+    /* Kompakt fargeforklaring inne i det store kartet: ein rad med knappar som kan rullast sidelengs. */
+    function renderMini() {
+      if (!el.frame.classList.contains("kart-stor")) { el.mini.hidden = true; el.mini.innerHTML = ""; return; }
+      const mode = K.mode, cats = K.cats[mode];
+      if (!cats) { el.mini.hidden = true; return; }
+      el.mini.innerHTML = cats.map((c, i) => {
+        if (!c || (!c.n && mode !== "klynge")) return "";
+        const on = mode === "klynge" ? K.sel === i : K.cat === i;
+        const attr = mode === "klynge" ? `data-kk="${esc(i)}"` : `data-kc="${esc(i)}"`;
+        const name = mode === "klynge" ? shortName(c.name) : c.name;
+        return `<button type="button" class="kart-chip${on ? " on" : ""}" ${attr} aria-pressed="${on}" title="${esc(c.name)}">` +
+          `<span class="kart-sw" style="background:${esc(catColour(mode, i))}"></span>${esc(name)}</button>`;
+      }).join("");
+      el.mini.hidden = false;
     }
 
     function workLink(id) {
@@ -775,29 +945,40 @@
       const titleOnly = typeof nTitle === "number" && nTitle > 0 ? ` ${fmt(nTitle)} av dei har berre tittel.` : "";
       const list = (arr, name) => `<ul class="plain kp-liste">${(arr || []).map((x) => `<li><span>${esc(name ? name(x[0]) : x[0])}</span><span>${fmt(x[1])}</span></li>`).join("")}</ul>`;
       const subs = u ? [] : K.subsOf[c.id] || [];
+      const t = K.d.tal || {};
+      const lang = languageNote(o.nordisk, t.nordisk_sprak_del_alle, u ? "gruppa" : "klynga");
+      const ranked = hasRanked(o);
+      const what = u ? "gruppa" : "klynga";
       el.panel.innerHTML =
         `<div class="kp-hovud"><span class="kart-sw kp-sw" style="background:${esc(clusterColour(c.id))}"></span><h3>${esc(o.namn || "")}</h3></div>` +
         (u ? `<p class="kp-sti">Underklynge i <button type="button" class="kp-knapp" data-kk="${esc(c.id)}">${esc(c.namn)}</button></p>` : "") +
+        `<p class="kp-note kp-namn">${o.namn_sjekka === false ? "Namnet er laga automatisk av dei skiljande orda." : "Namnet er sett for hand ut frå orda og titlane under."} Ingen fagperson har kontrollert det.</p>` +
         `<p class="kp-tal">${fmt(o.n || members.length)} verk, ${pct(share)} av korpuset.${sure}${titleOnly}</p>` +
+        (lang ? `<p class="kp-tal kp-sprak">${esc(lang)}</p>` : "") +
         (o.ord && o.ord.length ? `<h4>Ord som skil ${u ? "gruppa" : "klynga"} frå resten</h4><p class="kp-ord">${o.ord.map((t) => `<span class="tag">${esc(t)}</span>`).join(" ")}</p>` : "") +
         (Array.isArray(o.periode) && o.periode.length ? `<h4>Når verka kom ut</h4>${periodBars(o.periode)}` : "") +
         `<div class="kp-to"><div><h4>Kanalar</h4>${list(o.kanalar)}</div><div><h4>Land</h4>${list(o.land, countryName)}</div></div>` +
-        (o.sentrale && o.sentrale.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${o.sentrale.slice(0, 5).map((id) => `<li>${workLink(id)}</li>`).join("")}</ol><p class="kp-note">Sentrale verk er dei som liknar mest på snittet av ${u ? "gruppa" : "klynga"} i tekstrommet.</p>` : "") +
+        (o.sentrale && o.sentrale.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${o.sentrale.slice(0, 5).map((id) => `<li>${workLink(id)}</li>`).join("")}</ol>` +
+          `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først, fordi ein kort tittel åleine lett hamnar nær midten." : ""}</p>` : "") +
         (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Grupper av verk med mange felles naboar inne i klynga. Zoom inn for å sjå namna på kartet.</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
-        `<div class="kp-knappar"><a class="act act-block" href="#liste=${ids.map((id) => esc(encodeURIComponent(id))).join("~")}">Opne dei ${ids.length} mest sentrale i katalogen</a>` +
+        `<div class="kp-knappar"><a class="act act-block" href="#liste=${ids.map((id) => esc(encodeURIComponent(id))).join("~")}">${ranked ? `Opne dei ${ids.length} mest sentrale i katalogen` : `Opne ${ids.length} verk frå kjernen av ${what}`}</a>` +
         (u ? `<button type="button" class="act act-block" data-kk="${esc(c.id)}">Tilbake til klynga</button>` : "") +
         `<button type="button" class="act act-block" data-kx="alle">Vis alle klynger</button></div>`;
       el.panel.hidden = false;
       renderHint();
     }
     function renderHint() {
-      if (K.sel >= 0 && K.cl[K.sel] && el.frame.classList.contains("kart-stor")) {
-        const o = K.sub >= 0 ? K.sb.get(K.sub) : K.cl[K.sel];
-        el.hint.textContent = "Vald: " + (o ? o.namn : "") + ". Lukk det store kartet for å sjå detaljane.";
+      const o = K.sel >= 0 && K.cl[K.sel] ? (K.sub >= 0 ? K.sb.get(K.sub) : K.cl[K.sel]) : null;
+      if (o && el.frame.classList.contains("kart-stor")) {
+        el.hint.textContent = "Vald: " + o.namn + ". Lukk det store kartet for å sjå detaljane.";
+        return;
+      }
+      if (o) {
+        el.hint.innerHTML = `Vald: ${esc(shortName(o.namn))}. <button type="button" class="kp-knapp" data-kd="1">Sjå detaljane rett under kartet</button>`;
         return;
       }
       el.hint.textContent = fine.matches
-        ? "Dra for å flytte, rull for å zoome. Peik på ein prikk for å sjå verket."
+        ? "Dra for å flytte. Klikk i kartet og rull, eller hald Ctrl og rull, for å zoome. Peik på ein prikk for å sjå verket."
         : "Knip for å zoome. Trykk på ein prikk for å sjå verket, eller på eit namn for å sjå klynga.";
     }
     function renderOm(om) {
@@ -808,21 +989,64 @@
     }
 
     /* ---------- stort kart ---------- */
-    function setBig(on) {
+    /* Det store kartet er ein modal dialog: søk og fargeval blir flytte inn, ei kompakt forklaring står nedst,
+       Tab blir verande i dialogen, og ved lukking kjem sida tilbake til same rulleposisjon og same fokus. */
+    function setBig(on, keepScroll) {
+      const isOn = el.frame.classList.contains("kart-stor");
+      if (!on && keepScroll) K.bigSave = null;
+      if (on === isOn) return;
+      if (on) {
+        K.bigSave = { y: window.scrollY || window.pageYOffset || 0, focus: document.activeElement };
+        el.frame.insertBefore(el.styring, el.wrap);
+        el.frame.setAttribute("role", "dialog");
+        el.frame.setAttribute("aria-modal", "true");
+        el.frame.setAttribute("aria-label", "Stort kart");
+      } else {
+        root.insertBefore(el.styring, el.frame);
+        el.frame.removeAttribute("role");
+        el.frame.removeAttribute("aria-modal");
+        el.frame.removeAttribute("aria-label");
+      }
       el.frame.classList.toggle("kart-stor", on);
       document.documentElement.classList.toggle("kart-stor-open", on);
       el.big.textContent = on ? "Lukk stort kart" : "Stort kart";
       el.big.setAttribute("aria-pressed", String(on));
       renderHint();
+      renderMini();
       resize();
       requestAnimationFrame(resize);
+      if (on) { try { el.big.focus({ preventScroll: true }); } catch (e) { el.big.focus(); } }
+      else if (K.bigSave) {
+        const s = K.bigSave;
+        K.bigSave = null;
+        /* Straks, ikkje i neste bilete: sida har alt fått att høgda si når klassen er fjerna. */
+        window.scrollTo(0, s.y);
+        const f = s.focus && document.contains(s.focus) && s.focus !== document.body ? s.focus : el.big;
+        try { f.focus({ preventScroll: true }); } catch (e) { /* fokus er ikkje kritisk */ }
+      }
     }
+    el.frame.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab" || !el.frame.classList.contains("kart-stor")) return;
+      const f = [...el.frame.querySelectorAll("button, [href], input, select, canvas[tabindex]")]
+        .filter((x) => !x.hidden && !x.disabled && x.offsetParent !== null && x.getAttribute("tabindex") !== "-1");
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    });
 
     /* ---------- hendingar ---------- */
     root.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-kk],[data-ku],[data-kc],[data-kx],[data-kz]");
+      const t = e.target.closest("[data-kk],[data-ku],[data-kc],[data-kx],[data-kz],[data-kd]");
       if (!t || !root.contains(t)) return;
-      if (t.hasAttribute("data-kk")) { const k = +t.getAttribute("data-kk"); if (K.sel === k && K.sub < 0 && t.classList.contains("kart-lg")) clearAll(); else select(k, -1); return; }
+      /* Val i listene under panelet flyttar panelet inn i synsfeltet; val inne i panelet eller i det store kartet gjer ikkje. */
+      const fromList = !!t.closest(".kart-forklaring, .kart-klynger") && !t.closest(".kart-panel");
+      if (t.hasAttribute("data-kd")) { revealPanel(); try { el.panel.focus({ preventScroll: true }); } catch (err) { /* ikkje kritisk */ } return; }
+      if (t.hasAttribute("data-kk")) {
+        const k = +t.getAttribute("data-kk");
+        if (K.sel === k && K.sub < 0 && (t.classList.contains("kart-lg") || t.classList.contains("kart-chip"))) clearAll(); else select(k, -1, fromList);
+        return;
+      }
       if (t.hasAttribute("data-ku")) { const u = K.sb.get(+t.getAttribute("data-ku")); if (u) select(u.k, u.id); return; }
       if (t.hasAttribute("data-kc")) { const c = +t.getAttribute("data-kc"); K.cat = K.cat === c ? -1 : c; computeFocus(); renderLegend(); schedule(); return; }
       if (t.getAttribute("data-kx") === "alle") { clearAll(); return; }
@@ -838,6 +1062,14 @@
       K.cat = -1; computeFocus(); renderLegend(); writeHash(); schedule();
     });
     el.search.addEventListener("input", () => { clearTimeout(searchTmr); searchTmr = setTimeout(runSearch, 120); });
+    el.core.addEventListener("change", () => { K.coreOnly = el.core.checked; hideTip(); schedule(); });
+    /* Under rørsle blir prikkane teikna som firkantar; når kartet har stått i ro ei lita stund, kjem rundingane att. */
+    let moveTmr = 0;
+    function moved() {
+      K.moving = 1;
+      clearTimeout(moveTmr);
+      moveTmr = setTimeout(() => { K.moving = 0; schedule(); }, 160);
+    }
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Escape" || !sec.classList.contains("active")) return;
       if (el.frame.classList.contains("kart-stor")) { setBig(false); e.preventDefault(); return; }
@@ -856,7 +1088,7 @@
       else if (e.key === "-" || e.key === "_") { zoomAt(K.W / 2, K.H / 2, 1 / 1.4); return e.preventDefault(); }
       else if (e.key === "0") { resetView(); return e.preventDefault(); }
       else used = false;
-      if (used) { e.preventDefault(); clampView(); hideTip(); schedule(); }
+      if (used) { e.preventDefault(); clampView(); hideTip(); moved(); schedule(); }
     });
 
     /* Peikarar: mus, penn og fingrar. Éin peikar flyttar, to knip. */
@@ -866,6 +1098,7 @@
     el.cv.addEventListener("pointerdown", (e) => {
       if (!K.d) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
+      K.engaged = true;
       try { el.cv.setPointerCapture(e.pointerId); } catch (err) { /* ikkje kritisk */ }
       const p = local(e);
       ptrs.set(e.pointerId, p);
@@ -897,7 +1130,7 @@
           if (drag.moved) {
             const s = scale();
             K.cx -= (p[0] - drag.x) / s; K.cy -= (p[1] - drag.y) / s;
-            clampView(); schedule();
+            clampView(); moved(); schedule();
           }
           drag.x = p[0]; drag.y = p[1];
         }
@@ -936,7 +1169,9 @@
       if (K.hover >= 0) { K.hover = -1; el.tip.hidden = true; schedule(); }
     });
     function tap(px, py, type) {
-      const lab = hitLabel(px, py);
+      let lab = hitLabel(px, py, 3);
+      /* Eit fingertrykk i margen rundt eit namn går til ein prikk som ligg like ved, så prikkar under namna kan nåast. */
+      if (lab && type !== "mouse" && !hitLabel(px, py, 0) && hitPoint(px, py, 6) >= 0) lab = null;
       if (lab) {
         hideTip();
         if (lab.type === "k") { if (K.sel === lab.id && K.sub < 0) clearAll(); else select(lab.id, -1); }
@@ -950,10 +1185,25 @@
       showTip(i, true);
       schedule();
     }
+    /* Rull zoomar berre når kartet er teke i bruk (klikka i eller fokusert) eller med Ctrl, Cmd eller Shift.
+       Elles rullar sida forbi kartet som før, og lina under kartet seier korleis ein zoomar. */
+    el.cv.addEventListener("focus", () => { K.engaged = true; });
+    el.cv.addEventListener("blur", () => { K.engaged = false; });
+    el.frame.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") K.engaged = false; });
+    let wheelNote = 0;
     el.cv.addEventListener("wheel", (e) => {
       if (!K.d) return;
-      const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
-      if (K.z <= 1.0001 && dy > 0 && !e.ctrlKey) return; // lat sida rulle når kartet alt er heilt ute
+      const raw = e.deltaY || (e.shiftKey ? e.deltaX : 0);
+      const dy = e.deltaMode === 1 ? raw * 16 : e.deltaMode === 2 ? raw * 400 : raw;
+      const mod = e.ctrlKey || e.metaKey || e.shiftKey;
+      if (!mod && !K.engaged && !el.frame.classList.contains("kart-stor")) {
+        if (!wheelNote) {
+          el.hint.textContent = "Klikk i kartet først, eller hald Ctrl og rull, for å zoome.";
+          wheelNote = setTimeout(() => { wheelNote = 0; renderHint(); }, 2200);
+        }
+        return;
+      }
+      if (K.z <= 1.0001 && dy > 0 && !mod) return; // lat sida rulle når kartet alt er heilt ute
       e.preventDefault();
       const p = local(e);
       zoomAt(p[0], p[1], Math.exp(-Math.max(-300, Math.min(300, dy)) * (e.ctrlKey ? 0.01 : 0.0022)));
@@ -975,7 +1225,7 @@
 
     /* Fana: last ved første opning, skriv adressa når fana blir aktiv. */
     const onActive = () => {
-      if (!sec.classList.contains("active")) { if (el.frame.classList.contains("kart-stor")) setBig(false); hideTip(); return; }
+      if (!sec.classList.contains("active")) { if (el.frame.classList.contains("kart-stor")) setBig(false, true); hideTip(); return; }
       if (!K.started) { start(); return; }
       requestAnimationFrame(() => { resize(); schedule(); });
       writeHash();

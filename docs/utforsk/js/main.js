@@ -1,22 +1,22 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=23";
-import * as data from "./data.js?v=23";
-import * as T from "./tilstand.js?v=23";
-import * as filterlinje from "./filterlinje.js?v=23";
-import * as liste from "./liste.js?v=23";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=23";
-import { initMaal } from "./maal.js?v=23";
+import * as hjelp from "./hjelp.js?v=24";
+import * as data from "./data.js?v=24";
+import * as T from "./tilstand.js?v=24";
+import * as filterlinje from "./filterlinje.js?v=24";
+import * as liste from "./liste.js?v=24";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=24";
+import { initMaal } from "./maal.js?v=24";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=23"),
-  nett: () => import("./visningar/nett.js?v=23"),
-  verda: () => import("./visningar/verda.js?v=23"),
-  siteringar: () => import("./visningar/siteringar.js?v=23"),
-  tid: () => import("./visningar/tid.js?v=23"),
+  kart: () => import("./visningar/kart.js?v=24"),
+  nett: () => import("./visningar/nett.js?v=24"),
+  verda: () => import("./visningar/verda.js?v=24"),
+  siteringar: () => import("./visningar/siteringar.js?v=24"),
+  tid: () => import("./visningar/tid.js?v=24"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}
@@ -70,8 +70,12 @@ const listeApi = {
     T.endre((s) => { s.verk = id; });
     const v = visingar[S.vis];
     if (smal()) {
-      liste.settArk("halv");
-      if (v && v.klar && v.mod.sentrer) setTimeout(() => v.mod.sentrer(i), 30);
+      // a lower card than the half sheet; a sheet already higher (the reader pulled it up) stays
+      const st = liste.arkStatus();
+      if (st === "peek" || st === "kort") liste.settArk("kort");
+      else if (st === "full") liste.settArk("halv");
+      // centre once the sheet has reached its height (0.25 s), in the part of the picture above it
+      if (v && v.klar && v.mod.sentrer) setTimeout(() => { if (S.verk === id) v.mod.sentrer(i); }, 280);
     } else if (fraListe && v && v.klar && v.mod.panTil) v.mod.panTil(i);
   },
   lukkVerk() { T.endre((s) => { s.verk = null; }); },

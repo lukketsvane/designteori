@@ -29,14 +29,43 @@ test("kart-adresse: katalogen les kart-adressa som kartfana og bryt ikkje", () =
   assert.equal(st.work, "");
 });
 
-test("søk i titlar: alle orda må finnast, utan omsyn til store bokstavar og diakritikk", () => {
+test("søk i titlar: alle orda må starte eit ord i tittelen, utan omsyn til store bokstavar og diakritikk", () => {
   const m = Kart.makeMatcher("Ærlig  DESIGN");
-  assert.ok(m(Kart.fold("Ærlig design i Norden")));
-  assert.ok(m(Kart.fold("Designing aerlig things")));
-  assert.ok(!m(Kart.fold("Design i Norden")));
+  assert.ok(m(Kart.foldTitle("Ærlig design i Norden")));
+  assert.ok(m(Kart.foldTitle("Designing aerlig things")));
+  assert.ok(!m(Kart.foldTitle("Design i Norden")));
   assert.equal(Kart.makeMatcher("   "), null);
-  assert.ok(Kart.makeMatcher("café")(Kart.fold("Cafe culture")));
-  assert.ok(Kart.makeMatcher("søm")(Kart.fold("Som")));
+  assert.ok(Kart.makeMatcher("café")(Kart.foldTitle("Cafe culture")));
+  assert.ok(Kart.makeMatcher("søm")(Kart.foldTitle("Som")));
+  assert.ok(Kart.makeMatcher("art")(Kart.foldTitle("Arts-based research")));
+  assert.ok(!Kart.makeMatcher("art")(Kart.foldTitle("Participatory design")), "ikkje midt i eit ord");
+  assert.ok(Kart.makeMatcher("co design")(Kart.foldTitle("Co-design with children")));
+});
+
+test("lenkje frå søket til katalogen: liste ved få treff, søk ved mange", () => {
+  assert.equal(Kart.hitsHref("tekstil", ["W1", "nordic:nva:a b"]), "#liste=W1~nordic%3Anva%3Aa%20b");
+  assert.deepEqual(Ui.parseHash(Kart.hitsHref("tekstil", ["W1", "nordic:nva:ab"])).list, ["W1", "nordic:nva:ab"]);
+  const many = Array.from({ length: 61 }, (_, i) => "W" + i);
+  assert.equal(Kart.hitsHref(" design & co ", many), "#korpus?q=design%20%26%20co");
+  assert.equal(Ui.parseHash(Kart.hitsHref("design & co", null)).q, "design & co");
+});
+
+test("språk frå flagga og fargeplass for klynger", () => {
+  assert.equal(Kart.langIndex(8), 0);
+  assert.equal(Kart.langIndex(4 | 1), 1);
+  assert.equal(Kart.langIndex(2), 2);
+  assert.equal(Kart.clusterSlot({ id: 3, farge: 6 }, 8), 6, "fargeplass frå dataa går føre");
+  assert.equal(Kart.clusterSlot({ id: 3 }, 8), Kart.SLOT8[3], "reserve for eit eldre kart med åtte klynger");
+  assert.equal(Kart.clusterSlot({ id: 3 }, 10), 3);
+  assert.equal(Kart.clusterSlot({ id: 9 }, 10), -1, "ingen plass: grå, ikkje ein lånt farge");
+  assert.equal(Kart.clusterSlot({ id: 2, farge: 9 }, 8), Kart.SLOT8[2], "ugyldig plass blir ignorert");
+});
+
+test("språklina i panelet: berre når gruppa er tydeleg meir nordiskspråkleg enn korpuset", () => {
+  assert.match(Kart.languageNote(0.541, 0.062, "klynga"), /^54\s%\sav verka i klynga er på eit nordisk språk, mot 6\s%/);
+  assert.equal(Kart.languageNote(0.1, 0.062, "klynga"), "");
+  assert.equal(Kart.languageNote(0.25, 0.2, "gruppa"), "");
+  assert.equal(Kart.languageNote(undefined, 0.06, "klynga"), "");
 });
 
 test("periode, land og kanalgruppe", () => {
@@ -79,6 +108,9 @@ test("etikettar: overlappande etikettar med lågare prioritet blir gøymde, og i
     { x: 395, y: 5, w: 80, h: 20 }, // blir skyvd inn
   ];
   const r = Kart.placeLabels(items, 400, 400, 3);
+  const res = { l: 344, t: 0, r: 400, b: 104 };
+  const rr = Kart.placeLabels([{ x: 360, y: 20, w: 80, h: 20 }, { x: 360, y: 60, w: 160, h: 60 }], 400, 400, 3, [res]);
+  for (const x of rr.filter(Boolean)) assert.ok(x.r <= res.l || x.t >= res.b, "ingen etikett under zoomknappane");
   assert.ok(r[0] && r[6] && r[8]);
   assert.ok(r[1], "nest viktigaste finn plass over eller under");
   assert.equal(r[5], null, "den lågast prioriterte på same stad blir gøymd");
@@ -131,6 +163,9 @@ test("sentrale verk: dei fem frå analysen først, så kjerneverk nærast midten
   assert.deepEqual(out, ["a", "e", "b", "c", "f", "d"], "grenseverket d kjem sist");
   assert.equal(Kart.centralIds(d, { sentrale: ["a"] }, [0, 1, 2, 3, 4, 5], idIndex, 3).length, 3);
   assert.deepEqual(Kart.centralIds(d, { sentrale: ["a"], sentrale60: ["f", "e"] }, [], idIndex, 60), ["f", "e"]);
+  assert.deepEqual(Kart.centralIds(d, { sentrale: ["a"], sentrale60: [5, 4, 0] }, [], idIndex, 2), ["f", "e"], "radnummer i ids");
+  assert.ok(Kart.hasRanked({ sentrale60: [1] }));
+  assert.ok(!Kart.hasRanked({ sentrale: ["a"] }));
 });
 
 test("delt liste til katalogen: formatet katalogen les", () => {
@@ -155,9 +190,21 @@ test("kart.json frå bygget: gyldig, og alle verk har ein plass", () => {
   const ks = new Set(d.klynger.map((c) => c.id));
   for (const k of d.k) assert.ok(ks.has(k));
   if (d.klynger.length === 8) assert.deepEqual([...Kart.SLOT8].sort(), [0, 1, 2, 3, 4, 5, 6, 7]);
-  const line = Kart.introLine(d, null);
-  assert.ok(!/—/.test(line), "ingen lange tankestrekar");
-  assert.ok(line.length < 260);
+  const slots = d.klynger.map((c) => Kart.clusterSlot(c, d.klynger.length));
+  assert.ok(slots.every((s) => s >= 0 && s < 8), "kvar klynge har ein fargeplass");
+  assert.equal(new Set(slots).size, slots.length, "ingen to klynger deler farge");
+  for (const g of d.klynger.concat(d.under || [])) {
+    assert.ok(Kart.hasRanked(g), "sentrale60 er eksportert");
+    const ids = Kart.centralIds(d, g, [], new Map(), 60);
+    assert.equal(new Set(ids).size, ids.length);
+    for (const id of ids) assert.equal(d[g.k === undefined ? "k" : "u"][d.ids.indexOf(id)], g.id, "sentrale verk høyrer til gruppa");
+  }
+  for (const om of [null, JSON.parse(fs.readFileSync(path.join(docs, "data", "klynger", "om.json"), "utf8"))]) {
+    const line = Kart.introLine(d, om);
+    assert.ok(!/—/.test(line), "ingen lange tankestrekar");
+    assert.ok(line.length < 260);
+    assert.match(line, /nordiske språk/, "lina over kartet seier at språk speler inn");
+  }
 });
 
 test("escaping av tekst frå data", () => {

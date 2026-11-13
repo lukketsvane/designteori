@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=23";
-import * as T from "./tilstand.js?v=23";
-import * as data from "./data.js?v=23";
-import { hentSamandrag } from "./samandrag.js?v=23";
+import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=24";
+import * as T from "./tilstand.js?v=24";
+import * as data from "./data.js?v=24";
+import { hentSamandrag } from "./samandrag.js?v=24";
 
 const { S, D } = T;
 let api = null;
@@ -129,6 +129,7 @@ export function oppdater(s, e) {
     api.merk(listeFokus() ? aktivI() : null);
   }
   if (e.verk || e.filter) visDetalj();
+  else if (e.vis || (e.visning && e.visning.size)) tittelFri();
   if (e.filter || e.verk) teiknHandtak();
 }
 export const listeLengd = () => rekkje.length;
@@ -197,7 +198,9 @@ function merke(i) {
   const kl = st === 0 ? "pdf" : st === 1 ? "lenke" : "doi";
   const tittel = st === 0 ? "Open PDF, stadfest" : st === 1 ? "Lenke frå metadata, ikkje stadfest at det er PDF" : "Berre utgjevarside (DOI)";
   const u = lenkeFor(i);
-  if (u) return `<a class="merke ${kl}" href="${esc(u)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true" title="${tittel}">${ord}</a>`;
+  // the row itself carries the status for a screen reader; a link that can be tapped says which work it opens
+  const namn = `Opne ${st === 0 ? "PDF" : st === 1 ? "lenka" : "DOI-sida"} for ${kutt(D.kol.tittel[i], 80)}`;
+  if (u) return `<a class="merke ${kl}" href="${esc(u)}" target="_blank" rel="noopener" tabindex="-1" aria-label="${esc(namn)}" title="${tittel}">${ord}</a>`;
   return `<span class="merke ${kl}" aria-hidden="true" title="${tittel}">${ord}</span>`;
 }
 
@@ -282,9 +285,8 @@ function visDetalj() {
   else {
     const st = el.detalj.scrollTop;
     bevarFokus(el.detalj, () => { el.detalj.innerHTML = detaljHtml(i); });
-    // keep the reader's place further down, but never leave the title half under the sticky bar
-    const h = el.detalj.querySelector("h2");
-    el.detalj.scrollTop = h && st < h.offsetTop + h.offsetHeight ? 0 : st;
+    el.detalj.scrollTop = st;
+    tittelFri();
   }
   if (ny) {
     el.detalj.scrollTop = 0;
@@ -300,6 +302,18 @@ function visDetalj() {
     if (T.harFil("siteringar.json")) fyllSit(i, true);
     fyllSamandrag(i, id);
   }
+}
+
+// Keep the reader's place further down the detail, but never leave the title partly under the
+// sticky "← Lista" bar: a scroll offset that ends inside the title goes back to the top.
+function tittelFri() {
+  if (!S.verk || el.detalj.hidden) return;
+  const h = el.detalj.querySelector("h2");
+  if (!h || !el.detalj.scrollTop) return;
+  const boks = el.detalj.getBoundingClientRect();
+  if (!boks.height) { el.detalj.scrollTop = 0; return; }
+  const hBotn = h.getBoundingClientRect().bottom - boks.top + el.detalj.scrollTop;
+  if (el.detalj.scrollTop < hBotn) el.detalj.scrollTop = 0;
 }
 
 function detaljHtml(i) {
@@ -431,7 +445,7 @@ function detaljKlikk(e) {
   if (d.handling === "lista") return api.lukkVerk();
   if (d.handling === "lenker") { lenkeStatus = "ingen"; return sikreLenker(); }
   if (d.handling === "naboar") { const id = S.verk, i = D.idx.get(id); return T.sikre("naboar.bin").then((r) => { if (S.verk === id) fyllNaboar(i, r.ok); }); }
-  if (d.handling === "nabolag") return api.nabolag(S.verk);
+  if (d.handling === "nabolag") { const r = api.nabolag(S.verk); tittelFri(); return r; }
   // "these ten": the work and its ten neighbours, on their own (other filters would hide some of them)
   if (d.handling === "lik") return T.endre((s) => { s.f = T.tomeFilter(); s.f.lik = s.verk; s.vis = "kart"; });
   if (d.forf) return T.veksle("forf", d.forf, { erstatt: true });
@@ -449,7 +463,8 @@ let dratt = false;
 function arkHoyder() {
   const vh = window.innerHeight;
   const topp = (document.querySelector(".topp") || { offsetHeight: 48 }).offsetHeight;
-  return { peek: 64, halv: Math.round(vh * 0.5), full: vh - topp };
+  // "kort": an opened work on a phone, lower than half so the picture keeps room for its mark
+  return { peek: 64, kort: Math.round(vh * 0.4), halv: Math.round(vh * 0.5), full: vh - topp };
 }
 export function settArk(t, utanAnim) {
   arkTilstand = t;

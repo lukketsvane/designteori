@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=23";
-import * as T from "./tilstand.js?v=23";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=24";
+import * as T from "./tilstand.js?v=24";
 
 const { S, D } = T;
 let el = {};
@@ -255,7 +255,23 @@ function visForslag() {
   if (!ut.length) { lukkForslag(); return; }
   el.forslag.innerHTML = ut.join("");
   el.forslag.hidden = false;
+  plasserForslag();
 }
+// Below 900 px the list opens under the field and is never taller than the visible space
+// between the field and the list sheet (or the on-screen keyboard); it scrolls inside.
+function plasserForslag() {
+  if (!el.forslag || el.forslag.hidden) return;
+  if (!smal()) { el.forslag.style.maxHeight = ""; return; }
+  const vv = window.visualViewport;
+  const synBotn = vv ? vv.offsetTop + vv.height : window.innerHeight;
+  const ark = document.getElementById("listepanel");
+  const arkTopp = ark ? ark.getBoundingClientRect().top : synBotn;
+  const botn = Math.min(synBotn, arkTopp > 0 ? arkTopp : synBotn);
+  const topp = el.sok.getBoundingClientRect().bottom + 4;
+  el.forslag.style.maxHeight = `${Math.max(96, Math.floor(botn - topp - 8))}px`;
+}
+if (window.visualViewport) window.visualViewport.addEventListener("resize", () => plasserForslag());
+window.addEventListener("resize", () => plasserForslag());
 // Cited works (corpus works and cited items outside it) whose title has every typed word
 // as a word prefix; at most 3, most cited first. Choosing one selects the works citing it.
 let sitertOrd = null;

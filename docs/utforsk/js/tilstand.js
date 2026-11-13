@@ -1,7 +1,7 @@
 // The selection model: state S, data columns D, masks, utval, facet counts,
 // subscribers, URL hash and history rules. Nothing else mutates S.
-import { fold, termNokkel, kutt } from "./hjelp.js?v=23";
-import * as data from "./data.js?v=23";
+import { fold, termNokkel, kutt } from "./hjelp.js?v=24";
+import * as data from "./data.js?v=24";
 
 export const VISNINGAR = ["kart", "nett", "verda", "siteringar", "tid"];
 const SIT_DELAR = ["saman", "nabolag", "straum", "tid"];

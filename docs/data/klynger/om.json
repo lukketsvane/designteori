@@ -1,6 +1,7 @@
 {
  "versjon": 1,
  "tittel": "Om kartet",
+ "linje": "6 432 verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre. Språk speler òg inn: 88 % av verka på nordiske språk ligg i éi klynge. Grensene er mjuke: 32 % av verka ligg mellom klynger.",
  "ingress": "Kartet viser alle 6 432 verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om det same, ligg nær kvarandre. Fargane er 8 klynger som ein algoritme har funne, og kvar klynge er delt i mindre underklynger.",
  "bolkar": [
   {
@@ -26,6 +27,10 @@
   {
    "tittel": "Verk med berre tittel",
    "tekst": "Dei 2 228 verka utan samandrag er plasserte og grupperte som dei andre, og dei er merkte i kartet. Plasseringa deira er litt mindre sikker: naboane deira deler sjeldnare referansar med dei (24 % mot 29 % for verk med samandrag). Dei ligg ikkje oftare på ei grense (32 % mot 33 %). Dei har framleis oftare andre berre-tittel-verk som naboar (58 % mot 35 % venta), delvis fordi mange av dei kjem frå dei nordiske arkiva. Grenseverk er òg merkte."
+  },
+  {
+   "tittel": "Sentrale verk",
+   "tekst": "Dei sentrale verka i ei klynge er dei som liknar mest på snittet av klynga i tekstrommet, ikkje dei som ligg midt i biletet. Verk med samandrag kjem først. Ein vektor bygd berre på ein kort tittel seier lite og hamnar difor lett nær midten av klynga, så verk med berre tittel kjem med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje."
   }
  ]
 }

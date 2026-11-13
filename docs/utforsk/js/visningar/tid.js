@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=23";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=24";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -68,6 +68,8 @@ export default {
       if (!b) return;
       if (b.dataset.prov != null) { lastOrd(); return; }
       if (b.dataset.sokord) { const q = b.dataset.sokord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; }); }
+      // the errand "what is cited around this word, and how did it move": the same words in Siteringar
+      if (b.dataset.sitord) { const q = b.dataset.sitord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; s.vis = "siteringar"; s.sit.del = "saman"; }); }
     });
     new ResizeObserver(() => teikn(false)).observe(ramme.flate);
     bindBandDrag();
@@ -118,8 +120,9 @@ function bindInput() {
     inp.value = "";
     ukjendMelding = "";
     if (S.tid.termar.includes(key)) { teikn(false); return; }
-    if (S.tid.termar.length >= 6) { ukjendMelding = "Du kan samanlikne opptil seks ord. Fjern eitt først."; teikn(false); return; }
+    if (S.tid.termar.length >= 6) { ukjendMelding = "Du kan samanlikne opptil seks ord. Fjern eitt først."; teikn(false); visOrdboks(); return; }
     T.endre((s) => { s.tid.termar = [...s.tid.termar, key]; s.tid.termarSett = true; });
+    visOrdboks();
   };
   const provSkriven = () => {
     const q = inp.value.trim();
@@ -132,11 +135,18 @@ function bindInput() {
       // say how many titles do have the word, and offer them as a search: "tacit" is in 3 titles,
       // too few for a curve, but the reader still wants those works
       const n = titlarMed(q);
-      ukjendMelding = { q, n, tekst: `«${q}» finst ikkje i ordlista over tittelord (minst ${D.tidd.tal.min_df} titlar, ikkje meir enn 4 av 10, så «design» manglar). ${n ? `${fmt(n)} ${n === 1 ? "tittel har" : "titlar har"} ordet.` : "Ingen titlar har ordet."}` };
+      const min = D.tidd.tal.min_df || 5;
+      const tekst = !n ? `Ingen titlar har «${q}», så det blir inga kurve.`
+        : n < min ? `«${q}» står i ${n === 1 ? "berre éin tittel" : `berre ${fmt(n)} titlar`}. Ei kurve treng minst ${min}.`
+        : `«${q}» står i ${fmt(n)} titlar, så mange at ordet ikkje skil verka frå kvarandre, og det har inga kurve.`;
+      ukjendMelding = { q, n, tekst };
       lukk(); teikn(false);
+      visOrdboks();
     }
   };
   inp.addEventListener("input", () => { valt = -1; vis(); });
+  // on a phone the word box sits below the fold: bring it and the curves up when the reader uses it
+  inp.addEventListener("focus", () => { if (smal()) visOrdboks(); });
   inp.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown" && liste.length) { valt = Math.min(liste.length - 1, valt + 1); vis(); inp.setAttribute("aria-activedescendant", `ordf-${valt}`); e.preventDefault(); }
     else if (e.key === "ArrowUp" && liste.length) { valt = Math.max(0, valt - 1); vis(); inp.setAttribute("aria-activedescendant", `ordf-${valt}`); e.preventDefault(); }
@@ -146,6 +156,18 @@ function bindInput() {
   inp.addEventListener("blur", () => setTimeout(lukk, 150));
   el.forslag.addEventListener("pointerdown", (e) => e.preventDefault());
   el.forslag.addEventListener("click", (e) => { const b = e.target.closest("button[data-t]"); if (b) leggTil(+b.dataset.t); });
+}
+
+// Scroll the Tid column so the word box (message, chips) and the curves under it are in view.
+// On a wide screen everything fits and nothing moves.
+function visOrdboks() {
+  const tid = el.band && el.band.parentElement;
+  const boks = el.input && el.input.closest(".tid-ordboks");
+  if (!tid || !boks || tid.scrollHeight <= tid.clientHeight + 1) return;
+  const mal = Math.min(boks.offsetTop - 4, tid.scrollHeight - tid.clientHeight);
+  if (Math.abs(tid.scrollTop - mal) < 2) return;
+  if (tid.scrollTo) tid.scrollTo({ top: mal, behavior: rorsle.redusert ? "auto" : "smooth" });
+  else tid.scrollTop = mal;
 }
 
 // Titles with every typed word as a word (or word prefix for words of 7 letters or more), as
@@ -198,7 +220,11 @@ function ordData() {
     });
     kurver.push({ key, t, vis: D.tidd.termar.vis[t], pkt });
   }
-  return { kurver, m };
+  // shares from years with a handful of works jump about (co-design 2.7 % in 1996 from one or
+  // two titles): the curve is faint up to the first year with at least 20 works in the selection
+  let j0 = m.findIndex((c) => c >= 20);
+  if (j0 < 0) j0 = AR.length;
+  return { kurver, m, sikkerFra: AR[Math.min(j0, AR.length - 1)], j0 };
 }
 
 // ---------- drawing ----------
@@ -234,7 +260,7 @@ function teikn(anim) {
   const meirOpe = !!(ramme.teikn.querySelector(".teikn-meir") || {}).open;
   settInnhald(ramme.teikn, `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig (${fmt(talAr(2026))} verk mot ${fmt(talAr(2025))} i 2025: innhaustinga er ikkje ferdig, året er ikkje lite).</span>
     <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Tema er grupper av like titlar og kjelder, ikkje emne sett av nokon. Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
-    <span class="teikn-merk">Orda er talde per språkform: «service design» og «tjenestedesign» er to ord. Eit ord manglar når det står i færre enn ${D.tidd ? D.tidd.tal.min_df : 5} titlar. Ei kurve startar der eit treårsvindauge har minst 20 verk (for heile korpuset i 1993).</span></details>`);
+    <span class="teikn-merk">Orda er talde per språkform: «service design» og «tjenestedesign» er to ord. Eit ord manglar når det står i færre enn ${D.tidd ? D.tidd.tal.min_df : 5} titlar. Ei kurve startar der eit treårsvindauge har minst 20 verk (for heile korpuset i 1993), og ho er blek fram til første år med minst 20 verk i utvalet, for delen i år med få verk kan hoppe mykje.</span></details>`);
   if (meirOpe) ramme.teikn.querySelector(".teikn-meir").open = true;
   void med;
 }
@@ -409,17 +435,19 @@ function teiknOrd() {
   if (ordStatus === "feil") settInnhald(el.melding, `Ordlista kunne ikkje lastast. <button type="button" class="knapp liten" data-prov>Prøv igjen</button>`);
   else if (ukjendMelding && typeof ukjendMelding === "object") {
     const u = ukjendMelding;
-    settInnhald(el.melding, `${esc(u.tekst)}${u.n ? ` <button type="button" class="knapp liten" data-sokord="${esc(u.q)}">Vis ${u.n === 1 ? "verket" : `dei ${fmt(u.n)} verka`}</button>` : ""}`);
+    settInnhald(el.melding, `${esc(u.tekst)}${u.n ? ` <button type="button" class="knapp liten" data-sokord="${esc(u.q)}">Vis ${u.n === 1 ? "verket" : `dei ${fmt(u.n)} verka`}</button> <button type="button" class="knapp liten" data-sitord="${esc(u.q)}" title="Opnar Siteringar med verka som har ordet i tittelen: kva dei siterer, og kven som siterer det over tid">Kva siterer dei?</button>` : ""}`);
   } else settInnhald(el.melding, esc(ukjendMelding || ""));
   el.ordTom.hidden = true;
   tvSeg.el.classList.remove("framheva");
   if (ordStatus === "lastar") { el.ordTom.hidden = false; el.ordTom.textContent = "Lastar ordlista …"; return; }
   if (ordStatus !== "ok" || W < 10 || H < 30) return;
-  const { kurver, m: mTot } = ordData();
+  const { kurver, m: mTot, sikkerFra } = ordData();
+  const bleik = S.tid.tv === "del" ? sikkerFra : A0;
   if (!kurver.length) { el.ordTom.hidden = false; el.ordTom.textContent = "Skriv eit ord over for å teikne ei kurve."; return; }
   const mm = marg();
   const x = d3.scaleLinear().domain([A0, A1]).range([mm.l, W - mm.r]);
-  const ymax = d3.max(kurver, (k) => d3.max(k.pkt, (p) => p.v)) || 1;
+  // the scale follows the years that carry weight; the faint early part is clipped to it
+  const ymax = d3.max(kurver, (k) => d3.max(k.pkt, (p) => (p.a >= bleik ? p.v : null))) || d3.max(kurver, (k) => d3.max(k.pkt, (p) => p.v)) || 1;
   const y = d3.scaleLinear().domain([0, ymax * 1.1]).nice().range([H - 18, 10]);
   const ay = svg.append("g").attr("class", "akse").attr("transform", `translate(${mm.l},0)`);
   ay.call(d3.axisLeft(y).ticks(4).tickFormat((d) => (S.tid.tv === "del" ? `${d} %` : d)).tickSize(3));
@@ -439,14 +467,17 @@ function teiknOrd() {
   const gl = svg.append("g");
   kurver.forEach((k, q) => {
     const f = PALETTE_ORD[q % 6];
-    const heil = k.pkt.filter((p) => p.a <= 2025);
+    const tidleg = k.pkt.filter((p) => p.a <= bleik && p.a <= 2025);
+    const heil = k.pkt.filter((p) => p.a >= bleik && p.a <= 2025);
     const slutt = k.pkt.filter((p) => p.a >= 2025);
     const w = S.f.term.has(k.key) ? 3 : 2;
+    const ytop = y.domain()[1];
+    if (tidleg.length > 1) gl.append("path").attr("d", line(tidleg.map((p) => (p.v != null && p.v > ytop ? { ...p, v: ytop } : p)))).attr("fill", "none").attr("stroke", f).attr("stroke-width", 1.5).attr("stroke-opacity", 0.3).attr("class", "bleik");
     gl.append("path").attr("d", line(heil)).attr("fill", "none").attr("stroke", f).attr("stroke-width", w).attr("stroke-dasharray", ORD_STREK[q % 6] || null);
     gl.append("path").attr("d", line(slutt)).attr("fill", "none").attr("stroke", f).attr("stroke-width", w).attr("stroke-dasharray", "3 3").attr("stroke-opacity", 0.8);
-    for (const p of k.pkt) if (p.v != null && (p.a % 5 === 0 || p.a === 2025)) gl.append("g").attr("transform", `translate(${x(p.a)},${y(p.v)})`).html(merkeSvg(q, 0, 0));
+    for (const p of k.pkt) if (p.v != null && p.a >= bleik && (p.a % 5 === 0 || p.a === 2025)) gl.append("g").attr("transform", `translate(${x(p.a)},${y(p.v)})`).html(merkeSvg(q, 0, 0));
     // wide invisible hit path
-    gl.append("path").attr("d", line(k.pkt)).attr("fill", "none").attr("stroke", "transparent").attr("stroke-width", 14).style("cursor", "pointer")
+    gl.append("path").attr("d", line(k.pkt.map((p) => (p.v != null && p.v > ytop ? { ...p, v: ytop } : p)))).attr("fill", "none").attr("stroke", "transparent").attr("stroke-width", 14).style("cursor", "pointer")
       .on("click", (ev) => {
         if (ev.pointerType && ev.pointerType !== "mouse") {
           if (kort.ope && kort.id === `ord${k.key}`) { kort.lukk(); T.veksle("term", k.key); return; }
@@ -481,7 +512,8 @@ function teiknOrd() {
       const v = p.v == null ? "for få verk" : S.tid.tv === "del" ? `${pst(p.v, 1)} %` : fmt(p.v);
       return `<div class="tt-meta"><span class="prikk" style="background:${PALETTE_ORD[q % 6]}"></span>${esc(k.vis)}: ${fmt(p.h)} av ${fmt(mTot[j])} verk (${v})</div>`;
     }).join("");
-    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel">${a}${a === 2026 ? " (ufullstendig)" : ""}</div>${rader}<div class="tt-fot">Klikk ei line: bruk ordet som filter</div>`, ev.clientX, ev.clientY);
+    const fa = a < bleik ? `<div class="tt-fot">Under 20 verk dette året: delen er usikker (blek line).</div>` : "";
+    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel">${a}${a === 2026 ? " (ufullstendig)" : ""}</div>${rader}${fa}<div class="tt-fot">Klikk ei line: bruk ordet som filter</div>`, ev.clientX, ev.clientY);
   }).on("pointerleave", () => { regel.attr("visibility", "hidden"); tooltip.skjul(); });
 }
 

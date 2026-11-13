@@ -267,7 +267,8 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .merke.doi { color: var(--dim); border-color: #2a2a2a; }
 @media (max-width: 599px) {
   .rad { height: 88px; }
-  .merke { position: relative; min-width: 52px; height: 32px; font-size: 11px; }
+  .merke { position: relative; min-width: 56px; height: 44px; font-size: 11px; }
+  .rad-hogre { gap: 2px; }
   .merke::after { content: ""; position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; transform: translate(-50%, -50%); }
 }
 
@@ -409,12 +410,18 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
 .tiar-tabell .lenkeknapp { min-height: 28px; }
 @media (max-width: 599px) { .tiar-tabell { padding: 8px 10px; } .tiar-tabell th, .tiar-tabell td { padding: 6px 4px; } .tiar-tabell .lenkeknapp { min-height: 44px; } }
 .sit-rang.lukka ol, .sit-rang.lukka p { display: none; }
-@media (min-width: 900px) { .sit-saman { right: 276px !important; } .sit-rang { top: 8px; bottom: 8px; max-height: none; } }
+/* the ranked list is as tall as its rows, never taller than the picture */
+@media (min-width: 900px) { .sit-saman { right: 276px !important; } .sit-rang { top: 8px; bottom: auto; max-height: calc(100% - 16px); } }
 @media (max-width: 899px) {
   .ego { grid-template-columns: minmax(0, 1fr); grid-template-areas: "midt" "siterer" "sitertav" "liknar"; gap: 12px; }
   .ego-item { min-height: 44px; }
   .ego-kort { margin-top: 0; }
-  .sidepanel.sit-rang { top: auto; bottom: 8px; }
+  .sidepanel.sit-rang { top: auto; bottom: 8px; right: 8px; }
+  /* opened on a phone the list gets most of the picture: the reader asked for the list */
+  .sidepanel.sit-rang:not(.lukka) { max-height: 70%; }
+  .sit-rang .rang-valt { padding: 2px 10px 6px; font-size: 12px; }
+  .sit-rang .rangrad { padding: 0 4px; }
+  .sit-rang .rang-bar { height: 2px; }
 }
 
 /* Verda: a short legend, sizes on two lines and the colours in two columns */
@@ -450,7 +457,9 @@ button.teikn-post[aria-pressed="true"] { color: var(--fg); background: #1e1e1e; 
   .filterlinje { flex-wrap: nowrap; gap: 8px; padding: 6px 12px; align-items: flex-start; }
   .sokfelt { flex: 1 1 auto; max-width: none; }
   .sok { min-height: 44px; }
-  .forslag { top: auto; bottom: calc(100% + 4px); }
+  /* the list opens under the field; JS caps its height at the visible space above the sheet */
+  .forslag { top: calc(100% + 4px); bottom: auto; max-height: 50vh; overflow-y: auto; overscroll-behavior: contain; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+  .forslag button { min-height: 44px; }
   .filterknapp { display: inline-flex; min-height: 44px; flex: none; }
   .filterpanel { display: none; }
   .filterpanel.ope {

@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=23";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=24";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph

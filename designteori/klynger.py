@@ -105,7 +105,7 @@ NAMN_UNDER: dict[str, str] = {
     "nordic:nva:2d2da03f1ad446cb87e7": "Born, matematikk og inkluderande undervising",
     "W4364862113": "Designtenking i undervising",
     "W7152443517": "Generativ KI i undervising",
-    "nordic:nva:179ba6aba03a2ee685e4": "Framtider og spekulativ pedagogikk",
+    "nordic:nva:179ba6aba03a2ee685e4": "Spekulativ design og framtider i undervisinga",
     "W7112102007": "Metodar for deltakande design",
     "nordic:nva:e1e1e681b01bc5fc24dc": "Co-design, samarbeid og lab",
     "W3036567598": "Deltakande design, rettferd og marginaliserte grupper",
@@ -125,11 +125,11 @@ NAMN_UNDER: dict[str, str] = {
     "W7160449131": "Byar og planlegging",
     "nordic:nva:91d728fe435b9a022586": "Berekraftig design, innovasjon og næring",
     "nordic:nva:7682a711cc1200383840": "Sirkulær mote og tekstil",
-    "nordic:nva:c764dfbbab418dddba62": "Skipsbruer, hygiene og skam",
+    "nordic:nva:c764dfbbab418dddba62": "Systemisk design, transport og kvardagspraksis",
     "nordic:nordes:109a5de8fba50509e59c": "Designaktivisme og politikk",
     "nordic:nva:898048d5b131af21835a": "Kunst og handverk i skulen",
     "nordic:nva:e55ef98f18d463e279f9": "Nordiskspråkleg designteori og tenestedesign",
-    "W2966096216": "Helsingar, leiarar og blanda tidsskriftstoff",
+    "W2966096216": "Leiarartiklar, arkitektur og blanda tidsskriftstoff",
     "nordic:nva:af941e1d1301e3e994f7": "Norske prosjekt: interaksjonsdesign, tenester og helse",
     "W1800324983": "Innleiingar til konferansar",
     "W1872603985": "Profesjon, politikk, institusjonar (svensk, finsk)",
@@ -140,6 +140,23 @@ NAMN_UNDER: dict[str, str] = {
     "nordic:nva:2e418bcebf88e47e9a99": "Kultur og makt i tenester",
     "nordic:nva:b7851ea25f2d229103a0": "Undervising i tenestedesign",
 }
+
+# Colour slot (0..7 in the page's categorical palette, docs/kart.js PAL) per top cluster, keyed like NAMN_TOPP. The
+# slots were chosen so the clusters that border each other most in the map get the colours that differ most. A
+# cluster whose key is missing gets the first free slot; more than len(PALETT_PLASSAR) clusters stops the build,
+# because the page has no more distinct colours.
+PALETT_PLASSAR = 8
+FARGE_TOPP: dict[str, int] = {
+    "W2094495192": 5,
+    "W2980032970": 7,
+    "nordic:nva:df2fc6603fa902e39783": 4,
+    "W7112102007": 0,
+    "nordic:nordes:cc99826647bd8ca7c983": 6,
+    "nordic:nva:c23b90c9058cd61a87c5": 3,
+    "nordic:nva:81591de1f19a19f49d3a": 1,
+    "nordic:nva:ee4378a8e4b4b13233a6": 2,
+}
+NORDISKE_SPRAK = "bndsf"  # meta.json lang codes: bokmål, nynorsk, dansk, svensk, finsk
 
 # Stop words: English, Norwegian (both forms), Swedish, Danish, and academic boilerplate.
 STOPPORD = frozenset("""
@@ -839,20 +856,49 @@ def til_ruta(Y: np.ndarray) -> np.ndarray:
 
 
 def etikettpunkt(P: np.ndarray, med: np.ndarray, sentral: np.ndarray, radius: float) -> list[int]:
-    """Density peak: the member with most fellow members within radius; ties go to the more central work."""
+    """Label anchor: the member where the group is both dense and in the majority. Score = own works within radius
+    times their share of all works within radius, so a small tight clump inside another cluster loses to the main
+    mode. Ties go to the more central work. (A plain density peak with a small radius put the label of a bimodal
+    cluster on a secondary clump where the cluster was a minority.)"""
     p = P[med].astype(np.float64)
-    if len(med) > 3000:
+    alle = P.astype(np.float64)
+    if len(med) > 1500:
         rng = np.random.default_rng(0)
-        prove = np.sort(rng.choice(len(med), 3000, replace=False))
+        prove = np.sort(rng.choice(len(med), 1500, replace=False))
     else:
         prove = np.arange(len(med))
-    ant = np.zeros(len(prove), dtype=np.int64)
-    for b in range(0, len(prove), 512):
-        q = p[prove[b: b + 512]]
-        d2 = ((q[:, None, :] - p[None, :, :]) ** 2).sum(2)
-        ant[b: b + 512] = (d2 <= radius * radius).sum(1)
-    best = max(range(len(prove)), key=lambda t: (ant[t], float(sentral[prove[t]]), -prove[t]))
+    eigen = np.zeros(len(prove))
+    tot = np.zeros(len(prove))
+    r2 = radius * radius
+    for b in range(0, len(prove), 256):
+        q = p[prove[b: b + 256]]
+        eigen[b: b + 256] = (((q[:, None, :] - p[None, :, :]) ** 2).sum(2) <= r2).sum(1)
+        tot[b: b + 256] = (((q[:, None, :] - alle[None, :, :]) ** 2).sum(2) <= r2).sum(1)
+    skar = eigen * eigen / np.maximum(tot, 1.0)
+    best = max(range(len(prove)), key=lambda t: (round(float(skar[t]), 6), float(sentral[med[prove[t]]]), -prove[t]))
     return [int(p[prove[best], 0]), int(p[prove[best], 1])]
+
+
+def fargeplassar(nokklar: list[list[str]]) -> list[int]:
+    """Palette slot per top cluster from FARGE_TOPP (key = one of the cluster's naming keys); free slots for the rest."""
+    if len(nokklar) > PALETT_PLASSAR:
+        raise SystemExit(f"{len(nokklar)} klynger, men paletten på sida har berre {PALETT_PLASSAR} fargar")
+    ut: list[int | None] = []
+    for nk in nokklar:
+        ut.append(next((FARGE_TOPP[w] for w in nk if w in FARGE_TOPP), None))
+    brukt: set[int] = set()
+    for c, s in enumerate(ut):
+        if s is not None and s in brukt:
+            logg(f"fargeplass {s} er alt teken, klynge {c} får ein ledig")
+            ut[c] = None
+        elif s is not None:
+            brukt.add(s)
+    ledige = [s for s in range(PALETT_PLASSAR) if s not in brukt]
+    for c, s in enumerate(ut):
+        if s is None:
+            ut[c] = ledige.pop(0)
+            logg(f"klynge {c} har ingen fargenøkkel, får plass {ut[c]}")
+    return [int(s) for s in ut]  # type: ignore[arg-type]
 
 
 # ---------------------------------------------------------------------------
@@ -952,21 +998,35 @@ def toppliste(verdiar: list[str], n: int = 5) -> list[list]:
     return [[k, c] for k, c in sorted(tel.items(), key=lambda kv: (-kv[1], kv[0]))[:n]]
 
 
-def skildre(K: Ns, V: np.ndarray, med: np.ndarray) -> Ns:
-    c = normaliser(V[med].mean(0, keepdims=True))[0]
-    cos = V[med] @ c
-    rekkje_alle = med[np.lexsort((med, -cos))]
+def unike_titlar(K: Ns, rekkje: np.ndarray, n: int) -> list[int]:
+    """The first n works of a ranking, one work per title (duplicate records and chapters share titles)."""
     sett: set[str] = set()
-    rekkje_l = []
-    for i in rekkje_alle:  # one work per title (duplicate records and chapters share titles)
+    ut: list[int] = []
+    for i in rekkje:
         f = fold(K.tittel[i])
         if f in sett:
             continue
         sett.add(f)
-        rekkje_l.append(i)
-        if len(rekkje_l) >= 8:
+        ut.append(int(i))
+        if len(ut) >= n:
             break
-    rekkje = np.asarray(rekkje_l, dtype=np.int64)
+    return ut
+
+
+def skildre(K: Ns, V: np.ndarray, med: np.ndarray) -> Ns:
+    """Profile of a group. Three rankings by cosine to the group's mean vector in the text space:
+    nokkel (all works; the naming keys, as when the names were checked), sentrale (the five shown on the page) and
+    sentrale60 (the catalogue link). The shown rankings take works with an abstract first and title-only works only
+    when there are too few: a title-only vector is built from a few words, sits closer to the generic middle and
+    filled 30 of the 40 places when all works were ranked together."""
+    c = normaliser(V[med].mean(0, keepdims=True))[0]
+    cos = V[med] @ c
+    rekkje_alle = med[np.lexsort((med, -cos))]
+    tb = K.tittel_berre[rekkje_alle]
+    rekkje_vist = np.concatenate([rekkje_alle[~tb], rekkje_alle[tb]])
+    nokkel = unike_titlar(K, rekkje_alle, 8)
+    vist = unike_titlar(K, rekkje_vist, 60)
+    rekkje = np.asarray(nokkel, dtype=np.int64)
     vis_kanal: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     for i in med:
         if K.kanal[i]:
@@ -974,8 +1034,10 @@ def skildre(K: Ns, V: np.ndarray, med: np.ndarray) -> Ns:
     kanalar = toppliste([K.kanal[i] for i in med])
     kanalar = [[kort(sorted(vis_kanal[k].items(), key=lambda kv: (-kv[1], kv[0]))[0][0]), n] for k, n in kanalar]
     land = toppliste([c for i in med for c in K.land[i]])
-    return Ns(sentrale=[K.ids[i] for i in rekkje[:5]], sentrale_i=rekkje[:8], periode=periodeprofil(K.ar[med]),
-              kanalar=kanalar, land=land, sentrum=c, cos=cos)
+    nordisk = np.asarray([K.sprak[i] in NORDISKE_SPRAK for i in med])
+    return Ns(nokkel=[K.ids[i] for i in rekkje[:5]], sentrale_i=rekkje[:8], sentrale=[K.ids[i] for i in vist[:5]],
+              sentrale60=vist, periode=periodeprofil(K.ar[med]), kanalar=kanalar, land=land, sentrum=c, cos=cos,
+              nordisk=round(float(nordisk.mean()), 3) if len(med) else 0.0)
 
 
 def kort(s: str, maks: int = 100) -> str:
@@ -1382,21 +1444,26 @@ def main(argv: list[str] | None = None) -> int:
     tt = klassetermar(termar, X, topp, nk)
     klynger = []
     grunnlag = []
+    nokklar = []
     for c in range(nk):
         med = np.flatnonzero(topp == c)
         d = skildre(K, V, med)
-        namn, sjekka = vel_namn(d.sentrale, NAMN_TOPP, tt[c])
+        nokklar.append(d.nokkel)
+        namn, sjekka = vel_namn(d.nokkel, NAMN_TOPP, tt[c])
         sentral = np.zeros(K.n)
         sentral[med] = d.cos
-        lx, ly = etikettpunkt(P, med, sentral, 0.035 * SKALA)
+        lx, ly = etikettpunkt(P, med, sentral, 0.08 * SKALA)
         g = g_topp[med]
         klynger.append({"id": c, "namn": namn, "namn_sjekka": sjekka, "ord": tt[c][:6], "n": int(len(med)),
-                        "lx": lx, "ly": ly, "sentrale": d.sentrale, "periode": d.periode, "kanalar": d.kanalar,
+                        "lx": lx, "ly": ly, "sentrale": d.sentrale, "sentrale60": d.sentrale60,
+                        "periode": d.periode, "kanalar": d.kanalar,
                         "land": d.land, "stabilitet": klstab[c],
                         "kjerne": round(float((g >= GRENSE_DEL).mean()), 3),
-                        "tittel_berre": int(K.tittel_berre[med].sum()),
+                        "tittel_berre": int(K.tittel_berre[med].sum()), "nordisk": d.nordisk,
                         "silhuett": round(float(sil_verk[med].mean()), 3), "under": []})
         grunnlag.append((c, None, namn, tt[c], [K.tittel[i] for i in d.sentrale_i], d))
+    for c, s in enumerate(fargeplassar(nokklar)):
+        klynger[c]["farge"] = s
     under_lst = []
     for c in range(nk):
         med = np.flatnonzero(topp == c)
@@ -1409,14 +1476,14 @@ def main(argv: list[str] | None = None) -> int:
         for q, u in enumerate(u_ids):
             m2 = np.flatnonzero(under == u)
             d = skildre(K, V, m2)
-            namn, sjekka = vel_namn(d.sentrale, NAMN_UNDER, ut_[q])
+            namn, sjekka = vel_namn(d.nokkel, NAMN_UNDER, ut_[q])
             sentral = np.zeros(K.n)
             sentral[m2] = d.cos
-            lx, ly = etikettpunkt(P, m2, sentral, 0.02 * SKALA)
+            lx, ly = etikettpunkt(P, m2, sentral, 0.03 * SKALA)
             under_lst.append({"id": u, "k": c, "namn": namn, "namn_sjekka": sjekka, "ord": ut_[q][:5], "n": int(len(m2)),
-                              "lx": lx, "ly": ly, "sentrale": d.sentrale, "periode": d.periode,
-                              "kanalar": d.kanalar[:3], "land": d.land[:3],
-                              "stabilitet": st[q] if st else None})
+                              "lx": lx, "ly": ly, "sentrale": d.sentrale, "sentrale60": d.sentrale60,
+                              "periode": d.periode, "kanalar": d.kanalar[:3], "land": d.land[:3],
+                              "nordisk": d.nordisk, "stabilitet": st[q] if st else None})
             klynger[c]["under"].append(u)
             grunnlag.append((c, u, namn, ut_[q], [K.tittel[i] for i in d.sentrale_i], d))
 
@@ -1425,6 +1492,8 @@ def main(argv: list[str] | None = None) -> int:
     flagg = np.zeros(K.n, dtype=np.int64)
     flagg[g_topp < GRENSE_DEL] |= 1
     flagg[K.tittel_berre] |= 2
+    flagg[np.asarray([s in NORDISKE_SPRAK for s in K.sprak])] |= 4
+    flagg[np.asarray([s == "e" for s in K.sprak])] |= 8
     tal_ = {
         "verk": K.n, "med_samandrag": int((~K.tittel_berre).sum()), "berre_tittel": int(K.tittel_berre.sum()),
         "abs_o": K.abs.count("o"), "abs_x": K.abs.count("x"),
@@ -1454,7 +1523,7 @@ def main(argv: list[str] | None = None) -> int:
         "grense_del_med_samandrag": round(float((g_topp[~K.tittel_berre] < GRENSE_DEL).mean()), 4),
         "gammal_kjelde_kopling": next(r["kopling"] for r in res["alle"] if r["kjelde"] == "b"),
     }
-    nordisk = np.asarray([c in "bndsf" for c in K.sprak])
+    nordisk = np.asarray([c in NORDISKE_SPRAK for c in K.sprak])
     delar = [float(nordisk[topp == c].mean()) for c in range(nk)]
     tal_["nordisk_sprak_klynge"] = int(np.argmax(delar))
     tal_["nordisk_sprak_del"] = round(max(delar), 4)
@@ -1487,7 +1556,8 @@ def main(argv: list[str] | None = None) -> int:
         "tal": tal_,
         "periodar": [p[0] for p in PERIODAR],
         "skala": SKALA,
-        "flagg": {"1": "grense", "2": "berre tittel"},
+        "flagg": {"1": "grense", "2": "berre tittel", "4": "nordisk språk", "8": "engelsk"},
+        # sentrale60 in klynger and under: row numbers into ids (not ids, to keep the file small)
         "ids": K.ids,
         "x": [int(v) for v in P[:, 0]], "y": [int(v) for v in P[:, 1]],
         "k": [int(v) for v in topp], "u": [int(v) for v in under], "f": [int(v) for v in flagg],
@@ -1519,7 +1589,7 @@ def skriv_grunnlag(sti: Path, K: Ns, grunnlag, klynger, under_lst) -> None:
         linjer.append(f"- ord: {', '.join(ord_)}")
         linjer.append(f"- kanalar: {'; '.join(f'{k} ({n})' for k, n in d.kanalar)}")
         linjer.append(f"- land: {', '.join(f'{k} {n}' for k, n in d.land)}  periode: {d.periode}")
-        linjer.append(f"- nøkkel (mest sentrale verk): {d.sentrale[0]}")
+        linjer.append(f"- nøkkel (mest sentrale verk): {d.nokkel[0]}")
         for t in titlar:
             linjer.append(f"  - {t}")
         linjer.append("")
@@ -1532,7 +1602,11 @@ def om_tekst(t: dict, klynger: list[dict], kv: dict) -> dict:
     return {
         "versjon": VERSJON,
         "tittel": "Om kartet",
-        "ingress": (f"Kartet viser alle {tal(t['verk'])} verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om "
+        # the line above the map; says that language, not only theme, shapes the clearest island
+        "linje": (f"{tal(t['verk'])} verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre. "
+                  f"Språk speler òg inn: {pst(t['nordisk_sprak_del_av_nordiske'])} av verka på nordiske språk ligg i "
+                  f"éi klynge. Grensene er mjuke: {pst(t['grense_del'])} av verka ligg mellom klynger."),
+        "ingress":(f"Kartet viser alle {tal(t['verk'])} verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om "
                     "det same, ligg nær kvarandre. Fargane er {k} klynger som ein algoritme har funne, og kvar klynge "
                     "er delt i mindre underklynger.").replace("{k}", tal(t["klynger"])),
         "bolkar": [
@@ -1590,6 +1664,11 @@ def om_tekst(t: dict, klynger: list[dict], kv: dict) -> dict:
                        f"Dei har framleis oftare andre berre-tittel-verk som naboar ({pst(t['tittel_berre_homofili'])} "
                        f"mot {pst(t['tittel_berre_homofili_basis'])} venta), delvis fordi mange av dei kjem frå dei "
                        "nordiske arkiva. Grenseverk er òg merkte.")},
+            {"tittel": "Sentrale verk",
+             "tekst": ("Dei sentrale verka i ei klynge er dei som liknar mest på snittet av klynga i tekstrommet, "
+                       "ikkje dei som ligg midt i biletet. Verk med samandrag kjem først. Ein vektor bygd berre på ein "
+                       "kort tittel seier lite og hamnar difor lett nær midten av klynga, så verk med berre tittel kjem "
+                       "med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje.")},
         ],
     }
 
