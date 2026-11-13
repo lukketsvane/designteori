@@ -11,7 +11,11 @@
   const TILGS = ["pdf", "open", "abs"];
 
   const esc = (s) => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  const fmt = (n) => (typeof n === "number" && isFinite(n) ? n.toLocaleString("nn-NO") : "");
+  const fmt = (n) => {
+    if (typeof n !== "number" || !isFinite(n)) return "";
+    const [i, d] = String(Math.abs(n)).split(".");
+    return (n < 0 ? "−" : "") + i.replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0") + (d ? "," + d : "");
+  };
   const safeHref = (u) => (typeof u === "string" && /^https?:\/\/[^\s<>"']+$/i.test(u.trim()) ? u.trim() : "");
   const REL = "noopener noreferrer";
 
