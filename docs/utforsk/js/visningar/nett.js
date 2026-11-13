@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE } from "../hjelp.js?v=21";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=23";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph
@@ -396,7 +396,7 @@ function teiknLinje() {
   const inst = G.modus === "inst";
   const alle = G.tal.alle, vist = G.tal.vist;
   let t = `${inst ? "Institusjonar" : "Forfattarar"} som skriv saman. Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre OpenAlex: ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"}.`;
-  if (!inst) t += " Verk der ein person berre står med namn (mest arkivverk) er ikkje talde under personen.";
+  if (!inst) t += " Berre forfattarar med OpenAlex-id er med: der ein person står med namn utan id (arkivverka, og nokre OpenAlex-verk), er verket ikkje tald under personen, så ein person kan ha fleire verk enn nettet viser.";
   if (S.verk && D.idx.has(S.verk) && !opneNoder.size) t += " Det opne verket har ingen node i nettet.";
   ramme.linje.textContent = t;
   scene.settLabel(t);
@@ -407,5 +407,5 @@ function teiknLinje() {
     const f = k === "" ? UKJEND : k === "andre" ? "#9a9a9a" : LAND_FARGE[k];
     return `<span class="teikn-post"><span class="prikk" style="background:${f}"></span>${esc(namn)}</span>`;
   }).join("");
-  ramme.teikn.innerHTML = `${post}<span class="teikn-merk">Farge: hovudland. Storleik: verk. Linje: felles verk${T.harFilter() ? " i utvalet" : ""}.</span>`;
+  settInnhald(ramme.teikn, `${post}<span class="teikn-merk">Farge: hovudland. Storleik: verk. Linje: felles verk${T.harFilter() ? " i utvalet" : ""}.</span>`);
 }

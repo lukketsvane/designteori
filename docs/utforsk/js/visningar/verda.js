@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle } from "../hjelp.js?v=21";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=23";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -17,7 +17,8 @@ let hoverBoge = null;
 export default {
   id: "verda",
   filer: ["stader.json"],
-  skript: ["topojson"],
+  // topojson is loaded with the country outlines; without it the places are still drawn
+  skript: [],
   async init(rot, api) {
     A = api; T = api.T; D = api.D; S = api.S; ramme = api.ramme; d3 = window.d3;
     proj = d3.geoAzimuthalEqualArea().rotate([-15, -62]).precision(0.3);
@@ -77,8 +78,8 @@ function dekt() {
 }
 
 async function lastLand() {
-  const r = await A.data.verdsAtlas();
-  if (!r.ok || !window.topojson) { landFeil = true; teiknLinje(); scene.teikn(); return; }
+  const [r, tj] = await Promise.all([A.data.verdsAtlas(), A.data.lastSkript("topojson")]);
+  if (!r.ok || !tj.ok || !window.topojson) { landFeil = true; if (sVal) teiknLinje(); scene.teikn(); return; }
   const topo = r.data;
   const fc = window.topojson.feature(topo, topo.objects.countries);
   const sti = d3.geoPath(proj);
@@ -192,7 +193,7 @@ function ring(ctx, sc, p, e, w = 1.5) {
   ctx.strokeStyle = "#fff"; ctx.lineWidth = w; ctx.stroke();
 }
 function teiknOverlay(ctx, sc) {
-  if (!P) return;
+  if (!P || !sVal) return;
   sc.setSkjerm(ctx);
   for (const k of S.f.stad) { const p = D.stadIdx.get(k); if (p != null) ring(ctx, sc, p, 2, 2); }
   if (S.f.par) for (const k of S.f.par) { const p = D.stadIdx.get(k); if (p != null) ring(ctx, sc, p, 2, 2); }
@@ -214,7 +215,7 @@ function teiknOverlay(ctx, sc) {
 
 // ---------- picking (amendment 42) ----------
 function finn(px, py, type) {
-  if (!P) return null;
+  if (!P || !sVal) return null;
   const sc = scene.sc;
   const [x, y] = sc.tilVerd(px, py);
   const touch = type !== "mouse";
@@ -313,7 +314,8 @@ function teiknLinje() {
   const sirklar = ref.map((v) => { const r = (3 + 22 * Math.sqrt(v / smax)) * (scene ? scene.sc.rf : 1); return `<span class="teikn-post"><svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="none" stroke="#bbb"/></svg>${fmt(v)}</span>`; }).join("");
   const bw = [wmax, Math.round(wmax / 3), 1].map((v) => `<span class="teikn-post"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke="#f2f2f2" stroke-width="${0.6 + 5 * (v / wmax) ** 0.8}"/></svg>${fmt(v)}</span>`).join("");
   const land = ["NO", "SE", "DK", "FI", "IS", "GB", "US", "NL"].map((k) => `<span class="teikn-post"><span class="prikk" style="background:${landFarge(k)}"></span>${esc(T.landNamn(k))}</span>`).join("");
-  ramme.teikn.innerHTML = `<span class="teikn-merk">Verk:</span>${sirklar}<span class="teikn-merk">Felles verk:</span>${bw}${land}<span class="teikn-post"><span class="prikk" style="background:#9a9a9a"></span>Andre</span><span class="teikn-merk">Grå ring: heile korpuset.</span>`;
+  // short legend: sizes on two lines, the colours in two columns, so it covers little of the map
+  settInnhald(ramme.teikn, `<span class="teikn-linje"><span class="teikn-merk">Verk</span>${sirklar}</span><span class="teikn-linje"><span class="teikn-merk">Felles verk</span>${bw}</span><span class="teikn-kol">${land}<span class="teikn-post"><span class="prikk" style="background:#9a9a9a"></span>Andre</span></span><span class="teikn-merk">Grå ring: heile korpuset. Nabobyar er eigne stader (København og Lyngby, Espoo og Helsinki), så nokre bogar går mellom campusar i same byområde.</span>`);
   if (T.harFilter() && T.valt > 0 && !P.med) A.hjelp.visMelding(ramme, { tekst: "Ingen av verka i utvalet har stad i dataa." });
   else if (ramme.melding.textContent.startsWith("Ingen av verka")) A.hjelp.visMelding(ramme, null);
 }

@@ -1,7 +1,7 @@
 // The selection model: state S, data columns D, masks, utval, facet counts,
 // subscribers, URL hash and history rules. Nothing else mutates S.
-import { fold, termNokkel, kutt } from "./hjelp.js?v=21";
-import * as data from "./data.js?v=21";
+import { fold, termNokkel, kutt } from "./hjelp.js?v=23";
+import * as data from "./data.js?v=23";
 
 export const VISNINGAR = ["kart", "nett", "verda", "siteringar", "tid"];
 const SIT_DELAR = ["saman", "nabolag", "straum", "tid"];
@@ -12,7 +12,7 @@ export const AR_MIN = 1983, AR_MAX = 2026;
 
 export const tomeFilter = () => ({
   ar: null, land: new Set(), tema: new Set(), kanal: new Set(), kgr: new Set(), type: new Set(), lag: new Set(),
-  pdf: false, q: "", inst: new Set(), forf: new Set(), fland: new Set(), stad: new Set(), par: null,
+  pdf: false, q: "", qv: false, inst: new Set(), forf: new Set(), fland: new Set(), stad: new Set(), par: null,
   kanon: new Set(), siterer: null, term: new Set(), lik: null, omr: null,
 });
 
@@ -61,7 +61,15 @@ export async function sikre(namn) {
   if (forberedde.has(namn)) return { ok: true };
   const r = await data.last(namn, { hoy: namn === "lenker.json" });
   if (!r.ok) return r;
-  if (!forberedde.has(namn)) { forbered(namn, r.data); forberedde.add(namn); }
+  if (!forberedde.has(namn)) {
+    // a broken file (odd length, wrong shape) is a failed file, not an endless "Lastar"
+    try { forbered(namn, r.data); } catch (e) {
+      console.error(`Utforsk: ${namn} kunne ikkje lesast`, e);
+      data.merkFeil(namn);
+      return { ok: false, feil: namn };
+    }
+    forberedde.add(namn);
+  }
   return { ok: true };
 }
 export const harFil = (namn) => forberedde.has(namn);
@@ -88,6 +96,10 @@ function forbered(namn, x) {
     D.nSitert = Int32Array.from(x.n_sitert);
     D.m = x.kjelder.k.length;
     D.kjeldeIdx = new Map(x.kjelder.k.map((k, j) => [k, n + j]));
+    // unique labels for the nodes of the co-citation map (two different works can share
+    // "Schön 1992" as surname and year; the builder makes the map labels unique)
+    D.kartMerk = new Map();
+    if (x.kart && x.kart.merkelapp) x.kart.noder.forEach((v, p) => D.kartMerk.set(v, x.kart.merkelapp[p]));
   } else if (namn === "tid.json") {
     D.tidd = x;
     D.termIdx = new Map(x.termar.k.map((k, t) => [k, t]));
@@ -110,6 +122,7 @@ export function nodeTittel(v) {
   return v < D.n ? D.kol.tittel[v] : D.sitd.kjelder.tittel[v - D.n];
 }
 export function merkelapp(v) {
+  if (D.kartMerk && D.kartMerk.has(v)) return D.kartMerk.get(v);
   if (v >= D.n) return D.sitd.kjelder.merkelapp[v - D.n];
   const f = D.kol.forf[v];
   const nm = f.length ? D.verk.forfattarar[f[0]].namn : "";
@@ -178,10 +191,17 @@ function qMaske(q) {
   const tal = new Uint8Array(n), stempel = new Int32Array(n).fill(-1);
   tokens.forEach((t, r) => prefiksTreff(t.p, stempel, tal, r));
   const T = tokens.length;
-  let c = 0;
-  for (let i = 0; i < n; i++) if (tal[i] === T) { M[i] = 1; c++; }
-  if (c < 10 && T > 1) {
-    const min = Math.max(1, T - 1);
+  let c = 0, minst1 = 0;
+  for (let i = 0; i < n; i++) { if (tal[i] === T) { M[i] = 1; c++; } if (tal[i] > 0) minst1++; }
+  sokInfo.streng = c; sokInfo.minst1 = minst1; sokInfo.vid = false;
+  if (T > 1 && S.f.qv) {
+    // the reader chose "at least one of the words"
+    for (let i = 0; i < n; i++) M[i] = tal[i] > 0 ? 1 : 0;
+    sokInfo.vid = true;
+  } else if (c < 10 && T > 2) {
+    // three or more words: relax to all but one (amendment 1); two words are never relaxed by
+    // default, since "at least 1 of 2" would picture the common word, not the topic
+    const min = T - 1;
     for (let i = 0; i < n; i++) M[i] = tal[i] >= min ? 1 : 0;
     sokInfo.delvis = true;
   }
@@ -433,7 +453,7 @@ function zFor(vis) {
 }
 export function lagHash() {
   const p = [];
-  for (const d of DIMS) { const t = dimTekst(d); if (t) p.push(`${d}=${t}`); }
+  for (const d of DIMS) { const t = dimTekst(d); if (t) p.push(`${d}=${t}`); if (d === "q" && t && S.f.qv) p.push("qv=1"); }
   if (S.verk) p.push(`verk=${encodeURIComponent(S.verk)}`);
   // view settings go in the link only for the view on screen, so links stay short
   const v = S.vis;
@@ -488,6 +508,7 @@ export function lesHash(hash) {
       case "term": f.term = new Set(liste().map(termNokkel).filter(Boolean)); break;
       case "pdf": f.pdf = v === "1"; break;
       case "q": f.q = v.slice(0, 200); break;
+      case "qv": f.qv = v === "1"; break;
       case "par": { const a = raw.split("~").map((x) => decodeURIComponent(x)); if (a.length === 2 && a.every((x) => ID_RE.test(x))) f.par = a; else ugyldig(k, v); break; }
       case "siterer": { const m = /^(kgr|land|tiar):([A-Za-z0-9_]+)$/.exec(v); if (m) f.siterer = { modus: m[1], nokkel: m[2] }; else ugyldig(k, v); break; }
       case "lik": if (ID_RE.test(v)) f.lik = v; else ugyldig(k, v); break;
@@ -553,6 +574,7 @@ export function avsluttGest(key) { if (!key || sisteGest === key) sisteGest = nu
 function bilete() {
   const f = {};
   for (const d of DIMS) f[d] = dimTekst(d);
+  if (S.f.qv && S.f.q) f.q += "|v";
   return { vis: S.vis, verk: S.verk, f, v: VIS_NOKLAR(), sort: S.sort };
 }
 
@@ -562,6 +584,7 @@ export function endre(fn, { hist = "push", utsett = 0 } = {}) {
   fn(S);
   // normalise
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
+  if (!S.f.q) S.f.qv = false;
   const etter = bilete();
   const dims = DIMS.filter((d) => for_.f[d] !== etter.f[d]);
   const visning = new Set(Object.keys(etter.v).filter((k) => for_.v[k] !== etter.v[k]));
@@ -573,9 +596,16 @@ export function endre(fn, { hist = "push", utsett = 0 } = {}) {
   if (e.filter || e.vis || e.verk || visning.size || e.sort) meld(e);
   if (hist === "ingen") return e;
   clearTimeout(urlTid);
-  if (utsett) { urlModus = hist; urlTid = setTimeout(() => skrivUrl(urlModus), utsett); }
-  else skrivUrl(hist);
+  if (utsett) { urlModus = hist; urlTid = setTimeout(() => { urlTid = 0; skrivUrl(urlModus); }, utsett); }
+  else { urlTid = 0; skrivUrl(hist); }
   return e;
+}
+// Write a pending delayed URL now (before the link is copied).
+export function skrivUrlNo() {
+  if (urlTid) { clearTimeout(urlTid); urlTid = 0; skrivUrl(urlModus); }
+  clearTimeout(zTid);
+  const h = lagHash();
+  if (h !== location.hash) history.replaceState(null, "", h);
 }
 
 // Zoom of a view: always replaceState in the current entry, no notification.
@@ -620,6 +650,8 @@ export function fraUrl({ start = false } = {}) {
   const p = lesHash(location.hash);
   navToken++;
   sisteGest = null;
+  // a pending delayed write (typing) belongs to the entry we are leaving
+  clearTimeout(urlTid); urlTid = 0;
   bruk(p, start);
   // validate keys that need verk.json
   const f = S.f, sjekk = (d, map) => { for (const x of [...f[d]]) if (!map.has(x)) { f[d].delete(x); ugyldig(d, x); } };
@@ -630,6 +662,7 @@ export function fraUrl({ start = false } = {}) {
   if (f.lik && !D.idx.has(f.lik)) { ugyldig("lik", f.lik); f.lik = null; }
   if (D.termIdx) for (const k of [...f.term]) if (!D.termIdx.has(k)) { f.term.delete(k); ugyldig("term", k); }
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
+  if (!f.q) f.qv = false;
   if (f.q && !sok) byggSok();
   rekn(DIMS);
   for (const d of aktiveDims()) if (LAT[d] && dimStatus(d) !== "ok") lastDim(d);
@@ -658,7 +691,7 @@ export function fjern(d, key) {
     const v = s.f[d];
     if (v instanceof Set) { if (key != null) v.delete(key); else v.clear(); }
     else if (d === "pdf") s.f.pdf = false;
-    else if (d === "q") s.f.q = "";
+    else if (d === "q") { s.f.q = ""; s.f.qv = false; }
     else s.f[d] = null;
   });
 }
@@ -702,7 +735,7 @@ export function chipar() {
   for (const k of f.type) leggTil("type", k, `Type: ${v.typar[D.typeIdx.get(k)].namn}`);
   for (const k of f.lag) leggTil("lag", k, `Lag: ${k === "arkiv" ? "Arkiv" : "OpenAlex"}`);
   if (f.pdf) leggTil("pdf", null, "Berre open PDF");
-  if (f.q) leggTil("q", null, `Søk: «${kutt(f.q, 30)}»`);
+  if (f.q) leggTil("q", null, `Søk: «${kutt(f.q, 30)}»${f.qv && sokInfo.tokens.length > 1 ? " (minst eitt av orda)" : ""}`);
   for (const k of f.inst) leggTil("inst", k, `Institusjon: ${kutt(v.institusjonar[D.instIdx.get(k)].namn, 40)}`);
   for (const k of f.forf) leggTil("forf", k, `Forfattar: ${v.forfattarar[D.forfIdx.get(k)].namn}`);
   for (const k of f.fland) leggTil("fland", k, `Forfattarland: ${landNamn(k)}`);

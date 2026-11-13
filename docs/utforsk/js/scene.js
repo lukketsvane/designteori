@@ -1,7 +1,7 @@
 // Canvas scene shared by Kart, Nett, Verda and the Siteringar map: base and overlay
 // canvas with dpr, d3.zoom, pointer and touch rules, tooltip and pinned card,
 // lasso, keyboard pan/zoom, focus-ring cycling, zoom buttons.
-import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=21";
+import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=23";
 
 const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
 
@@ -71,8 +71,12 @@ export function lagScene(flate, o) {
   function malDekka() {
     const r = flate.getBoundingClientRect();
     const ut = [];
-    for (const e of flate.querySelectorAll(":scope > .teikn-wrap, :scope > .sidepanel:not([hidden]), :scope > .verktoy, :scope > .zoomknappar, :scope > .invitasjon:not([hidden])")) {
+    const els = [...flate.querySelectorAll(":scope > .teikn-wrap, :scope > .sidepanel:not([hidden]), :scope > .verktoy, :scope > .zoomknappar, :scope > .invitasjon:not([hidden])")];
+    // panels that float over this drawing from outside its own box (Siteringar's ranked list)
+    if (o.dekkaEkstra) for (const e of o.dekkaEkstra()) if (e && !e.hidden) els.push(e);
+    for (const e of els) {
       const b = e.getBoundingClientRect();
+      if (b.right <= r.left || b.left >= r.right || b.bottom <= r.top || b.top >= r.bottom) continue;
       if (!b.width || !b.height) continue;
       ut.push({ x0: b.left - r.left - 4, y0: b.top - r.top - 4, x1: b.right - r.left + 4, y1: b.bottom - r.top + 4, kind: e.classList.contains("teikn-wrap") ? "teikn" : e.classList.contains("sidepanel") ? "panel" : "verktoy" });
     }
@@ -91,30 +95,47 @@ export function lagScene(flate, o) {
     // keep the reader's zoom; the home view (identity) refits to the new size and panels
     const heime = Math.abs(sc.t.k - 1) < 1e-3 && Math.abs(sc.t.x) < 0.5 && Math.abs(sc.t.y) < 0.5;
     const z = sc.w > 1 && !heime ? zNo() : null;
-    sc.w = w; sc.h = h; sc.dpr = DPR();
+    const dpr = DPR();
+    // reallocate the canvases only when the size changed (a filter change must not pay for it)
+    if (w !== sc.w || h !== sc.h || dpr !== sc.dpr) {
+      sc.w = w; sc.h = h; sc.dpr = dpr;
+      for (const c of [base, over]) {
+        c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+        c.style.width = `${w}px`; c.style.height = `${h}px`;
+      }
+    }
     // mark sizes are tuned for a drawing about 860 px across; smaller drawings get smaller marks
     sc.rf = Math.max(0.5, Math.min(1, Math.min(w, h) / 860));
-    for (const c of [base, over]) {
-      c.width = Math.round(w * sc.dpr); c.height = Math.round(h * sc.dpr);
-      c.style.width = `${w}px`; c.style.height = `${h}px`;
-    }
     const m = o.marg != null ? o.marg : 0.04;
     // the home view fits o.heim() (a box in world units) or the whole world
     const hb = o.heim ? o.heim() : [0, 0, VW, VH];
     const bw = Math.max(1, hb[2] - hb[0]), bh = Math.max(1, hb[3] - hb[1]);
-    // A floating legend on the left and a side panel on the right take their width from the
-    // home view: the drawing is fitted to the space between them (when that leaves at least
-    // 40 % of the width), so no mark or label of the home view sits under them.
+    // The home view is fitted to the free area: a side panel on the right takes its width,
+    // and the floating legend (lower left) takes either its width or its height, whichever
+    // leaves the larger drawing. The zoom buttons and toolbars are small and are not counted.
     const dk = malDekka();
-    const padL = Math.max(0, ...dk.filter((b) => b.kind === "teikn").map((b) => b.x1 + 8));
-    const padR = Math.max(0, ...dk.filter((b) => b.kind === "panel").map((b) => w - b.x0 + 8));
-    let l = 0, rr = 0;
-    if (w - padL - padR >= w * 0.4) { l = padL; rr = padR; }
-    else if (w - padR >= w * 0.5) rr = padR;
-    else if (w - padL >= w * 0.5) l = padL;
-    const fw = w - l - rr;
-    sc.s0 = Math.min(fw / bw, h / bh) * (1 - 2 * m);
-    sc.ox = l + (fw - bw * sc.s0) / 2 - hb[0] * sc.s0; sc.oy = (h - bh * sc.s0) / 2 - hb[1] * sc.s0;
+    // a tall panel on the right takes width; a box resting on the bottom (the legend, or a
+    // ranked list docked at the bottom on a phone) takes height; the legend may take width
+    const hogre = dk.filter((b) => b.kind === "panel" && b.x0 > w * 0.4 && b.y1 - b.y0 > h * 0.3);
+    const botn = dk.filter((b) => b.kind !== "verktoy" && b.y1 >= h - 30 && !hogre.includes(b));
+    const forkl = dk.filter((b) => b.kind === "teikn");
+    const padR = Math.max(0, ...hogre.map((b) => w - b.x0 + 8));
+    const padL = Math.max(0, ...forkl.map((b) => b.x1 + 8));
+    const padB = Math.max(0, ...botn.map((b) => h - b.y0 + 4));
+    const padT = Math.max(0, ...dk.filter((b) => b.kind === "verktoy" && b.x0 < w * 0.5).map((b) => b.y1 + 4));
+    const val = [];
+    const prov = (l, rr, t, bt) => { const fw = w - l - rr, fh = h - t - bt; if (fw > 80 && fh > 80) val.push({ l, rr, t, bt, s: Math.min(fw / bw, fh / bh) }); };
+    prov(padL, padR, 0, 0);
+    prov(0, padR, 0, padB);
+    prov(0, padR, padT, padB);
+    prov(0, padR, 0, 0);
+    prov(0, 0, 0, 0);
+    // prefer a fit that leaves every control clear, unless it costs more than 45 % of the scale
+    const best = val.reduce((a, b) => (b.s > a.s ? b : a), val[val.length - 1]);
+    const klar = val.slice(0, 3).filter((v) => v.s >= best.s * 0.55).sort((a, b) => b.s - a.s)[0] || best;
+    const fw = w - klar.l - klar.rr, fh = h - klar.t - klar.bt;
+    sc.s0 = Math.min(fw / bw, fh / bh) * (1 - 2 * m);
+    sc.ox = klar.l + (fw - bw * sc.s0) / 2 - hb[0] * sc.s0; sc.oy = klar.t + (fh - bh * sc.s0) / 2 - hb[1] * sc.s0;
     zoom.extent([[0, 0], [w, h]]).translateExtent(o.fri ? [[-Infinity, -Infinity], [Infinity, Infinity]] : [[-w * 2, -h * 2], [w * 3, h * 3]]);
     if (z) settZ(z, 0, true); else { oppdaterSc(); }
     teikn();
@@ -208,6 +229,9 @@ export function lagScene(flate, o) {
   });
   over.addEventListener("pointerdown", (ev) => {
     sistePeikar = ev.pointerType || "mouse";
+    // a primary pointer means no other pointer is down: forget ids whose release we never saw
+    // (a mouse button released outside the canvas), so later touches are not "second fingers"
+    if (ev.isPrimary) { peikarar.clear(); suspendert = false; }
     peikarar.add(ev.pointerId);
     if (o.stopp) o.stopp();
     if (lasso && peikarar.size > 1) { avbrytLasso(); suspendert = true; return; }
@@ -219,6 +243,9 @@ export function lagScene(flate, o) {
     if (!peikarar.size) suspendert = false;
   };
   over.addEventListener("pointerup", opp);
+  // releases outside the canvas (the mouse is not captured) still end the press
+  window.addEventListener("pointerup", (ev) => { if (peikarar.has(ev.pointerId) && ev.target !== over) opp(ev); });
+  over.addEventListener("lostpointercapture", (ev) => { if (lasso && ev.pointerId === lasso.id) avbrytLasso(); peikarar.delete(ev.pointerId); if (!peikarar.size) suspendert = false; });
   over.addEventListener("pointercancel", (ev) => { peikarar.delete(ev.pointerId); if (lasso && ev.pointerId === lasso.id) avbrytLasso(); if (!peikarar.size) suspendert = false; });
   over.addEventListener("click", (ev) => {
     if (lassoNettoFerdig) { lassoNettoFerdig = false; return; }

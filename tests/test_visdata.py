@@ -135,7 +135,7 @@ class TestVerk(unittest.TestCase):
         self.assertTrue(all(0 <= t < len(v["tema"]) for t in k["tema"]))
         self.assertTrue(all(0 <= t < len(v["undertema"]) for t in k["undertema"]))
         self.assertTrue(all(p in (0, 1, 2, 3) for p in k["pdf"]))
-        self.assertTrue(all(0 <= m <= 3 for m in k["merk"]))
+        self.assertTrue(all(0 <= m <= 7 for m in k["merk"]))
         for i in range(N):
             self.assertEqual(k["lag"][i] == 1, k["sit"][i] == -1, i)
             self.assertEqual(v["undertema"][k["undertema"][i]]["tema"], k["tema"][i], i)
@@ -210,8 +210,9 @@ class TestVerk(unittest.TestCase):
             telt[t] += 1
         self.assertEqual(telt, [t["n"] for t in v["tema"]])
         self.assertEqual(telt, sorted(telt, reverse=True))
-        for t in v["tema"]:
-            self.assertIn(t["k"], idx["presets"])
+        for j, t in enumerate(v["tema"]):
+            self.assertEqual(t["k"], f"t{j}")
+            self.assertIn(t["preset"], idx["presets"])
             self.assertEqual(len(t["sentroide"]), idx["dimensions"])
             self.assertTrue(0 <= t["lx"] <= 10000 and 0 <= t["ly"] <= 10000)
             self.assertTrue(1 <= len(t["ord"]) <= 5)

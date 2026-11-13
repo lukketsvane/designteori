@@ -1,22 +1,22 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=21";
-import * as data from "./data.js?v=21";
-import * as T from "./tilstand.js?v=21";
-import * as filterlinje from "./filterlinje.js?v=21";
-import * as liste from "./liste.js?v=21";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=21";
-import { initMaal } from "./maal.js?v=21";
+import * as hjelp from "./hjelp.js?v=23";
+import * as data from "./data.js?v=23";
+import * as T from "./tilstand.js?v=23";
+import * as filterlinje from "./filterlinje.js?v=23";
+import * as liste from "./liste.js?v=23";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=23";
+import { initMaal } from "./maal.js?v=23";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=21"),
-  nett: () => import("./visningar/nett.js?v=21"),
-  verda: () => import("./visningar/verda.js?v=21"),
-  siteringar: () => import("./visningar/siteringar.js?v=21"),
-  tid: () => import("./visningar/tid.js?v=21"),
+  kart: () => import("./visningar/kart.js?v=23"),
+  nett: () => import("./visningar/nett.js?v=23"),
+  verda: () => import("./visningar/verda.js?v=23"),
+  siteringar: () => import("./visningar/siteringar.js?v=23"),
+  tid: () => import("./visningar/tid.js?v=23"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}
@@ -85,6 +85,7 @@ function feil(id, e) {
   const v = visingar[id];
   const k = `${id}:${e && e.message}`;
   if (!errLogga.has(k)) { errLogga.add(k); console.error(`Utforsk (${id}):`, e); }
+  if (v) v.feilMelding = true;
   if (v && v.ramme) hjelp.visMelding(v.ramme, { tittel: `Kunne ikkje teikne ${NAMN[id]}.`, knapp: { tekst: "Prøv igjen", gjer: () => {
     hjelp.visMelding(v.ramme, null);
     if (v.klar) oppdaterVis(id, alleEndringar());
@@ -97,6 +98,8 @@ function oppdaterVis(id, e) {
   const v = visingar[id];
   if (!v || !v.klar) return;
   const t0 = performance.now();
+  // a "could not draw" banner from an earlier failure goes once the view draws again
+  if (v.feilMelding) { v.feilMelding = false; hjelp.visMelding(v.ramme, null); }
   try {
     const p = v.mod.oppdater(S, e);
     if (p && typeof p.catch === "function") p.catch((err) => feil(id, err));
@@ -198,12 +201,24 @@ const api = (id) => ({
   feil: (e) => feil(id, e),
 });
 
+let merktBrukt = false;
 function vedEndring(s, e) {
+  if (!merktBrukt && e.filter && !e.popstate) { merktBrukt = true; try { localStorage.setItem("utforsk.brukt", "1"); } catch (err) { /* storage blocked */ } }
   if (e.filter || e.vis || e.verk || e.sort || e.popstate) filterlinje.oppdater(e);
   liste.oppdater(s, e);
-  if (e.vis) { settFane(s.vis); visVis(s.vis); }
+  // below 900 px a new tab or a new selection drops the sheet to its handle, so the picture
+  // the reader asked for is not hidden under half a screen of list
+  if (smal() && (e.vis || (e.filter && !e.popstate)) && liste.arkStatus() === "halv" && !e.verk) liste.settArk("peek");
+  else if (smal() && e.vis && liste.arkStatus() !== "peek") liste.settArk("peek");
+  if (e.vis) {
+    settFane(s.vis);
+    // the view that comes into sight is drawn once, by visVis, with every change
+    const ny = visingar[s.vis];
+    if (ny) ny.skitten = true;
+    visVis(s.vis);
+  }
   for (const [id, v] of Object.entries(visingar)) {
-    if (id === s.vis && !v.el.hidden) { if (!e.vis || !v.skitten) oppdaterVis(id, e); }
+    if (id === s.vis) { if (!e.vis && !v.el.hidden) oppdaterVis(id, e); }
     else v.skitten = true;
   }
 }
@@ -236,6 +251,7 @@ document.getElementById("hopp").addEventListener("click", () => { if (smal()) li
 // ---------- copy link ----------
 const kopier = document.getElementById("kopier");
 kopier.addEventListener("click", async () => {
+  T.skrivUrlNo();
   try { await navigator.clipboard.writeText(location.href); } catch (e) {
     const t = document.createElement("textarea"); t.value = location.href; document.body.appendChild(t); t.select();
     try { document.execCommand("copy"); } catch (e2) { /* ignore */ } t.remove();

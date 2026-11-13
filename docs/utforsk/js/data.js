@@ -11,11 +11,15 @@ try {
 export const DATA = BASE;
 
 let manifest = null;
+const ferdige = new Map();
 const lova = new Map();   // name -> Promise<{ok, data, feil}>
 const status = new Map(); // name -> "lastar" | "ok" | "feil"
 const lyttarar = new Set();
 
 export const filStatus = (namn) => status.get(namn);
+// A file that arrived but could not be read counts as failed; "Prøv igjen" fetches it anew.
+export function merkFeil(namn) { status.set(namn, "feil"); lova.delete(namn); ferdige.delete(namn); melde(namn); }
+const TIDSGRENSE = 45000;
 export const paStatus = (fn) => { lyttarar.add(fn); return () => lyttarar.delete(fn); };
 const melde = (namn) => { for (const fn of lyttarar) { try { fn(namn, status.get(namn)); } catch (e) { console.error(e); } } };
 
@@ -43,9 +47,16 @@ export function hent(namn, { bin = namn.endsWith(".bin"), hoy = false } = {}) {
   melde(namn);
   const p = (async () => {
     try {
-      const r = await fetch(url(namn), hoy ? { priority: "high" } : {});
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const data = bin ? await r.arrayBuffer() : await r.json();
+      // a hung request ends as a failure with "Prøv igjen", not as "Lastar" for ever
+      const ctl = typeof AbortController === "function" ? new AbortController() : null;
+      const tid = ctl ? setTimeout(() => ctl.abort(), TIDSGRENSE) : 0;
+      const opt = { ...(hoy ? { priority: "high" } : {}), ...(ctl ? { signal: ctl.signal } : {}) };
+      let data;
+      try {
+        const r = await fetch(url(namn), opt);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        data = bin ? await r.arrayBuffer() : await r.json();
+      } finally { clearTimeout(tid); }
       status.set(namn, "ok");
       melde(namn);
       return { ok: true, data };
@@ -61,7 +72,6 @@ export function hent(namn, { bin = namn.endsWith(".bin"), hoy = false } = {}) {
 }
 
 // Synchronous access to a file that has loaded (or undefined).
-const ferdige = new Map();
 export async function last(namn, opt) {
   if (ferdige.has(namn)) return { ok: true, data: ferdige.get(namn) };
   const r = await hent(namn, opt);
@@ -87,7 +97,8 @@ export function lastSkript(namn) {
     el.src = s.src;
     el.integrity = s.sri;
     el.crossOrigin = "anonymous";
-    el.onload = () => res(s.sjekk() ? { ok: true } : { ok: false, feil: namn });
+    // loaded but not usable: forget it, so "Prøv igjen" can load it again
+    el.onload = () => { if (s.sjekk()) res({ ok: true }); else { el.remove(); skriptLova.delete(namn); res({ ok: false, feil: namn }); } };
     el.onerror = () => { el.remove(); skriptLova.delete(namn); res({ ok: false, feil: namn }); };
     document.head.appendChild(el);
   });

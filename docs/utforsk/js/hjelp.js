@@ -138,13 +138,23 @@ export function annonserMerke(tekst) {
 const tipEl = () => document.getElementById("tooltip");
 export const tooltip = {
   synleg: false,
+  _html: null,
+  _raf: 0,
+  _pos: null,
+  // The same content is only moved (no rebuild); moves are batched to one per frame.
   vis(html, cx, cy) {
     const el = tipEl();
     if (!el) return;
-    el.innerHTML = html;
-    el.hidden = false;
-    this.synleg = true;
-    this.flytt(cx, cy);
+    if (html !== this._html || el.hidden) {
+      el.innerHTML = html;
+      this._html = html;
+      el.hidden = false;
+      this.synleg = true;
+      this.flytt(cx, cy);
+      return;
+    }
+    this._pos = [cx, cy];
+    if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; if (this._pos) this.flytt(this._pos[0], this._pos[1]); });
   },
   flytt(cx, cy) {
     const el = tipEl();
@@ -162,6 +172,8 @@ export const tooltip = {
     const el = tipEl();
     if (el && !el.hidden) { el.hidden = true; el.innerHTML = ""; }
     this.synleg = false;
+    this._html = null;
+    this._pos = null;
   },
 };
 
@@ -270,6 +282,9 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], blokk = []
     for (const k of liste) (forrige.has(k.id) ? a : b).push(k);
     liste = a.concat(b);
   }
+  // a candidate marked forst (the open work) is always placed first
+  const forst = liste.filter((k) => k.forst);
+  if (forst.length) liste = forst.concat(liste.filter((k) => !k.forst));
   liste = liste.slice(0, maks);
   const ut = [];
   for (const k of liste) {
@@ -294,7 +309,7 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], blokk = []
       if (b.x0 < 0 || b.x1 > w || b.y0 < 0 || b.y1 > h) continue;
       if (kolliderer(b, k.id, k.rang)) continue;
       leggTil(b);
-      ut.push({ id: k.id, x: v.x, y: v.y, w: tw, h: th, tekst: k.tekst, font: k.font, align: v.align, pos: v.pos, farge: k.farge, boks: b, data: k.data, bakgrunn: !!k.sentrert });
+      ut.push({ id: k.id, x: v.x, y: v.y, w: tw, h: th, tekst: k.tekst, font: k.font, align: v.align, pos: v.pos, farge: k.farge, boks: b, data: k.data, bakgrunn: !!k.sentrert || !!k.forst });
       break;
     }
   }
@@ -381,7 +396,9 @@ export function lagRamme(el, { kontrollTekst } = {}) {
   // On wide screens the legend of a canvas view floats over the drawing area, so the
   // drawing gets the height; below 900 px it sits under the line behind "Forklaring".
   let flyt = false, flytOpe = null, flytMal = null;
-  try { const v = localStorage.getItem("utforsk.forklaring"); if (v) flytOpe = v !== "lukka"; } catch (e) { /* storage blocked */ }
+  let kjend = false; // a reader who has used the page before starts with the legend folded
+  try { const v = localStorage.getItem("utforsk.forklaring"); if (v) flytOpe = v !== "lukka"; kjend = !!localStorage.getItem("utforsk.brukt"); } catch (e) { /* storage blocked */ }
+  if (flytOpe == null && kjend) flytOpe = false;
   const bruk = () => {
     const f = flyt && !smal();
     const mal = flytMal || r.flate;
@@ -418,15 +435,31 @@ const FOKUSERBAR = "button, a[href], input, select, [tabindex]";
 export function bevarFokus(boks, fn) {
   const a = document.activeElement;
   let key = null;
-  if (a && a !== boks && boks.contains(a)) key = { tag: a.tagName, data: { ...a.dataset }, idx: [...boks.querySelectorAll(FOKUSERBAR)].indexOf(a) };
+  if (a && a !== boks && boks.contains(a)) {
+    key = { tag: a.tagName, data: { ...a.dataset }, verdi: a.tagName === "INPUT" && a.type === "checkbox" ? a.value : null, cls: a.className, idx: [...boks.querySelectorAll(FOKUSERBAR)].indexOf(a) };
+    if (a.tagName === "INPUT" && a.type !== "checkbox") { key.tekst = a.value; key.sel = [a.selectionStart, a.selectionEnd]; }
+  }
   fn();
   if (!key || boks.contains(document.activeElement)) return;
   const alle = [...boks.querySelectorAll(FOKUSERBAR)].filter((e) => !e.hidden && e.tabIndex >= 0);
   const dk = Object.entries(key.data);
-  const lik = dk.length ? alle.find((e) => e.tagName === key.tag && dk.every(([k, v]) => e.dataset[k] === v)) : null;
+  const lik = alle.find((e) => e.tagName === key.tag && (dk.length || key.verdi != null || key.tekst != null)
+    && dk.every(([k, v]) => e.dataset[k] === v)
+    && (key.verdi == null || e.value === key.verdi)
+    && (key.tekst == null || e.className === key.cls));
   const m = lik || alle[Math.max(0, Math.min(key.idx, alle.length - 1))];
-  if (m) m.focus({ preventScroll: true });
-  else { if (!boks.hasAttribute("tabindex")) boks.setAttribute("tabindex", "-1"); boks.focus({ preventScroll: true }); }
+  if (m) {
+    m.focus({ preventScroll: true });
+    if (key.tekst != null && m === lik) { try { m.setSelectionRange(key.sel[0], key.sel[1]); } catch (e) { /* not a text field */ } }
+  } else { if (!boks.hasAttribute("tabindex")) boks.setAttribute("tabindex", "-1"); boks.focus({ preventScroll: true }); }
+}
+// Replace a box's content only when it changed, keeping keyboard focus (amendment: focus is
+// never dropped to the body when a control rebuilds its own box).
+export function settInnhald(boks, html) {
+  if (!boks) return;
+  if (boks._html === html) return;
+  boks._html = html;
+  bevarFokus(boks, () => { boks.innerHTML = html; });
 }
 
 // Message overlay in a frame: {tittel, tekst, knapp: {tekst, gjer}}; null clears.

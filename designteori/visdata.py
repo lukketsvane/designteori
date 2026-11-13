@@ -41,11 +41,16 @@ from . import DOCS_DATA_DIR, RAW_SQLITE, normalize_doi, now_iso, read_json
 from .pdf import allowed_url, safe_public_link
 
 VIS_DIR = DOCS_DATA_DIR / "vis"
-NOTATMAPPE = Path("C:/Users/Iver/Documents/github/FORML-RE/.claude/arbeidsflyt-20261112/steg9-utforsk")
+# Notes folder (spring buffer, t-SNE checkpoint, reports): outside the repository, given with
+# --notatmappe or the environment variable UTFORSK_NOTATMAPPE; without it the build keeps no notes.
+NOTATMAPPE = Path(os.environ["UTFORSK_NOTATMAPPE"]) if os.environ.get("UTFORSK_NOTATMAPPE") else None
 N_FORVENTA = 6432
 KART_STORLEIK = 10000
 MIN_VERK_NETT = 2
 GENERERT = None  # set in main()
+# Without --generert the files are built with this placeholder; skriv_alle then keeps the old
+# timestamp when no byte changed (a rebuild of the same input gives the same files and ?v=).
+PLASSHALDAR = "@@GENERERT@@"
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -236,8 +241,16 @@ def kort_hash(s: str, n: int) -> str:
     return hashlib.sha1(s.encode("utf-8")).hexdigest()[:n]
 
 
+def kanal_fold(namn: str) -> str:
+    """Folded venue name for merging spellings: "The Artifact" and "Artifact", "&" and "and",
+    commas and an ellipsis ("Proceedings of the ... International Conference") make no difference."""
+    f = fold(namn).replace("&", " and ").replace("…", " ").replace("...", " ").replace(",", " ")
+    f = " ".join(f.split())
+    return f[4:] if f.startswith("the ") else f
+
+
 def kanal_nokkel(namn: str) -> str:
-    return "k" + kort_hash(fold(namn), 8)
+    return "k" + kort_hash(kanal_fold(namn), 8)
 
 
 def kanal_gruppe(namn: str) -> int:
@@ -405,7 +418,7 @@ def les_korpus(db: sqlite3.Connection, indeks_sti: Path) -> Ns:
     kanal_n = collections.Counter()
     kanal_per_verk_fold: list[str] = []
     for nm in kanal_namn_per_verk:
-        f = fold(nm)
+        f = kanal_fold(nm)
         if not f or f in UKJENT_KANALNAMN:
             kanal_per_verk_fold.append("")
             continue
@@ -478,6 +491,7 @@ def bygg_ordbokar(K: Ns, kanon_land: set[str]) -> None:
     forf_idx: dict[str, int] = {}
     forf_lst: list[dict] = []
     forf_kol: list[list[int]] = []
+    skrivemaatar: dict[int, collections.Counter] = collections.defaultdict(collections.Counter)
     for i in range(n):
         rad = []
         for k, nm in K.forf_per_verk[i]:
@@ -486,9 +500,17 @@ def bygg_ordbokar(K: Ns, kanon_land: set[str]) -> None:
                 j = len(forf_lst)
                 forf_idx[k] = j
                 forf_lst.append({"k": k, "namn": nm})
+            skrivemaatar[j][nm] += 1
             if j not in rad:
                 rad.append(j)
         forf_kol.append(rad)
+    # one author id can be written with and without diacritics in different works
+    # ("Kristina Lindstrom" and "Kristina Lindström"): show the spelling that keeps its
+    # diacritics (as publications.json has it), then the most common, then the first seen
+    for j, c in skrivemaatar.items():
+        if len(c) > 1:
+            forste = forf_lst[j]["namn"]
+            forf_lst[j]["namn"] = max(c, key=lambda nm: (sum(1 for ch in nm if ord(ch) > 127), c[nm], nm == forste))
     # institusjonar
     inst_ids = sorted(K.inst_verk, key=lambda x: (-len(K.inst_verk[x]), x))
     stor = inst_ids[:STORE_INSTITUSJONAR]
@@ -571,6 +593,55 @@ def bygg_lenker(K: Ns) -> dict:
     if nedgradert:
         logg(f"ADVARSEL: {nedgradert} stadfesta PDF-ar fall gjennom allowed_url/safe_public_link")
     return {"status": status, "pdf": pdf_url, "doi": doi, "kjelde": kjelde, "teljar": teljar}
+
+
+def merk_dublettar(K: Ns) -> int:
+    """Bit 4 in `merk`: the same paper is already in the corpus under another id. Found by a
+    shared verified PDF address, a shared DOI, or the same title with years at most 2 apart and
+    a shared author surname. The first work of a group (OpenAlex before archive) is not marked."""
+    def etternamn(nm: str) -> str:
+        nm = nm.strip()
+        return fold(nm.split(",")[0] if "," in nm else (nm.split() or [""])[-1])
+    tittel = [re.sub(r"[^0-9a-z]+", "", fold(str(r.get("title") or ""))) for r in K.pub + K.arkiv]
+    namn = [{etternamn(nm) for _, nm in K.forf_per_verk[i]} - {""} for i in range(K.n)]
+    foreldre = list(range(K.n))
+
+    def rot(a):
+        while foreldre[a] != a:
+            foreldre[a] = foreldre[foreldre[a]]
+            a = foreldre[a]
+        return a
+
+    def slaa(a, b):
+        a, b = rot(a), rot(b)
+        if a != b:
+            foreldre[max(a, b)] = min(a, b)
+
+    for nokkel_av in (lambda i: K.lenker["pdf"][i] if K.lenker["status"][i] == 0 else "", lambda i: K.lenker["doi"][i].lower()):
+        sett: dict[str, int] = {}
+        for i in range(K.n):
+            k = nokkel_av(i)
+            if k:
+                if k in sett:
+                    slaa(sett[k], i)
+                else:
+                    sett[k] = i
+    per_tittel = collections.defaultdict(list)
+    for i, t in enumerate(tittel):
+        if len(t) >= 20:
+            per_tittel[t].append(i)
+    for gruppe in per_tittel.values():
+        for x in range(len(gruppe)):
+            for y in range(x + 1, len(gruppe)):
+                a, b = gruppe[x], gruppe[y]
+                if abs(K.ar[a] - K.ar[b]) <= 2 and namn[a] & namn[b]:
+                    slaa(a, b)
+    n = 0
+    for i in range(K.n):
+        if rot(i) != i:
+            K.merk[i] |= 4
+            n += 1
+    return n
 
 
 # ---------------------------------------------------------------------------
@@ -762,7 +833,9 @@ def bygg_tema(V: np.ndarray, indeks: dict, T: Ns, seed: int = 42) -> Ns:
         key = nokklar[b]
         namn = TEMA_NAMN_OVERSTYRING.get(key, PRESET_NAMN.get(key, key))
         ord_ = vel_ord(skår[:, j], M[:, j], T, 5)
-        tema_lst.append({"k": key, "namn": namn, "ord": ord_, "n": int((tema == j).sum()),
+        # neutral keys in links (tema=t3): the preset a cluster is matched to is often another
+        # subject than its name says, and the main page uses the preset keys for its own themes
+        tema_lst.append({"k": f"t{j}", "preset": key, "namn": namn, "ord": ord_, "n": int((tema == j).sum()),
                          "sentroide": [round(float(x), 4) for x in senter[j]], "_cos": c,
                          "_auto": PRESET_NAMN.get(key, key)})
     # sub-themes
@@ -941,11 +1014,9 @@ def lagre_spring_buffer() -> None:
     """Keep finished spring layouts on disk so that a crash later in the build does not cost minutes again."""
     if SPRING_BUFFER_STI is None:
         return
-    import pickle
-
-    tmp = SPRING_BUFFER_STI.with_name(SPRING_BUFFER_STI.name + ".tmp")
-    with open(tmp, "wb") as fh:
-        pickle.dump(SPRING_BUFFER, fh)
+    # plain arrays in an .npz (no pickle): a buffer file can never run code when it is read
+    tmp = SPRING_BUFFER_STI.with_name(SPRING_BUFFER_STI.stem + ".tmp.npz")
+    np.savez(tmp, **{k: np.asarray(v, dtype=np.float64) for k, v in SPRING_BUFFER.items()})
     os.replace(tmp, SPRING_BUFFER_STI)
 
 
@@ -953,11 +1024,9 @@ def les_spring_buffer(sti: Path) -> None:
     global SPRING_BUFFER_STI
     SPRING_BUFFER_STI = sti
     if sti.exists():
-        import pickle
-
         try:
-            with open(sti, "rb") as fh:
-                SPRING_BUFFER.update(pickle.load(fh))
+            with np.load(sti, allow_pickle=False) as z:
+                SPRING_BUFFER.update({k: z[k] for k in z.files})
         except Exception as exc:  # noqa: BLE001
             logg(f"spring-buffer ikkje lesen ({exc})")
 
@@ -1792,14 +1861,14 @@ FORVENTA = {
     "nett_forf_noder": 1824, "nett_forf_kantar": 4970, "forfattarar_totalt": 8921, "referansar": 109116,
     "siterande_verk": 3554, "referansar_kjent_mal_rader": 31123, "referansar_til_korpus": 6611,
     "referansar_til_kanon": 24512, "sjolvsiteringar": 27, "pdf_verifisert": 3262, "pdf_ikkje_stadfest": 1387,
-    "pdf_doi": 1439, "pdf_ingen": 344, "kanalar": 846, "samandrag": 4209,
+    "pdf_doi": 1439, "pdf_ingen": 344, "kanalar": 841, "samandrag": 4204,
 }
 
 
 def bygg_verk(K: Ns, T: Ns, tema: Ns, x, y) -> dict:
     tema_ut = []
     for j, t in enumerate(tema.tema_lst):
-        tema_ut.append({"k": t["k"], "namn": t["namn"], "ord": t["ord"], "n": t["n"], "lx": t["lx"], "ly": t["ly"],
+        tema_ut.append({"k": t["k"], "preset": t["preset"], "namn": t["namn"], "ord": t["ord"], "n": t["n"], "lx": t["lx"], "ly": t["ly"],
                         "sentroide": t["sentroide"]})
     under_ut = [{"tema": u["tema"], "namn": u["namn"], "n": u["n"], "lx": u["lx"], "ly": u["ly"]} for u in tema.under_lst]
     tittel = [str(r["title"]) for r in K.pub] + [str(r["title"]) for r in K.arkiv]
@@ -1867,7 +1936,25 @@ def teikn_fffd(K: Ns) -> dict:
     return {"titlar": t, "verk_med_forfattarnamn": a, "institusjonsnamn": i}
 
 
+def vel_generert(ut: Path, filer: dict[str, bytes], tal: dict) -> str:
+    """The old timestamp when every file would come out byte for byte the same, else now."""
+    gml = read_json(ut / "manifest.json")
+    if not gml or not gml.get("generert") or gml.get("tal") != tal:
+        return now_iso()
+    g = gml["generert"].encode("utf-8")
+    for namn, data in filer.items():
+        sti = ut / namn
+        if not sti.exists() or sti.read_bytes() != data.replace(PLASSHALDAR.encode("utf-8"), g):
+            return now_iso()
+    return gml["generert"]
+
+
 def skriv_alle(ut: Path, filer: dict[str, bytes], tal: dict) -> dict:
+    global GENERERT
+    if GENERERT == PLASSHALDAR:
+        GENERERT = vel_generert(ut, filer, tal)
+    g = GENERERT.encode("utf-8")
+    filer = {k: v.replace(PLASSHALDAR.encode("utf-8"), g) for k, v in filer.items()}
     manifest_filer = {}
     for namn, data in filer.items():
         skriv_bytes(ut / namn, data)
@@ -1885,7 +1972,7 @@ def skriv_tema_sjekk(sti: Path, K: Ns, tema: Ns, V: np.ndarray) -> None:
     for j, t in enumerate(tema.tema_lst):
         med = np.flatnonzero(tema.tema == j)
         nærast = med[np.argsort(-(V[med] @ tema.senter[j]), kind="stable")[:8]]
-        ut.append(f"## {j}: {t['namn']} (`{t['k']}`), {t['n']} verk, cosinus til preset {t['_cos']:.3f}")
+        ut.append(f"## {j}: {t['namn']} (`{t['k']}`, preset `{t['preset']}`), {t['n']} verk, cosinus til preset {t['_cos']:.3f}")
         if t["namn"] != t["_auto"]:
             ut.append(f"Automatisk namn frå preset: {t['_auto']}; overstyrt etter gjennomgang.")
         ut.append(f"Ord: {', '.join(t['ord'])}")
@@ -1966,7 +2053,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--iterasjonar", type=int, default=750, help="t-SNE-iterasjonar (250 utvida + resten)")
     ap.add_argument("--ut", default=str(VIS_DIR), help="utmappe")
     ap.add_argument("--generert", default=None, help="fast tidsstempel (ISO) for eit reproduserbart bygg")
-    ap.add_argument("--notatmappe", default=str(NOTATMAPPE), help="mappe for buffer og rapportar")
+    ap.add_argument("--notatmappe", default=str(NOTATMAPPE) if NOTATMAPPE else None, help="mappe for buffer og rapportar (eller UTFORSK_NOTATMAPPE)")
     ap.add_argument("--perplexity", type=float, default=30.0)
     ap.add_argument("--lr", type=float, default=None)
     args = ap.parse_args(argv)
@@ -1976,13 +2063,13 @@ def main(argv: list[str] | None = None) -> int:
         except Exception:  # noqa: BLE001
             pass
     sett_lavare_prioritet()
-    GENERERT = args.generert or now_iso()
+    GENERERT = args.generert or PLASSHALDAR
     ut = Path(args.ut)
-    notat = Path(args.notatmappe)
+    notat = Path(args.notatmappe) if args.notatmappe else None
     avvik: list[str] = []
     merknader: list[str] = []
-    if notat.exists():
-        les_spring_buffer(notat / "spring_buffer.pkl")
+    if notat and notat.exists():
+        les_spring_buffer(notat / "spring_buffer.npz")
     if not RAW_SQLITE.exists():
         raise SystemExit(f"{RAW_SQLITE} finst ikkje; byggjaren treng databasen")
     db = opne_db()
@@ -1998,6 +2085,8 @@ def main(argv: list[str] | None = None) -> int:
                 pass
         bygg_ordbokar(K, kanon_land)
         K.lenker = bygg_lenker(K)
+        K.dublettar = merk_dublettar(K)
+        logg(f"same verk under to id-ar (merk & 4): {K.dublettar}")
         logg(f"verk {K.n}, forfattarar {len(K.forfattarar)}, institusjonar {len(K.institusjonar)}, kanalar {len(K.kanalar)}, land_alle {len(K.land_alle)}")
         logg(f"PDF-status: {dict(sorted(K.lenker['teljar'].items()))}")
         if K.forfordning_avvik:
@@ -2027,7 +2116,7 @@ def main(argv: list[str] | None = None) -> int:
             gjenbrukt = True
             logg("bruker x, y frå eksisterande verk.json")
         else:
-            kp = (notat / "tsne_kontrollpunkt.npz") if notat.exists() else None
+            kp = (notat / "tsne_kontrollpunkt.npz") if notat and notat.exists() else None
             Y = tsne(V, knn_idx, knn_sim, args.iterasjonar, 42, kp, args.perplexity, args.lr)
             xa, ya = normaliser_kart(Y)
             x, y = xa.tolist(), ya.tolist()
@@ -2058,10 +2147,10 @@ def main(argv: list[str] | None = None) -> int:
 
     with Steg("stader"):
         kj_sti = ut / "kjelde_stader.json"
-        raa_sti = notat / "openalex_institusjonar_raa.json"
+        raa_sti = (notat / "openalex_institusjonar_raa.json") if notat else None
         if args.hent_stader:
-            if not notat.exists():
-                raise SystemExit("notatmappa finst ikkje; treng ho til bufferfila")
+            if not notat or not notat.exists():
+                raise SystemExit("notatmappa finst ikkje; gi --notatmappe (treng ho til bufferfila)")
             raa = hent_stader([d["k"] for d in K.institusjonar], raa_sti)
             skriv_kjelde_stader(raa, K, kj_sti)
         kj = read_json(kj_sti)
@@ -2102,6 +2191,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.rapport is not None:
         mappe = Path(args.rapport) if args.rapport else notat
+        if mappe is None:
+            raise SystemExit("--rapport utan mappe treng --notatmappe")
         mappe.mkdir(parents=True, exist_ok=True)
         merknader += [
             "Forfattarnamn: arkivverk skriv «Etternamn, Fornamn», OpenAlex «Fornamn Etternamn», så same person kan vere to nøklar.",
@@ -2113,7 +2204,7 @@ def main(argv: list[str] | None = None) -> int:
             "`kanalar` har 846 oppføringar: dei 847 i spesifikasjonen tel «Ukjent» som namn, men dei fem verka med det namnet har kanal -1.",
             "Temaord (`tema.ord`, undertemanamn): c-TF-IDF er vekta med lift (andelen klassen har av ordet delt på andelen av alle ord), elles fekk alle tema generiske ord som «research» og «study». Namna på åtte av ti tema er overstyrte etter gjennomgang (TEMA_NAMN_OVERSTYRING); nøklane er framleis næraste preset.",
             "Maskina var delt: BLAS-tråder (OPENBLAS_NUM_THREADS=4) vart 10 til 20 gonger tregare enn éin tråd under last frå andre prosessar. Køyr med OPENBLAS_NUM_THREADS=1 om maskina er travel (t-SNE tek då om lag 5 minutt).",
-            f"Mogleg dublett (merk & 1): {sum(1 for v in K.merk if v & 1)}; ikkje gjennomgått (merk & 2): {sum(1 for v in K.merk if v & 2)}.",
+            f"Mogleg dublett (merk & 1): {sum(1 for v in K.merk if v & 1)}; ikkje gjennomgått (merk & 2): {sum(1 for v in K.merk if v & 2)}; same verk som eit anna i korpuset (merk & 4, delt PDF-adresse, delt DOI eller same tittel med år innan 2 og felles etternamn): {sum(1 for v in K.merk if v & 4)}; ein av dei to: {sum(1 for v in K.merk if v & 5)}.",
             f"Kanon-element som ikkje er verk i korpuset: {S.antal_canon_ikkje_korpus}, av dei sitert og slått saman til {S.m} noder ({S.grupper_med_fleire} grupper med fleire variantar).",
             f"t-SNE-vektorar frå {args.vektorar}.",
             "Forfattarnettet har 1 823 noder og 4 959 kantar mot venta 1 824 og 4 970: verket W2994871791 har to ulike forfattar-id-ar med same namn, og regelen om éin oppføring per namn og verk (endring 51) gir den eine ho mistar verket. n i nettet er rekna frå verk.json, slik at sidas tal stemmer med lista.",

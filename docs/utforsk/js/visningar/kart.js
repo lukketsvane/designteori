@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal } from "../hjelp.js?v=21";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=23";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -14,6 +14,8 @@ let sitOrd;
 let fargeSeg, lassoKnapp, zoomKnapp;
 const ARR = 1, R_MAX = 9;
 let invitasjonBrukt = false;
+let puls = null, stoppPuls = null;   // a short pulse round the work just opened
+let temaTal = null, temaTalV = -1;   // works in the selection per theme
 // Under this many works in the selection, the bright points are drawn larger and ringed.
 const LITE = 200;
 const liteUtval = () => T.harFilter() && T.valt > 0 && T.valt <= LITE;
@@ -70,6 +72,7 @@ export default {
     if (!kat || e.visning.has("kart.farge")) { lagFargar(); fargeSeg.set(S.kart.farge); }
     if (!grupper || e.filter || e.visning.has("kart.farge")) byggGrupper(e.filter && !e.popstate && grupper && !e.visning.has("kart.farge"));
     if (e.popstate || e.vis) { const z = S.kart.z; const n = scene.zNo(); if (!z || Math.abs(z[0] - n[0]) > 0.01 || Math.abs(z[1] - n[1]) > 1 || Math.abs(z[2] - n[2]) > 1) scene.settZ(z); }
+    if (e.verk && S.verk) startPuls();
     teiknTeikn();
     teiknLinje();
     zoomKnapp.disabled = !(T.valt > 0 && T.valt < D.n);
@@ -88,7 +91,13 @@ export default {
     const dekt = Math.max(0, r.bottom - ark.top);
     scene.sentrer(D.x[i], D.y[i], dekt);
   },
-  panTil(i) { scene.panTilOmUte(D.x[i], D.y[i]); },
+  // opened from the list: bring the work into the middle part of the map, so its mark (and the
+  // pulse) is where the eye is, not at an edge or under a control
+  panTil(i) {
+    const sc = scene.sc;
+    const [px, py] = sc.tilSkjerm(D.x[i], D.y[i]);
+    if (px < sc.w * 0.2 || px > sc.w * 0.8 || py < sc.h * 0.2 || py > sc.h * 0.8) scene.sentrer(D.x[i], D.y[i]);
+  },
   vis() { scene.storleik(); },
   skjul() { tooltip.skjul(); },
   avbrytLasso() { return scene.avbrytLasso(); },
@@ -96,6 +105,7 @@ export default {
   // for measuring
   scene: () => scene,
   etikettar: () => etikettar,
+  finn: (px, py, type = "mouse") => finn(px, py, type),
 };
 
 function settLasso(v) {
@@ -284,24 +294,80 @@ function teiknOverlay(ctx, sc) {
     if (l.data && l.data.alfa != null) teiknEtikettar(ctx, [l], { alfa: l.data.alfa });
   }
   teiknEtikettar(ctx, etikettar.filter((l) => !l.data || l.data.alfa == null));
-  const vist = new Set();
-  for (const i of [merkI, S.verk ? D.idx.get(S.verk) : null, typeof sc.hoverId === "number" ? sc.hoverId : null, typeof sc.fokusId === "number" ? sc.fokusId : null]) {
+  const vi = S.verk ? D.idx.get(S.verk) : null;
+  const vist = new Set([vi]);
+  for (const i of [merkI, typeof sc.hoverId === "number" ? sc.hoverId : null, typeof sc.fokusId === "number" ? sc.fokusId : null]) {
     if (i == null || vist.has(i)) continue;
     vist.add(i);
     ring(ctx, sc, i);
   }
+  if (vi != null) opneMerke(ctx, sc, vi);
+}
+
+// The open work has its own mark, unlike any other ring on the map: a thick outer ring with
+// four ticks, a dark halo, a pulse when it opens, and its title as a label.
+function opneMerke(ctx, sc, i) {
+  const [px, py] = sc.tilSkjerm(D.x[i], D.y[i]);
+  if (px < -40 || px > sc.w + 40 || py < -40 || py > sc.h + 40) return;
+  const r = radius(i, sc);
+  if (puls) {
+    for (const d of [0, 0.35]) {
+      const t = puls.t - d;
+      if (t <= 0 || t >= 1) continue;
+      ctx.beginPath(); ctx.arc(px, py, r + 6 + 34 * t, 0, 6.2832);
+      ctx.globalAlpha = 0.9 * (1 - t); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  ctx.beginPath(); ctx.arc(px, py, r + 3, 0, 6.2832);
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 3.5; ctx.stroke();
+  ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+  const R = r + 9;
+  ctx.beginPath(); ctx.arc(px, py, R, 0, 6.2832);
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 5; ctx.stroke();
+  ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.5; ctx.stroke();
+  // four short ticks outside the ring: the mark reads as "here" even among ringed points
+  ctx.beginPath();
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { ctx.moveTo(px + dx * (R + 3), py + dy * (R + 3)); ctx.lineTo(px + dx * (R + 10), py + dy * (R + 10)); }
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 4.5; ctx.stroke();
+  ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+}
+function startPuls() {
+  if (stoppPuls) stoppPuls();
+  if (rorsle.redusert) { puls = null; return; }
+  puls = { t: 0 };
+  stoppPuls = tween(1100, (t) => { if (puls) puls.t = t * 1.35; scene.teiknOverlay(); }, () => { puls = null; stoppPuls = null; scene.teiknOverlay(); });
+}
+let dublettTal = null;
+function talDublettar() { if (dublettTal == null) { dublettTal = 0; for (let i = 0; i < D.n; i++) if (D.merk[i] & 5) dublettTal++; } return dublettTal; }
+function reknTemaTal() {
+  if (temaTalV === T.versjonNo() && temaTal) return temaTal;
+  const c = new Int32Array(D.verk.tema.length), u = T.utval;
+  for (let i = 0; i < D.n; i++) if (u[i]) c[D.tema[i]]++;
+  temaTal = c; temaTalV = T.versjonNo();
+  return c;
 }
 
 function lagEtikettar(sc) {
   const k = sc.k, v = D.verk, kand = [];
   const smalt = sc.w < 600;
   let alfa = 1;
+  const vi = S.verk ? D.idx.get(S.verk) : null;
+  if (vi != null && sc.synleg(D.x[vi], D.y[vi])) {
+    const [px, py] = sc.tilSkjerm(D.x[vi], D.y[vi]);
+    kand.push({ id: `v${vi}`, x: px, y: py, r: radius(vi, sc) + 11, tekst: `${kutt(D.kol.tittel[vi], 44)} (${D.ar[vi]})`, font: "600 12px Literata, Georgia, serif", h: 16, farge: "#ffffff", forst: true, prio: 1e9 });
+  }
   if (k < 3.0) {
     alfa = k < 2.5 ? 1 : 1 - (k - 2.5) / 0.5;
     const font = `600 ${smalt ? 13 : 15}px Literata, Georgia, serif`;
+    // with a filter, each theme name carries its count in the selection and fades where it has
+    // none, as the points do: the eye goes to where the matches are
+    const filt = T.harFilter(), c = filt ? reknTemaTal() : null;
     v.tema.forEach((t, j) => {
       const [px, py] = sc.tilSkjerm(t.lx, t.ly);
-      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: lys(PALETTE_TEMA[j], 0.3), prio: t.n, data: { tema: j, alfa: alfa < 1 ? alfa : null } });
+      const tom = filt && !c[j];
+      const a = alfa * (tom ? 0.5 : 1);
+      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: filt ? `${t.namn} · ${fmt(c[j])}` : t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: tom ? "#9a9a9a" : lys(PALETTE_TEMA[j], 0.3), prio: t.n, data: { tema: j, alfa: a < 1 ? a : null, synleg: alfa } });
     });
   }
   if (k >= 2.5 && k < 6) {
@@ -317,7 +383,7 @@ function lagEtikettar(sc) {
     let c = 0;
     for (const i of sitOrd) {
       if (D.sit[i] < 0) break;
-      if (!T.utval[i] && T.harFilter()) continue;
+      if ((!T.utval[i] && T.harFilter()) || i === vi) continue;
       if (!sc.synleg(D.x[i], D.y[i])) continue;
       const [px, py] = sc.tilSkjerm(D.x[i], D.y[i]);
       kand.push({ id: i, x: px, y: py, r: radius(i, sc), tekst: kutt(D.kol.tittel[i], 48), font, h: 15, farge: "#e8e8e8", prio: D.sit[i] });
@@ -335,6 +401,14 @@ function finn(px, py, type) {
   const [x, y] = sc.tilVerd(px, py);
   const touch = type !== "mouse";
   const R = (touch ? 22 : Math.max(R_MAX, 6)) / sc.K;
+  // A theme name wins over the points under it: the names sit in the middle of their clusters,
+  // so "only where no point is near" left almost no clickable pixels. The points under a name
+  // are reached by zooming in (the names fade out from k = 2.5) or from the list.
+  for (const l of etikettar) {
+    if (!l.data || l.data.tema == null || (l.data.synleg != null && l.data.synleg < 0.5)) continue;
+    const b = l.boks;
+    if (px >= b.x0 && px <= b.x1 && py >= b.y0 && py <= b.y1) return { id: `tema${l.data.tema}`, type: "tema", tema: l.data.tema };
+  }
   const kand = A.innanfor(qt, x, y, R, (i) => D.x[i], (i) => D.y[i]);
   const filt = T.harFilter();
   const treff = [];
@@ -351,15 +425,6 @@ function finn(px, py, type) {
       if (naer.length >= 3) return { id: `k${best.i}`, type: "klynge", i: best.i, liste: naer.map((t) => t.i), x, y };
     }
     return { id: best.i, type: "verk", i: best.i, fleire: treff.length - 1 };
-  }
-  // theme labels as targets only where no point lies within 6 px
-  for (const l of etikettar) {
-    if (!l.data || l.data.tema == null) continue;
-    const b = l.boks;
-    if (px >= b.x0 && px <= b.x1 && py >= b.y0 && py <= b.y1) {
-      const naer = A.innanfor(qt, x, y, 6 / sc.K, (i) => D.x[i], (i) => D.y[i]);
-      if (!naer.length) return { id: `tema${l.data.tema}`, type: "tema", tema: l.data.tema };
-    }
   }
   return null;
 }
@@ -378,8 +443,14 @@ function verkHtml(i, fleire) {
     <div class="tt-meta"><span class="prikk" style="background:${PALETTE_TEMA[D.tema[i]]}"></span>${esc(t.namn)} · ${sit} · ${pdfOrd}</div>
     ${fleire ? `<div class="tt-fot">+${fmt(fleire)} til her</div>` : ""}`;
 }
+function temaHtml(j) {
+  const t = D.verk.tema[j];
+  const c = reknTemaTal()[j];
+  const del = T.harFilter() ? `${fmt(c)} av ${fmt(t.n)} verk i utvalet` : `${fmt(t.n)} verk`;
+  return `<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[j]}"></span>${esc(t.namn)}</div><div class="tt-meta">Tema · ${del}</div>${S.f.tema.has(t.k) ? `<div class="tt-meta">Valt no</div>` : ""}`;
+}
 function tips(hit) {
-  if (hit.type === "tema") return `<div class="tt-tittel">${esc(D.verk.tema[hit.tema].namn)}</div><div class="tt-fot">Klikk for å velje tema</div>`;
+  if (hit.type === "tema") return temaHtml(hit.tema) + `<div class="tt-fot">Klikk for å velje tema · Skift-klikk: legg til</div>`;
   if (hit.type === "verk") return verkHtml(hit.i, hit.fleire) + `<div class="tt-fot">Klikk: opne verket</div>`;
   return "";
 }
@@ -389,7 +460,7 @@ function klikk(hit, ev) {
 }
 function kortFor(hit) {
   if (hit.type === "verk") return { html: verkHtml(hit.i, hit.fleire), knappar: [{ tekst: "Opne verket", primar: true, gjer: () => A.opneVerk(hit.i) }] };
-  if (hit.type === "tema") return { html: `<div class="tt-tittel">${esc(D.verk.tema[hit.tema].namn)}</div>`, knappar: [{ tekst: "Vel", primar: true, gjer: () => T.veksle("tema", D.verk.tema[hit.tema].k, { erstatt: true }) }, { tekst: "Legg til", gjer: () => T.veksle("tema", D.verk.tema[hit.tema].k) }] };
+  if (hit.type === "tema") return { html: temaHtml(hit.tema), knappar: [{ tekst: "Vel", primar: true, gjer: () => T.veksle("tema", D.verk.tema[hit.tema].k, { erstatt: true }) }, { tekst: "Legg til", gjer: () => T.veksle("tema", D.verk.tema[hit.tema].k) }] };
   const topp = hit.liste.slice().sort((a, b) => D.sit[b] - D.sit[a] || a - b).slice(0, 3);
   return {
     html: `<div class="tt-tittel">${fmt(hit.liste.length)} verk her</div>${topp.map((i) => `<div class="tt-meta">${esc(kutt(D.kol.tittel[i], 70))} · ${D.ar[i]}</div>`).join("")}`,
@@ -455,7 +526,9 @@ function teiknTeikn() {
       return `<button type="button" class="teikn-post" data-dim="${dim}" data-k="${esc(key)}" aria-pressed="${aktiv}">${inner}</button>`;
     }).join("");
     if (modus === "land") html += `<span class="teikn-merk">Land (nordisk tilknyting, elles kjelda). Verk med fleire land tel under kvart land.</span>`;
+    if (modus === "tema") html += `<span class="teikn-merk">Tema er grupper av like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre er mest arkivverk eller norskspråklege (Teneste- og systemdesign er nesten berre norsk arkiv).</span>`;
   }
   html += `<span class="teikn-merk">Storleik: siteringar (berre OpenAlex)</span>`;
-  ramme.teikn.innerHTML = html;
+  html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;
+  settInnhald(ramme.teikn, html);
 }

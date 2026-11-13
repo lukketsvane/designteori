@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=21";
-import * as T from "./tilstand.js?v=21";
-import * as data from "./data.js?v=21";
-import { hentSamandrag } from "./samandrag.js?v=21";
+import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=23";
+import * as T from "./tilstand.js?v=23";
+import * as data from "./data.js?v=23";
+import { hentSamandrag } from "./samandrag.js?v=23";
 
 const { S, D } = T;
 let api = null;
@@ -279,7 +279,13 @@ function visDetalj() {
   el.visning.hidden = true;
   el.detalj.hidden = false;
   if (ny) el.detalj.innerHTML = detaljHtml(i);
-  else { const st = el.detalj.scrollTop; bevarFokus(el.detalj, () => { el.detalj.innerHTML = detaljHtml(i); }); el.detalj.scrollTop = st; }
+  else {
+    const st = el.detalj.scrollTop;
+    bevarFokus(el.detalj, () => { el.detalj.innerHTML = detaljHtml(i); });
+    // keep the reader's place further down, but never leave the title half under the sticky bar
+    const h = el.detalj.querySelector("h2");
+    el.detalj.scrollTop = h && st < h.offsetTop + h.offsetHeight ? 0 : st;
+  }
   if (ny) {
     el.detalj.scrollTop = 0;
     sikreLenker();
@@ -323,7 +329,8 @@ function detaljHtml(i) {
   }
   const doi = D.lenker && D.lenker.doi[i] ? `<a class="knapp" href="https://doi.org/${esc(D.lenker.doi[i])}" target="_blank" rel="noopener">DOI</a>` : "";
   const kjelde = D.lenker && D.lenker.kjelde[i] ? D.lenker.kjelde[i] : "";
-  const sitLinje = D.sit[i] >= 0 ? `Sitert ${fmt(D.sit[i])} gonger (OpenAlex)` : `Arkivverk${kjelde ? ` frå ${esc(kjelde)}` : ""}, ikkje gjennomgått${D.merk[i] & 1 ? " · Mogleg dublett" : ""}`;
+  const dubl = D.merk[i] & 4 ? " · Same verk finst òg under ei anna oppføring i korpuset (same PDF, DOI eller tittel)" : D.merk[i] & 1 ? " · Mogleg dublett" : "";
+  const sitLinje = D.sit[i] >= 0 ? `Sitert ${fmt(D.sit[i])} gonger (OpenAlex)${dubl}` : `Arkivverk${kjelde ? ` frå ${esc(kjelde)}` : ""}, ikkje gjennomgått${dubl}`;
   return `
     <div class="detalj-topp"><button type="button" class="knapp liten" data-handling="lista">← Lista</button></div>
     <h2 tabindex="-1">${esc(k.tittel[i])}</h2>
@@ -364,9 +371,9 @@ async function fyllSamandrag(i, id) {
       b.append(q);
     }
   } else if (r && r.tekst) {
-    b.innerHTML = `<p class="dim">Teksten kjelda gir som samandrag, ser ut som byrjinga av artikkelen (dato, tittel eller forfattar), så han er ikkje vist. Sjå utgjevarsida.</p><p><a href="${esc(KATALOG_LENKE(id))}">Opne i katalogen</a></p>`;
+    b.innerHTML = `<p class="dim">Teksten kjelda gir som samandrag, ser ut som byrjinga av artikkelen (dato, tittel eller forfattar), så han er ikkje vist. Sjå utgjevarsida eller katalogen.</p>`;
   } else {
-    b.innerHTML = `<p class="dim">Samandrag er ikkje publisert her. Sjå utgjevarsida.</p><p><a href="${esc(KATALOG_LENKE(id))}">Opne i katalogen</a></p>`;
+    b.innerHTML = `<p class="dim">Samandrag er ikkje publisert her. Sjå utgjevarsida eller katalogen.</p>`;
   }
 }
 
@@ -405,10 +412,15 @@ function fyllNaboar(i, ok = true) {
     // surname, as elsewhere on the page: "Etternamn, Fornamn" (archive) or "Fornamn Etternamn"
     const nm = f.length ? v.forfattarar[f[0]].namn : "";
     const forf = nm.includes(",") ? nm.split(",")[0].trim() : nm.trim().split(/\s+/).pop() || "";
-    html += `<li><button type="button" class="nabo" data-opne="${j}"><span class="nabo-tittel">${esc(kutt(D.kol.tittel[j], 90))}</span>
-      <span class="nabo-meta">${esc(forf)} ${D.ar[j]}</span><span class="likskap" title="Likskap ${Math.round(c * 100)} av 100"><span style="width:${Math.round(c * 100)}%"></span></span></button></li>`;
+    // what can be read now: the same badge as in the list (open PDF, link, DOI)
+    const st = D.pdf[j];
+    const merkeOrd = ["PDF", "Lenke", "DOI", ""][st], merkeKl = ["pdf", "lenke", "doi", ""][st];
+    html += `<li><button type="button" class="nabo" data-opne="${j}" aria-label="${esc(D.kol.tittel[j])}, ${esc(forf)} ${D.ar[j]}, likskap ${Math.round(c * 100)} prosent${["", ", open PDF", ", lenke", ", berre DOI"][st + 1] || ""}">
+      <span class="nabo-tittel">${esc(kutt(D.kol.tittel[j], 90))}</span>
+      <span class="nabo-meta">${esc(forf)} ${D.ar[j]}${merkeOrd ? ` <span class="merke ${merkeKl} lite" aria-hidden="true">${merkeOrd}</span>` : ""}</span>
+      <span class="likskap-rad" aria-hidden="true"><span class="likskap"><span style="width:${Math.round(c * 100)}%"></span></span><span class="likskap-tal">${Math.round(c * 100)} %</span></span></button></li>`;
   }
-  html += `</ol><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
+  html += `</ol><p class="dim nabo-merk">Likskap: kor nær tittel, kanal og emneord ligg (100 % = same). PDF: open og stadfest.</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
   b.innerHTML = html;
 }
 

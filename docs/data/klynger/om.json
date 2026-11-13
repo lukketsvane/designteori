@@ -1,0 +1,31 @@
+{
+ "versjon": 1,
+ "tittel": "Om kartet",
+ "ingress": "Kartet viser alle 6 432 verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om det same, ligg nær kvarandre. Fargane er 8 klynger som ein algoritme har funne, og kvar klynge er delt i mindre underklynger.",
+ "bolkar": [
+  {
+   "tittel": "Korleis kartet er laga",
+   "tekst": "Tittel og samandrag for kvart verk er gjort om til ein talvektor med språkmodellen EmbeddingGemma (256 tal per verk). 2 228 verk har ikkje samandrag, og for dei byggjer vektoren berre på tittelen. Slike vektorar la seg først i ein eigen klump, fordi dei er laga på ein annan måte (tittelen står der samandraget elles står) og av ein svært kort tekst. Difor er verk med og utan samandrag sentrerte kvar for seg, og vektorane for berre-tittel-verka er justerte til same spreiing som dei andre. For kvart verk er dei 15 mest like verka funne, og desse naboskapa er lagde ut på flata med t-SNE, ein metode som held på kven som er nabo med kven."
+  },
+  {
+   "tittel": "Kva avstand tyder",
+   "tekst": "Nærleik i kartet tyder at tekstane liknar kvarandre i ordbruk og tema. Store avstandar og retningar tyder lite: t-SNE held på dei næraste naboane, ikkje på avstanden mellom fjerne område. I snitt er 31 % av dei 15 næraste naboane i tekstrommet òg blant dei 15 næraste i kartet (tillit 0,92). Ein lineær projeksjon av dei same vektorane, slik det gamle kartet var laga, held på 2 %."
+  },
+  {
+   "tittel": "Korleis klyngene er funne",
+   "tekst": "Klyngene er funne i tekstrommet, ikkje i biletet. Dei 8 klyngene kjem frå k-means: kvart verk høyrer til det klyngesenteret det liknar mest. Talet 8 er eit val, ikkje noko dataa viser. Av 8 til 16 klynger gav dette talet det mest stabile resultatet frå køyring til køyring, og det skilde verka minst like godt som dei andre. Inne i kvar klynge er det funne grupper av verk som har mange felles naboar (Louvain-metoden), til saman 52 underklynger. Namna er sette for hand i analysen ut frå orda som skil klynga frå resten, dei mest sentrale titlane og eit tilfeldig utval titlar. Ingen fagperson har kontrollert dei. Dei er merkelappar, ikkje fagfolk si inndeling."
+  },
+  {
+   "tittel": "Kor sikre klyngene er",
+   "tekst": "Feltet er meir eit samanhengande landskap enn øyar. Silhuetten, eit mål frå -1 til 1 på kor klart verka ligg i eiga klynge, er 0,06 (ei tilfeldig sky utan klynger gir 0,03). 32 % av verka ligg på ei grense: færre enn halvparten av naboane deira er i same klynge. Køyrer ein metoden ti gonger med ulike startverdiar, er samsvaret i snitt 0,75 (justert Rand-indeks, 1 er likt kvar gong), og 0,49 for dei to køyringane som liknar minst. Klynga «Norske fagmiljø: handverk, didaktikk, tenestedesign» er delvis ei språkgruppe: 54 % av verka der er på eit nordisk språk, mot 6 % i heile korpuset, og 88 % av alle verk på nordiske språk ligg i denne klynga."
+  },
+  {
+   "tittel": "Ein kontroll utanfor teksten",
+   "tekst": "Klyngene er laga berre av tekst. Likevel deler verk i same klynge oftare referansar: av alle par av verk som siterer minst éitt felles verk, ligg 26 % i same klynge, mot 14 % om klyngene var tilfeldige. Kanal og OpenAlex-emne heng moderat saman med klyngene. Målet NMI går frå 0 (ingen samanheng) til 1 (same inndeling). Det er 0,26 for kanal og 0,30 for emne, mot 0,13 og 0,07 om verka vart fordelte tilfeldig på klynger av same storleik."
+  },
+  {
+   "tittel": "Verk med berre tittel",
+   "tekst": "Dei 2 228 verka utan samandrag er plasserte og grupperte som dei andre, og dei er merkte i kartet. Plasseringa deira er litt mindre sikker: naboane deira deler sjeldnare referansar med dei (24 % mot 29 % for verk med samandrag). Dei ligg ikkje oftare på ei grense (32 % mot 33 %). Dei har framleis oftare andre berre-tittel-verk som naboar (58 % mot 35 % venta), delvis fordi mange av dei kjem frå dei nordiske arkiva. Grenseverk er òg merkte."
+  }
+ ]
+}

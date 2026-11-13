@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal } from "../hjelp.js?v=21";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=23";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -63,6 +63,12 @@ export default {
       const c = e.target.closest("button[data-filterord]");
       if (c) T.veksle("term", c.dataset.filterord);
     });
+    el.melding.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      if (b.dataset.prov != null) { lastOrd(); return; }
+      if (b.dataset.sokord) { const q = b.dataset.sokord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; }); }
+    });
     new ResizeObserver(() => teikn(false)).observe(ramme.flate);
     bindBandDrag();
     lastOrd();
@@ -122,7 +128,13 @@ function bindInput() {
     let t = D.termIdx.get(key);
     if (t == null) t = D.termIdx.get(key.replace(/ /g, ""));
     if (t != null) leggTil(t);
-    else { ukjendMelding = `«${q}» finst ikkje i ordlista: ord på minst 3 bokstavar som står i minst ${D.tidd.tal.min_df} titlar og ikkje i meir enn 4 av 10 (difor manglar «design»).`; lukk(); teikn(false); }
+    else {
+      // say how many titles do have the word, and offer them as a search: "tacit" is in 3 titles,
+      // too few for a curve, but the reader still wants those works
+      const n = titlarMed(q);
+      ukjendMelding = { q, n, tekst: `«${q}» finst ikkje i ordlista over tittelord (minst ${D.tidd.tal.min_df} titlar, ikkje meir enn 4 av 10, så «design» manglar). ${n ? `${fmt(n)} ${n === 1 ? "tittel har" : "titlar har"} ordet.` : "Ingen titlar har ordet."}` };
+      lukk(); teikn(false);
+    }
   };
   inp.addEventListener("input", () => { valt = -1; vis(); });
   inp.addEventListener("keydown", (e) => {
@@ -135,6 +147,21 @@ function bindInput() {
   el.forslag.addEventListener("pointerdown", (e) => e.preventDefault());
   el.forslag.addEventListener("click", (e) => { const b = e.target.closest("button[data-t]"); if (b) leggTil(+b.dataset.t); });
 }
+
+// Titles with every typed word as a word (or word prefix for words of 7 letters or more), as
+// the search does. Used when a word is not in the word list.
+let tittelOrd = null;
+function titlarMed(q) {
+  const toks = fold(q).split(/[^\p{L}\p{N}]+/u).filter((w) => w.length >= 2);
+  if (!toks.length) return 0;
+  if (!tittelOrd) tittelOrd = D.kol.tittel.map((t) => fold(t).replace(/[-'’]/g, "").split(/[^\p{L}\p{N}]+/u));
+  let n = 0;
+  for (const ord of tittelOrd) if (toks.every((t) => ord.some((w) => w === t || (t.length >= 7 && w.startsWith(t.slice(0, 6))) || w === t + "s"))) n++;
+  return n;
+}
+
+const arTal = new Map();
+function talAr(a) { if (!arTal.has(a)) { let c = 0; for (let i = 0; i < D.n; i++) if (D.ar[i] === a) c++; arTal.set(a, c); } return arTal.get(a); }
 
 // ---------- data ----------
 function bandData() {
@@ -175,10 +202,14 @@ function ordData() {
 }
 
 // ---------- drawing ----------
+let namnBreidd = 0;
 function marg() {
-  // the right margin holds the band labels: wide enough for the longest theme name
+  // The right margin holds the band labels, wide enough for the longest theme name in full
+  // (no ellipsis). Where that would leave the bands under 360 px, the names go to a chip row.
   const w = el.band.clientWidth;
-  const hogre = w >= 900 ? 220 : w >= 600 ? 150 : 16;
+  if (!namnBreidd) namnBreidd = Math.ceil(Math.max(...D.verk.tema.map((t) => tekstBreidd(t.namn, "12px Literata, Georgia, serif"))));
+  const lw = namnBreidd + 26;
+  const hogre = w - lw - 44 >= 360 ? lw : 16;
   return { l: 44, r: hogre, w };
 }
 
@@ -200,7 +231,11 @@ function teikn(anim) {
   teiknMerk();
   // line and legend
   ramme.linje.textContent = `Verk per år etter tema. ${fmt(T.valt)} verk i utvalet${foer ? `; ${fmt(foer)} av dei er frå før 1990 og ikkje teikna` : ""}. 2026 er ufullstendig. Dra sidelengs over diagrammet for å velje år. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
-  ramme.teikn.innerHTML = `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig.</span>`;
+  const meirOpe = !!(ramme.teikn.querySelector(".teikn-meir") || {}).open;
+  settInnhald(ramme.teikn, `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig (${fmt(talAr(2026))} verk mot ${fmt(talAr(2025))} i 2025: innhaustinga er ikkje ferdig, året er ikkje lite).</span>
+    <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Tema er grupper av like titlar og kjelder, ikkje emne sett av nokon. Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
+    <span class="teikn-merk">Orda er talde per språkform: «service design» og «tjenestedesign» er to ord. Eit ord manglar når det står i færre enn ${D.tidd ? D.tidd.tal.min_df : 5} titlar. Ei kurve startar der eit treårsvindauge har minst 20 verk (for heile korpuset i 1993).</span></details>`);
+  if (meirOpe) ramme.teikn.querySelector(".teikn-meir").open = true;
   void med;
 }
 
@@ -224,6 +259,8 @@ function teiknBand(rows) {
   const W = el.band.clientWidth, H = el.band.clientHeight;
   if (W < 10 || H < 10) return;
   const m = marg();
+  const fa = document.activeElement;
+  const fokusTema = fa && svgEl.contains(fa) && fa.dataset ? fa.dataset.tema : null;
   const svg = d3.select(svgEl).attr("width", W).attr("height", H);
   svg.selectAll("*").remove();
   const K = D.verk.tema.length;
@@ -285,26 +322,38 @@ function teiknBand(rows) {
       items.forEach((it, q) => {
         const x0 = x(2025), x1 = W - m.r + 10;
         lg.append("path").attr("d", `M${x0},${it.y}L${x1 - 4},${ys[q]}`).attr("stroke", PALETTE_TEMA[it.s.key]).attr("fill", "none").attr("stroke-width", 1);
-        const tx = lg.append("text").attr("class", "etikett").attr("x", x1).attr("y", ys[q] + 4).text(kutt(D.verk.tema[it.s.key].namn, m.r >= 200 ? 34 : 22));
-        tx.append("title").text(D.verk.tema[it.s.key].namn);
-        tx
-          .style("cursor", "pointer").on("click", () => T.veksle("tema", D.verk.tema[it.s.key].k));
+        const t = D.verk.tema[it.s.key];
+        const valt = S.f.tema.has(t.k);
+        // the names are buttons for the keyboard too (Tab, Enter or space)
+        const tx = lg.append("text").attr("class", `etikett temaetikett${valt ? " valt" : ""}`).attr("x", x1).attr("y", ys[q] + 4).text(t.namn)
+          .attr("tabindex", 0).attr("role", "button").attr("aria-pressed", String(valt)).attr("data-tema", t.k)
+          .attr("aria-label", `${t.namn}: vel temaet`);
+        tx.style("cursor", "pointer")
+          .on("click", (ev) => { ev.stopPropagation(); T.veksle("tema", t.k, { erstatt: !(ev.shiftKey || ev.ctrlKey || ev.metaKey) }); })
+          .on("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); T.veksle("tema", t.k, { erstatt: !ev.shiftKey }); } });
       });
+      // keep keyboard focus on the same name after the redraw
+      if (fokusTema) { const n = svgEl.querySelector(`[data-tema="${CSS.escape(fokusTema)}"]`); if (n) n.focus({ preventScroll: true }); }
     }
   } else {
     let rad = chipRad;
     if (!rad) { rad = document.createElement("div"); rad.className = "tid-temachipar"; el.band.after(rad); rad.addEventListener("click", (e) => { const b = e.target.closest("button[data-tema]"); if (b) T.veksle("tema", b.dataset.tema); }); }
-    rad.innerHTML = D.verk.tema.map((t, k) => `<button type="button" class="teikn-post" data-tema="${esc(t.k)}" aria-pressed="${S.f.tema.has(t.k)}"><span class="prikk" style="background:${PALETTE_TEMA[k]}"></span>${esc(t.namn)}</button>`).join("");
+    settInnhald(rad, D.verk.tema.map((t, k) => `<button type="button" class="teikn-post" data-tema="${esc(t.k)}" aria-pressed="${S.f.tema.has(t.k)}"><span class="prikk" style="background:${PALETTE_TEMA[k]}"></span>${esc(t.namn)}</button>`).join(""));
   }
   // interaction
+  let tipsKey = null;
   paths.on("pointermove", (ev, s) => {
     const [px] = d3.pointer(ev, svgEl);
     const a = Math.max(A0, Math.min(A1, Math.round(x.invert(px))));
     const j = a - A0;
     const c = rows[j][s.key], sum = tot[j] || 1;
     if (hoverTema !== s.key) { hoverTema = s.key; paths.attr("fill-opacity", (q) => (q.key === s.key ? 0.95 : 0.35)); }
+    // the text is built once per band and year; between those only the box moves
+    const key = `${s.key}|${a}`;
+    if (key === tipsKey && tooltip.synleg) { tooltip.flytt(ev.clientX, ev.clientY); return; }
+    tipsKey = key;
     if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel tema · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
-  }).on("pointerleave", () => { hoverTema = null; tooltip.skjul(); paths.attr("fill-opacity", 0.92); })
+  }).on("pointerleave", () => { hoverTema = null; tipsKey = null; tooltip.skjul(); paths.attr("fill-opacity", (q) => (S.f.tema.size && !S.f.tema.has(D.verk.tema[q.key].k) ? 0.45 : 0.92)); })
     .on("click", (ev, s) => {
       if (undertrykkKlikk) return;
       const key = D.verk.tema[s.key].k;
@@ -350,18 +399,18 @@ function teiknOrd() {
   const svg = d3.select(svgEl).attr("width", W).attr("height", Math.max(0, H));
   svg.selectAll("*").remove();
   // chips
-  el.chipar.innerHTML = S.tid.termar.map((key, q) => {
+  settInnhald(el.chipar, S.tid.termar.map((key, q) => {
     const vis = D.termIdx && D.termIdx.has(key) ? D.tidd.termar.vis[D.termIdx.get(key)] : key;
     const iFilter = S.f.term.has(key);
     return `<span class="ordchip" style="--f:${PALETTE_ORD[q % 6]}"><svg width="14" height="14" aria-hidden="true">${merkeSvg(q, 7, 7)}</svg>
       <button type="button" class="lenkeknapp" data-filterord="${esc(key)}" aria-pressed="${iFilter}" title="${iFilter ? "Fjern frå filteret" : "Bruk som filter"}">${esc(vis)}</button>
       <button type="button" class="chip-x" data-fjernord="${esc(key)}" aria-label="Fjern ordet ${esc(vis)}">×</button></span>`;
-  }).join("");
-  el.melding.textContent = ordStatus === "feil" ? "Ordlista kunne ikkje lastast." : ukjendMelding;
-  if (ordStatus === "feil") {
-    el.melding.innerHTML = `Ordlista kunne ikkje lastast. <button type="button" class="knapp liten" data-prov>Prøv igjen</button>`;
-    el.melding.querySelector("button").addEventListener("click", lastOrd);
-  }
+  }).join(""));
+  if (ordStatus === "feil") settInnhald(el.melding, `Ordlista kunne ikkje lastast. <button type="button" class="knapp liten" data-prov>Prøv igjen</button>`);
+  else if (ukjendMelding && typeof ukjendMelding === "object") {
+    const u = ukjendMelding;
+    settInnhald(el.melding, `${esc(u.tekst)}${u.n ? ` <button type="button" class="knapp liten" data-sokord="${esc(u.q)}">Vis ${u.n === 1 ? "verket" : `dei ${fmt(u.n)} verka`}</button>` : ""}`);
+  } else settInnhald(el.melding, esc(ukjendMelding || ""));
   el.ordTom.hidden = true;
   tvSeg.el.classList.remove("framheva");
   if (ordStatus === "lastar") { el.ordTom.hidden = false; el.ordTom.textContent = "Lastar ordlista …"; return; }
@@ -417,10 +466,14 @@ function teiknOrd() {
   });
   // hover rule
   const regel = svg.append("line").attr("y1", 8).attr("y2", H - 18).attr("stroke", "#fff").attr("stroke-opacity", 0.5).attr("visibility", "hidden").attr("pointer-events", "none");
+  let sistAr = null;
   svg.on("pointermove", (ev) => {
     const [px] = d3.pointer(ev, svgEl);
-    if (px < mm.l || px > W - mm.r + 4) { regel.attr("visibility", "hidden"); tooltip.skjul(); return; }
+    if (px < mm.l || px > W - mm.r + 4) { regel.attr("visibility", "hidden"); tooltip.skjul(); sistAr = null; return; }
     const a = Math.max(A0, Math.min(A1, Math.round(x.invert(px))));
+    // one rebuild per year, not per pixel
+    if (a === sistAr && tooltip.synleg) { tooltip.flytt(ev.clientX, ev.clientY); return; }
+    sistAr = a;
     regel.attr("x1", x(a)).attr("x2", x(a)).attr("visibility", "visible");
     const j = a - A0;
     const rader = kurver.map((k, q) => {
@@ -443,6 +496,8 @@ function bindBandDrag() {
   });
   el.band.addEventListener("pointermove", (ev) => {
     if (!drag || ev.pointerId !== drag.id) return;
+    // the button was released somewhere we did not hear about: no phantom year selection
+    if (ev.pointerType === "mouse" && ev.buttons === 0) { drag = null; boks.hidden = true; return; }
     drag.x1 = lokal(ev);
     if (!drag.aktiv && Math.abs(drag.x1 - drag.x0) > 6) {
       drag.aktiv = true;
@@ -471,6 +526,7 @@ function bindBandDrag() {
   };
   el.band.addEventListener("pointerup", slutt);
   el.band.addEventListener("pointercancel", slutt);
+  window.addEventListener("pointerup", (ev) => { if (drag && ev.pointerId === drag.id && !el.band.contains(ev.target)) { if (drag.aktiv) slutt(ev); else { drag = null; boks.hidden = true; } } });
 }
 function arFor(a, b) {
   const x = siste.x;
