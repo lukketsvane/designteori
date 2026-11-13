@@ -1,0 +1,336 @@
+/* KART - det semantiske kartet (kart.js). Brukar fargevariablane frå style.css. */
+
+/* Det gamle kartet ligg att i sida, men er gøymt når kart.js har teke over fana */
+#view-kart.kart-ny > :not(.kart) { display: none !important; }
+.kart [hidden] { display: none !important; }
+.kart-linje.kart-feil { color: var(--fg); }
+
+.kart-linje {
+  margin: 0 0 12px;
+  font-size: .92rem;
+  line-height: 1.5;
+}
+.kart-kontroll {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 9.5em);
+  gap: 0 16px;
+  margin-bottom: 4px;
+}
+.kart-treff {
+  margin: 6px 0 0;
+  font-size: .81rem;
+  line-height: 1.45;
+  color: var(--dim);
+}
+
+/* ---- flata ---- */
+.kart-ramme {
+  margin: 10px calc(0px - var(--page-gutter)) 0;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+  background: var(--bg);
+}
+.kart-flate {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.04;
+  max-height: 78vh;
+  min-height: 300px;
+  overflow: hidden;
+}
+.kart-flate canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.kart-flate canvas.kart-drar { cursor: grabbing; }
+.kart-flate canvas:focus-visible { outline: 1px solid var(--dim); outline-offset: -2px; }
+.kart-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 var(--page-gutter);
+  text-align: center;
+  font-size: .88rem;
+  color: var(--dim);
+}
+.kart-status.kart-feil { color: var(--fg); }
+.kart-flate.kart-tom { aspect-ratio: auto; min-height: 120px; }
+
+.kart-zoom {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kart-zoom button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+.kart-zoom button:hover { border-color: var(--fg); }
+
+.kart-linjeverk {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 calc(var(--page-gutter) - 10px) 0 var(--page-gutter);
+  border-top: 1px solid var(--hair);
+}
+.kart-hint {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 6px 0;
+  font-size: .75rem;
+  line-height: 1.4;
+  color: var(--dim);
+}
+.kart-linjeverk .act { flex: 0 0 auto; }
+
+/* ---- tips ved eit verk ---- */
+.kart-tips {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: max-content;
+  max-width: 300px;
+  padding: 9px 11px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
+  font-size: .8rem;
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.kart-tips[hidden] { display: none; }
+.kart-tips:not(.kt-pinned) { pointer-events: none; }
+.kart-tips.kt-pinned { border-color: var(--fg); }
+.kart-tips:hover { text-decoration: none; }
+.kt-t {
+  font-weight: 400;
+  font-size: .86rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.kt-m, .kt-o { font-family: var(--mono); font-size: 10px; letter-spacing: .02em; color: var(--dim); }
+.kt-k { color: var(--fg); }
+.kt-u { color: var(--dim); }
+.kt-f { color: var(--dim); font-size: .74rem; }
+.kt-o { margin-top: 2px; }
+.kart-tips.kt-pinned .kt-o { color: var(--fg); text-decoration: underline; text-underline-offset: .2em; }
+
+.kart-sw {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: .02em;
+}
+
+/* ---- forklaring ---- */
+.kart-lg-hovud {
+  margin: 14px 0 4px;
+  font-size: .81rem;
+  color: var(--dim);
+}
+.kart-forklaring, .kp-under {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 20px;
+}
+@media (max-width: 460px) { .kart-forklaring, .kp-under { grid-template-columns: 1fr; } }
+.kart-lg {
+  -webkit-appearance: none;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  min-height: var(--tap, 44px);
+  margin: 0;
+  padding: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-size: .84rem;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+.kart-lg-n { flex: 1 1 auto; min-width: 0; }
+.kart-lg-c {
+  flex: 0 0 auto;
+  margin-left: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--dim);
+  text-align: right;
+}
+.kart-lg-c b { font-weight: 500; color: var(--fg); }
+.kart-lg:hover .kart-lg-n { text-decoration: underline; text-decoration-color: var(--dim); text-underline-offset: .2em; }
+.kart-lg.on { box-shadow: inset 2px 0 0 var(--fg); padding-left: 8px; }
+.kart-lg.on .kart-lg-n { font-weight: 500; }
+.kart-lg-av { color: var(--dim); }
+.kart-lg:focus-visible { outline: 1px solid var(--dim); outline-offset: -1px; }
+
+/* ---- panel for vald klynge ---- */
+.kart-panel {
+  margin: 18px 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--fg);
+}
+.kart-panel[hidden] { display: none; }
+.kp-hovud { display: flex; align-items: baseline; gap: 2px; }
+.kp-hovud h3 { margin: 0; font-size: 1.2rem; font-weight: 400; line-height: 1.3; }
+.kp-sw { width: 11px; height: 11px; }
+.kart-panel h4 {
+  margin: 16px 0 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.kp-sti { margin: 4px 0 0; font-size: .84rem; color: var(--dim); }
+.kp-knapp {
+  -webkit-appearance: none; appearance: none; margin: 0; padding: 0; border: 0; background: none;
+  font: inherit; color: var(--fg); cursor: pointer;
+  text-decoration: underline; text-decoration-style: dotted; text-decoration-color: var(--dim); text-underline-offset: .16em;
+}
+.kp-tal { margin: 8px 0 0; font-size: .9rem; line-height: 1.5; }
+.kp-ord { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 6px; }
+.kp-ord .tag { font-size: 11px; color: var(--fg); border-color: var(--line); }
+.kp-note, .kp-merk { color: var(--dim); font-size: .75rem; }
+.kp-note { margin: 4px 0 6px; line-height: 1.4; }
+
+.kp-periode {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  align-items: end;
+}
+.kp-p { display: flex; flex-direction: column; align-items: stretch; min-width: 0; }
+.kp-pv, .kp-pl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  line-height: 1.3;
+  color: var(--dim);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.kp-pb {
+  position: relative;
+  height: 48px;
+  margin: 2px 0 4px;
+  border-bottom: 1px solid var(--line);
+}
+.kp-pb i {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 0;
+  background: var(--fg);
+  border-radius: 2px 2px 0 0;
+}
+
+.kp-to {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 0 20px;
+}
+.kp-liste li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 4px 0;
+  border-top: 1px solid var(--hair);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.kp-liste li > span:last-child {
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.kp-verk { margin: 0; padding-left: 1.3em; font-size: .86rem; line-height: 1.4; }
+.kp-verk li { padding: 4px 0; }
+.kp-verk a {
+  text-decoration-style: dotted;
+  text-decoration-color: var(--dim);
+  overflow-wrap: anywhere;
+}
+.kp-verk a:hover { text-decoration-style: solid; text-decoration-color: var(--fg); }
+.kp-knappar { display: flex; flex-wrap: wrap; margin-top: 14px; }
+
+/* ---- om kartet ---- */
+.kart-om {
+  margin: 18px 0 8px;
+  border-top: 1px solid var(--hair);
+  padding-top: 8px;
+}
+.kart-om summary {
+  cursor: pointer;
+  min-height: var(--tap, 44px);
+  display: flex;
+  align-items: center;
+  font-size: .9rem;
+}
+.kart-om summary:focus-visible { outline: 1px solid var(--dim); outline-offset: 2px; }
+.kart-om-tekst { font-size: .86rem; line-height: 1.55; }
+.kart-om-tekst h4 { margin: 14px 0 4px; font-size: .9rem; font-weight: 400; }
+.kart-om-tekst p { margin: 0 0 8px; }
+
+/* ---- stort kart: fyller vindauget ---- */
+.kart-ramme.kart-stor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  margin: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+.kart-stor .kart-flate { flex: 1 1 auto; aspect-ratio: auto; max-height: none; min-height: 0; height: auto; }
+.kart-stor .kart-linjeverk { flex: 0 0 auto; }
+html.kart-stor-open, html.kart-stor-open body { overflow: hidden; }
+
+@media (forced-colors: active) {
+  .kart-sw { forced-color-adjust: none; }
+}

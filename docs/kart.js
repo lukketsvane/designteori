@@ -120,7 +120,7 @@
       const it = items[i];
       if (!(it.x >= 0 && it.x <= W && it.y >= 0 && it.y <= H)) continue;
       if (it.w > W - 4 || it.h > H - 4) continue;
-      const tries = [0, -0.5 * it.h - 4, 0.5 * it.h + 4];
+      const tries = [0, -0.6 * it.h - gap, 0.6 * it.h + gap, -it.h - 2 * gap, it.h + 2 * gap];
       for (const dy of tries) {
         let l = it.x - it.w / 2, t = it.y - it.h / 2 + dy;
         l = Math.max(2, Math.min(W - 2 - it.w, l));
@@ -199,6 +199,14 @@
     return out;
   }
 
+  /* Kort namn til oversikta på smal skjerm: delen før første kolon eller komma. */
+  function shortName(name) {
+    const s = String(name == null ? "" : name).trim();
+    const m = /^[^:,]+/.exec(s);
+    const t = m ? m[0].trim() : s;
+    return t.length >= 4 ? t : s;
+  }
+
   function validData(d) {
     if (!d || !Array.isArray(d.ids) || !d.ids.length || !Array.isArray(d.klynger) || !d.klynger.length) return false;
     const n = d.ids.length;
@@ -223,7 +231,7 @@
     const t = (d && d.tal) || {};
     const n = t.verk || (d && d.ids ? d.ids.length : 0);
     const k = t.klynger || (d && d.klynger ? d.klynger.length : 0);
-    let s = fmt(n) + " verk. Kvar prikk er eitt verk, og verk som liknar kvarandre i tema, ligg nær kvarandre. Fargane er " + k + " klynger.";
+    let s = fmt(n) + " verk. Kvar prikk er eitt verk, og verk som liknar kvarandre i tema, ligg nær kvarandre. Ein algoritme har delt verka i " + k + " klynger.";
     if (typeof t.grense_del === "number") s += " Grensene er mjuke: " + pct(t.grense_del) + " av verka ligg på ei grense mellom klynger.";
     return s;
   }
@@ -231,7 +239,7 @@
   const API = {
     MODES, PAL, SEQ, SLOT8, COUNTRIES, VENUES,
     esc, fmt, fold, queryTokens, makeMatcher, periodIndex, countryIndex, venueIndex,
-    parseKartHash, buildKartHash, wrapLines, placeLabels, buildGrid, nearest, clampBox, centralIds, validData, luminance, introLine,
+    parseKartHash, buildKartHash, wrapLines, placeLabels, shortName, buildGrid, nearest, clampBox, centralIds, validData, luminance, introLine,
   };
   if (typeof module === "object" && module.exports) { module.exports = API; return; }
   window.DTKart = API;
@@ -270,6 +278,7 @@
     </div>
     <p class="kart-lg-hovud"></p>
     <div class="kart-forklaring" role="group" aria-label="Fargeforklaring"></div>
+    <div class="kart-klynger" role="group" aria-label="Klynger" hidden></div>
     <div class="kart-panel" hidden></div>
     <details class="kart-om" hidden><summary>Korleis kartet er laga</summary><div class="kart-om-tekst"></div></details>`;
 
@@ -280,13 +289,13 @@
     const root = document.createElement("div");
     root.className = "kart";
     root.innerHTML = TEMPLATE;
-    sec.appendChild(root);
+    sec.insertBefore(root, sec.firstChild);
     const $ = (s) => root.querySelector(s);
     const el = {
       line: $(".kart-linje"), search: $(".kart-sok"), mode: $(".kart-farge"), hits: $(".kart-treff"),
       frame: $(".kart-ramme"), wrap: $(".kart-flate"), cv: $("canvas"), tip: $(".kart-tips"), status: $(".kart-status"),
       hint: $(".kart-hint"), big: $('[data-kz="stor"]'), lgHead: $(".kart-lg-hovud"), legend: $(".kart-forklaring"),
-      panel: $(".kart-panel"), om: $(".kart-om"), omText: $(".kart-om-tekst"),
+      panel: $(".kart-panel"), om: $(".kart-om"), clList: $(".kart-klynger"), omText: $(".kart-om-tekst"),
     };
     const fine = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : { matches: true };
 
@@ -343,9 +352,9 @@
     }
     function fail() {
       K.failed = true;
-      el.status.textContent = "Kartet kunne ikkje lastast. Last sida på nytt for å prøve igjen. Under ligg det gamle kartet.";
-      el.status.classList.add("kart-feil");
-      el.wrap.classList.add("kart-tom");
+      el.line.textContent = "Det nye kartet kunne ikkje lastast. Last sida på nytt for å prøve igjen. Under ligg det gamle kartet.";
+      el.line.classList.add("kart-feil");
+      for (const x of [el.frame, root.querySelector(".kart-kontroll"), el.hits, el.lgHead, el.legend, el.clList, el.panel, el.om]) x.hidden = true;
       sec.classList.remove("kart-ny");
       try { window.dispatchEvent(new Event("resize")); } catch (e) { /* gamalt kart teiknar seg ved neste endring */ }
     }
@@ -395,14 +404,15 @@
       for (const w of raw) {
         const i = K.idx.get(w && w.id);
         if (i == null) continue;
-        works[i] = { t: String(w.title || ""), y: w.year || 0, v: String(w.source || w.venue || ""), f: null };
+        works[i] = { t: String(w.title || ""), y: w.year || 0, v: String(w.source || w.venue || ""), f: null, cs: w.countries };
       }
       for (let i = 0; i < n; i++) {
         const w = works[i];
         if (!w) { ar[i] = nper; land[i] = COUNTRIES.length + 1; kanal[i] = VENUES.length + 1; continue; }
         const p = periodIndex(w.y, nper);
         ar[i] = p < 0 ? nper : p;
-        land[i] = countryIndex(raw[i] && raw[i].id === K.d.ids[i] ? raw[i].countries : (raw.find((x) => x && x.id === K.d.ids[i]) || {}).countries);
+        land[i] = countryIndex(w.cs);
+        w.cs = null;
         kanal[i] = venueIndex(w.v, /^nordic:/.test(K.d.ids[i]));
       }
       const count = (arr, m) => { const c = new Array(m).fill(0); for (let i = 0; i < n; i++) c[arr[i]]++; return c; };
@@ -499,8 +509,8 @@
       const bw = Math.max(1, K.bx.maxx - K.bx.minx), bh = Math.max(1, K.bx.maxy - K.bx.miny);
       K.s0 = Math.min(W / bw, H / bh) * 0.94;
       el.cv.style.touchAction = K.z > 1.001 ? "none" : "pan-y";
-      hideTip();
       schedule();
+      if (!el.tip.hidden) { const i = K.pinned >= 0 ? K.pinned : K.hover; if (i >= 0) requestAnimationFrame(() => placeTip(i)); }
     }
     function schedule() { if (!K.raf && K.d) K.raf = requestAnimationFrame(draw); }
     const scale = () => K.s0 * K.z;
@@ -536,10 +546,12 @@
       const fs = big ? (K.W < 420 ? 14 : 15) : (K.W < 420 ? 11.5 : 12.5);
       const font = (big ? "" : "italic ") + fs + "px Literata, Charter, Georgia, serif";
       const lh = Math.round(fs * 1.18);
-      const key = type + o.id + "|" + font + "|" + maxW;
+      const full = o.namn || (big ? "Klynge " : "Underklynge ") + o.id;
+      const short = big && K.W < 480 && K.z < SUBZ && o.id !== K.sel;
+      const key = type + o.id + "|" + font + "|" + maxW + "|" + short;
       let lb = K.lines.get(key);
       if (!lb) {
-        const lines = wrapLines(o.namn || (big ? "Klynge " : "Underklynge ") + o.id, maxW, (t) => measureText(ctx, font, t));
+        const lines = wrapLines(short ? shortName(full) : full, maxW, (t) => measureText(ctx, font, t));
         const w = Math.max(...lines.map((t) => measureText(ctx, font, t)));
         lb = { lines, font, lh, w: w + (big ? 13 : 0) + 4, h: lines.length * lh + 2, dot: big };
         K.lines.set(key, lb);
@@ -726,6 +738,12 @@
           `<span class="kart-sw" style="background:${esc(catColour(mode, i))}"></span><span class="kart-lg-n">${esc(c.name)}</span>` +
           `<span class="kart-lg-c">${fmt(c.n)}${K.match ? ` · <b>${fmt(h)} treff</b>` : ""}</span></button>`;
       }).join("");
+      /* Klyngelista er tekstalternativet til kartet, så ho står der i alle fargeval. */
+      if (mode === "klynge") { el.clList.hidden = true; el.clList.innerHTML = ""; return; }
+      el.clList.innerHTML = `<p class="kart-lg-hovud">Klynger</p><div class="kart-forklaring">` +
+        K.cl.map((c, i) => c ? `<button type="button" class="kart-lg${K.sel === i ? " on" : ""}${K.match && !(K.matchCl[i] || 0) ? " kart-lg-av" : ""}" data-kk="${esc(i)}" aria-pressed="${K.sel === i}">` +
+          `<span class="kart-lg-n">${esc(c.namn || "Klynge " + i)}</span><span class="kart-lg-c">${fmt(c.n || 0)}${K.match ? ` · <b>${fmt(K.matchCl[i] || 0)} treff</b>` : ""}</span></button>` : "").join("") + `</div>`;
+      el.clList.hidden = false;
     }
 
     function workLink(id) {
@@ -796,6 +814,7 @@
       el.big.textContent = on ? "Lukk stort kart" : "Stort kart";
       el.big.setAttribute("aria-pressed", String(on));
       renderHint();
+      resize();
       requestAnimationFrame(resize);
     }
 
@@ -819,9 +838,10 @@
       K.cat = -1; computeFocus(); renderLegend(); writeHash(); schedule();
     });
     el.search.addEventListener("input", () => { clearTimeout(searchTmr); searchTmr = setTimeout(runSearch, 120); });
-    root.addEventListener("keydown", (e) => {
-      if (e.key !== "Escape") return;
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape" || !sec.classList.contains("active")) return;
       if (el.frame.classList.contains("kart-stor")) { setBig(false); e.preventDefault(); return; }
+      if (!root.contains(e.target) && e.target !== document.body && e.target !== document.documentElement) return;
       if (!el.tip.hidden) { hideTip(); return; }
       if (K.sel >= 0 || K.sub >= 0 || K.cat >= 0) { clearAll(); e.preventDefault(); return; }
       if (e.target === el.search && el.search.value) { el.search.value = ""; runSearch(); }
@@ -955,7 +975,7 @@
 
     /* Fana: last ved første opning, skriv adressa når fana blir aktiv. */
     const onActive = () => {
-      if (!sec.classList.contains("active")) { if (el.frame.classList.contains("kart-stor")) setBig(false); return; }
+      if (!sec.classList.contains("active")) { if (el.frame.classList.contains("kart-stor")) setBig(false); hideTip(); return; }
       if (!K.started) { start(); return; }
       requestAnimationFrame(() => { resize(); schedule(); });
       writeHash();
