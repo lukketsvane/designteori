@@ -426,6 +426,10 @@ def verify_all(*, check_sqlite: bool = True) -> dict:
                 finally:
                     conn.close()
 
+    from .search_verify import verify_search_files
+
+    errors.extend(verify_search_files())
+
     if errors:
         raise AssertionError("DESIGNTEORI verification failed:\n - " + "\n - ".join(errors))
 

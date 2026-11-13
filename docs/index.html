@@ -7,11 +7,11 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <title>designteori · Iver Raknes Finne</title>
-  <meta name="description" content="Nordisk designteori og designforsking 1900–2026. Publikasjonar, fulltekst-PDF, siteringar og semantisk søk.">
+  <meta name="description" content="Nordisk designteori og designforsking. Søk i tittel, samandrag og tilknyting, finn open PDF, liknande verk og eksport til referanseverktøy.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..400;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="style.css?v=0">
+  <link rel="stylesheet" href="style.css?v=1">
 </head>
 <body>
   <header class="bar">
@@ -21,6 +21,7 @@
       <button class="nav-btn" data-tab="kart" type="button">kart</button>
       <button class="nav-btn" data-tab="analyse" type="button">analyse</button>
       <button class="nav-btn" data-tab="teorielement" type="button">teori</button>
+      <button class="nav-btn" data-tab="om" type="button">om</button>
     </nav>
     <a href="https://iverfinne.no">iverfinne.no</a>
   </header>
@@ -35,75 +36,112 @@
         </button>
         <button class="metric metric-btn" id="metricPdfBtn" type="button">
           <span class="num" id="stPdfs">…</span>
-          <span class="label">Fulltekst-PDF i arkivet</span>
+          <span class="label">PDF-lenkjer kontrollerte</span>
         </button>
       </div>
 
       <div class="search-wrap">
-        <input type="search" id="qInput" placeholder="Søk tittel, forfattar, tidsskrift…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk">
+        <input type="search" id="qInput" placeholder="Skriv eit emne, ei setning eller ein tittel – norsk eller engelsk" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Søk" aria-describedby="statusLine">
       </div>
-
-      <div class="filters">
-        <select id="ccSel" aria-label="Land">
-          <option value="">Alle land</option>
-          <option value="NO">Noreg</option>
-          <option value="SE">Sverige</option>
-          <option value="DK">Danmark</option>
-          <option value="FI">Finland</option>
-          <option value="IS">Island</option>
-        </select>
-
-        <select id="presetSel" aria-label="Tema">
-          <option value="">Alle tema</option>
-          <option value="participatory-design">Deltakande design</option>
-          <option value="codesign">Co-design</option>
-          <option value="research-through-design">Research through Design</option>
-          <option value="design-theory-epistemology">Designteori</option>
-          <option value="service-systemic-design">Teneste- og systemdesign</option>
-          <option value="sustainable-circular">Berekraftig design</option>
-          <option value="critical-speculative">Kritisk design</option>
-          <option value="interaction-hci-ai">Interaksjonsdesign</option>
-          <option value="design-history-nordic">Designhistorie</option>
-          <option value="craft-materiality-textile">Handverk og tekstil</option>
-          <option value="aesthetics-form">Estetikk og form</option>
-          <option value="design-education-pedagogy">Designdidaktikk</option>
-          <option value="design-ethics-justice">Etikk og universell</option>
-          <option value="design-anthropology">Designantropologi</option>
-          <option value="industrial-product">Industridesign</option>
-          <option value="urban-architecture">Arkitekturteori</option>
-        </select>
-
-        <select id="eraSel" aria-label="Periode">
-          <option value="">1900–2026</option>
-          <option value="pre2000">1900–1999</option>
-          <option value="2000-2009">2000–2009</option>
-          <option value="2010-2019">2010–2019</option>
-          <option value="2020-2026">2020–2026</option>
-        </select>
-
-        <select id="sortSel" aria-label="Sortering">
-          <option value="relevance">PDF først</option>
-          <option value="citations">Mest sitert</option>
-          <option value="year_desc">Nyaste</option>
-          <option value="year_asc">Eldste</option>
-        </select>
+      <p id="statusLine" class="status" aria-live="polite"></p>
+      <div class="model-row">
+        <button id="modelBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="modelPanel">Slå på språkmodell</button>
+        <span id="modelState" class="status-inline"></span>
       </div>
+      <div id="modelPanel" class="panel" hidden></div>
 
-      <div id="semBanner" class="sem-active" hidden>
-        <span id="semBannerTxt"></span>
-        <button id="clearSemBtn" type="button">Lukk</button>
+      <section id="startPanel" class="panel start" aria-labelledby="startTitle" hidden>
+        <div class="panel-head">
+          <h2 id="startTitle">Byrjar du i nordisk designforsking?</h2>
+          <button id="startHideBtn" class="act act-line" type="button">Skjul</button>
+        </div>
+        <div id="startChips" class="chips" aria-label="Eksempelsøk"></div>
+        <ul id="startLines" class="plain start-lines"></ul>
+        <p id="startLang" class="start-note"></p>
+        <p class="start-terms" id="startTerms"></p>
+        <p class="start-links"><a href="#om" data-tab="om">Om korpuset og søket</a> · <a href="#ordliste">Ordliste</a></p>
+      </section>
+      <button id="startOpenBtn" class="act act-line" type="button" hidden>Byrjar du i nordisk designforsking?</button>
+
+      <div class="filter-bar">
+        <button id="filterToggle" class="act act-line" type="button" aria-expanded="false" aria-controls="filterPanel">Filter</button>
+        <button id="resetBtn" class="act act-line" type="button" hidden>Nullstill</button>
       </div>
+      <div id="filterPanel" class="filter-panel">
+        <div class="filters">
+          <label class="fld"><span class="fld-l">År frå</span><input type="number" id="yrFrom" inputmode="numeric" min="1980" max="2030" placeholder="frå" aria-label="År frå"></label>
+          <label class="fld"><span class="fld-l">År til</span><input type="number" id="yrTo" inputmode="numeric" min="1980" max="2030" placeholder="til" aria-label="År til"></label>
+          <label class="fld"><span class="fld-l">Type</span>
+            <select id="kindSel" aria-label="Type">
+              <option value="">Alle typar</option>
+              <option value="article">Artikkel</option>
+              <option value="conf">Konferansebidrag</option>
+              <option value="chapter">Kapittel</option>
+              <option value="book">Bok</option>
+              <option value="thesis">Avhandling</option>
+              <option value="other">Anna</option>
+            </select></label>
+          <label class="fld"><span class="fld-l">Språk</span>
+            <select id="langSel" aria-label="Språk">
+              <option value="">Alle språk</option>
+              <option value="e">Engelsk</option>
+              <option value="b">Bokmål</option>
+              <option value="n">Nynorsk</option>
+              <option value="d">Dansk</option>
+              <option value="s">Svensk</option>
+              <option value="o">Anna eller ukjend</option>
+            </select></label>
+          <label class="fld"><span class="fld-l">Land</span>
+            <select id="ccSel" aria-label="Land">
+              <option value="">Alle land</option>
+              <option value="NO">Noreg</option>
+              <option value="SE">Sverige</option>
+              <option value="DK">Danmark</option>
+              <option value="FI">Finland</option>
+              <option value="IS">Island</option>
+            </select></label>
+          <label class="fld"><span class="fld-l">Tilgang</span>
+            <select id="tilgSel" aria-label="Tilgang">
+              <option value="">Alle</option>
+              <option value="pdf">Har PDF-lenkje</option>
+              <option value="open">Berre kontrollert open PDF</option>
+              <option value="abs">Har samandrag</option>
+            </select></label>
+          <label class="fld"><span class="fld-l">Sortering</span>
+            <select id="sortSel" aria-label="Sortering">
+              <option value="rel">Mest relevant</option>
+              <option value="first">Les først</option>
+              <option value="cited">Mest siterte</option>
+              <option value="new">Nyaste</option>
+              <option value="old">Eldste</option>
+            </select></label>
+        </div>
+        <label class="check"><input type="checkbox" id="dupChk" checked> <span id="dupLbl">Skjul moglege dublettar</span></label>
+      </div>
+      <div id="chips" class="chips" aria-label="Aktive val"></div>
+
+      <div id="simBanner" class="sem-active" hidden></div>
+      <div id="loadMsg" class="status" role="status" hidden></div>
 
       <div class="resultline">
         <span id="hitCount">Lastar…</span>
-        <button id="resetBtn" class="link-btn" type="button" hidden>Nullstill</button>
+        <span class="result-actions">
+          <button id="copyLinkBtn" class="act act-line" type="button" hidden>Kopier lenkje</button>
+          <button id="exportBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="exportMenu" hidden>Eksporter</button>
+          <button id="listBtn" class="act act-line" type="button" aria-expanded="false" aria-controls="readingPanel">Leseliste (0)</button>
+        </span>
       </div>
+      <div id="exportMenu" class="panel" hidden></div>
+      <section id="readingPanel" class="panel" aria-label="Leseliste" hidden></section>
+      <div id="zeroBox" class="panel" hidden></div>
 
       <div id="corpusList"></div>
       <button id="moreCorpusBtn" class="more-btn" type="button" hidden>Vis 50 fleire</button>
+      <section id="peoplePanel" class="panel" aria-label="Personar og miljø" hidden></section>
     </section>
 
     <section id="view-siteringar" class="view">
+      <p class="tab-intro">Mest siterte verk og forfattarar i korpuset.</p>
       <div class="subnav" role="tablist">
         <button class="sub-pill active" data-sub="internal" type="button">Mest sitert i Norden</button>
         <button class="sub-pill" data-sub="canon" type="button">Sitert kanon</button>
@@ -117,6 +155,7 @@
     </section>
 
     <section id="view-kart" class="view">
+      <p class="tab-intro">Kart over verk som liknar kvarandre i meining, utan etikettar på enkeltverk; viser <span id="mapShown">…</span> av <span id="mapTotal">…</span>.</p>
       <div class="filters filters-2 map-controls">
         <select id="mapMode" aria-label="Fargekoding">
           <option value="cluster">Farge: klynge</option>
@@ -133,10 +172,12 @@
     </section>
 
     <section id="view-analyse" class="view">
+      <p class="tab-intro">Tal for korpuset: verk per tiår, land, tema og tidsskrift.</p>
       <div id="anaRoot"></div>
     </section>
 
     <section id="view-teorielement" class="view">
+      <p class="tab-intro" id="teIntro">Eit eige forskingsprosjekt om å kode teorielement i <span id="teTexts">nokre</span> tekstar; ikkje ei oversikt over designteoriar. Pilot.</p>
       <div class="ana-grid">
         <div class="ana-sec">
           <h3>Teorielement</h3>
@@ -146,7 +187,7 @@
         </div>
         <div class="ana-sec">
           <h3>Forankring</h3>
-          <p class="te-p">Cash (2018), «Developing theory-driven design research», <em>Design Studies</em> 56, tilrår mellom anna å «support aggregation of theory, e.g., via databases of studies and theoretical elements» (tabell 3, tilråding 4). <a href="https://doi.org/10.1016/j.destud.2018.03.002" target="_blank" rel="noopener">DOI</a></p>
+          <p class="te-p">Cash (2018), «Developing theory-driven design research», <em>Design Studies</em> 56, tilrår mellom anna å «support aggregation of theory, e.g., via databases of studies and theoretical elements» (tabell 3, tilråding 4). <a href="https://doi.org/10.1016/j.destud.2018.03.002" target="_blank" rel="noopener noreferrer">DOI</a></p>
           <p class="te-p">Felta følgjer definisjonen av teori som artikkelen legg til grunn: definerte omgrep, eksplisitt bruksområde, forklarte samanhengar og føreseiingar. Basen brukar ikkje sjekklista i artikkelen som målestokk. Ingen måte å prøve ein påstand på er rangert over ein annan.</p>
         </div>
         <div class="ana-sec">
@@ -200,6 +241,11 @@
       <div class="resultline"><span id="teCount">Lastar…</span></div>
       <div id="teList"></div>
     </section>
+
+    <section id="view-om" class="view">
+      <p class="tab-intro">Kva korpuset dekker, kva det ikkje dekker, og korleis søket verkar.</p>
+      <div id="omRoot"><p class="status">Lastar…</p></div>
+    </section>
   </main>
 
   <footer>
@@ -212,7 +258,12 @@
     </nav>
   </footer>
 
-  <script src="app.js?v=0"></script>
+  <script src="ui.js?v=1"></script>
+  <script src="search.js?v=1"></script>
+  <script src="export.js?v=1"></script>
+  <script src="embed.js?v=1"></script>
+  <script src="om.js?v=1"></script>
+  <script src="app.js?v=1"></script>
   <script src="teorielement.js?v=5"></script>
 </body>
 </html>

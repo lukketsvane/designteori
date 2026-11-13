@@ -129,6 +129,9 @@ def ensure_local_gemma(model_dir: Path = MODEL_CACHE_DIR):
         providers = ["DmlExecutionProvider", "CPUExecutionProvider"]
     else:
         phys_threads = max(4, min(8, (os.cpu_count() or 8) // 2))
+        env_threads = os.environ.get("DESIGNTEORI_ORT_THREADS", "").strip()
+        if env_threads.isdecimal() and int(env_threads) > 0:
+            phys_threads = int(env_threads)
         opts.intra_op_num_threads = phys_threads
         opts.inter_op_num_threads = 2
         providers = ["CPUExecutionProvider"]

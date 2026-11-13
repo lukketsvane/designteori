@@ -1,0 +1,10 @@
+[
+  {"id": "W2885298853", "title": "Infrastructuring urban commons over time: R&D, 50% of A_B and #1 {care}", "year": 2018, "doi": "https://doi.org/10.1080/15710882.2018.1531_x%y", "authors": ["Anna Seravalli", "Per-Anders Hillgren"], "source": "CoDesign & Practice", "kind": "article", "citations": 37, "abstract": "SECRET-ABSTRACT-TEXT-1"},
+  {"id": "nordic:diva:00094b8101b6c8b7abf0", "title": "Imagining Human-Robot Future Homes", "year": 2025, "doi": "", "authors": ["Kim, Min Jae", "Øyvind Åsheim"], "source": "DiVA", "venue": "Nordes 2025", "kind": "proceedings-article", "citations": null, "oa_url": "https://uu.diva-portal.org/smash/get/diva2:1970592/FULLTEXT01.pdf", "abstract": "SECRET-ABSTRACT-TEXT-2"},
+  {"id": "W111", "title": "Making ~ and ^ matter: a chapter", "year": 2014, "doi": "10.1234/chapter.1", "authors": ["Sofie Brødsted"], "source": "Routledge Handbook", "kind": "book-chapter", "citations": 3},
+  {"id": "W222", "title": "Design Research Handbook", "year": 2010, "doi": "", "authors": ["Maria Hansen", "Jens Olsen", "Lise Berg", "Ole Nilsen"], "source": "Springer", "kind": "book", "citations": 100},
+  {"id": "W333", "title": "A study of \\ backslashes and $ dollars", "year": 2019, "doi": "https://doi.org/10.5555/phd.2019", "authors": ["Kari Nordmann"], "source": "NTNU", "kind": "dissertation", "citations": 0},
+  {"id": "nordic:nva:aaa111", "title": "Masteroppgave om stolar", "year": 2021, "doi": "", "authors": ["Ola Nordmann"], "source": "Nasjonalt vitenarkiv / Cristin", "kind": "thesis", "source_url": "https://hdl.handle.net/11250/1"},
+  {"id": "W444", "title": "Review of design theory", "year": 2020, "doi": "https://doi.org/10.1/rev", "authors": ["A B"], "source": "Design Issues", "kind": "review", "citations": 2},
+  {"id": "W555", "title": "Editorial: noko anna", "year": 2022, "doi": "", "authors": [], "source": "", "kind": "editorial"}
+]

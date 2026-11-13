@@ -1,0 +1,56 @@
+{
+  "abstracts": {
+    "none": 2213,
+    "oa": 3908,
+    "x": 311
+  },
+  "acc": {
+    "0": 344,
+    "d": 1439,
+    "h": 23,
+    "u": 1387,
+    "v": 3239
+  },
+  "duplicates": {
+    "archive_status": 125,
+    "pairs": {
+      "nordic->nordic": 10,
+      "openalex->nordic": 11,
+      "openalex->openalex": 41
+    },
+    "title_extra_rows": 62,
+    "title_groups": 59
+  },
+  "extraction": {
+    "accepted": 311,
+    "cache_available": true,
+    "cached_not_verified_excluded": 1,
+    "candidates": 997,
+    "no_cache_document": 1,
+    "no_cache_ids": [
+      "nordic:nva:2d9b6440d6ce40142d56"
+    ],
+    "rejected": {
+      "bad-ending": 148,
+      "columns": 5,
+      "no-heading": 369,
+      "not-extracted": 4,
+      "too-long": 138,
+      "too-short": 21
+    },
+    "sha_mismatch": 0,
+    "sha_mismatch_ids": []
+  },
+  "note": "ids and numbers only; no text from the private cache",
+  "schema": 1,
+  "removed_overlong": [
+    "W1992770167",
+    "W2171107889",
+    "W2283131626",
+    "W2480460194",
+    "W2942550615",
+    "W2997164442",
+    "W4293107643",
+    "W4389082581"
+  ]
+}

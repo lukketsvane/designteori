@@ -153,6 +153,24 @@ def cmd_verify(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_build_search(args: argparse.Namespace) -> int:
+    from designteori.search_build import main as build_search_main
+
+    argv = ["--stage", args.stage]
+    if args.time_only:
+        argv += ["--time-only", str(args.time_only)]
+    if args.draft:
+        argv += ["--draft", args.draft]
+    return build_search_main(argv)
+
+
+def cmd_bench_search(_args: argparse.Namespace) -> int:
+    from designteori.search_eval import run_benchmark
+
+    _print(run_benchmark(write=True)["summary"])
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="designteori",
@@ -226,6 +244,15 @@ def main(argv: list[str] | None = None) -> int:
 
     p_ver = sub.add_parser("verify", help="Verify corpus integrity, provenance, checksums & embeddings")
     p_ver.set_defaults(func=cmd_verify)
+
+    p_bs = sub.add_parser("build-search", help="Build the site search data in docs/data/search/ (stages: config, lexical, embed, finish)")
+    p_bs.add_argument("--stage", required=True, choices=("config", "lexical", "embed", "finish", "modelcheck"))
+    p_bs.add_argument("--time-only", type=int, default=0, help="embed: time N texts, print an estimate and stop")
+    p_bs.add_argument("--draft", default="", help="finish: only encode the queries of this draft file")
+    p_bs.set_defaults(func=cmd_build_search)
+
+    p_bn = sub.add_parser("bench-search", help="Recompute the search quality (recall@10) from the published search files")
+    p_bn.set_defaults(func=cmd_bench_search)
 
     parsed = parser.parse_args(argv)
     return parsed.func(parsed)

@@ -32,3 +32,11 @@ jobs:
         run: python -m pytest tests/test_teorielement_prep.py -q
       - name: Verifiser database, sjekksummar, kjeldelag og Google-embeddingar
         run: python designteori.py verify
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Køyr JavaScript-testar for søk, eksport og grensesnitt (node:test, ingen avhengigheiter)
+        run: |
+          if ls tests/js/*.test.mjs >/dev/null 2>&1; then
+            node --test tests/js/*.test.mjs
+          fi
