@@ -10,6 +10,8 @@ import { initMaal } from "./maal.js?v=24";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
+// every module has loaded: the boot fallback in index.html stands down
+window.__utforskStarta = true;
 
 const LASTARAR = {
   kart: () => import("./visningar/kart.js?v=24"),
@@ -45,8 +47,16 @@ async function start() {
   liste.init(listeApi);
   T.abonner(vedEndring);
   liste.oppdater(S, { filter: true, sort: true, verk: true });
+  // a shared or reloaded link with a work opens on a phone with the work's card showing, not
+  // only a label on the map under a closed sheet
+  if (S.verk && smal()) liste.settArk("kort", true);
   settFane(S.vis);
   await visVis(S.vis);
+  // ... and the work's mark sits in the part of the picture above the card
+  if (S.verk && smal()) {
+    const v = visingar[S.vis], i = D.idx.get(S.verk);
+    if (v && v.klar && v.mod.sentrer && i != null) setTimeout(() => { if (D.kol.id[i] === S.verk) { try { v.mod.sentrer(i); } catch (e) { feil(S.vis, e); } } }, 60);
+  }
   initMaal({ visingar, liste, filterlinje });
   // label widths measured with the fallback font are wrong once the web font is in
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
@@ -212,8 +222,13 @@ function vedEndring(s, e) {
   liste.oppdater(s, e);
   // below 900 px a new tab or a new selection drops the sheet to its handle, so the picture
   // the reader asked for is not hidden under half a screen of list
-  if (smal() && (e.vis || (e.filter && !e.popstate)) && liste.arkStatus() === "halv" && !e.verk) liste.settArk("peek");
-  else if (smal() && e.vis && liste.arkStatus() !== "peek") liste.settArk("peek");
+  // Back/Forward to a state with an open work shows its card, as a fresh link does
+  if (smal()) {
+    const st = liste.arkStatus();
+    if (e.popstate) { if (s.verk) { if (st === "peek") liste.settArk("kort"); } else if (st !== "peek") liste.settArk("peek"); }
+    else if (e.vis && st !== "peek") liste.settArk("peek");
+    else if (e.filter && st === "halv" && !e.verk) liste.settArk("peek");
+  }
   if (e.vis) {
     settFane(s.vis);
     // the view that comes into sight is drawn once, by visVis, with every change

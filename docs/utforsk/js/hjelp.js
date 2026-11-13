@@ -39,6 +39,18 @@ export const kutt = (s, n) => {
   s = String(s || "");
   return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s;
 };
+// Archive names come as "Etternamn, Fornamn", OpenAlex names as "Fornamn Etternamn". In a list
+// of authors joined with commas "Dindler, Christian" reads as two people, so names are shown
+// as "Fornamn Etternamn" (display only; keys and search keep the stored form).
+export function visNamn(s) {
+  const t = String(s || "").trim();
+  const m = /^([^,]+),\s*([^,]+)$/.exec(t);
+  if (!m) return t;
+  const etter = m[1].trim(), fore = m[2].trim();
+  // "Smith, Jr." and initials-only suffixes are not given names
+  if (/^(jr|sr|ii|iii|iv)\.?$/i.test(fore)) return t;
+  return `${fore} ${etter}`;
+}
 
 // ---------- colour ----------
 export const PALETTE_TEMA = ["#4da3ff", "#ff9f45", "#8fe388", "#ffd166", "#c77dff", "#5ee6c8", "#ff6b5e", "#f472b6", "#c8a27a", "#9fb3c8"];

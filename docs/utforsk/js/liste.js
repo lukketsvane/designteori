@@ -1,6 +1,6 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=24";
+import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=24";
 import * as T from "./tilstand.js?v=24";
 import * as data from "./data.js?v=24";
 import { hentSamandrag } from "./samandrag.js?v=24";
@@ -131,6 +131,7 @@ export function oppdater(s, e) {
   if (e.verk || e.filter) visDetalj();
   else if (e.vis || (e.visning && e.visning.size)) tittelFri();
   if (e.filter || e.verk) teiknHandtak();
+  if (e.verk && el.p) kroppKlasse();
 }
 export const listeLengd = () => rekkje.length;
 export const listeInnhald = () => rekkje;
@@ -173,7 +174,7 @@ function teiknRader(tving) {
   for (let p = a; p < b; p++) {
     const i = rekkje[p];
     const f = D.kol.forf[i];
-    const forf = f.length ? v.forfattarar[f[0]].namn + (f.length > 1 ? " m.fl." : "") : "Ukjend forfattar";
+    const forf = f.length ? visNamn(v.forfattarar[f[0]].namn) + (f.length > 1 ? " m.fl." : "") : "Ukjend forfattar";
     const kanal = D.kanal[i] >= 0 ? v.kanalar[D.kanal[i]].namn : D.lenker && D.lenker.kjelde[i] ? D.lenker.kjelde[i] : (D.lag[i] ? "Arkiv" : "");
     html += `<div class="rad${p === aktiv ? " aktiv" : ""}" role="option" id="rad-${i}" data-i="${i}" aria-label="${esc(D.kol.tittel[i])}, ${esc(forf)}, ${D.ar[i]}${[", open PDF", ", lenke", ", berre DOI", ""][D.pdf[i]]}" aria-selected="${p === aktiv}" aria-posinset="${p + 1}" aria-setsize="${rekkje.length}" style="transform:translateY(${p * H}px)">
       <div class="rad-tekst"><span class="rad-tittel">${esc(D.kol.tittel[i])}</span><span class="rad-meta">${esc(forf)} · ${D.ar[i]}${kanal ? " · " + esc(kutt(kanal, 60)) : ""}</span></div>
@@ -206,7 +207,9 @@ function merke(i) {
 
 function teiknHandtak() {
   const ope = arkTilstand !== "peek";
-  el.handtakTekst.textContent = S.verk ? `${fmt(T.valt)} verk · eitt ope` : `${fmt(T.valt)} verk`;
+  // the one place on a phone that says how many works are selected (the chip row does not repeat it)
+  const tal = T.valt < D.n ? `${fmt(T.valt)} av ${fmt(D.n)} verk` : `${fmt(D.n)} verk`;
+  el.handtakTekst.textContent = S.verk ? `${tal} · eitt ope` : tal;
   el.handtak.setAttribute("aria-label", ope ? "Gøym lista" : "Vis lista");
   el.handtak.setAttribute("aria-expanded", String(ope));
 }
@@ -321,9 +324,9 @@ function detaljHtml(i) {
   const forf = k.forf[i].map((f) => {
     const a = v.forfattarar[f];
     return a.k.startsWith("A")
-      ? `<button type="button" class="lenkeknapp" data-forf="${esc(a.k)}" title="Vis verka til ${esc(a.namn)}">${esc(a.namn)}</button>`
-      : `<button type="button" class="lenkeknapp" data-sok="${esc(a.namn)}" title="Søk etter ${esc(a.namn)}">${esc(a.namn)}</button>`;
-  }).join(", ");
+      ? `<button type="button" class="lenkeknapp" data-forf="${esc(a.k)}" title="Vis verka til ${esc(visNamn(a.namn))}">${esc(visNamn(a.namn))}</button>`
+      : `<button type="button" class="lenkeknapp" data-sok="${esc(a.namn)}" title="Søk etter ${esc(visNamn(a.namn))}">${esc(visNamn(a.namn))}</button>`;
+  }).join(`<span class="skil">, </span>`);
   const kanal = D.kanal[i] >= 0 ? `<button type="button" class="lenkeknapp" data-kanal="${esc(v.kanalar[D.kanal[i]].k)}">${esc(v.kanalar[D.kanal[i]].namn)}</button>` : (D.lag[i] ? "Ukjend kanal" : "Ukjend kanal");
   const t = v.tema[D.tema[i]];
   const inst = k.inst[i].map((j) => { const x = v.institusjonar[j]; return `<li><button type="button" class="lenkeknapp" data-inst="${esc(x.k)}">${esc(x.namn)}</button>${x.land ? ` <span class="dim">${esc(T.landNamn(x.land))}</span>` : ""}</li>`; }).join("");
@@ -468,18 +471,24 @@ function arkHoyder() {
 }
 export function settArk(t, utanAnim) {
   arkTilstand = t;
-  if (!smal()) { el.p.style.height = ""; el.p.classList.remove("ark-peek", "ark-halv", "ark-full"); return; }
+  if (!smal()) { el.p.style.height = ""; el.p.classList.remove("ark-peek", "ark-kort", "ark-halv", "ark-full"); document.body.classList.remove("verk-ope-smal"); return; }
   const h = arkHoyder()[t];
   el.p.classList.toggle("utan-anim", !!utanAnim);
   el.p.style.height = `${h}px`;
-  el.p.classList.remove("ark-peek", "ark-halv", "ark-full");
+  el.p.classList.remove("ark-peek", "ark-kort", "ark-halv", "ark-full");
   el.p.classList.add(`ark-${t}`);
   document.documentElement.style.setProperty("--ark", `${h}px`);
+  kroppKlasse();
   teiknHandtak();
   setTimeout(() => teiknRader(true), 260);
   document.dispatchEvent(new CustomEvent("utforsk:ark", { detail: { h } }));
 }
 export const arkStatus = () => arkTilstand;
+// A work open on a phone with its card showing: the canvas views fold their line and control
+// row (CSS), so the map above the card keeps its height
+function kroppKlasse() {
+  document.body.classList.toggle("verk-ope-smal", !!(smal() && S.verk && arkTilstand !== "peek"));
+}
 function drag() {
   let y0 = 0, h0 = 0, t0 = 0, sisteY = 0, sisteT = 0, fart = 0, aktivDrag = false;
   el.handtak.addEventListener("pointerdown", (e) => {

@@ -12,7 +12,7 @@ export const AR_MIN = 1983, AR_MAX = 2026;
 
 export const tomeFilter = () => ({
   ar: null, land: new Set(), tema: new Set(), kanal: new Set(), kgr: new Set(), type: new Set(), lag: new Set(),
-  pdf: false, q: "", qv: false, inst: new Set(), forf: new Set(), fland: new Set(), stad: new Set(), par: null,
+  pdf: false, q: "", qv: false, qd: false, inst: new Set(), forf: new Set(), fland: new Set(), stad: new Set(), par: null,
   kanon: new Set(), siterer: null, term: new Set(), lik: null, omr: null,
 });
 
@@ -193,14 +193,17 @@ function qMaske(q) {
   const T = tokens.length;
   let c = 0, minst1 = 0;
   for (let i = 0; i < n; i++) { if (tal[i] === T) { M[i] = 1; c++; } if (tal[i] > 0) minst1++; }
-  sokInfo.streng = c; sokInfo.minst1 = minst1; sokInfo.vid = false;
+  let utanEin = 0;
+  if (T > 2) for (let i = 0; i < n; i++) if (tal[i] >= T - 1) utanEin++;
+  sokInfo.streng = c; sokInfo.minst1 = minst1; sokInfo.utanEin = utanEin; sokInfo.vid = false;
   if (T > 1 && S.f.qv) {
     // the reader chose "at least one of the words"
     for (let i = 0; i < n; i++) M[i] = tal[i] > 0 ? 1 : 0;
     sokInfo.vid = true;
-  } else if (c < 10 && T > 2) {
-    // three or more words: relax to all but one (amendment 1); two words are never relaxed by
-    // default, since "at least 1 of 2" would picture the common word, not the topic
+  } else if (T > 2 && (c === 0 || S.f.qd)) {
+    // three or more words: the works with every word come first, as for two words; the set
+    // with all but one word is the default only when no work has them all, and otherwise an
+    // offer the reader can take (qd)
     const min = T - 1;
     for (let i = 0; i < n; i++) M[i] = tal[i] >= min ? 1 : 0;
     sokInfo.delvis = true;
@@ -453,7 +456,7 @@ function zFor(vis) {
 }
 export function lagHash() {
   const p = [];
-  for (const d of DIMS) { const t = dimTekst(d); if (t) p.push(`${d}=${t}`); if (d === "q" && t && S.f.qv) p.push("qv=1"); }
+  for (const d of DIMS) { const t = dimTekst(d); if (t) p.push(`${d}=${t}`); if (d === "q" && t && S.f.qv) p.push("qv=1"); if (d === "q" && t && S.f.qd) p.push("qd=1"); }
   if (S.verk) p.push(`verk=${encodeURIComponent(S.verk)}`);
   // view settings go in the link only for the view on screen, so links stay short
   const v = S.vis;
@@ -509,6 +512,7 @@ export function lesHash(hash) {
       case "pdf": f.pdf = v === "1"; break;
       case "q": f.q = v.slice(0, 200); break;
       case "qv": f.qv = v === "1"; break;
+      case "qd": f.qd = v === "1"; break;
       case "par": { const a = raw.split("~").map((x) => decodeURIComponent(x)); if (a.length === 2 && a.every((x) => ID_RE.test(x))) f.par = a; else ugyldig(k, v); break; }
       case "siterer": { const m = /^(kgr|land|tiar):([A-Za-z0-9_]+)$/.exec(v); if (m) f.siterer = { modus: m[1], nokkel: m[2] }; else ugyldig(k, v); break; }
       case "lik": if (ID_RE.test(v)) f.lik = v; else ugyldig(k, v); break;
@@ -575,6 +579,7 @@ function bilete() {
   const f = {};
   for (const d of DIMS) f[d] = dimTekst(d);
   if (S.f.qv && S.f.q) f.q += "|v";
+  if (S.f.qd && S.f.q) f.q += "|d";
   return { vis: S.vis, verk: S.verk, f, v: VIS_NOKLAR(), sort: S.sort };
 }
 
@@ -584,7 +589,7 @@ export function endre(fn, { hist = "push", utsett = 0 } = {}) {
   fn(S);
   // normalise
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
-  if (!S.f.q) S.f.qv = false;
+  if (!S.f.q) { S.f.qv = false; S.f.qd = false; }
   const etter = bilete();
   const dims = DIMS.filter((d) => for_.f[d] !== etter.f[d]);
   const visning = new Set(Object.keys(etter.v).filter((k) => for_.v[k] !== etter.v[k]));
@@ -662,7 +667,7 @@ export function fraUrl({ start = false } = {}) {
   if (f.lik && !D.idx.has(f.lik)) { ugyldig("lik", f.lik); f.lik = null; }
   if (D.termIdx) for (const k of [...f.term]) if (!D.termIdx.has(k)) { f.term.delete(k); ugyldig("term", k); }
   if (S.f.ar && S.f.ar[0] <= AR_MIN && S.f.ar[1] >= AR_MAX) S.f.ar = null;
-  if (!f.q) f.qv = false;
+  if (!f.q) { f.qv = false; f.qd = false; }
   if (f.q && !sok) byggSok();
   rekn(DIMS);
   for (const d of aktiveDims()) if (LAT[d] && dimStatus(d) !== "ok") lastDim(d);
@@ -691,7 +696,7 @@ export function fjern(d, key) {
     const v = s.f[d];
     if (v instanceof Set) { if (key != null) v.delete(key); else v.clear(); }
     else if (d === "pdf") s.f.pdf = false;
-    else if (d === "q") { s.f.q = ""; s.f.qv = false; }
+    else if (d === "q") { s.f.q = ""; s.f.qv = false; s.f.qd = false; }
     else s.f[d] = null;
   });
 }
@@ -735,7 +740,7 @@ export function chipar() {
   for (const k of f.type) leggTil("type", k, `Type: ${v.typar[D.typeIdx.get(k)].namn}`);
   for (const k of f.lag) leggTil("lag", k, `Lag: ${k === "arkiv" ? "Arkiv" : "OpenAlex"}`);
   if (f.pdf) leggTil("pdf", null, "Berre open PDF");
-  if (f.q) leggTil("q", null, `Søk: «${kutt(f.q, 30)}»${f.qv && sokInfo.tokens.length > 1 ? " (minst eitt av orda)" : ""}`);
+  if (f.q) leggTil("q", null, `Søk: «${kutt(f.q, 30)}»${f.qv && sokInfo.tokens.length > 1 ? " (minst eitt av orda)" : sokInfo.delvis ? ` (minst ${sokInfo.tokens.length - 1} av ${sokInfo.tokens.length} ord)` : ""}`);
   for (const k of f.inst) leggTil("inst", k, `Institusjon: ${kutt(v.institusjonar[D.instIdx.get(k)].namn, 40)}`);
   for (const k of f.forf) leggTil("forf", k, `Forfattar: ${v.forfattarar[D.forfIdx.get(k)].namn}`);
   for (const k of f.fland) leggTil("fland", k, `Forfattarland: ${landNamn(k)}`);

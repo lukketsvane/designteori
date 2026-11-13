@@ -56,19 +56,23 @@ export function init() {
     clearTimeout(sokTid);
     sokTid = setTimeout(() => {
       if (!T.sokKlar()) { ko = verdi; return; }
-      T.endre((s) => { const nq = verdi.trim(); if (nq !== s.f.q) s.f.qv = false; s.f.q = nq; }, { hist: "kont:q", utsett: 300 });
+      T.endre((s) => { const nq = verdi.trim(); if (nq !== s.f.q) { s.f.qv = false; s.f.qd = false; } s.f.q = nq; }, { hist: "kont:q", utsett: 300 });
       clearTimeout(slutTid);
       slutTid = setTimeout(() => T.avsluttGest("q"), 1500);
     }, 200);
   };
-  el.brukKo = () => { if (ko != null) { const q = ko; ko = null; T.endre((s) => { s.f.q = q.trim(); s.f.qv = false; }, { hist: "kont:q", utsett: 300 }); } el.sok.placeholder = "Søk i tittel, forfattar, kanal, institusjon"; };
+  el.brukKo = () => { if (ko != null) { const q = ko; ko = null; T.endre((s) => { s.f.q = q.trim(); s.f.qv = false; s.f.qd = false; }, { hist: "kont:q", utsett: 300 }); } el.sok.placeholder = "Søk i tittel, forfattar, kanal, institusjon"; };
   el.sok.addEventListener("input", () => { brukSok(el.sok.value); visForslag(); });
   // suggestions: words in titles (tid.json) and cited works (siteringar.json), loaded on first focus
-  el.sok.addEventListener("focus", () => { T.sikre("tid.json").then(() => visForslag()); T.sikre("siteringar.json").then(() => visForslag()); });
+  el.sok.addEventListener("focus", () => {
+    T.sikre("tid.json").then(() => visForslag());
+    const hadde = T.harFil("siteringar.json");
+    T.sikre("siteringar.json").then(() => { visForslag(); if (!hadde && S.f.q) teiknChipar(T.chipar()); });
+  });
   el.sok.addEventListener("blur", () => { T.avsluttGest("q"); setTimeout(() => { if (!el.forslag.contains(document.activeElement)) lukkForslag(); }, 150); });
   el.sok.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown" && !el.forslag.hidden) { const b = el.forslag.querySelector("button"); if (b) { b.focus(); e.preventDefault(); } }
-    else if (e.key === "Enter") { clearTimeout(sokTid); if (T.sokKlar()) T.endre((s) => { const nq = el.sok.value.trim(); if (nq !== s.f.q) s.f.qv = false; s.f.q = nq; }); T.avsluttGest("q"); lukkForslag(); }
+    else if (e.key === "Enter") { clearTimeout(sokTid); if (T.sokKlar()) T.endre((s) => { const nq = el.sok.value.trim(); if (nq !== s.f.q) { s.f.qv = false; s.f.qd = false; } s.f.q = nq; }); T.avsluttGest("q"); lukkForslag(); }
   });
   el.avbrytSok = () => { clearTimeout(sokTid); clearTimeout(slutTid); ko = null; };
   el.forslag.addEventListener("click", (e) => {
@@ -129,6 +133,8 @@ export function init() {
     if (b.dataset.prov) T.provIgjen(b.dataset.prov);
     if (b.dataset.qv) { T.endre((s) => { s.f.qv = b.dataset.qv === "1"; }); return; }
     if (b.dataset.frase) { if (el.avbrytSok) el.avbrytSok(); el.sok.value = ""; T.endre((s) => { s.f.term.add(b.dataset.frase); s.f.q = ""; }); }
+    if (b.dataset.kanon) { if (el.avbrytSok) el.avbrytSok(); el.sok.value = ""; T.endre((s) => { s.f.kanon = new Set([b.dataset.kanon]); s.f.q = ""; }); return; }
+    if (b.dataset.qd) { T.endre((s) => { s.f.qd = b.dataset.qd === "1"; }); return; }
   });
   oppdater();
 }
@@ -272,22 +278,30 @@ function plasserForslag() {
 }
 if (window.visualViewport) window.visualViewport.addEventListener("resize", () => plasserForslag());
 window.addEventListener("resize", () => plasserForslag());
-// Cited works (corpus works and cited items outside it) whose title has every typed word
-// as a word prefix; at most 3, most cited first. Choosing one selects the works citing it.
+// Cited works (corpus works and cited items outside it) whose title or label ("Polanyi 1966":
+// first author's surname and year) has every typed word as a word prefix; at most 3, most cited
+// first. Choosing one selects the works citing it. A reader who knows the author but not the
+// title finds the work by the name. berreNamn: only items whose label alone matches.
 let sitertOrd = null;
-function sitertForslag(q) {
+const ordAv = (s) => fold(s).split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+function sitertForslag(q, { berreNamn = false, maks = 3 } = {}) {
   if (!T.harFil("siteringar.json")) return [];
   const tok = T.sokTokens(q).map((t) => t.p);
   if (!tok.length) return [];
   if (!sitertOrd) {
     sitertOrd = [];
     const NM = D.n + D.m;
-    for (let v = 0; v < NM; v++) if (D.nSitert[v] >= 3) sitertOrd.push({ v, ord: fold(T.nodeTittel(v)).split(/[^\p{L}\p{N}]+/u).filter(Boolean) });
+    for (let v = 0; v < NM; v++) {
+      if (D.nSitert[v] < 3) continue;
+      const namn = ordAv(T.merkelapp(v));
+      sitertOrd.push({ v, namn, ord: [...ordAv(T.nodeTittel(v)), ...namn] });
+    }
     sitertOrd.sort((a, b) => D.nSitert[b.v] - D.nSitert[a.v] || a.v - b.v);
   }
   const ut = [];
   for (const x of sitertOrd) {
-    if (tok.every((p) => x.ord.some((w) => w.startsWith(p)))) { ut.push(x.v); if (ut.length >= 3) break; }
+    const ord = berreNamn ? x.namn : x.ord;
+    if (tok.every((p) => ord.some((w) => w.startsWith(p)))) { ut.push(x.v); if (ut.length >= maks) break; }
   }
   return ut;
 }
@@ -408,14 +422,19 @@ function teiknChipar(chips) {
   const status = [];
   if (T.ventar()) status.push(`<span class="status">Lastar …</span>`);
   const si = T.sokInfo;
+  // Two or more words: the set with every word is the default and stands first; a looser set is
+  // an offer. Every sentence is visible text (a phone shows no title attribute).
+  const nt = si.tokens.length;
   if (S.f.q && si.delvis && T.brukt("q")) {
-    const nt = si.tokens.length;
-    status.push(`<span class="status" title="Færre enn 10 verk hadde alle orda, så lista viser verk med minst ${nt - 1} av dei ${nt}. Dei med alle orda står øvst.">Delvis treff: minst ${fmt(nt - 1)} av ${fmt(nt)} ord</span>`);
+    if (si.streng > 0) {
+      status.push(`<button type="button" class="lenkeknapp status-knapp" data-qd="0">Berre dei ${fmt(si.streng)} med alle ${fmt(nt)} orda</button>`);
+      status.push(`<span class="status">Viser òg verk med ${fmt(nt - 1)} av ${fmt(nt)} ord</span>`);
+    } else status.push(`<span class="status">Ingen verk har alle ${fmt(nt)} orda. Viser verk med ${fmt(nt - 1)} av ${fmt(nt)}</span>`);
   }
-  // two or more words: the strict set is the default; the wide set is an offer, never the default
-  if (S.f.q && T.brukt("q") && si.tokens.length > 1 && !si.delvis) {
-    if (si.vid) status.push(`<button type="button" class="lenkeknapp status-knapp" data-qv="0" title="Vis berre verk som har alle orda">Berre verk med alle orda (${fmt(si.streng)})</button>`);
-    else if (si.streng < 10 && si.minst1 > si.streng) status.push(`<button type="button" class="lenkeknapp status-knapp" data-qv="1" title="Vis verk som har minst eitt av orda. Dei med alle orda står øvst.">Vis ${fmt(si.minst1)} med minst eitt av orda</button>`);
+  if (S.f.q && T.brukt("q") && nt > 1 && !si.delvis) {
+    if (si.vid) status.push(`<button type="button" class="lenkeknapp status-knapp" data-qv="0">Berre dei ${fmt(si.streng)} med alle orda</button>`);
+    else if (nt > 2 && si.streng < 10 && si.utanEin > si.streng) status.push(`<button type="button" class="lenkeknapp status-knapp" data-qd="1">Vis ${fmt(si.utanEin)} med minst ${fmt(nt - 1)} av ${fmt(nt)} ord</button>`);
+    else if (nt === 2 && si.streng < 10 && si.minst1 > si.streng) status.push(`<button type="button" class="lenkeknapp status-knapp" data-qv="1">Vis ${fmt(si.minst1)} med minst eitt av orda</button>`);
   }
   // the exact phrase as one click, when it is a word in the title list
   if (S.f.q && T.sokInfo.tokens.length > 1 && T.harFil("tid.json")) {
@@ -423,13 +442,18 @@ function teiknChipar(chips) {
     const t = D.termIdx.get(key) ?? D.termIdx.get(key.replace(/ /g, ""));
     if (t != null && !S.f.term.has(D.tidd.termar.k[t])) status.push(`<button type="button" class="lenkeknapp status-knapp" data-frase="${esc(D.tidd.termar.k[t])}">Berre «${esc(D.tidd.termar.vis[t])}» i tittelen (${fmt(D.tidd.termar.df[t])})</button>`);
   }
+  // a name that finds (almost) no work in the corpus may be a cited author: offer the works citing them
+  if (S.f.q && T.valt < 5 && T.harFil("siteringar.json")) {
+    const v = sitertForslag(S.f.q, { berreNamn: true, maks: 1 })[0];
+    if (v != null) status.push(`<button type="button" class="lenkeknapp status-knapp" data-kanon="${esc(T.nodeKey(v))}" title="${esc(T.nodeTittel(v))}">Vis ${fmt(D.nSitert[v])} verk som siterer ${esc(T.merkelapp(v))}</button>`);
+  }
   for (const d of T.ikkjeIBruk()) status.push(`<span class="status feil">Filteret «${esc(T.DIM_NAMN[d] || d)}» er ikkje i bruk fordi fila kunne ikkje lastast. <button type="button" class="lenkeknapp" data-prov="${d}">Prøv igjen</button></span>`);
   // keep keyboard focus on the same chip (or its neighbour) when the row is rebuilt
   const a = document.activeElement;
   let fokus = null;
   if (a && rad.contains(a)) {
     const xs = [...rad.querySelectorAll(".chip-x")];
-    fokus = { id: a.id, fjern: a.dataset.fjern, verdi: a.dataset.verdi, prov: a.dataset.prov, qv: a.dataset.qv, frase: a.dataset.frase, pos: xs.indexOf(a) };
+    fokus = { id: a.id, fjern: a.dataset.fjern, verdi: a.dataset.verdi, prov: a.dataset.prov, qv: a.dataset.qv ?? a.dataset.qd, frase: a.dataset.frase, pos: xs.indexOf(a) };
   }
   rad.innerHTML = `
     <span class="teljar"><b>${fmt(T.valt)}</b> av ${fmt(n)} verk</span>${status.join("")}
@@ -441,7 +465,7 @@ function teiknChipar(chips) {
     if (fokus.id) m = rad.querySelector(`#${fokus.id}`);
     else if (fokus.fjern) m = [...rad.querySelectorAll(".chip-x")].find((b) => b.dataset.fjern === fokus.fjern && (b.dataset.verdi || "") === (fokus.verdi || ""));
     else if (fokus.prov) m = rad.querySelector(`[data-prov="${fokus.prov}"]`);
-    else if (fokus.qv != null) m = rad.querySelector("[data-qv]");
+    else if (fokus.qv != null) m = rad.querySelector("[data-qv], [data-qd]");
     if (!m && fokus.pos >= 0) { const xs = rad.querySelectorAll(".chip-x"); m = xs[Math.min(fokus.pos, xs.length - 1)] || null; }
     if (!m) m = rad.querySelector("#nullstill");
     (m || el.sok).focus({ preventScroll: true });

@@ -67,9 +67,9 @@ export default {
       const b = e.target.closest("button");
       if (!b) return;
       if (b.dataset.prov != null) { lastOrd(); return; }
-      if (b.dataset.sokord) { const q = b.dataset.sokord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; }); }
+      if (b.dataset.sokord) { const q = b.dataset.sokord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; s.f.qd = false; }); }
       // the errand "what is cited around this word, and how did it move": the same words in Siteringar
-      if (b.dataset.sitord) { const q = b.dataset.sitord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; s.vis = "siteringar"; s.sit.del = "saman"; }); }
+      if (b.dataset.sitord) { const q = b.dataset.sitord; ukjendMelding = ""; T.endre((s) => { s.f.q = q; s.f.qv = false; s.f.qd = false; s.vis = "siteringar"; s.sit.del = "saman"; }); }
     });
     new ResizeObserver(() => teikn(false)).observe(ramme.flate);
     bindBandDrag();

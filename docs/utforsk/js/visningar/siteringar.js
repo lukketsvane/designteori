@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=24";
+import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=24";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -724,11 +724,15 @@ function teiknOverTid() {
     const rader = topp.slice(0, 8).map(([v, c]) => {
       const d = profilDel(v);
       const ned = d[2] < d[0];
-      return `<tr><th scope="row"><button type="button" class="lenkeknapp" data-v="${v}" title="${esc(nodeTittel(v))}">${esc(T.merkelapp(v))}</button> <span class="dim">${fmt(c)} i utvalet</span></th>${d.map((x) => `<td>${pst(x, 1)} %</td>`).join("")}<td>${ned ? "lågare no" : d[2] > d[0] ? "høgare no" : "likt"}</td></tr>`;
+      // number and % never part over two lines; the trend is an arrow and one short word
+      const trend = ned ? ["↓", "lågare", "lågare i 2020-åra enn i 2000-åra"] : d[2] > d[0] ? ["↑", "høgare", "høgare i 2020-åra enn i 2000-åra"] : ["=", "likt", "likt i 2020-åra og 2000-åra"];
+      return `<tr><th scope="row"><button type="button" class="lenkeknapp" data-v="${v}" title="${esc(nodeTittel(v))}">${esc(T.merkelapp(v))}</button> <span class="dim">${fmt(c)} i utvalet</span></th>${d.map((x) => `<td>${pst(x, 1)}&nbsp;%</td>`).join("")}<td class="trend" aria-label="${trend[2]}"><span aria-hidden="true">${trend[0]}&nbsp;${trend[1]}</span></td></tr>`;
     }).join("");
+    const KORT = ["00-åra", "10-åra", "20-åra"];
     html = `<div class="tiar-tabell"><p class="melding-tittel">For få verk i utvalet til å rangere kvart tiår for seg (minst 20 med referanseliste).</p>
       <p class="dim">Dei mest siterte verka i utvalet, og kor stor del av alle siterande verk i heile korpuset som siterte dei i kvart tiår.</p>
-      ${topp.length ? `<table><thead><tr><th scope="col">Verk</th>${TIAR_NAMN.map((t, j) => `<th scope="col">${t}${j === 2 ? " (ufullstendig)" : ""}<br><span class="dim">${fmt(p.nT[j])} verk</span></th>`).join("")}<th scope="col">2020-åra mot 2000-åra</th></tr></thead><tbody>${rader}</tbody></table>` : `<p>Ingen verk i utvalet har referanseliste.</p>`}<p class="dim">Per tiår i utvalet: ${rangar.map((r) => `${r.t}-åra ${fmt(r.n)} verk med referanseliste`).join(", ")}.</p></div>`;
+      ${topp.length ? `<table><thead><tr><th scope="col">Verk</th>${TIAR_NAMN.map((t, j) => `<th scope="col"><span aria-hidden="true">${KORT[j]}${j === 2 ? "*" : ""}</span><span class="sr">${t}${j === 2 ? ", ufullstendig" : ""}</span></th>`).join("")}<th scope="col" class="trend"><span aria-hidden="true">No</span><span class="sr">2020-åra mot 2000-åra</span></th></tr></thead><tbody>${rader}</tbody></table>
+      <p class="dim tiar-fot">Prosent: del av siterande verk i korpuset (${TIAR_NAMN.map((t, j) => `${t} ${fmt(p.nT[j])}`).join(", ")}). * 2020-åra er ikkje ferdige. «No»: 2020-åra mot 2000-åra.</p>` : `<p>Ingen verk i utvalet har referanseliste.</p>`}<p class="dim">Per tiår i utvalet: ${rangar.map((r) => `${r.t}-åra ${fmt(r.n)} verk med referanseliste`).join(", ")}.</p></div>`;
   }
   el.svg.innerHTML = html;
   ramme.linje.textContent = `Dei 8 mest siterte verka per tiår, rekna frå dei ${fmt(T.valt)} verka i utvalet etter tiåret dei kom ut. Prosent = del av desse verka som siterer.`;
@@ -779,7 +783,7 @@ function hoverSvg(e) {
   if (it) {
     const v = +it.dataset.v;
     const iK = v < D.n;
-    const forf = iK ? D.kol.forf[v].map((f) => D.verk.forfattarar[f].namn).slice(0, 4).join(", ") : "";
+    const forf = iK ? D.kol.forf[v].map((f) => visNamn(D.verk.forfattarar[f].namn)).slice(0, 4).join(", ") : "";
     const kanal = iK ? (D.kanal[v] >= 0 ? D.verk.kanalar[D.kanal[v]].namn : "") : D.sitd.kjelder.kanalnamn[v - D.n];
     tooltip.vis(`<div class="tt-tittel">${esc(nodeTittel(v))}</div><div class="tt-meta">${esc(forf)} · ${T.malAr(v) || "ukjent år"}${kanal ? " · " + esc(kutt(kanal, 40)) : ""}</div>
       <div class="tt-meta">Sitert av ${fmt(D.nSitert[v])} verk i korpuset${iK && D.sit[v] >= 0 ? ` · ${fmt(D.sit[v])} siteringar i OpenAlex` : ""}</div><div class="tt-fot">${iK ? "Klikk: gjer til midten" : "Klikk: vis kortet"}</div>`, e.clientX, e.clientY);
