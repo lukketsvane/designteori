@@ -1,7 +1,7 @@
 // Canvas scene shared by Kart, Nett, Verda and the Siteringar map: base and overlay
 // canvas with dpr, d3.zoom, pointer and touch rules, tooltip and pinned card,
 // lasso, keyboard pan/zoom, focus-ring cycling, zoom buttons.
-import { tooltip, kort, rorsle, annonserMerke, esc, KL } from "./hjelp.js?v=28";
+import { tooltip, kort, rorsle, annonserMerke, esc, KL } from "./hjelp.js?v=35";
 
 const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
 

@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald, KL, ANNA_LAND } from "../hjelp.js?v=28";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald, KL, ANNA_LAND } from "../hjelp.js?v=35";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph
@@ -378,7 +378,7 @@ function teiknTopp(el) {
       <button type="button" class="rang-namn" data-p="velsjolv" data-b="${b}" title="${esc(G.fulltNamn(b))}" aria-label="${esc(G.fulltNamn(b))}, ${fmt(w)} verk: vel og sjå kven dei skriv med">${esc(kutt(G.namn(b), 30))}</button>
       <span class="rang-tal">${fmt(w)} <button type="button" class="knapp liten leggtil" data-p="legg" data-b="${b}" aria-label="Legg ${esc(G.fulltNamn(b))} til i filteret">+</button></span>
       <span class="rang-bar"><span style="width:${Math.round((100 * w) / mx)}%"></span></span></li>`).join("")}</ol>
-      <p class="sidepanel-merk">Klikk eit namn for å sjå kven dei skriv saman med.</p>` : `<p class="dim" style="padding:0 10px">Ingen ${ord} har verk i utvalet.</p>`) : ""}`;
+      <p class="sidepanel-merk">Trykk på eit namn for å sjå kven dei skriv saman med.</p>` : `<p class="dim" style="padding:0 10px">Ingen ${ord} har verk i utvalet.</p>`) : ""}`;
 }
 
 function partnarKlikk(e) {
@@ -395,7 +395,7 @@ function partnarKlikk(e) {
 function teiknLinje() {
   const inst = G.modus === "inst";
   const alle = G.tal.alle, vist = G.tal.vist;
-  let t = `Linje = felles verk. ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre ${fmt(G.harLag)} av ${fmt(T.valt)} verk har ${inst ? "institusjon" : "forfattar med id"} (OpenAlex).`;
+  let t = `Linje = felles verk. ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). ${G.harLag === T.valt ? `Alle ${fmt(T.valt)}` : `Berre ${fmt(G.harLag)} av ${fmt(T.valt)}`} verk har ${inst ? "institusjon" : "forfattar med id"} (OpenAlex).`;
   if (!inst) t += " Berre forfattarar med OpenAlex-id er med: der ein person står med namn utan id (arkivverka, og nokre OpenAlex-verk), er verket ikkje tald under personen, så ein person kan ha fleire verk enn nettet viser.";
   if (S.verk && D.idx.has(S.verk) && !opneNoder.size) t += " Det opne verket har ingen node i nettet.";
   ramme.linje.textContent = t;

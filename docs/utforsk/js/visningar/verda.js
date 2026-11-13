@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald, KL } from "../hjelp.js?v=28";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald, KL } from "../hjelp.js?v=35";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -305,7 +305,7 @@ function stoppSpel() {
 
 // ---------- line and legend ----------
 function teiknLinje() {
-  let t = `Boble = stad, storleik = verk. Boge = felles verk. Berre ${fmt(P.med || 0)} av ${fmt(T.valt)} verk har stad (OpenAlex).`;
+  let t = `Boble = stad, storleik = verk. Boge = felles verk. ${(P.med || 0) === T.valt ? `Alle ${fmt(T.valt)}` : `Berre ${fmt(P.med || 0)} av ${fmt(T.valt)}`} verk har stad (OpenAlex).`;
   if (bogarTotalt > bogar.length) t += ` Viser ${fmt(bogar.length)} av ${fmt(bogarTotalt)} bogar.`;
   if (landFeil) t += " Landkartet kunne ikkje lastast; stadene er rett plasserte.";
   ramme.linje.textContent = t;

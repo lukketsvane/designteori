@@ -950,14 +950,16 @@
 
   async function loadAbout() {
     const root = $("omRoot");
-    const render = () => { root.innerHTML = Om.aboutHtml(S.counts, S.about, S.quality, S.glossary, { built: S.meta && S.meta.built }); };
-    render();
-    if (!S.metaOK) return;
+    /* Før dei tre små filene er henta står «Lastar …», ikkje ei feilmelding. */
+    const render = (pending) => { root.innerHTML = Om.aboutHtml(S.counts, S.about, S.quality, S.glossary, { built: S.meta && S.meta.built, pending }); };
+    if (!S.metaOK) { render(); return; }
+    if (S.omLoaded) { render(); } else render({ about: true, quality: true, glossary: true });
     const [a, q, g] = await Promise.all([
       once("about", async () => (S.about = await sget(S.meta.about ? S.meta.about.file : "about.json", null))),
       once("quality", async () => (S.quality = await sget(S.meta.quality ? S.meta.quality.file : "search_quality.json", null))),
       ensureGlossary(),
     ]);
+    S.omLoaded = true;
     render();
     if (S.st.anchor) { const el = $(S.st.anchor); if (el) el.scrollIntoView(); }
   }
@@ -970,7 +972,7 @@
 
     if (S.citSub === "internal") {
       const rows = (S.analysis?.citations?.top_internally_cited || []).filter((r) => match(`${r.title} ${(r.authors || []).join(" ")}`));
-      box.innerHTML = rows.map((r) => {
+      box.innerHTML = `<p class="subline">Verk i korpuset, rangerte etter kor mange nordiske verk som siterer dei. Trykk på ein tittel for å opne verket i katalogen.</p>` + rows.map((r) => {
         const sub = [(r.authors || []).join(", "), `${fmt(r.internal_citations)} nordiske av ${fmt(r.global_citations)} sitat`].filter(Boolean).join(" · ");
         return `
           <article class="item">
@@ -988,7 +990,7 @@
     if (S.citSub === "canon") {
       if (!S.canon) S.canon = (await jget("data/cited_canon.json", { items: [] })).items || [];
       const rows = S.canon.filter((r) => match(`${r.title} ${r.authors}`)).slice(0, 150);
-      box.innerHTML = rows.map((r) => {
+      box.innerHTML = `<p class="subline">Verk som nordiske tekstar refererer til, rangerte etter kor mange av dei som siterer dei. Lenkja går til utgjevarsida.</p>` + rows.map((r) => {
         const sub = [r.authors, `${fmt(r.nordic_citing_count)} nordiske av ${fmt(r.global_citations)} sitat`].filter(Boolean).join(" · ");
         const doiHref = U.doiHref({ doi: r.doi });
         return `
@@ -1007,7 +1009,7 @@
     if (S.citSub === "authors") {
       if (!S.authors) S.authors = (await jget("data/authors.json", { items: [] })).items || [];
       const rows = S.authors.filter((a) => match(`${a.name} ${(a.institutions || []).join(" ")}`)).slice(0, 120);
-      box.innerHTML = rows.map((a) => {
+      box.innerHTML = `<p class="subline">Trykk på eit namn for å sjå verka til forfattaren i katalogen.</p>` + rows.map((a) => {
         const sub = [(a.institutions || []).slice(0, 2).join(", "), `${fmt(a.works)} verk`, `${fmt(a.openalex_citation_sum_on_snapshot_works)} sit.`].filter(Boolean).join(" · ");
         return `
           <article class="item">
@@ -1043,11 +1045,12 @@
     const maxD = Math.max(1, ...decs.map((d) => d.total + (d.nordic_archives || 0)));
     const cs = a.countries || [];
     const vens = (a.top_venues || []).slice(0, 15);
+    const landPdf = cs.reduce((n, c) => n + (c.pdfs || 0), 0), tiarPdf = decs.reduce((n, d) => n + (d.pdfs || 0), 0);
     $("anaRoot").innerHTML = `
       <div class="ana-grid">
         <div class="ana-sec">
           <h3>Verk per tiår</h3>
-          <p class="subline">I parentes: verk med PDF i arkivet.</p>
+          <p class="subline">I parentes: verk med kopi i arkivet.</p>
           ${decs.map((d) => {
             const tot = d.total + (d.nordic_archives || 0);
             return `<div class="bar-line"><span>${esc(String(d.decade).replace(/^(\d{4})s$/, "$1-åra"))}</span><div class="bar-bg"><div class="bar-a" style="width:${((tot / maxD) * 100).toFixed(1)}%"></div><div class="bar-b" style="width:${((d.pdfs / maxD) * 100).toFixed(1)}%"></div></div><span class="r">${fmt(tot)} (${fmt(d.pdfs)})</span></div>`;
@@ -1055,10 +1058,10 @@
         </div>
         <div class="ana-sec">
           <h3>Verk per land</h3>
-          <p class="subline">OpenAlex og Arkiv er dei to laga i korpuset, talde kvar for seg. Open: del av OpenAlex-verka med open tilgang.</p>
+          <p class="subline">OpenAlex og Arkiv er dei to laga i korpuset, talde kvar for seg. Kopi i arkivet: verk med PDF i arkivet.${landPdf !== tiarPdf ? ` Eit verk med forfattarar frå fleire land tel i kvart av landa, så kolonnen summerer til ${fmt(landPdf)} mot ${fmt(tiarPdf)} verk i tiårsradene.` : ""} Open: del av OpenAlex-verka med open tilgang.</p>
           <div class="table-wrap">
             <table class="tbl-clean">
-              <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">PDF</th><th class="r">Open</th></tr></thead>
+              <thead><tr><th>Land</th><th class="r">OpenAlex</th><th class="r">Arkiv</th><th class="r">Kopi i arkivet</th><th class="r">Open</th></tr></thead>
               <tbody>${cs.map((c) => `<tr><td><strong>${esc(COUNTRY_NAMES[c.country] || c.country)}</strong></td><td class="r">${fmt(c.openalex_works)}</td><td class="r">${fmt(c.nordic_archive_records)}</td><td class="r"><strong>${fmt(c.pdfs)}</strong></td><td class="r">${((c.oa_share || 0) * 100).toFixed(0)} %</td></tr>`).join("")}</tbody>
             </table>
           </div>
@@ -1069,7 +1072,7 @@
           <div class="table-wrap">
             <table class="tbl-clean">
               <thead><tr><th>Namn</th><th class="r">Verk</th><th class="r">Sitat</th></tr></thead>
-              <tbody>${vens.map((v) => `<tr><td><strong>${esc(v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
+              <tbody>${vens.map((v) => `<tr><td><strong title="${esc(v.venue)}">${esc(v.venue.length > 60 ? v.venue.slice(0, 59).trimEnd() + "…" : v.venue)}</strong></td><td class="r">${fmt(v.auto_included)}</td><td class="r">${fmt(v.citations)}</td></tr>`).join("")}</tbody>
             </table>
           </div>
         </div>

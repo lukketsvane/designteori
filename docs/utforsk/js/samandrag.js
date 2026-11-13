@@ -14,6 +14,13 @@ const KJELDE = {
   x: "trekt ut av den opne PDF-en (automatisk, kan innehalde feil)",
 };
 
+// Some publisher abstracts come as "text"-- : the quotes and dashes are not part of the text (same rule as the catalogue).
+function rens(t) {
+  let x = String(t == null ? "" : t).trim();
+  if (/^"/.test(x) && /"\s*--\s*$/.test(x)) x = x.slice(1).replace(/"\s*--\s*$/, "");
+  return x;
+}
+
 async function json(url, opt) {
   try {
     const r = await fetch(url, opt);
@@ -49,7 +56,7 @@ async function fraSkjerv(id) {
   if (!x || !x.t) return null;
   // Uttrekk frå PDF (s:"x") skal lenkje til kjelda (u), slik rettsregelen krev.
   const lenkje = x.s === "x" && typeof x.u === "string" && /^https?:\/\/[^\s<>"']+$/i.test(x.u) ? x.u : "";
-  return { tekst: String(x.t), kjelde: KJELDE[x.s] || String(x.s || "ukjend"), lenkje };
+  return { tekst: rens(x.t), kjelde: KJELDE[x.s] || String(x.s || "ukjend"), lenkje };
 }
 
 async function fraReserve(id) {
@@ -58,7 +65,7 @@ async function fraReserve(id) {
   const tab = reserve.items && typeof reserve.items === "object" ? reserve.items : reserve;
   const x = tab[id];
   if (!x || !x.text) return null;
-  return { tekst: String(x.text), kjelde: KJELDE[x.src] || String(x.src || "ukjend") };
+  return { tekst: rens(x.text), kjelde: KJELDE[x.src] || String(x.src || "ukjend") };
 }
 
 // Returns {tekst, kjelde} or null. Never throws. Caches the loaded files.

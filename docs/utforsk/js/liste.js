@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=28";
-import * as T from "./tilstand.js?v=28";
-import * as data from "./data.js?v=28";
-import { hentSamandrag } from "./samandrag.js?v=28";
+import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=35";
+import * as T from "./tilstand.js?v=35";
+import * as data from "./data.js?v=35";
+import { hentSamandrag } from "./samandrag.js?v=35";
 
 const { S, D } = T;
 let api = null;
@@ -431,8 +431,13 @@ function fyllNaboar(i, ok = true) {
   }
   const v = D.verk;
   let html = `<ol class="naboar">`;
+  // the work itself, or a second record of it (same title and year), is not its own neighbour
+  const tittelNokkel = (x) => fold(D.kol.tittel[x]).replace(/[^\p{L}\p{N}]+/gu, "") + "|" + D.ar[x];
+  const eigen = tittelNokkel(i);
+  let skjult = 0;
   for (let r = 0; r < 10; r++) {
     const j = D.nabo[i * 10 + r], c = D.naboCos[i * 10 + r] / 255;
+    if (j === i || tittelNokkel(j) === eigen) { skjult++; continue; }
     const f = D.kol.forf[j];
     // surname, as elsewhere on the page: "Etternamn, Fornamn" (archive) or "Fornamn Etternamn"
     const nm = f.length ? v.forfattarar[f[0]].namn : "";
@@ -445,7 +450,7 @@ function fyllNaboar(i, ok = true) {
       <span class="nabo-meta">${esc(forf)} ${D.ar[j]}${merkeOrd ? ` <span class="merke ${merkeKl} lite" aria-hidden="true">${merkeOrd}</span>` : ""}</span>
       <span class="likskap-rad" aria-hidden="true"><span class="likskap"><span style="width:${Math.round(c * 100)}%"></span></span><span class="likskap-tal">${Math.round(c * 100)} %</span></span></button></li>`;
   }
-  html += `</ol><p class="dim nabo-merk">Likskap: kor like tittel, kanal og emneord er (100 % = same). PDF: open og stadfest.</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
+  html += `</ol><p class="dim nabo-merk">Likskap: kor like tittel, kanal og emneord er (100 % = same). PDF: open og stadfest.${skjult ? " Ei anna oppføring av same verk er ikkje vist." : ""}</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
   b.innerHTML = html;
 }
 

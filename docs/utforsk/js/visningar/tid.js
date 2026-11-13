@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd, KL, BG } from "../hjelp.js?v=28";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd, KL, BG } from "../hjelp.js?v=35";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);

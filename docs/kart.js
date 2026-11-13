@@ -269,12 +269,14 @@
     if (typeof t.grense_del === "number") s += " Grensene er mjuke: " + pct(t.grense_del) + " av verka ligg mellom klynger.";
     return s;
   }
+  /* «ein algoritme har funne» er fagspråk: «av verk med lik tekst» seier det same. */
+  function plain(t) { return String(t).replace(/(\d+|[Åå]tte|[Ss]eks|[Ss]ju|[Nn]i|[Tt]i)\s+(grupper|klynger) som ein algoritme har funne/, "$1 $2 av verk med lik tekst"); }
   /* Overskrifta over klyngelista: kor mykje klyngene er verdt (forbehald), kvar språk speler inn, og kva ein kan gjere. */
   function legendHead(d, om) {
     const t = (d && d.tal) || {}, cl = (d && d.klynger) || [], n = cl.length;
-    const str = (k) => (om && typeof om[k] === "string" && om[k].trim() ? om[k].trim() : "");
+    const str = (k) => (om && typeof om[k] === "string" && om[k].trim() ? plain(om[k].trim()) : "");
     /* Berre første setning: at grensene er mjuke står alt i lina over kartet. */
-    const hedge = (str("forbehald") || cap(talord(n)) + " grupper som ein algoritme har funne.").split(/(?<=\.)\s+/)[0].replace(/^(\S+) grupper/, "$1 klynger");
+    const hedge = (str("forbehald") || cap(talord(n)) + " grupper av verk med lik tekst.").split(/(?<=\.)\s+/)[0].replace(/^(\S+) grupper/, "$1 klynger");
     let lang = str("sprak");
     if (!lang && Number.isInteger(t.nordisk_sprak_klynge) && cl[t.nordisk_sprak_klynge]) {
       lang = "Verk på nordiske språk samlar seg i klynga «" + shortName(cl[t.nordisk_sprak_klynge].namn) + "», så der speler språk like mykje inn som tema.";
@@ -295,13 +297,13 @@
     const sp = per.reduce((a, b) => a + b, 0), st = totals.reduce((a, b) => a + (b || 0), 0);
     return { share, base: st > 0 ? sp / st : 0 };
   }
-  /* «2005–09» -> «05–09», «før 2000» -> «før 00»: plass til sju periodar side om side på ein telefon. */
+  /* «2005–09» -> «’05–09», «før 2000» -> «før ’00»: plass til sju periodar side om side på ein telefon, og apostrofen viser at det er årstal. */
   function shortPeriod(label) {
     const s = String(label == null ? "" : label);
     let m = /^(\d{2})(\d{2})\s*[–-]\s*(\d{2})$/.exec(s);
-    if (m) return m[2] + "–" + m[3];
+    if (m) return "’" + m[2] + "–" + m[3];
     m = /^(\D*?)\s*\d{2}(\d{2})$/.exec(s);
-    return m ? (m[1] ? m[1] + " " : "") + m[2] : s;
+    return m ? (m[1] ? m[1] + " " : "") + "’" + m[2] : s;
   }
   /* Tal år i ein periode som «2025–26» (2); 0 når etiketten ikkje er eit slikt spenn. */
   function periodSpan(label) {
@@ -332,7 +334,7 @@
     MODES, PAL, SEQ, SLOT8, COUNTRIES, VENUES, LANGS,
     esc, fmt, fold, foldTitle, queryTokens, makeMatcher, hitsHref, periodIndex, countryIndex, venueIndex, langIndex, clusterSlot,
     parseKartHash, buildKartHash, wrapLines, placeLabels, shortName, buildGrid, nearest, clampBox, hasRanked, centralIds, validData,
-    luminance, introLine, languageNote, legendHead, talord, searchReady, paintOrder, periodShares, shortPeriod, pctFine,
+    luminance, introLine, languageNote, legendHead, plain, talord, searchReady, paintOrder, periodShares, shortPeriod, pctFine,
     titleOnlyNote, periodSpan,
   };
   if (typeof module === "object" && module.exports) { module.exports = API; return; }
@@ -1071,9 +1073,9 @@
         (kind || unstable ? `<p class="kp-tal kp-slag">${esc([kind, unstable].filter(Boolean).join(" "))}</p>` : "") +
         `<p class="kp-tal">${fmt(o.n || members.length)} verk, ${pct(share)} av korpuset.${sure}${titleOnly}</p>` +
         (lang ? `<p class="kp-tal kp-sprak">${esc(lang)}</p>` : "") +
-        (o.ord && o.ord.length ? `<h4>Ord som skil ${u ? "gruppa" : "klynga"} frå resten</h4><p class="kp-ord">${o.ord.map((t) => `<span class="tag">${esc(t)}</span>`).join(" ")}</p>` : "") +
+        (o.ord && o.ord.length ? `<h4>Engelske ord som skil ${u ? "gruppa" : "klynga"} frå resten</h4><p class="kp-ord">${o.ord.map((t) => `<span class="tag">${esc(t)}</span>`).join(" ")}</p>` : "") +
         (Array.isArray(o.periode) && o.periode.length ? `<h4>Når verka kom ut</h4>${periodBars(o.periode, what)}` : "") +
-        `<div class="kp-to"><div><h4>Kanalar</h4>${list(o.kanalar)}</div><div><h4>Land</h4>${list(o.land, countryName)}</div></div>` +
+        `<div class="kp-to"><div><h4>Kanalar (verk)</h4>${list(o.kanalar)}</div><div><h4>Land (verk)</h4>${list(o.land, countryName)}</div></div>` +
         (shown.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${shown.map((id) => `<li>${workLink(id)}</li>`).join("")}</ol>` +
           `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først." : ""}</p>` : "") +
         (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Zoom inn for å sjå namna på kartet.${subs.some((s) => s.slag) ? " Grå namn er konferansebind eller ei blanding, ikkje tema." : ""}</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg${s.slag ? " kart-lg-slag" : ""}" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
@@ -1095,7 +1097,7 @@
     }
     function renderOm(om) {
       if (!om || !Array.isArray(om.bolkar) || !om.bolkar.length) { el.om.hidden = true; return; }
-      el.omText.innerHTML = (om.ingress ? `<p>${esc(om.ingress)}</p>` : "") +
+      el.omText.innerHTML = (om.ingress ? `<p>${esc(plain(om.ingress))}</p>` : "") +
         om.bolkar.map((b) => `${b && b.tittel === "Korleis kartet er laga" ? "" : `<h4>${esc(b && b.tittel)}</h4>`}<p>${esc(b && b.tekst)}</p>`).join("");
       el.om.hidden = false;
     }

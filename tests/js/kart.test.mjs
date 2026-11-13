@@ -206,7 +206,8 @@ test("kart.json frå bygget: gyldig, og alle verk har ein plass", () => {
     assert.match(line, /mjuke/);
     const head = Kart.legendHead(d, om);
     assert.ok(!/—/.test(head));
-    assert.match(head, /algoritme/, "forbehald: grupper ein algoritme har funne");
+    assert.match(head, /av verk med lik tekst/, "forbehald: grupper av verk med lik tekst");
+    assert.ok(!/algoritme/.test(head), "ikkje fagordet algoritme");
     assert.ok(!/mjuke|skarpe|landskap/.test(head), "at grensene er mjuke står berre i lina over kartet");
     assert.match(head, /nordiske språk/, "forklaringa seier at språk speler inn");
   }
@@ -216,7 +217,7 @@ test("lina over kartet og forbehaldet utan om.json", () => {
   const d = { tal: { grense_del: 0.324, nordisk_sprak_klynge: 1 }, klynger: [{ namn: "A" }, { namn: "Nordisk ting: x, y" }, { namn: "C" }] };
   assert.match(Kart.introLine(d, null), /^Eitt verk per prikk, og like tekstar ligg nær kvarandre\. Grensene er mjuke: 32\s% av verka ligg mellom klynger\.$/);
   const h = Kart.legendHead(d, null);
-  assert.match(h, /^Tre klynger som ein algoritme har funne\./);
+  assert.match(h, /^Tre klynger av verk med lik tekst\./);
   assert.match(h, /«Nordisk ting»/);
   assert.equal(Kart.legendHead(d, { forbehald: "F.", sprak: "S." }), "F. S. Vel ei klynge for å sjå kva ho består av.");
   assert.equal(Kart.talord(8), "åtte");
@@ -242,8 +243,8 @@ test("periodar: delar mot korpuset, korte etikettar og delår", () => {
   const r = Kart.periodShares([10, 20, 0], [100, 400, 0]);
   assert.deepEqual(r.share, [0.1, 0.05, 0]);
   assert.equal(r.base, 30 / 500);
-  assert.equal(Kart.shortPeriod("2005–09"), "05–09");
-  assert.equal(Kart.shortPeriod("før 2000"), "før 00");
+  assert.equal(Kart.shortPeriod("2005–09"), "’05–09");
+  assert.equal(Kart.shortPeriod("før 2000"), "før ’00");
   assert.equal(Kart.shortPeriod("anna"), "anna");
   assert.equal(Kart.periodSpan("2025–26"), 2);
   assert.equal(Kart.periodSpan("2020–24"), 5);

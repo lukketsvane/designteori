@@ -44,6 +44,12 @@ ORD = (("sitatlista cited_canon", "lista over siterte verk"), ("referansar til c
        ("(NMI om lag 0,25, ARI 0,123)", "(NMI om lag 0,25 og ARI 0,123, to mål på samsvar mellom inndelingar der 1 er likt og 0 er tilfeldig)"),
        ("ti poeng per stratum i fem strata", "ti poeng per gruppe (stratum) i fem grupper"),
        ("aldersjustert persentil", "aldersjustert persentil (plassering mellom 0 og 100 blant verk av same alder)"),
+       # steg 12 runde 3: kodenamn og fagord
+       ("over 90 % same kind;", "over 90 % same verkstype (artikkel eller konferansepapir);"),
+       ("AUC for kind frå tekstmål", "AUC (kor godt eit mål skil artiklar frå konferansepapir: 0,5 er tilfeldig, 1 er perfekt) for verkstype frå tekstmål"),
+       ("Louvain gir 18 til 20 samfunn", "Klyngealgoritmen Louvain gir 18 til 20 samfunn (grupper av tett kopla verk)"),
+       ("Louvain-samfunn flyttar seg mellom køyringar og versjonar av networkx", "Samfunna Louvain finn flyttar seg mellom køyringar og versjonar av programvaren"),
+       ("av 52 hovudpåstandar i v0.3 (regel H)", "av 52 hovudpåstandar i v0.3 (hovudpåstandsregelen, kalla regel H)"),
        # B15: lag er nemnde i 1. Kort, ikkje tre gonger
        ("Lag er skrivne slik: OpenAlex-laget (4 694 verk i utvalet), arkivlaget (1 738 verk frå nordiske arkiv), fulltekstlaget (verk med fulltekst i det private mellomlageret), berre engelsk der det er sagt.",
         "Lag: OpenAlex-laget og arkivlaget (tala står i 1. Kort), fulltekstlaget (verk med fulltekst i det private mellomlageret), berre engelsk der det er sagt."))
@@ -158,7 +164,10 @@ PAGE = """<!doctype html>
 <html lang="nn">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <title>Metaanalyse · designteori</title>
 <meta name="description" content="Kva dei registrerte verka i nordisk designforsking viser: populasjon, vekst, kanalar, siteringar, tema, omgrep, kunnskapsformer og teorielement.">
 <link rel="preconnect" href="https://fonts.googleapis.com">

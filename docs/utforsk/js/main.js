@@ -1,12 +1,12 @@
 // Boot: manifest, verk.json, first view; tab routing; global keys and errors;
 // idle load of lenker.json and the search index.
-import * as hjelp from "./hjelp.js?v=28";
-import * as data from "./data.js?v=28";
-import * as T from "./tilstand.js?v=28";
-import * as filterlinje from "./filterlinje.js?v=28";
-import * as liste from "./liste.js?v=28";
-import { lagScene, lagIndeks, innanfor } from "./scene.js?v=28";
-import { initMaal } from "./maal.js?v=28";
+import * as hjelp from "./hjelp.js?v=35";
+import * as data from "./data.js?v=35";
+import * as T from "./tilstand.js?v=35";
+import * as filterlinje from "./filterlinje.js?v=35";
+import * as liste from "./liste.js?v=35";
+import { lagScene, lagIndeks, innanfor } from "./scene.js?v=35";
+import { initMaal } from "./maal.js?v=35";
 
 const { S, D } = T;
 const { esc, fmt, kort, tooltip, smal } = hjelp;
@@ -14,11 +14,11 @@ const { esc, fmt, kort, tooltip, smal } = hjelp;
 window.__utforskStarta = true;
 
 const LASTARAR = {
-  kart: () => import("./visningar/kart.js?v=28"),
-  nett: () => import("./visningar/nett.js?v=28"),
-  verda: () => import("./visningar/verda.js?v=28"),
-  siteringar: () => import("./visningar/siteringar.js?v=28"),
-  tid: () => import("./visningar/tid.js?v=28"),
+  kart: () => import("./visningar/kart.js?v=35"),
+  nett: () => import("./visningar/nett.js?v=35"),
+  verda: () => import("./visningar/verda.js?v=35"),
+  siteringar: () => import("./visningar/siteringar.js?v=35"),
+  tid: () => import("./visningar/tid.js?v=35"),
 };
 const NAMN = { kart: "kartet", nett: "nettet", verda: "verdskartet", siteringar: "siteringane", tid: "tidslina" };
 const visingar = {}; // id -> {el, ramme, mod, klar, skitten, lastar, feil}

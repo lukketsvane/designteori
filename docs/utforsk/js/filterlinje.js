@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=28";
-import * as T from "./tilstand.js?v=28";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=35";
+import * as T from "./tilstand.js?v=35";
 
 const { S, D } = T;
 let el = {};
@@ -185,7 +185,7 @@ function teiknPop(p) {
     settInnhald(pop, `<p class="pop-tittel">Klynge</p>` + v.tema.map((t, j) => `
       <label class="sjekk"><input type="checkbox" data-dim="tema" value="${esc(t.k)}" ${S.f.tema.has(t.k) ? "checked" : ""}>
       <span class="prikk" style="background:${PALETTE_TEMA[j]}"></span><span class="sjekk-namn">${esc(t.namn)}</span><span class="tal" title="${esc(lagDel(j))}">${fmt(c.get(t.k) || 0)}</span></label>`).join("")
-      + `<p class="pop-merk">Dei same åtte klyngene som i Kart-fana på hovudsida. Dei to siste har mest arkivverk (43 og 45 %).</p>`);
+      + `<p class="pop-merk">Dei same åtte klyngene som i Kart-fana. Meir om dei står under Forklaring i Kart.</p>`);
     synkSjekk(pop, "tema");
   } else if (p === "type") {
     const c = T.fasettal("type");

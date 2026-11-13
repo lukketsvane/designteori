@@ -39,7 +39,7 @@
     const span = f.y0 && f.y1 ? ", " + esc(f.y0) + "–" + esc(f.y1) : "";
     return [
       "<strong>Kva:</strong> " + esc(fmt(f.total)) + " verk om design og designforsking frå Norden" + span + ": " + esc(fmt(f.openalex)) + " henta frå OpenAlex og " + esc(fmt(f.nordic)) + " frå nordiske arkiv" + (srcs ? " (" + srcs + ")" : "") + ".",
-      "<strong>Kor sikkert:</strong> Ingen verk er kontrollerte av eit menneske. OpenAlex-verka er valde automatisk etter tittel. " + esc(fmt(f.dup)) + " verk er moglege dublettar og er skjulte som standard; " + esc(fmt(f.unk)) + " arkivverk har ukjend tilknyting.",
+      "<strong>Kor sikkert:</strong> Ingen verk er kontrollerte av eit menneske. OpenAlex-verka er valde automatisk etter tittel. " + esc(fmt(f.dup)) + " verk er moglege dublettar og er skjulte som standard. Arkivverka er ikkje gjennomgåtte.",
       "<strong>Språk og samandrag:</strong> " + esc(f.pctEn) + " % av verka er på engelsk. " + esc(f.pctAbs) + " % har samandrag. " + esc(fmt(f.nPdf)) + " har ei kontrollert open PDF-lenkje.",
       "<strong>Manglar:</strong> Fulltekst vert ikkje publisert her. Arkiva er ujamne (Finland har ingen arkivverk), arkivverk har ingen sitattal, og bøker utan open adresse finst berre som referanse.",
     ];
@@ -58,13 +58,16 @@
       rows.map((r) => "<tr>" + r.map((c, i) => "<td" + (i ? ' class="r"' : "") + ">" + (i ? esc(c) : "<strong>" + esc(c) + "</strong>") + "</td>").join("") + "</tr>").join("") +
       "</tbody></table></div>";
   }
-  const dateOnly = (s) => (s ? String(s).slice(0, 10) : "");
+  /* «2026-11-12T03:43:41+00:00» vert «12.11.2026», same form som i metaanalysen. */
+const dateOnly = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || "")); return m ? m[3] + "." + m[2] + "." + m[1] : ""; };
   const CC = { NO: "Noreg", SE: "Sverige", DK: "Danmark", FI: "Finland", IS: "Island" };
   const LANGN = { e: "Engelsk", b: "Bokmål", n: "Nynorsk", d: "Dansk", s: "Svensk", f: "Finsk", o: "Anna", u: "Ukjend" };
   const SYSTEMS = [["lexical", "Ordsøk"], ["semantic", "Meining"], ["fused", "Med språkmodell"], ["fallback", "Utan språkmodell"]];
   const GROUPS = [["all", "Alle"], ["known-item", "Kjent verk"], ["topical-en", "Emne, engelsk"], ["cross-lingual", "Tvers av språk"]];
 
-  function qualityHtml(q) {
+  const LASTAR = '<p class="om-lastar">Lastar …</p>';
+  function qualityHtml(q, pending) {
+    if (pending) return LASTAR;
     if (!q || !q.metrics) return "<p>Målt søkjekvalitet er ikkje tilgjengeleg no.</p>";
     const one = (key) => {
       const m = q.metrics[key] || {};
@@ -104,17 +107,20 @@
     return s ? '<p class="gl-eq">' + s + "</p>" : "";
   }
 
-  function glossaryHtml(g) {
+  function glossaryHtml(g, pending) {
     const terms = g && g.terms ? g.terms : [];
+    if (pending && !terms.length) return LASTAR;
     if (!terms.length) return "<p>Ordlista er ikkje tilgjengeleg no.</p>";
     return terms.map((t) =>
       '<article class="gl-item" id="gl-' + esc(t.id) + '"><div class="gl-head"><h4>' + esc(t.term) + "</h4>" +
       '<button type="button" class="act act-line gl-search" data-q="' + esc(t.q || t.term) + '" aria-label="Søk på ' + esc(t.term) + '">Søk</button></div><p>' + esc(t.nn) + "</p>" + glEq(t) + "</article>").join("");
   }
 
-  /* c: meta.counts, a: about.json eller null, q: search_quality.json eller null, g: glossary.json eller null, m: {built} */
+  /* c: meta.counts, a: about.json eller null, q: search_quality.json eller null, g: glossary.json eller null,
+     m: {built, pending: {about, quality, glossary}}. «pending» er sant medan fila vert henta: då står «Lastar …», ikkje ei feilmelding. */
   function aboutHtml(c, a, q, g, m) {
     c = c || {}; a = a || {}; m = m || {};
+    const pend = m.pending || {};
     const f = figures(c);
     const sources = (c.sources || a.sources || []);
     const rev = a.review || {};
@@ -126,13 +132,13 @@
     secs.push("<section class=\"om-sec\"><h3>Kva som er med</h3>" +
       "<p>" + esc(fmt(f.total)) + " verk om design og designforsking" + (f.y0 && f.y1 ? ", " + esc(f.y0) + "–" + esc(f.y1) : "") + ", frå OpenAlex og nordiske arkiv.</p>" +
       table(["Kjelde", "Verk"], sources.map((s) => [s.name, fmt(s.n)])) +
-      "<p class=\"om-dates\">OpenAlex-uttrekk: " + esc(dateOnly(a.openalex_generated_at) || "ukjend") + ". Søkedata bygd: " + esc(dateOnly(m.built || a.built) || "ukjend") + ".</p></section>");
+      (pend.about ? "<p class=\"om-dates\">Lastar …</p>" : "<p class=\"om-dates\">OpenAlex-uttrekk: " + esc(dateOnly(a.openalex_generated_at) || "ukjend") + ". Søkedata bygd: " + esc(dateOnly(m.built || a.built) || "ukjend") + ".</p>") + "</section>");
 
     secs.push("<section class=\"om-sec\"><h3>Korleis verk vart valde, og kva det betyr</h3><ul class=\"plain\">" +
       "<li>OpenAlex-verka er valde automatisk etter tittel. Ingen er kontrollerte av eit menneske (" + esc(fmt(rev.human_checked != null ? rev.human_checked : 0)) + " av " + esc(fmt(f.openalex)) + " sjekka).</li>" +
       "<li>Arkivverka er ukontrollerte metadata frå arkiva" + (rev.kind_unknown != null ? "; " + esc(fmt(rev.kind_unknown)) + " har typen «ukjend»" : "") + (rev.without_citations != null ? " og " + esc(fmt(rev.without_citations)) + " har ingen sitattal" : "") + ".</li>" +
-      "<li>" + esc(fmt(f.dup)) + " verk er merkte som moglege dublettar (same tittel, same år, felles forfattar). Dei er skjulte som standard.</li>" +
-      "<li>" + esc(fmt(rev.affiliation_unknown != null ? rev.affiliation_unknown : f.unk)) + " arkivverk (Nordes) har ingen landkode, så nordisk tilknyting er ikkje kontrollert.</li>" +
+      "<li>" + esc(fmt(f.dup)) + " verk er merkte som moglege dublettar (same tittel, same år, felles forfattar). Dei er skjulte som standard. Utforsk og metaanalysen tel dublettar etter andre reglar (til dømes same PDF-adresse eller DOI, eller same tittel utan krav til år), så tala der er ikkje dei same.</li>" +
+      (rev.affiliation_unknown == null ? "" : "<li>" + esc(fmt(rev.affiliation_unknown)) + " arkivverk (Nordes) har ingen landkode, så nordisk tilknyting er ikkje kontrollert.</li>") +
       "<li>«Nordisk» tyder her at minst éin forfattar har ei nordisk tilknyting i OpenAlex, eller at arkivet er nordisk. Det tyder ikkje at emnet er nordisk.</li></ul></section>");
 
     secs.push("<section class=\"om-sec\"><h3>Kva som manglar</h3><ul class=\"plain\">" +
@@ -159,8 +165,8 @@
       "<p><strong>Ordsøk</strong> leitar i tittel, forfattar, tidsskrift, tilknyting og samandrag, og tek ikkje omsyn til ø/ö/å eller målform. <strong>Ordlista</strong> legg til engelske fagord når du skriv norske (taus kunnskap gir òg tacit knowledge). <strong>Språkmodellen</strong> finn verk som liknar på meining, òg på tvers av språk.</p>" +
       "<p>Spørjinga vert rekna ut i nettlesaren og vert ikkje sendt nokon stad. Utan språkmodell brukar søket ord, ordliste og verk som liknar dei beste treffa.</p></section>");
 
-    secs.push("<section class=\"om-sec\"><h3>Målt søkjekvalitet</h3>" + qualityHtml(q) + "</section>");
-    secs.push("<section class=\"om-sec\" id=\"ordliste\"><h3>Ordliste</h3><div id=\"glossaryBox\">" + glossaryHtml(g) + "</div></section>");
+    secs.push("<section class=\"om-sec\"><h3>Målt søkjekvalitet</h3>" + qualityHtml(q, pend.quality) + "</section>");
+    secs.push("<section class=\"om-sec\" id=\"ordliste\"><h3>Ordliste</h3><div id=\"glossaryBox\">" + glossaryHtml(g, pend.glossary) + "</div></section>");
 
     return secs.join("");
   }

@@ -39,8 +39,9 @@ test("om-fana: seksjonane og tabellane ligg i overflow-wrapper, tal frå fila", 
   };
   const html = Om.aboutHtml(COUNTS, { openalex_generated_at: "2026-11-12T03:43:41+00:00", review: { human_checked: 0, kind_unknown: 671, without_citations: 1738, affiliation_unknown: 408 }, countries: { NO: { openalex: 970, nordic: 1161 } } }, quality, { terms: [{ id: "rtd", term: "research through design", nn: "Forklaring.", en: ["RtD"], no: [], q: "research through design" }] }, { built: "2026-11-13T10:06:19+00:00" });
   for (const h of ["Kva som er med", "Korleis verk vart valde", "Kva som manglar", "Samandrag og PDF", "Språk", "Korleis søket verkar", "Målt søkjekvalitet", "Ordliste"]) assert.ok(html.includes(h), h);
-  assert.ok(html.includes("2026-11-12"));
-  assert.ok(html.includes("2026-11-13"));
+  assert.ok(html.includes("12.11.2026"));
+  assert.ok(html.includes("13.11.2026"));
+  assert.ok(html.includes("408 arkivverk"), "same tal som i metaanalysen og Utforsk");
   assert.ok(html.includes("0,31"));
   assert.ok(html.includes("Vurderaren er ein språkmodell."));
   assert.ok(html.includes('id="ordliste"'));
@@ -56,4 +57,17 @@ test("ordliste: escapa tekst og søkeknapp", () => {
   assert.ok(html.includes("&lt;b&gt;t&lt;/b&gt;"));
   assert.ok(html.includes('data-q="q&quot;q"'));
   assert.ok(html.includes(">Søk</button>"));
+});
+
+test("om-fana medan filene lastar: «Lastar …», ingen falske feilmeldingar", () => {
+  const pending = { about: true, quality: true, glossary: true };
+  const html = Om.aboutHtml(COUNTS, null, null, null, { built: "2026-11-13T10:06:19+00:00", pending });
+  assert.ok((html.match(/Lastar …/g) || []).length >= 3);
+  for (const bad of ["ikkje tilgjengeleg no", "OpenAlex-uttrekk: ukjend", "Ordlista er ikkje tilgjengeleg"]) assert.ok(!html.includes(bad), bad);
+  assert.ok(!/ingen landkode/.test(html), "ikkje eit anna tal enn det frå about.json");
+  // fila svarte ikkje: då er feilmeldinga rett
+  const failed = Om.aboutHtml(COUNTS, null, null, null, { pending: { about: false, quality: false, glossary: false } });
+  assert.ok(failed.includes("Målt søkjekvalitet er ikkje tilgjengeleg no."));
+  assert.ok(failed.includes("Ordlista er ikkje tilgjengeleg no."));
+  assert.ok(!/ingen landkode/.test(failed), "399 frå flagget er ikkje det same som 408 frå about.json");
 });

@@ -1,7 +1,7 @@
 // window.__utforsk: state, measuring and self-checks (6.5, amendment 45).
-import * as T from "./tilstand.js?v=28";
-import * as data from "./data.js?v=28";
-import { PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, ANNA_LAND, KGR_FARGE, PALETTE_GRUPPE, PALETTE_ORD, FADE, FADE_ALFA, BG, cie76, kontrast, blandHex, overlappPar, rorsle, fmt } from "./hjelp.js?v=28";
+import * as T from "./tilstand.js?v=35";
+import * as data from "./data.js?v=35";
+import { PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, ANNA_LAND, KGR_FARGE, PALETTE_GRUPPE, PALETTE_ORD, FADE, FADE_ALFA, BG, cie76, kontrast, blandHex, overlappPar, rorsle, fmt } from "./hjelp.js?v=35";
 
 // A frame, or 40 ms when the page is hidden and rAF does not run.
 const venteRamme = () => new Promise((r) => { let ferdig = false; const f = (t) => { if (!ferdig) { ferdig = true; r(t == null ? performance.now() : t); } }; requestAnimationFrame(f); setTimeout(() => f(null), 40); });

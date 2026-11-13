@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald, KL, klyngeTekst } from "../hjelp.js?v=28";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald, KL, klyngeTekst } from "../hjelp.js?v=35";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -66,7 +66,7 @@ export default {
     scene.storleik();
     if (S.kart.z) scene.settZ(S.kart.z);
     // a one-line invitation over the first screen; it goes at the first filter or opened work
-    ramme.flate.insertAdjacentHTML("beforeend", `<p class="invitasjon" hidden>Søk, klikk ei klynge eller dra ein ring rundt punkt for å starte.</p>`);
+    ramme.flate.insertAdjacentHTML("beforeend", `<p class="invitasjon" hidden>Søk, trykk ei klynge eller dra ein ring rundt punkt for å starte.</p>`);
   },
   oppdater(s, e) {
     if (!kat || e.visning.has("kart.farge")) { lagFargar(); fargeSeg.set(S.kart.farge); }
@@ -339,6 +339,8 @@ function startPuls() {
   stoppPuls = tween(1100, (t) => { if (puls) puls.t = t * 1.35; scene.teiknOverlay(); }, () => { puls = null; stoppPuls = null; scene.teiknOverlay(); });
 }
 let dublettTal = null;
+let moglegTal = null;
+function talMogleg() { if (moglegTal == null) { moglegTal = 0; for (let i = 0; i < D.n; i++) if (D.merk[i] & 1) moglegTal++; } return moglegTal; }
 function talDublettar() { if (dublettTal == null) { dublettTal = 0; for (let i = 0; i < D.n; i++) if (D.merk[i] & 5) dublettTal++; } return dublettTal; }
 function reknTemaTal() {
   if (temaTalV === T.versjonNo() && temaTal) return temaTal;
@@ -529,6 +531,6 @@ function teiknTeikn() {
     if (modus === "tema") html += `<span class="teikn-merk">Dei same åtte klyngene som i Kart-fana på hovudsida: grupper av verk med lik tekst, ikkje emne sett av nokon. Dei to siste har mest arkivverk (43 og 45 %).</span>`;
   }
   html += `<span class="teikn-merk">Storleik: siteringar (berre OpenAlex)</span>`;
-  html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;
+  html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala, og i detaljen er den eine oppføringa merkt. Katalogen skjuler berre dei ${fmt(talMogleg())} med same tittel, år og forfattar; her tel òg verk med same PDF-adresse eller DOI.</span>`;
   settInnhald(ramme.teikn, html);
 }

@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald, KL } from "../hjelp.js?v=28";
+import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald, KL } from "../hjelp.js?v=35";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -485,7 +485,7 @@ function teiknNabolag() {
   ramme.linje.textContent = iKorpus && D.lag[v]
     ? "Arkivverk har inga referanseliste i dataa. Viser berre liknande verk."
     : `${T.merkelapp(v)}: siterer ${fmt(siterer.length)} verk med kjende metadata${iKorpus ? ` (av ${fmt(Math.max(r, 0))} referansar)` : ""}, sitert av ${fmt(sitertAv.length)} verk i korpuset${iKorpus ? `, liknar ${fmt(liknar.length)} verk` : ""}.${T.harFilter() ? ` Bleike: utanfor utvalet (${fmt(T.valt)} av ${fmt(D.n)} verk).` : ` Utvalet: alle ${fmt(D.n)} verk.`}`;
-  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-post"><span class="prikk" style="background:${KL.dim}"></span>utanfor korpuset</span><span class="teikn-merk">Farge: tema. Kolonnane viser dei 40 mest siterte, ordna etter år. Klikk eit verk for å gjere det til midten.</span>`);
+  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-post"><span class="prikk" style="background:${KL.dim}"></span>utanfor korpuset</span><span class="teikn-merk">Farge: tema. Kolonnane viser dei 40 mest siterte, ordna etter år. Trykk på eit verk for å gjere det til midten.</span>`);
   requestAnimationFrame(teiknBogar);
 }
 function teiknBogar() {
@@ -685,10 +685,13 @@ function teiknOverTid() {
   });
   const W = Math.max(320, el.svg.clientWidth), rad = 40, topp = 54;
   const H = topp + rad * 8 + 20;
-  const kw = (W - 40) / kolonnar.length;
+  // never narrower than 180 px per decade: on a phone the chart scrolls sideways (the next decade peeks in at the edge)
+  const kw = Math.max(180, (W - 40) / kolonnar.length);
+  const SW = Math.round(40 + kw * kolonnar.length);
   const x = (j) => 20 + kw * j + 8;
   const boksB = Math.min(170, kw - 30);
-  let html = `<svg width="${W}" height="${H}" class="bump">`;
+  const kuttTegn = Math.max(10, Math.floor((boksB - 46) / 6.1) - 3);
+  let html = `<svg width="${SW}" height="${H}" class="bump">`;
   // lines between columns
   const posAv = rangar.map((r) => new Map((r.liste || []).map(([v], q) => [v, q])));
   for (let j = 0; j + 1 < rangar.length; j++) {
@@ -702,7 +705,7 @@ function teiknOverTid() {
   }
   rangar.forEach((r, j) => {
     const ufull = r.t === 2020;
-    html += `<text x="${x(j)}" y="18" class="bump-hovud">${r.t}-åra${ufull ? " (ufullstendig)" : ""}</text><text x="${x(j)}" y="34">${fmt(r.n)} verk med referanseliste</text>`;
+    html += `<text x="${x(j)}" y="18" class="bump-hovud">${r.t}-åra${ufull ? "*" : ""}</text><text x="${x(j)}" y="34">${fmt(r.n)} verk</text>`;
     if (!r.liste) { html += `<text x="${x(j)}" y="${topp + 20}" class="dim">For få verk</text>`; return; }
     r.liste.forEach(([v, c], q) => {
       const y = topp + q * rad;
@@ -710,7 +713,7 @@ function teiknOverTid() {
       html += `<g class="bump-node" data-v="${v}" data-t="${r.t}" tabindex="0" role="button" aria-label="${esc(T.merkelapp(v))}, ${c} av ${r.n} verk i ${r.t}-åra">
         <rect x="${x(j)}" y="${y}" width="${boksB}" height="${rad - 12}" rx="3" fill="${KL.flate}" stroke="${S.f.kanon.has(T.nodeKey(v)) ? KL.ring : KL.linjeUte}"/>
         <rect x="${x(j)}" y="${y + rad - 15}" width="${Math.max(2, (boksB * pst_) / 40)}" height="3" fill="${KL.bar}"/>
-        <text x="${x(j) + 6}" y="${y + 16}" class="bump-tekst">${q + 1}. ${esc(kutt(T.merkelapp(v), 18))}</text>
+        <text x="${x(j) + 6}" y="${y + 16}" class="bump-tekst">${q + 1}. ${esc(kutt(T.merkelapp(v), kuttTegn))}</text>
         <text x="${x(j) + boksB - 6}" y="${y + 16}" text-anchor="end">${pst(pst_)} %</text></g>`;
     });
   });
@@ -735,8 +738,8 @@ function teiknOverTid() {
       <p class="dim tiar-fot">Prosent: del av siterande verk i korpuset (${TIAR_NAMN.map((t, j) => `${t} ${fmt(p.nT[j])}`).join(", ")}). * 2020-åra er ikkje ferdige. «No»: 2020-åra mot 2000-åra.</p>` : `<p>Ingen verk i utvalet har referanseliste.</p>`}<p class="dim">Per tiår i utvalet: ${rangar.map((r) => `${r.t}-åra ${fmt(r.n)} verk med referanseliste`).join(", ")}.</p></div>`;
   }
   el.svg.innerHTML = html;
-  ramme.linje.textContent = `Dei 8 mest siterte verka per tiår, rekna frå dei ${fmt(T.valt)} verka i utvalet etter tiåret dei kom ut. Prosent = del av desse verka som siterer.`;
-  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-merk">Linjer bind saman same verk. Tiår med under 20 verk med referanseliste får ingen rangering.</span>`);
+  ramme.linje.textContent = `Dei 8 mest siterte verka per tiår, rekna frå dei ${fmt(T.valt)} verka i utvalet etter tiåret dei kom ut. Prosent = del av desse verka som siterer.${SW > W ? " Dra sidelengs for å sjå alle tiår." : ""}`;
+  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-merk">Linjer bind saman same verk. Tal under tiåret: verk med referanseliste. * 2020-åra er ikkje ferdige. Tiår med under 20 slike verk får ingen rangering.</span>`);
   el.svg._rangar = { rangar, verkPerTiar, tel };
 }
 function bumpTips(v) {
