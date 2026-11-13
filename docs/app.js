@@ -31,6 +31,9 @@
 
   const $ = (id) => document.getElementById(id);
   const saveData = () => !!(navigator.connection && navigator.connection.saveData);
+  /* Tilgangsadressene kjem aldri når fila feila, eller når saveData held bakgrunnslastinga tilbake */
+  const accessGone = () => !S.access && (!!S.accessFailed || (saveData() && !S.t1));
+  const accInfo = (i, w) => U.accessInfo(S.meta.acc[i], w, S.access ? S.access[w.id] : null, { unavailable: accessGone() });
   const narrow = () => { const w = window.innerWidth; return w > 0 && w < 600; };
   const lowMem = () => typeof navigator.deviceMemory === "number" && navigator.deviceMemory < 4;
   const tally = (s) => { const o = {}; for (const c of s) o[c] = (o[c] || 0) + 1; return o; };
@@ -187,6 +190,7 @@
     });
     once("access", () => sget(S.meta.access ? S.meta.access.file : "access.json", null)).then((a) => {
       if (a && a.items) { S.access = a.items; if (S.result) renderList(); }
+      else { S.accessFailed = true; if (S.result) renderList(); }
     });
   }
 
@@ -199,7 +203,7 @@
       if (!buf || buf.byteLength !== n * k * 3) return null;
       S.sim = { nbr: new Uint16Array(buf, 0, n * k), sim: new Uint8Array(buf, n * k * 2, n * k), k };
       return S.sim;
-    });
+    }).then((v) => { if (!v) S.simFailed = true; return v; });
   }
   function ensureVectors() {
     if (!S.metaOK || !S.meta.vectors) return Promise.resolve(null);
@@ -450,7 +454,7 @@
         }
         if (S.metaOK && !S.qvs && S.meta.query_vectors) ensureQV().then((v) => { if (v && seq === S.seq && v[key]) runSearch(); });
         if (S.metaOK && !S.sim && S.meta.similar) ensureSim().then((v) => { if (v && seq === S.seq) runSearch(); });
-        const out = Search.run(S.engine, q, { mask, n: S.works.length, qv: qv && S.vectors ? qv : null, vectors: S.vectors, dim: S.meta.vectors ? S.meta.vectors.dim : 256, sim: S.sim });
+        const out = Search.run(S.engine, q, { mask, n: S.works.length, qv: qv && S.vectors ? qv : null, vectors: S.vectors, dim: S.meta.vectors ? S.meta.vectors.dim : 256, sim: S.sim, titles: S.corpus.titleKeys() });
         res.mode = out.mode === "sem" ? src : "ord";
         res.rel = out.hits.map((h) => h.d);
         res.cap = out.cap; res.capped = out.capped;
@@ -578,7 +582,11 @@
     else {
       t = `${fmt(r.total + (r.pinned != null ? 1 : 0))} av ${fmt(N)} verk`;
       if (r.hasQuery && r.sort === "rel" && r.capped) t += ` · viser dei ${fmt(r.total)} mest relevante`;
-      if (!S.st.dup && !S.degraded && (S.counts.flag || {}).d) t += ` (${fmt(S.counts.flag.d)} skjulte)`;
+      if (!S.st.dup && !S.degraded && (S.counts.flag || {}).d) {
+        /* Talet gjeld heile korpuset; det vert berre vist når lista ikkje er smalna inn av søk eller filter */
+        const narrowed = !!(S.st.q.trim() || U.filterCount(S.st));
+        t += narrowed ? " · moglege dublettar er skjulte" : ` · ${fmt(S.counts.flag.d)} moglege dublettar skjulte`;
+      }
     }
     el.textContent = t;
     const has = r.list.length > 0 || r.pinned != null;
@@ -597,7 +605,7 @@
     const w = S.works[i], id = w.id;
     const code = S.meta.acc[i];
     const item = S.access ? S.access[id] : null;
-    const info = U.accessInfo(code, w, item);
+    const info = accInfo(i, w);
     const detail = S.expandedId === id;
     const absOpen = !S.noAbs && (detail || S.openAbs.has(id));
     const inList = S.reading.includes(id);
@@ -660,7 +668,7 @@
     const w = S.works[i], id = w.id;
     const code = S.meta.acc[i];
     const item = S.access ? S.access[id] : null;
-    const info = U.accessInfo(code, w, item);
+    const info = accInfo(i, w);
     const links = [];
     const doi = U.doiHref(w);
     if (doi && code !== "d") links.push(`<a class="act act-block" href="${esc(doi)}" target="_blank" rel="noopener noreferrer">Utgjevarside (DOI)</a>`);
@@ -672,7 +680,8 @@
     let simBox = "";
     if (S.metaOK && S.meta.similar) {
       const nb = neighborsOf(i, 6);
-      if (!nb) { ensureSim().then(() => refreshRow(id)); simBox = `<p class="subline">Lastar liknande verk…</p>`; }
+      if (S.simFailed) simBox = `<p class="subline">Liknande verk er ikkje tilgjengelege no.</p>`;
+      else if (!nb) { ensureSim().then(() => refreshRow(id)); simBox = `<p class="subline">Lastar liknande verk…</p>`; }
       else simBox = `<ul class="plain detail-list">${nb.map(({ d, pct }) => { const sw = S.works[d]; return `<li><a href="#verk/${esc(encodeURIComponent(sw.id))}" data-jump="${esc(sw.id)}">${esc(sw.year ? sw.year + " · " : "")}${esc(sw.title)}</a> <span class="score" title="${esc(U.SIM_NOTE)}">${pct} %</span></li>`; }).join("")}</ul><button type="button" class="act act-block" data-sim="${esc(id)}">Vis alle 20</button><p class="subline">${esc(U.SIM_NOTE)}.</p>`;
     }
 
@@ -902,7 +911,7 @@
       return;
     }
     const rows = pos.map((i) => {
-      const w = S.works[i], info = U.accessInfo(S.meta.acc[i], w, S.access ? S.access[w.id] : null);
+      const w = S.works[i], info = accInfo(i, w);
       return `<li class="rl-row"><div><button type="button" class="link-row" data-jump="${esc(w.id)}">${esc(w.title)}</button><div class="subline">${esc([w.year, authorsText(w, 3), info.tag].filter(Boolean).join(" · "))}</div></div>${shared ? "" : `<button type="button" class="act" data-rl="${esc(w.id)}" aria-label="Fjern frå leseliste">Fjern</button>`}</li>`;
     }).join("");
     const tooMany = ids.length > 60;

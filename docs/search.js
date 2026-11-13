@@ -5,7 +5,7 @@
   "use strict";
 
   const FOLD_MAP = { "æ": "ae", "ø": "o", "ð": "d", "þ": "th", "ß": "ss", "đ": "d", "ł": "l", "œ": "oe" };
-  const PARAMS = { k1: 1.2, b: 0.75, rrfK: 60, wLex: 1.0, wSem: 1.0, wPrf: 0.6, glossW: 1.0, topN: 200, cap: 300, fullCap: 2000, extraMax: 6, prfSeeds: 5 };
+  const PARAMS = { k1: 1.2, b: 0.75, rrfK: 60, wLex: 1.0, wSem: 1.0, wSemLong: 2.0, longQuery: 4, wPrf: 0.6, glossW: 1.0, litBonus: 0.75, topN: 200, cap: 300, fullCap: 2000, extraMax: 6, prfSeeds: 5 };
   const NORDIC = ["NO", "SE", "DK", "FI", "IS"];
 
   /* ---------- 5.1 folding og tokenisering ---------- */
@@ -105,6 +105,8 @@
     return g;
   }
 
+  const PHRASE_BONUS = 1000;
+
   /* ---------- søkemotor ---------- */
   function createEngine(config, lex, params) {
     const P = Object.assign({}, PARAMS, params || {});
@@ -114,6 +116,7 @@
     const gloss = ((config && config.glossary) || []).map((e) => ({
       from: (e.from || []).map((ph) => ph.map((t) => fold(t, fm))),
       to: (e.to || []).map((ph) => tokenize(ph, fm).filter((t) => !stop.has(t))),
+      toFull: (e.to || []).map((ph) => tokenize(ph, fm)),
       w: e.w != null ? e.w : P.glossW,
     }));
     return { ix, fm, stop, gloss, P };
@@ -148,18 +151,18 @@
     return Math.imul((x + (x >>> 4)) & 0x0f0f0f0f, 0x01010101) >>> 24;
   }
 
-  /* 5.2 + 5.3. opts: {mask, topN, glossary, full} */
+  /* 5.2 + 5.3. Eigne ord frå brukaren går føre ordlisteomsetjingar: poenget vert gonga med (1 + litBonus × del kjerne-token dekt av eiga gruppe). opts: {mask, topN, glossary, full} */
   function lexical(eng, query, opts) {
     opts = opts || {};
     const ix = eng.ix, P = eng.P, N = ix.N;
     const mask = opts.mask || null;
     const topN = opts.topN || P.topN;
     const { all, core } = coreTokens(eng, query);
-    const res = { tokens: all, core, extra: [], list: [], full: [], terms: [], glossHits: [] };
+    const res = { tokens: all, core, extra: [], list: [], full: [], terms: [], glossHits: [], phraseHits: 0 };
     const m = core.length;
     if (!m) return res;
 
-    const score = new Float64Array(N), cov = new Uint32Array(N), gv = new Float64Array(N), touchedAll = new Uint8Array(N);
+    const score = new Float64Array(N), cov = new Uint32Array(N), lit = new Uint32Array(N), gv = new Float64Array(N), touchedAll = new Uint8Array(N);
     const all_touched = [];
     const termSet = new Set();
 
@@ -188,9 +191,10 @@
 
     for (let i = 0; i < m; i++) {
       const bit = (1 << i) >>> 0;
-      runGroup(buildGroup(ix, core[i]), 1, (d) => { cov[d] |= bit; });
+      runGroup(buildGroup(ix, core[i]), 1, (d) => { cov[d] |= bit; lit[d] |= bit; });
     }
 
+    const gPhrases = [];
     if (opts.glossary !== false && eng.gloss.length) {
       const coreSet = new Set(core), added = new Map(), order = [];
       for (const e of eng.gloss) {
@@ -208,6 +212,13 @@
           if (ok) { hit = true; ps.forEach((i) => sources.add(i)); }
         }
         if (!hit) continue;
+        if (sources.size === core.length) { // oppføringa dekkjer heile spørjinga: ordlistefrasen er «spørjinga omsett»
+          for (const tf of e.toFull) {
+            if (tf.length < 2) continue;
+            const key = " " + tf.join(" ") + " ";
+            if (gPhrases.indexOf(key) < 0) gPhrases.push(key);
+          }
+        }
         for (const ph of e.to) for (const tok of ph) {
           if (coreSet.has(tok)) continue;
           if (added.has(tok)) sources.forEach((i) => added.get(tok).sources.add(i));
@@ -225,11 +236,23 @@
       }
     }
 
+    /* Tittelfrase-påslag (same i designteori/search_eval.py; ikkje i «lexical» utan ordliste). Påslaget vert lagt til éin gong per verk når
+       (a) heile spørjefrasen, stoppord med, står rett etter kvarandre i tittelen, eller
+       (b) spørjinga (utan stoppord) er heilt dekt av éi ordlisteoppføring og ein engelsk frase med fleire ord frå oppføringa står i tittelen
+       (til dømes «design thinking» for «designtenking», «service design» for «tenestedesign»). */
+    const userKey = opts.titles && all.length >= 2 ? " " + all.join(" ") + " " : "";
+    const gKeys = opts.titles ? gPhrases.filter((k) => k !== userKey) : [];
     const cand = [];
     const full = [];
     for (const d of all_touched) {
       const dek = popcount(cov[d]) / m;
-      const s = score[d] * (0.6 + 0.4 * dek);
+      let s = score[d] * (0.6 + 0.4 * dek) * (1 + P.litBonus * popcount(lit[d]) / m);
+      if (s > 0 && opts.titles && opts.titles[d]) {
+        const t = opts.titles[d];
+        let hit = userKey !== "" && t.indexOf(userKey) >= 0;
+        if (!hit) for (const k of gKeys) if (t.indexOf(k) >= 0) { hit = true; break; }
+        if (hit) { s += PHRASE_BONUS; res.phraseHits++; }
+      }
       score[d] = s;
       if (s > 0) { cand.push(d); if (dek === 1) full.push(d); }
     }
@@ -292,13 +315,14 @@
   function run(eng, query, ctx) {
     ctx = ctx || {};
     const P = eng.P;
-    const lex = lexical(eng, query, { mask: ctx.mask, glossary: ctx.glossary !== false, full: ctx.full !== false });
+    const lex = lexical(eng, query, { mask: ctx.mask, glossary: ctx.glossary !== false, full: ctx.full !== false, titles: ctx.titles });
     const lists = [{ list: lex.list, w: P.wLex, name: "lex" }];
     let mode = "ord";
     let sem = null, prf = null;
     if (ctx.qv && ctx.vectors) {
       sem = semanticTop(ctx.vectors, ctx.n, ctx.dim || 256, ctx.qv, ctx.mask, P.topN);
-      lists.push({ list: sem, w: P.wSem, name: "sem" });
+      /* spørjing som liknar ein tittel eller ei setning (>= 4 token): meininga får dobbel vekt, målt på dev-spørjingane */
+      lists.push({ list: sem, w: lex.tokens.length >= P.longQuery ? P.wSemLong : P.wSem, name: "sem" });
       mode = "sem";
     } else if (ctx.sim && lex.list.length) {
       prf = prfTop(lex.list.slice(0, P.prfSeeds).map((e) => e.d), ctx.sim, ctx.mask, P.topN);
@@ -395,7 +419,12 @@
       }
       return arr;
     }
-    return { n, works, meta, year, mask, sortList, kindGroup: kg };
+    let titleK = null;
+    const titleKeys = () => {
+      if (!titleK) titleK = works.map((w) => " " + tokenize(w.title || "", fm).join(" ") + " ");
+      return titleK;
+    };
+    return { n, works, meta, year, mask, sortList, kindGroup: kg, titleKeys };
   }
 
   /* Kandidatpool for andre sorteringar enn relevans (endring 3): dekning == 1 pluss treffmengda */

@@ -126,7 +126,7 @@ header nav {
   padding-bottom: .55rem;
   border-bottom: 1px solid var(--hair);
 }
-.brand { color: inherit; text-decoration: none; }
+.brand { color: inherit; text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
 
 .nav-btn {
   -webkit-appearance: none;
@@ -670,7 +670,8 @@ footer {
   flex-wrap: wrap;
   gap: 18px;
 }
-.footer-links a { text-decoration: none; }
+.footer-links a { text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; min-width: 44px; justify-content: center; }
+.footer-links { gap: 4px 14px; }
 .footer-links a:hover { color: var(--fg); }
 
 /* 520px column: the narrow layout is the only layout (as on traktat) */
@@ -852,6 +853,8 @@ progress { width: 70%; height: 10px; vertical-align: middle; }
 .om-sec h3 { font-size: 1.15rem; font-weight: 400; line-height: 1.3; margin: 0 0 8px; }
 .om-sec h4 { font-family: var(--mono); font-size: 10px; font-weight: 400; letter-spacing: .02em; color: var(--dim); margin: 14px 0 4px; }
 .om-sec p, .om-sec li { font-size: .9rem; line-height: 1.55; }
+.om-plain { border-left: 3px solid var(--hair); padding: 2px 0 2px 12px; margin: 10px 0 14px; }
+.om-plain h4 { margin-top: 4px; }
 .om-dates { color: var(--dim); }
 .gl-item { padding: 8px 0; border-top: 1px solid var(--hair); }
 .gl-item h4 { font-family: var(--serif); font-size: 1rem; color: var(--fg); margin: 0 0 4px; }

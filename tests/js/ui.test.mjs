@@ -180,3 +180,20 @@ test("nye filer er klassiske skript utan ESM-syntaks, med UMD-hale", () => {
   }
   assert.ok(!/1900/.test(src["om.js"]), "om.js skal ikkje seie 1900");
 });
+
+test("kode v utan access.json: lenkje til utgjevarsida eller metadata-adressa, aldri evig «lastar…»", () => {
+  const pending = Ui.accessInfo("v", W, null);
+  assert.equal(pending.pending, true);
+  assert.equal(pending.href, "");
+  const viaDoi = Ui.accessInfo("v", W, null, { unavailable: true });
+  assert.equal(viaDoi.pending, false);
+  assert.equal(viaDoi.href, "https://doi.org/10.1/abc");
+  assert.equal(viaDoi.label, "Utgjevarside");
+  const viaMeta = Ui.accessInfo("v", { id: "n:1", source_url: "https://arkiv.example/x" }, null, { unavailable: true });
+  assert.equal(viaMeta.href, "https://arkiv.example/x");
+  assert.equal(viaMeta.label, "PDF (ikkje kontrollert)");
+  const none = Ui.accessInfo("v", { id: "n:2" }, null, { unavailable: true });
+  assert.equal(none.pending, false);
+  assert.equal(Ui.accessLinkHtml(none), "");
+  assert.ok(!Ui.accessLinkHtml(viaDoi).includes("lastar"));
+});

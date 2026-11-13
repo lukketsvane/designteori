@@ -39,13 +39,17 @@
   function venueOf(w) { return oneLine(w.venue || w.source || ""); }
 
   /* Namn: «Etternamn, Fornamn» vert ståande; elles delt ved siste mellomrom. */
+  const PARTICLES = new Set(["de", "van", "von", "der", "den", "da", "di", "del", "della", "la", "le", "af", "av", "zu", "ten", "ter", "du", "dos", "das"]);
   function splitName(name) {
     const n = oneLine(name);
     if (!n) return { family: "", given: "" };
     const c = n.indexOf(",");
     if (c >= 0) return { family: n.slice(0, c).trim(), given: n.slice(c + 1).trim() };
-    const sp = n.lastIndexOf(" ");
-    return sp < 0 ? { family: n, given: "" } : { family: n.slice(sp + 1), given: n.slice(0, sp).trim() };
+    const parts = n.split(" ");
+    if (parts.length < 2) return { family: n, given: "" };
+    let k = parts.length - 1;
+    while (k > 1 && PARTICLES.has(parts[k - 1].toLowerCase())) k--; // «Amalia de Götzen», «Jan van der Berg»
+    return { family: parts.slice(k).join(" "), given: parts.slice(0, k).join(" ") };
   }
   const nameAsListed = (name) => { const { family, given } = splitName(name); return given ? family + ", " + given : family; };
   const initials = (given) => given.split(/[\s]+/).filter(Boolean).map((p) => p.split("-").map((x) => x.charAt(0).toUpperCase() + ".").join("-")).join(" ");

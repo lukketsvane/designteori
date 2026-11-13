@@ -1,0 +1,584 @@
+{
+  "schema": 1,
+  "built": "2026-11-13T12:03:22.616797+00:00",
+  "n_queries": 25,
+  "model": "google/embeddinggemma-300m (q8, 256 dim)",
+  "params": {
+    "k1": 1.2,
+    "b": 0.75,
+    "rrf_k": 60,
+    "w_lex": 1.0,
+    "w_sem": 1.0,
+    "w_sem_long": 2.0,
+    "long_query_tokens": 4,
+    "w_prf": 0.6,
+    "lit_bonus": 0.75,
+    "phrase_bonus": 1000.0,
+    "gloss_w": 1.0,
+    "top_n": 200,
+    "fused_n": 300,
+    "prefix_w": 0.5,
+    "morph_w": 0.8
+  },
+  "metrics": {
+    "recall_at_10": {
+      "lexical": {
+        "all": 0.44,
+        "known-item": 0.575,
+        "topical-en": 0.55,
+        "cross-lingual": 0.222222,
+        "dev": 0.4,
+        "test": 0.4625
+      },
+      "semantic": {
+        "all": 0.724,
+        "known-item": 0.8,
+        "topical-en": 0.775,
+        "cross-lingual": 0.611111,
+        "dev": 0.811111,
+        "test": 0.675
+      },
+      "fused": {
+        "all": 0.74,
+        "known-item": 0.675,
+        "topical-en": 0.825,
+        "cross-lingual": 0.722222,
+        "dev": 0.688889,
+        "test": 0.76875
+      },
+      "fallback": {
+        "all": 0.548,
+        "known-item": 0.2,
+        "topical-en": 0.6875,
+        "cross-lingual": 0.733333,
+        "dev": 0.444444,
+        "test": 0.60625
+      }
+    },
+    "success_at_10": {
+      "lexical": {
+        "all": 0.68,
+        "known-item": 0.625,
+        "topical-en": 0.875,
+        "cross-lingual": 0.555556,
+        "dev": 0.777778,
+        "test": 0.625
+      },
+      "semantic": {
+        "all": 0.88,
+        "known-item": 0.875,
+        "topical-en": 1.0,
+        "cross-lingual": 0.777778,
+        "dev": 1.0,
+        "test": 0.8125
+      },
+      "fused": {
+        "all": 0.92,
+        "known-item": 0.75,
+        "topical-en": 1.0,
+        "cross-lingual": 1.0,
+        "dev": 0.888889,
+        "test": 0.9375
+      },
+      "fallback": {
+        "all": 0.76,
+        "known-item": 0.25,
+        "topical-en": 1.0,
+        "cross-lingual": 1.0,
+        "dev": 0.777778,
+        "test": 0.75
+      }
+    }
+  },
+  "per_query": [
+    {
+      "id": "q01",
+      "lexical": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.4,
+        "first_rank": 3
+      },
+      "fused": {
+        "recall10": 0.4,
+        "first_rank": 2
+      },
+      "fallback": {
+        "recall10": 0.6,
+        "first_rank": 2
+      }
+    },
+    {
+      "id": "q02",
+      "lexical": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.8,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.8,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q03",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 45
+      },
+      "semantic": {
+        "recall10": 0.3,
+        "first_rank": 8
+      },
+      "fused": {
+        "recall10": 0.5,
+        "first_rank": 2
+      },
+      "fallback": {
+        "recall10": 0.5,
+        "first_rank": 5
+      }
+    },
+    {
+      "id": "q04",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 16
+      },
+      "semantic": {
+        "recall10": 0.4,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.4,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q05",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 137
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 5
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 9
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": 48
+      }
+    },
+    {
+      "id": "q06",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 15
+      },
+      "semantic": {
+        "recall10": 0.0,
+        "first_rank": 18
+      },
+      "fused": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.9,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q07",
+      "lexical": {
+        "recall10": 0.4,
+        "first_rank": 2
+      },
+      "semantic": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.5,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q08",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 88
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 4
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": 14
+      }
+    },
+    {
+      "id": "q09",
+      "lexical": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 1.0,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q10",
+      "lexical": {
+        "recall10": 1.0,
+        "first_rank": 4
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 2
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": 22
+      }
+    },
+    {
+      "id": "q11",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": 15
+      },
+      "semantic": {
+        "recall10": 0.0,
+        "first_rank": 12
+      },
+      "fused": {
+        "recall10": 0.3,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.8,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q12",
+      "lexical": {
+        "recall10": 0.4,
+        "first_rank": 3
+      },
+      "semantic": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.8,
+        "first_rank": 2
+      },
+      "fallback": {
+        "recall10": 0.7,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q13",
+      "lexical": {
+        "recall10": 0.5,
+        "first_rank": 2
+      },
+      "semantic": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.7,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q14",
+      "lexical": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 2
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": 49
+      }
+    },
+    {
+      "id": "q15",
+      "lexical": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 1.0,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q16",
+      "lexical": {
+        "recall10": 0.2,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.4,
+        "first_rank": 2
+      }
+    },
+    {
+      "id": "q17",
+      "lexical": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.7,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.6,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q18",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": null
+      },
+      "semantic": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.6,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.7,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q19",
+      "lexical": {
+        "recall10": 0.0,
+        "first_rank": null
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 5
+      },
+      "fused": {
+        "recall10": 0.0,
+        "first_rank": 15
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": null
+      }
+    },
+    {
+      "id": "q20",
+      "lexical": {
+        "recall10": 1.0,
+        "first_rank": 2
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 3
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 1.0,
+        "first_rank": 2
+      }
+    },
+    {
+      "id": "q21",
+      "lexical": {
+        "recall10": 0.8,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.9,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q22",
+      "lexical": {
+        "recall10": 0.6,
+        "first_rank": 3
+      },
+      "semantic": {
+        "recall10": 0.9,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 0.8,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.4,
+        "first_rank": 2
+      }
+    },
+    {
+      "id": "q23",
+      "lexical": {
+        "recall10": 0.1,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 0.8,
+        "first_rank": 1
+      }
+    },
+    {
+      "id": "q24",
+      "lexical": {
+        "recall10": 1.0,
+        "first_rank": 6
+      },
+      "semantic": {
+        "recall10": 0.0,
+        "first_rank": 120
+      },
+      "fused": {
+        "recall10": 0.0,
+        "first_rank": 42
+      },
+      "fallback": {
+        "recall10": 0.0,
+        "first_rank": 31
+      }
+    },
+    {
+      "id": "q25",
+      "lexical": {
+        "recall10": 0.3,
+        "first_rank": 1
+      },
+      "semantic": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fused": {
+        "recall10": 1.0,
+        "first_rank": 1
+      },
+      "fallback": {
+        "recall10": 1.0,
+        "first_rank": 1
+      }
+    }
+  ],
+  "caveats": [
+    "Ni av 25 spørjingar er dev (q01, q04, ...); resten er test. Tre val vart gjorde mot dev-spørjingane etter brukartesten: påslaget for dei eigne orda til brukaren (lit_bonus 0,75), tittelfrase-påslaget og dobbel meiningsvekt for spørjingar på fire ord eller meir. Dei andre parametrane vart ikkje justerte; reglane i tillegg 2 og 3 vart gjorde før måling.",
+    "Relevansvurderinga las i hovudsak titlar; samandrag vart ikkje lesne for alle kandidatar. Tak på 25 relevante for emnespørjingar på engelsk er eit utval av dei mest sentrale.",
+    "Mange verk i puljen er nesten like (same verk i fleire registreringar); begge tel som relevante når dei er relevante.",
+    "Målet «known-item: samla søk success@10 >= 0,85» vart ikkje nådd (0,75): omskrivne spørjingar gir svak ordsøk-liste, og samanslåinga dreg ned den gode meiningslista. Reservemodus (utan språkmodell) er svak for omskrivne kjende verk (success@10 0,25).",
+    "Eksempelsøket «taus kunnskap i handverk» gir recall@10 0,5 både i samla søk og reservemodus med ordliste; meiningslista åleine får mange norske kunst-og-handverk-titlar (0,3).",
+    "Relevansvurderinga er gjord av ein språkmodell, ikkje av ein domeneekspert (sjå judge i benchmark_queries.json).",
+    "Relevansmengda er avgrensa av pooling frå ordsøk, meining og samla søk; verk utanfor puljen tel som ikkje relevante, og reservemodus var ikkje med i puljen.",
+    "Berre 25 spørjingar: usikkerheita er brei, og tala skal lesast som retning, ikkje som presise mål.",
+    "Spørjevektorane er koda i Python med same modellfil som nettlesaren skal bruke; paritet i nettlesaren er ikkje målt av byggjeskriptet.",
+    "Arkivverk har berre tittel i innbygginga (ingen samandrag frå metadata), så meining og likskap er svakare for dei.",
+    "Alle system er målte utan filter og utan skjuling av moglege dublettar.",
+    "«Samla» og «reservemodus» er målte med tittelfrase-påslaget og med dobbel meiningsvekt for spørjingar på fire ord eller meir; «ordsøk» er utan ordliste og utan tittelfrase-påslag. Tittelfrase-påslaget gjeld òg engelske ordlistefrasar («design thinking» for «designtenking») når éi ordlisteoppføring dekkjer heile spørjinga; det vart lagt til etter ei gjennomgang og ikkje justert mot spørjingane (måltala er uendra av det)."
+  ]
+}

@@ -61,11 +61,9 @@ test("BM25: poeng stemmer med formelen i 5.2", () => {
     const f = ix.tfs[j][k];
     expect.set(d, idf * f * (1.2 + 1) / (f + 1.2 * (1 - 0.75 + 0.75 * LEX.doclen[d] / ix.avgdl)));
   });
-  // 'design' har prefiksutviding (designs? nei) men dekning = 1 gir faktor 1.0
-  for (const e of r.list) {
-    const prefix = 0; // ingen andre termar startar med design i denne korpusen
-    assert.ok(Math.abs(e.score - expect.get(e.d) * 1.0) < 1e-9 + prefix, `doc ${e.d}`);
-  }
+  // dekning = 1 gir faktor 1.0; eigne ord dekte gir i tillegg (1 + litBonus) for eitt kjerne-token
+  const lit = 1 + eng.P.litBonus;
+  for (const e of r.list) assert.ok(Math.abs(e.score - expect.get(e.d) * lit) < 1e-9, `doc ${e.d}`);
   assert.equal(r.list.length, expect.size);
   for (let i = 1; i < r.list.length; i++) assert.ok(r.list[i - 1].score >= r.list[i].score);
 });
@@ -248,4 +246,52 @@ test("Les først: formel i 5.6", () => {
   assert.ok(Math.abs(S.readFirstScore(0.5, 1, 999, "v") - 0.5 * (1 + 0.2 * 1) * 1.05) < 1e-12);
   assert.equal(S.readFirstScore(1, 1, 0, "d"), 1);
   assert.equal(S.readFirstScore(1, 1, null, "u"), 1);
+});
+
+test("tittelfrase-påslag: heile frasen i tittelen (stoppord med) går først, berre når titles er gitt", () => {
+  const eng = S.createEngine(CFG, LEX);
+  const titles = DOCS.map((d) => " " + S.tokenize(d.title).join(" ") + " ");
+  const q = "design in the public sector";
+  const plain = S.lexical(eng, q, { glossary: false });
+  const boosted = S.lexical(eng, q, { glossary: false, titles });
+  assert.equal(plain.phraseHits, 0);
+  assert.equal(boosted.phraseHits, 1);
+  assert.equal(boosted.list[0].d, 0);
+  // eitt ord gir aldri påslag, og utan titles er lista lik den målte
+  assert.equal(S.lexical(eng, "design", { glossary: false, titles }).phraseHits, 0);
+  assert.deepEqual(S.lexical(eng, q, { glossary: false }).list, plain.list);
+});
+
+test("eigne ord går føre ordlisteomsetjingar (litBonus)", () => {
+  // eitt verk med berre «craft» (ordliste) og eitt med «handverk» (brukaren sitt eige ord) har lik tf og lengd:
+  // det med eige ord skal få høgast poeng
+  const lex = {
+    n: 2, k1: 1.2, b: 0.75, avgdl: 10, doclen: [10, 10],
+    terms: ["craft", "handverk"], post: [[1, 4], [0, 4]],
+  };
+  const cfg = { stopwords: [], glossary: [{ from: [["handverk"]], to: ["craft"], w: 1.0 }] };
+  const eng = S.createEngine(cfg, lex);
+  const r = S.lexical(eng, "handverk", {});
+  assert.deepEqual(r.list.map((e) => e.d), [0, 1]);
+  assert.ok(r.list[0].score > r.list[1].score);
+});
+
+test("tittelfrase-påslag for ordlistefrasar: «designtenking» løftar «design thinking» i tittelen, men berre når oppføringa dekkjer heile spørjinga", () => {
+  const docs = [
+    { title: "Systems thinking in a design studio", authors: "A B", venue: "X" },
+    { title: "Design thinking meets innovation", authors: "C D", venue: "Y" },
+    { title: "Thinking about design education", authors: "E F", venue: "Z" },
+  ];
+  const cfg = { stopwords: STOP, glossary: [{ from: [["designtenking"]], to: ["design thinking"], w: 1.0 }] };
+  const eng = S.createEngine(cfg, buildLex(docs, STOP));
+  const titles = docs.map((d) => " " + S.tokenize(d.title).join(" ") + " ");
+  const plain = S.lexical(eng, "designtenking", {});
+  const boosted = S.lexical(eng, "designtenking", { titles });
+  assert.equal(plain.phraseHits, 0);
+  assert.equal(boosted.phraseHits, 1);
+  assert.equal(boosted.list[0].d, 1);
+  // spørjinga har eit ord til som oppføringa ikkje dekkjer: ingen ordlistepåslag
+  assert.equal(S.lexical(eng, "designtenking skule", { titles }).phraseHits, 0);
+  // utan ordliste ingen påslag
+  assert.equal(S.lexical(eng, "designtenking", { titles, glossary: false }).phraseHits, 0);
 });

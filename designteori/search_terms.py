@@ -223,7 +223,7 @@ EXAMPLES = [
     {"q": "korleis involverer ein innbyggjarar i offentlege tenester", "lang": "nn"},
     {"q": "co-design with children", "lang": "en"},
     {"q": "speculative design", "lang": "en"},
-    {"q": "velferdsteknologi og design for eldre", "lang": "nb"},
+    {"q": "tjenestedesign i helse og omsorg", "lang": "nb"},
     {"q": "designutdanning og studiopedagogikk", "lang": "nb"},
 ]
 

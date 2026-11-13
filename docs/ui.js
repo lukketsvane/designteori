@@ -104,7 +104,8 @@
   function openAlexHref(w) { return w && /^W\d+$/.test(w.id || "") ? "https://openalex.org/" + w.id : ""; }
 
   /* code: h|v|u|d|0. item: oppføring frå access.json eller null. Gir {code,label,href,pending,tag,help,cls}. */
-  function accessInfo(code, w, item) {
+  function accessInfo(code, w, item, opts) {
+    opts = opts || {};
     w = w || {};
     const info = { code, label: "", href: "", pending: false, tag: "", help: "", cls: "acc-" + code };
     if (code === "h") {
@@ -116,8 +117,14 @@
     } else if (code === "v") {
       info.label = "Open PDF";
       info.href = safeHref(item ? item[1] : "");
-      info.pending = !info.href;
       info.help = "Adressa er kontrollert og peikar på ei open PDF-fil hos eigaren";
+      if (!info.href && opts.unavailable) {
+        /* tilgangsfila kom ikkje: gå til utgjevarsida, elles den ukontrollerte adressa frå metadata */
+        const doi = doiHref(w), alt = safeHref(w.oa_url || w.source_url);
+        if (doi) { info.href = doi; info.label = "Utgjevarside"; info.help = "Den kontrollerte PDF-adressa kunne ikkje lastast; lenkja går til utgjevarsida"; }
+        else if (alt) { info.href = alt; info.label = "PDF (ikkje kontrollert)"; info.help = "Den kontrollerte PDF-adressa kunne ikkje lastast; adressa er frå metadata og er ikkje kontrollert"; }
+      }
+      info.pending = !info.href && !opts.unavailable;
     } else if (code === "u") {
       info.label = "PDF (ikkje kontrollert)";
       info.href = safeHref(item ? item[1] : (w.oa_url || w.source_url));

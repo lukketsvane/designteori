@@ -85,7 +85,7 @@ def write_json(path: Path, value, *, compact: bool = False, sort_keys: bool = Fa
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp_name = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
     try:
-        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as fh:
             if compact:
                 json.dump(value, fh, ensure_ascii=False, separators=(",", ":"), sort_keys=sort_keys)
             else:

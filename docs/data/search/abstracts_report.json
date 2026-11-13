@@ -1,8 +1,8 @@
 {
   "abstracts": {
-    "none": 2213,
+    "none": 2228,
     "oa": 3908,
-    "x": 311
+    "x": 296
   },
   "acc": {
     "0": 344,
@@ -22,27 +22,40 @@
     "title_groups": 59
   },
   "extraction": {
-    "accepted": 311,
+    "accepted": 296,
     "cache_available": true,
     "cached_not_verified_excluded": 1,
-    "candidates": 997,
+    "candidates": 1000,
     "no_cache_document": 1,
     "no_cache_ids": [
       "nordic:nva:2d9b6440d6ce40142d56"
     ],
     "rejected": {
-      "bad-ending": 148,
-      "columns": 5,
-      "no-heading": 369,
+      "bad-ending": 62,
+      "columns": 2,
+      "no-heading": 371,
       "not-extracted": 4,
+      "residue-affiliation": 1,
+      "residue-bibliographic": 1,
+      "residue-copyright": 2,
+      "residue-correspondence": 3,
+      "residue-email": 9,
+      "residue-header-status": 5,
+      "residue-isbn": 10,
+      "residue-noise": 1,
+      "residue-run-together": 1,
+      "residue-url": 9,
+      "starts-lowercase": 63,
       "too-long": 138,
       "too-short": 21
     },
     "sha_mismatch": 0,
-    "sha_mismatch_ids": []
+    "sha_mismatch_ids": [],
+    "verified_cache_sha_match": 3260,
+    "verified_no_cache_document": 2,
+    "verified_total": 3262
   },
   "note": "ids and numbers only; no text from the private cache",
-  "schema": 1,
   "removed_overlong": [
     "W1992770167",
     "W2171107889",
@@ -52,5 +65,6 @@
     "W2997164442",
     "W4293107643",
     "W4389082581"
-  ]
+  ],
+  "schema": 1
 }

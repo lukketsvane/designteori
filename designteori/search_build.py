@@ -61,6 +61,7 @@ BM25_B = 0.75
 GLOSSARY_W = 1.0
 EXTRACT_MIN, EXTRACT_MAX = 300, 2500
 OA_ABSTRACT_MIN = 50
+MAX_ABSTRACT_CHARS = 5000  # R8: no published abstract is longer; longer metadata abstracts are left out
 MAX_FILE_BYTES = 2_000_000
 LEX_MAX_BYTES = 3_000_000
 LEX_MAX_GZIP = 900_000
@@ -339,12 +340,46 @@ _HEAD = re.compile(r"^\s*(?:abstract|summary|sammendrag|samandrag|sammanfattning
 _STOP = re.compile(r"^\s*(?:key\s*words?|keywords?|n[oø]kkelord|nyckelord|index terms|emneord|asiasanat|schlagw|1[.\s]+introduc|introduction\b|innledning|inledning|johdanto|contents|innhold|table of contents|acknowledg|forord|preface|\d\.?\s+[A-Z][a-z]+)", re.I)
 _KEYWORD_LINE = re.compile(r"^\s*(?:key\s*words?|keywords?|n[oø]kkelord|nyckelord|index terms|emneord|asiasanat)\b", re.I)
 _INNER_HEAD = re.compile(r"^\s*(?:keywords?|key\s*words?|n[oø]kkelord|nyckelord|introduction|innledning|inledning|1\.)\s*$", re.I)
+# Header/footer residue that the extraction can pick up from a page (e-mail, ISBN/ISSN, copyright, received/accepted lines, URLs, page ranges)
+_RESIDUE = (
+    ("email", re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")),
+    ("isbn", re.compile(r"\bIS[BS]N\b")),
+    ("copyright", re.compile(r"©|\(c\)\s*(?:19|20)\d\d|\bAll rights reserved\b|\bCopyright\b", re.I)),
+    ("header-status", re.compile(r"\b(?:Received|Accepted|Revised|Submitted)\b[:\s]+(?:on\s+)?(?:\d|[A-Z][a-z]+\s+\d)|ARTICLE HISTORY|Article history|Available online|Published online")),
+    ("url", re.compile(r"\bwww\.|https?://|\bdoi\.org|\bdoi:", re.I)),
+    ("correspondence", re.compile(r"Correspondence to|Corresponding author|Author Keywords|\b(?:Fax|Tel)\s*[:.]", re.I)),
+    ("bibliographic", re.compile(r"\bpp\.\s*\d")),
+    ("affiliation", re.compile(r"\bDepartment of [A-Z]\w+(?: [A-Z]\w+)*,\s+(?:[A-Z]\w+ )*University")),
+    ("run-together", re.compile(r"[A-Za-z]{30,}")),
+    ("author-bio", re.compile(r"\b(?:B\.A\.|M\.A\.|B\.Sc\.|M\.Sc\.|Ph\.D\.)\s+(?:in|from)\b")),
+    ("noise", re.compile(r"(?:\w+!\s+){3,}|^[|!/*_\[\]<>#=~^]|^[|\s]*(?:[ivx]+\s+)?(?:Abstract|Sammendrag|Samandrag|Summary)\b")),
+)
 _MOJIBAKE = re.compile(r"(?:Ã[\u0080-¿]|â€|Â[ -¿])")
 
 
-def extract_abstract(pages: list[str]) -> tuple[str, str]:
+_HYPHEN_BREAK = re.compile(r"(?<![\w-])([^\W\d_]+)- ([^\W\d_]+)")
+_COORDINATORS = {"og", "and", "or", "och", "eller", "und", "oder", "en", "ja", "sekä", "tai", "et", "ou", "y", "o"}
+
+
+def fix_hyphen_breaks(text: str, vocab: set[str] | None = None) -> str:
+    """De-hyphenation of text from a PDF. A line-break hyphen shows up as "word- part" ("lat- est", "network- based").
+    "kunst- og" and "pre- and" (a coordinated compound) stay as written. Otherwise the break is joined without hyphen when the
+    joined word is a word of the corpus (vocab), else the hyphen is kept and only the space is removed ("network-based"). A part that
+    starts with a capital letter is a real compound ("Human-Centred")."""
+    def rep(m: re.Match) -> str:
+        a, b = m.group(1), m.group(2)
+        if b.lower() in _COORDINATORS:
+            return m.group(0)
+        if b[:1].isupper() or vocab is None:
+            return a + "-" + b
+        return a + b if (a + b).lower() in vocab else a + "-" + b
+    return _HYPHEN_BREAK.sub(rep, text)
+
+
+def extract_abstract(pages: list[str], vocab: set[str] | None = None) -> tuple[str, str]:
     """Rule from the data measurement: heading Abstract/Sammendrag/... on the first pages, text up to keywords/introduction/new heading.
-    Returns (text, reason); reason is '' when the quality filter of spec 4.6 is passed, else why it was rejected."""
+    Returns (text, reason); reason is '' when the quality filter of spec 4.6 is passed, else why it was rejected.
+    `vocab` (lowercase words of the metadata) is used to repair line-break hyphens (fix_hyphen_breaks)."""
     best_reason = "no-heading"
     for page_text in pages:
         lines = (page_text or "").split("\n")
@@ -363,8 +398,8 @@ def extract_abstract(pages: list[str]) -> tuple[str, str]:
                     break
             block = [b.strip() for b in buf if b.strip()]
             raw = "\n".join(block)
-            raw = re.sub(r"(\w)-\n(?=[a-zæøåäö])", r"\1", raw)
-            text = unicodedata.normalize("NFKC", re.sub(r"\s+", " ", raw)).strip()
+            raw = re.sub(r"(\w)-\n(?=[a-zæøåäö])", r"\1- ", raw)
+            text = fix_hyphen_breaks(unicodedata.normalize("NFKC", re.sub(r"\s+", " ", raw)).strip(), vocab)
             reason = _quality_reason(block, text)
             if not reason:
                 return text, ""
@@ -381,8 +416,13 @@ def _quality_reason(block: list[str], text: str) -> str:
         return "too-long"
     if "�" in text:
         return "fffd"
+    if text[:1].islower():
+        return "starts-lowercase"  # the block starts in the middle of a sentence
     if _MOJIBAKE.search(text):
         return "mojibake"
+    for name, rx in _RESIDUE:
+        if rx.search(text):
+            return "residue-" + name
     if not re.search(r"[.?!][\"')”’]?$", text):
         return "bad-ending"
     for line in block:
@@ -403,6 +443,11 @@ def extract_abstracts(works: list[dict], acc: list[dict], oa: dict[str, str], fo
     out: dict[str, str] = {}
     if not PRIVATE_CORPUS_DB.is_file():
         return out, report
+    vocab: set[str] = set()
+    for w in works:
+        vocab.update(re.findall(r"[^\W\d_]{3,}", (w.get("title") or "").lower()))
+    for t in oa.values():
+        vocab.update(re.findall(r"[^\W\d_]{3,}", t.lower()))
     con = _ro(PRIVATE_CORPUS_DB)
     try:
         docs: dict[str, set[str]] = collections.defaultdict(set)
@@ -442,7 +487,7 @@ def extract_abstracts(works: list[dict], acc: list[dict], oa: dict[str, str], fo
                 rejected["not-extracted"] += 1
                 continue
             pages = [t for _, t in con.execute("SELECT page, text FROM pages WHERE sha256=? AND page<=4 ORDER BY page", (expected,))]
-            text, reason = extract_abstract(pages)
+            text, reason = extract_abstract(pages, vocab)
             if text:
                 out[wid] = text
             else:
@@ -685,6 +730,9 @@ def stage_lexical() -> dict:
 
     # abstracts
     oa = load_openalex_abstracts()
+    removed_overlong = sorted(w for w, t in oa.items() if len(t) > MAX_ABSTRACT_CHARS)
+    for w in removed_overlong:
+        del oa[w]
     xtra, xreport = extract_abstracts(works, acc, oa, found, manifest)
     abstracts: dict[str, dict] = {}
     for w in works:
@@ -759,6 +807,7 @@ def stage_lexical() -> dict:
                       "none": n - len(abstracts)},
         "extraction": {k: v for k, v in xreport.items()},
         "duplicates": dup_info,
+        "removed_overlong": removed_overlong,
         "acc": counts["acc"],
         "note": "ids and numbers only; no text from the private cache",
     }
@@ -1024,7 +1073,13 @@ def encode_queries(keys: list[str]) -> dict[str, "np.ndarray"]:
 
 
 def write_query_vectors(keys: list[str]) -> None:
-    vecs = encode_queries(sorted(set(keys)))
+    vecs = dict(encode_queries(sorted(set(keys))))
+    # ASCII alias of keys that contain diacritics ("infrastructuring malmo" gets the vector of "infrastructuring malmö"),
+    # so typing Malmo and Malmö gives the same answer. The alias is itself a valid query_key.
+    for k in list(vecs):
+        fk = query_key(fold(k))
+        if fk != k and fk not in vecs:
+            vecs[fk] = vecs[k]
     payload = {"schema": SCHEMA, "model": "google/embeddinggemma-300m", "dim": DIM, "scale": 127,
                "queries": {k: base64.b64encode(v.tobytes()).decode("ascii") for k, v in sorted(vecs.items())}}
     write_json(SEARCH_DIR / "query_vectors.json", payload, compact=True)
@@ -1070,6 +1125,13 @@ def stage_finish(draft: str | None = None) -> dict:
     base = _meta_base(meta0, works, shard_abs, n)
     meta = write_meta(base, meta0.get("built"))
     return {"quality": quality["summary"], "build_id": meta["build_id"]}
+
+
+def refresh_meta() -> dict:
+    """Rewrite meta.json after a file changed (hashes, build_id), keeping the built date."""
+    works, ids = load_corpus()
+    meta0 = read_json(SEARCH_DIR / "meta.json", {}) or {}
+    return write_meta(_meta_base(meta0, works, abstracts_from_shards(), len(ids)), meta0.get("built"))
 
 
 def _meta_base(meta0: dict, works: list[dict], shard_abs: dict, n: int) -> dict:

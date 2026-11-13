@@ -8,7 +8,7 @@
   const DEFAULT_EXAMPLES = [
     "participation in service design in the public sector", "research through design", "infrastructuring", "sustainable design",
     "taus kunnskap i handverk", "korleis involverer ein innbyggjarar i offentlege tenester", "co-design with children",
-    "speculative design", "velferdsteknologi og design for eldre", "designutdanning og studiopedagogikk",
+    "speculative design", "tjenestedesign i helse og omsorg", "designutdanning og studiopedagogikk",
   ];
   const WORDS = ["Null", "Ein", "To", "Tre", "Fire", "Fem", "Seks", "Sju", "Åtte", "Ni", "Ti"];
   const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
@@ -74,7 +74,18 @@
       }))));
     };
     const cav = (q.caveats || []).map((c) => "<li>" + esc(c) + "</li>").join("");
+    /* Kva tala tyder for ein vanleg vitjar (utan språkmodell). Alle tal vert lesne frå fila. */
+    const val = (key, sys, g) => { const v = q.metrics[key] && q.metrics[key][sys] && q.metrics[key][sys][g]; return typeof v === "number" ? v : null; };
+    const p = (v) => (v == null ? "–" : Math.round(v * 100) + " %");
+    const d2 = (v) => (v == null ? "–" : v.toFixed(2).replace(".", ","));
+    const plain = val("success_at_10", "fallback", "all") == null ? "" :
+      "<div class=\"om-plain\"><h4>I kva grad kan du stole på søket?</h4><p>Utan språkmodell, som er standard, fann søket minst eitt relevant verk blant dei ti første i " + esc(p(val("success_at_10", "fallback", "all"))) +
+      " av testspørjingane. Når du leitar etter eitt enkelt verk du hugsar med eigne ord, er delen " + esc(p(val("success_at_10", "fallback", "known-item"))) +
+      " (emnesøk på engelsk: " + esc(p(val("success_at_10", "fallback", "topical-en"))) + "). Med språkmodell er tala " + esc(p(val("success_at_10", "fused", "all"))) + " og " + esc(p(val("success_at_10", "fused", "known-item"))) +
+      ". Samla søk er svakare enn reint meiningssøk for kjende verk (recall@10 " + esc(d2(val("recall_at_10", "fused", "known-item"))) + " mot " + esc(d2(val("recall_at_10", "semantic", "known-item"))) + ").</p>" +
+      "<p>Tala er rettleiing, ikkje garanti: søkereglane vart justerte mot ein tredel av testspørjingane (dev), relevans er vurdert av ein språkmodell ut frå dei same systema, og det er få spørjingar. Prøv fleire ord og både norsk og engelsk dersom du ikkje finn det du leitar etter, og bruk «Liknande» frå eit verk som passar.</p></div>";
     return "<p>" + esc(fmt(q.n_queries)) + " testspørjingar" + (q.model ? ", modell " + esc(q.model) : "") + ". Relevans er vurdert av ein språkmodell, ikkje av ein domeneekspert. Tala er lesne frå fila <code>search_quality.json</code>.</p>" +
+      plain +
       "<h4>Del av relevante verk i topp 10 (recall@10)</h4>" + one("recall_at_10") +
       "<h4>Del spørjingar med minst eitt relevant verk i topp 10 (success@10)</h4>" + one("success_at_10") +
       (cav ? "<h4>Avgrensingar</h4><ul class=\"plain\">" + cav + "</ul>" : "");

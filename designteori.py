@@ -167,7 +167,11 @@ def cmd_build_search(args: argparse.Namespace) -> int:
 def cmd_bench_search(_args: argparse.Namespace) -> int:
     from designteori.search_eval import run_benchmark
 
-    _print(run_benchmark(write=True)["summary"])
+    from designteori.search_build import refresh_meta
+
+    result = run_benchmark(write=True)["summary"]
+    refresh_meta()
+    _print(result)
     return 0
 
 

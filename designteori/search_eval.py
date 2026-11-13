@@ -8,10 +8,15 @@ Rules as implemented (the amendments override the first version of the spec):
   5.2  BM25 over weighted fields; groups per core token: exact term (1.0), s/es stem (1.0), prefix terms (0.5, len <= len(q)+4,
        up to 8 by df), and for len(q) >= 8 morphology terms that start with q[:-3] (0.8, up to 8 by df).
        score = sum(group values) * (0.6 + 0.4 * dekning)
+  5.2b score is also multiplied by (1 + LIT_BONUS * share of core tokens covered by their own group), so the user's own words
+       outrank the glossary translations (works with the Norwegian word first, then the English translations)
+  5.2c title phrase bonus (lists used by the site: +1000, once per work, when the whole query is a contiguous phrase in the title, or
+       when the query is fully covered by one glossary entry and a multi-word English phrase of that entry ("design thinking" for
+       "designtenking") is one)
   5.3  glossary groups with weight w = 1.0; a core token also counts as covered (dekning) when a glossary group derived from a
        from-phrase containing that token has value > 0 for the document.
   5.4  semantic list from stored int8 vectors; neighbour expansion (prf) from similar.bin
-  5.5  reciprocal rank fusion k = 60; w_lex 1.0, w_sem 1.0, w_prf 0.6; pool for sorts other than relevance
+  5.5  reciprocal rank fusion k = 60; w_lex 1.0, w_sem 1.0 (2.0 when the query has >= 4 tokens), w_prf 0.6; pool for sorts other than relevance
 """
 from __future__ import annotations
 
@@ -35,6 +40,10 @@ PREFIX_W = 0.5
 MORPH_W = 0.8
 MAX_EXTRA_TOKENS = 6
 POOL_CAP = 2000
+PHRASE_BONUS = 1000.0  # the whole query, stopwords included, stands as a phrase in the title (hybrid and fallback lists only)
+W_SEM_LONG = 2.0  # semantic weight for queries that look like a title or a sentence (>= LONG_QUERY tokens)
+LONG_QUERY = 4
+LIT_BONUS = 0.75  # extra weight for works covered by the user's own tokens (not only by glossary groups)
 
 
 def matches(q: str, t: str) -> bool:
@@ -88,9 +97,26 @@ class Index:
             pubs = read_json(DOCS_DATA_DIR / "publications.json") or []
             nordic = read_json(DOCS_DATA_DIR / "nordic_additions.json") or []
             self.works = pubs + nordic
+        self._titles: list[str] | None = None
         self.acc = self.meta["acc"]
         self.flag = self.meta["flag"]
         self.lang = self.meta["lang"]
+
+    def phrase_titles(self) -> list[str]:
+        """Folded title per work with a space on each side, for the title phrase bonus (same keys as titleKeys() in search.js)."""
+        if self._titles is None:
+            works = self.works
+            if works is None:
+                works = (read_json(DOCS_DATA_DIR / "publications.json") or []) + (read_json(DOCS_DATA_DIR / "nordic_additions.json") or [])
+            if len(works) != self.n:
+                self._titles = [""] * self.n  # a test fixture or a stale build: no phrase bonus (test_search_data checks the real files)
+            else:
+                self._titles = [" " + " ".join(tokenize(w.get("title") or "")) + " " for w in works]
+        return self._titles
+
+    @staticmethod
+    def sem_weight(text: str) -> float:
+        return W_SEM_LONG if len(tokenize(text)) >= LONG_QUERY else W_SEM
 
     # --- postings -------------------------------------------------------------------------------
     def postings(self, j: int) -> tuple[np.ndarray, np.ndarray]:
@@ -171,8 +197,10 @@ class Index:
                 out.append(t)
         return out
 
-    def glossary_groups(self, core: list[str]) -> list[dict]:
-        """Additional groups (5.3): [{'token': t, 'sources': {core index, ...}, 'w': w}], at most 6 tokens."""
+    def glossary_groups(self, core: list[str], phrases: list[str] | None = None) -> list[dict]:
+        """Additional groups (5.3): [{'token': t, 'sources': {core index, ...}, 'w': w}], at most 6 tokens.
+        When `phrases` is a list, the folded key (" a b ") of every multi-word `to` phrase of a matching entry that covers every
+        core token is appended to it (used for the title phrase bonus)."""
         added: dict[str, dict] = {}
         order: list[str] = []
         coreset = set(core)
@@ -194,6 +222,13 @@ class Index:
             if not hit:
                 continue
             w = float(entry.get("w", 1.0))
+            if phrases is not None and len(sources) == len(core):  # the entry covers the whole query: its phrase is "the query translated"
+                for phrase in entry["to"]:
+                    full = tokenize(phrase)
+                    if len(full) >= 2:
+                        key = " " + " ".join(full) + " "
+                        if key not in phrases:
+                            phrases.append(key)
             for phrase in entry["to"]:
                 for tok in tokenize(phrase):
                     if tok in self.stopwords or tok in coreset:
@@ -206,26 +241,43 @@ class Index:
         return [added[t] for t in order]
 
     # --- lists ---------------------------------------------------------------------------------------------
-    def lexical_scores(self, text: str, *, glossary: bool = True) -> tuple[np.ndarray, np.ndarray]:
+    def lexical_scores(self, text: str, *, glossary: bool = True, phrase: bool = False) -> tuple[np.ndarray, np.ndarray]:
         """(score, dekning) arrays over all works for the query text."""
         core = self.core_tokens(text)
         score = np.zeros(self.n)
         if not core:
             return score, np.zeros(self.n)
         covered = np.zeros((len(core), self.n), dtype=bool)
+        literal = np.zeros((len(core), self.n), dtype=bool)
         for i, q in enumerate(core):
             g = self.group_values(q)
             score += g
             covered[i] = g > 0
+            literal[i] = g > 0
+        gphrases: list[str] = []
         if glossary:
-            for grp in self.glossary_groups(core):
+            for grp in self.glossary_groups(core, gphrases):
                 g = self.group_values(grp["token"]) * grp["w"]
                 score += g
                 pos = g > 0
                 for i in grp["sources"]:
                     covered[i] |= pos
         dek = covered.sum(axis=0) / len(core)
-        return score * (0.6 + 0.4 * dek), dek
+        lit = literal.sum(axis=0) / len(core)
+        score = score * (0.6 + 0.4 * dek) * (1.0 + LIT_BONUS * lit)
+        if phrase:
+            toks = tokenize(text)
+            user_key = " " + " ".join(toks) + " " if len(toks) >= 2 else ""
+            gkeys = [k for k in gphrases if k != user_key]
+            if user_key or gkeys:
+                titles = self.phrase_titles()
+                for d in np.flatnonzero(score > 0):
+                    hit = bool(user_key) and user_key in titles[d]
+                    if not hit:
+                        hit = any(k in titles[d] for k in gkeys)
+                    if hit:
+                        score[d] += PHRASE_BONUS
+        return score, dek
 
     def top(self, score: np.ndarray, mask: np.ndarray | None, n: int = TOP_N, positive_only: bool = True) -> list[int]:
         ok = score > 0 if positive_only else np.ones(self.n, dtype=bool)
@@ -237,8 +289,8 @@ class Index:
         order = np.lexsort((cand, -score[cand]))
         return [int(x) for x in cand[order][:n]]
 
-    def lexical(self, text: str, mask=None, *, glossary: bool = True, n: int = TOP_N) -> list[int]:
-        score, _ = self.lexical_scores(text, glossary=glossary)
+    def lexical(self, text: str, mask=None, *, glossary: bool = True, n: int = TOP_N, phrase: bool = False) -> list[int]:
+        score, _ = self.lexical_scores(text, glossary=glossary, phrase=phrase)
         return self.top(score, mask, n)
 
     def semantic(self, qv: np.ndarray, mask=None, n: int = TOP_N) -> list[int]:
@@ -269,10 +321,10 @@ class Index:
         """The full hybrid answer. Mode: 'vector' with a query vector, 'neighbours' with similar.bin only, else 'words'."""
         if qv is None:
             qv = self.key_vector(text)
-        lex = self.lexical(text, mask)
+        lex = self.lexical(text, mask, phrase=True)
         if qv is not None and self.vectors is not None:
             mode = "vector"
-            fused = self.rrf([(lex, W_LEX), (self.semantic(qv, mask), W_SEM)], n)
+            fused = self.rrf([(lex, W_LEX), (self.semantic(qv, mask), self.sem_weight(text))], n)
         elif self.similar_idx is not None:
             mode = "neighbours"
             fused = self.rrf([(lex, W_LEX), (self.prf(lex, mask), W_PRF)], n)
@@ -284,7 +336,7 @@ class Index:
     def candidate_pool(self, text: str, mask=None, qv=None, cap: int = POOL_CAP) -> list[int]:
         """Pool for sorts other than relevance (5.5, amendment 3): every work with dekning == 1 after the filter mask
         (cap 2000, ordered by score) united with the 300 fused hits."""
-        score, dek = self.lexical_scores(text)
+        score, dek = self.lexical_scores(text, phrase=True)
         full = (dek >= 1.0 - 1e-12) & (score > 0)
         if mask is not None:
             full = full & mask
@@ -350,10 +402,10 @@ SYSTEMS = ("lexical", "semantic", "fused", "fallback")
 def system_lists(idx: Index, text: str, mask=None) -> dict[str, list[int]]:
     qv = idx.key_vector(text)
     lex_plain = idx.lexical(text, mask, glossary=False)
-    lex = idx.lexical(text, mask)
+    lex = idx.lexical(text, mask, phrase=True)
     out = {"lexical": lex_plain}
     out["semantic"] = idx.semantic(qv, mask) if qv is not None else []
-    out["fused"] = idx.rrf([(lex, W_LEX), (out["semantic"], W_SEM)])
+    out["fused"] = idx.rrf([(lex, W_LEX), (out["semantic"], idx.sem_weight(text))])
     out["fallback"] = idx.rrf([(lex, W_LEX), (idx.prf(lex, mask), W_PRF)])
     return out
 
@@ -394,13 +446,17 @@ def run_benchmark(write: bool = True, base: Path | None = None) -> dict:
     quality = {
         "schema": SCHEMA, "built": now_iso(), "n_queries": len(queries),
         "model": "google/embeddinggemma-300m (q8, 256 dim)",
-        "params": {"k1": idx.k1, "b": idx.b, "rrf_k": RRF_K, "w_lex": W_LEX, "w_sem": W_SEM, "w_prf": W_PRF,
+        "params": {"k1": idx.k1, "b": idx.b, "rrf_k": RRF_K, "w_lex": W_LEX, "w_sem": W_SEM, "w_sem_long": W_SEM_LONG, "long_query_tokens": LONG_QUERY, "w_prf": W_PRF,
+                   "lit_bonus": LIT_BONUS, "phrase_bonus": PHRASE_BONUS,
                    "gloss_w": float(idx.glossary[0].get("w", 1.0)), "top_n": TOP_N, "fused_n": FUSED_N,
                    "prefix_w": PREFIX_W, "morph_w": MORPH_W},
         "metrics": {"recall_at_10": {s: agg(rec[s]) for s in SYSTEMS}, "success_at_10": {s: agg(suc[s]) for s in SYSTEMS}},
         "per_query": per_query,
         "caveats": list(bq.get("caveats") or []) + default_caveats(bq),
     }
+    old_q = read_json(base / "search_quality.json")
+    if isinstance(old_q, dict) and {k: v for k, v in old_q.items() if k != "built"} == {k: v for k, v in quality.items() if k != "built"}:
+        quality["built"] = old_q.get("built", quality["built"])  # unchanged result: keep the file byte-identical
     summary = {"n_queries": len(queries), "recall_at_10": quality["metrics"]["recall_at_10"],
                "success_at_10": quality["metrics"]["success_at_10"]}
     if write:
@@ -418,4 +474,5 @@ def default_caveats(bq: dict) -> list[str]:
         "Spørjevektorane er koda i Python med same modellfil som nettlesaren skal bruke; paritet i nettlesaren er ikkje målt av byggjeskriptet.",
         "Arkivverk har berre tittel i innbygginga (ingen samandrag frå metadata), så meining og likskap er svakare for dei.",
         "Alle system er målte utan filter og utan skjuling av moglege dublettar.",
+        "«Samla» og «reservemodus» er målte med tittelfrase-påslaget og med dobbel meiningsvekt for spørjingar på fire ord eller meir; «ordsøk» er utan ordliste og utan tittelfrase-påslag. Tittelfrase-påslaget gjeld òg engelske ordlistefrasar («design thinking» for «designtenking») når éi ordlisteoppføring dekkjer heile spørjinga; det vart lagt til etter ei gjennomgang og ikkje justert mot spørjingane (måltala er uendra av det).",
     ]
