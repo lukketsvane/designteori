@@ -1,5 +1,5 @@
 // Kart: every work as a point, similar works near each other.
-import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald } from "../hjelp.js?v=27";
+import { esc, fmt, kutt, PALETTE_TEMA, LAND_FARGE, FLEIRE_LAND, UKJEND, KGR_FARGE, FADE, FADE_ALFA, lys, tween, rorsle, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, settInnhald, KL, klyngeTekst } from "../hjelp.js?v=28";
 
 let A, T, D, S, ramme, scene;
 let qt;
@@ -38,7 +38,7 @@ export default {
     qt = api.lagIndeks(n, (i) => D.x[i], (i) => D.y[i]);
     fargeSeg = segmentert(ramme.kontroll, {
       namn: "Farge", verdi: S.kart.farge,
-      val: [{ k: "tema", namn: "Tema" }, { k: "land", namn: "Land" }, { k: "kanal", namn: "Kanal" }, { k: "ar", namn: "År" }],
+      val: [{ k: "tema", namn: "Klynge" }, { k: "land", namn: "Land" }, { k: "kanal", namn: "Kanal" }, { k: "ar", namn: "År" }],
       ved: (v) => T.endre((s) => { s.kart.farge = v; }),
     });
     fargeSeg.el.insertAdjacentHTML("beforebegin", `<span class="kontroll-namn">Farge</span>`);
@@ -66,7 +66,7 @@ export default {
     scene.storleik();
     if (S.kart.z) scene.settZ(S.kart.z);
     // a one-line invitation over the first screen; it goes at the first filter or opened work
-    ramme.flate.insertAdjacentHTML("beforeend", `<p class="invitasjon" hidden>Søk, klikk eit tema eller dra ein ring rundt punkt for å starte.</p>`);
+    ramme.flate.insertAdjacentHTML("beforeend", `<p class="invitasjon" hidden>Søk, klikk ei klynge eller dra ein ring rundt punkt for å starte.</p>`);
   },
   oppdater(s, e) {
     if (!kat || e.visning.has("kart.farge")) { lagFargar(); fargeSeg.set(S.kart.farge); }
@@ -262,8 +262,8 @@ function teiknLite(ctx, sc, vb, alfa) {
     }
     ctx.fill();
   }
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 2 / K; ctx.stroke(svart);
-  ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 1.25 / K; ctx.stroke(ring);
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = 2 / K; ctx.stroke(svart);
+  ctx.strokeStyle = KL.ring9; ctx.lineWidth = 1.25 / K; ctx.stroke(ring);
   ctx.globalAlpha = 1;
 }
 function grupperLyse() {
@@ -276,8 +276,8 @@ function ring(ctx, sc, i, ekstra = 3) {
   const [px, py] = sc.tilSkjerm(D.x[i], D.y[i]);
   const r = radius(i, sc) + ekstra;
   ctx.beginPath(); ctx.arc(px, py, r, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 3.5; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = 3.5; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = 1.5; ctx.stroke();
 }
 
 function teiknOverlay(ctx, sc) {
@@ -287,7 +287,7 @@ function teiknOverlay(ctx, sc) {
     ctx.beginPath();
     S.f.omr.forEach(([x, y], j) => { const [px, py] = sc.tilSkjerm(x, y); if (j) ctx.lineTo(px, py); else ctx.moveTo(px, py); });
     ctx.closePath();
-    ctx.setLineDash([4, 4]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = KL.ring; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
   }
   etikettar = lagEtikettar(sc);
   for (const l of etikettar) {
@@ -315,22 +315,22 @@ function opneMerke(ctx, sc, i) {
       const t = puls.t - d;
       if (t <= 0 || t >= 1) continue;
       ctx.beginPath(); ctx.arc(px, py, r + 6 + 34 * t, 0, 6.2832);
-      ctx.globalAlpha = 0.9 * (1 - t); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+      ctx.globalAlpha = 0.9 * (1 - t); ctx.strokeStyle = KL.ring; ctx.lineWidth = 2; ctx.stroke();
     }
     ctx.globalAlpha = 1;
   }
   ctx.beginPath(); ctx.arc(px, py, r + 3, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 3.5; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = 3.5; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = 1.5; ctx.stroke();
   const R = r + 9;
   ctx.beginPath(); ctx.arc(px, py, R, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 5; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.5; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = 5; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = 2.5; ctx.stroke();
   // four short ticks outside the ring: the mark reads as "here" even among ringed points
   ctx.beginPath();
   for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { ctx.moveTo(px + dx * (R + 3), py + dy * (R + 3)); ctx.lineTo(px + dx * (R + 10), py + dy * (R + 10)); }
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 4.5; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = 4.5; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = 2; ctx.stroke();
 }
 function startPuls() {
   if (stoppPuls) stoppPuls();
@@ -355,7 +355,7 @@ function lagEtikettar(sc) {
   const vi = S.verk ? D.idx.get(S.verk) : null;
   if (vi != null && sc.synleg(D.x[vi], D.y[vi])) {
     const [px, py] = sc.tilSkjerm(D.x[vi], D.y[vi]);
-    kand.push({ id: `v${vi}`, x: px, y: py, r: radius(vi, sc) + 11, tekst: `${kutt(D.kol.tittel[vi], 44)} (${D.ar[vi]})`, font: "600 12px Literata, Georgia, serif", h: 16, farge: "#ffffff", forst: true, prio: 1e9 });
+    kand.push({ id: `v${vi}`, x: px, y: py, r: radius(vi, sc) + 11, tekst: `${kutt(D.kol.tittel[vi], 44)} (${D.ar[vi]})`, font: "600 12px Literata, Georgia, serif", h: 16, farge: KL.sterk, forst: true, prio: 1e9 });
   }
   if (k < 3.0) {
     alfa = k < 2.5 ? 1 : 1 - (k - 2.5) / 0.5;
@@ -367,7 +367,7 @@ function lagEtikettar(sc) {
       const [px, py] = sc.tilSkjerm(t.lx, t.ly);
       const tom = filt && !c[j];
       const a = alfa * (tom ? 0.5 : 1);
-      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: filt ? `${t.namn} · ${fmt(c[j])}` : t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: tom ? "#9a9a9a" : lys(PALETTE_TEMA[j], 0.3), prio: t.n, data: { tema: j, alfa: a < 1 ? a : null, synleg: alfa } });
+      kand.push({ id: `t${j}`, x: px, y: py, r: 0, tekst: filt ? `${t.namn} · ${fmt(c[j])}` : t.namn, font, h: smalt ? 16 : 18, sentrert: true, farge: tom ? KL.dim : klyngeTekst(PALETTE_TEMA[j]), prio: t.n, data: { tema: j, alfa: a < 1 ? a : null, synleg: alfa } });
     });
   }
   if (k >= 2.5 && k < 6) {
@@ -375,7 +375,7 @@ function lagEtikettar(sc) {
     const ut = v.undertema.map((u, j) => ({ u, j })).filter(({ u }) => sc.synleg(u.lx, u.ly)).sort((a, b) => b.u.n - a.u.n);
     for (const { u, j } of ut) {
       const [px, py] = sc.tilSkjerm(u.lx, u.ly);
-      kand.push({ id: `u${j}`, x: px, y: py, r: 0, tekst: u.namn, font, h: 16, sentrert: true, farge: "#d8d8d8", prio: u.n });
+      kand.push({ id: `u${j}`, x: px, y: py, r: 0, tekst: u.namn, font, h: 16, sentrert: true, farge: KL.tekst3, prio: u.n });
     }
   }
   if (k >= 6) {
@@ -386,7 +386,7 @@ function lagEtikettar(sc) {
       if ((!T.utval[i] && T.harFilter()) || i === vi) continue;
       if (!sc.synleg(D.x[i], D.y[i])) continue;
       const [px, py] = sc.tilSkjerm(D.x[i], D.y[i]);
-      kand.push({ id: i, x: px, y: py, r: radius(i, sc), tekst: kutt(D.kol.tittel[i], 48), font, h: 15, farge: "#e8e8e8", prio: D.sit[i] });
+      kand.push({ id: i, x: px, y: py, r: radius(i, sc), tekst: kutt(D.kol.tittel[i], 48), font, h: 15, farge: KL.tekst2, prio: D.sit[i] });
       if (++c >= 40) break;
     }
   }
@@ -447,10 +447,10 @@ function temaHtml(j) {
   const t = D.verk.tema[j];
   const c = reknTemaTal()[j];
   const del = T.harFilter() ? `${fmt(c)} av ${fmt(t.n)} verk i utvalet` : `${fmt(t.n)} verk`;
-  return `<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[j]}"></span>${esc(t.namn)}</div><div class="tt-meta">Tema · ${del}</div>${S.f.tema.has(t.k) ? `<div class="tt-meta">Valt no</div>` : ""}`;
+  return `<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[j]}"></span>${esc(t.namn)}</div><div class="tt-meta">Klynge · ${del}</div>${S.f.tema.has(t.k) ? `<div class="tt-meta">Valt no</div>` : ""}`;
 }
 function tips(hit) {
-  if (hit.type === "tema") return temaHtml(hit.tema) + `<div class="tt-fot">Klikk for å velje tema · Skift-klikk: legg til</div>`;
+  if (hit.type === "tema") return temaHtml(hit.tema) + `<div class="tt-fot">Klikk for å velje klynge · Skift-klikk: legg til</div>`;
   if (hit.type === "verk") return verkHtml(hit.i, hit.fleire) + `<div class="tt-fot">Klikk: opne verket</div>`;
   return "";
 }
@@ -490,7 +490,7 @@ function fokusListe() {
 // ---------- line and legend ----------
 function teiknLinje() {
   const n = D.n;
-  let t = `Kvart punkt er eitt verk. Verk med lik tittel, kanal og emneord ligg nær kvarandre.${T.harFilter() ? ` ${fmt(T.valt)} av ${fmt(n)} verk i utvalet.` : ""}`;
+  let t = `Kvart punkt er eitt verk. Verk med lik tekst (tittel og samandrag) ligg nær kvarandre.${T.harFilter() ? ` ${fmt(T.valt)} av ${fmt(n)} verk i utvalet.` : ""}`;
   if (S.kart.farge === "land") {
     let m = 0;
     for (let i = 0; i < n; i++) if (T.utval[i] && D.landBits[i]) m++;
@@ -526,7 +526,7 @@ function teiknTeikn() {
       return `<button type="button" class="teikn-post" data-dim="${dim}" data-k="${esc(key)}" aria-pressed="${aktiv}">${inner}</button>`;
     }).join("");
     if (modus === "land") html += `<span class="teikn-merk">Land (nordisk tilknyting, elles kjelda). Verk med fleire land tel under kvart land.</span>`;
-    if (modus === "tema") html += `<span class="teikn-merk">Tema er grupper av like titlar, kanalar og emneord, ikkje emne sett av nokon. Nokre er mest arkivverk eller norskspråklege (Teneste- og systemdesign er nesten berre norsk arkiv). Inndelinga er ikkje den same som klyngene i kartet på hovudsida.</span>`;
+    if (modus === "tema") html += `<span class="teikn-merk">Dei same åtte klyngene som i Kart-fana på hovudsida: grupper av verk med lik tekst, ikkje emne sett av nokon. Dei to siste har mest arkivverk (43 og 45 %).</span>`;
   }
   html += `<span class="teikn-merk">Storleik: siteringar (berre OpenAlex)</span>`;
   html += `<span class="teikn-merk">${fmt(talDublettar())} verk (${Math.round((100 * talDublettar()) / D.n)} %) står truleg to gonger, i arkivet og i OpenAlex; dei er med i tala og merkte i detaljen.</span>`;

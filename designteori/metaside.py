@@ -29,7 +29,24 @@ ORD = (("sitatlista cited_canon", "lista over siterte verk"), ("referansar til c
        ("utanfor scope", "utanfor utvalet"), ("held scope saman", "held utvalet saman"), ("scope-verk", "verk i utvalet"),
        ("in_scope vart", "Utvalet vart"), ("scope-til-scope-referanse", "referanse innanfor utvalet"), ("frå scope til scope", "frå utvalet til utvalet"),
        ("Scope vart", "Utvalet vart"), ("i scope", "i utvalet"), ("til scope", "til utvalet"), ("frå scope", "frå utvalet"),
-       ("den private cachen", "det private mellomlageret"))
+       ("den private cachen", "det private mellomlageret"),
+       # B1: ti klynger er eit anna kart enn dei åtte på hovudsida (same ord, to inndelingar)
+       ("Det semantiske kartet over 3 263 verk med fulltekst har ti klynger, men svak struktur (silhuett 0,0737).",
+        "Eit eige kart over 3 263 verk med fulltekst har ti klynger (ikkje dei åtte på hovudsida, som gjeld alle 6 432 verk), men svak struktur (silhuett 0,0737: 0 betyr ingen tydeleg struktur, 1 skarpe skilje)."),
+       ("Ti klynger over 3 263 verk med fulltekst (2 447 OpenAlex-laget, 816 arkivlaget).",
+        "Ti klynger i eit eige kart over 3 263 verk med fulltekst (2 447 OpenAlex-laget, 816 arkivlaget); dei er ikkje dei åtte klyngene på hovudsida."),
+       ("Ti klynger over 3 263 verk gir ei lesemåte", "Ti klynger i det eigne fulltekstkartet gir ei lesemåte"),
+       # B15: forklaring av fagord
+       ("I innbyggingsrommet ligg", "I tekstkartet (verk plasserte etter tekstvektorar frå ein språkmodell) ligg"),
+       ("over tiande persentil til verka innanfor, avhengig av kva sentroide ein bruker.",
+        "over tiande persentil til verka innanfor (grensa for dei ti prosent minst like), avhengig av kva sentroide (gjennomsnittspunkt) ein bruker."),
+       ("Land mot klynge gir V 0,277", "Land mot klynge gir Cramérs V (samanheng mellom to inndelingar, 0 til 1) på 0,277"),
+       ("(NMI om lag 0,25, ARI 0,123)", "(NMI om lag 0,25 og ARI 0,123, to mål på samsvar mellom inndelingar der 1 er likt og 0 er tilfeldig)"),
+       ("ti poeng per stratum i fem strata", "ti poeng per gruppe (stratum) i fem grupper"),
+       ("aldersjustert persentil", "aldersjustert persentil (plassering mellom 0 og 100 blant verk av same alder)"),
+       # B15: lag er nemnde i 1. Kort, ikkje tre gonger
+       ("Lag er skrivne slik: OpenAlex-laget (4 694 verk i utvalet), arkivlaget (1 738 verk frå nordiske arkiv), fulltekstlaget (verk med fulltekst i det private mellomlageret), berre engelsk der det er sagt.",
+        "Lag: OpenAlex-laget og arkivlaget (tala står i 1. Kort), fulltekstlaget (verk med fulltekst i det private mellomlageret), berre engelsk der det er sagt."))
 
 
 def norm(s: str) -> str:
@@ -156,8 +173,14 @@ body{{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.55 var(--serif);
 main{{max-width:44rem;margin:0 auto;padding:.4rem max(16px,4.5vw) 5rem}}
 a{{color:inherit;text-underline-offset:.16em;text-decoration-thickness:1px;text-decoration-color:var(--dim)}}
 a:hover{{text-decoration-color:var(--fg)}}
-.topp{{display:flex;gap:18px;flex-wrap:wrap;font:12px/1.4 var(--mono);letter-spacing:.02em;color:var(--dim)}}
-.topp a{{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}} .topp a:hover{{color:var(--fg)}} .topp .ut{{margin-left:auto}}
+header.bar{{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;max-width:44rem;margin:0 auto;padding:6px max(16px,4.5vw) 0;font:11px/1.4 var(--mono);letter-spacing:.02em;color:var(--dim)}}
+header.bar a{{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:inherit}} header.bar a:hover{{color:var(--fg)}}
+nav.tabs{{position:relative;display:inline-flex;align-items:center;gap:0 6px}}
+.nav-btn,.nav-more-btn{{-webkit-appearance:none;appearance:none;margin:0;border:0;background:none;color:var(--dim);font:inherit;cursor:pointer;white-space:nowrap;min-height:44px;min-width:44px;padding:0 8px}}
+.nav-btn:hover,.nav-btn.active,.nav-more-btn:hover,.nav-more-btn.active,.nav-more-btn[aria-expanded="true"]{{color:var(--fg)}}
+.nav-more{{display:none}}
+.nav-more.open{{display:flex;flex-direction:column;position:absolute;top:100%;left:0;z-index:40;min-width:12rem;padding:6px 0;background:var(--bg);border:1px solid var(--hair)}}
+.nav-more.open .nav-btn{{display:flex;align-items:center;width:100%;padding:0 16px;text-align:left}}
 h1{{font-size:1.5rem;line-height:1.25;margin:.8rem 0 .4rem;font-weight:400}}
 h2{{font-size:1.2rem;line-height:1.3;margin:2.4rem 0 .6rem;padding-top:.8rem;border-top:1px solid var(--hair);font-weight:400}}
 h3{{font-size:1.02rem;margin:1.6rem 0 .4rem;font-weight:500}}
@@ -168,7 +191,7 @@ code{{font:.86em var(--mono)}}
 details.toc{{margin:1.2rem 0;padding:0 1rem;border:1px solid var(--line);border-radius:4px}}
 details.toc summary{{cursor:pointer;min-height:44px;display:flex;align-items:center;font:13px/1.5 var(--mono);color:var(--dim)}}
 details.toc ol{{list-style:none;margin:0;padding:0 0 .4rem}} details.toc li{{margin:0}}
-details.toc a{{display:flex;align-items:center;min-height:44px;text-decoration:none}} details.toc a:hover{{text-decoration:underline}}
+details.toc a{{display:flex;align-items:center;min-height:44px;box-sizing:border-box;text-decoration:none}} details.toc a:hover{{text-decoration:underline}}
 details.pilot{{border:1px solid var(--line);border-radius:4px;padding:0 1rem;margin:.6rem 0}}
 details.pilot summary{{cursor:pointer;min-height:44px;display:flex;align-items:center;font:13px/1.5 var(--mono);color:var(--dim)}}
 .merk{{color:var(--dim);font-style:italic}}
@@ -177,14 +200,30 @@ footer a{{display:inline-block;padding:.7rem 0}}
 </style>
 </head>
 <body>
+<header class="bar">
+<nav class="tabs" aria-label="Meny">
+<a class="nav-btn" href="../">katalog</a>
+<button class="nav-more-btn active" id="navMoreBtn" type="button" aria-expanded="false" aria-controls="navMore">metaanalyse &#9662;</button>
+<div class="nav-more" id="navMore">
+<a class="nav-btn" href="../utforsk/">utforsk</a>
+<a class="nav-btn" href="../#siteringar">kanon</a>
+<a class="nav-btn" href="../#kart">kart</a>
+<a class="nav-btn" href="../#analyse">analyse</a>
+<a class="nav-btn" href="../#teorielement">teori</a>
+<a class="nav-btn" href="../#om">om</a>
+<a class="nav-btn active" href="./" aria-current="page">metaanalyse</a>
+</div>
+</nav>
+<a href="https://iverfinne.no">iverfinne.no</a>
+</header>
 <main>
-<div class="topp"><a href="../">katalog</a><a href="../utforsk/">utforsk</a><a class="ut" href="https://iverfinne.no">iverfinne.no</a></div>
 <h1>Kva korpuset viser</h1>
 <p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho. Klyngene i teksten høyrer til eit eige kart over verk med fulltekst; dei er ikkje dei same som i kartet på hovudsida eller i Utforsk.</p>
 <details class="toc"><summary>Innhald</summary><nav aria-label="Innhald"><ol>{toc}</ol></nav></details>
 {body}
 <footer>Rekna frå OpenAlex-laget og arkivlaget i dette korpuset, med fulltekst lesen lokalt og aldri publisert. Feil og spørsmål: opne ei sak på <a href="https://github.com/lukketsvane/designteori/issues">GitHub</a>.</footer>
 </main>
+<script src="../meny.js?v=4"></script>
 </body>
 </html>
 """

@@ -205,42 +205,35 @@ class TestVerk(unittest.TestCase):
         self.assertTrue(all(d["k"].startswith("A") or d["k"].startswith("n:") for d in v["forfattarar"]))
 
     def test_themes(self):
+        """Utforsk uses the cluster division of the Kart tab: the same 8 clusters, 52 sub-clusters and map positions."""
         v, k = self.v, self.kol
-        idx = les_docs("semantic_index.json")
+        kart = les_docs("klynger/kart.json")
+        self.assertEqual(len(v["tema"]), 8)
+        self.assertEqual(len(v["undertema"]), 52)
         self.assertEqual(sum(t["n"] for t in v["tema"]), N)
-        self.assertEqual(len(v["tema"]), 10)
-        telt = [0] * 10
+        self.assertEqual(sum(u["n"] for u in v["undertema"]), N)
+        self.assertEqual(k["id"], kart["ids"])
+        self.assertEqual(k["tema"], kart["k"])
+        self.assertEqual(k["undertema"], kart["u"])
+        self.assertEqual(k["x"], kart["x"])
+        self.assertEqual(k["y"], kart["y"])
+        telt = [0] * 8
         for t in k["tema"]:
             telt[t] += 1
         self.assertEqual(telt, [t["n"] for t in v["tema"]])
         self.assertEqual(telt, sorted(telt, reverse=True))
-        for j, t in enumerate(v["tema"]):
+        for j, (t, c) in enumerate(zip(v["tema"], kart["klynger"])):
             self.assertEqual(t["k"], f"t{j}")
-            self.assertIn(t["preset"], idx["presets"])
-            self.assertEqual(len(t["sentroide"]), idx["dimensions"])
+            self.assertEqual((t["namn"], t["n"], t["farge"]), (c["namn"], c["n"], c["farge"]))
+            self.assertEqual((t["lx"], t["ly"]), (c["lx"], c["ly"]))
             self.assertTrue(0 <= t["lx"] <= 10000 and 0 <= t["ly"] <= 10000)
-            self.assertTrue(1 <= len(t["ord"]) <= 5)
-        self.assertEqual(len({t["k"] for t in v["tema"]}), 10)
-        for u in v["undertema"]:
+            self.assertTrue(1 <= len(t["ord"]) <= 6)
+            self.assertNotIn("preset", t)
+        self.assertEqual(len({t["k"] for t in v["tema"]}), 8)
+        self.assertEqual(sorted(t["farge"] for t in v["tema"]), list(range(8)))
+        for u, c in zip(v["undertema"], kart["under"]):
+            self.assertEqual((u["namn"], u["n"], u["tema"]), (c["namn"], c["n"], c["k"]))
             self.assertTrue(0 <= u["lx"] <= 10000 and 0 <= u["ly"] <= 10000)
-        self.assertEqual(sum(u["n"] for u in v["undertema"]), N)
-        # every work lies nearest to its own theme centroid (sample, pure Python)
-        dim = idx["dimensions"]
-        raa = (DOCS_DATA_DIR / "semantic_vectors.bin").read_bytes()
-        cent = [t["sentroide"] for t in v["tema"]]
-        nrm = [sum(x * x for x in c) ** 0.5 for c in cent]
-        feil = 0
-        utval = range(0, N, 5)
-        for i in utval:
-            vec = struct.unpack_from(f"{dim}b", raa, i * dim)
-            best, bj = -9.0, -1
-            for j, c in enumerate(cent):
-                s = sum(a * b for a, b in zip(vec, c)) / nrm[j]
-                if s > best:
-                    best, bj = s, j
-            if bj != k["tema"][i]:
-                feil += 1
-        self.assertLessEqual(feil, 0.005 * len(utval) + 1, feil)
 
     def test_fold_and_term_key(self):
         from designteori.visdata import fold, termnokkel
@@ -392,7 +385,9 @@ class TestNaboar(unittest.TestCase):
         utval = rng.sample(range(N), 800)
         nabo = sum(((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2) ** 0.5 for i in utval for j in idx[i * 10 : i * 10 + 10]) / 8000
         tilf = sum(((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2) ** 0.5 for i in utval for j in rng.sample(range(N), 10)) / 8000
-        self.assertLess(nabo, 0.6 * tilf, (nabo, tilf))
+        # the positions are those of the Kart tab (built from the search vectors), the neighbour lists come from the
+        # Utforsk vectors, so the two agree less than a layout built from the same vectors would
+        self.assertLess(nabo, 0.7 * tilf, (nabo, tilf))
         for col in (x, y):
             m = sum(col) / N
             sd = (sum((c - m) ** 2 for c in col) / N) ** 0.5

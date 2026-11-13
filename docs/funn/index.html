@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="nn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kva korpuset viser · designteori</title>
+<meta name="description" content="Metastudien av nordisk designforsking som bilete: kvart funn er ei teikning med talet sitt, nemnar og lag.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..500;1,7..72,300..400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="funn.css">
+<script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" integrity="sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=" crossorigin="anonymous"></script>
+<script defer src="funn.js"></script>
+<script defer src="funn-h.js"></script>
+<script defer src="funn-a.js"></script>
+<script defer src="funn-nett.js"></script>
+<script defer src="funn-b.js"></script>
+<script defer src="funn-c.js"></script>
+</head>
+<body>
+
+<div class="topp"><nav aria-label="Seksjonar">
+  <a href="#materialet">Materialet</a><a href="#vekst">Vekst</a><a href="#kanalar">Kanalar</a><a href="#siteringar">Siteringar</a><a href="#tema">Tema</a><a href="#omgrep">Omgrep</a><a href="#kunnskap">Kunnskap</a><a href="#teori">Teori</a><a href="#sporsmaal">Spørsmål</a>
+</nav></div>
+
+<section class="hero" id="topp" aria-labelledby="tittel">
+  <canvas id="hero-kart" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <div>
+      <h1 id="tittel">Kva korpuset viser</h1>
+      <p class="lead">Nordisk designforsking som eit korpus: kva som finst, kven som skriv, kva som blir sitert og kva det handlar om. Kvart bilete er eit mål, ikkje ein dom.</p>
+    </div>
+    <div>
+      <p class="stor">6&#8239;432<small>registrerte verk, 1983 til 2026</small></p>
+      <ul class="tal">
+        <li><b>87,8&#8239;%</b><span>er frå 2010 og seinare</span></li>
+        <li><b>3,1</b><span>forfattarar per verk 2020–24, mot 1,74 før 2000</span></li>
+        <li><b>3</b><span>er median for registrerte siteringar per verk</span></li>
+        <li><b>4 av 15</b><span>forventingar heldt då dei vart målte</span></li>
+      </ul>
+      <a class="ned" href="#materialet">Rull ned ↓</a>
+    </div>
+  </div>
+</section>
+
+<main>
+<noscript><p>Sida teiknar figurane med JavaScript. Heile rapporten som tekst ligg på <a href="../metaanalyse/">metaanalysesida</a>.</p></noscript>
+
+<!-- 1 ------------------------------------------------------------------>
+<section class="sek" id="materialet" data-sek>
+  <header><span class="nr">01</span><h2>Materialet</h2></header>
+
+  <figure class="fig" id="f01" data-fig="f01">
+    <header><h3>Det meste av det som vart henta låg utanfor feltet</h3><p class="tx">Tre vegar inn i materialet, og kva som er lese i fulltekst.</p></header>
+    <div class="mount" style="min-height:380px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f02" data-fig="f02">
+    <header><h3>Materialet er ungt: det meste kom etter 2010</h3><p class="tx">Verk per år og lag, og kva slag verk det er.</p></header>
+    <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <div class="duo">
+    <figure class="fig" id="f03" data-fig="f03">
+      <header><h3>Språk er ei merking som følgjer kanalen</h3></header>
+      <div class="mount" style="min-height:560px"></div><figcaption class="nem"></figcaption>
+    </figure>
+    <figure class="fig" id="f04" data-fig="f04">
+      <header><h3>Kven som er lesen følgjer tilgang, land og alder</h3></header>
+      <div class="mount" style="min-height:560px"></div><figcaption class="nem"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 2 ------------------------------------------------------------------>
+<section class="sek" id="vekst" data-sek>
+  <header><span class="nr">02</span><h2>Vekst og samarbeid</h2></header>
+
+  <figure class="fig" id="f05" data-fig="f05">
+    <header><h3>Rangeringa mellom landa avheng av kva som tel med</h3></header>
+    <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f06" data-fig="f06">
+    <header><h3>Teama er blitt større, og meir av samarbeidet går over grenser</h3></header>
+    <div class="mount" style="min-height:560px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f07" data-fig="f07">
+    <header><h3>Nordiske land skriv sjeldnare saman enn tilfeldig val ville gitt</h3></header>
+    <div class="mount" style="min-height:300px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f08" data-fig="f08">
+    <header><h3>Fleire institusjonar er med, og mange forfattarar har berre delar av arbeidet sitt i feltet</h3></header>
+    <div class="mount" style="min-height:560px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig svart" id="f09" data-fig="f09">
+    <header><h3>Land og institusjonar heng saman, forfattarane gjer det i mindre grad</h3><p class="tx">Same felt, tre eningar.</p></header>
+    <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 3 ------------------------------------------------------------------>
+<section class="sek" id="kanalar" data-sek>
+  <header><span class="nr">03</span><h2>Kanalar</h2></header>
+
+  <figure class="fig" id="f10" data-fig="f10">
+    <header><h3>Få kanalar tek mykje av verka, og inngangsporten set delar av biletet</h3></header>
+    <div class="mount" style="min-height:460px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f11" data-fig="f11">
+    <header><h3>Norsk særstilling i nordiske kanalar følgjer av porten</h3></header>
+    <div class="mount" style="min-height:460px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f12" data-fig="f12">
+    <header><h3>Registrerte siteringar skil sterkt mellom kanalar, og kanalane skiftar over tid</h3></header>
+    <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 4 ------------------------------------------------------------------>
+<section class="sek" id="siteringar" data-sek>
+  <header><span class="nr">04</span><h2>Siteringar</h2></header>
+
+  <figure class="fig svart" id="f13" data-fig="f13">
+    <header><h3>Dei mest siterte elementa heng saman i sju grupper</h3><p class="tx">Trykk på ein prikk for tittel.</p></header>
+    <div class="mount" style="min-height:460px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f14" data-fig="f14">
+    <header><h3>Mottekne siteringar er svært skeive, og mange verk har ingen</h3></header>
+    <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <div class="duo">
+    <figure class="fig" id="f15" data-fig="f15">
+      <header><h3>Referanselistene er blitt lengre, og referansane eldre</h3></header>
+      <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+    </figure>
+    <figure class="fig" id="f16" data-fig="f16">
+      <header><h3>Ein liten og veksande del av referansane peikar til laget sjølv</h3></header>
+      <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+    </figure>
+  </div>
+
+  <figure class="fig" id="f17" data-fig="f17">
+    <header><h3>Dei kopla siteringssamfunna følgjer kanalen noko meir enn språk, land eller periode</h3></header>
+    <div class="mount" style="min-height:360px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 5 ------------------------------------------------------------------>
+<section class="sek" id="tema" data-sek>
+  <header><span class="nr">05</span><h2>Tema og kart</h2></header>
+
+  <figure class="fig svart" id="f18" data-fig="f18">
+    <header><h3>Åtte klynger, men dei ligg tett mot kvarandre</h3><p class="tx">Trykk på ein merkelapp for å opne klynga i kartfana.</p></header>
+    <div class="mount" style="min-height:480px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f19" data-fig="f19">
+    <header><h3>Strukturen er svak, og kanal forklarer meir av variasjonen enn land eller periode</h3></header>
+    <div class="mount" style="min-height:520px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f20" data-fig="f20">
+    <header><h3>Eitt emne dominerer, og klyngene har skifta over tid</h3></header>
+    <div class="mount" style="min-height:640px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 6 ------------------------------------------------------------------>
+<section class="sek" id="omgrep" data-sek>
+  <header><span class="nr">06</span><h2>Omgrep</h2></header>
+  <div class="duo ujamn">
+    <figure class="fig" id="f21" data-fig="f21">
+      <header><h3>Omgrep skil seg i breidde og i kor ofte tekstane siterer same anker</h3></header>
+      <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+    </figure>
+    <figure class="fig" id="f22" data-fig="f22">
+      <header><h3>Fleire omgrep stig enn fell, og dei fleste syner seg først etter 2000</h3></header>
+      <div class="mount" style="min-height:420px"></div><figcaption class="nem"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 7 ------------------------------------------------------------------>
+<section class="sek" id="kunnskap" data-sek>
+  <header><span class="nr">07</span><h2>Kunnskapsformer</h2></header>
+
+  <figure class="fig" id="f23" data-fig="f23">
+    <header><h3>Berre éi form let seg måle med markørar, og formene opptrer saman</h3><p class="tx">Formene står i kodebokrekkjefølgje, ikkje sorterte.</p></header>
+    <div class="mount" style="min-height:640px"></div><figcaption class="nem"></figcaption>
+  </figure>
+
+  <figure class="fig" id="f24" data-fig="f24">
+    <header><h3>Datainnsamlingsmarkørar varierer med kjelde og land og har auka over tid</h3></header>
+    <div class="mount" style="min-height:560px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 8 ------------------------------------------------------------------>
+<section class="sek" id="teori" data-sek>
+  <header><span class="nr">08</span><h2>Teorielement</h2></header>
+
+  <figure class="fig" id="f25" data-fig="f25">
+    <header><h3>Pilotane gir ein profil, og ei andre lesing finn att to av tre påstandar</h3></header>
+    <div class="mount" style="min-height:620px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<!-- 9 ------------------------------------------------------------------>
+<section class="sek" id="sporsmaal" data-sek>
+  <header><span class="nr">09</span><h2>Femten nye spørsmål</h2></header>
+
+  <figure class="fig" id="f26" data-fig="f26">
+    <header><h3>Fire forventingar heldt, åtte heldt ikkje og tre er uavgjorde</h3></header>
+    <div class="mount" style="min-height:900px"></div><figcaption class="nem"></figcaption>
+  </figure>
+</section>
+
+<section class="sek" id="stipendiatar">
+  <header><span class="nr">10</span><h2>Til stipendiatane</h2></header>
+  <ol class="stip">
+    <li><span>Les korpuset som eit utval med ein port. Kanalar, land og språk følgjer korleis materialet vart samla. <a class="f" href="#f10">f10</a><a class="f" href="#f11">f11</a></span></li>
+    <li><span>Sei kva eining du tel. Forfattar, institusjon og land gir ulike bilete av same felt. <a class="f" href="#f09">f09</a></span></li>
+    <li><span>Registrerte siteringar er ikkje verd. Dei er skeive, og unge verk har ikkje hatt tid. <a class="f" href="#f14">f14</a></span></li>
+    <li><span>Bruk ikkje temaklyngene som fasit. Strukturen er svak, og samfunna flyttar seg mellom køyringar. <a class="f" href="#f19">f19</a><a class="f" href="#f17">f17</a></span></li>
+    <li><span>Berre datainnsamling let seg måle med markørar. Dei andre formene krev lesing. <a class="f" href="#f23">f23</a></span></li>
+    <li><span>Skriv ned forventinga før du måler, og ta vare på bomma. <a class="f" href="#f26">f26</a></span></li>
+  </ol>
+</section>
+
+<section class="sek" id="atterhald">
+  <header><span class="nr">11</span><h2>Atterhald</h2></header>
+  <div class="atterhald">
+    <ul>
+      <li>Biletet viser kva som er registrert, ikkje kva som er verdt å lese. Siteringar er registrerte siteringar.</li>
+      <li>Språk og referanselister finst berre for OpenAlex-laget. Arkivlaget manglar begge.</li>
+      <li>2026 er ufullstendig, til 4. november. Mange tal for 2025 og 2026 er førebelse.</li>
+      <li>Fulltekstutvalet er skeivt. Lesinga av kunnskapsformer og pilotane er gjort av éin kodar eller éin modell, utan kontroll mot menneske.</li>
+      <li>Klyngenamna er våre, ikkje fagfolk sine, og siteringssamfunna flyttar seg mellom køyringar.</li>
+      <li>Nullmodellar, klyngeanalyse, fulltekstlesing og pilotar er gjevne frå første runde. Tala frå databasen er rekna på nytt. Runde 2 er ikkje med.</li>
+    </ul>
+  </div>
+  <p class="slutt"><a href="../metaanalyse/">Heile rapporten som tekst →</a><a href="../index.html">Katalogen →</a></p>
+</section>
+</main>
+</body>
+</html>

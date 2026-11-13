@@ -1,7 +1,7 @@
 // Canvas scene shared by Kart, Nett, Verda and the Siteringar map: base and overlay
 // canvas with dpr, d3.zoom, pointer and touch rules, tooltip and pinned card,
 // lasso, keyboard pan/zoom, focus-ring cycling, zoom buttons.
-import { tooltip, kort, rorsle, annonserMerke, esc } from "./hjelp.js?v=27";
+import { tooltip, kort, rorsle, annonserMerke, esc, KL } from "./hjelp.js?v=28";
 
 const DPR = () => Math.min(window.devicePixelRatio || 1, 2);
 
@@ -291,9 +291,9 @@ export function lagScene(flate, o) {
     co.beginPath();
     lasso.pkt.forEach(([x, y], i) => (i ? co.lineTo(x, y) : co.moveTo(x, y)));
     co.closePath();
-    co.fillStyle = "rgba(255,255,255,0.1)";
+    co.fillStyle = KL.lassoFyll;
     co.fill();
-    co.strokeStyle = "#fff";
+    co.strokeStyle = KL.ring;
     co.lineWidth = 1;
     co.stroke();
   }

@@ -1,5 +1,5 @@
 // Verda: a real map. Places as bubbles, collaboration as arcs, with time.
-import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald } from "../hjelp.js?v=27";
+import { esc, fmt, kutt, landFarge, FADE, plasserEtikettar, teiknEtikettar, tooltip, kort, rorsle, settInnhald, KL } from "../hjelp.js?v=28";
 
 const NORDISK_ID = new Set(["578", "752", "208", "246", "352"]);
 const VW = 1000;
@@ -149,11 +149,11 @@ function teiknBase(ctx, sc) {
   sc.setVerd(ctx);
   if (land) {
     // land a step above black and coasts visible on an ordinary screen; the Nordic countries lighter
-    ctx.fillStyle = "#1d1d1d"; ctx.fill(land);
-    ctx.fillStyle = "#2b2b2b"; ctx.fill(landNordisk);
-    ctx.strokeStyle = "#4a4a4a"; ctx.lineWidth = 0.7 / sc.K;
+    ctx.fillStyle = KL.land; ctx.fill(land);
+    ctx.fillStyle = KL.landNordisk; ctx.fill(landNordisk);
+    ctx.strokeStyle = KL.landKant; ctx.lineWidth = 0.7 / sc.K;
     ctx.stroke(land);
-    ctx.strokeStyle = "#5e5e5e"; ctx.stroke(landNordisk);
+    ctx.strokeStyle = KL.landNordiskKant; ctx.stroke(landNordisk);
   }
   if (!P || !sVal) return;
   const hovStad = typeof sc.hoverId === "number" ? sc.hoverId : null;
@@ -166,7 +166,7 @@ function teiknBase(ctx, sc) {
     const aktiv = (hovStad != null && (b.a === hovStad || b.b === hovStad)) || hoverBoge === b;
     if (aktiv) { alfa = 0.9; bw += 1.5; } else if (hovStad != null || hoverBoge) alfa = 0.04;
     ctx.globalAlpha = alfa;
-    ctx.strokeStyle = "#f2f2f2";
+    ctx.strokeStyle = KL.boge;
     ctx.lineWidth = bw / sc.K;
     ctx.beginPath(); ctx.moveTo(b.x1, b.y1); ctx.quadraticCurveTo(b.qx, b.qy, b.x2, b.y2); ctx.stroke();
   }
@@ -189,8 +189,8 @@ function teiknBase(ctx, sc) {
 function ring(ctx, sc, p, e, w = 1.5) {
   const [px, py] = sc.tilSkjerm(P.x[p], P.y[p]);
   ctx.beginPath(); ctx.arc(px, py, radius(p, Math.max(sVal[p], 1), sc) + e, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = w + 2; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = w; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = w; ctx.stroke();
 }
 function teiknOverlay(ctx, sc) {
   if (!P || !sVal) return;
@@ -305,17 +305,17 @@ function stoppSpel() {
 
 // ---------- line and legend ----------
 function teiknLinje() {
-  let t = `Boble = stad (byen til institusjonen), storleik = verk; eit verk kan stå i fleire. Boge = felles verk mellom to stader. Berre ${fmt(P.med || 0)} av ${fmt(T.valt)} verk i utvalet har stad (frå OpenAlex).`;
+  let t = `Boble = stad, storleik = verk. Boge = felles verk. Berre ${fmt(P.med || 0)} av ${fmt(T.valt)} verk har stad (OpenAlex).`;
   if (bogarTotalt > bogar.length) t += ` Viser ${fmt(bogar.length)} av ${fmt(bogarTotalt)} bogar.`;
   if (landFeil) t += " Landkartet kunne ikkje lastast; stadene er rett plasserte.";
   ramme.linje.textContent = t;
   scene.settLabel(t);
   const ref = [Math.round(smax), Math.round(smax / 4), Math.max(1, Math.round(smax / 20))];
-  const sirklar = ref.map((v) => { const r = (3 + 22 * Math.sqrt(v / smax)) * (scene ? scene.sc.rf : 1); return `<span class="teikn-post"><svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="none" stroke="#bbb"/></svg>${fmt(v)}</span>`; }).join("");
-  const bw = [wmax, Math.round(wmax / 3), 1].map((v) => `<span class="teikn-post"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke="#f2f2f2" stroke-width="${0.6 + 5 * (v / wmax) ** 0.8}"/></svg>${fmt(v)}</span>`).join("");
+  const sirklar = ref.map((v) => { const r = (3 + 22 * Math.sqrt(v / smax)) * (scene ? scene.sc.rf : 1); return `<span class="teikn-post"><svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="none" stroke="${KL.sirkel}"/></svg>${fmt(v)}</span>`; }).join("");
+  const bw = [wmax, Math.round(wmax / 3), 1].map((v) => `<span class="teikn-post"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke="${KL.boge}" stroke-width="${0.6 + 5 * (v / wmax) ** 0.8}"/></svg>${fmt(v)}</span>`).join("");
   const land = ["NO", "SE", "DK", "FI", "IS", "GB", "US", "NL"].map((k) => `<span class="teikn-post"><span class="prikk" style="background:${landFarge(k)}"></span>${esc(T.landNamn(k))}</span>`).join("");
   // short legend: sizes on two lines, the colours in two columns, so it covers little of the map
-  settInnhald(ramme.teikn, `<span class="teikn-linje"><span class="teikn-merk">Verk</span>${sirklar}</span><span class="teikn-linje"><span class="teikn-merk">Felles verk</span>${bw}</span><span class="teikn-kol">${land}<span class="teikn-post"><span class="prikk" style="background:#9a9a9a"></span>Andre</span></span><span class="teikn-merk">Grå ring: heile korpuset. Nabobyar er eigne stader (København og Lyngby, Espoo og Helsinki), så nokre bogar går mellom campusar i same byområde.</span>`);
+  settInnhald(ramme.teikn, `<span class="teikn-merk">Stad = byen til institusjonen. Eit verk kan stå i fleire bobler.</span><span class="teikn-linje"><span class="teikn-merk">Verk</span>${sirklar}</span><span class="teikn-linje"><span class="teikn-merk">Felles verk</span>${bw}</span><span class="teikn-kol">${land}<span class="teikn-post"><span class="prikk" style="background:#9a9a9a"></span>Andre</span></span><span class="teikn-merk">Grå ring: heile korpuset. Nabobyar er eigne stader (København og Lyngby, Espoo og Helsinki), så nokre bogar går mellom campusar i same byområde.</span>`);
   if (T.harFilter() && T.valt > 0 && !P.med) A.hjelp.visMelding(ramme, { tekst: "Ingen av verka i utvalet har stad i dataa." });
   else if (ramme.melding.textContent.startsWith("Ingen av verka")) A.hjelp.visMelding(ramme, null);
 }

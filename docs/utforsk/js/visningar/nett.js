@@ -1,5 +1,5 @@
 // Nett: who writes together. Institutions (or authors) as nodes, shared works as lines.
-import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald } from "../hjelp.js?v=27";
+import { esc, fmt, kutt, landFarge, UKJEND, FADE, FADE_ALFA, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, LAND_FARGE, settInnhald, KL, ANNA_LAND } from "../hjelp.js?v=28";
 
 let A, T, D, S, ramme, scene, modSeg;
 let G = null;            // current graph
@@ -187,10 +187,10 @@ function byggTeiknCache(hov) {
       if (ww === 0) ww = 1;
     } else alfa = Math.min(0.08 + 0.05 * w, 0.6);
     if (hov != null) {
-      if (a === hov || b === hov) { leggKant(a, b, ww, 0.9, "#ffffff"); continue; }
+      if (a === hov || b === hov) { leggKant(a, b, ww, 0.9, KL.sterk); continue; }
       alfa = Math.max(0.02, alfa * 0.25);
     }
-    leggKant(a, b, ww, alfa, "#dcdcdc");
+    leggKant(a, b, ww, alfa, KL.kant);
   }
   const kantar = [...botter.values()].sort((u, v) => u.ba - v.ba);
   for (const k of kantar) {
@@ -244,18 +244,18 @@ function teiknBase(ctx, sc) {
   ctx.globalAlpha = 1;
 }
 
-function ringSkjerm(ctx, sc, p, ekstra, farge = "#fff", w = 1.5) {
+function ringSkjerm(ctx, sc, p, ekstra, farge = KL.ring, w = 1.5) {
   const [px, py] = sc.tilSkjerm(G.x[p], G.y[p]);
   ctx.beginPath(); ctx.arc(px, py, radius(p, sc) + ekstra, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = w + 2; ctx.stroke();
   ctx.strokeStyle = farge; ctx.lineWidth = w; ctx.stroke();
 }
 function teiknOverlay(ctx, sc) {
   if (!G) return;
   sc.setSkjerm(ctx);
-  for (const p of G.valdeNoder) ringSkjerm(ctx, sc, p, 2, "#fff", 2);
+  for (const p of G.valdeNoder) ringSkjerm(ctx, sc, p, 2, KL.ring, 2);
   for (const p of merkNoder) ringSkjerm(ctx, sc, p, 3);
-  for (const p of opneNoder) ringSkjerm(ctx, sc, p, 5, "#fff", 1.5);
+  for (const p of opneNoder) ringSkjerm(ctx, sc, p, 5, KL.ring, 1.5);
   if (typeof sc.hoverId === "number") ringSkjerm(ctx, sc, sc.hoverId, 2);
   if (typeof sc.fokusId === "number") ringSkjerm(ctx, sc, sc.fokusId, 4);
   etikettar = lagEtikettar(sc);
@@ -395,7 +395,7 @@ function partnarKlikk(e) {
 function teiknLinje() {
   const inst = G.modus === "inst";
   const alle = G.tal.alle, vist = G.tal.vist;
-  let t = `Linje = minst eitt felles verk. Viser ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre ${fmt(G.harLag)} av ${fmt(T.valt)} verk i utvalet har ${inst ? "institusjon" : "forfattar med id"} (frå OpenAlex).`;
+  let t = `Linje = felles verk. ${fmt(vist)} av ${fmt(alle)} ${inst ? "institusjonar" : "forfattarar"} (minst ${G.tal.min_verk} verk). Berre ${fmt(G.harLag)} av ${fmt(T.valt)} verk har ${inst ? "institusjon" : "forfattar med id"} (OpenAlex).`;
   if (!inst) t += " Berre forfattarar med OpenAlex-id er med: der ein person står med namn utan id (arkivverka, og nokre OpenAlex-verk), er verket ikkje tald under personen, så ein person kan ha fleire verk enn nettet viser.";
   if (S.verk && D.idx.has(S.verk) && !opneNoder.size) t += " Det opne verket har ingen node i nettet.";
   ramme.linje.textContent = t;
@@ -404,7 +404,7 @@ function teiknLinje() {
   for (let p = 0; p < G.N; p++) { const k = G.land[p] >= 0 ? D.verk.land_alle[G.land[p]].k : ""; const f = G.farge[p]; const key = LAND_FARGE[k] ? k : f === UKJEND ? "" : "andre"; tel.set(key, (tel.get(key) || 0) + 1); }
   const post = [...tel.entries()].sort((a, b) => b[1] - a[1]).map(([k]) => {
     const namn = k === "" ? "Ukjend" : k === "andre" ? "Andre land" : D.verk.land_alle[D.flandIdx.get(k)].namn;
-    const f = k === "" ? UKJEND : k === "andre" ? "#9a9a9a" : LAND_FARGE[k];
+    const f = k === "" ? UKJEND : k === "andre" ? ANNA_LAND : LAND_FARGE[k];
     return `<span class="teikn-post"><span class="prikk" style="background:${f}"></span>${esc(namn)}</span>`;
   }).join("");
   settInnhald(ramme.teikn, `${post}<span class="teikn-merk">Farge: hovudland. Storleik: verk. Linje: felles verk${T.harFilter() ? " i utvalet" : ""}.</span>`);

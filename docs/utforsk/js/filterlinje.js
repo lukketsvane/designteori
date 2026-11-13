@@ -1,7 +1,7 @@
 // Filter bar: search with term suggestions, year slider with histogram, Nordic land
 // toggles, popovers (tema, kanal, type), lag, PDF; chips row with count; mobile panel.
-import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=27";
-import * as T from "./tilstand.js?v=27";
+import { esc, fmt, fold, termNokkel, kutt, PALETTE_TEMA, KGR_FARGE, annonser, smal, settInnhald } from "./hjelp.js?v=28";
+import * as T from "./tilstand.js?v=28";
 
 const { S, D } = T;
 let el = {};
@@ -29,8 +29,8 @@ export function init() {
       </div>
       ${["tema", "kanal", "type"].map((p) => `
         <div class="kontroll kontroll-pop" data-pop="${p}">
-          <button type="button" class="knapp popknapp" id="popknapp-${p}" aria-expanded="false" aria-controls="pop-${p}">${p === "tema" ? "Tema" : p === "kanal" ? "Kanal" : "Type"}<span class="aktivtal" data-aktivtal></span></button>
-          <div class="popover" id="pop-${p}" role="group" aria-label="${p === "tema" ? "Tema" : p === "kanal" ? "Kanal" : "Type"}" hidden></div>
+          <button type="button" class="knapp popknapp" id="popknapp-${p}" aria-expanded="false" aria-controls="pop-${p}">${p === "tema" ? "Klynge" : p === "kanal" ? "Kanal" : "Type"}<span class="aktivtal" data-aktivtal></span></button>
+          <div class="popover" id="pop-${p}" role="group" aria-label="${p === "tema" ? "Klynge" : p === "kanal" ? "Kanal" : "Type"}" hidden></div>
         </div>`).join("")}
       <div class="kontroll kontroll-lag" role="group" aria-label="Lag">
         <span class="kontroll-namn">Lag</span>
@@ -182,10 +182,10 @@ function teiknPop(p) {
   // checkbox: a toggled box is never destroyed under the reader's hand.
   if (p === "tema") {
     const c = T.fasettal("tema");
-    settInnhald(pop, `<p class="pop-tittel">Tema</p>` + v.tema.map((t, j) => `
+    settInnhald(pop, `<p class="pop-tittel">Klynge</p>` + v.tema.map((t, j) => `
       <label class="sjekk"><input type="checkbox" data-dim="tema" value="${esc(t.k)}" ${S.f.tema.has(t.k) ? "checked" : ""}>
       <span class="prikk" style="background:${PALETTE_TEMA[j]}"></span><span class="sjekk-namn">${esc(t.namn)}</span><span class="tal" title="${esc(lagDel(j))}">${fmt(c.get(t.k) || 0)}</span></label>`).join("")
-      + `<p class="pop-merk">Tema er grupper av like verk, ikkje emne sett av nokon. Nokre er mest arkivverk eller mest norskspråklege, så å velje dei er nesten å velje lag eller språk.</p>`);
+      + `<p class="pop-merk">Dei same åtte klyngene som i Kart-fana på hovudsida. Dei to siste har mest arkivverk (43 og 45 %).</p>`);
     synkSjekk(pop, "tema");
   } else if (p === "type") {
     const c = T.fasettal("type");
@@ -208,7 +208,7 @@ function teiknPop(p) {
     liste.sort((a, b) => (S.f.kanal.has(b.k.k) - S.f.kanal.has(a.k.k)) || b.c - a.c || a.j - b.j);
     settInnhald(pop.querySelector(".kgrliste"), v.kanalgrupper.map((g) => `
       <label class="sjekk"><input type="checkbox" data-dim="kgr" value="${esc(g.k)}" ${S.f.kgr.has(g.k) ? "checked" : ""}>
-      <span class="prikk" style="background:${KGR_FARGE[g.k] || "#9a9a9a"}"></span><span class="sjekk-namn">${esc(g.namn)}</span><span class="tal">${fmt(cg.get(g.k) || 0)}</span></label>`).join(""));
+      <span class="prikk" style="background:${KGR_FARGE[g.k] || KGR_FARGE.ukjend}"></span><span class="sjekk-namn">${esc(g.namn)}</span><span class="tal">${fmt(cg.get(g.k) || 0)}</span></label>`).join(""));
     settInnhald(pop.querySelector(".kanalliste"), liste.slice(0, 50).map((x) => `
       <label class="sjekk"><input type="checkbox" data-dim="kanal" value="${esc(x.k.k)}" ${S.f.kanal.has(x.k.k) ? "checked" : ""}>
       <span class="sjekk-namn">${esc(kutt(x.k.namn, 70))}</span><span class="tal">${fmt(x.c)}</span></label>`).join(""));

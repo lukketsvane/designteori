@@ -1,7 +1,7 @@
 // The selection model: state S, data columns D, masks, utval, facet counts,
 // subscribers, URL hash and history rules. Nothing else mutates S.
-import { fold, termNokkel, kutt } from "./hjelp.js?v=27";
-import * as data from "./data.js?v=27";
+import { fold, termNokkel, kutt } from "./hjelp.js?v=28";
+import * as data from "./data.js?v=28";
 
 export const VISNINGAR = ["kart", "nett", "verda", "siteringar", "tid"];
 const SIT_DELAR = ["saman", "nabolag", "straum", "tid"];
@@ -734,7 +734,7 @@ export function chipar() {
   };
   if (f.ar) leggTil("ar", null, `År: ${f.ar[0]} til ${f.ar[1]}`);
   for (const c of f.land) leggTil("land", c, `Nordisk land: ${c === "X" ? "Ukjend" : (v.land[D.landIdx.get(c)] || { namn: c }).namn}`);
-  for (const k of f.tema) leggTil("tema", k, `Tema: ${v.tema[D.temaIdx.get(k)].namn}`);
+  for (const k of f.tema) leggTil("tema", k, `Klynge: ${v.tema[D.temaIdx.get(k)].namn}`);
   for (const k of f.kanal) leggTil("kanal", k, `Kanal: ${kutt(v.kanalar[D.kanalIdx.get(k)].namn, 40)}`);
   for (const k of f.kgr) leggTil("kgr", k, `Kanaltype: ${v.kanalgrupper[D.kgrIdx.get(k)].namn}`);
   for (const k of f.type) leggTil("type", k, `Type: ${v.typar[D.typeIdx.get(k)].namn}`);

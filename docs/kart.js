@@ -347,12 +347,13 @@
     <div class="kart-styring">
       <div class="kart-kontroll">
         <input type="search" class="kart-sok" placeholder="Finn titlar" aria-label="Finn titlar på kartet" autocomplete="off" spellcheck="false">
+        <span class="kart-farge-l" aria-hidden="true">Farge</span>
         <select class="kart-farge" aria-label="Farge etter">
-          <option value="klynge">Farge: klynge</option>
-          <option value="ar">Farge: år</option>
-          <option value="land">Farge: land</option>
-          <option value="kanal">Farge: kanal</option>
-          <option value="sprak">Farge: språk</option>
+          <option value="klynge">klynge</option>
+          <option value="ar">år</option>
+          <option value="land">land</option>
+          <option value="kanal">kanal</option>
+          <option value="sprak">språk</option>
         </select>
       </div>
       <label class="check kart-kjerne"><input type="checkbox" class="kart-kjerne-av"> Tone ned verk som ligg mellom klynger</label>

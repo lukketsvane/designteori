@@ -1065,6 +1065,7 @@
         </div>
         <div class="ana-sec">
           <h3>Tidsskrift og konferansar</h3>
+          <p class="subline">Verk i korpuset og summen av siteringar frå OpenAlex for kvar kanal.</p>
           <div class="table-wrap">
             <table class="tbl-clean">
               <thead><tr><th>Namn</th><th class="r">Verk</th><th class="r">Sitat</th></tr></thead>

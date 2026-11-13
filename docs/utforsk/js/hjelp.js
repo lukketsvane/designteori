@@ -53,20 +53,58 @@ export function visNamn(s) {
 }
 
 // ---------- colour ----------
-export const PALETTE_TEMA = ["#4da3ff", "#ff9f45", "#8fe388", "#ffd166", "#c77dff", "#5ee6c8", "#ff6b5e", "#f472b6", "#c8a27a", "#9fb3c8"];
-export const LAND_FARGE = { DK: "#ff6b5e", SE: "#4da3ff", FI: "#5ee6c8", NO: "#ffd166", IS: "#f472b6", GB: "#c77dff", US: "#8fe388", NL: "#ff9f45" };
-export const FLEIRE_LAND = "#e8e8e8";
+// The page follows the colour scheme of the device (reloads when it changes; the state sits in the address).
+export const MORK = (() => {
+  try {
+    const t = document.documentElement.dataset.theme;
+    if (t === "dark") return true;
+    if (t === "light") return false;
+    return matchMedia("(prefers-color-scheme: dark)").matches;
+  } catch (e) { return false; }
+})();
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => location.reload()); } catch (e) { /* old browser: no live switch */ }
+// Darkens a pastel until it has contrast with white (the palettes below were drawn for a black page).
+function paHvit(h, mal = 3.2) {
+  const [r, g, b] = hexRgb(h);
+  let f = 1, hex = h;
+  while (kontrast(hex, "#ffffff") < mal && f > 0.25) {
+    f -= 0.03;
+    hex = "#" + [r, g, b].map((c) => Math.round(c * f).toString(16).padStart(2, "0")).join("");
+  }
+  return hex;
+}
+const modus = (h) => (MORK ? h : paHvit(h));
+const kartPal = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, modus(v)]));
+// The eight clusters have the colours of the Kart tab on the main page (kart.js PAL, slot per cluster).
+const KLYNGE_FARGE = {
+  lys: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
+  mork: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
+};
+export const KLYNGE_PLASS = [5, 7, 4, 0, 6, 3, 1, 2];
+export const PALETTE_TEMA = KLYNGE_PLASS.map((s) => KLYNGE_FARGE[MORK ? "mork" : "lys"][s]);
+export const LAND_FARGE = kartPal({ DK: "#ff6b5e", SE: "#4da3ff", FI: "#5ee6c8", NO: "#ffd166", IS: "#f472b6", GB: "#c77dff", US: "#8fe388", NL: "#ff9f45" });
+export const FLEIRE_LAND = MORK ? "#e8e8e8" : "#4a4a4a";
 export const UKJEND = "#6b6b6b";
-export const ANNA_LAND = "#9a9a9a";
-export const KGR_FARGE = { tidsskrift: "#4da3ff", konferanse: "#ff9f45", hci: "#c77dff", bok: "#8fe388", repositorium: "#ffd166", anna: "#9fb3c8", ukjend: "#6b6b6b" };
+export const ANNA_LAND = MORK ? "#9a9a9a" : "#8a8a8a";
+export const KGR_FARGE = kartPal({ tidsskrift: "#4da3ff", konferanse: "#ff9f45", hci: "#c77dff", bok: "#8fe388", repositorium: "#ffd166", anna: "#9fb3c8", ukjend: "#6b6b6b" });
 // Second and third palettes (amendment 23): CIE76 >= 12 from every hex above.
-export const PALETTE_GRUPPE = ["#e0e048", "#3dd6f5", "#ff4fa0", "#a0a0ff", "#7cff6b", "#ffb3c6", "#00e5a0", "#ffa07a", "#e45cff", "#d2b4ff"];
-export const PALETTE_ORD = ["#b5f23d", "#70f0ff", "#ff5c8a", "#ffd0a0", "#c8c8ff", "#ff7a3d"];
+export const PALETTE_GRUPPE = ["#e0e048", "#3dd6f5", "#ff4fa0", "#a0a0ff", "#7cff6b", "#ffb3c6", "#00e5a0", "#ffa07a", "#e45cff", "#d2b4ff"].map(modus);
+export const PALETTE_ORD = ["#b5f23d", "#70f0ff", "#ff5c8a", "#ffd0a0", "#c8c8ff", "#ff7a3d"].map(modus);
 export const ORD_MERKE = ["sirkel", "firkant", "trekant", "ruter", "kryss", "ring"];
 export const ORD_STREK = ["", "6 3", "2 3", "8 3 2 3", "1 2", "10 4"];
 export const FADE = "#808080";
 export const FADE_ALFA = 0.35;
-export const BG = "#000000";
+export const BG = MORK ? "#000000" : "#ffffff";
+// Colours the canvas and the SVG drawings use for text, outlines and lines (the CSS has the same pairs as custom properties).
+export const KL = MORK
+  ? { tekst: "#f2f2f2", tekst2: "#e8e8e8", tekst3: "#d8d8d8", sterk: "#ffffff", dim: "#9a9a9a", halo: "rgba(0,0,0,0.9)", boks: "rgba(0,0,0,0.62)",
+      kontur: "#000000", ring: "#ffffff", ring9: "rgba(255,255,255,0.9)", kant: "#dcdcdc", bar: "#cfcfcf", flate: "#141414", linjeNorm: "#555", linjeUte: "#333",
+      lassoFyll: "rgba(255,255,255,0.1)", land: "#1d1d1d", landNordisk: "#2b2b2b", landKant: "#4a4a4a", landNordiskKant: "#5e5e5e", boge: "#f2f2f2", nokkelDim: "#8a8a8a", sirkel: "#bbb", gruppeAnna: "#d6d6d6" }
+  : { tekst: "#111111", tekst2: "#1a1a1a", tekst3: "#333333", sterk: "#000000", dim: "#6b6b6b", halo: "rgba(255,255,255,0.92)", boks: "rgba(255,255,255,0.75)",
+      kontur: "#ffffff", ring: "#000000", ring9: "rgba(0,0,0,0.9)", kant: "#8c8c8c", bar: "#555555", flate: "#f0f0f0", linjeNorm: "#b0b0b0", linjeUte: "#d0d0d0",
+      lassoFyll: "rgba(0,0,0,0.08)", land: "#eeeeee", landNordisk: "#e0e0e0", landKant: "#c8c8c8", landNordiskKant: "#aaaaaa", boge: "#222222", nokkelDim: "#8a8a8a", sirkel: "#777", gruppeAnna: "#555555" };
+// Label colour of a cluster: lightened on black, darkened on white.
+export const klyngeTekst = (h) => (MORK ? lys(h, 0.3) : paHvit(h, 4.5));
 
 export function landFarge(kode) {
   if (!kode) return UKJEND;
@@ -329,20 +367,20 @@ export function plasserEtikettar(kandidatar, { w, h, hindringar = [], blokk = []
   return ut;
 }
 
-export function teiknEtikettar(ctx, plasserte, { farge = "#f2f2f2", alfa = 1 } = {}) {
+export function teiknEtikettar(ctx, plasserte, { farge = KL.tekst, alfa = 1 } = {}) {
   ctx.save();
   ctx.globalAlpha = alfa;
   ctx.textBaseline = "middle";
   ctx.lineJoin = "round";
   ctx.lineWidth = 4;
-  ctx.strokeStyle = "rgba(0,0,0,0.9)";
+  ctx.strokeStyle = KL.halo;
   for (const p of plasserte) {
     ctx.font = p.font;
     ctx.textAlign = p.align;
     // labels set over the middle of a dense area (theme names) get a dark backing
     if (p.bakgrunn) {
       const x0 = p.align === "left" ? p.x : p.x - p.w;
-      ctx.fillStyle = "rgba(0,0,0,0.62)";
+      ctx.fillStyle = KL.boks;
       ctx.beginPath();
       if (ctx.roundRect) ctx.roundRect(x0 - 5, p.y - p.h / 2 - 1, p.w + 10, p.h + 2, 4); else ctx.rect(x0 - 5, p.y - p.h / 2 - 1, p.w + 10, p.h + 2);
       ctx.fill();

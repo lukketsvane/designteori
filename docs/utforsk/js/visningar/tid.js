@@ -1,5 +1,5 @@
 // Tid: themes as bands over time, and term curves for words the reader types.
-import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd } from "../hjelp.js?v=27";
+import { esc, fmt, pst, kutt, PALETTE_TEMA, PALETTE_ORD, ORD_MERKE, ORD_STREK, termNokkel, fold, tween, rorsle, tooltip, kort, segmentert, plasserVertikalt, veldigSmal, smal, settInnhald, tekstBreidd, KL, BG } from "../hjelp.js?v=28";
 
 const A0 = 1990, A1 = 2026;
 const AR = Array.from({ length: A1 - A0 + 1 }, (_, j) => A0 + j);
@@ -26,7 +26,7 @@ export default {
     A = api; T = api.T; D = api.D; S = api.S; ramme = api.ramme; d3 = window.d3;
     ramme.flate.insertAdjacentHTML("beforeend", `
       <div class="tid">
-        <div class="tid-band" role="group" aria-label="Tema over tid. Dra sidelengs over diagrammet for å velje år."><svg></svg><div class="tid-dragboks" hidden></div></div>
+        <div class="tid-band" role="group" aria-label="Klynger over tid. Dra sidelengs over diagrammet for å velje år."><svg></svg><div class="tid-dragboks" hidden></div></div>
         <div class="tid-stripe brushstripe"><svg aria-label="Dra for å velje år"></svg></div>
         <div class="tid-ordboks">
           <div class="ordfelt">
@@ -256,10 +256,10 @@ function teikn(anim) {
   teiknOrd();
   teiknMerk();
   // line and legend
-  ramme.linje.textContent = `Verk per år etter tema${foer ? `; ${fmt(foer)} verk frå før 1990 er ikkje teikna` : ""}. Orda: del av verka kvart år som har ordet i tittelen, glatta over tre år. Delen er utan ordfilteret.`;
+  ramme.linje.textContent = `Verk per år etter klynge${foer ? ` (${fmt(foer)} verk frå før 1990 er ikkje med)` : ""}. Under: delen av titlane som har ordet, glatta over tre år.`;
   const meirOpe = !!(ramme.teikn.querySelector(".teikn-meir") || {}).open;
   settInnhald(ramme.teikn, `<span class="teikn-merk">Bandbreidd: verk per år.${sisteSmaa ? " Utvalet er lite, så banda står som trapper år for år, utan glatting." : ""} ${sisteTilpassa ? "Skalaen er tilpassa det vesle utvalet, så heile korpuset er ikkje teikna som grå kontur." : T.harFilter() ? "Grå kontur: heile korpuset." : ""} Skravert: 2026 er ufullstendig (${fmt(talAr(2026))} verk mot ${fmt(talAr(2025))} i 2025: innhaustinga er ikkje ferdig, året er ikkje lite).</span>
-    <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Nokre tema er mest arkivverk eller norskspråklege, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
+    <details class="teikn-meir"><summary>Kva som kan forme banda og kurvene</summary><span class="teikn-merk">Dei to siste klyngene har mest arkivverk, og arkivdelen skiftar frå år til år (Nordes kjem annakvart år), så eit skift i banda kan vere eit skift i kva kjeldene dekkjer.</span>
     <span class="teikn-merk">Orda er talde per språkform: «service design» og «tjenestedesign» er to ord. Eit ord manglar når det står i færre enn ${D.tidd ? D.tidd.tal.min_df : 5} titlar. Ei kurve startar der eit treårsvindauge har minst 20 verk (for heile korpuset i 1993), og ho er blek fram til første år med minst 20 verk i utvalet, for delen i år med få verk kan hoppe mykje.</span></details>`);
   if (meirOpe) ramme.teikn.querySelector(".teikn-meir").open = true;
   void med;
@@ -269,14 +269,14 @@ function skuggeAr(svg, x, h) {
   const ar = S.f.ar;
   const g = svg.append("g").attr("class", "skugge").attr("pointer-events", "none");
   if (ar) {
-    if (ar[0] > A0) g.append("rect").attr("x", x(A0) - 4).attr("y", 0).attr("width", x(ar[0]) - x(A0) + 4 - (x(1) - x(0)) / 2).attr("height", h).attr("fill", "#000").attr("fill-opacity", 0.55);
-    if (ar[1] < A1) g.append("rect").attr("x", x(ar[1]) + (x(1) - x(0)) / 2).attr("y", 0).attr("width", x(A1) - x(ar[1]) + 4).attr("height", h).attr("fill", "#000").attr("fill-opacity", 0.55);
+    if (ar[0] > A0) g.append("rect").attr("x", x(A0) - 4).attr("y", 0).attr("width", x(ar[0]) - x(A0) + 4 - (x(1) - x(0)) / 2).attr("height", h).attr("fill", BG).attr("fill-opacity", 0.55);
+    if (ar[1] < A1) g.append("rect").attr("x", x(ar[1]) + (x(1) - x(0)) / 2).attr("y", 0).attr("width", x(A1) - x(ar[1]) + 4).attr("height", h).attr("fill", BG).attr("fill-opacity", 0.55);
   }
 }
 function skravur(svg, x, h, id) {
   const defs = svg.append("defs");
   const p = defs.append("pattern").attr("id", id).attr("patternUnits", "userSpaceOnUse").attr("width", 6).attr("height", 6).attr("patternTransform", "rotate(45)");
-  p.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", 6).attr("stroke", "#fff").attr("stroke-opacity", 0.25).attr("stroke-width", 2);
+  p.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", 6).attr("stroke", KL.ring).attr("stroke-opacity", 0.25).attr("stroke-width", 2);
   svg.append("rect").attr("x", x(2025.5)).attr("y", 0).attr("width", Math.max(0, x(A1) - x(2025.5) + 4)).attr("height", h).attr("fill", `url(#${id})`).attr("pointer-events", "none");
 }
 
@@ -322,7 +322,7 @@ function teiknBand(rows) {
     .attr("d", area)
     .attr("fill", (s) => PALETTE_TEMA[s.key])
     .attr("fill-opacity", (s) => (hoverTema == null || hoverTema === s.key ? (S.f.tema.size && !S.f.tema.has(D.verk.tema[s.key].k) ? 0.45 : 0.92) : 0.35))
-    .attr("stroke", "#000").attr("stroke-width", 0.5)
+    .attr("stroke", KL.kontur).attr("stroke-width", 0.5)
     .style("cursor", "pointer");
   skuggeAr(svg, x, H);
   skravur(svg, x, H, "skravur-band");
@@ -332,7 +332,7 @@ function teiknBand(rows) {
   const pxPer = (y(0) - y(1));
   const nice = [5, 10, 20, 50, 100, 200, 500].find((v) => v * pxPer >= 18) || 500;
   const sb = svg.append("g").attr("transform", `translate(8,${12})`);
-  sb.append("line").attr("x1", 4).attr("x2", 4).attr("y1", 0).attr("y2", nice * pxPer).attr("stroke", "#cfcfcf").attr("stroke-width", 2);
+  sb.append("line").attr("x1", 4).attr("x2", 4).attr("y1", 0).attr("y2", nice * pxPer).attr("stroke", KL.bar).attr("stroke-width", 2);
   sb.append("text").attr("x", 8).attr("y", Math.min(nice * pxPer, 60) / 2 + 4).text(`= ${nice} verk`);
   // labels at 2025, or chips
   const synlege = ser.filter((s) => tot.some((t) => t > 0) && s[2025 - A0][1] - s[2025 - A0][0] > 0.01);
@@ -353,7 +353,7 @@ function teiknBand(rows) {
         // the names are buttons for the keyboard too (Tab, Enter or space)
         const tx = lg.append("text").attr("class", `etikett temaetikett${valt ? " valt" : ""}`).attr("x", x1).attr("y", ys[q] + 4).text(t.namn)
           .attr("tabindex", 0).attr("role", "button").attr("aria-pressed", String(valt)).attr("data-tema", t.k)
-          .attr("aria-label", `${t.namn}: vel temaet`);
+          .attr("aria-label", `${t.namn}: vel klynga`);
         tx.style("cursor", "pointer")
           .on("click", (ev) => { ev.stopPropagation(); T.veksle("tema", t.k, { erstatt: !(ev.shiftKey || ev.ctrlKey || ev.metaKey) }); })
           .on("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); T.veksle("tema", t.k, { erstatt: !ev.shiftKey }); } });
@@ -378,7 +378,7 @@ function teiknBand(rows) {
     const key = `${s.key}|${a}`;
     if (key === tipsKey && tooltip.synleg) { tooltip.flytt(ev.clientX, ev.clientY); return; }
     tipsKey = key;
-    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel tema · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
+    if (ev.pointerType === "mouse") tooltip.vis(`<div class="tt-tittel"><span class="prikk" style="background:${PALETTE_TEMA[s.key]}"></span>${esc(D.verk.tema[s.key].namn)}, ${a}</div><div class="tt-meta">${fmt(Math.round(c))} verk (${pst((100 * c) / sum)} % av året i utvalet)</div><div class="tt-fot">Klikk: vel klynge · Skift-klikk: legg til</div>`, ev.clientX, ev.clientY);
   }).on("pointerleave", () => { hoverTema = null; tipsKey = null; tooltip.skjul(); paths.attr("fill-opacity", (q) => (S.f.tema.size && !S.f.tema.has(D.verk.tema[q.key].k) ? 0.45 : 0.92)); })
     .on("click", (ev, s) => {
       if (undertrykkKlikk) return;
@@ -496,7 +496,7 @@ function teiknOrd() {
     svg.append("text").attr("class", "etikett").attr("x", W - mm.r + 10).attr("y", ys[j] + 4).attr("fill", PALETTE_ORD[it.q % 6]).text(kutt(it.k.vis, mm.r >= 200 ? 30 : 20));
   });
   // hover rule
-  const regel = svg.append("line").attr("y1", 8).attr("y2", H - 18).attr("stroke", "#fff").attr("stroke-opacity", 0.5).attr("visibility", "hidden").attr("pointer-events", "none");
+  const regel = svg.append("line").attr("y1", 8).attr("y2", H - 18).attr("stroke", KL.ring).attr("stroke-opacity", 0.5).attr("visibility", "hidden").attr("pointer-events", "none");
   let sistAr = null;
   svg.on("pointermove", (ev) => {
     const [px] = d3.pointer(ev, svgEl);
@@ -585,7 +585,7 @@ function teiknMerk() {
     svg.selectAll(".merkline").remove();
     if (merkAr == null || !siste || merkAr < A0) continue;
     const x = d3.scaleLinear().domain([A0, A1]).range([siste.m.l, siste.W - siste.m.r]);
-    svg.append("line").attr("class", "merkline").attr("x1", x(merkAr)).attr("x2", x(merkAr)).attr("y1", 0).attr("y2", box.clientHeight - 16).attr("stroke", "#fff").attr("stroke-width", 1).attr("pointer-events", "none");
+    svg.append("line").attr("class", "merkline").attr("x1", x(merkAr)).attr("x2", x(merkAr)).attr("y1", 0).attr("y2", box.clientHeight - 16).attr("stroke", KL.ring).attr("stroke-width", 1).attr("pointer-events", "none");
   }
 }
 void smal; void veldigSmal;

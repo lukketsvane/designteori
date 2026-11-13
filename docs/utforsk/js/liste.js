@@ -1,9 +1,9 @@
 // The list of works (virtual, sortable, keyboard), the detail of one work, and the
 // bottom sheet below 900 px.
-import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=27";
-import * as T from "./tilstand.js?v=27";
-import * as data from "./data.js?v=27";
-import { hentSamandrag } from "./samandrag.js?v=27";
+import { esc, fmt, kutt, fold, visNamn, PALETTE_TEMA, KATALOG_LENKE, smal, veldigSmal, annonserMerke, bevarFokus } from "./hjelp.js?v=28";
+import * as T from "./tilstand.js?v=28";
+import * as data from "./data.js?v=28";
+import { hentSamandrag } from "./samandrag.js?v=28";
 
 const { S, D } = T;
 let api = null;
@@ -375,6 +375,7 @@ async function fyllSamandrag(i, id) {
     b.innerHTML = "";
     const p = document.createElement("p");
     p.textContent = r.tekst;
+    if (erEngelsk(r.tekst)) p.lang = "en";
     const k = document.createElement("p");
     k.className = "dim";
     k.textContent = `Kjelde: ${r.kjelde}`;
@@ -394,6 +395,13 @@ async function fyllSamandrag(i, id) {
   }
 }
 
+// Summaries are mostly English: mark them so a screen reader and the hyphenation use the right language.
+function erEngelsk(t) {
+  const en = (t.match(/(the|and|of|is|are|with|this|that|for|in|to)/gi) || []).length;
+  const nn = (t.match(/(og|ikkje|som|det|med|til|er|av|på|for)/gi) || []).length;
+  return en > 3 && en > 2 * nn;
+}
+
 // A summary text that opens with a date or repeats the title is the first page of the paper
 // (header, title, author note), not a summary.
 const DATO_RE = /^\s*(\d{1,2}[./-]\d{1,2}[./-]\d{2,4}|\d{4}-\d{2}-\d{2}|(jan|feb|mar|apr|may|mai|jun|jul|aug|sep|oct|okt|nov|dec|des)[a-z]*\.?\s+\d{1,2},?\s+\d{4})/i;
@@ -410,7 +418,7 @@ function fyllSit(i, ok) {
   if (D.lag[i]) { b.textContent = "Arkivverk har inga referanseliste i dataa."; }
   else {
     const a = D.refOff[i + 1] - D.refOff[i];
-    b.textContent = `I korpuset: ${fmt(D.nSitert[i])} siterer verket, og verket siterer ${fmt(a)} (korpuset eller kanon).`;
+    b.textContent = `${fmt(D.nSitert[i])} av dei er i korpuset. Verket siterer sjølv ${fmt(a)} verk i korpuset eller kanon.`;
   }
 }
 
@@ -437,7 +445,7 @@ function fyllNaboar(i, ok = true) {
       <span class="nabo-meta">${esc(forf)} ${D.ar[j]}${merkeOrd ? ` <span class="merke ${merkeKl} lite" aria-hidden="true">${merkeOrd}</span>` : ""}</span>
       <span class="likskap-rad" aria-hidden="true"><span class="likskap"><span style="width:${Math.round(c * 100)}%"></span></span><span class="likskap-tal">${Math.round(c * 100)} %</span></span></button></li>`;
   }
-  html += `</ol><p class="dim nabo-merk">Likskap: kor nær verka ligg i kartet (100 % = same). PDF: open og stadfest.</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
+  html += `</ol><p class="dim nabo-merk">Likskap: kor like tittel, kanal og emneord er (100 % = same). PDF: open og stadfest.</p><button type="button" class="knapp" data-handling="lik">Vis desse ti i kartet</button>`;
   b.innerHTML = html;
 }
 

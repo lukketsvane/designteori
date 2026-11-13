@@ -108,29 +108,9 @@ KANAL_REGLAR = [
 ]
 UKJENT_KANALNAMN = {"ukjent", "ukjend", "unknown"}
 
-PRESET_NAMN = {
-    "participatory-design": "Deltakande design", "codesign": "Co-design",
-    "research-through-design": "Research through Design", "design-theory-epistemology": "Designteori",
-    "service-systemic-design": "Teneste- og systemdesign", "sustainable-circular": "Berekraftig design",
-    "critical-speculative": "Kritisk design", "interaction-hci-ai": "Interaksjonsdesign",
-    "design-history-nordic": "Designhistorie", "craft-materiality-textile": "Handverk og tekstil",
-    "aesthetics-form": "Estetikk og form", "design-education-pedagogy": "Designdidaktikk",
-    "design-ethics-justice": "Etikk og universell", "design-anthropology": "Designantropologi",
-    "industrial-product": "Industridesign", "urban-architecture": "By og arkitektur",
-}
-# A reviewed name may replace the automatic one here (key = preset key). Set after reading tema-sjekk.md.
-# Reviewed 2026-11-13 against the 8 titles nearest each centroid and the c-TF-IDF terms (tema-sjekk.md). The keys
-# stay the nearest preset (they are only identifiers in the URL); the names say what the cluster holds.
-TEMA_NAMN_OVERSTYRING: dict[str, str] = {
-    "research-through-design": "Co-design og casestudiar",
-    "critical-speculative": "Systemdesign og undervising",
-    "participatory-design": "Nordisk designforsking",
-    "interaction-hci-ai": "Deltakande design",
-    "aesthetics-form": "Interaksjonsdesign og brukarar",
-    "design-history-nordic": "Relasjonelt design og framtider",
-    "craft-materiality-textile": "Handverk og fagdidaktikk",
-    "industrial-product": "Tenestedesign på norsk",
-}
+# The themes of Utforsk are the 8 clusters and 52 sub-clusters of the Kart tab (docs/data/klynger/kart.json, built by
+# designteori/klynger.py): same names, counts, colour slots, label anchors and map positions. One division everywhere.
+KLYNGER_FIL = DOCS_DATA_DIR / "klynger" / "kart.json"
 
 # Short names for the largest institutions, keyed by OpenAlex institution id (amendment 69).
 KORT_NAMN = {
@@ -798,89 +778,25 @@ def kmeans_sfarisk(V: np.ndarray, k: int, seed: int = 42, maks: int = 100):
     return ny, senter, konvergert
 
 
-def bygg_tema(V: np.ndarray, indeks: dict, T: Ns, seed: int = 42) -> Ns:
-    n = V.shape[0]
-    lab, senter, konv = kmeans_sfarisk(V, 10, seed, 300)
-    if not konv:
-        logg("ADVARSEL: k-means konvergerte ikkje")
-    storleik = np.bincount(lab, minlength=10)
-    rekkje = sorted(range(10), key=lambda j: (-storleik[j], j))
-    omkode = np.empty(10, dtype=np.int64)
-    for ny_j, gml_j in enumerate(rekkje):
-        omkode[gml_j] = ny_j
-    tema = omkode[lab]
-    senter = senter[rekkje]
-    # name: greedy unique matching to the presets
-    nokklar = list(indeks["presets"].keys())
-    Pm = np.asarray([indeks["presets"][k] for k in nokklar], dtype=np.float32)
-    Pm /= np.linalg.norm(Pm, axis=1, keepdims=True)
-    cos = senter @ Pm.T
-    tatt_t, tatt_p = set(), set()
-    par = {}
-    kandidatar = sorted(((-float(cos[a, b]), a, b) for a in range(10) for b in range(len(nokklar))))
-    for negc, a, b in kandidatar:
-        if a in tatt_t or b in tatt_p:
-            continue
-        par[a] = (b, -negc)
-        tatt_t.add(a)
-        tatt_p.add(b)
-    # c-TF-IDF terms
-    M = termmatrise(T, tema, 10)
-    skår = ctfidf(M)
+def les_klynger(ids: list[str]) -> tuple[Ns, list[int], list[int]]:
+    """The cluster division of the Kart tab as Utforsk themes. Returns (themes, x, y); x and y are the map positions."""
+    d = read_json(KLYNGER_FIL)
+    if d is None:
+        raise SystemExit(f"{KLYNGER_FIL} finst ikkje; bygg klyngene først (python -m designteori.klynger)")
+    if d["ids"] != ids:
+        raise SystemExit("kart.json har andre verk (id-ar) enn korpuset; bygg klyngene på nytt")
+    if [u["id"] for u in d["under"]] != list(range(len(d["under"]))):
+        raise SystemExit("kart.json: underklynge-id-ane er ikkje 0..n-1")
     tema_lst = []
-    for j in range(10):
-        b, c = par[j]
-        key = nokklar[b]
-        namn = TEMA_NAMN_OVERSTYRING.get(key, PRESET_NAMN.get(key, key))
-        ord_ = vel_ord(skår[:, j], M[:, j], T, 5)
-        # neutral keys in links (tema=t3): the preset a cluster is matched to is often another
-        # subject than its name says, and the main page uses the preset keys for its own themes
-        tema_lst.append({"k": f"t{j}", "preset": key, "namn": namn, "ord": ord_, "n": int((tema == j).sum()),
-                         "sentroide": [round(float(x), 4) for x in senter[j]], "_cos": c,
-                         "_auto": PRESET_NAMN.get(key, key)})
-    # sub-themes
-    under = np.full(n, -1, dtype=np.int64)
-    under_lst = []
-    for j in range(10):
-        med = np.flatnonzero(tema == j)
-        ks = int(min(6, max(2, round(len(med) / 150))))
-        sl, _, kv = kmeans_sfarisk(V[med], ks, seed, 300)
-        ss = np.bincount(sl, minlength=ks)
-        rk = sorted(range(ks), key=lambda q: (-ss[q], q))
-        om = np.empty(ks, dtype=np.int64)
-        for ny_q, gml_q in enumerate(rk):
-            om[gml_q] = ny_q
-        sl = om[sl]
-        klasse = np.full(n, -1, dtype=np.int64)
-        klasse[med] = sl
-        Ms = termmatrise(T, klasse, ks)
-        sk = ctfidf(Ms)
-        base = len(under_lst)
-        for q in range(ks):
-            ord2 = vel_ord(sk[:, q], Ms[:, q], T, 2)
-            under_lst.append({"tema": j, "namn": " · ".join(ord2) if ord2 else f"{tema_lst[j]['namn']} {q + 1}",
-                              "n": int((sl == q).sum())})
-        under[med] = base + sl
-    return Ns(tema=tema, under=under, tema_lst=tema_lst, under_lst=under_lst, senter=senter, konvergert=konv)
-
-
-def ankre(tema: Ns, x: np.ndarray, y: np.ndarray) -> None:
-    """Anchors: density peak per theme (most members within 4 % of the map width), medoid per sub-theme."""
-    pos = np.stack([x, y], 1).astype(np.float64)
-    r = 0.04 * KART_STORLEIK
-    for j, t in enumerate(tema.tema_lst):
-        med = np.flatnonzero(tema.tema == j)
-        p = pos[med]
-        d2 = ((p[:, None, :] - p[None, :, :]) ** 2).sum(2)
-        ant = (d2 <= r * r).sum(1)
-        b = int(np.argmax(ant))
-        t["lx"], t["ly"] = int(p[b, 0]), int(p[b, 1])
-    for q, u in enumerate(tema.under_lst):
-        med = np.flatnonzero(tema.under == q)
-        p = pos[med]
-        d = np.sqrt(((p[:, None, :] - p[None, :, :]) ** 2).sum(2)).sum(1)
-        b = int(np.argmin(d))
-        u["lx"], u["ly"] = int(p[b, 0]), int(p[b, 1])
+    for j, c in enumerate(d["klynger"]):
+        if c["id"] != j:
+            raise SystemExit("kart.json: klynge-id-ane er ikkje 0..n-1")
+        tema_lst.append({"k": f"t{j}", "namn": c["namn"], "ord": list(c["ord"]), "n": int(c["n"]),
+                         "lx": int(c["lx"]), "ly": int(c["ly"]), "farge": int(c["farge"])})
+    under_lst = [{"tema": int(u["k"]), "namn": u["namn"], "n": int(u["n"]), "lx": int(u["lx"]), "ly": int(u["ly"])}
+                 for u in d["under"]]
+    return Ns(tema=np.asarray(d["k"], dtype=np.int64), under=np.asarray(d["u"], dtype=np.int64),
+              tema_lst=tema_lst, under_lst=under_lst), list(d["x"]), list(d["y"])
 
 
 # ---------------------------------------------------------------------------
@@ -1868,8 +1784,7 @@ FORVENTA = {
 def bygg_verk(K: Ns, T: Ns, tema: Ns, x, y) -> dict:
     tema_ut = []
     for j, t in enumerate(tema.tema_lst):
-        tema_ut.append({"k": t["k"], "preset": t["preset"], "namn": t["namn"], "ord": t["ord"], "n": t["n"], "lx": t["lx"], "ly": t["ly"],
-                        "sentroide": t["sentroide"]})
+        tema_ut.append({"k": t["k"], "namn": t["namn"], "ord": t["ord"], "n": t["n"], "lx": t["lx"], "ly": t["ly"], "farge": t["farge"]})
     under_ut = [{"tema": u["tema"], "namn": u["namn"], "n": u["n"], "lx": u["lx"], "ly": u["ly"]} for u in tema.under_lst]
     tittel = [str(r["title"]) for r in K.pub] + [str(r["title"]) for r in K.arkiv]
     return {
@@ -1966,28 +1881,6 @@ def skriv_alle(ut: Path, filer: dict[str, bytes], tal: dict) -> dict:
     return manifest_filer
 
 
-def skriv_tema_sjekk(sti: Path, K: Ns, tema: Ns, V: np.ndarray) -> None:
-    tit = [str(r["title"]) for r in K.pub + K.arkiv]
-    ut = ["# Tema-sjekk (generert av visdata.py)", "", f"Generert {GENERERT}. Namna er automatiske; sett `TEMA_NAMN_OVERSTYRING` i visdata.py der eit namn er openbert feil.", ""]
-    for j, t in enumerate(tema.tema_lst):
-        med = np.flatnonzero(tema.tema == j)
-        nærast = med[np.argsort(-(V[med] @ tema.senter[j]), kind="stable")[:8]]
-        ut.append(f"## {j}: {t['namn']} (`{t['k']}`, preset `{t['preset']}`), {t['n']} verk, cosinus til preset {t['_cos']:.3f}")
-        if t["namn"] != t["_auto"]:
-            ut.append(f"Automatisk namn frå preset: {t['_auto']}; overstyrt etter gjennomgang.")
-        ut.append(f"Ord: {', '.join(t['ord'])}")
-        ut.append("")
-        for i in nærast:
-            ut.append(f"- {tit[i]} ({K.ar[i]})")
-        ut.append("")
-        ut.append("Undertema:")
-        for q, u in enumerate(tema.under_lst):
-            if u["tema"] == j:
-                ut.append(f"- {u['namn']} ({u['n']})")
-        ut.append("")
-    skriv_bytes(sti, ("\n".join(ut) + "\n").encode("utf-8"))
-
-
 def skriv_data_rapport(sti: Path, tal: dict, filer: dict, avvik: list[str], notat: list[str]) -> None:
     ut = ["# Data-rapport for Utforsk (generert av visdata.py)", "", f"Generert {GENERERT}.", "", "## Køyretid per steg", ""]
     for namn, s in _steg_tider:
@@ -2047,15 +1940,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--hent-stader", action="store_true", help="hent institusjonskoordinatar frå OpenAlex (maks 40 kall)")
     ap.add_argument("--gjenbruk-layout", action="store_true", help="bruk x, y frå eksisterande filer når inndata er like")
     ap.add_argument("--rapport", nargs="?", const="", default=None, metavar="MAPPE",
-                    help="skriv tema-sjekk.md og data-rapport.md til MAPPE (standard: notatmappa)")
+                    help="skriv data-rapport.md til MAPPE (standard: notatmappa)")
     ap.add_argument("--vektorar", default=str(DOCS_DATA_DIR / "semantic_vectors.bin"), help="int8-fil (verk x dim) eller .npy")
     ap.add_argument("--indeks", default=str(DOCS_DATA_DIR / "semantic_index.json"), help="semantic_index.json (ids, presets, dimensions)")
-    ap.add_argument("--iterasjonar", type=int, default=750, help="t-SNE-iterasjonar (250 utvida + resten)")
     ap.add_argument("--ut", default=str(VIS_DIR), help="utmappe")
     ap.add_argument("--generert", default=None, help="fast tidsstempel (ISO) for eit reproduserbart bygg")
     ap.add_argument("--notatmappe", default=str(NOTATMAPPE) if NOTATMAPPE else None, help="mappe for buffer og rapportar (eller UTFORSK_NOTATMAPPE)")
-    ap.add_argument("--perplexity", type=float, default=30.0)
-    ap.add_argument("--lr", type=float, default=None)
     args = ap.parse_args(argv)
     for strom in (sys.stdout, sys.stderr):
         try:
@@ -2106,23 +1996,8 @@ def main(argv: list[str] | None = None) -> int:
         V = les_vektorar(Path(args.vektorar), dim, K.n)
         knn_idx, knn_sim = knn_cosinus(V, 90)
         naboar = bygg_naboar(knn_idx, knn_sim)
-        tema = bygg_tema(V, K.indeks, T)
-        logg("tema: " + ", ".join(f"{t['namn']} {t['n']}" for t in tema.tema_lst))
-
-    with Steg("kartutforming (t-SNE)"):
-        gjenbrukt = False
-        if args.gjenbruk_layout and gml_verk and gml_verk["kol"]["id"] == K.ids:
-            x, y = gml_verk["kol"]["x"], gml_verk["kol"]["y"]
-            gjenbrukt = True
-            logg("bruker x, y frå eksisterande verk.json")
-        else:
-            kp = (notat / "tsne_kontrollpunkt.npz") if notat and notat.exists() else None
-            Y = tsne(V, knn_idx, knn_sim, args.iterasjonar, 42, kp, args.perplexity, args.lr)
-            xa, ya = normaliser_kart(Y)
-            x, y = xa.tolist(), ya.tolist()
-        ankre(tema, np.asarray(x), np.asarray(y))
-        if not gjenbrukt:
-            merknader.append(f"t-SNE med {args.iterasjonar} iterasjonar (perplexity {args.perplexity}, kNN 90, seed 42)")
+        tema, x, y = les_klynger(K.ids)
+        logg("tema (klynger frå kart.json): " + ", ".join(f"{t['namn']} {t['n']}" for t in tema.tema_lst))
 
     with Steg("samforfattarnett"):
         gm_i = read_json(ut / "nett_inst.json") if args.gjenbruk_layout else None
@@ -2202,15 +2077,14 @@ def main(argv: list[str] | None = None) -> int:
             f"Nettverk: overlapp att etter fjerning av overlapp (ved 900 px brei visning, k = 1): {OVERLAPP_REST}. Forfattarnettet er for tett til å bli fritt for overlapp ved den storleiken; sida kan skalere nodane ned.",
             "Tillegg til kontrakten: `siteringar.ref_utan[i]` (referansar utan metadata, -1 for arkiv), `siteringar.kart.merkelapp` (unike merkelappar parallelt med `kart.noder`, også for korpusverk), `siteringar.land_topp`, `siteringar.tal.mal_utan_kanal_del`/`mal_utan_land_del`, `manifest.filer.*.gzip`, `tid.tal.min_df`/`maks_df`, `stader.kjelde`.",
             "`kanalar` har 846 oppføringar: dei 847 i spesifikasjonen tel «Ukjent» som namn, men dei fem verka med det namnet har kanal -1.",
-            "Temaord (`tema.ord`, undertemanamn): c-TF-IDF er vekta med lift (andelen klassen har av ordet delt på andelen av alle ord), elles fekk alle tema generiske ord som «research» og «study». Namna på åtte av ti tema er overstyrte etter gjennomgang (TEMA_NAMN_OVERSTYRING); nøklane er framleis næraste preset.",
+            "Tema, undertema, namn, ord, fargeplass og kartposisjon (x, y) kjem frå docs/data/klynger/kart.json, slik at Utforsk og Kart-fana har same inndeling (8 klynger, 52 underklynger).",
             "Maskina var delt: BLAS-tråder (OPENBLAS_NUM_THREADS=4) vart 10 til 20 gonger tregare enn éin tråd under last frå andre prosessar. Køyr med OPENBLAS_NUM_THREADS=1 om maskina er travel (t-SNE tek då om lag 5 minutt).",
             f"Mogleg dublett (merk & 1): {sum(1 for v in K.merk if v & 1)}; ikkje gjennomgått (merk & 2): {sum(1 for v in K.merk if v & 2)}; same verk som eit anna i korpuset (merk & 4, delt PDF-adresse, delt DOI eller same tittel med år innan 2 og felles etternamn): {sum(1 for v in K.merk if v & 4)}; ein av dei to: {sum(1 for v in K.merk if v & 5)}.",
             f"Kanon-element som ikkje er verk i korpuset: {S.antal_canon_ikkje_korpus}, av dei sitert og slått saman til {S.m} noder ({S.grupper_med_fleire} grupper med fleire variantar).",
-            f"t-SNE-vektorar frå {args.vektorar}.",
+            f"Nabolister (naboar.bin) frå vektorane i {args.vektorar}; kartposisjonane er frå kart.json.",
             "Forfattarnettet har 1 823 noder og 4 959 kantar mot venta 1 824 og 4 970: verket W2994871791 har to ulike forfattar-id-ar med same namn, og regelen om éin oppføring per namn og verk (endring 51) gir den eine ho mistar verket. n i nettet er rekna frå verk.json, slik at sidas tal stemmer med lista.",
             f"Stader utanfor landets ramme (feil koordinatar frå OpenAlex, ikkje plasserte): {stader['tal'].get('utanfor_land', 0)}.",
         ]
-        skriv_tema_sjekk(mappe / "tema-sjekk.md", K, tema, V)
         skriv_data_rapport(mappe / "data-rapport.md", tal, manifest_filer, avvik, merknader)
         logg(f"rapportar skrivne til {mappe}")
     for a in avvik:

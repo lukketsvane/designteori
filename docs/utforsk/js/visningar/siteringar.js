@@ -1,6 +1,6 @@
 // Siteringar: what is cited together, the neighbourhood of one work, flows of
 // who cites what, and how what is cited has moved over time.
-import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald } from "../hjelp.js?v=27";
+import { esc, fmt, pst, kutt, visNamn, PALETTE_TEMA, PALETTE_GRUPPE, KGR_FARGE, FADE, FADE_ALFA, UKJEND, landFarge, plasserEtikettar, teiknEtikettar, tooltip, kort, segmentert, smal, veldigSmal, tween, rorsle, settInnhald, KL } from "../hjelp.js?v=28";
 
 let A, T, D, S, ramme, d3, scene, delSeg, straumSeg;
 let el = {};
@@ -207,7 +207,7 @@ function heimBoks() {
   const pad = Math.max(250, 0.06 * Math.max(x1 - x0, y1 - y0));
   return [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
 }
-const gruppeFarge = (g) => (g < PALETTE_GRUPPE.length ? PALETTE_GRUPPE[g] : g === 99 ? "#d6d6d6" : "#9a9a9a");
+const gruppeFarge = (g) => (g < PALETTE_GRUPPE.length ? PALETTE_GRUPPE[g] : g === 99 ? KL.gruppeAnna : KL.dim);
 const lysNode = (p) => !T.harFilter() || sNode[p] > 0;
 const radius = (p, sc) => (4 + 1.15 * Math.sqrt(K.n[p])) * sc.rf * Math.min(sc.k, 3) ** 0.4;
 function felles() {
@@ -241,7 +241,7 @@ function teiknBase(ctx, sc) {
     if (T.harFilter() && !(lysNode(a) && lysNode(b))) alfa = 0.04;
     if (hov != null) alfa = a === hov || b === hov ? 0.9 : Math.max(0.02, alfa * 0.25);
     ctx.globalAlpha = alfa;
-    ctx.strokeStyle = hov != null && (a === hov || b === hov) ? "#fff" : "#dcdcdc";
+    ctx.strokeStyle = hov != null && (a === hov || b === hov) ? KL.ring : KL.kant;
     ctx.lineWidth = (0.5 + 2.5 * w) / sc.K;
     ctx.beginPath(); ctx.moveTo(K.x[a], K.y[a]); ctx.lineTo(K.x[b], K.y[b]); ctx.stroke();
     void c;
@@ -262,8 +262,8 @@ function teiknBase(ctx, sc) {
 function ring(ctx, sc, p, e, w = 1.5) {
   const [px, py] = sc.tilSkjerm(K.x[p], K.y[p]);
   ctx.beginPath(); ctx.arc(px, py, radius(p, sc) + e, 0, 6.2832);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = w + 2; ctx.stroke();
-  ctx.strokeStyle = "#fff"; ctx.lineWidth = w; ctx.stroke();
+  ctx.strokeStyle = KL.kontur; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = KL.ring; ctx.lineWidth = w; ctx.stroke();
 }
 function teiknOverlay(ctx, sc) {
   if (!K) return;
@@ -279,7 +279,7 @@ function teiknOverlay(ctx, sc) {
   rang.forEach((p, j) => { const [px, py] = sc.tilSkjerm(K.x[p], K.y[p]); hind.push({ id: p, x: px, y: py, r: radius(p, sc), rang: j }); });
   rang.slice(0, 60).forEach((p, j) => {
     const [px, py] = sc.tilSkjerm(K.x[p], K.y[p]);
-    kand.push({ id: p, x: px, y: py, r: radius(p, sc), tekst: T.merkelapp(K.noder[p]), font, h: 15, rang: j, farge: lysNode(p) ? "#f2f2f2" : "#9a9a9a" });
+    kand.push({ id: p, x: px, y: py, r: radius(p, sc), tekst: T.merkelapp(K.noder[p]), font, h: 15, rang: j, farge: lysNode(p) ? KL.tekst : KL.dim });
   });
   etikettar = plasserEtikettar(kand, { w: sc.w, h: sc.h, hindringar: hind, blokk: sc.dekkaNo(), forrige: forrigePlass, maks: Math.min(60, Math.round(30 * Math.max(1, sc.k))) });
   forrigePlass = new Map(etikettar.map((q) => [q.id, q.pos]));
@@ -365,7 +365,7 @@ function profilDel(v) { const p = tiarProfil(); return [0, 1, 2].map((d) => (p.n
 function profilTekst(v) { const d = profilDel(v); return TIAR_NAMN.map((t, j) => `${t} ${pst(d[j], 1)} %`).join(", "); }
 function miniStolpar(v, h = 14) {
   const d = profilDel(v), mx = Math.max(...d, 0.001);
-  return `<svg class="ministolpar" width="26" height="${h}" aria-hidden="true">${d.map((x, j) => { const bh = Math.max(1, Math.round((h - 1) * x / mx)); return `<rect x="${j * 9}" y="${h - bh}" width="7" height="${bh}" fill="${j === 2 ? "#e8e8e8" : "#8a8a8a"}"/>`; }).join("")}</svg>`;
+  return `<svg class="ministolpar" width="26" height="${h}" aria-hidden="true">${d.map((x, j) => { const bh = Math.max(1, Math.round((h - 1) * x / mx)); return `<rect x="${j * 9}" y="${h - bh}" width="7" height="${bh}" fill="${j === 2 ? KL.tekst2 : KL.nokkelDim}"/>`; }).join("")}</svg>`;
 }
 
 // ranked list (amendment 13)
@@ -387,7 +387,7 @@ function teiknRang() {
     const kv = S.f.kanon.size === 1 ? T.nodeAv([...S.f.kanon][0]) : -1;
     el.rang.innerHTML = `<div class="sidepanel-topp"><span>Utvalet siterer mest</span><button type="button" class="knapp liten" data-rang aria-expanded="${!lukka}">${lukka ? "Vis lista" : "Gøym lista"}</button></div>
     ${kv >= 0 ? `<p class="rang-valt">Utvalet: verk som siterer <b>${esc(T.merkelapp(kv))}</b>. <button type="button" class="lenkeknapp" data-nabolag="${kv}">Kven siterer det, per tiår og land</button></p>` : ""}
-    ${topp.length ? `<p class="rang-nokkel" aria-hidden="true"><svg width="26" height="8"><rect x="0" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="9" y="2" width="7" height="6" fill="#8a8a8a"/><rect x="18" y="2" width="7" height="6" fill="#e8e8e8"/></svg> 2000-, 2010-, 2020-åra · tal i utvalet</p>
+    ${topp.length ? `<p class="rang-nokkel" aria-hidden="true"><svg width="26" height="8"><rect x="0" y="2" width="7" height="6" fill="${KL.nokkelDim}"/><rect x="9" y="2" width="7" height="6" fill="${KL.nokkelDim}"/><rect x="18" y="2" width="7" height="6" fill="${KL.tekst2}"/></svg> 2000-, 2010-, 2020-åra · tal i utvalet</p>
     <ol>${topp.map(([v, c]) => { const iKart = K.pos.has(v); return `<li class="rangrad"><button type="button" class="rang-namn" data-v="${v}" title="${esc(nodeTittel(v))}${iKart ? "" : ` (ikkje mellom dei ${K.N} i kartet)`}" aria-label="${esc(T.merkelapp(v))}, ${esc(nodeTittel(v))}: sitert av ${fmt(c)} verk i utvalet. I heile korpuset: ${profilTekst(v)} av dei siterande verka.${iKart ? "" : " Ikkje i kartet."}">${esc(T.merkelapp(v))}${iKart ? "" : ` <span class="ikkje-kart">ikkje i kartet</span>`}</button><span class="rang-tal" title="Del av alle siterande verk i korpuset: ${profilTekst(v)}">${miniStolpar(v)} ${fmt(c)}</span><button type="button" class="knapp liten rang-nabo" data-nabolag="${v}" aria-label="Opne nabolaget til ${esc(T.merkelapp(v))}: kven siterer det, per tiår og land" title="Nabolag: kven siterer det, per tiår og land">↗</button><span class="rang-bar"><span style="width:${Math.round((100 * c) / mx)}%"></span></span></li>`; }).join("")}</ol>
       <p class="sidepanel-merk">Tal: verk i utvalet som siterer. Små stolpar: del av alle siterande verk i korpuset i 2000-, 2010- og 2020-åra (lys = 2020-åra). Peik på eit namn for å finne det i kartet.</p>` : `<p class="dim" style="padding:0 10px">Ingen verk i utvalet har referanseliste.</p>`}`;
   });
@@ -435,7 +435,7 @@ function plukk(liste) {
 function itemHtml(v, kol) {
   const iKorpus = v < D.n;
   const ute = iKorpus && T.harFilter() && !T.utval[v];
-  const farge = iKorpus ? PALETTE_TEMA[D.tema[v]] : "#9a9a9a";
+  const farge = iKorpus ? PALETTE_TEMA[D.tema[v]] : KL.dim;
   return `<button type="button" class="ego-item${ute ? " ute" : ""}" data-v="${v}" ${iKorpus ? `data-ego-i="${v}"` : ""} data-kol="${kol}">
     <span class="prikk" style="background:${farge}"></span><span class="ego-tekst"><b>${esc(T.merkelapp(v))}</b>: ${esc(nodeTittel(v))}</span></button>`;
 }
@@ -485,7 +485,7 @@ function teiknNabolag() {
   ramme.linje.textContent = iKorpus && D.lag[v]
     ? "Arkivverk har inga referanseliste i dataa. Viser berre liknande verk."
     : `${T.merkelapp(v)}: siterer ${fmt(siterer.length)} verk med kjende metadata${iKorpus ? ` (av ${fmt(Math.max(r, 0))} referansar)` : ""}, sitert av ${fmt(sitertAv.length)} verk i korpuset${iKorpus ? `, liknar ${fmt(liknar.length)} verk` : ""}.${T.harFilter() ? ` Bleike: utanfor utvalet (${fmt(T.valt)} av ${fmt(D.n)} verk).` : ` Utvalet: alle ${fmt(D.n)} verk.`}`;
-  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-post"><span class="prikk" style="background:#9a9a9a"></span>utanfor korpuset</span><span class="teikn-merk">Farge: tema. Kolonnane viser dei 40 mest siterte, ordna etter år. Klikk eit verk for å gjere det til midten.</span>`);
+  settInnhald(ramme.teikn, `<span class="teikn-merk">${felles()}</span><span class="teikn-post"><span class="prikk" style="background:${KL.dim}"></span>utanfor korpuset</span><span class="teikn-merk">Farge: tema. Kolonnane viser dei 40 mest siterte, ordna etter år. Klikk eit verk for å gjere det til midten.</span>`);
   requestAnimationFrame(teiknBogar);
 }
 function teiknBogar() {
@@ -505,7 +505,7 @@ function teiknBogar() {
     else if (kol === "sitertav") { x1 = r.left - box.left; x2 = k.right - box.left; }
     else { x1 = r.left + 20 - box.left; x2 = k.left + k.width / 2 - box.left; y2 = k.bottom - box.top; }
     const mx = (x1 + x2) / 2;
-    html += `<path d="M${x1},${y1}C${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none" stroke="${b.classList.contains("ute") ? "#333" : "#555"}" stroke-width="1"/>`;
+    html += `<path d="M${x1},${y1}C${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none" stroke="${b.classList.contains("ute") ? KL.linjeUte : KL.linjeNorm}" stroke-width="1"/>`;
   }
   svg.innerHTML = html;
 }
@@ -569,9 +569,9 @@ async function teiknStraum() {
     return k === "andre" ? "Andre land" : k === "X" ? "Ukjend" : T.landNamn(k);
   };
   const fargeFor = (k, side) => {
-    if (modus !== "land" && (side === "v" || modus === "kanal")) return KGR_FARGE[k] || "#9fb3c8";
+    if (modus !== "land" && (side === "v" || modus === "kanal")) return KGR_FARGE[k] || KGR_FARGE.anna;
     if (modus === "tiar") { const j = T.TIAR.findIndex((x) => x.k === k); return k === "u" ? UKJEND : d3.interpolateGreys(0.35 + 0.1 * j).replace(/rgb/, "rgb"); }
-    return k === "andre" ? "#9a9a9a" : k === "X" ? UKJEND : landFarge(k);
+    return k === "andre" ? KL.dim : k === "X" ? UKJEND : landFarge(k);
   };
   const W = Math.max(320, el.svg.clientWidth), H = Math.max(420, el.svg.clientHeight - 8);
   const linje = () => {
@@ -708,8 +708,8 @@ function teiknOverTid() {
       const y = topp + q * rad;
       const pst_ = (100 * c) / r.n;
       html += `<g class="bump-node" data-v="${v}" data-t="${r.t}" tabindex="0" role="button" aria-label="${esc(T.merkelapp(v))}, ${c} av ${r.n} verk i ${r.t}-åra">
-        <rect x="${x(j)}" y="${y}" width="${boksB}" height="${rad - 12}" rx="3" fill="#141414" stroke="${S.f.kanon.has(T.nodeKey(v)) ? "#fff" : "#333"}"/>
-        <rect x="${x(j)}" y="${y + rad - 15}" width="${Math.max(2, (boksB * pst_) / 40)}" height="3" fill="#bdbdbd"/>
+        <rect x="${x(j)}" y="${y}" width="${boksB}" height="${rad - 12}" rx="3" fill="${KL.flate}" stroke="${S.f.kanon.has(T.nodeKey(v)) ? KL.ring : KL.linjeUte}"/>
+        <rect x="${x(j)}" y="${y + rad - 15}" width="${Math.max(2, (boksB * pst_) / 40)}" height="3" fill="${KL.bar}"/>
         <text x="${x(j) + 6}" y="${y + 16}" class="bump-tekst">${q + 1}. ${esc(kutt(T.merkelapp(v), 18))}</text>
         <text x="${x(j) + boksB - 6}" y="${y + 16}" text-anchor="end">${pst(pst_)} %</text></g>`;
     });
