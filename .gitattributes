@@ -2,3 +2,7 @@
 *.gz binary -delta -diff -merge
 *.bin binary -delta -diff -merge
 
+
+# Data files whose bytes are recorded in a manifest (size and sha256) must be stored exactly as built
+docs/data/search/** -text
+docs/data/vis/** -text
