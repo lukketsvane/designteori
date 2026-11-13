@@ -7,7 +7,7 @@
   const pc = (v) => F.n(v, 1) + " %";
 
   /* ---------- f23: kunnskapsformer ---------- */
-  F.fig.f23 = function (m, d, ctx) {
+  F.del.d23 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Del av 80 lesne tekstar som har forma (vekta), prosent med 95 % intervall", "Samsvar mellom markør og lesing: kappa"]);
     const cap1 = (q) => q.namn.replace(/^./, (c) => c.toUpperCase());
     const rows = d.former.map((q) => {
@@ -53,7 +53,7 @@
   };
 
   /* ---------- f24: datainnsamlingsmarkørar ---------- */
-  F.fig.f24 = function (m, d, ctx) {
+  F.del.d24 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Over tid og før mot etter 2015", "Etter kjelde, land og endring innan kjelde"]);
     const dot = (q, group, extra) => Object.assign({ label: q.namn + " · n " + n0(q.n), v: q.pct, lo: q.lo, hi: q.hi, mark: "dot", color: "var(--fg)", vtxt: F.n(q.pct, 1), group, tip: q.namn + "|" + n0(q.k) + " av " + n0(q.n) + " tekstar (" + F.n(q.pct, 1) + " %)" + (q.lo != null ? "|95 % intervall " + F.n(q.lo, 1) + " til " + F.n(q.hi, 1) : "") }, extra || {});
     const rowsA = d.periode.map((q, i) => dot(q, i === 0 ? "Periode" : null)).concat(d.for_etter.map((q, i) => dot(q, i === 0 ? "Før og etter 2015" : null, { color: "var(--t3)" })));
@@ -66,7 +66,7 @@
   };
 
   /* ---------- f25: teorielement i pilotane ---------- */
-  F.fig.f25 = function (m, d, ctx) {
+  F.del.d25 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Profil: del av påstandane, prosent (95 % intervall)", "Pålitelegheit: andre lesing av same " + d.utval.lesbare + " lesbare tekstar"]);
     const iv = (label, a, group, extra) => Object.assign({ label, v: a[0], lo: a[1], hi: a[2], mark: "dot", color: "var(--fg)", vtxt: F.n(a[0], 0), group, tip: label + "|" + F.n(a[0], 0) + " % (" + F.n(a[1], 0) + " til " + F.n(a[2], 0) + ")" }, extra || {});
     const k = d.kausal, rowsA = [
@@ -92,46 +92,52 @@
     F.d("p", { cls: "sm" }, A).append("v0.1 (", b("31 %"), " av 315 påstandar) og v0.3 (", b("56 %"), " av 52, frå " + d.utval.lesbare + " lesbare av " + d.utval.v03 + " CC-verk) kan ikkje samanliknast: skilnaden følgjer både plukkemåte og tekstutval, og dei to kan ikkje skiljast med desse data.");
   };
 
-  /* ---------- f26: femten spørsmål ---------- */
-  F.fig.f26 = function (m, d, ctx) {
+  /* ---------- d26: 24 spørsmål i to rundar ---------- */
+  F.del.d26 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 760;
     const oname = d.namn;
-    /* inngangsbilete: femten flater, med forklaringa rett over, så den står på første skjermen */
+    /* inngangsbilete: 24 flater, med forklaringa rett over, så den står på første skjermen */
     const ov = F.d("div", { style: "margin:0 0 6px" }, m);
     const legd = F.d("div", { cls: "leg", style: "margin:0 0 6px" }, ov);
     [["var(--fg)", "heldt", false], ["var(--fg)", "heldt ikkje", true], ["var(--dim)", "uavgjort", true]].forEach(([c, t, o], i) => { const s = F.d("span", null, legd); const ii = F.d("i", { cls: o ? "o" : "" }, s); ii.style.background = c; ii.style.color = c; if (i === 2) ii.style.borderStyle = "dashed"; s.appendChild(document.createTextNode(t)); });
     F.d("p", { cls: "sm", style: "margin:0 0 12px" }, ov).textContent = "Flate: dommen for spørsmålet. Prikkane er stripene: fylt er treff, open er bom, stipla er ikkje avgjort. Trykk på ei flate for å opne spørsmålet. I korta er skygga felt det forventa området og svart merke det observerte.";
-    const lin = ["Eininga", "Skilja", "Tida"];
-    const cw = mob ? Math.floor((W - 2) / 5) : 74, rh = 64, left = mob ? 0 : 84;
-    const svg0 = F.svg(ov, mob ? W : Math.min(W, left + cw * 5 + 8), 3 * (rh + 14), "Oversyn over femten spørsmål");
-    lin.forEach((l, li) => {
-      F.s("text", { x: 0, y: li * (rh + 14) + (mob ? 8 : rh / 2 + 4), text: l, cls: "b" }, svg0);
-      d.sporsmal.filter((q) => q.linse === l).forEach((q, i) => {
-        const x0 = left + i * cw, y0 = li * (rh + 14) + (mob ? 14 : 0);
-        const a = F.s("a", { href: "#sp-" + q.id }, svg0);
-        const g = F.s("g", { cls: "mk", tip: q.tittel + "|" + oname[q.utfall] }, a);
-        const hh = mob ? rh - 16 : rh;
-        F.s("rect", { x: x0 + 2, y: y0, width: cw - 6, height: hh, rx: 5, fill: q.utfall === "held" ? "var(--fg)" : "transparent", stroke: "var(--fg)", "stroke-width": q.utfall === "held" ? 0 : 1.4, "stroke-dasharray": q.utfall === "undecided" ? "3 3" : null }, g);
-        const nr = q.rader.length, step = (cw - 14) / Math.max(nr, 1);
-        q.rader.forEach((r, k) => {
-          const cxp = x0 + 8 + step * k + step / 2 - 1, cyp = y0 + hh / 2 - 5, ink = q.utfall === "held" ? "var(--bg)" : "var(--fg)";
-          F.s("circle", { cx: cxp, cy: cyp, r: 3.4, fill: r.dom === "treff" ? ink : "none", stroke: ink, "stroke-width": 1.4, "stroke-dasharray": r.dom === "open" ? "2 1.6" : null }, g);
+    /* to blokker: første runde (15 spørsmål, tre linser) og andre runde (9 spørsmål, tre andre linser) */
+    const blokker = [{ r: 1, t: "Første runde, 15 spørsmål", lin: ["Eininga", "Skilja", "Tida"] }, { r: 2, t: "Andre runde, 9 spørsmål", lin: ["Grenser", "Skilja", "Tida"] }];
+    const cw = mob ? Math.floor((W - 2) / 5) : 74, rh = 64, left = mob ? 0 : 84, bh = 3 * (rh + 14) + 24;
+    const svg0 = F.svg(ov, mob ? W : Math.min(W, left + cw * 5 + 8), blokker.length * bh, "Oversyn over 24 spørsmål i to rundar");
+    blokker.forEach((bk, bi) => {
+      const oy = bi * bh;
+      F.s("text", { x: 0, y: oy + 12, text: bk.t, cls: "fg", style: "font-weight:500" }, svg0);
+      bk.lin.forEach((l, li) => {
+        F.s("text", { x: 0, y: oy + 24 + li * (rh + 14) + (mob ? 8 : rh / 2 + 4), text: l, cls: "b" }, svg0);
+        d.sporsmal.filter((q) => q.runde === bk.r && q.linse === l).forEach((q, i) => {
+          const x0 = left + i * cw, y0 = oy + 24 + li * (rh + 14) + (mob ? 14 : 0);
+          const a = F.s("a", { href: "#sp-" + q.id }, svg0);
+          const g = F.s("g", { cls: "mk", tip: q.tittel + "|" + pill(q) }, a);
+          const hh = mob ? rh - 16 : rh;
+          F.s("rect", { x: x0 + 2, y: y0, width: cw - 6, height: hh, rx: 5, fill: q.utfall === "held" ? "var(--fg)" : "transparent", stroke: "var(--fg)", "stroke-width": q.utfall === "held" ? 0 : 1.4, "stroke-dasharray": q.utfall === "undecided" ? "3 3" : null }, g);
+          const nr = q.rader.length, step = (cw - 14) / Math.max(nr, 1);
+          q.rader.forEach((r, k) => {
+            const cxp = x0 + 8 + step * k + step / 2 - 1, cyp = y0 + hh / 2 - 5, ink = q.utfall === "held" ? "var(--bg)" : "var(--fg)";
+            F.s("circle", { cx: cxp, cy: cyp, r: 3.4, fill: r.dom === "treff" ? ink : "none", stroke: ink, "stroke-width": 1.4, "stroke-dasharray": r.dom === "open" ? "2 1.6" : null }, g);
+          });
+          F.s("text", { x: x0 + cw / 2 - 1, y: y0 + hh - 10, "text-anchor": "middle", text: q.id.split("-")[1], style: "fill:" + (q.utfall === "held" ? "var(--bg)" : "var(--fg)") }, g);
         });
-        F.s("text", { x: x0 + cw / 2 - 1, y: y0 + hh - 10, "text-anchor": "middle", text: q.id.split("-")[1], style: "fill:" + (q.utfall === "held" ? "var(--bg)" : "var(--fg)") }, g);
       });
     });
-    lin.forEach((l) => {
-      F.d("div", { cls: "sp-linse", text: l }, m);
+    function pill(q) { return q.etikett === "delvis" ? "delvis" : oname[q.utfall]; }
+    blokker.forEach((bk) => bk.lin.forEach((l) => {
+      F.d("div", { cls: "sp-linse", text: bk.t.split(",")[0] + " · " + l }, m);
       const grid = F.d("div", { cls: "sp-grid" }, m);
-      d.sporsmal.filter((q) => q.linse === l).forEach((q) => card(grid, q));
-    });
+      d.sporsmal.filter((q) => q.runde === bk.r && q.linse === l).forEach((q) => card(grid, q));
+    }));
     /* eitt kort per spørsmål: tittel, dom og den første stripa. Resten opnar ved trykk (eller frå flata over). */
     function card(grid, q) {
       const el = F.d("section", { cls: "sp", id: "sp-" + q.id }, grid);
       const h = F.d("h4", null, el);
       F.d("span", { text: q.tittel }, h);
-      F.d("em", { text: oname[q.utfall], cls: q.utfall }, h);
-      F.d("p", { cls: "sp-merk", text: q.nemnar }, el);
+      F.d("em", { text: pill(q), cls: q.utfall }, h);
+      F.d("p", { cls: "sp-merk", text: q.nemnar + (q.etikett && q.etikett !== "uavgjort" ? " Kjeldas etikett: " + q.etikett + "." : "") }, el);
       const w = Math.floor(el.getBoundingClientRect().width) || (mob ? W : W / 2 - 24);
       const more = F.d("div", { id: "sp-" + q.id + "-meir", hidden: "hidden" }, el);
       q.rader.forEach((r, ri) => strip(ri === 0 ? el : more, q, r, ri, w));

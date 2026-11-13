@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const NS = "http://www.w3.org/2000/svg";
-  const F = (window.FUNN = { fig: {}, st: {}, cache: {}, rendered: new Map(), land: ["DK", "FI", "IS", "NO", "SE"],
+  const F = (window.FUNN = { fig: {}, del: {}, st: {}, cache: {}, rendered: new Map(), land: ["DK", "FI", "IS", "NO", "SE"],
     landNamn: { DK: "Danmark", FI: "Finland", IS: "Island", NO: "Noreg", SE: "Sverige" } });
 
   /* ---------- tal og tekst ---------- */
@@ -325,7 +325,7 @@
 
   /* ---------- lat teikning ---------- */
   /* venta høgd per figur (mobil, brei), målt frå ferdig teikna figurar: held sida stabil medan ho blir teikna */
-  F.HOYDE = {f01: [491, 440], f02: [507, 526], f03: [719, 703], f04: [809, 809], f05: [806, 739], f06: [951, 328], f07: [413, 220], f08: [1268, 431], f09: [718, 846], f10: [1283, 438], f11: [763, 412], f12: [1241, 1236], f13: [812, 981], f14: [970, 496], f15: [600, 564], f16: [602, 602], f17: [604, 284], f18: [1095, 729], f19: [1243, 586], f20: [1197, 589], f21: [618, 579], f22: [816, 803], f23: [1627, 1024], f24: [1218, 784], f25: [1155, 692], f26: [3993, 2399]};
+  F.HOYDE = {f01: [1531, 1097], f02: [1208, 956], f03: [1005, 839], f04: [686, 633], f05: [2811, 1332], f06: [791, 883], f07: [1400, 519], f08: [903, 1018], f09: [1127, 577], f10: [757, 665], f11: [1198, 778], f12: [739, 383], f13: [1270, 626], f14: [771, 660], f15: [858, 766], f16: [1789, 1142], f17: [1246, 747], f18: [6830, 4203]};
   function expH(id) {
     const e = F.HOYDE[id]; if (!e) return 0;
     return innerWidth < 700 ? e[0] : e[1];
@@ -338,8 +338,10 @@
     if (!w) return;
     try {
       const { d, m } = await F.figData(id);
+      /* ei figur med fleire delar har ei nemnarlinje under kvar del (teikna av samansettinga), ikkje under heile figuren */
       const nem = el.querySelector(".nem");
-      if (nem && !nem.textContent) nem.textContent = m.nemnar;
+      if (nem && (m.delar || []).length > 1) nem.hidden = true;
+      else if (nem && !nem.textContent) nem.textContent = m.nemnar;
       const st = F.st[id] || (F.st[id] = {});
       const ctx = { id, w, mob: w < 520, st, el: mount, fig: el, m, rerender: () => render(el), dark: matchMedia("(prefers-color-scheme: dark)").matches || document.documentElement.dataset.theme === "dark" };
       const hold = mount.offsetHeight;
@@ -456,20 +458,22 @@
       const f = (await F.manifest()).funn;
       if (!f) return;
       li.querySelector("b").textContent = F.n(f.kontrollerte);
-      li.querySelector("span").textContent = "kontrollerte funn (" + F.n(f.stadfesta) + " stadfesta, " + F.n(f.retta) + " retta); " + F.n(f.teikna) + " av dei er teikna, pluss " + F.n(f.sporsmal) + " spørsmål";
+      li.querySelector("span").textContent = "kontrollerte funn i to rundar (" + F.n(f.stadfesta) + " stadfesta, " + F.n(f.retta) + " retta); " + F.n(f.teikna) + " av dei er teikna, pluss " + F.n(f.sporsmal) + " spørsmål";
     } catch (e) { /* den statiske teksten står att */ }
   }
 
   /* ---------- inngangsbilete: kartet som bakgrunn ---------- */
-  /* klyngefargar: ikkje landsfargane (blå, oransje, grøn, rosa, gul), og alltid med nummer eller bokstav */
-  const PAL = ["#b8a4ff", "#ff5d7a", "#c6ee5a", "#f2f2f2", "#7b86ff", "#e45df2", "#d9c9a3", "#8fb0c8"];
+  /* klyngefargar: ein farge har éi tyding på sida. Landa har blå, rosa, gul, oransje og grøn; laga har indigo og karmin.
+     Klyngene bruker berre dei fargane som er att (gulgrøn, grøn, fiolett, purpur) pluss kvitt, sand og stålgrått,
+     og har alltid nummer eller bokstav ved sida av. */
+  const PAL = ["#b8ec4a", "#a974ff", "#8de35f", "#f2f2f2", "#d46bff", "#c8b98f", "#9fb2c4", "#6fdc8a"];
   F.PAL = PAL;
-  F.GPAL = ["#c6ee5a", "#b8a4ff", "#ff5d7a", "#f2f2f2", "#7b86ff", "#e45df2", "#d9c9a3"];
+  F.GPAL = ["#b8ec4a", "#a974ff", "#8de35f", "#f2f2f2", "#d46bff", "#c8b98f", "#9fb2c4"];
   async function hero() {
     const cv = document.getElementById("hero-kart");
     if (!cv) return;
     let d;
-    try { d = (await F.figData("f18")).d; } catch (e) { return; }
+    try { d = (await F.figData("f11")).d.d18; } catch (e) { return; }
     const draw = () => {
       const r = cv.parentNode.getBoundingClientRect();
       const dpr = Math.min(devicePixelRatio || 1, 2);

@@ -31,7 +31,7 @@
   }
 
   /* ---------- f09: tre eningar, eitt stort nettverk om gongen ---------- */
-  F.fig.f09 = function (m, d, ctx) {
+  F.del.d09 = function (m, d, ctx) {
     const st = ctx.st; st.tab = st.tab || "forfattar";
     const wide = ctx.w >= 900;
     const side = wide ? Math.min(660, Math.round(ctx.w * 0.6)) : ctx.w;
@@ -139,7 +139,7 @@
   };
 
   /* ---------- f13: samsiteringsnett ---------- */
-  F.fig.f13 = function (m, d, ctx) {
+  F.del.d13 = function (m, d, ctx) {
     const mob = ctx.w < 760, gcol = F.GPAL;
     const A = F.d("div", null, m);
     const w = ctx.w, h = mob ? Math.round(w * 1.1) : Math.min(640, Math.round(w * 0.62));
@@ -204,7 +204,7 @@
   };
 
   /* ---------- f18: kartet ---------- */
-  F.fig.f18 = function (m, d, ctx) {
+  F.del.d18 = function (m, d, ctx) {
     const st = ctx.st; st.mode = st.mode || "klynge";
     const mob = ctx.w < 760;
     const ctl = F.d("div", { cls: "ctl" }, m);

@@ -7,11 +7,11 @@
   const b = (t) => Object.assign(document.createElement("b"), { textContent: t });
 
   /* ---------- f01: frå rader til verk (vertikal sankey) ---------- */
-  F.fig.f01 = function (m, d, ctx) {
+  F.del.d01 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 560, pad = 2;
     const H = mob ? 400 : 390;
     const L = [28, 150, 262, 372].map((v) => (mob ? v * 1.02 : v * 0.95));
-    const svg = F.svg(m, W, H, "Frå 24 812 hente rader til 6 432 registrerte verk, og kva som har fulltekst");
+    const svg = F.svg(m, W, H, "Frå 24 812 hente rader til 6 432 registrerte postar, og kva som har fulltekst");
     const ids = {}; d.nodar.forEach((n) => (ids[n.id] = Object.assign({}, n)));
     const gap = mob ? 5 : 9, nh = 20;
     const tot = 27044;
@@ -57,7 +57,7 @@
     put(lab("hent_oa", mob ? "OpenAlex-rader" : "OpenAlex-rader henta"), lay.hent_oa.x, Y[0] - 5, "start", true);
     put(lab("hent_ark", "Arkivposter"), W - pad, Y[0] - 5, "end", true);
     put(lab("ut", "Utanfor scope"), lay.ut.x, Y[1] - 5, "start", true);
-    put(lab("reg", mob ? "Registrerte verk" : "Registrerte verk"), lay.reg.x - 8, Y[2] + 14, "end", true);
+    put(lab("reg", "Registrerte postar"), lay.reg.x - 8, Y[2] + 14, "end", true);
     /* små nodar: etikettar i ei rekkje under dei, samla i ei forklaring */
     const small = [["liste", "Via tidsskriftlista"], ["andre", "Via tittel eller emne"], ["ark_att", "Arkivverk att"], ["fjerna", "Fjerna på DOI-treff"]];
     const sy = Y[1] + ln + 16;
@@ -74,7 +74,7 @@
   };
 
   /* ---------- f02: når verka kom, og kva slag dei er ---------- */
-  F.fig.f02 = function (m, d, ctx) {
+  F.del.d02 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 560;
     F.legend(m, [{ c: "var(--oa)", t: "OpenAlex-laget" }, { c: "var(--ark)", t: "Arkivlaget" }]);
     const H = mob ? 190 : 250, pl = 30, pr = 2, pt = 8, pb = 20, strip = 54;
@@ -128,10 +128,12 @@
       });
     });
     function fillOf(s, f) { return F.fillOf(s, f); }
+    const av = d.avhandling_ark;
+    F.d("p", { cls: "sm" }, m).append("Slaget avhandling i arkivlaget (", b(String(av.thesis)), ") er ", b(av.doktor + " doktor"), " og ", b(av.master + " master"), ". Slag manglar for 671 arkivverk.");
   };
 
   /* ---------- f03: språk ---------- */
-  F.fig.f03 = function (m, d, ctx) {
+  F.del.d03 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "", ["Språkmerking, 4 694 verk", "Verk på landets eige språk, per land", "FormAkademisk: del som ikkje er engelsk, prosent per periode, med n"]);
     /* A: to stolpar med utvida del. Kategoriar i blågrøn skala (svart er reservert for observert) */
     const W = A.w, svg = F.svg(A, W, 128, "Del av verka som er merkte engelsk, og kvar dei ikkje-engelske står");
@@ -157,22 +159,17 @@
   };
 
   /* ---------- f04: fulltekst ---------- */
-  F.fig.f04 = function (m, d, ctx) {
+  F.del.d04 = function (m, d, ctx) {
     const mk = (g, col, group) => ({ label: g.namn + " · " + n0(g.n), v: g.del, vtxt: F.p(g.del, 1), color: col || "var(--fg)", group, tip: g.namn + "|" + n0(g.fulltekst) + " av " + n0(g.n) + " verk med fulltekst (" + F.n(g.del, 1) + " %)" });
     const gr = d.grupper, by = (nm) => gr.find((g) => g.namn === nm);
     const land = { "Norske verk": "NO", "Svenske verk": "SE", "Finske verk": "FI", "Danske verk": "DK" };
-    const rows = [
-      mk(by("Verk med open lenkje"), null, "Tilgang"), mk(by("Verk utan open lenkje")),
-      mk(by("FormAkademisk"), null, "Kanal"),
-      mk(by("Norske verk"), F.cc("NO"), "Land"), mk(by("Svenske verk"), F.cc("SE")), mk(by("Finske verk"), F.cc("FI")), mk(by("Danske verk"), F.cc("DK")),
-      mk(by("Før 2000"), null, "Alder"), ].concat(d.periodar.map((p) => mk(p)),
-      [mk(by("Bokkapittel"), null, "Slag og siteringar"), mk(by("Artiklar")), mk(by("Minst 100 siteringar")),
-       mk({ namn: "OpenAlex-laget", n: d.alle.n, fulltekst: d.alle.fulltekst, del: d.alle.del }, "var(--oa)", "Lag"), mk({ namn: "Arkivlaget", n: d.arkiv.n, fulltekst: d.arkiv.fulltekst, del: d.arkiv.del }, "var(--ark)")]);
-    F.rows(m, ctx, { rows, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1), refs: [{ v: d.alle.del, label: "OpenAlex-laget " + F.p(d.alle.del, 1), left: false }], label: "Del med fulltekst per gruppe", rowH: ctx.mob ? 33 : 34, gH: 26, valW: 7 });
+    /* tilgang, kanal, land, periode og lag er nå dekte av open PDF (d32); her står berre slag og siteringar */
+    const rows = [mk(by("Bokkapittel")), mk(by("Artiklar")), mk(by("Minst 100 siteringar"))];
+    F.rows(m, ctx, { rows, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1), refs: [{ v: d.alle.del, label: "OpenAlex-laget " + F.p(d.alle.del, 1), left: false }], label: "Del med fulltekst etter slag og siteringar", rowH: ctx.mob ? 33 : 34, gH: 26, valW: 7 });
   };
 
   /* ---------- f05: rangering mellom land etter teljemåte, og land over tid ---------- */
-  F.fig.f05 = function (m, d, ctx) {
+  F.del.d05 = function (m, d, ctx) {
     const st = ctx.st; st.lag = st.lag || "oa"; st.vis = st.vis || "antal";
     const W = ctx.w, mob = W < 560;
     /* A: rang 2020-24 etter tre teljemåtar */
@@ -195,7 +192,7 @@
       F.s("text", { x: pts[2][0] + 12, y: pts[2][1] + 4, text: F.n(dl[k][2], 1) + " " + (mob ? k : F.landNamn[k]), cls: "fg", style: "font-size:12px" }, g);
     });
     const sm = d.del_samla, srt = ["NO", "DK", "SE", "FI"].sort((p, q) => sm[q][5] - sm[p][5]);
-    F.d("p", { cls: "sm" }, m).append("Tala er del av kredittane i prosent. ", b("Med arkivlaget"), " (1 738 verk til) er Noreg størst 2020–24: " + srt.map((k) => F.landNamn[k] + " " + F.n(sm[k][5], 1) + " %").join(", ") + ".");
+    F.d("p", { cls: "sm" }, m).append("Tala er del av kredittane i prosent. ", b("Med arkivlaget"), " (1 738 verk til) er Noreg størst 2020–24: " + srt.map((k) => F.landNamn[k] + " " + F.n(sm[k][5], 1) + " %").join(", ") + ". Finland har 0 arkivverk (sjå arkivlaget i første figur). Utan kvitlista held plasseringa Noreg mot Finland ikkje (" + F.n(d.utan_kvitlista.NO, 1) + " mot " + F.n(d.utan_kvitlista.FI, 1) + " %).");
     /* B: land over tid (sekundært) */
     const ctl = F.d("div", { cls: "ctl", style: "margin-top:34px" }, m);
     const host = F.d("div", null, m);
@@ -234,7 +231,7 @@
   };
 
   /* ---------- f06: team og grenser ---------- */
-  F.fig.f06 = function (m, d, ctx) {
+  F.del.d06 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Lagstorleik per periode, del av verka (prosent)", "Samarbeid over grenser, del av fleirforfattarverk (prosent)", "Snitt forfattarar per verk (tal)"]);
     const cats = d.periodar.map((p) => ({ label: short(p) }));
     const keys = [{ k: "ein", name: "ein forfattar", fill: "var(--k1)", ink: "var(--fg)" }, { k: "to", name: "to", fill: "var(--k2)", ink: "var(--fg)" }, { k: "tre", name: "tre", fill: "var(--k3)", ink: "var(--bg)" }, { k: "fire", name: "fire eller fleire", fill: "var(--k4)", ink: "var(--bg)" }];
@@ -246,7 +243,7 @@
   };
 
   /* ---------- f07: nullmodell ---------- */
-  F.fig.f07 = function (m, d, ctx) {
+  F.del.d07 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Nordiske land i same verk: observert mot venta ved tilfeldig val", "Tre utanlandske par: observert mot venta"]);
     const W = A.w, H = 150;
     const svg = F.svg(A, W, H, "Nordisk samarbeid mot nullmodell");
@@ -270,7 +267,7 @@
   };
 
   /* ---------- f08: institusjonar og forfattarar ---------- */
-  F.fig.f08 = function (m, d, ctx) {
+  F.del.d08 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Aktive institusjonar per periode (tal)", "Forfattarar: del av forfattarane mot del av plassane (prosent)", "Del av eigne verk i scope per forfattar, forfattarar med minst fem verk i heile tabellen"]);
     /* A */
     const cats = d.periodar.map((p, i) => ({ label: short(p), vlIn: i === 0, vals: [d.aktive[i]], tip: d.periodar[i] + "|" + d.aktive[i] + " aktive institusjonar|topp ti har " + F.n(d.topp10[i], 1) + " % av verka|" + d.k50[i] + " institusjonar for halvparten" }));

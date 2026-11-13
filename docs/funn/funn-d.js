@@ -11,7 +11,7 @@
   const capT = (el, chip, t, mt) => { const h = cap(el, "", mt); const c = F.d("span", { cls: "bokst", text: chip, style: "width:auto;min-width:20px;padding:0 5px;margin-right:8px;vertical-align:1px" }, h); h.appendChild(document.createTextNode(t)); return h; };
 
   /* ---------- f19: svak struktur ---------- */
-  F.fig.f19 = function (m, d, ctx) {
+  F.del.d19 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
     capT(L, "A–J", "Tekstklynger: silhuett mot tilfeldig datasky");
@@ -25,11 +25,11 @@
     F.rows(R, { w: R.w }, { rows: [{ label: "I klynge I, n " + d.klynge8.n, v: d.klynge8.nordisk, color: "var(--fg)" }, { label: "Alle verk med fulltekst, n " + n0(d.verk), v: d.klynge8.alle, color: "var(--ref)" }], max: 100, ticks: [0, 50, 100], tfmt: (v) => v + "", fmt: pc, mark: "bar", rowH: 36, label: "Nordisk språk" });
     cap(R, "Kva fulltekstutvalet dekkjer: del av verka med fulltekst, prosent", 24);
     const e = (t, v, g) => ({ label: t, v, color: "var(--fg)", group: g });
-    F.rows(R, { w: R.w }, { rows: d.utval_periode.map((q, i) => e(q[0], q[1], i === 0 ? "Periode" : null)).concat(d.utval_sprak.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()) + "språklege", q[1], i === 0 ? "Språk" : null)), d.utval_type.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()), q[1], i === 0 ? "Slag" : null))), max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: pc, rowH: 32, gH: 26, label: "Kva fulltekstutvalet dekkjer" });
+    F.rows(R, { w: R.w }, { rows: d.utval_periode.map((q, i) => e(q[0], q[1], i === 0 ? "Periode" : null)).concat(d.utval_sprak.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()) + "språklege", q[1], i === 0 ? "Språk" : null)), [e("Alle nordiskspråklege, " + d.nordisk_samla[1] + " av " + d.nordisk_samla[2], d.nordisk_samla[0], null)], d.utval_type.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()), q[1], i === 0 ? "Slag" : null))), max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: pc, rowH: 32, gH: 26, label: "Kva fulltekstutvalet dekkjer" });
   };
 
   /* ---------- f20: emne og klynger ---------- */
-  F.fig.f20 = function (m, d, ctx) {
+  F.del.d20 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
     const heile = {}; d.topp.forEach((q) => { heile[q.namn] = q.pct; });
@@ -46,7 +46,7 @@
   };
 
   /* ---------- f21: breidde og ankerdel, alle omgrep i éin figur ---------- */
-  F.fig.f21 = function (m, d, ctx) {
+  F.del.d21 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 520;
     const all = {};
     const mid = (q) => (q.x_lo != null ? (q.x_lo + q.x_hi) / 2 : q.x);
@@ -80,7 +80,7 @@
   };
 
   /* ---------- f22: stig og fall ---------- */
-  F.fig.f22 = function (m, d, ctx) {
+  F.del.d22 = function (m, d, ctx) {
     const W = ctx.w;
     cap(m, "Uttrykk (frå engelske samandrag) som stig og fell frå ein periode til neste, tal på uttrykk");
     const rows = d.overgangar.map((o) => ({ t: o.namn, up: o.opp, dn: o.ned }));

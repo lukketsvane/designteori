@@ -7,7 +7,7 @@
   const b = (t) => Object.assign(document.createElement("b"), { textContent: t });
 
   /* ---------- f10: konsentrasjon ---------- */
-  F.fig.f10 = function (m, d, ctx) {
+  F.del.d10 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Lorenz-kurver: kor samla verka ligg i få kanalfamiliar", "Dei ti største kanalane, verk", "Per periode"]);
     const w = A.w, h = Math.min(w, 300), pl = 32, pb = 24, pt = 8, pr = 8;
     const svg = F.svg(A, w, h, "Lorenz-kurver for kanalfamiliar, alle verk og delt etter inngangsport");
@@ -47,7 +47,7 @@
   };
 
   /* ---------- f11: nordiske kanalar ---------- */
-  F.fig.f11 = function (m, d, ctx) {
+  F.del.d11 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p21", ["Kanalklasse per periode, del av verka (prosent)", "Nordisk del per land, prosent, 2000–2026"]);
     const vals = d.per.map((q) => ({ fa: Math.max(0, q["nordisk kanal"] - q.nord_utan_fa_nordes), an: q.nord_utan_fa_nordes, int: q["internasjonal kanal"], fs: q.forlagsserie, rep: q.repositorium, uk: q.ukjend }));
     const keys = [{ k: "fa", name: "FormAkademisk og Nordes", fill: "var(--k4)", ink: "var(--bg)" }, { k: "an", name: "andre nordiske kanalar", fill: { hatch: "var(--k4)" } }, { k: "int", name: "internasjonal kanal", fill: "var(--k3)", ink: "var(--bg)" }, { k: "fs", name: "forlagsserie", fill: "var(--k2)", ink: "var(--fg)" }, { k: "rep", name: "repositorium", fill: "var(--k1)", ink: "var(--fg)" }, { k: "uk", name: "ukjend kanal (stipla)", fill: { outline: true } }];
@@ -60,7 +60,7 @@
   };
 
   /* ---------- f12: siteringar etter kanal; kanalfamiliar over tid ---------- */
-  F.fig.f12 = function (m, d, ctx) {
+  F.del.d12 = function (m, d, ctx) {
     const cc = { "Design Studies": "Design Studies", "CoDesign": "CoDesign", "Designing Interactive Systems": "DIS", "FormAkademisk": "FormAkademisk", "Proceedings of DRS": "DRS", "Nordes": "Nordes" };
     const sixFam = new Set(d.sit.map((q) => q.fam));
     const famShort = {}; d.sit.forEach((q) => { famShort[q.fam] = cc[q.namn] || q.namn; });
@@ -71,14 +71,14 @@
     F.rows(m, { w: ctx.w }, { rows: rowsA, min: 0, max: 80, ticks: [0, 20, 40, 60, 80], tfmt: (v) => v + "", rowH: 36, valW: 7.4, label: "Siteringar per verk etter kanal" });
     F.d("p", { cls: "sm" }, m).append("Stolpen er første til tredje kvartil, ringen er medianen.");
     /* matrise */
-    const mh = F.d("div", { cls: "plate", style: "margin-top:34px" }, m);
+    const mh = F.d("div", { style: "margin-top:34px" }, m);
     F.d("h4", { text: "Kanalfamiliar per femårsperiode", style: "font:500 13px/1.35 var(--mono);color:var(--fg);margin:0 0 4px" }, mh);
     F.d("p", { cls: "tal-inn", style: "margin:0 0 10px", text: "Familiar med minst 8 verk, sorterte etter første år. Kvar rad er ein familie." }, mh);
     const lg = F.ramp(mh, "color-mix(in srgb, var(--fg) 18%, var(--bg))", "var(--fg)", "1 verk", d3.max(d.matrise, (r) => d3.max(r.per)) + " verk", "per celle");
     const k2 = F.d("span", null, lg); const mkb = F.d("i", null, k2); mkb.style.cssText = "width:3px;height:12px;background:var(--fg);border-radius:0"; k2.appendChild(document.createTextNode(" verk i alle fire periodar"));
     const k3 = F.d("span", null, lg); const mkr = F.d("i", { cls: "r" }, k3); mkr.style.cssText = "border:2px solid var(--fg);background:none"; k3.appendChild(document.createTextNode(" ein av dei seks over"));
     const rows = d.matrise.slice().sort((a, c) => a.forste - c.forste || c.n - a.n);
-    const W = ctx.w - 28, mob = W < 520, rh = mob ? 8.5 : 10, padR = mob ? 118 : 190, padT = 30, padL = 14;
+    const W = ctx.w, mob = W < 520, rh = mob ? 8.5 : 10, padR = mob ? 118 : 190, padT = 30, padL = 14;
     const H = padT + rows.length * rh + 4;
     const svg = F.svg(mh, W, H, "Kanalfamiliar etter periode");
     const cw = (W - padL - padR) / 4, mx = d3.max(rows, (r) => d3.max(r.per));
@@ -101,7 +101,7 @@
   };
 
   /* ---------- f14: skeive siteringar ---------- */
-  F.fig.f14 = function (m, d, ctx) {
+  F.del.d14 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Lorenz-kurve for mottekne siteringar, 4 694 verk", "Del usiterte verk, prosent per publiseringsår"]);
     const w = A.w, h = Math.min(w, 330), pl = 32, pb = 26, pt = 10, pr = 8;
     const svg = F.svg(A, w, h, "Lorenz-kurve for mottekne siteringar");
@@ -140,7 +140,7 @@
   };
 
   /* ---------- f15: referansetal og -alder ---------- */
-  F.fig.f15 = function (m, d, ctx) {
+  F.del.d15 = function (m, d, ctx) {
     const W = ctx.w, rows = d.periodar, pl = 4, pr = 4, rh = ctx.mob ? 92 : 96, top = 8, ph = 52;
     const H = top + rows.length * rh + 34;
     const svg = F.svg(m, W, H, "Referanseliste og referansealder per periode");
@@ -171,7 +171,7 @@
   };
 
   /* ---------- f16: kvar referansane går ---------- */
-  F.fig.f16 = function (m, d, ctx) {
+  F.del.d16 = function (m, d, ctx) {
     const W = ctx.w, svg = F.svg(m, W, 80, "Kvar referansane går");
     const s = (W - 4) / d.sum;
     const segs = [["Til verk i laget", d.til_laget, "var(--fg)"], ["Til utanforverk i tabellen", d.til_utanfor, "var(--t3)"], ["Utanfor tabellen", d.utanfor_tabellen, "var(--hair)"]];
@@ -195,7 +195,7 @@
   };
 
   /* ---------- f17: siteringssamfunn ---------- */
-  F.fig.f17 = function (m, d, ctx) {
+  F.del.d17 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Kor samanhengande er koplingsnettverket", "NMI mellom samfunn og kjelde, språk, type, land og periode"]);
     const W = A.w, svg = F.svg(A, W, 96, "Koplingsnettverket");
     const s = (W - 2) / d.verk, rest = d.verk - d.storst - d.isolerte;
