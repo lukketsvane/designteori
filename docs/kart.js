@@ -256,15 +256,69 @@
     return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
   }
 
-  /* Éi line over kartet: frå om.json om ho finst, elles sett saman av tala i kart.json. */
+  const TALORD = ["null", "éin", "to", "tre", "fire", "fem", "seks", "sju", "åtte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten"];
+  function talord(n) { return n >= 0 && n < TALORD.length ? TALORD[n] : fmt(n); }
+  const cap = (s) => String(s).charAt(0).toUpperCase() + String(s).slice(1);
+
+  /* Éi kort line over kartet: frå om.json om ho finst, elles sett saman av tala i kart.json.
+     Ho skal vere kort, så kartet byrjar høgt på ein telefon; resten står ved forklaringa under kartet. */
   function introLine(d, om) {
     if (om && typeof om.linje === "string" && om.linje.trim()) return om.linje.trim();
     const t = (d && d.tal) || {};
-    const n = t.verk || (d && d.ids ? d.ids.length : 0);
-    let s = fmt(n) + " verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre.";
-    if (typeof t.nordisk_sprak_del_av_nordiske === "number") s += " Språk speler òg inn: " + pct(t.nordisk_sprak_del_av_nordiske) + " av verka på nordiske språk ligg i éi klynge.";
+    let s = "Eitt verk per prikk, og like tekstar ligg nær kvarandre.";
     if (typeof t.grense_del === "number") s += " Grensene er mjuke: " + pct(t.grense_del) + " av verka ligg mellom klynger.";
     return s;
+  }
+  /* Overskrifta over klyngelista: kor mykje klyngene er verdt (forbehald), kvar språk speler inn, og kva ein kan gjere. */
+  function legendHead(d, om) {
+    const t = (d && d.tal) || {}, cl = (d && d.klynger) || [], n = cl.length;
+    const str = (k) => (om && typeof om[k] === "string" && om[k].trim() ? om[k].trim() : "");
+    const hedge = str("forbehald") || cap(talord(n)) + " grupper som ein algoritme har funne. Feltet er meir eit landskap enn øyar, så fargane viser tyngdepunkt, ikkje skarpe skilje.";
+    let lang = str("sprak");
+    if (!lang && Number.isInteger(t.nordisk_sprak_klynge) && cl[t.nordisk_sprak_klynge]) {
+      lang = "Verk på nordiske språk samlar seg i klynga «" + shortName(cl[t.nordisk_sprak_klynge].namn) + "», så der speler språk like mykje inn som tema.";
+    }
+    return [hedge, lang, "Vel ei klynge for å sjå kva ho består av."].filter(Boolean).join(" ");
+  }
+  /* Søket startar først ved minst to teikn i eitt ord: «a» og «ø» (folda til «o») treffer kvar tredje tittel. */
+  function searchReady(q) { return queryTokens(q).some((t) => t.length >= 2); }
+  /* Kategoriane i teiknerekkjefølgje: største først, så sjeldne kategoriar blir teikna sist og ikkje dekte. */
+  function paintOrder(counts) {
+    const o = [];
+    for (let i = 0; i < counts.length; i++) if (counts[i] > 0) o.push(i);
+    return o.sort((a, b) => counts[b] - counts[a] || a - b);
+  }
+  /* Del av verka frå kvar periode som er i gruppa, og delen i heile korpuset (alle periodar saman). */
+  function periodShares(per, totals) {
+    const share = per.map((v, i) => (totals[i] > 0 ? v / totals[i] : 0));
+    const sp = per.reduce((a, b) => a + b, 0), st = totals.reduce((a, b) => a + (b || 0), 0);
+    return { share, base: st > 0 ? sp / st : 0 };
+  }
+  /* «2005–09» -> «05–09», «før 2000» -> «før 00»: plass til sju periodar side om side på ein telefon. */
+  function shortPeriod(label) {
+    const s = String(label == null ? "" : label);
+    let m = /^(\d{2})(\d{2})\s*[–-]\s*(\d{2})$/.exec(s);
+    if (m) return m[2] + "–" + m[3];
+    m = /^(\D*?)\s*\d{2}(\d{2})$/.exec(s);
+    return m ? (m[1] ? m[1] + " " : "") + m[2] : s;
+  }
+  /* Tal år i ein periode som «2025–26» (2); 0 når etiketten ikkje er eit slikt spenn. */
+  function periodSpan(label) {
+    const m = /(\d{4})\s*[–-]\s*(\d{2,4})$/.exec(String(label == null ? "" : label));
+    if (!m) return 0;
+    const a = +m[1], b = m[2].length === 2 ? Math.floor(a / 100) * 100 + +m[2] : +m[2];
+    return b >= a ? b - a + 1 : 0;
+  }
+  /* Prosent med éin desimal under 10 %, elles heile prosent. */
+  function pctFine(x) {
+    if (!(x >= 0)) return "";
+    const p = x * 100;
+    return (p < 10 ? (Math.round(p * 10) / 10).toFixed(1).replace(".", ",") : String(Math.round(p))) + " %";
+  }
+  /* Merknad når mange i gruppa har berre tittel, men ingen av dei er blant dei sentrale som blir viste. */
+  function titleOnlyNote(nTitle, n, shownTitleOnly, what) {
+    if (!(n > 0) || !(nTitle / n >= 0.25) || shownTitleOnly > 0) return "";
+    return "Ingen av dei " + fmt(nTitle) + " verka med berre tittel (" + pct(nTitle / n) + ") er blant dei fem, så lista viser berre den delen av " + what + " som har samandrag.";
   }
   /* Ei line i panelet når ei gruppe er mykje meir nordiskspråkleg enn korpuset (minst dobbel del og minst 20 %). */
   function languageNote(share, base, what) {
@@ -277,7 +331,8 @@
     MODES, PAL, SEQ, SLOT8, COUNTRIES, VENUES, LANGS,
     esc, fmt, fold, foldTitle, queryTokens, makeMatcher, hitsHref, periodIndex, countryIndex, venueIndex, langIndex, clusterSlot,
     parseKartHash, buildKartHash, wrapLines, placeLabels, shortName, buildGrid, nearest, clampBox, hasRanked, centralIds, validData,
-    luminance, introLine, languageNote,
+    luminance, introLine, languageNote, legendHead, talord, searchReady, paintOrder, periodShares, shortPeriod, pctFine,
+    titleOnlyNote, periodSpan,
   };
   if (typeof module === "object" && module.exports) { module.exports = API; return; }
   window.DTKart = API;
@@ -304,7 +359,10 @@
     </div>
     <div class="kart-ramme">
       <div class="kart-flate">
-        <canvas tabindex="0" role="img" aria-label="Kart over verka i korpuset"></canvas>
+        <canvas class="kart-dens" aria-hidden="true"></canvas>
+        <canvas class="kart-cv" tabindex="0" role="img" aria-label="Kart over verka i korpuset" aria-describedby="kart-tastar"></canvas>
+        <canvas class="kart-over" aria-hidden="true"></canvas>
+        <span class="kart-sr" id="kart-tastar">Piltastane flyttar kartet, pluss og minus zoomar, 0 nullstiller. Enter opnar verket som er valt. Klyngene står òg i lista under kartet.</span>
         <div class="kart-zoom">
           <button type="button" data-kz="inn" aria-label="Zoom inn">+</button>
           <button type="button" data-kz="ut" aria-label="Zoom ut">−</button>
@@ -337,7 +395,8 @@
     const el = {
       line: $(".kart-linje"), search: $(".kart-sok"), mode: $(".kart-farge"), hits: $(".kart-treff"),
       hitsT: $(".kart-treff-t"), hitsA: $(".kart-treff-a"), styring: $(".kart-styring"), core: $(".kart-kjerne-av"),
-      frame: $(".kart-ramme"), wrap: $(".kart-flate"), cv: $("canvas"), tip: $(".kart-tips"), status: $(".kart-status"),
+      frame: $(".kart-ramme"), wrap: $(".kart-flate"), cv: $(".kart-cv"), dens: $(".kart-dens"), over: $(".kart-over"),
+      tip: $(".kart-tips"), status: $(".kart-status"),
       hint: $(".kart-hint"), big: $('[data-kz="stor"]'), lgHead: $(".kart-lg-hovud"), legend: $(".kart-forklaring"),
       panel: $(".kart-panel"), om: $(".kart-om"), clList: $(".kart-klynger"), omText: $(".kart-om-tekst"), mini: $(".kart-mini"),
     };
@@ -442,7 +501,10 @@
 
       el.line.textContent = introLine(d, om);
       renderOm(om);
-      el.cv.setAttribute("aria-label", "Kart over " + fmt(n) + " verk i " + K.cl.filter(Boolean).length + " klynger. Klyngene står òg i lista under kartet.");
+      el.cv.setAttribute("aria-label", "Kart over " + fmt(n) + " verk i " + K.cl.filter(Boolean).length + " klynger.");
+      K.om = om;
+      /* Verk per periode i heile korpuset, til delane i panelet. */
+      K.perTotal = (d.periodar || []).map((_, p) => d.klynger.reduce((a, c) => a + ((c.periode && c.periode[p]) || 0), 0));
       el.status.hidden = true;
       readTheme();
       resize();
@@ -481,9 +543,11 @@
       K.cats.kanal = VENUES.map((v, i) => ({ name: v[0], n: cKanal[i] }))
         .concat([{ name: "Nordiske arkiv", n: cKanal[VENUES.length] }, { name: "Andre kanalar", n: cKanal[VENUES.length + 1] }]);
       K.works = works;
+      const f = captureFocus();
       runSearch();
       renderLegend();
       renderPanel();
+      restoreFocus(f);
       if (K.pinned >= 0) showTip(K.pinned, true);
       schedule();
     }
@@ -535,7 +599,7 @@
     let searchTmr = 0;
     function runSearch() {
       if (!K.d) return;
-      const m = makeMatcher(el.search.value);
+      const m = searchReady(el.search.value) ? makeMatcher(el.search.value) : null;
       if (!m || !K.works) { K.match = null; K.matchN = 0; K.matchCl = null; K.matchIds = null; renderHits(); renderLegend(); schedule(); return; }
       const n = K.n, match = new Uint8Array(n), per = new Array(K.cl.length).fill(0), ids = [];
       let c = 0;
@@ -551,7 +615,8 @@
     function renderHits() {
       const q = el.search.value.trim();
       let s = "", href = "", label = "";
-      if (q && !K.works) s = K.worksFailed ? "Titlane kunne ikkje lastast, så søket verkar ikkje no." : "Lastar titlar…";
+      if (q && !searchReady(q)) s = "Skriv minst to bokstavar.";
+      else if (q && !K.works) s = K.worksFailed ? "Titlane kunne ikkje lastast, så søket verkar ikkje no." : "Lastar titlar…";
       else if (q && K.match) {
         if (!K.matchN) s = "Ingen titlar passar. Søket finn ord som byrjar slik i titlane.";
         else {
@@ -577,6 +642,11 @@
       if (W === K.W && H === K.H && dpr === K.dpr) return;
       K.W = W; K.H = H; K.dpr = dpr;
       el.cv.width = Math.round(W * dpr); el.cv.height = Math.round(H * dpr);
+      el.over.width = Math.round(W * dpr); el.over.height = Math.round(H * dpr);
+      /* Tettleikslaget er eit mjukt bilete: halv oppløysing held, og det sparer mykje på ein telefon med dpr 3. */
+      K.ddpr = Math.min(dpr, 1.5);
+      el.dens.width = Math.round(W * K.ddpr); el.dens.height = Math.round(H * K.ddpr);
+      K.densView = null;
       const bw = Math.max(1, K.bx.maxx - K.bx.minx), bh = Math.max(1, K.bx.maxy - K.bx.miny);
       K.s0 = Math.min(W / bw, H / bh) * 0.94;
       el.cv.style.touchAction = K.z > 1.001 ? "none" : "pan-y";
@@ -657,8 +727,8 @@
       const T = K.theme, W = K.W, H = K.H, n = K.n;
       ctx.setTransform(K.dpr, 0, 0, K.dpr, 0, 0);
       ctx.globalAlpha = 1;
-      ctx.fillStyle = T.bg;
-      ctx.fillRect(0, 0, W, H);
+      /* Flata er gjennomsiktig: bakgrunnen og tettleikslaget ligg i eigne lag under (sjå drawDensity). */
+      ctx.clearRect(0, 0, W, H);
       const s = scale(), ox = W / 2 - K.cx * s, oy = H / 2 - K.cy * s;
       const r = Math.min(4.6, Math.max(1.7, 1.25 * Math.sqrt(K.z) + 0.5)), rf = r * 0.8;
       const ci = K.catIdx[K.mode];
@@ -668,11 +738,11 @@
       /* Små prikkar og prikkar i rørsle blir teikna som firkantar (fillRect): same flate, langt mindre rasterarbeid.
          Rundingar berre når kartet står i ro og prikkane er store nok til at forma syner. */
       const sq = K.moving > 0 || r < 2.4;
-      if (!K.moving) drawDensity(ctx, s, ox, oy); // tettleikslaget kostar ~3 ms skalert; det kjem att når kartet står i ro
+      drawDensity(s, ox, oy);
       const xs = K.xs, ys = K.ys, TAU = Math.PI * 2, nb = cats.length + 2;
       const code = K.code && K.code.length === n ? K.code : (K.code = new Int16Array(n));
       const sxa = K.sxa && K.sxa.length === n ? K.sxa : (K.sxa = new Float32Array(n)), sya = K.sya && K.sya.length === n ? K.sya : (K.sya = new Float32Array(n));
-      const used = new Uint8Array(nb);
+      const cnt = new Int32Array(nb);
       let nFaded = 0;
       for (let i = 0; i < n; i++) {
         const sx = ox + xs[i] * s, sy = oy + ys[i] * s;
@@ -680,8 +750,10 @@
         if (sx < -6 || sx > W + 6 || sy < -6 || sy > H + 6) { code[i] = -1; continue; }
         if ((anyF && !focus[i]) || (match && !match[i]) || (core && fs[i] & 1)) { code[i] = -2; nFaded++; continue; }
         const c = modeReady ? ci[i] : cats.length + 1;
-        code[i] = c; used[c] = 1;
+        code[i] = c; cnt[c]++;
       }
+      /* Største kategori først: sjeldne (verk frå før 2005, Island) blir teikna sist og ligg øvst. */
+      const order = paintOrder(cnt);
       const paint = (want, rad) => {
         if (sq) {
           const side = rad * 1.77, h = side / 2;
@@ -695,23 +767,29 @@
       if (nFaded) { ctx.fillStyle = T.dim; ctx.globalAlpha = T.dark ? 0.32 : 0.22; paint(-2, rf); }
       if (match) {
         ctx.globalAlpha = 1; ctx.fillStyle = T.fg;
-        for (let c = 0; c < nb; c++) if (used[c]) paint(c, r + 1.8);
+        for (const c of order) paint(c, r + 1.8);
       }
       ctx.globalAlpha = match || anyF ? 1 : (T.dark ? 0.85 : 0.8);
-      for (let c = 0; c < nb; c++) {
-        if (!used[c]) continue;
+      for (const c of order) {
         ctx.fillStyle = modeReady ? catColour(K.mode, c) : T.dim;
         paint(c, r);
       }
       ctx.globalAlpha = 1;
-      const hv = K.pinned >= 0 ? K.pinned : K.hover;
-      if (hv >= 0) {
-        const sx = ox + xs[hv] * s, sy = oy + ys[hv] * s;
-        ctx.beginPath(); ctx.arc(sx, sy, r + 4, 0, TAU);
-        ctx.lineWidth = 2; ctx.strokeStyle = T.fg; ctx.stroke();
-      }
+      K.r = r;
       drawLabels(ctx);
+      drawOverlay();
       K.lastDraw = performance.now() - t0;
+    }
+    /* Ringen rundt verket under peikaren ligg i eit eige lag, så ein musepeikar over prikkane ikkje teiknar heile kartet. */
+    function drawOverlay() {
+      const ctx = el.over.getContext("2d");
+      ctx.setTransform(K.dpr, 0, 0, K.dpr, 0, 0);
+      ctx.clearRect(0, 0, K.W, K.H);
+      const hv = K.pinned >= 0 ? K.pinned : K.hover;
+      if (hv < 0 || !K.d) return;
+      const [sx, sy] = toScreen(K.xs[hv], K.ys[hv]);
+      ctx.beginPath(); ctx.arc(sx, sy, (K.r || 3) + 4, 0, Math.PI * 2);
+      ctx.lineWidth = 2; ctx.strokeStyle = K.theme.fg; ctx.stroke();
     }
 
     /* Tettleik: eit svakt, glatta lag under prikkane som viser kvar verka ligg tettast når prikkane dekkjer
@@ -761,15 +839,31 @@
       c2.putImageData(img, 0, 0);
       return { cv, x0, y0, size: G * cell };
     }
-    function drawDensity(ctx, s, ox, oy) {
+    /* Tettleiken står i sitt eige lerret under prikkane. Det blir teikna på nytt berre når kartet står i ro;
+       under flytting og zoom følgjer det med som ein CSS-transform (nesten gratis), så det verken blinkar eller
+       sprett fram når kartet stoppar. */
+    function drawDensity(s, ox, oy) {
       const key = K.theme.fg + "|" + K.n;
-      if (!K.dens || K.densKey !== key) { K.dens = buildDensity(); K.densKey = key; }
-      const D = K.dens;
-      ctx.save();
+      if (!K.dens || K.densKey !== key) { K.dens = buildDensity(); K.densKey = key; K.densView = null; }
+      const look = key + "|" + K.coreOnly + "|" + K.W + "x" + K.H;
+      const V = K.densView;
+      if (V && V.look === look) {
+        if (V.s === s && V.ox === ox && V.oy === oy) { if (V.tf) { el.dens.style.transform = ""; V.tf = false; } return; }
+        if (K.moving) {
+          const k = s / V.s;
+          el.dens.style.transform = `translate(${ox - V.ox * k}px, ${oy - V.oy * k}px) scale(${k})`;
+          V.tf = true;
+          return;
+        }
+      }
+      const D = K.dens, ctx = el.dens.getContext("2d");
+      ctx.setTransform(K.ddpr, 0, 0, K.ddpr, 0, 0);
+      ctx.clearRect(0, 0, K.W, K.H);
       ctx.imageSmoothingEnabled = true;
       ctx.globalAlpha = (K.coreOnly ? 0.2 : 0.1) * (K.theme.dark ? 1.3 : 1);
       ctx.drawImage(D.cv, ox + D.x0 * s, oy + D.y0 * s, D.size * s, D.size * s);
-      ctx.restore();
+      el.dens.style.transform = "";
+      K.densView = { look, s, ox, oy, tf: false };
     }
 
     function drawLabels(ctx) {
@@ -795,7 +889,7 @@
           ctx.fillStyle = K.mode === "klynge" ? clusterColour(it.id) : T.fg;
           ctx.lineWidth = 2; ctx.strokeStyle = T.bg; ctx.stroke(); ctx.fill();
         }
-        ctx.lineWidth = 4; ctx.strokeStyle = T.bg; ctx.fillStyle = T.fg;
+        ctx.lineWidth = 4; ctx.strokeStyle = T.bg; ctx.fillStyle = it.type === "u" && it.o.slag ? T.dim : T.fg;
         for (const t of lb.lines) { ctx.strokeText(t, x0, y); ctx.fillText(t, x0, y); y += lb.lh; }
         K.placed.push({ type: it.type, id: it.id, r });
       }
@@ -804,11 +898,13 @@
 
     /* ---------- treff-testing ---------- */
     /* pad: kor mange px utanfor teksten eit trykk enno tel som treff på namnet. */
-    function hitLabel(px, py, pad) {
+    /* minH: trykkflata blir utvida loddrett til minst så mange px. */
+    function hitLabel(px, py, pad, minH) {
       pad = pad == null ? 3 : pad;
       for (let i = K.placed.length - 1; i >= 0; i--) {
         const p = K.placed[i], r = p.r;
-        if (px >= r.l - pad && px <= r.r + pad && py >= r.t - pad && py <= r.b + pad) return p;
+        const py0 = Math.max(pad, minH ? (minH - (r.b - r.t)) / 2 : 0);
+        if (px >= r.l - pad && px <= r.r + pad && py >= r.t - py0 && py <= r.b + py0) return p;
       }
       return null;
     }
@@ -835,7 +931,7 @@
         (meta ? `<span class="kt-m">${esc(meta)}</span>` : "") +
         `<span class="kt-k"><i class="kart-sw" style="background:${esc(clusterColour(c ? c.id : -1))}"></i>${esc(c ? c.namn : "")}${u ? ` <span class="kt-u">› ${esc(u.namn)}</span>` : ""}</span>` +
         (flags.length ? `<span class="kt-fl">${flags.map((f) => `<span class="kt-f" title="${esc(f[1])}">${esc(f[0])}</span>`).join("")}</span>` : "") +
-        `<span class="kt-o">${fine.matches ? "Klikk på prikken" : "Trykk her"} for å opne verket i katalogen</span>`;
+        `<span class="kt-o">${pinned ? (fine.matches ? "Klikk her eller trykk Enter" : "Trykk her") + " for å opne verket i katalogen" : "Klikk på prikken for å feste boksen"}</span>`;
       el.tip.href = "#verk/" + encodeURIComponent(id);
       el.tip.setAttribute("data-jump", id);
       el.tip.classList.toggle("kt-pinned", !!pinned);
@@ -855,7 +951,7 @@
     }
     function hideTip() {
       if (!el.tip.hidden) el.tip.hidden = true;
-      if (K.pinned >= 0 || K.hover >= 0) { K.pinned = -1; K.hover = -1; schedule(); }
+      if (K.pinned >= 0 || K.hover >= 0) { K.pinned = -1; K.hover = -1; drawOverlay(); }
     }
     function openWork(i) {
       if (i < 0) return;
@@ -880,8 +976,8 @@
         return c;
       };
       el.lgHead.textContent = mode === "klynge"
-        ? K.cl.filter(Boolean).length + " klynger. Vel ei klynge for å sjå kva ho består av."
-        : "Farge etter " + MODE_LABEL[mode] + ". Vel ein farge for å framheve han.";
+        ? legendHead(K.d, K.om)
+        : "Farge etter " + MODE_LABEL[mode] + ". Vel ein farge for å framheve han." + (mode === "ar" || mode === "land" ? " Dei minste gruppene er teikna øvst." : "");
       renderMini();
       el.legend.innerHTML = cats.map((c, i) => {
         if (!c || (!c.n && mode !== "klynge")) return "";
@@ -921,13 +1017,23 @@
       const label = w ? (w.y ? w.y + " · " : "") + w.t : id;
       return `<a href="#verk/${esc(encodeURIComponent(id))}" data-jump="${esc(id)}">${esc(label)}</a>${i != null && K.fs[i] & 2 ? ' <span class="kp-merk">berre tittel</span>' : ""}`;
     }
-    function periodBars(per) {
-      const labels = K.d.periodar || [];
-      const max = Math.max(1, ...per);
-      const aria = labels.map((l, i) => l + ": " + (per[i] || 0)).join(", ");
-      return `<div class="kp-periode" role="img" aria-label="${esc("Verk per periode. " + aria)}">` +
-        per.map((v, i) => `<div class="kp-p"><span class="kp-pv">${fmt(v)}</span><span class="kp-pb"><i style="height:${((v / max) * 100).toFixed(1)}%"></i></span><span class="kp-pl">${esc(labels[i] || "")}</span></div>`).join("") +
-        `</div>`;
+    /* Del av alle verk frå kvar periode som er i gruppa, mot delen i heile korpuset (streken). Delar, ikkje tal:
+       korpuset veks, så tal ville få kvar gruppe til å sjå ut som ho veks. Siste periode er berre to år. */
+    function periodBars(per, what) {
+      const labels = K.d.periodar || [], tot = K.perTotal || [];
+      const { share, base } = periodShares(per, tot);
+      const max = Math.max(base * 1.6, ...share, 1e-6);
+      const last = labels.length - 1;
+      const part = last >= 1 && periodSpan(labels[last]) > 0 && periodSpan(labels[last]) < periodSpan(labels[last - 1]) ? last : -1;
+      const aria = labels.map((l, i) => l + (i === part ? " (delår)" : "") + ": " + pctFine(share[i]) + " (" + (per[i] || 0) + " av " + (tot[i] || 0) + ")").join(", ");
+      const bl = ((base / max) * 100).toFixed(1);
+      return `<div class="kp-periode" role="img" aria-label="${esc("Del av verka frå kvar periode som er i " + what + ". " + aria + ". I heile korpuset: " + pctFine(base) + ".")}">` +
+        per.map((v, i) => `<div class="kp-p" title="${esc((labels[i] || "") + ": " + fmt(v) + " av " + fmt(tot[i] || 0) + " verk")}"><span class="kp-pv">${pctFine(share[i])}</span>` +
+          `<span class="kp-pb"><i style="height:${((share[i] / max) * 100).toFixed(1)}%"></i><b style="bottom:${bl}%"></b></span>` +
+          `<span class="kp-pl">${esc(shortPeriod(labels[i] || ""))}${i === part ? "*" : ""}</span></div>`).join("") +
+        `</div>` +
+        `<p class="kp-note">Stolpen er delen av alle verk frå perioden som er i ${what}; streken er delen i heile korpuset (${pctFine(base)}). ` +
+        `Over streken er ${what} sterkare i perioden enn elles.${part >= 0 ? ` * ${esc(labels[part])} er berre to år, og det siste året er ikkje over.` : ""}</p>`;
     }
     function countryName(code) { const c = COUNTRIES.find((x) => x[0] === code); return c ? c[1] : code; }
 
@@ -949,18 +1055,27 @@
       const lang = languageNote(o.nordisk, t.nordisk_sprak_del_alle, u ? "gruppa" : "klynga");
       const ranked = hasRanked(o);
       const what = u ? "gruppa" : "klynga";
+      const shown = (o.sentrale || []).slice(0, 5);
+      const shownTB = shown.filter((id) => { const i = K.idx.get(id); return i != null && K.fs[i] & 2; }).length;
+      const tbNote = shown.length ? titleOnlyNote(typeof nTitle === "number" ? nTitle : 0, o.n || members.length, shownTB, what) : "";
+      /* Grupper som ikkje er tema (konferansebind, blandingar) og grupper som ikkje kjem att når metoden blir køyrd på nytt. */
+      const kind = u && u.slag === "dokument" ? "Denne gruppa er halden saman av dokumenttypen, til dømes konferansebind og innleiingar, ikkje av eit tema."
+        : u && u.slag === "blanda" ? "Ei lita, blanda gruppe. Namnet passar midten av gruppa, ikkje alle verka i ho." : "";
+      const unstable = u && typeof u.stabilitet === "number" && u.stabilitet < 0.4
+        ? `Gruppa er ustabil: køyrer ein metoden på nytt, overlappar ho i snitt berre ${pct(u.stabilitet)} med den gruppa som liknar mest.` : "";
       el.panel.innerHTML =
         `<div class="kp-hovud"><span class="kart-sw kp-sw" style="background:${esc(clusterColour(c.id))}"></span><h3>${esc(o.namn || "")}</h3></div>` +
         (u ? `<p class="kp-sti">Underklynge i <button type="button" class="kp-knapp" data-kk="${esc(c.id)}">${esc(c.namn)}</button></p>` : "") +
         `<p class="kp-note kp-namn">${o.namn_sjekka === false ? "Namnet er laga automatisk av dei skiljande orda." : "Namnet er sett for hand ut frå orda og titlane under."} Ingen fagperson har kontrollert det.</p>` +
+        (kind || unstable ? `<p class="kp-tal kp-slag">${esc([kind, unstable].filter(Boolean).join(" "))}</p>` : "") +
         `<p class="kp-tal">${fmt(o.n || members.length)} verk, ${pct(share)} av korpuset.${sure}${titleOnly}</p>` +
         (lang ? `<p class="kp-tal kp-sprak">${esc(lang)}</p>` : "") +
         (o.ord && o.ord.length ? `<h4>Ord som skil ${u ? "gruppa" : "klynga"} frå resten</h4><p class="kp-ord">${o.ord.map((t) => `<span class="tag">${esc(t)}</span>`).join(" ")}</p>` : "") +
-        (Array.isArray(o.periode) && o.periode.length ? `<h4>Når verka kom ut</h4>${periodBars(o.periode)}` : "") +
+        (Array.isArray(o.periode) && o.periode.length ? `<h4>Når verka kom ut</h4>${periodBars(o.periode, what)}` : "") +
         `<div class="kp-to"><div><h4>Kanalar</h4>${list(o.kanalar)}</div><div><h4>Land</h4>${list(o.land, countryName)}</div></div>` +
-        (o.sentrale && o.sentrale.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${o.sentrale.slice(0, 5).map((id) => `<li>${workLink(id)}</li>`).join("")}</ol>` +
-          `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først, fordi ein kort tittel åleine lett hamnar nær midten." : ""}</p>` : "") +
-        (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Grupper av verk med mange felles naboar inne i klynga. Zoom inn for å sjå namna på kartet.</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
+        (shown.length ? `<h4>Mest sentrale verk</h4><ol class="kp-verk">${shown.map((id) => `<li>${workLink(id)}</li>`).join("")}</ol>` +
+          `<p class="kp-note">Sentrale verk liknar mest på snittet av ${what} i tekstrommet, ikkje i biletet.${ranked ? " Verk med samandrag kjem først, fordi ein kort tittel åleine lett hamnar nær midten." : ""}${tbNote ? " " + esc(tbNote) : ""}</p>` : "") +
+        (subs.length ? `<h4>Underklynger</h4><p class="kp-note">Grupper av verk med mange felles naboar inne i klynga. Zoom inn for å sjå namna på kartet.${subs.some((s) => s.slag) ? " Grå namn er ikkje tema, men konferansebind eller ei blanding." : ""}</p><div class="kp-under">${subs.map((s) => `<button type="button" class="kart-lg${s.slag ? " kart-lg-slag" : ""}" data-ku="${esc(s.id)}"><span class="kart-lg-n">${esc(s.namn)}</span><span class="kart-lg-c">${fmt(s.n)}</span></button>`).join("")}</div>` : "") +
         `<div class="kp-knappar"><a class="act act-block" href="#liste=${ids.map((id) => esc(encodeURIComponent(id))).join("~")}">${ranked ? `Opne dei ${ids.length} mest sentrale i katalogen` : `Opne ${ids.length} verk frå kjernen av ${what}`}</a>` +
         (u ? `<button type="button" class="act act-block" data-kk="${esc(c.id)}">Tilbake til klynga</button>` : "") +
         `<button type="button" class="act act-block" data-kx="alle">Vis alle klynger</button></div>`;
@@ -978,7 +1093,7 @@
         return;
       }
       el.hint.textContent = fine.matches
-        ? "Dra for å flytte. Klikk i kartet og rull, eller hald Ctrl og rull, for å zoome. Peik på ein prikk for å sjå verket."
+        ? "Dra for å flytte. Klikk i kartet og rull, hald Ctrl og rull, eller dobbeltklikk for å zoome. Klikk på ein prikk for å sjå verket."
         : "Knip for å zoome. Trykk på ein prikk for å sjå verket, eller på eit namn for å sjå klynga.";
     }
     function renderOm(om) {
@@ -1035,10 +1150,50 @@
       else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
     });
 
+    /* ---------- fokus ---------- */
+    /* Forklaringa, klyngelista, den kompakte lista og panelet blir bygde på nytt ved kvart val. Då forsvinn knappen som
+       hadde fokus, og ein tastaturbrukar ville hamne øvst på sida. Difor: hugs kva knapp som hadde fokus, og set fokus
+       på same knapp (same data-attributt i same liste) etter at lista er bygd på nytt. */
+    const FOCUS_ATTRS = ["data-kk", "data-kc", "data-ku", "data-kx", "data-kz", "data-kd"];
+    function captureFocus() {
+      const a = document.activeElement;
+      if (!a || a === document.body || !root.contains(a)) return null;
+      const zone = [el.mini, el.clList, el.legend, el.panel, el.hint].find((z) => z.contains(a)) || null;
+      const attr = FOCUS_ATTRS.find((x) => a.hasAttribute(x));
+      return { node: a, zone, attr, val: attr ? a.getAttribute(attr) : null, sel: K.sel };
+    }
+    const visible = (x) => !!x && document.contains(x) && !x.hidden && x.getClientRects().length > 0;
+    function focusEl(x) { try { x.focus({ preventScroll: true }); } catch (e) { x.focus(); } }
+    function restoreFocus(f) {
+      if (!f) return;
+      const a = document.activeElement;
+      /* Fokus er flytt med vilje (til panelet, til knappen for stort kart): la det vere. */
+      if (a && a !== document.body && a !== document.documentElement && document.contains(a)) {
+        if (a !== f.node || visible(a)) return;
+      }
+      if (visible(f.node)) { focusEl(f.node); return; }
+      let t = null;
+      if (f.zone && f.attr) t = [...f.zone.querySelectorAll(`[${f.attr}]`)].find((x) => x.getAttribute(f.attr) === f.val && visible(x)) || null;
+      /* Knappen finst ikkje lenger (til dømes «Vis alle klynger» i panelet): panelet om det står, elles klynga i lista. */
+      if (!t && f.zone === el.panel && visible(el.panel)) t = el.panel;
+      if (!t) {
+        const k = K.sel >= 0 ? K.sel : f.sel;
+        const lists = [el.mini, el.legend, el.clList].filter(visible);
+        for (const z of lists) { t = k >= 0 ? z.querySelector(`[data-kk="${k}"]`) : null; if (visible(t)) break; t = null; }
+        if (!t) for (const z of lists) { t = z.querySelector("button"); if (visible(t)) break; t = null; }
+      }
+      if (t) focusEl(t);
+    }
+
     /* ---------- hendingar ---------- */
     root.addEventListener("click", (e) => {
       const t = e.target.closest("[data-kk],[data-ku],[data-kc],[data-kx],[data-kz],[data-kd]");
       if (!t || !root.contains(t)) return;
+      const f = captureFocus();
+      onControl(t);
+      restoreFocus(f);
+    });
+    function onControl(t) {
       /* Val i listene under panelet flyttar panelet inn i synsfeltet; val inne i panelet eller i det store kartet gjer ikkje. */
       const fromList = !!t.closest(".kart-forklaring, .kart-klynger") && !t.closest(".kart-panel");
       if (t.hasAttribute("data-kd")) { revealPanel(); try { el.panel.focus({ preventScroll: true }); } catch (err) { /* ikkje kritisk */ } return; }
@@ -1056,6 +1211,12 @@
       else if (z === "ut") zoomAt(K.W / 2, K.H / 2, 1 / 1.6);
       else if (z === "null") resetView();
       else if (z === "stor") setBig(!el.frame.classList.contains("kart-stor"));
+    }
+    /* Klikk på «kart» i menyen når kartet alt er ope: app.js skriv då berre «#kart» og fjernar valet frå adressa,
+       utan at klassen på fana endrar seg. Skriv adressa på nytt etter app.js. */
+    document.addEventListener("click", (e) => {
+      const b = e.target && e.target.closest ? e.target.closest('[data-tab="kart"]') : null;
+      if (b && !root.contains(b)) setTimeout(writeHash, 0);
     });
     el.mode.addEventListener("change", () => {
       K.mode = MODES.indexOf(el.mode.value) >= 0 ? el.mode.value : "klynge";
@@ -1075,7 +1236,7 @@
       if (el.frame.classList.contains("kart-stor")) { setBig(false); e.preventDefault(); return; }
       if (!root.contains(e.target) && e.target !== document.body && e.target !== document.documentElement) return;
       if (!el.tip.hidden) { hideTip(); return; }
-      if (K.sel >= 0 || K.sub >= 0 || K.cat >= 0) { clearAll(); e.preventDefault(); return; }
+      if (K.sel >= 0 || K.sub >= 0 || K.cat >= 0) { const f = captureFocus(); clearAll(); restoreFocus(f); e.preventDefault(); return; }
       if (e.target === el.search && el.search.value) { el.search.value = ""; runSearch(); }
     });
     el.cv.addEventListener("keydown", (e) => {
@@ -1087,6 +1248,7 @@
       else if (e.key === "+" || e.key === "=") { zoomAt(K.W / 2, K.H / 2, 1.4); return e.preventDefault(); }
       else if (e.key === "-" || e.key === "_") { zoomAt(K.W / 2, K.H / 2, 1 / 1.4); return e.preventDefault(); }
       else if (e.key === "0") { resetView(); return e.preventDefault(); }
+      else if (e.key === "Enter" && K.pinned >= 0) { openWork(K.pinned); return e.preventDefault(); }
       else used = false;
       if (used) { e.preventDefault(); clampView(); hideTip(); moved(); schedule(); }
     });
@@ -1141,10 +1303,10 @@
       if (!hoverRaf) hoverRaf = requestAnimationFrame(() => {
         hoverRaf = 0;
         if (!hoverAt) return;
-        const lab = hitLabel(hoverAt[0], hoverAt[1]);
+        const lab = labelAt(hoverAt[0], hoverAt[1], true);
         const i = lab ? -1 : hitPoint(hoverAt[0], hoverAt[1], 9);
         el.cv.style.cursor = lab || i >= 0 ? "pointer" : "";
-        if (i !== K.hover) { K.hover = i; if (i >= 0) showTip(i, false); else el.tip.hidden = true; schedule(); }
+        if (i !== K.hover) { K.hover = i; if (i >= 0) showTip(i, false); else el.tip.hidden = true; drawOverlay(); }
       });
     });
     const endPtr = (e, cancelled) => {
@@ -1166,24 +1328,33 @@
       if (e.pointerType !== "mouse" || K.pinned >= 0) return;
       hoverAt = null;
       if (e.relatedTarget && el.tip.contains(e.relatedTarget)) return;
-      if (K.hover >= 0) { K.hover = -1; el.tip.hidden = true; schedule(); }
+      if (K.hover >= 0) { K.hover = -1; el.tip.hidden = true; drawOverlay(); }
     });
     function tap(px, py, type) {
-      let lab = hitLabel(px, py, 3);
+      const mouse = type === "mouse";
+      let lab = labelAt(px, py, mouse);
       /* Eit fingertrykk i margen rundt eit namn går til ein prikk som ligg like ved, så prikkar under namna kan nåast. */
-      if (lab && type !== "mouse" && !hitLabel(px, py, 0) && hitPoint(px, py, 6) >= 0) lab = null;
+      if (lab && !mouse && !hitLabel(px, py, 0) && hitPoint(px, py, 6) >= 0) lab = null;
       if (lab) {
         hideTip();
         if (lab.type === "k") { if (K.sel === lab.id && K.sub < 0) clearAll(); else select(lab.id, -1); }
         else { const u = K.sb.get(lab.id); if (u) select(u.k, u.id); }
         return;
       }
-      const i = hitPoint(px, py, type === "mouse" ? 9 : 16);
-      if (type === "mouse") { if (i >= 0) openWork(i); else hideTip(); return; }
+      /* Eit klikk festar boksen ved verket (som eit trykk på ein telefon); verket blir opna frå boksen eller med Enter.
+         Då kan ein dobbeltklikke for å zoome inn der prikkane ligg tett, utan å forlate kartet. */
+      const i = hitPoint(px, py, mouse ? 9 : 16);
       if (i < 0) { hideTip(); return; }
+      if (K.pinned === i) return;
       K.pinned = i; K.hover = -1;
       showTip(i, true);
-      schedule();
+      drawOverlay();
+    }
+    /* Namnet under peikaren. Med mus går ein prikk rett under peikaren (innan 3 px) føre namnet, så prikkar under eit
+       namn kan nåast. Med finger er trykkflata rundt eit namn minst 44 px høg. */
+    function labelAt(px, py, mouse) {
+      if (mouse) return hitPoint(px, py, 3) >= 0 ? null : hitLabel(px, py, 3);
+      return hitLabel(px, py, 3, 44);
     }
     /* Rull zoomar berre når kartet er teke i bruk (klikka i eller fokusert) eller med Ctrl, Cmd eller Shift.
        Elles rullar sida forbi kartet som før, og lina under kartet seier korleis ein zoomar. */
@@ -1215,7 +1386,7 @@
     if (typeof ResizeObserver === "function") new ResizeObserver(() => resize()).observe(el.wrap);
     window.addEventListener("resize", () => { if (sec.classList.contains("active")) resize(); });
     window.addEventListener("scroll", () => { if (!el.tip.hidden) { const i = K.pinned >= 0 ? K.pinned : K.hover; if (i >= 0) placeTip(i); } }, { passive: true });
-    const retheme = () => { if (!K.d) return; readTheme(); renderLegend(); renderPanel(); schedule(); };
+    const retheme = () => { if (!K.d) return; const f = captureFocus(); readTheme(); renderLegend(); renderPanel(); restoreFocus(f); schedule(); };
     if (window.matchMedia) {
       const mq = window.matchMedia("(prefers-color-scheme: dark)");
       if (mq.addEventListener) mq.addEventListener("change", retheme); else if (mq.addListener) mq.addListener(retheme);
@@ -1231,7 +1402,7 @@
       writeHash();
     };
     new MutationObserver(onActive).observe(sec, { attributes: true, attributeFilter: ["class"] });
-    window.addEventListener("hashchange", () => { const st = parseKartHash(location.hash); if (st && K.d) applyState(st, false); });
+    window.addEventListener("hashchange", () => { const st = parseKartHash(location.hash); if (st && K.d) { const f = captureFocus(); applyState(st, false); restoreFocus(f); } });
     renderHint();
     onActive();
 

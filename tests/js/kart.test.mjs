@@ -202,9 +202,62 @@ test("kart.json frå bygget: gyldig, og alle verk har ein plass", () => {
   for (const om of [null, JSON.parse(fs.readFileSync(path.join(docs, "data", "klynger", "om.json"), "utf8"))]) {
     const line = Kart.introLine(d, om);
     assert.ok(!/—/.test(line), "ingen lange tankestrekar");
-    assert.ok(line.length < 260);
-    assert.match(line, /nordiske språk/, "lina over kartet seier at språk speler inn");
+    assert.ok(line.length < 130, "lina over kartet er kort, så kartet byrjar høgt på ein telefon");
+    assert.match(line, /mjuke/);
+    const head = Kart.legendHead(d, om);
+    assert.ok(!/—/.test(head));
+    assert.match(head, /algoritme/, "forbehald: grupper ein algoritme har funne");
+    assert.match(head, /landskap/);
+    assert.match(head, /nordiske språk/, "forklaringa seier at språk speler inn");
   }
+});
+
+test("lina over kartet og forbehaldet utan om.json", () => {
+  const d = { tal: { grense_del: 0.324, nordisk_sprak_klynge: 1 }, klynger: [{ namn: "A" }, { namn: "Nordisk ting: x, y" }, { namn: "C" }] };
+  assert.match(Kart.introLine(d, null), /^Eitt verk per prikk, og like tekstar ligg nær kvarandre\. Grensene er mjuke: 32\s% av verka ligg mellom klynger\.$/);
+  const h = Kart.legendHead(d, null);
+  assert.match(h, /^Tre grupper som ein algoritme har funne\./);
+  assert.match(h, /«Nordisk ting»/);
+  assert.equal(Kart.legendHead(d, { forbehald: "F.", sprak: "S." }), "F. S. Vel ei klynge for å sjå kva ho består av.");
+  assert.equal(Kart.talord(8), "åtte");
+  assert.equal(Kart.talord(40), "40");
+});
+
+test("søket startar ved to teikn i eitt ord", () => {
+  assert.ok(!Kart.searchReady("a"));
+  assert.ok(!Kart.searchReady("ø"), "ø blir folda til o");
+  assert.ok(!Kart.searchReady("a b"));
+  assert.ok(Kart.searchReady("ab"));
+  assert.ok(Kart.searchReady("a co"));
+  assert.ok(!Kart.searchReady("  "));
+});
+
+test("teiknerekkjefølgje: største kategori først, sjeldne sist (øvst)", () => {
+  assert.deepEqual(Kart.paintOrder([259, 0, 3000, 900, 20]), [2, 3, 0, 4]);
+  assert.deepEqual(Kart.paintOrder([5, 5, 1]), [0, 1, 2], "likt tal: fast rekkjefølgje");
+  assert.deepEqual(Kart.paintOrder(new Int32Array([0, 0])), []);
+});
+
+test("periodar: delar mot korpuset, korte etikettar og delår", () => {
+  const r = Kart.periodShares([10, 20, 0], [100, 400, 0]);
+  assert.deepEqual(r.share, [0.1, 0.05, 0]);
+  assert.equal(r.base, 30 / 500);
+  assert.equal(Kart.shortPeriod("2005–09"), "05–09");
+  assert.equal(Kart.shortPeriod("før 2000"), "før 00");
+  assert.equal(Kart.shortPeriod("anna"), "anna");
+  assert.equal(Kart.periodSpan("2025–26"), 2);
+  assert.equal(Kart.periodSpan("2020–24"), 5);
+  assert.equal(Kart.periodSpan("før 2000"), 0);
+  assert.equal(Kart.pctFine(0.024), "2,4 %");
+  assert.equal(Kart.pctFine(0.35), "35 %");
+  assert.equal(Kart.pctFine(undefined), "");
+});
+
+test("merknad om verk med berre tittel blant dei sentrale", () => {
+  assert.match(Kart.titleOnlyNote(277, 643, 0, "klynga"), /^Ingen av dei 277 verka med berre tittel \(43\s%\)/);
+  assert.equal(Kart.titleOnlyNote(277, 643, 1, "klynga"), "", "ein av dei fem har berre tittel: ingen merknad");
+  assert.equal(Kart.titleOnlyNote(10, 643, 0, "klynga"), "", "få med berre tittel: ingen merknad");
+  assert.equal(Kart.titleOnlyNote(0, 0, 0, "klynga"), "");
 });
 
 test("escaping av tekst frå data", () => {

@@ -178,6 +178,17 @@ class KartFil(unittest.TestCase):
         self.assertEqual(max(c["nordisk"] for c in self.kart["klynger"]),
                          self.kart["klynger"][t["nordisk_sprak_klynge"]]["nordisk"])
 
+    def test_slag(self):
+        # sub-clusters that are not a topic are marked, so the page can say so
+        from designteori.klynger import UNDER_SLAG_TYPAR
+
+        slag = [u.get("slag") for u in self.kart["under"]]
+        for s in slag:
+            self.assertTrue(s is None or s in UNDER_SLAG_TYPAR, s)
+        self.assertGreaterEqual(sum(s == "dokument" for s in slag), 1)
+        for c in self.kart["klynger"]:
+            self.assertNotIn("slag", c)
+
     def test_ingen_lang_tekst(self):
         for sti, s in strengar({k: v for k, v in self.kart.items() if k != "ids"}):
             self.assertLessEqual(len(s), MAKS_STRENG, sti)
@@ -206,8 +217,13 @@ class OmFil(unittest.TestCase):
         om = les(KLYNGER / "om.json")
         self.assertEqual(om["versjon"], 1)
         self.assertTrue(om["tittel"] and om["ingress"])
-        self.assertTrue(20 < len(om["linje"]) < 260)
-        self.assertIn("nordiske språk", om["linje"])
+        # the line above the map is short (it pushed the map down on a phone); language and the hedge about structure
+        # stand with the legend
+        self.assertTrue(20 < len(om["linje"]) < 130)
+        self.assertIn("mjuke", om["linje"])
+        self.assertIn("nordiske språk", om["sprak"])
+        self.assertIn("landskap", om["forbehald"])
+        self.assertIn("algoritme", om["forbehald"])
         self.assertGreaterEqual(len(om["bolkar"]), 4)
         for sti, s in strengar(om):
             self.assertNotIn("—", s, sti)

@@ -1,7 +1,9 @@
 {
  "versjon": 1,
  "tittel": "Om kartet",
- "linje": "6 432 verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre. Språk speler òg inn: 88 % av verka på nordiske språk ligg i éi klynge. Grensene er mjuke: 32 % av verka ligg mellom klynger.",
+ "linje": "Eitt verk per prikk, og like tekstar ligg nær kvarandre. Grensene er mjuke: 32 % av verka ligg mellom klynger.",
+ "forbehald": "Åtte grupper som ein algoritme har funne. Feltet er meir eit landskap enn øyar, så fargane viser tyngdepunkt, ikkje skarpe skilje.",
+ "sprak": "Verk på nordiske språk samlar seg i klynga «Nordiskspråkleg forsking», så der speler språk like mykje inn som tema.",
  "ingress": "Kartet viser alle 6 432 verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om det same, ligg nær kvarandre. Fargane er 8 klynger som ein algoritme har funne, og kvar klynge er delt i mindre underklynger.",
  "bolkar": [
   {
@@ -18,7 +20,7 @@
   },
   {
    "tittel": "Kor sikre klyngene er",
-   "tekst": "Feltet er meir eit samanhengande landskap enn øyar. Silhuetten, eit mål frå -1 til 1 på kor klart verka ligg i eiga klynge, er 0,06 (ei tilfeldig sky utan klynger gir 0,03). 32 % av verka ligg på ei grense: færre enn halvparten av naboane deira er i same klynge. Køyrer ein metoden ti gonger med ulike startverdiar, er samsvaret i snitt 0,75 (justert Rand-indeks, 1 er likt kvar gong), og 0,49 for dei to køyringane som liknar minst. Klynga «Norske fagmiljø: handverk, didaktikk, tenestedesign» er delvis ei språkgruppe: 54 % av verka der er på eit nordisk språk, mot 6 % i heile korpuset, og 88 % av alle verk på nordiske språk ligg i denne klynga."
+   "tekst": "Feltet er meir eit samanhengande landskap enn øyar. Silhuetten, eit mål frå -1 til 1 på kor klart verka ligg i eiga klynge, er 0,06 (ei tilfeldig sky utan klynger gir 0,03). 32 % av verka ligg på ei grense: færre enn halvparten av naboane deira er i same klynge. Køyrer ein metoden ti gonger med ulike startverdiar, er samsvaret i snitt 0,75 (justert Rand-indeks, 1 er likt kvar gong), og 0,49 for dei to køyringane som liknar minst. Klynga «Nordiskspråkleg forsking: skulefag, profesjon, tenester» er delvis ei språkgruppe: 54 % av verka der er på eit nordisk språk, mot 6 % i heile korpuset, og 88 % av alle verk på nordiske språk ligg i denne klynga."
   },
   {
    "tittel": "Ein kontroll utanfor teksten",
@@ -30,7 +32,11 @@
   },
   {
    "tittel": "Sentrale verk",
-   "tekst": "Dei sentrale verka i ei klynge er dei som liknar mest på snittet av klynga i tekstrommet, ikkje dei som ligg midt i biletet. Verk med samandrag kjem først. Ein vektor bygd berre på ein kort tittel seier lite og hamnar difor lett nær midten av klynga, så verk med berre tittel kjem med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje."
+   "tekst": "Dei sentrale verka i ei klynge er dei som liknar mest på snittet av klynga i tekstrommet, ikkje dei som ligg midt i biletet. Verk med samandrag kjem først. Ein vektor bygd berre på ein kort tittel seier lite og hamnar difor lett nær midten av klynga, så verk med berre tittel kjem med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje. Sidan verk med berre tittel kjem sist, er dei sjeldan med blant dei fem første, sjølv der dei er mange. Panelet seier kor stor del av gruppa dei er."
+  },
+  {
+   "tittel": "Grupper som ikkje er tema",
+   "tekst": "Nokre små underklynger er ikkje tema. Somme er haldne saman av dokumenttypen, til dømes konferansebind og innleiingar til konferansar, og éi er ei blanding der namnet berre passar midten. Dei er merkte i panelet, og namna deira står gråare i kartet. Underklynger som ikkje kjem att når metoden blir køyrd på nytt, er òg merkte."
   }
  ]
 }

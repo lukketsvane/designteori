@@ -83,7 +83,10 @@ NAMN_TOPP: dict[str, str] = {
     "W7112102007": "Deltakande design og co-design",
     "nordic:nordes:cc99826647bd8ca7c983": "Handverk, kunst, materiale og kritisk praksis",
     "nordic:nva:c23b90c9058cd61a87c5": "Berekraft, klima og framtider",
-    "nordic:nva:81591de1f19a19f49d3a": "Norske fagmiljø: handverk, didaktikk, tenestedesign",
+    # Renamed 2026-11-13 after review: the old name ("Norske fagmiljø: handverk, didaktikk, tenestedesign") overlapped
+    # with clusters 2, 4 and 7. What holds this cluster together is language (54 % Nordic-language works against 6 % in
+    # the corpus) as much as topic, so the name says that first.
+    "nordic:nva:81591de1f19a19f49d3a": "Nordiskspråkleg forsking: skulefag, profesjon, tenester",
     "nordic:nva:ee4378a8e4b4b13233a6": "Tenestedesign og innovasjon",
 }
 NAMN_UNDER: dict[str, str] = {
@@ -108,7 +111,7 @@ NAMN_UNDER: dict[str, str] = {
     "nordic:nva:179ba6aba03a2ee685e4": "Spekulativ design og framtider i undervisinga",
     "W7112102007": "Metodar for deltakande design",
     "nordic:nva:e1e1e681b01bc5fc24dc": "Co-design, samarbeid og lab",
-    "W3036567598": "Deltakande design, rettferd og marginaliserte grupper",
+    "W3036567598": "Avkolonisering og sameksistens i deltakande design",
     "nordic:nva:706a1db5fc0f4b4539d3": "Deltakande design i helse",
     "W1988944132": "Born, unge og spel i co-design",
     "W4383616658": "Fasilitering av deltaking",
@@ -118,21 +121,21 @@ NAMN_UNDER: dict[str, str] = {
     "nordic:nordes:cc99826647bd8ca7c983": "Tekstil og mote",
     "W4412035372": "Spekulativ og kunstnarleg designpraksis",
     "W7225150284": "Handverk og praksisbasert forsking",
-    "W2793604173": "Kjønn, kropp og feminisme",
+    "W2793604173": "Kjønn, feminisme og born",
     "nordic:nordes:a327efe57da110b2aa1c": "Designantropologi og teknologi",
     "nordic:nva:8f14b3629b17154557ce": "Konferansebind (Nordes, DRS, IASDR)",
     "nordic:nva:5a9b0b6c69621c2068a4": "Systemendring og framtider",
     "W7160449131": "Byar og planlegging",
     "nordic:nva:91d728fe435b9a022586": "Berekraftig design, innovasjon og næring",
     "nordic:nva:7682a711cc1200383840": "Sirkulær mote og tekstil",
-    "nordic:nva:c764dfbbab418dddba62": "Systemisk design, transport og kvardagspraksis",
+    "nordic:nva:c764dfbbab418dddba62": "Blanda: systemisk design og transport",
     "nordic:nordes:109a5de8fba50509e59c": "Designaktivisme og politikk",
     "nordic:nva:898048d5b131af21835a": "Kunst og handverk i skulen",
     "nordic:nva:e55ef98f18d463e279f9": "Nordiskspråkleg designteori og tenestedesign",
     "W2966096216": "Leiarartiklar, arkitektur og blanda tidsskriftstoff",
     "nordic:nva:af941e1d1301e3e994f7": "Norske prosjekt: interaksjonsdesign, tenester og helse",
     "W1800324983": "Innleiingar til konferansar",
-    "W1872603985": "Profesjon, politikk, institusjonar (svensk, finsk)",
+    "W1872603985": "Arkitektkonkurransar, oppdragsgjevarar og profesjon",
     "nordic:nva:ee4378a8e4b4b13233a6": "Tenestedesign som praksis",
     "nordic:nva:0ec6610bbad18df61af9": "Tenestedesign i helse",
     "nordic:nva:63696e4fd6b474e93c95": "Offentlege tenester",
@@ -140,6 +143,17 @@ NAMN_UNDER: dict[str, str] = {
     "nordic:nva:2e418bcebf88e47e9a99": "Kultur og makt i tenester",
     "nordic:nva:b7851ea25f2d229103a0": "Undervising i tenestedesign",
 }
+# Sub-clusters that are not a topic, keyed like NAMN_UNDER. "dokument": held together by document type (proceedings
+# volumes, conference introductions), not by what the works are about. "blanda": a small mix whose name only fits its
+# centre. Revised 2026-11-13 after review (3.25, 4.33, 6.44 are front matter; 5.38 has terms that do not match any one
+# topic and a stability of 0.17). The page says so in the panel and draws these names dimmer.
+UNDER_SLAG: dict[str, str] = {
+    "nordic:nva:944e7ae1d97910962e0b": "dokument",
+    "nordic:nva:8f14b3629b17154557ce": "dokument",
+    "W1800324983": "dokument",
+    "nordic:nva:c764dfbbab418dddba62": "blanda",
+}
+UNDER_SLAG_TYPAR = ("dokument", "blanda")
 
 # Colour slot (0..7 in the page's categorical palette, docs/kart.js PAL) per top cluster, keyed like NAMN_TOPP. The
 # slots were chosen so the clusters that border each other most in the map get the colours that differ most. A
@@ -1053,6 +1067,14 @@ def vel_namn(sentrale: list[str], tabell: dict[str, str], termar: list[str]) -> 
     return auto[:1].upper() + auto[1:], False
 
 
+def vel_slag(sentrale: list[str]) -> str | None:
+    """UNDER_SLAG for the key vel_namn picked from NAMN_UNDER (the first central work that has a reviewed name)."""
+    for w in sentrale:
+        if w in NAMN_UNDER:
+            return UNDER_SLAG.get(w)
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Number formatting for the Nynorsk text
 # ---------------------------------------------------------------------------
@@ -1068,6 +1090,21 @@ def tal(x: float | int, des: int = 0) -> str:
 
 def pst(x: float, des: int = 0) -> str:
     return f"{tal(100 * x, des)}\u00a0%"
+
+
+TALORD = ["null", "\u00e9in", "to", "tre", "fire", "fem", "seks", "sju", "\u00e5tte", "ni", "ti", "elleve", "tolv", "tretten",
+          "fjorten", "femten", "seksten", "sytten", "atten", "nitten", "tjue"]
+
+
+def talord(n: int) -> str:
+    return TALORD[n] if 0 <= n < len(TALORD) else tal(n)
+
+
+def kortnamn(namn: str) -> str:
+    """The part of a name before the first colon or comma (as shortName in docs/kart.js)."""
+    m = re.match(r"[^:,]+", namn.strip())
+    t = m.group(0).strip() if m else namn
+    return t if len(t) >= 4 else namn
 
 
 # ---------------------------------------------------------------------------
@@ -1480,10 +1517,14 @@ def main(argv: list[str] | None = None) -> int:
             sentral = np.zeros(K.n)
             sentral[m2] = d.cos
             lx, ly = etikettpunkt(P, m2, sentral, 0.03 * SKALA)
-            under_lst.append({"id": u, "k": c, "namn": namn, "namn_sjekka": sjekka, "ord": ut_[q][:5], "n": int(len(m2)),
-                              "lx": lx, "ly": ly, "sentrale": d.sentrale, "sentrale60": d.sentrale60,
-                              "periode": d.periode, "kanalar": d.kanalar[:3], "land": d.land[:3],
-                              "nordisk": d.nordisk, "stabilitet": st[q] if st else None})
+            ul = {"id": u, "k": c, "namn": namn, "namn_sjekka": sjekka, "ord": ut_[q][:5], "n": int(len(m2)),
+                  "lx": lx, "ly": ly, "sentrale": d.sentrale, "sentrale60": d.sentrale60,
+                  "periode": d.periode, "kanalar": d.kanalar[:3], "land": d.land[:3],
+                  "nordisk": d.nordisk, "stabilitet": st[q] if st else None}
+            slag = vel_slag(d.nokkel)
+            if slag:
+                ul["slag"] = slag
+            under_lst.append(ul)
             klynger[c]["under"].append(u)
             grunnlag.append((c, u, namn, ut_[q], [K.tittel[i] for i in d.sentrale_i], d))
 
@@ -1602,10 +1643,14 @@ def om_tekst(t: dict, klynger: list[dict], kv: dict) -> dict:
     return {
         "versjon": VERSJON,
         "tittel": "Om kartet",
-        # the line above the map; says that language, not only theme, shapes the clearest island
-        "linje": (f"{tal(t['verk'])} verk, eitt per prikk. Verk med lik ordbruk og like tema ligg nær kvarandre. "
-                  f"Språk speler òg inn: {pst(t['nordisk_sprak_del_av_nordiske'])} av verka på nordiske språk ligg i "
-                  f"éi klynge. Grensene er mjuke: {pst(t['grense_del'])} av verka ligg mellom klynger."),
+        # the line above the map: short, so the map starts high on a phone (review 2026-11-13); the language and the
+        # hedge about structure stand with the legend under the map (forbehald, sprak)
+        "linje": (f"Eitt verk per prikk, og like tekstar ligg nær kvarandre. Grensene er mjuke: "
+                  f"{pst(t['grense_del'])} av verka ligg mellom klynger."),
+        "forbehald": (f"{talord(t['klynger']).capitalize()} grupper som ein algoritme har funne. Feltet er meir eit "
+                      "landskap enn øyar, så fargane viser tyngdepunkt, ikkje skarpe skilje."),
+        "sprak": (f"Verk på nordiske språk samlar seg i klynga «{kortnamn(klynger[t['nordisk_sprak_klynge']]['namn'])}», "
+                  "så der speler språk like mykje inn som tema."),
         "ingress":(f"Kartet viser alle {tal(t['verk'])} verka i korpuset. Kvar prikk er eitt verk. Verk som handlar om "
                     "det same, ligg nær kvarandre. Fargane er {k} klynger som ein algoritme har funne, og kvar klynge "
                     "er delt i mindre underklynger.").replace("{k}", tal(t["klynger"])),
@@ -1668,7 +1713,14 @@ def om_tekst(t: dict, klynger: list[dict], kv: dict) -> dict:
              "tekst": ("Dei sentrale verka i ei klynge er dei som liknar mest på snittet av klynga i tekstrommet, "
                        "ikkje dei som ligg midt i biletet. Verk med samandrag kjem først. Ein vektor bygd berre på ein "
                        "kort tittel seier lite og hamnar difor lett nær midten av klynga, så verk med berre tittel kjem "
-                       "med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje.")},
+                       "med berre når det er for få andre. Lenkja til katalogen opnar dei 60 første i same rekkjefølgje. "
+                       "Sidan verk med berre tittel kjem sist, er dei sjeldan med blant dei fem første, sjølv der dei er "
+                       "mange. Panelet seier kor stor del av gruppa dei er.")},
+            {"tittel": "Grupper som ikkje er tema",
+             "tekst": ("Nokre små underklynger er ikkje tema. Somme er haldne saman av dokumenttypen, til dømes "
+                       "konferansebind og innleiingar til konferansar, og éi er ei blanding der namnet berre passar "
+                       "midten. Dei er merkte i panelet, og namna deira står gråare i kartet. Underklynger som ikkje "
+                       "kjem att når metoden blir køyrd på nytt, er òg merkte.")},
         ],
     }
 
