@@ -1,93 +1,433 @@
 [
   {
-    "id": "10.23995/tht.111924",
-    "title": "Focus on Bauhaus and Nordic Architecture and Design",
+    "id": "oai:aaltodoc.aalto.fi:123456789/101669",
+    "title": "Co-creation and co-design in technology-enhanced learning : Innovating science learning outside the classroom",
     "authors": [
-      "Juhana Lahti",
-      "Leena Svinhufvud"
+      "Durall Gazulla, Eva",
+      "Bauters, Merja",
+      "Hietala, Iida",
+      "Leinonen, Teemu",
+      "Kapros, Evangelos"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/101669"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/102160",
+    "title": "Design Contributions for the COVID-19 Global Emergency (Part 1): Empirical Approaches and First Solutions",
+    "authors": [
+      "Rossi, Emilio",
+      "Di Nicolantonio, Massimo",
+      "Ceschin, Fabrizio",
+      "Mincolelli, Giuseppe",
+      "dos Santos, Aguinaldo",
+      "Kohtala, Cindy",
+      "Jacques, Edu",
+      "Cipolla, Carla",
+      "Manzini, Ezio"
     ],
     "year": 2021,
-    "doi": "https://doi.org/10.23995/tht.111924",
-    "kind": "journal-article",
-    "venue": "Tahiti",
-    "url": "https://tahiti.journal.fi/article/download/111924/65703"
+    "doi": "https://doi.org/10.4013/sdrj.2020.133.01",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/102160"
   },
   {
-    "id": "10.23995/tht.111932",
-    "title": "How Nordic Designers Reacted to Bauhaus?",
+    "id": "oai:aaltodoc.aalto.fi:123456789/102354",
+    "title": "The Importance of Creative Practices in Designing More-than Human Cities",
     "authors": [
-      "Petteri Kummala",
-      "Joona Rantasalo"
+      "Wolff, Annika",
+      "Pässilä, Anne",
+      "Knutas, Antti",
+      "Vainio, Teija",
+      "Lautala, Joni",
+      "Kantola, Lasse"
     ],
     "year": 2021,
-    "doi": "https://doi.org/10.23995/tht.111932",
-    "kind": "journal-article",
-    "venue": "Tahiti",
-    "url": "https://tahiti.journal.fi/article/download/111932/65710"
+    "doi": "https://doi.org/10.1007/978-3-030-15145-4_74-1",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/102354"
   },
   {
-    "id": "10.33134/eeja.55",
-    "title": "Edward Winters: Aesthetics and Architecture",
+    "id": "oai:aaltodoc.aalto.fi:123456789/102757",
+    "title": "Textile Designer Perspective on Haptic Interface Design: A Sensorial Platform for Conversation Between Discipline",
     "authors": [
-      "Martina Sedláková"
+      "Townsend, Riikka",
+      "Bang, Anne Louise",
+      "Mikkonen, Jussi"
     ],
-    "year": 2009,
-    "doi": "https://doi.org/10.33134/eeja.55",
-    "kind": "journal-article",
-    "venue": "Estetika: The European Journal of Aesthetics",
-    "url": "https://account.estetikajournal.org/index.php/uh-j-eteja/article/download/55/53"
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-50344-4_9",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/102757"
   },
   {
-    "id": "10.33134/eeja.61",
-    "title": "Nana Last: &lt;i&gt;Wittgenstein’s House: Language, Space, and Architecture&lt;/i&gt;",
+    "id": "oai:aaltodoc.aalto.fi:123456789/102990",
+    "title": "Dressmaking Rediscovered: When Design Meets Fashion in Helsinki",
     "authors": [
-      "Christopher Long"
+      "Chun, Namkyu"
     ],
-    "year": 2009,
-    "doi": "https://doi.org/10.33134/eeja.61",
-    "kind": "journal-article",
-    "venue": "Estetika: The European Journal of Aesthetics",
-    "url": "https://account.estetikajournal.org/index.php/uh-j-eteja/article/download/61/59"
+    "year": 2021,
+    "doi": "https://doi.org/10.1386/fspc_00057_1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/102990"
   },
   {
-    "id": "10.33134/eeja.89",
-    "title": "The Structure and Content of Architectural Experience: Scruton on Architecture as Art",
+    "id": "oai:aaltodoc.aalto.fi:123456789/103215",
+    "title": "Approaching Change with and in Design",
     "authors": [
-      "Andrea Sauchelli"
+      "Valtonen, Anna"
     ],
-    "year": 2012,
-    "doi": "https://doi.org/10.33134/eeja.89",
-    "kind": "journal-article",
-    "venue": "Estetika: The European Journal of Aesthetics",
-    "url": "https://account.estetikajournal.org/index.php/uh-j-eteja/article/download/89/87"
+    "year": 2021,
+    "doi": "https://doi.org/10.1016/j.sheji.2020.08.004",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/103215"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/103020",
-    "title": "Pathways of the creative journey - The significance of a cruise ship concept design",
+    "id": "oai:aaltodoc.aalto.fi:123456789/103270",
+    "title": "Alternative Histories in DIY Cultures and Maker Utopias",
     "authors": [
-      "Keiramo, Marjo"
+      "Kohtala, Cindy",
+      "Boeva, Yana",
+      "Troxler, Peter"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.14361/dcs-2020-0102",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/103270"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/103285",
+    "title": "Fashion Design Rediscovered: A Theory on Dressmaking Practice",
+    "authors": [
+      "Chun, Namkyu"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1080/14606925.2020.1851426",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/103285"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/106816",
+    "title": "Workplace Dynamics",
+    "authors": [
+      "Kokkonen, Ville (editor)",
+      "Holste, Markus (editor)"
     ],
     "year": 2021,
     "doi": "",
-    "kind": "G4 Monografiaväitöskirja",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/103020"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/106816"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/103470",
-    "title": "Applying graph matching techniques to enhance reuse of plant design information",
+    "id": "oai:aaltodoc.aalto.fi:123456789/107543",
+    "title": "Human-Centred Design When Direct Contact with Users Is Not Possible",
     "authors": [
-      "Rantala, Miia",
-      "Niemistö, Hannu",
-      "Karhela, Tommi",
-      "Sierla, Seppo",
-      "Vyatkin, Valeriy"
+      "Savolainen, Kaisa"
     ],
     "year": 2021,
-    "doi": "https://doi.org/10.1016/j.compind.2019.01.005",
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107543"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107775",
+    "title": "Epä/igenesis: Tekstin muotoilu uusmateriaalisena kirjoitta/u misena. Tutkielma Y",
+    "authors": [
+      "Karhumaa, Arja"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107775"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107892",
+    "title": "Designing Sustainability for All : The Design of Sustainable Product-Service Systems Applied to Distributed Economies",
+    "authors": [],
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-66300-1",
+    "kind": "Book",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107892"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107896",
+    "title": "Design Contributions for the COVID-19 Global Emergency (Part 2): Methodological Reflections and Future Visions",
+    "authors": [
+      "Rossi, Emilio",
+      "Di Nicolantonio, Massimo",
+      "Ceschin, Fabrizio",
+      "Mincolelli, Giuseppe",
+      "dos Santos, Aguinaldo",
+      "Kohtala, Cindy",
+      "Jacques Filho, Edu Fernandes Lima",
+      "Cipolla, Carla",
+      "Manzini, Ezio"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.4013/sdrj.2021.14.22721",
     "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/103470"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107896"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107902",
+    "title": "S.PSS and DE in Practice",
+    "authors": [
+      "García Parra, Brenda",
+      "Kohtala, Cindy",
+      "Marttila, Tatu",
+      "dos Santos, Aguinaldo",
+      "Molina Mata, Sandra",
+      "Zhong, Fang",
+      "Xia, Nan",
+      "Xin, Liu",
+      "Zhang, Jun",
+      "Banerjee, Sharmistha",
+      "Upadhyay, Pankaj",
+      "Punekar, Ravi Mokashi"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-66300-1_5",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107902"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107909",
+    "title": "Shared Authorship in Research through Art, Design, and Craft",
+    "authors": [
+      "Vega, Luis",
+      "Aktas, Bilge",
+      "Latva-Somppi, Riikka",
+      "Falin, Priska",
+      "Valle Noronha, Julia"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.24342/9zsp-hj59",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107909"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107918",
+    "title": "Distributed Economies",
+    "authors": [
+      "dos Santos, Aguinaldo",
+      "Vezzoli, Carlo",
+      "García Parra, Brenda",
+      "Molina Mata, Sandra",
+      "Banerjee, Sharmistha",
+      "Kohtala, Cindy",
+      "Ceschin, Fabrizio",
+      "Petrulaityte, Aine",
+      "Garcez Duarte, Gabriele",
+      "Dickie, Isadora Burmeister",
+      "Balasubramanian, Ranjani",
+      "Xia, Nan"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-66300-1_2",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107918"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107921",
+    "title": "How to Cool Down Dense Urban Environments? A Discussion on Site-Specific Urban Mitigating Strategies",
+    "authors": [
+      "Yao, Chaowen",
+      "Fricker, Pia"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.14627/537705007",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107921"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107938",
+    "title": "Getting Participatory Design Done: From Methods and Choices to Translation Work across Constituent Domains",
+    "authors": [
+      "Botero, Andrea",
+      "Hyysalo, Sampsa",
+      "Kohtala, Cindy",
+      "Whalen, John"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107938"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/107947",
+    "title": "Briefing at the pre-project phase in design consulting - How design consultants navigate through uncertainty while briefing and selling simultaneously",
+    "authors": [
+      "Park-Lee, Seungho"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/107947"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/108051",
+    "title": "Co-Designing for Equity in Informal Science Learning: A Proof-of-Concept Study of Design Principles",
+    "authors": [
+      "Durall Gazulla, Eva",
+      "Perry, Sophie",
+      "Hurley, Mairéad",
+      "Kapros, Evangelos",
+      "Leinonen, Teemu"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.3389/feduc.2021.675325",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/108051"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/108108",
+    "title": "User Representations as a Design Resource: Achieving Accountable Design without Access to Users",
+    "authors": [
+      "Savolainen, Kaisa",
+      "Hyysalo, Sampsa"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.23987/sts.84598",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/108108"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/108493",
+    "title": "Closing the Loop through Clothing Design: Wishful Thinking or Achievable Practice?",
+    "authors": [
+      "Karell, Essi"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/108493"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/108850",
+    "title": "Design for Sustainability Transformations: A ‘Deep Leverage Points’ Research Agenda for the (Post-)pandemic Context",
+    "authors": [
+      "Gaziulusoy, Idil",
+      "Veselova, Emilija",
+      "Hodson, Elise",
+      "Berglund, Eeva",
+      "Erdogan Öztekin, Elif",
+      "Houtbeckers, Eeva",
+      "Hernberg, Hella",
+      "Jalas, Mikko",
+      "Fodor, Kata",
+      "Ferreira Litowtschenko, Maria"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.4013/sdrj.2021.141.02",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/108850"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/109110",
+    "title": "Woven through Trust and Affect: Four Cases on Fashion Sustainability in Brazil",
+    "authors": [
+      "Chun, Namkyu",
+      "Valle Noronha, Julia"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/109110"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/109137",
+    "title": "Places in the Making: How Fashion Design Transforms the Multitude of Scales",
+    "authors": [
+      "Chun, Namkyu"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.21606/nordes.2021.45",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/109137"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/109210",
+    "title": "Distributed Thinking through Making: Towards a relational ontology in practice-led design research",
+    "authors": [
+      "Vega, Luis"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.21606/nordes.2021.29",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/109210"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/109913",
+    "title": "Understanding the Role of Physical and Digital Techniques in the Initial Design Processes of Architecture",
+    "authors": [
+      "Gulay, Emrecan",
+      "Lucero, Andres"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-85616-8_19",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/109913"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/109971",
+    "title": "Co-Designing Urban Carbon Sink Parks: Case Carbon Lane in Helsinki",
+    "authors": [
+      "Tammeorg, Priit",
+      "Soronen, Päivi",
+      "Riikonen, Anu",
+      "Salo, Esko",
+      "Tikka, Suvi",
+      "Koivunen, Minja",
+      "Salonen, Anna-Reetta",
+      "Kopakkala, Topi",
+      "Jalas, Mikko"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.3389/fenvs.2021.672468",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/109971"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/110141",
+    "title": "User-Centred Design without Involving Users: A Longitudinal Case Study in a Human-Centred-Design–Mature Company",
+    "authors": [
+      "Savolainen, Kaisa"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1080/14606925.2021.1980267",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110141"
   },
   {
     "id": "oai:aaltodoc.aalto.fi:123456789/110422",
@@ -102,126 +442,2495 @@
     "url": "https://aaltodoc.aalto.fi/handle/123456789/110422"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/113373",
-    "title": "Local adequacy as a design strategy in place-based making",
+    "id": "oai:aaltodoc.aalto.fi:123456789/110482",
+    "title": "Graphic designers’ work and skillset - What companies talk about in their job advertisements",
     "authors": [
-      "Usenyuk-Kravchuk, Svetlana",
-      "Hyysalo, Sampsa",
-      "Raeva, Alexandra"
+      "Nicoletti Dziobczenski, Paulo Roberto"
     ],
-    "year": 2022,
-    "doi": "https://doi.org/10.1080/15710882.2021.2006720",
-    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
-    "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/113373"
-  },
-  {
-    "id": "oai:aaltodoc.aalto.fi:123456789/114419",
-    "title": "Kotikeittiön aineksista joustavaksi neulosmaiseksi biomuoviksi",
-    "authors": [
-      "Tullila, Hanna"
-    ],
-    "year": 2022,
+    "year": 2021,
     "doi": "",
-    "kind": "S harjoitus- ja seminaarityöt",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/114419"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110482"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/115757",
-    "title": "Redefining Structural Art : A Neuroaesthetics Perspective on the Art of Structural Design",
+    "id": "oai:aaltodoc.aalto.fi:123456789/110750",
+    "title": "‘Just Hit a Button!’ – Fashion 4.0 Designers as Cyborgs, Experimenting and Designing with Generative Algorithms",
     "authors": [
-      "Wang, Shuaizhong",
-      "Kotnik, Toni",
-      "Schwartz, Joseph"
+      "Särmäkari, Natalia",
+      "Vänskä, Annamari"
     ],
-    "year": 2022,
-    "doi": "https://doi.org/10.1007/s44150-022-00027-y",
+    "year": 2021,
+    "doi": "https://doi.org/10.1080/17543266.2021.1991005",
     "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/115757"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110750"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/11841",
-    "title": "Empowering Mobile Art Practice : A Recontextualization of Mobile and Ubiquitous Computing",
+    "id": "oai:aaltodoc.aalto.fi:123456789/110831",
+    "title": "Human-Centred Technology for Sustainable Development Goals: Challenges and Opportunities",
     "authors": [
-      "Scheible, Jürgen"
+      "Piccolo, Lara S.G.",
+      "Neris, Vânia",
+      "Rodrigues, Kamila Rios",
+      "Masoodian, Masood"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1007/978-3-030-85607-6_76",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110831"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/110872",
+    "title": "Changing the Old and Designing the New - Contradictions in Visual Communication Design",
+    "authors": [
+      "Björklund, Ulla"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110872"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/110897",
+    "title": "When a tree is also a multispecies collective, a photosynthesis process and a carbon cycle: A systemic typology of natural nonhuman stakeholders when designing for sustainability",
+    "authors": [
+      "Veselova, Emilija",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/110897"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111338",
+    "title": "The Need for a Paradigm Shift in Approaching Ageing-Related Design Research and Practice",
+    "authors": [
+      "Comincioli, Elena",
+      "Chirico, Alice",
+      "Gaggioli, Andrea",
+      "Masoodian, Masood"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.3389/fpsyg.2021.750178",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111338"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111555",
+    "title": "Multiple intelligibility in constructive design research: The case of empathic design",
+    "authors": [
+      "Lee, Jung Joo",
+      "Koskinen, Ilpo",
+      "Whalen, Jack"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111555"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111582",
+    "title": "Open-Source Philosophy in Fashion Design: Contesting Authorship Conventions and Professionalism",
+    "authors": [
+      "Särmäkari, Natalia",
+      "Vänskä, Annamari"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.21606/drs.2020.195",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111582"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111596",
+    "title": "Cumulative and Combined: Analyzing Methods Use in a Human-Centered Design Mature Company",
+    "authors": [
+      "Savolainen, Kaisa",
+      "Hyysalo, Sampsa"
+    ],
+    "year": 2021,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111596"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111636",
+    "title": "Design framework and principles for learning environment co-design: Synthesis from literature and three empirical studies",
+    "authors": [
+      "Mäkelä, Tiina",
+      "Leinonen, Teemu"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.3390/buildings11120581",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111636"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111650",
+    "title": "Whose Common Good? Ideals and Challenges in Academic Programs Focused on Social Design",
+    "authors": [
+      "Hodson, Elise",
+      "Morais, Ana Rita",
+      "Pandolfi, Christopher",
+      "Daam-Rossi, Heather"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.5281/zenodo.4899521",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111650"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/111652",
+    "title": "A Mixed-Method Study of Design Practices and Designers’ Roles in Sustainable-Minded Clothing Companies",
+    "authors": [
+      "Karell, Essi",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.3390/su12114680",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/111652"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/112008",
+    "title": "Designing Visual Tools to Facilitate Human-Centered Design",
+    "authors": [
+      "Wang, Yuzhou",
+      "Masoodian, Masood"
+    ],
+    "year": 2021,
+    "doi": "https://doi.org/10.1145/3399715.3399936",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/112008"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11261",
+    "title": "Expanding design space(s) : design in communal endeavours",
+    "authors": [
+      "Botero, Andrea"
     ],
     "year": 2013,
     "doi": "",
-    "kind": "G5 Artikkeliväitöskirja",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/11841"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11261"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/119898",
-    "title": "Guiding the PhD in design: Experiences from six programs",
+    "id": "oai:aaltodoc.aalto.fi:123456789/112739",
+    "title": "Combining machine learning and Service Design to improve customer experience",
     "authors": [
-      "Stappers, Pieter Jan",
-      "Teixera, Carlos",
-      "Rampino, Lucia",
-      "Baxter, Weston",
+      "Reunanen, Niko",
+      "Falay von Flittner, Zeynep",
+      "Roto, Virpi",
+      "Vaajakallio, Kirsikka"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/112739"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/112772",
+    "title": "Exploring a Feedback-Oriented Design Process Through Curved Folding",
+    "authors": [
+      "Gulay, Emrecan",
+      "Kotnik, Toni",
+      "Lucero, Andres"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1145/3411764.3445639",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/112772"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11278",
+    "title": "Women and jewelry : a social approach to wearing and possessing jewelry",
+    "authors": [
+      "Ahde-Deal, Petra"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11278"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/113090",
+    "title": "Digital Dramaturgy - Interactive fiction video games as cyborg theatre of cruelty and ethical choice-making",
+    "authors": [
+      "Kouratoras, Michail"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/113090"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/113761",
+    "title": "The Overlaps and Boundaries between Service Design and User Experience Design",
+    "authors": [
+      "Roto, Virpi",
+      "Lee, Jung Joo",
+      "Lai-Chong Law, Effie",
+      "Zimmerman, John"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1145/3461778.3462058",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/113761"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/114183",
+    "title": "How HCI Adopts Service Design : Unpacking current perceptions and scopes of service design in HCI and identifying future opportunities",
+    "authors": [
+      "Lee, Jung-Joo",
+      "Yap, Christine Ee Ling",
+      "Roto, Virpi"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1145/3491102.3502128",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/114183"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/114425",
+    "title": "Architects as 'Mediators': Socio-political roles in mediating the ‘temporary use’ of vacant spaces",
+    "authors": [
+      "Hernberg, Hella"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/114425"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11461",
+    "title": "Against Method: The Portability of Method in Human-Centered Design",
+    "authors": [
+      "Lee, Jung-Joo"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11461"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11462",
+    "title": "Co-experience: understanding user experiences in interaction",
+    "authors": [
+      "Battarbee, Katja"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11462"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11463",
+    "title": "Design Credo: The making of design tools as a personal theory building process",
+    "authors": [
+      "Heikkinen, Tero"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11463"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/114665",
+    "title": "The changing meaning of an urban place",
+    "authors": [
+      "Sayed, Neha"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/114665"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/115501",
+    "title": "Bioinclusive Collaborative and Participatory Design: A Conceptual Framework and a Research Agenda",
+    "authors": [
+      "Veselova, Emilija",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1080/17547075.2021.2019455",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/115501"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/115744",
+    "title": "Mediating the needs of human and natural nonhuman stakeholders: Towards a design methodological framework",
+    "authors": [
+      "Veselova, Emilija",
+      "Gaziulusoy, Idil",
+      "Lohmann, Julia"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.21606/drs.2022.524",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/115744"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/116058",
+    "title": "Exploring bio-based materials in an interdisciplinary learning environment: Outlining the design inquiry cycle",
+    "authors": [
+      "Laamanen, Tarja-Kaarina",
+      "Kääriäinen, Pirjo"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.21606/drs.2022.546",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/116058"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/116214",
+    "title": "From a Tool to a Culture - Authorship and Professionalism of Fashion 4.0 Designers in Contemporary Digital Environments",
+    "authors": [
+      "Särmäkari, Natalia"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/116214"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11661",
+    "title": "Designing Learning Tools. Methodological Insights",
+    "authors": [
+      "Leinonen, Teemu"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11661"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/116755",
+    "title": "Housing Development for All?: Learnings from the Ars Longa Case",
+    "authors": [
+      "Pirinen, Antti"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.3233/shti220834",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/116755"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117267",
+    "title": "Feasting on Participatory Methodologies for Regenerative Food Transitions",
+    "authors": [
+      "Dolejsova, Marketa",
+      "Wilde, Danielle",
+      "Davis, Hilary",
+      "Altarriba Bertran, Ferran"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1145/3537797.3537832",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117267"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117447",
+    "title": "Developing design education and knowledge for heritage",
+    "authors": [
+      "Díaz-Kommonen, Lily"
+    ],
+    "year": 2022,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117447"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117486",
+    "title": "Space and Time in Hybrid Teaching and Learning Environments: Two Cases and Design Principles",
+    "authors": [
+      "Leinonen, Teemu",
+      "Mäkelä, Tiina"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1007/978-981-19-5240-1_3",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117486"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11764",
+    "title": "Dwelling with design",
+    "authors": [
+      "Paavilainen, Heidi"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11764"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117798",
+    "title": "Service Design Handover to user experience design – a systematic literature review",
+    "authors": [
+      "Leinonen, Aarne",
+      "Roto, Virpi"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1016/j.infsof.2022.107087",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117798"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117805",
+    "title": "Unboxing empathy: Reflecting on architectural design for maternal health",
+    "authors": [
+      "Sandman, Helena",
+      "Meguid, Tarek",
+      "Levänen, Jarkko"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1080/15710882.2020.1833935",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117805"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117816",
+    "title": "‘Hey, I can do that too!’: How skilful participation thrives in a co-sewing café",
+    "authors": [
+      "Hirscher, Anja Lisa"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1080/15710882.2020.1823994",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117816"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117868",
+    "title": "Nordic Revival: Crafting Rural Development in Finnish and Norwegian Design Discourse",
+    "authors": [
+      "Graesse, Malin",
+      "Savola, Kaisu"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.4324/9781003309321-7",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117868"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117883",
+    "title": "What does it take to study learning in transitions? A case of citizen energy in Finland",
+    "authors": [
+      "Lähteenoja, Satu",
       "Hyysalo, Sampsa",
-      "Chapman, Jonathan"
+      "Lukkarinen, Jani",
+      "Marttila, Tatu",
+      "Saarikoski, Heli",
+      "Faehnle, Maija",
+      "Peltonen, Lasse"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.1080/15487733.2022.2109316",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117883"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/117981",
+    "title": "Spacetime-Craft: An Archaeology of Visions and Explorations of Spatial Experience",
+    "authors": [
+      "Miltiadis, Constantinos"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.30965/9783846767238_011",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/117981"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11812",
+    "title": "Vapautta vai vaikuttavuutta? : kuvataiteeseen perustuva palvelu hoitolaitosyhteisölle",
+    "authors": [
+      "Strandman-Suontausta, Pia"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11812"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11815",
+    "title": "Designing for an open museum : an exploration of content creation and sharing through interactive pieces",
+    "authors": [
+      "Salgado, Mariana"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11815"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/118154",
+    "title": "Centring Relationships More than Humans and Things: Translating Design through the Culture of the Far East",
+    "authors": [
+      "Chun, Namkyu"
+    ],
+    "year": 2022,
+    "doi": "https://doi.org/10.4324/9781003285175-15",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118154"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11818",
+    "title": "Designing for wellbeing",
+    "authors": [
+      "Keinonen, Turkka",
+      "Vaajakallio, Kirsikka",
+      "Honkonen, Janos"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11818"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11819",
+    "title": "Designing Wellbeing in Elderly Care Homes",
+    "authors": [
+      "Hujala, Anneli",
+      "Rissanen, Sari",
+      "Vihma, Susann"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11819"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11829",
+    "title": "Design probes",
+    "authors": [
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11829"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11846",
+    "title": "Open Wave – tutkimus avoimen innovoinnin mahdollisuuksista venealalla: Open Wave - projektin tutkimusraportti",
+    "authors": [
+      "Jakobsson, Minna",
+      "Pekkala, Janne, Hissa, Annika"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11846"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/118656",
+    "title": "Creating Visual Tools to Support Human-Centered Design Methods",
+    "authors": [
+      "Wang, Yuzhou",
+      "Masoodian, Masood"
     ],
     "year": 2023,
-    "doi": "https://doi.org/10.21606/drs.2022.845",
+    "doi": "https://doi.org/10.1109/iv51561.2020.00086",
     "kind": "A4 Artikkeli konferenssijulkaisussa",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/119898"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118656"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/131536",
-    "title": "A Bi-Objective Optimization Model for Fare Structure Design in Public Transport",
+    "id": "oai:aaltodoc.aalto.fi:123456789/118816",
+    "title": "Entangling with Materials: Crafting as a Way of Repairing Our Relationship with the Environment",
     "authors": [
-      "Schiewe, Philine",
-      "Schöbel, Anita",
-      "Urban, Reena"
+      "Aktas, Bilge"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/978-981-19-4855-8_6",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118816"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/118824",
+    "title": "The Hexadecimal Factory - Product and Service Design Work in the Digital Economy",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1007/978-3-030-93677-8_1",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118824"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/118851",
+    "title": "Tutorial on UCD Sprint: Inclusive Process for Concept Design",
+    "authors": [
+      "Larusdottir, Marta Kristin",
+      "Roto, Virpi",
+      "Lanzilotti, Rosa",
+      "Visescu, Ioana Duta"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1145/3547522.3558901",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118851"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11889",
+    "title": "Visual Mobile Communication: Camera Phone Photo Messages as Ritual Communication and Mediated Presence",
+    "authors": [
+      "Villi, Mikko"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11889"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11891",
+    "title": "Minihameesta mummonmekkoon. Teollinen vaatesuunnittelu ja keski-ikäisten naisten vaatekäytännöt sosiaalista ikää rakentamassa",
+    "authors": [
+      "Iltanen, Sonja"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11891"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11892",
+    "title": "Prototyping Social Action",
+    "authors": [
+      "Kurvinen, Esko"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11892"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/118945",
+    "title": "Design Enters the City: Requisites and Points of Friction in Deepening Public Sector Design",
+    "authors": [
+      "Pirinen, Antti",
+      "Savolainen, Kaisa",
+      "Hyysalo, Sampsa",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.57698/v16i3.01",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/118945"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/11895",
+    "title": "Industrial design as a culturally reflexive activity in manufacturing",
+    "authors": [
+      "Järvinen, Juha",
+      "Koskinen, Ilpo"
+    ],
+    "year": 2013,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/11895"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/119001",
+    "title": "PDC Place Nordic: participatory design in/for the digitalization of public services",
+    "authors": [
+      "De Götzen, Amalia",
+      "Starostka, Justyna",
+      "Saad-Sulonen, Joanna",
+      "Ehrenberg, Nils",
+      "Linde, Per"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1145/3537797.3537885",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/119001"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/119139",
+    "title": "Speculative approaches in social science and design research: Methodological implications of working in ‘the gap’ of uncertainty",
+    "authors": [
+      "Meskus, Mianna",
+      "Tikka, Emilia"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1177/14687941221129808",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/119139"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/119186",
+    "title": "Materialising Norms - Norm-Critical and Speculative Explorations in Design",
+    "authors": [
+      "Andersson, Camilla"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/119186"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/119920",
+    "title": "Disrespectful thoughts about design: Social, political and environmental values in Finnish design, 1960–1980",
+    "authors": [
+      "Savola, Kaisu"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/119920"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/120409",
+    "title": "INTERACTIVE ECOSYSTEM FOR CIRCULAR TEXTILES: The New Cotton Project case",
+    "authors": [
+      "Moreira, Natalia",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/120409"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/121162",
+    "title": "The UCD Sprint: A Process for User-Centered Innovation",
+    "authors": [
+      "Larusdottir, Marta Kristin",
+      "Roto, Virpi",
+      "Lanzilotti, Rosa",
+      "Visescu, Ioana"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1145/3544549.3574176",
+    "kind": "Abstract",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/121162"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/121317",
+    "title": "Designing with Nature for Sustainability - Towards a critical approach for including natural nonhuman stakeholders in collaborative and participatory design when designing for sustainability",
+    "authors": [
+      "Veselova, Emīlija"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/121317"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/121963",
+    "title": "Listening to the sociomaterial: When thinking through making extends beyond the individual",
+    "authors": [
+      "Vega, Luis",
+      "Mäkelä, Maarit",
+      "Seitamaa-Hakkarainen, Pirita"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1016/j.destud.2023.101203",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/121963"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/122009",
+    "title": "Design types in diversified city administration: The case City of Helsinki",
+    "authors": [
+      "Hyysalo, Sampsa",
+      "Savolainen, Kaisa",
+      "Pirinen, Antti",
+      "Mattelmäki, Tuuli",
+      "Hietanen, Päivi",
+      "Virta, Meri"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/14606925.2023.2181886",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/122009"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/122168",
+    "title": "Digital Landscape Architecture Education – Where Do We Stand and Where Should We Go?",
+    "authors": [
+      "Fricker, Pia",
+      "Hayek, Ulrike Wissen",
+      "Monacella, Rosalea"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.14627/537740060",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/122168"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/122191",
+    "title": "Copyright and digital fashion designers: The democratization of authorship?",
+    "authors": [
+      "Härkönen, Heidi",
+      "Särmäkari, Natalia"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1093/jiplp/jpac115",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/122191"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/122276",
+    "title": "Transition co-design dynamics in high level policy processes",
+    "authors": [
+      "Lähteenoja, Satu",
+      "Marttila, Tatu",
+      "Gaziulusoy, İdil",
+      "Hyysalo, Sampsa"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1016/j.destud.2023.101207",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/122276"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/122322",
+    "title": "Turning Inwards in Transformative Co-Design - Cultivating the Interconnectedness of Internal and External Change",
+    "authors": [
+      "Hakio, Kirsi"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/122322"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/123362",
+    "title": "Intuitive Design Workflows - Investigating the Feedback Cycles Between Physical and Digital Processes",
+    "authors": [
+      "Gulay, Emrecan"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/123362"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/123783",
+    "title": "From an Embodied Understanding to Ethical Considerations during Creative Practice",
+    "authors": [
+      "Falin, Priska",
+      "Falin, Petra",
+      "Mäkelä, Maarit"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.7577/formakademisk.5482",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/123783"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/123788",
+    "title": "Material-led creative processes in the context of design education",
+    "authors": [
+      "Laamanen, Tarja-Kaarina",
+      "Mäkelä, Maarit",
+      "Seitamaa-Hakkarainen, Pirita"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1386/adch_00061_1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/123788"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/123909",
+    "title": "Building-GNN: Exploring a co-design framework for generating controllable 3D building prototypes by graph and recurrent neural networks",
+    "authors": [
+      "Zhong, Ximing",
+      "Koh, Immanuel",
+      "Fricker, Pia"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.52842/conf.ecaade.2023.2.431",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/123909"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124178",
+    "title": "How digital-only fashion brands are creating more participatory models of fashion co-design",
+    "authors": [
+      "Huggard, Emily",
+      "Särmäkari, Natalia"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1386/fspc_00176_1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124178"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124247",
+    "title": "Accelerating transition toward district heating-system decarbonization by policy co-design with key investors : opportunities and challenges",
+    "authors": [
+      "Auvinen, Karoliina",
+      "Meriläinen, Teemu",
+      "Saikku, Laura",
+      "Hyysalo, Sampsa",
+      "Juntunen, Jouni K."
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/15487733.2023.2256622",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124247"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124253",
+    "title": "Computational Design Methods for Enhancing Urban Biodiversity : The flight of the bumblebee: Improving urban green for ecosystem service",
+    "authors": [
+      "Qiu, Yanxia",
+      "Fricker, Prof. Dr. Pia"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124253"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124369",
+    "title": "Computational analyses of dynamics of architectural space",
+    "authors": [
+      "Han, Yoon J.",
+      "Kotnik, Toni"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.37457/arf.130438",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124369"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124480",
+    "title": "Design probes applied as fashion design probes",
+    "authors": [
+      "Valle Noronha, Julia",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124480"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124490",
+    "title": "Before Repairing : Pausing and Knotting Discomfort",
+    "authors": [
+      "Pérez-Bustos, Tania",
+      "Botero, Andrea"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.7764/disena.23.article.1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124490"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124496",
+    "title": "The art of structural relation: Kazuo Shinohara’s “strong structures” design thinking",
+    "authors": [
+      "Wang, Shuaizhong",
+      "Kotnik, Toni"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/13467581.2023.2182633",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124496"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124803",
+    "title": "Resistant and remediating design",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/14606925.2023.2215422",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124803"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124806",
+    "title": "Whom do we include and when? participatory design with vulnerable groups",
+    "authors": [
+      "Hodson, Elise",
+      "Svanda, Annukka",
+      "Dadashi, Nastaran"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/15710882.2022.2160464",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124806"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124876",
+    "title": "From Social Impact to Collective Knowledge and Skill Building : Committing and Valuing in Design Research that Makes a Difference",
+    "authors": [
+      "Vertiz Marquez, Brenda",
+      "Pinto Torres, Nathaly",
+      "Botero, Andrea"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.5151/ead2023-4esp-01full-15brenda-vertiz-marquez-et-al",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124876"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124882",
+    "title": "Turning inwards for change : The role of inner conditions in transformative co-design",
+    "authors": [
+      "Hakio, Kirsi",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.1080/14606925.2023.2247272",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124882"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/124915",
+    "title": "CoDesign for sustainability transitions: How a long-term research agenda can instill social impact and provide an envelope for doctoral education",
+    "authors": [
+      "Hyysalo, Sampsa",
+      "Marttila, Tatu"
+    ],
+    "year": 2023,
+    "doi": "https://doi.org/10.5151/ead2023-4esp-01full-03sampsa-hyysalo-et-al",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/124915"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/125286",
+    "title": "Finnish Architects in China : Discourses and Practices",
+    "authors": [
+      "Zhao, Yizhou"
+    ],
+    "year": 2023,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/125286"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/125787",
+    "title": "Mammoths and Reindeer : Speculative design imaginaries and technoscientific care in the Arctic",
+    "authors": [
+      "Müller, Martin",
+      "Tikka, Emilia"
     ],
     "year": 2024,
-    "doi": "https://doi.org/10.4230/oasics.atmos.2024.15",
-    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/131536"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/125787"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/135018",
-    "title": "Proposing Bus Adapter Connections in IEC 61499",
+    "id": "oai:aaltodoc.aalto.fi:123456789/127000",
+    "title": "Grounded Principles for Open Design Pedagogy - Design Perspectives on Early Years Pedagogy with Digital Technologies",
     "authors": [
-      "Jhunjhunwala, Pranay",
-      "Vyatkin, Valeriy"
+      "Brinck, Jaana"
     ],
-    "year": 2025,
-    "doi": "https://doi.org/10.1109/iecon55916.2024.10905348",
-    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/135018"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/127000"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/141556",
-    "title": "Travelling buildings – The Terijoki villas under changing geopolitical conditions",
+    "id": "oai:aaltodoc.aalto.fi:123456789/127233",
+    "title": "Pictograms for resistance : historicity and militant design research in Amazonian Ecuador",
     "authors": [
-      "Berger, Laura",
-      "Böök, Netta"
+      "Pinto, Nathaly",
+      "Julier, Guy",
+      "Tapia, Andrés"
     ],
-    "year": 2025,
-    "doi": "https://doi.org/10.37449/ennenjanyt.159946",
+    "year": 2024,
+    "doi": "https://doi.org/10.1177/14704129231196442",
     "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/141556"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/127233"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/17248",
-    "title": "Design for gender equality - the history of cohousing ideas and realities",
+    "id": "oai:aaltodoc.aalto.fi:123456789/127621",
+    "title": "Estonian Blues: Natural dyes as enhancers of environmental, intergenerational and heritage bonds in Fashion Design education",
     "authors": [
-      "Vestbro, Dick Urban",
-      "Horelli, Liisa"
+      "Valle Noronha, Julia",
+      "Puppart, Piret"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1386/crre_00118_1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/127621"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/127638",
+    "title": "Let it Flow - Making Generative Service Design Work",
+    "authors": [
+      "Knight, John R."
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/127638"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/127736",
+    "title": "Making Things that Change : Reconsidering the Fluid Nature of Creative Productions in Research through Art, Design, and Craft",
+    "authors": [
+      "Vega, Luis",
+      "Valle-Noronha, Julia",
+      "Markle, Gary",
+      "Latva-Somppi, Riikka",
+      "Hulkkonen, Kati Sara Sanelma",
+      "Falin, Priska",
+      "Korolainen, Hanna-Kaisa",
+      "Suomi, Maiju",
+      "Giabardo, Gianluca"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.54916/rae.142574",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/127736"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128401",
+    "title": "Genius or Charlatanry? - A psychobiographical reinterpretation of the life and works of Buckminster Fuller",
+    "authors": [
+      "Toiviainen, Pasi P."
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128401"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128418",
+    "title": "Advancing Sustainability Transformations - Co-design for Sustainable Development Policies",
+    "authors": [
+      "Lähteenoja, Satu"
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128418"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128644",
+    "title": "Toward a social responsibility-based model for urban design education",
+    "authors": [
+      "Khatami, Seyed Mahdi",
+      "Boujari, Pouria",
+      "Ranjbar, Ehsan"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1057/s41289-022-00195-9",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128644"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128653",
+    "title": "Design through Availability: Reform in the Architectural Design Process for Reuse",
+    "authors": [
+      "Järvelä, Havu",
+      "Lehto, Antti"
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128653"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128687",
+    "title": "Politicizing the Pictogram : Participatory Design Approaches within Indigenous Community Communication",
+    "authors": [
+      "Pinto Torres, Nathaly",
+      "Botero, Andrea",
+      "Julier, Guy"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.57698/v18i1.05",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128687"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128709",
+    "title": "AI as a Collaborative Partner in Landscape Form-finding",
+    "authors": [
+      "Tan, Chuheng",
+      "Zhong, Ximing",
+      "Fricker, Pia"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.14627/537752008",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128709"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/128710",
+    "title": "Inclusions – Landscape Narratives for Enhancing Landscape Architecture Pedagogy",
+    "authors": [
+      "Fricker, Pia",
+      "Hayek, Ulrike Wissen",
+      "Monacella, Rosalea",
+      "Ahn, Susann",
+      "Ervin, Stephen",
+      "Hensel, Michael",
+      "Rekittke, Jörg",
+      "Schroth, Olaf",
+      "Urech, Philipp R. W.",
+      "Vollmer, Matthias"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.14627/537752089",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/128710"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/12937",
+    "title": "Löytäjät Elokuvantajua rakentamassa. Yhteisöllinen WWW-palvelun tuotanto",
+    "authors": [
+      "Raike, Antti"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/12937"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/129502",
+    "title": "”Clay to Play With”: Generative AI Tools in UX and Industrial Design Practice",
+    "authors": [
+      "Uusitalo, Severi",
+      "Salovaara, Antti",
+      "Jokela, Tero",
+      "Salmimaa, Marja"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661624",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/129502"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/129700",
+    "title": "Transitions to Multispecies Futures in the Design Classroom",
+    "authors": [
+      "Gaziulusoy, İdil",
+      "Berglund, Eeva"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.21606/drs.2024.781",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/129700"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/129751",
+    "title": "‘Does Phosphorus Want to Sound Like That?’: Experiencing More-Than-Human Futures",
+    "authors": [
+      "Rosen, Anton",
+      "Sanchez, Camilo",
+      "Epp, Felix Anand"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.21606/drs.2024.829",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/129751"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/130406",
+    "title": "Articulating Felt Senses for More-Than-Human Design – A Viewpoint for Noticing",
+    "authors": [
+      "Núñez-Pacheco, Claudia",
+      "Rosén, Anton Poikolainen"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3643834.3661554",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/130406"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/130763",
+    "title": "Designing for and with the 'Digital Citizen'",
+    "authors": [
+      "Kirk, David S.",
+      "Boztepe, Suzan",
+      "Christiansson, Jörn",
+      "De Götzen, Amalia",
+      "Ehrenberg, Nils",
+      "Grönvall, Erik",
+      "Lawson, Shaun",
+      "Linde, Per",
+      "Saad-Sulonen, Joanna",
+      "Vlachokyriakos, Vasilis"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3656156.3658383",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/130763"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/130846",
+    "title": "Bird feeding devices exclude unwelcome visitors. More-than-humans shaping the architecture and technology of birdfeeders in twentieth-century Finland.",
+    "authors": [
+      "Lähdesmäki, Heta",
+      "Aivelo, Tuomas",
+      "Savolainen, Panu"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1177/25148486241242680",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/130846"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131082",
+    "title": "Accelerating the energy transition toward zero-emission district heating systems through policy codesign",
+    "authors": [
+      "Auvinen, Karoliina"
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131082"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131344",
+    "title": "Evolving PD tools through iteration : Analyzing templates used for multiple participatory renewable energy projects",
+    "authors": [
+      "Kuu-Park, Goeun",
+      "Botero, Andrea",
+      "Kohtala, Cindy"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3661455.3669869",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131344"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131542",
+    "title": "Thinking with people and pots: A practice-led design study of sociomaterially distributed thought processes",
+    "authors": [
+      "Vega, Luis"
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131542"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131924",
+    "title": "(Re)Framing the 'Smart' Fridge : Configurable Technology for Activist Food-Sharing Communities",
+    "authors": [
+      "Berns, Katie",
+      "Karlgren, Kasper",
+      "Menon, Arjun",
+      "Rossitto, Chiara",
+      "Tholander, Jakob",
+      "McMillan, Donald"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3679318.3685344",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131924"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131943",
+    "title": "Participatory Design Interventions : Supporting University Student Care Networks During Covid",
+    "authors": [
+      "Pinto Torres, Nathaly",
+      "Barriga Abril, Xavier",
+      "Machoa, Katy",
+      "Minoia, Paola"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1007/978-3-031-58860-0_9",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131943"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131968",
+    "title": "Opportunities with Multi-Layer Weave Structures in Woven E-Textile Design",
+    "authors": [
+      "Pouta, Emmi",
+      "Mikkonen, Jussi",
+      "Salovaara, Antti"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3689039",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131968"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/131988",
+    "title": "Peering through Time: Harnessing Anticipation in More‐than‐Human Design",
+    "authors": [
+      "Sanchez, Camilo",
+      "Poikolainen Rosen, Anton",
+      "Salovaara, Antti",
+      "Epp, Felix A.",
+      "Moesgen, Tim"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.4324/9781003467731-18",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/131988"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132095",
+    "title": "Adapting Cities for Older Adults Through Universal Design",
+    "authors": [
+      "Verma, Ira"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.3233/shti241012",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132095"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132211",
+    "title": "Designing for Social Reproduction : Towards the Sustainment of Public Space Interventions in Mexico City's Colonias Populares",
+    "authors": [
+      "Vertiz Marquez, Brenda Victoria"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3666094.3666113",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132211"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132222",
+    "title": "Uncertainties as Generative Resources in Research through Design: Three Dynamics for Moving in a Design Space",
+    "authors": [
+      "Epp, Felix Anand",
+      "Poikolainen Rosén, Anton",
+      "Salovaara, Antti",
+      "Sanchez, Camilo"
+    ],
+    "year": 2024,
+    "doi": "https://doi.org/10.1145/3689041",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132222"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132568",
+    "title": "Visualising Our Future - Designing the Public Realm Together",
+    "authors": [
+      "Ahlava, Antti"
+    ],
+    "year": 2024,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132568"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132791",
+    "title": "Four Questions for Systemic More-Than-Human Design in Practice",
+    "authors": [
+      "Rosén, Anton Poikolainen",
+      "Chen, Yuxi",
+      "Törnroth, Suzanna",
+      "Gaziulusoy, İdil",
+      "Marttila, Tatu"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.4324/9781003467731-13",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132791"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132800",
+    "title": "Introduction",
+    "authors": [
+      "Poikolainen Rosen, Anton",
+      "Salovaara, Antti",
+      "Botero, Andrea",
+      "Juul Søndergaard, Marie Louise"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.4324/9781003467731-1",
+    "kind": "Foreword / postscript",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132800"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132817",
+    "title": "Public Libraries and Digital Service Development : Bridging the Gaps in Company Collaborations",
+    "authors": [
+      "Ehrenberg, Nils",
+      "Hergatacorzian, Camila",
+      "Keinonen, Turkka"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.57698/v18i3.05",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132817"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/132826",
+    "title": "Weathering with Storms and Grounds as a More-than-Human Design Practice: Encountering Winds, Soils and Rocks",
+    "authors": [
+      "Rumo, Delphine",
+      "Lauterbach, Gloria"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.4324/9781003467731-8",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/132826"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/133161",
+    "title": "Contextually responsive interaction design - Design ideation for dynamic contexts",
+    "authors": [
+      "Pejoska, Jana"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/133161"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/13321",
+    "title": "Personalised assistive products : managing stigma and expressing the self",
+    "authors": [
+      "Jacobson, Susanne"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/13321"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/13352",
+    "title": "COMBINING PARTICIPATIONS. Expanding the Locus of Participatory E‐Planning by Combining Participatory Approaches in the Design of Digital Technology and in Urban Planning.",
+    "authors": [
+      "Saad-Sulonen, Joanna"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/13352"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/133839",
+    "title": "Other than Text : Media Used in Game Studies Publications. A Computational Analysis into 20 Years of Publications of the Game Studies Journal, and an Appeal for Research Through Design",
+    "authors": [
+      "Miltiadis, Constantinos"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/133839"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/133880",
+    "title": "Design for Sustainability : Reflections on a Dynamically Evolving Field",
+    "authors": [
+      "Ceschin, Fabrizio",
+      "Gaziulusoy, İdil"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.4324/9781003365433-4",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/133880"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/133883",
+    "title": "Gender and the Diversity of the Human Body as Challenges for the Inclusive Design of Wearable Technology",
+    "authors": [
+      "Hokka, Jenni"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1080/17569370.2023.2250153",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/133883"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/134270",
+    "title": "A Systemic Approach and Typology for Identifying Natural Nonhuman Stakeholders When Designing for Sustainability",
+    "authors": [
+      "Veselova, Emilija",
+      "Gaziulusoy, İdil"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.4324/9781003365433-42",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/134270"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/134432",
+    "title": "Designing Together in Multi-Crisis Times : Effects of Mundane and Strategic Work with Indigenous Communities in the Ecuadorian Amazon",
+    "authors": [
+      "Pinto Torres, Nathaly",
+      "Nango, Efrén"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.14361/9783839476031-013",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/134432"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/136779",
+    "title": "Viewpoint: advancing service design with practitioners’ insights",
+    "authors": [
+      "Caic, Martina",
+      "Solsona Caba, Nuria",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1108/jsm-11-2024-0602",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/136779"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/137554",
+    "title": "From the Amazon to the catwalks and back : On noticing Brazilian indigenous fashion designers and decentering fashion capitals.",
+    "authors": [
+      "Valle-Noronha, Julia"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/137554"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/137561",
+    "title": "A Relational Design Framework for Designing Feminist Futures in the Finnish Popular Music Sector",
+    "authors": [
+      "Rantanen, Tomi",
+      "Marttila, Tatu",
+      "Gaziulusoy, İdil"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.21606/nordes.2025.29",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/137561"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/137574",
+    "title": "In Relation : Brazilian Indigenous Fashion Design",
+    "authors": [
+      "Valle-Noronha, Julia"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.21606/nordes.2025.37",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/137574"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/13770",
+    "title": "From Disposable to Sustainable: the Complex Interplay between Design and Consumption of Textiles and Clothing",
+    "authors": [
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/13770"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/137707",
+    "title": "The Relational Becoming of a Participatory Design Commoner",
+    "authors": [
+      "Marttila, Sanna",
+      "Van Amstel, Frederick",
+      "Saad-Sulonen, Joanna",
+      "Botero, Andrea",
+      "Poderi, Giacomo",
+      "Teli, Maurizio",
+      ", P.D. Commoners"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.21606/nordes.2025.22",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/137707"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/13788",
+    "title": "Artistic Research in Public Space. Participation in material-based art.",
+    "authors": [
+      "Berg, Arild"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/13788"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138377",
+    "title": "How to talk of and evaluate relationality in design research and practice?",
+    "authors": [
+      "Mattelmäki, Tuuli",
+      "Light, Ann",
+      "Botero, Andrea",
+      "Choi, Jaz Hee-jeong",
+      "Dolejšová, Markéta"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.21606/nordes.2025.81",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138377"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138378",
+    "title": "Qualitative Evolutionary Design for Social Innovation in Architecture",
+    "authors": [
+      "Ahlava, Antti"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138378"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138411",
+    "title": "A survey to investigate approaches, methods, contents and objectives in education for sustainable design",
+    "authors": [
+      "Borgianni, Yuri",
+      "Berni, Aurora",
+      "Gaziulusoy, İdil",
+      "Ceschin, Fabrizio",
+      "Terzioglu, Nazli",
+      "Franconi, Alessio",
+      "Ruiz-Pastor, Laura",
+      "Becattini, Niccoló"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1017/dsj.2025.10020",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138411"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138608",
+    "title": "Unveiling Kinetic Expression : Exploring Design Variables and Processes for Dynamic Woven Textiles",
+    "authors": [
+      "Ojala, Aino Elina",
+      "Pouta, Emmi",
+      "Gowrishankar, Ramyah"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1145/3689050.3704950",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138608"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138861",
+    "title": "Human-Centred Design Approach to Find User Requirements for a Status Monitoring System in a Remote and Autonomous Multivessel Operation",
+    "authors": [
+      "Joseph, Antony William",
+      "Törmä, Iiro"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.1007/978-3-032-00777-3_9",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138861"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/138882",
+    "title": "What do We Design with the Public Sector? Disentangling Service Design Deliverables in Education",
+    "authors": [
+      "Solsona Caba, Nuria",
+      "Caic, Martina",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.57698/v19i2.06",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/138882"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/139177",
+    "title": "Design Governance – The Establishment of Data-Driven Decision-Making in Industrial Innovation Management in Digital Convergence",
+    "authors": [
+      "Rajasalo, Heikki"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/139177"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/139338",
+    "title": "Intergroup contact with participatory telerobotic puppetry Tricksters in the face of intractable conflicts",
+    "authors": [
+      "Peled, Avner"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/139338"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/140469",
+    "title": "Prototyping for service. Collaborative, transformative and translational practice",
+    "authors": [
+      "Hyvärinen, Jaana"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/140469"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/140861",
+    "title": "Participatory design for resistance: The making of pictograms with indigenous youth in the Ecuadorian Amazon",
+    "authors": [
+      "Pinto, Nathaly"
+    ],
+    "year": 2025,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/140861"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/141536",
+    "title": "Youth engagement in urban living labs: tools, methods and pedagogies",
+    "authors": [
+      "Charalambous, Nadia",
+      "Panayi, Christina",
+      "Mady, Christine",
+      "Augustinčić, Tomislav",
+      "Berc, Dafne"
+    ],
+    "year": 2025,
+    "doi": "https://doi.org/10.5334/bc.643",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/141536"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/141822",
+    "title": "What Makes Clothes Meaningful to You? : Conversations about Clothes, on Clothes, as a Tool for Meaning Creation in Fashion Design",
+    "authors": [
+      "Gorniak, Kasia"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.37198/apria.07.08.a4",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/141822"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/142417",
+    "title": "Toward Constructive Design Philosophy?",
+    "authors": [
+      "Koskinen, Ilpo",
+      "Dixon, Brian",
+      "Krogh, Peter Gall",
+      "Mäkelä, Maarit"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.5040/9781350494480.ch-2",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/142417"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/142920",
+    "title": "Social Innovation as Business : New Design Method for Architecture Offices",
+    "authors": [
+      "Ahlava, Antti"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1201/9781003491781-9",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/142920"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/14306",
+    "title": "The Urban Information Toolkit: Enabling collaborative work around issues related to urban everyday life",
+    "authors": [
+      "Laakso, Neea",
+      "Saad-Sulonen, Joanna",
+      "Botero, Andrea"
+    ],
+    "year": 2014,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/14306"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143168",
+    "title": "Political internet memes in contemporary China : The rhetorical, mnemonic, and phenomenological justification of their expression and reception as a multimodal mediated action",
+    "authors": [
+      "Zhang, Ningfeng"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143168"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143275",
+    "title": "Futures HCD - Human-Centred Design for Uncertain Future",
+    "authors": [
+      "Joseph, Antony William",
+      "Roto, Virpi",
+      "Stolt, Vivian"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1007/978-3-031-95334-7_2",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143275"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143304",
+    "title": "Transparent Autonomy and Human Work Interaction Design",
+    "authors": [
+      "Bouzekri, Elodie",
+      "Clemmensen, Torkil",
+      "Joseph, Antony William",
+      "Guerra Lopes, Arminda",
+      "Moreno Rangel, Adriana",
+      "Abdelnour Nocera, José"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1007/978-3-032-05008-3_75",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143304"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143545",
+    "title": "Sensing the Invisible : Architectural approaches to sonifying microbial life in Icelandic turf houses through VR",
+    "authors": [
+      "Navarro Villacampa, Aurora",
+      "Tampu, Eduard Mihai",
+      "Fricker, Pia",
+      "Hafsteinsson, Sigurjón Baldur",
+      "Grétarsdóttir, Tinna"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143545"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143622",
+    "title": "From Automation to Intelligence : An AI agent for spatial reasoning and 3D co-design",
+    "authors": [
+      "Zhong, Ximing",
+      "Li, Yingkai",
+      "Fricker, Pia",
+      "Zhang, Xiange"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.52842/conf.ecaade.2025.1.431",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143622"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/143827",
+    "title": "Conceptualizing the Zero-Energy Campus as a planning object : An integrated framework for Meso-Scale planning",
+    "authors": [
+      "Yang, Ting",
+      "Ahlava, Antti",
+      "Su, Yunsheng",
+      "Wang, Jingyi"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1007/s44243-026-00078-5",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/143827"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/144080",
+    "title": "\"Our Secret Language\": Co-Creating and Ritualizing Affective Haptics in Long-Distance Relationships",
+    "authors": [
+      "Yang, Mengshi",
+      "Moesgen, Tim",
+      "Hu, Ruochen",
+      "Zhou, Yen Hang",
+      "Li, Zhining",
+      "Salovaara, Antti"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1145/3772318.3790278",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/144080"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/144238",
+    "title": "Huomisen vaatekaappi & Aalto-yliopisto",
+    "authors": [
+      "Niinimäki, Kirsi",
+      "Kääriäinen, Pirjo"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "J Muu elektroninen julkaisu",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/144238"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/145216",
+    "title": "Designing meaningful industrial workplaces: a framework for collaborative research projects",
+    "authors": [
+      "Aromaa, Susanna",
+      "Lehtovaara, Joonas",
+      "Myllylä, Mari",
+      "Roto, Virpi",
+      "Saariluoma, Pertti",
+      "Salonen, Tuisku-Tuuli",
+      "Salo-Pöntinen, Henrikki",
+      "Tammentie, Bastian",
+      "Viljakainen, Anna",
+      "Wahlström, Mikael"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1007/s41233-026-00077-w",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/145216"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/145376",
+    "title": "Materialising energy transition through participatory design interventions in schools",
+    "authors": [
+      "Kuu-Park, Goeun"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/145376"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/145414",
+    "title": "Design in Between Worlds",
+    "authors": [
+      "Tikka, Emilia"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/145414"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/145497",
+    "title": "Redesigning transition arenas for power-sensitive participation",
+    "authors": [
+      "Rantanen, Tomi",
+      "Marttila, Tatu",
+      "Gaziulusoy, İdil"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.21606/drs.2026.1739",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/145497"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/146104",
+    "title": "Weaving relational dynamics : Civil servant agency in service design collaboration",
+    "authors": [
+      "Svanda, Annukka",
+      "Caic, Martina",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.21606/drs.2026.1285",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/146104"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/146107",
+    "title": "Uncovering Hidden Inequalities through Participatory Service Design : Institutional Service Failure in Public Employment Services",
+    "authors": [
+      "Svanda, Annukka",
+      "Caic, Martina",
+      "Keinonen, Turkka"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1145/3796624.3796641",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/146107"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/146130",
+    "title": "Hybrid Terrain Modeling : A Multidimensional Landscape Design Method",
+    "authors": [
+      "Häusler, Dennis",
+      "Vollmer, Matthias",
+      "Voser, Martina",
+      "Fricker, Prof. Dr. Pia"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.14627/537770039",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/146130"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/146145",
+    "title": "Addressing implicit ageism in service design: A new perspective on multidisciplinary service design for older adults",
+    "authors": [
+      "Comincioli, Elena"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/146145"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/146648",
+    "title": "Slow biodesign : a bioreceptive approach for multispecies participatory design practices",
+    "authors": [
+      "Pollini, Barbara"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/146648"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/147362",
+    "title": "Inclusion, agency, and justice by design",
+    "authors": [
+      "Svanda, Annukka"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/147362"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/148522",
+    "title": "Mood as a Means Versus an End : Unraveling How Experienced Practitioners Address Mood in Experience Design",
+    "authors": [
+      "Peng, Zhuochao",
+      "Xue, Haian",
+      "Joseph, Antony William",
+      "Roto, Virpi",
+      "Desmet, Pieter M.A."
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.57698/v20i1.01",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/148522"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/149086",
+    "title": "From design to co-nature’ing: toward a metabolic epistemology of design in the age of human–nature–intelligence ecologies",
+    "authors": [
+      "Mateus, Américo",
+      "Leonor, Susana",
+      "Lohmann, Julia",
+      "Palma, David"
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1017/s2977905726100912",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/149086"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/149741",
+    "title": "Interdisciplinary paradigms with mycelium : submerged liquid fermentation as a space for design inquiry",
+    "authors": [
+      "Arias Barrantes, Manuel",
+      "Peuhkurinen, Lauri",
+      "Moisanen, Henri",
+      "Pollini, Barbara",
+      "Penttilä, Merja",
+      "Szilvay, Géza R."
+    ],
+    "year": 2026,
+    "doi": "https://doi.org/10.1017/s2977905726101024",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/149741"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/149882",
+    "title": "Many ways of being a designer: essays on design education",
+    "authors": [
+      "Kääriäinen, Pirjo",
+      "Mattelmäki, Tuuli",
+      "Paavilainen, Heidi"
+    ],
+    "year": 2026,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/149882"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/15113",
+    "title": "Dwelling as product : perspectives on housing, users and the expansion of design",
+    "authors": [
+      "Pirinen, Antti"
     ],
     "year": 2015,
-    "doi": "https://doi.org/10.2148/benv.38.3.315",
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/15113"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/15241",
+    "title": "You are important! : designing for health agents in Vila Rosario",
+    "authors": [
+      "Judice, Marcelo Ortega"
+    ],
+    "year": 2015,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/15241"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/15242",
+    "title": "Design for hope : designing health information in Vila Rosario",
+    "authors": [
+      "Judice, Andrea Castello Branco"
+    ],
+    "year": 2015,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/15242"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/15345",
+    "title": "Science Fiction Prototypes as Design Outcome of Research",
+    "authors": [
+      "Kymäläinen, Tiina"
+    ],
+    "year": 2015,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/15345"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/15347",
+    "title": "Intuition unleashed: on the application and development of intuition in the creative process",
+    "authors": [
+      "Raami, Asta"
+    ],
+    "year": 2015,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/15347"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/16544",
+    "title": "Facilitating change : towards resident-oriented housing modernisation with collaborative design",
+    "authors": [
+      "Soini, Katja"
+    ],
+    "year": 2015,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/16544"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/19643",
+    "title": "Searching Knowledge CinemaSense as a Case Study in Collaborative Production of a WWW Service in Two Universities",
+    "authors": [
+      "Raike, Antti"
+    ],
+    "year": 2016,
+    "doi": "https://doi.org/10.1007/11788713",
     "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/17248"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/19643"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/20082",
+    "title": "Frame it simple! : towards a theory of conceptual designing",
+    "authors": [
+      "Ylirisku, Salu"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/20082"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/20094",
+    "title": "Kadonneet kirjaintyypit",
+    "authors": [
+      "Itkonen, Markus"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/20094"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/20103",
+    "title": "Muotoiltu ideologia : automuotoilu poliittisen järjestelmän välineenä DDR:ssä 1949-1990",
+    "authors": [
+      "Järvinen, Juha"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/20103"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/20110",
+    "title": "Places of creation : design in industrial agglomerations",
+    "authors": [
+      "Linder, Emma"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/20110"
   },
   {
     "id": "oai:aaltodoc.aalto.fi:123456789/20114",
@@ -231,62 +2940,1574 @@
     ],
     "year": 2016,
     "doi": "",
-    "kind": "G4 Monografiaväitöskirja",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
     "url": "https://aaltodoc.aalto.fi/handle/123456789/20114"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/2838",
-    "title": "A VLSI array processor architecture for emulating resistive network filtering",
+    "id": "oai:aaltodoc.aalto.fi:123456789/20224",
+    "title": "Opening the electrome : redefining home for energy studies through design practice",
     "authors": [
-      "Kananen, Asko"
+      "Acharya, Karthikeya"
     ],
-    "year": 2012,
+    "year": 2016,
     "doi": "",
-    "kind": "G4 Monografiaväitöskirja",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/2838"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/20224"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/28735",
-    "title": "Understanding Patient Choice: A Study of Women’s Choice in Prenatal Screening and Testing",
+    "id": "oai:aaltodoc.aalto.fi:123456789/21757",
+    "title": "Storied design : narrative matters in design presentation",
     "authors": [
-      "Chen, An"
+      "Liao, Tjhien"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/21757"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/23396",
+    "title": "Mobile apps for reflection in learning: A design research in K-12 education",
+    "authors": [
+      "Leinonen, Teemu",
+      "Keune, Anna",
+      "Veermans, Marjaana",
+      "Toikkanen, Tarmo"
+    ],
+    "year": 2016,
+    "doi": "https://doi.org/10.1111/bjet.12224",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/23396"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/23535",
+    "title": "The Structure and Components for the Open Education Ecosystem - Constructive Design Research of Online Learning Tools",
+    "authors": [
+      "Põldoja, Hans"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/23535"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/23821",
+    "title": "Physiological measurements of drawing and forming activities",
+    "authors": [
+      "Leinikka, Marianne",
+      "Huotilainen, Minna",
+      "Seitamaa-Hakkarainen, Pirita",
+      "Groth, Camilla",
+      "Rankanen, Mimmu",
+      "Mäkelä, Maarit"
+    ],
+    "year": 2016,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/23821"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/24181",
+    "title": "Design- and craft thinking analysed as embodied cognition",
+    "authors": [
+      "Groth, Camilla"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.7577/formakademisk.1481",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/24181"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/24395",
+    "title": "Fashion in-between : artisanal design and production of fashion",
+    "authors": [
+      "Aakko, Maarit"
     ],
     "year": 2017,
     "doi": "",
-    "kind": "G5 Artikkeliväitöskirja",
+    "kind": "dissertation",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/28735"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/24395"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/37028",
-    "title": "Approaching Aesthetics on User Interface and Interaction Design",
+    "id": "oai:aaltodoc.aalto.fi:123456789/24475",
+    "title": "Kestävää muotoilua mallintamassa : tulkitseva käsitetutkimus taideteollisen muotoilun näkökulmasta",
     "authors": [
-      "Wang, Chen",
-      "Sarcar, Sayan",
-      "Kurosu, Masaaki",
-      "Bardzell, Jeffrey",
-      "Oulasvirta, Antti",
-      "Miniukovich, Aliaksei",
-      "Ren, Xiangshi"
+      "Niemelä, Mirja"
     ],
-    "year": 2019,
-    "doi": "https://doi.org/10.1145/3279778.3279809",
+    "year": 2017,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/24475"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/24839",
+    "title": "Making sense through hands : design and craft practice analysed as embodied cognition",
+    "authors": [
+      "Groth, Camilla"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/24839"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25035",
+    "title": "Tracing Passenger Safety Perception for Cruise Ship Design",
+    "authors": [
+      "Ahola, Markus"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25035"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25192",
+    "title": "The Barriers and Enablers of Co-design for Services",
+    "authors": [
+      "Pirinen, Antti"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25192"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25259",
+    "title": "Design as freedom",
+    "authors": [
+      "Garduño García, Claudia"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25259"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25280",
+    "title": "Resolutions : responsibility in graphic design",
+    "authors": [
+      "Itkonen, Marjatta",
+      "Uppa, Heidi",
+      "Hudson, Sarah"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25280"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25284",
+    "title": "Resolutions : responsibility in graphic design",
+    "authors": [
+      "Itkonen, Marjatta (concept)",
+      "Uppa, Heidi (editor)",
+      "Hudson, Sarah (editor)"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25284"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25305",
+    "title": "Engaging teenagers productively in service design",
+    "authors": [
+      "Bowen, Simon",
+      "Sustar, Helena",
+      "Wolstenholme, Daniel",
+      "Dearden, Andy"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1016/j.ijcci.2014.02.001",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25305"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25382",
+    "title": "Reflection in Learning through a Self-monitoring Device: Design Research on EEG Self-Monitoring during a Study Session",
+    "authors": [
+      "Durall, Eva",
+      "Leinonen, Teemu",
+      "Gros, Begoña",
+      "Rodriguez-Kaarto, Tania"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.16993/dfl.75",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25382"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25726",
+    "title": "What is sought from graphic designers? A first thematic analysis of job offers for graphic design positions in the United Kingdom",
+    "authors": [
+      "Nicoletti Dziobczenski, Paulo",
+      "Person, Oscar"
+    ],
+    "year": 2017,
+    "doi": "",
     "kind": "A4 Artikkeli konferenssijulkaisussa",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/37028"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25726"
   },
   {
-    "id": "oai:aaltodoc.aalto.fi:123456789/41389",
-    "title": "Explorable Information Spaces - Designing Entity Affordances for Fluid Information Exploration",
+    "id": "oai:aaltodoc.aalto.fi:123456789/25757",
+    "title": "Koe puu! = Touch wood! : Puustudion töitä 2000-2012 = Wood Studio works 2000-2012",
     "authors": [
-      "Klouche, Khalil"
+      "Sahi, Karola",
+      "Paakkanen, Mikko"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25757"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25759",
+    "title": "Graafisen suunnittelijan toinen kieli ja muita kirjoituksia",
+    "authors": [
+      "Hinkka, Jorma"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25759"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25779",
+    "title": "Evolution of design for sustainability: From product design to design for system innovations and transitions",
+    "authors": [
+      "Ceschin, Fabrizio",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1016/j.destud.2016.09.002",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25779"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25838",
+    "title": "Infrastructuring for Cultural Commons",
+    "authors": [
+      "Marttila, Sanna",
+      "Botero, Andrea"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1007/s10606-017-9273-1",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25838"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/25924",
+    "title": "The meta-design of systems: how design, data and software enable the organizing of open, distributed, and collaborative processes",
+    "authors": [
+      "Menichinelli, Massimo",
+      "Valsecchi, Francesca"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.4995/ifdp.2016.3301",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/25924"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/26211",
+    "title": "Hyvinvoinnin muotoilu",
+    "authors": [
+      "Keinonen, Turkka",
+      "Vaajakallio, Kirsikka",
+      "Honkonen, Janos (toimittajat)"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/26211"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/26214",
+    "title": "Finnish design : a concise history",
+    "authors": [
+      "Korvenmaa, Pekka (author)",
+      "Kokkonen, Jüri (translator)"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/26214"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/26216",
+    "title": "Furniture repertory",
+    "authors": [
+      "Relander, Martin",
+      "Liesimaa, Noora (editors)"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/26216"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/26232",
+    "title": "Visuaalinen kuluttaminen : katseita, makuja ja muotokieliä",
+    "authors": [
+      "Takala-Schreib, Vuokko"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "D4 Julkaistu kehittämis- tai tutkimusraportti tai -selvitys",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/26232"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/26897",
+    "title": "Bicycles and plants : designing for conviviality and meaningful social relations through collaborative services",
+    "authors": [
+      "Wu, Yiying"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/26897"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28115",
+    "title": "Go with the Flow: Accelerated digital design in the age of Post-agility",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28115"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28163",
+    "title": "On The Teachers Role in Interactive Prototyping",
+    "authors": [
+      "Mikkonen, Jussi"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352651",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28163"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28177",
+    "title": "Shifting Conversations for Sustainability Transitions Using Participatory Design Visioning",
+    "authors": [
+      "Gaziulusoy, Idil",
+      "Ryan, Chris"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352709",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28177"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28251",
+    "title": "Preparing design students for the market: an initial investigation on the required knowledge and skills for graphic designers in Brazil",
+    "authors": [
+      "Nicoletti Dziobczenski, Paulo",
+      "Rezende Galeotti, Anamaria Amaral"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352653",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28251"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28274",
+    "title": "The Aesthetics of The Artificial – Critical Design’s Lost Dominion",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28274"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28315",
+    "title": "Rethinking the Roles of Fashion Designers: The Case of Pre Helsinki",
+    "authors": [
+      "Chun, Namkyu",
+      "Gurowa, Olga",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352944",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28315"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28325",
+    "title": "Technology choreography : Studying interactions in microsoft's future visions through dance",
+    "authors": [
+      "Poutanen, Olli",
+      "Ylirisku, Salu",
+      "Hoppu, Petri"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.17011/ht/urn.201705272516",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28325"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28349",
+    "title": "Graphic Designer Wanted: A Document Analysis of the Described Skill Set of Graphic Designers in Job Advertisements from the United Kingdom",
+    "authors": [
+      "Nicoletti Dziobczenski, Paulo",
+      "Person, Oscar"
+    ],
+    "year": 2017,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28349"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/28851",
+    "title": "Envisioning the future of public lighting with citizens for upcoming technologies",
+    "authors": [
+      "Heiskanen, Olli",
+      "Acharya, Karthikeya"
+    ],
+    "year": 2017,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352698",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/28851"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/29641",
+    "title": "Infrastructuring for cultural commons",
+    "authors": [
+      "Marttila, Sanna"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/29641"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/29855",
+    "title": "The body within the clothes: A case study on clothing design practice from a practitioner viewpoint",
+    "authors": [
+      "Valle Noronha, Julia"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/29855"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/29904",
+    "title": "Material as the Co-designer: exploring a new practice in the nature and at the studio",
+    "authors": [
+      "Aktas, Bilge"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/29904"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/30257",
+    "title": "Designing for energy transition through Value Sensitive Design",
+    "authors": [
+      "Mok, Luisa",
+      "Hyysalo, Sampsa"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.1016/j.destud.2017.09.006",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/30257"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/30989",
+    "title": "Designing Career Paths in Graphic Design: A Document Analysis of Job Advertisements for Graphic Design Positions in Finland",
+    "authors": [
+      "Nicoletti Dziobczenski, Paulo",
+      "Person, Oscar",
+      "Meriläinen, Sonja"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.1080/14606925.2018.1444874",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/30989"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/31300",
+    "title": "A sustainable level of material footprint — Benchmark for designing one-planet lifestyles",
+    "authors": [
+      "Lettenmeier, Michael"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/31300"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/31487",
+    "title": "Finding One's Own Way in Design - Reflections on Narrative Professional Identity",
+    "authors": [
+      "Kosonen, Krista"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/31487"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/33582",
+    "title": "Rural Sense: Value, Heritage, and Sensory Landscapes: Developing a design-directed approach to mapping for healthier landscapes",
+    "authors": [
+      "Van der Elst, Judith",
+      "Rissetto-Richards, Heather",
+      "Diaz-Kommonen, Lily"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/33582"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/33611",
+    "title": "Opening up New Textile Futures through Collaborative Rethinking and Remaking",
+    "authors": [
+      "Niinimäki, Kirsi",
+      "Salolainen, Maarit",
+      "Kääriäinen, Pirjo"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/33611"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/34038",
+    "title": "Platforms of co-creation : learning interprofessional design practice in creative sustainability",
+    "authors": [
+      "Marttila, Tatu"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/34038"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/34497",
+    "title": "Reflection and Self-Regulation Using Monitoring Tools in Learning - Critical Design Exploration on Self-Monitoring During Independent Study",
+    "authors": [
+      "Durall, Eva"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/34497"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/34874",
+    "title": "Re(dis)covering Fashion Designers : Interweaving Dressmaking and Placemaking",
+    "authors": [
+      "Chun, Namkyu"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/34874"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/34981",
+    "title": "NEW SILK: Studying Experimental Touchpoints between Material Science, Synthetic Biology, Design and Art",
+    "authors": [
+      "Niinimäki, Kirsi",
+      "Groth, Camilla",
+      "Kääriäinen, Pirjo"
+    ],
+    "year": 2018,
+    "doi": "https://doi.org/10.46467/tdd34.2018.34-43",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/34981"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/35051",
+    "title": "Service Operations: An Integrative Framework for Agile Service Design, Delivery and Operations",
+    "authors": [
+      "Knight, John",
+      "Gibbons, Chris",
+      "Ross, Elliot"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/35051"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/35175",
+    "title": "Practice-based research in fashion: A literature review",
+    "authors": [
+      "Valle Noronha, Julia",
+      "Chun, Namkyu"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/35175"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/35231",
+    "title": "Service design and activity theory for the meta-design of collaborative design processes",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/35231"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/35324",
+    "title": "The Service Experience Design Framework",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/35324"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/35640",
+    "title": "Em direção à prática para além do design de moda: Um estudo sobre a pesquisa de moda na educação brasileira",
+    "authors": [
+      "Valle Noronha, Julia",
+      "Chun, Namkyu"
+    ],
+    "year": 2018,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/35640"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36230",
+    "title": "Postcards from “the edge”: toward futures of design for sustainability transitions",
+    "authors": [
+      "Gaziulusoy, Idil"
     ],
     "year": 2019,
     "doi": "",
-    "kind": "G5 Artikkeliväitöskirja",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
     "venue": "Aaltodoc / Aalto University",
-    "url": "https://aaltodoc.aalto.fi/handle/123456789/41389"
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36230"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36234",
+    "title": "Vom Meer ins Museum: Co-Speculative Design – von der Utopie zur Wertegemeinschaft",
+    "authors": [
+      "Lohmann, Julia"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36234"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36235",
+    "title": "Briefing Beyond Documentation: An Interview Study on Industrial Design Consulting Practices in Finland",
+    "authors": [
+      "Park-Lee, Seungho",
+      "Person, Oscar"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36235"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36245",
+    "title": "Place-Making the Local to Reach the Global: A Case Study of Pre-Helsinki",
+    "authors": [
+      "Chun, Namkyu",
+      "Gurova, Olga"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/17569370.2018.1507168",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36245"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36260",
+    "title": "Transforming Fashion Expression through Textile Thinking",
+    "authors": [
+      "Salolainen, Maarit",
+      "Leppisaari, Anna-Mari",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36260"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36267",
+    "title": "'With whom do you feel your solidarity' - Developing a socially conscious design practice in 1960s Finland",
+    "authors": [
+      "Savola, Kaisu"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36267"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36719",
+    "title": "Material as the Co-designer: exploring a new practice in the nature and at the studio",
+    "authors": [
+      "Aktas, Bilge"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.24342/2me9-0697",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36719"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36776",
+    "title": "Disrupting Expectations: The case of an experimental pattern cutting workshop",
+    "authors": [
+      "Valle Noronha, Julia",
+      "Assis, Julia"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36776"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36912",
+    "title": "Monet and me: A Story of Inspiration",
+    "authors": [
+      "Korolainen, Hanna-Kaisa"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.24342/y05w-ab63",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36912"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/36935",
+    "title": "A data-driven approach for understanding Open Design. Mapping social interactions in collaborative processes on GitHub",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2017.1352869",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/36935"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/37321",
+    "title": "Creating a chromatic atmosphere: The colour design process of the new Koivusaari neighbourhood in Helsinki",
+    "authors": [
+      "Pyykkö, Saara"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/37321"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/37339",
+    "title": "Design for Circularity: The Case of circular.fashion",
+    "authors": [
+      "Karell, Essi"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A3 Kirjan tai muun kokoomateoksen osa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/37339"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/37401",
+    "title": "Confronting bureaucracies and assessing value in the co-production of social design research",
+    "authors": [
+      "Kimbell, Lucy",
+      "Julier, Guy"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/15710882.2018.1563190",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/37401"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/37599",
+    "title": "Drawing Together, Infrastructuring and Politics for Participatory Design: a visual collection of cases, issues, questions, and relevant literature",
+    "authors": [
+      "Botero, Andrea",
+      "Karasti, Helena",
+      "Saad-Sulonen, Joanna",
+      "Geirbo, Hanne Cecilie",
+      "Baker, Karen",
+      "Parmiggiani, Elena",
+      "Marttila, Sanna-Maria"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "report",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/37599"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38246",
+    "title": "Integrated Workflows: Generating Feedback Between Digital and Physical Realms",
+    "authors": [
+      "Gulay, Emrecan",
+      "Lucero Vera, Andres"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1145/3290605.3300290",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38246"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38324",
+    "title": "The participatory design of tools: Foreseeing the potential of future internet-enabled farming",
+    "authors": [
+      "Koskinen, Hanna",
+      "Norros, Leena"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38324"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38341",
+    "title": "Structuralism: Patterns of Interaction Computational design thinking across scales",
+    "authors": [
+      "Fricker, Pia",
+      "Kotnik, Toni",
+      "Piskorec, Luka"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.14627/537663026",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38341"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38345",
+    "title": "Virtual Reality for Immersive Data Interaction",
+    "authors": [
+      "Fricker, Pia"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.15302/j-laf-20190216",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38345"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38353",
+    "title": "CURVED.IT: A design tool to integrate making with curved folding into digital design process",
+    "authors": [
+      "Bacinoglu, Saadet",
+      "Piskorec, Luka",
+      "Kotnik, Toni"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.5505/itujfa.2019.44712",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38353"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38361",
+    "title": "Hand Puppet as Means for eTextile Synthesis",
+    "authors": [
+      "Pouta, Emmi",
+      "Mikkonen, Jussi"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1145/3294109.3300987",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38361"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/38888",
+    "title": "Implications of the Bioinclusive Ethic on Collaborative and Participatory Design",
+    "authors": [
+      "Veselova, Emilija",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2019.1594992",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/38888"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39627",
+    "title": "Design for sustainability transitions: Origins, attitudes and future directions",
+    "authors": [
+      "Gaziulusoy, Ïdil",
+      "Öztekin, Elif Erdoğan"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.3390/su11133601",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39627"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39649",
+    "title": "Renewing technology-driven materials research through an experimental co-design approach",
+    "authors": [
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2019.1594939",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39649"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39709",
+    "title": "Who Cares? Proceedings of the 8th Biannual Nordic Design Research Society",
+    "authors": [],
+    "year": 2019,
+    "doi": "",
+    "kind": "D6 Toimitettu ammatillinen kokoomateos",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39709"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39718",
+    "title": "Politics of Designing Visions of the Future",
+    "authors": [
+      "Maze, Ramia"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.6531/jfs.201903_23(3).0003",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39718"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39743",
+    "title": "Stuff Matters in Participation: Infrastructuring a Co-Sewing Café",
+    "authors": [
+      "Hirscher, Anja-Lisa",
+      "Maze, Ramia"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39743"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39759",
+    "title": "Addressing the Dialogue between Design, Sorting and Recycling in a Circular Economy",
+    "authors": [
+      "Karell, Essi",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2019.1595413",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39759"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39762",
+    "title": "Designing Transitions Bottom-up: The agency of design in formation and proliferation of niche practices",
+    "authors": [
+      "Erdogan Öztekin, Elif",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2019.1594999",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39762"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39763",
+    "title": "A sample of one: First-person research methods in HCI",
+    "authors": [
+      "Lucero, Andrés",
+      "Desjardins, Audrey",
+      "Neustaedter, Carman",
+      "Höök, Kristina",
+      "Hassenzahl, Marc",
+      "Cecchinato, Marta E."
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1145/3301019.3319996",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39763"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/39793",
+    "title": "Design Thinking for Innovation: Stress Testing Human Factors in Ideation Sessions",
+    "authors": [
+      "Knight, John",
+      "Fitton, Dan",
+      "Phillips, Charlie",
+      "Price, Dylan"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/14606925.2019.1594950",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/39793"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40108",
+    "title": "From within and in-between – co-designing organizational change",
+    "authors": [
+      "Salmi, Anna",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1080/15710882.2019.1581817",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40108"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40162",
+    "title": "Tangible ideation : How to design for and with children?",
+    "authors": [
+      "Lee, Bang Jeon"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40162"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40572",
+    "title": "Empathy in a Technology Driven Design Process: Designing for Users without a Voice of their Own",
+    "authors": [
+      "Ilen, Elina",
+      "Groth, Camilla",
+      "Ahola, Markus",
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.21606/nordes.2019.021",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40572"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40580",
+    "title": "Future Skills of Design for Sustainability: An Awareness-Based Co-Creation Approach",
+    "authors": [
+      "Hakio, Kirsi",
+      "Mattelmäki, Tuuli"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.3390/su11195247",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40580"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40589",
+    "title": "A Research through Design Framework from the Evaluation of a Meta-Design Platform for Open and Collaborative Design and Making Processes",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1017/dsi.2019.5",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40589"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/40624",
+    "title": "Becoming with Clothes : Activating wearer-worn engagements through design",
+    "authors": [
+      "Valle-Noronha, Julia"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/40624"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41070",
+    "title": "Lenses of Care – revisiting interconnectedness in service design",
+    "authors": [
+      "Hakio, Kirsi",
+      "Mattelmäki, Tuuli",
+      "Veselova, Emilija"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41070"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41088",
+    "title": "A Research through Design Framework from the Evaluation of a Meta-Design Platform for Open and Collaborative Design and Making Processes",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1017/dsi.2019.5",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41088"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41105",
+    "title": "User Experience in an Automated World",
+    "authors": [
+      "Palanque, Philippe",
+      "Campos, Pedro F.",
+      "Nocera, José Abdelnour",
+      "Clemmensen, Torkil",
+      "Roto, Virpi"
+    ],
+    "year": 2019,
+    "doi": "https://doi.org/10.1007/978-3-030-29390-1_67",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41105"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41489",
+    "title": "Through the threaded needle : A multi-sited ethnography on the sociomateriality of garment mending practices",
+    "authors": [
+      "Durrani, Marium"
+    ],
+    "year": 2019,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41489"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41913",
+    "title": "School as a Service: Platform for Learning in Upper Secondary Education operating on Aalto University Campus",
+    "authors": [
+      "Vladykina, Natalia",
+      "Campos Uribe, Alejandro",
+      "Ahlava, Antti"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1109/isc246665.2019.9071790",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41913"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41914",
+    "title": "Thinking with Ungenesis: The Situated Knowledge of a Text Designer",
+    "authors": [
+      "Karhumaa, Arja"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41914"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/41964",
+    "title": "Introduction: Body First: Somaesthetics and Popular Culture",
+    "authors": [
+      "Ryynänen, Max"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/41964"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42164",
+    "title": "Frequency-Based Design of Smart Textiles",
+    "authors": [
+      "Mikkonen, Jussi",
+      "Townsend, Riikka"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1145/3290605.3300524",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42164"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42188",
+    "title": "YABBA DABBA DOO: Boosting Multidisciplinary Innovation through Design-driven Approach.",
+    "authors": [
+      "Niinimäki, Kirsi"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42188"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42227",
+    "title": "Get Realistic! - UCD Course Design and Evaluation",
+    "authors": [
+      "Larusdottir, Marta",
+      "Roto, Virpi",
+      "Stage, Jan",
+      "Lucero Vera, Andres"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1007/978-3-030-05909-5_2",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42227"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42243",
+    "title": "Educational landscapes of the digital age: Challenging the frontiers of digital landscape education: a discussion on future-oriented computational design thinking",
+    "authors": [
+      "Fricker, Pia"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42243"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42267",
+    "title": "Digital Britannia – Secret Histories and Hidden Practices",
+    "authors": [
+      "Knight, John"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.33114/adim.2019.08_360",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42267"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42284",
+    "title": "Report on the Helsinki co-design session",
+    "authors": [
+      "Durall Gazulla, Eva",
+      "Bauters, Merja",
+      "Hietala, Iida"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "report",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42284"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/42304",
+    "title": "Design for Sustainability: A Multi-level Framework from Products to Socio-technical Systems",
+    "authors": [
+      "Ceschin, Fabrizio",
+      "Gaziulusoy, Idil"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.4324/9780429456510",
+    "kind": "Book",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/42304"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/43476",
+    "title": "When skillful participation becomes design : making clothes together",
+    "authors": [
+      "Hirscher, Anja-Lisa"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/43476"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/43948",
+    "title": "Game Jams for Learning and Teaching",
+    "authors": [
+      "Merilainen, Mikko",
+      "Aurava, Riikka",
+      "Annakaisa, Kultima",
+      "Stenros, Jaakko"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.4018/ijgbl.2020040104",
+    "kind": "A2 Katsausartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/43948"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/45304",
+    "title": "Failed Expectations, Successful Disruptions: Experimenting pattern-cutting from a student-centred learning perspective",
+    "authors": [
+      "Valle Noronha, Julia",
+      "Chun, Namkyu",
+      "Assis, Julia"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1080/17543266.2020.1778798",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/45304"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/45555",
+    "title": "Exploring the impact of Maker initiatives on cities and regions with a research through design approach",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.4013/sdrj.2020.131.07",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/45555"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/45652",
+    "title": "Bridging tangible and virtual realities : Computational procedures for data-informed participatory processes",
+    "authors": [
+      "Hermansdorfer, Mariusz",
+      "Skov-Petersen, Hans",
+      "Fricker, Pia",
+      "Borg, Kane",
+      "Belesky, Philip"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.14627/537690036",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/45652"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/45807",
+    "title": "Bridging tangible and virtual realities : Computational procedures for data-informed participatory processes",
+    "authors": [
+      "Hermansdorfer, Mariusz",
+      "Skov-Petersen, Hans",
+      "Fricker, Pia",
+      "Borg, Kane",
+      "Belesky, Philip"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.14627/537690036",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/45807"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/45817",
+    "title": "What can we share? A design game for developing the shared spaces in housing",
+    "authors": [
+      "Pirinen, Antti",
+      "Tervo, Anne"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1016/j.destud.2020.04.001",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/45817"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/46366",
+    "title": "Leveraging service design for healthcare transformation: Toward people-centered, integrated, and technology-enabled healthcare systems",
+    "authors": [
+      "Patrıcio, Lia",
+      "Sangiorgi, Daniela",
+      "Mahr, Dominik",
+      "Caic, Martina",
+      "Kalantari, Saleh",
+      "Sundar, Sue"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1108/josm-11-2019-0332",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/46366"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/46513",
+    "title": "Computational Design Pedagogy for the Cognitive Age",
+    "authors": [
+      "Fricker, Pia",
+      "Kotnik, Toni",
+      "Borg, Kane"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/46513"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/46583",
+    "title": "Studying Material Interactions to Facilitate a Sense of Being with the World",
+    "authors": [
+      "Aktas, Bilge",
+      "Groth, Camilla"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.21606/drs.2020.229",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/46583"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/46604",
+    "title": "Contexts of briefing for service design procurements in the Finnish public sector",
+    "authors": [
+      "Park-Lee, Seungho"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1016/j.destud.2020.05.002",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/46604"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/47034",
+    "title": "Entangled Fibres - An examination of human-material interaction",
+    "authors": [
+      "Aktas, Bilge Merve"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/47034"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/47213",
+    "title": "Open and collaborative design processes - Meta-Design, ontologies and platforms within the Maker Movement",
+    "authors": [
+      "Menichinelli, Massimo"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "dissertation",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/47213"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/47320",
+    "title": "From Systems to Patterns and Back - Exploring the spatial potential of dynamic patterns in the area of regional planning",
+    "authors": [
+      "Fricker, Pia",
+      "Grisiute, Ayda"
+    ],
+    "year": 2020,
+    "doi": "",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/47320"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/61753",
+    "title": "The problematization for the creativity in design",
+    "authors": [
+      "Selau, Luiza Grazziotin",
+      "Van Der Linden, Julio",
+      "Duarte, Carlos"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.35199/icdc.2020.13",
+    "kind": "A4 Artikkeli konferenssijulkaisussa",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/61753"
+  },
+  {
+    "id": "oai:aaltodoc.aalto.fi:123456789/61822",
+    "title": "Zones of participation - a framework to analyse design roles in Early Childhood Education and Care (ECEC)",
+    "authors": [
+      "Brinck, Jaana",
+      "Leinonen, Teemu",
+      "Lipponen, Lasse",
+      "Kallio-Tavin, Mira"
+    ],
+    "year": 2020,
+    "doi": "https://doi.org/10.1080/15710882.2020.1812667",
+    "kind": "A1 Alkuperäisartikkeli tieteellisessä aikakauslehdessä",
+    "venue": "Aaltodoc / Aalto University",
+    "url": "https://aaltodoc.aalto.fi/handle/123456789/61822"
   }
 ]

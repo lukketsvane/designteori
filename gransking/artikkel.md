@@ -84,6 +84,16 @@ Korpuset på $N = 6\,454$ verk består av to komplementære lag:
 - **OpenAlex-siteringslaget ($n = 4\,709$ verk):** Internasjonalt og nordisk indekserte publikasjonar med komplette forfattar- og institusjonsidentifikatorar, emneklassifisering og $109\,631$ utgåande referansekantar til $61\,066$ unike siterte verk, av dette $6\,589$ interne siteringskantar mellom verk inne i det nordiske designteori-korpuset.
 - **Det nordiske arkivlaget ($n = 1\,745$ verk):** Nasjonalt registrerte monografiar, doktorgradsavhandlingar, tidsskriftartiklar og rapportar henta direkte frå Cristin/NVA (Noreg), DiVA (Sverige), Forskningsdatabasen (Danmark), Aaltodoc/Finna (Finland) og Opin vísindi / IRIS (Island), deduplikert mot OpenAlex via DOI og normalisert tittelmatching.
 
+#### Tilhøve til den to-runders korpusmetaanalysen og oppdatert korpus
+
+Etter at den opphavlege undersøkinga av påstandane `P1`–`P10` vart gjennomført på grunnlagsutvalet ($N = 6\,454$, 07.11.2026), vart korpuset konsolidert og oppdatert til $N = 6\,432$ verk ($4\,694$ i OpenAlex-laget og $1\,738$ i arkivlaget; om lag $6\,236$ unike verk etter samanslåing av $196$ dublettpostar med lik tittel, år og førsteforfattar) den 13.11.2026. Denne oppdateringa vart følgd av ein omfattande to-runders korpusmetaanalyse som etablerte $164$ kontrollerte funn fordelt over $24$ førehandsfesta forskingsspørsmål (dokumentert som tekst i `docs/metaanalyse/` og med 18 interaktive visualiseringar i `docs/funn/`). Grunnlagsanalysen for dei ti hypotesetestane i denne artikkelen kviler på den opphavlege, uendra $N = 6\,454$-fikseringa for å sikre full metodisk sporbarheit for indikatorane i Tabell 1, medan den utvida metaanalysen og tilhøyrande sensitivitetstestar stadfestar at korpusdynamikken og hovudkonklusjonane er robuste og konsistente over tid.
+
+#### Valideringsarbeidsflytar og empirisk grensekoding
+
+For å sikre vitskapleg etterprøving av korpusgrensene og datautvinninga vart det utvikla to metodiske valideringsarbeidsflytar (`docs/validering/`):
+1. **Dobbeltblind validering av teorielement (`semje.py`):** For å etterprøve reliabiliteten i automatisk utvinning av teoretiske påstandar frå forskingstekstar vart det implementert ein protokoll for uavhengig dobbelkoding. I Del A vert evna til uassistert påstandsidentifikasjon målt gjennom presisjon, attfinning og $F_1$-skår mellom uavhengige kodarar og språkmodellar (to utdrag tel som same påstand når minst halvparten av orda i det kortaste utdraget også finst i det andre). I Del B vert 52 utdrag frå 21 tekstar koda i detalj over ni felt (påstandsstatus, hovudpoeng, relasjonsuttrykk, relasjonstype, definisjonsstatus, støttestatus, rekkevidde, forklaring og prediksjon), der inter-kodar-samsvar vert berekna med Cohens $\kappa$ for enkeltverdifelt, Krippendorffs $\alpha$, samt Jaccard-likskap for fleirverdifelt (omgrep og støtteformer).
+2. **Empirisk grensekoding for 400 verk (Grensa-utvalet):** For å teste sjølve korpusgrensa empirisk mot feilklassifisering vart det konstruert eit stratifisert utval på 400 verk fordelt over $8 \times 50$ strata (kjerne- mot grensekanalar, OpenAlex mot nasjonale arkiv, og designfaglege mot tilgrensande disiplinar). Ved å nytte Hare-Niemeyer-utvalsvekting mot den samla kandidatpopulasjonen på $26\,425$ verk gjer dette oppsettet det mogleg å berekne empiriske feilratar for både falske positive (feilaktig inkluderte verk) og falske negative (utelatne relevante verk) langs korpusgrensene.
+
 ### 2.2 Fulltekstutvinning, tekstvask og kanalstratifisering
 
 For å granske metodiske, hypotesetestande, finansielle og forskingsetiske praksisar som ikkje kjem fram i tittel eller samandrag, analyserte me alle verifiserte Open Access-PDF-ar i korpuset med komplett side-for-side tekstutvinning ($n = 1\,461$ dokument; $28\,955$ sider; $12\,431\,220$ ord).
@@ -377,13 +387,35 @@ Ei andre mogleg innvending er at designkorpuset inneheld mange konferansebidrag 
 - Når me isolerer **fagfellevurderte tidsskriftartiklar ($n = 921$)**, ligg formelle hypotesar framleis på berre **$1,95\,\%$** (mot $1,78\,\%$ i heile utvalet).
 - Når me isolerer **dedikerte kjernekanalar i design ($n = 735$)**, blir utslaga *sterkare* i retning av påstandane, ikkje svakare: formelle hypotesar fell frå $1,78\,\%$ til **$0,95\,\%$** ($p = 0,0272$), inferensstatistikk frå $3,70\,\%$ til **$2,04\,\%$**, etisk nemndvurdering frå $8,23\,\%$ til **$6,91\,\%$**, validerte måleinstrument/reliabilitet frå $3,29\,\%$ til **$1,09\,\%$**, og opne rådata frå $3,35\,\%$ til **$0,68\,\%$**. Dei få studiane som faktisk nyttar formelle hypotesar eller validerte skalaer, ligg primært i grenseflata mot HCI, psykologi og ingeniørfag, ikkje i kjernen av designdisiplinen.
 
-### 4.3 Leksikalsk presisjon, bibliografifjerning og utvalsskjevheit i Open Access
+### 4.3 Sensitivitets- og grensetesting under tre alternative korpusspesifikasjonar
+
+I Runde 2 av den utvida metaanalysen vart 17 sentrale bibliometriske og vitskapsteoretiske kjernetal testa under tre alternative, snevrare grensespesifikasjonar av OpenAlex-laget ($N = 4\,694$):
+1. **Utan kvitlista ($2\,308$ verk, $49,2\,\%$):** Inngangsporten vert snevra inn ved å fjerne dei førehandsdefinerte kjernekanalane i design, slik at berre verk med særskilde tekstlege designkriterium vert ståande. Under denne spesifikasjonen heldt 9 av 17 kjernetal seg heilt uendra og 3 flytta seg innanfor moderate marginar. Tala som flytta seg var hovudsakleg kanal- og landkonsentrasjon, noko som er mekanisk venta når dei dedikerte kanalane vert ekskluderte.
+2. **Utan HCI-kanalar ($4\,381$ verk, $93,3\,\%$):** Fjerning av 313 arbeid i grenseflata mot menneske-maskin-interaksjon (mellom anna *CHI*, *DIS* og *TOCHI*). Under denne spesifikasjonen heldt samtlege 17 kjernetal (17 av 17) seg fullstendig stabile.
+3. **Med krav om designord i tittel eller samandrag ($4\,405$ verk, $93,8\,\%$):** Fjerning av 289 verk som berre var inkluderte via publiseringskanal eller institusjon utan eksplisitt designterminologi i tittel eller samandrag. Her heldt 14 av 17 kjernetal seg uendra, medan dei 3 resterande flytta seg berre marginalt innanfor akseptable toleransar.
+(Sjølv under den strengaste kombinasjonen der alle tre kriteria vart lagde til grunn samstundes, $1\,994$ verk, $42,5\,\%$, heldt 10 av kjernetala seg fullstendig).
+
+Desse grensetestane syner at hovudkonklusjonane -- særleg mangelen på kumulativ replikasjon, den låge internordiske siteringstettleiken, den utbreidde semantiske amnesien og konsentrasjonen i eit fåtal kanalar -- er robuste mot alternative avgrensingar og ikkje er metodiske artefaktar av utvalsreglane.
+
+### 4.4 Systematisk revisjon og robustheit mot ikkje-forskingspostar
+
+Ei anna mogleg feilkjelde i store bibliometriske korpus er innslag av ikkje-forskingspostar, som leiarartiklar (*editorials*), innleiingsord til konferansar, bokmeldingar, errata og innhaldsfortekningar. Ein systematisk revisjon av korpuset identifiserte mellom 169 kjerneflagga postar ($2,6\,\%$) og 207 postar under ein vidare deteksjonsregel ($3,2\,\%$).
+
+For å kontrollere om slike perifere postar forstyrrar dei statistiske fordelingane, vart dei bibliometriske kjernemåla rekna ut med og utan dei flagga postane:
+- **Median siteringstal:** Nøyaktig 3 siteringar både med og utan dei flagga postane (3 mot 3).
+- **Del usiterte verk:** $26,6\,\%$ i heile korpuset mot $25,8\,\%$ når ikkje-forskingspostane vert filtrerte bort.
+- **Konsentrasjon i topp-10-\% siteringar:** $47,9\,\%$ av alle siteringar mot $47,6\,\%$ etter filtrering.
+- **Kanalspesifikk revisjon:** I til dømes *FormAkademisk* omfatta revisjonen 444 mot 481 postar utan at dei vitskaplege profilane vart endra.
+
+Filtrering av ikkje-forskingspostar endrar såleis korkje median siteringstal, usitert-delen eller siteringskonsentrasjonen. Dette stadfestar at dei observerte mønstra reflekterer reelle eigenskapar ved den vitskaplege publiseringa og ikkje bibliografisk støy.
+
+### 4.5 Leksikalsk presisjon, bibliografifjerning og utvalsskjevheit i Open Access
 
 Automatisk mønstersøk i $12,43$ millionar ord medfører alltid ei avveging mellom sensitivitet (*recall*) og spesifisitet (*precision*). Etter at referanselistene vart algoritmisk skilde ut (`split_body_and_references`), konstruerte me ordbøkene på engelsk, norsk, svensk og dansk bevisst *inkluderande*: til dømes tel kvar omtale av Cronbachs $\alpha$, Cohens $\kappa$, SUS eller konstruktvaliditet som treff i `P10`, sjølv om forfattaren berre nemner metoden kort. Det betyr at feilmarginen i regulære uttrykk primært verkar *konservativt* til fordel for faget: våre estimat på $1,78\,\%$ hypotesar, $3,29\,\%$ validerte mål og $8,23\,\%$ etisk nemndomtale utgjer **øvre grenser** for faktisk metodisk etterleving.
 
 Når det gjeld utvalet av fulltekst-PDF-ar ($n = 1\,461$ av $6\,454$, dvs. $22,64\,\%$), består dette av lovleg tilgjengelege Open Access-publikasjonar, som har ei tyngd mot nyare utgjevingsår (2010–2026) og offentleg finansierte forskingsprosjekt. Sidan krav til forskingsetisk godkjenning, opne data og preregistrering har vore *strengare* etter 2010 enn på 1980- og 1990-talet, tilseier denne tidsprofilen at heile det historiske korpuset ikkje på nokon måte har høgare etterleving enn Open Access-utvalet.
 
-### 4.4 Dekningsgrad i siteringsgrafar for bøker og nasjonale arkivverk
+### 4.6 Dekningsgrad i siteringsgrafar for bøker og nasjonale arkivverk
 
 OpenAlex indekserer referanselister best for engelskspråklege tidsskrift- og konferanseartiklar med DOI, mens norskspråklege, svenskspråklege og danskspråklege bøker og eldre høgskulerapportar i arkivlaget ($n = 1\,745$) sjeldan har maskinlesbare referanselister. For å unngå kunstig oppblåsing av null-siteringar har me difor avgrensa alle reine siteringsgrafiske brøkar (`P1` kanondel, `P2` DAG-djupn, `P4` ekstern sitering, `P8` intern siteringsendogami) strengt til OpenAlex-laget ($n = 4\,709$), mens semantisk spreiing (`P1`), postdoktorale publiseringskohortar (`P7`) og kanalstruktur (`P8`) er rekna på tvers av heile det dedupliserte korpuset ($N = 6\,454$).
 
@@ -421,6 +453,8 @@ Heile granskinga er fullt deterministisk og reproduserbar frå kjeldekode og ark
 - **Figurgenerering:** `gransking/lag_figurar.py` (produserer `fig1`–`fig4` i `gransking/figurar/`).
 - **Maskinlesbare resultat:** `gransking/data/resultatsamandrag.json` og `gransking/data/tabell_hypotesetestar.csv`.
 - **Korpus, avgrensingsfilter og rådata:** `designteori/eligibility.py`, `docs/data/publications.json`, `docs/data/nordic_additions.json`, `docs/data/cited_canon.json`, `docs/data/embeddings.bin` og `data/designteori.sqlite.gz`.
+- **Utvida metaanalyse og interaktive funn:** To-runders korpusmetaanalyse med $164$ kontrollerte funn og $24$ førehandsfesta forskingsspørsmål i `docs/metaanalyse/` og 18 interaktive visualiseringar i `docs/funn/`.
+- **Valideringsarbeidsflytar og kodeark:** Protokoll og skript for uavhengig dobbeltblind teorielementvalidering (`docs/validering/semje.py`, `docs/validering/utval.json`) samt stratifiserte kodeark for empirisk grenseprøving (Grensa-utvalet på 400 verk) i `docs/validering/`.
 
 Køyring frå rotmappa i repositoriet:
 

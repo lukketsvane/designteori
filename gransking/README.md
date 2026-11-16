@@ -25,3 +25,12 @@ Køyr frå rotmappa i repositoriet:
 py -3 gransking/analyse_korpus.py
 py -3 gransking/lag_figurar.py
 ```
+
+## Tilhøve til metaanalysen på nettsida og valideringsarbeidet
+
+`gransking/` dokumenterer den sjølvstendige metavitskaplege studien av hypotese `P1`–`P10` frå 07.11.2026 ($N = 6\,454$). Den seinare, to-runders korpusmetaanalysen ($N = 6\,432$, 164 kontrollerte funn og 24 førehandsfesta spørsmål) ligg som tekst i [`docs/metaanalyse/`](../docs/metaanalyse/) og som interaktive figurar i [`docs/funn/`](../docs/funn/).
+
+Metaanalysen inkluderer:
+- **Sensitivitets- og grensetesting:** Prøving under tre alternative, snevrare grensespesifikasjonar (utan kvitlista: 2 308 verk; utan HCI-kanalar: 4 381 verk; med krav om designord i tittel/samandrag: 4 405 verk), som stadfestar at hovudfunna om replikasjonsmangel, låg internordisk siteringstettleik og kanalkonsentrasjon er robuste.
+- **Ikkje-forskingspostar:** Systematisk revisjon av 169–207 ikkje-forskingspostar (2,6–3,2 %), som stadfestar at median siteringstal (3) og delen usiterte verk held seg uendra etter filtrering.
+- **Valideringsarbeidsflytar:** Dobbeltblind validering av teorielement med `docs/validering/semje.py` (Del A $F_1$-skår og Del B Cohens $\kappa$ over ni felt) og eit stratifisert grensekodeark for 400 verk fordelt over $8 \times 50$ strata (Grensa-utvalet med Hare-Niemeyer-utvalsvekting).

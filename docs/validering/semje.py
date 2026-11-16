@@ -16,7 +16,10 @@ Sjølvtesten lagar syntetiske kodarar frå maskinkodinga. Utan støy skal alle m
 Krev openpyxl.
 """
 import argparse, collections, difflib, itertools, json, pathlib, random, re, sys, tempfile
-import openpyxl
+try:
+    import openpyxl
+except ImportError:
+    openpyxl = None
 
 FIELDS = ['is_claim', 'is_headline', 'claim_location', 'attribution', 'relation_kind', 'support_status', 'scope', 'explanation', 'prediction']
 EXC = {'relation_expression': None, 'scope_utdrag': 'scope', 'explanation_utdrag': 'explanation', 'prediction_utdrag': 'prediction'}

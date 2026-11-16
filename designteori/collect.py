@@ -96,12 +96,15 @@ QUERIES_NORDIC = [
     "designteori", "designforskning", "designforsking", "formgivning", "formgiving",
     "formgjeving", "brukskunst", "industridesign", "tjenestedesign", "tjänstedesign",
     "interaksjonsdesign", "interaktionsdesign",
+    "brukermedvirkning", "brugerinddragelse",
     "muotoilu", "muotoilututkimus", "taideteollisuus", "hönnun",
 ]
 
+POLITE_USER_AGENT = "Designteori/3.0 (+https://github.com/lukketsvane/designteori; mailto:designteori-research@outlook.com)"
 
-def http_get(url: str, *, accept: str = "application/json", timeout: int = 35, retries: int = 3) -> bytes:
-    req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
+
+def http_get(url: str, *, accept: str = "application/json", timeout: int = 35, retries: int = 3, user_agent: str = POLITE_USER_AGENT) -> bytes:
+    req = Request(url, headers={"User-Agent": user_agent, "Accept": accept})
     for attempt in range(retries):
         try:
             with urlopen(req, timeout=timeout) as resp:
@@ -337,7 +340,13 @@ def fetch_cursor_stream(conn: sqlite3.Connection, filter_expr: str, label: str,
             if prev_ret < 200 or page * 200 >= (prev_total or 0):
                 break
             continue
-        params = {"filter": filter_expr, "per_page": 200, "page": page, "select": SELECT_FIELDS}
+        params = {
+            "filter": filter_expr,
+            "per_page": 200,
+            "page": page,
+            "select": SELECT_FIELDS,
+            "mailto": "designteori-research@outlook.com",
+        }
         if search:
             params["search"] = search
         url = OPENALEX_API + "?" + urlencode(params)
@@ -504,6 +513,65 @@ def harvest_openalex(*, pages_en: int = 5, pages_nordic: int = 5, end_year: int 
     return summary
 
 
+def clear_nordic_query_errors(conn: sqlite3.Connection | Path | str | None = None, clear_all_quota_errors: bool = True) -> int:
+    """Clear error field in query_log for failed queries to allow clean rerun."""
+    close_after = False
+    if conn is None or isinstance(conn, (str, Path)):
+        p = Path(conn) if conn else RAW_SQLITE
+        conn = sqlite3.connect(p)
+        close_after = True
+    if clear_all_quota_errors:
+        cur = conn.execute("UPDATE query_log SET error=NULL WHERE (query LIKE 'nordic_lang:%' OR error LIKE '%429%' OR error LIKE '%quota%') AND error IS NOT NULL")
+    else:
+        cur = conn.execute("UPDATE query_log SET error=NULL WHERE query LIKE 'nordic_lang:%' AND error IS NOT NULL")
+    count = cur.rowcount
+    conn.commit()
+    if close_after:
+        conn.close()
+    return count
+
+
+def rerun_failed_nordic_openalex(
+    conn: sqlite3.Connection | Path | None = None,
+    *,
+    pages_nordic: int = 5,
+    end_year: int = 2026,
+    delay: float = 0.25,
+) -> dict:
+    """Clear errors and rerun the 18 Nordic-keyword OpenAlex queries with polite headers."""
+    close_after = False
+    if conn is None or isinstance(conn, (str, Path)):
+        p = ensure_raw_sqlite(Path(conn) if conn else RAW_SQLITE)
+        conn = sqlite3.connect(p)
+        close_after = True
+
+    cleared = clear_nordic_query_errors(conn)
+    added = 0
+    errors = 0
+    for q in QUERIES_NORDIC:
+        filt = f"publication_year:1900-{end_year},{BASE_COUNTRY_FILTER}"
+        label = f"nordic_lang:{q}"
+        try:
+            got = fetch_cursor_stream(conn, filt, label, search=f'"{q}"', max_pages=pages_nordic)
+            added += got
+        except Exception as exc:
+            print(f"RERUN_ERR {label}: {exc}", flush=True)
+            errors += 1
+        time.sleep(delay)
+
+    refresh_existing_scope(conn)
+    conn.commit()
+    res = {
+        "cleared_errors": cleared,
+        "added_works": added,
+        "errors": errors,
+        "queries_run": len(QUERIES_NORDIC),
+    }
+    if close_after:
+        conn.close()
+    return res
+
+
 def _crossref_item_to_record(item: dict) -> dict | None:
     titles = item.get("title") or []
     title = (titles[0] if titles else "").strip()
@@ -544,16 +612,31 @@ def _crossref_item_to_record(item: dict) -> dict | None:
 def harvest_nordes_crossref() -> int:
     records = {}
     for query in ("nordes", "nordic", "scandinavian", "denmark", "sweden", "norway", "finland", "iceland", "co-design", "participatory"):
-        for offset in (0, 200, 400):
+        offset = 0
+        while True:
             url = f"https://api.crossref.org/prefixes/10.21606/works?query={quote(query)}&rows=200&offset={offset}"
             try:
                 data = json.loads(http_get(url).decode("utf-8"))
             except Exception as exc:
                 print("NORDES_ERR", query, offset, exc, flush=True)
                 break
-            items = ((data.get("message") or {}).get("items")) or []
+            msg = data.get("message") or {}
+            items = msg.get("items") or []
+            total_results = int(msg.get("total-results") or 0)
             for it in items:
                 d = normalize_doi(it.get("DOI"))
+                title = ((it.get("title") or [""])[0] if isinstance(it.get("title"), list) else str(it.get("title") or "")).strip()
+                t_lower = title.lower()
+                doi_lower = (d or "").lower()
+                is_front_matter = bool(
+                    doi_lower.endswith(".cv")
+                    or doi_lower.endswith("2023.")
+                    or re.match(r"^nordes \d{4}:\s*[^:]+$", title, re.I)
+                    or "intentionally blank" in t_lower
+                    or it.get("type") in ("proceedings", "proceedings-series", "book")
+                )
+                if is_front_matter:
+                    continue
                 is_nordes = "nordes" in d or "nordes" in json.dumps(it.get("container-title") or []).lower()
                 affil_blob = json.dumps(it.get("author") or []).lower()
                 is_nordic_affil = any(w in affil_blob for w in (
@@ -566,8 +649,9 @@ def harvest_nordes_crossref() -> int:
                     rec = _crossref_item_to_record(it)
                     if rec and rec["id"] not in records:
                         records[rec["id"]] = rec
-            if len(items) < 200:
+            if len(items) < 200 or (total_results and offset + len(items) >= total_results):
                 break
+            offset += 200
             time.sleep(0.2)
     out = IMPORTS_DIR / "nordes" / "nordes_drs.json"
     write_json(out, sorted(records.values(), key=lambda x: x["id"]))
@@ -776,70 +860,84 @@ def harvest_finnish_danish_icelandic() -> dict:
                 pass
             time.sleep(0.15)
 
-    # Also harvest Aaltodoc OAI-PMH recent pages matching design/muotoilu
-    token = None
-    for _ in range(6):
-        oai_url = (
-            "https://aaltodoc.aalto.fi/server/oai/request?verb=ListRecords&resumptionToken=" + quote(token)
-            if token else
-            "https://aaltodoc.aalto.fi/server/oai/request?verb=ListRecords&metadataPrefix=oai_dc"
-        )
-        try:
-            xml_bytes = http_get(oai_url, accept="application/xml,text/xml,*/*", timeout=35)
-            root = ET.fromstring(xml_bytes)
-        except Exception:
-            break
-        for node in root.iter():
-            if node.tag.split("}")[-1] != "record":
-                continue
-            titles, creators, dates, idents, types, subjects = [], [], [], [], [], []
-            oai_id = ""
-            for el in node.iter():
-                tag = el.tag.split("}")[-1].lower()
-                val = (el.text or "").strip()
-                if not val:
+    # Also harvest Aaltodoc OAI-PMH dedicated ARTS collections:
+    # col_123456789_54: Doctoral dissertations, Aalto ARTS
+    # col_123456789_11251: Research articles, Aalto ARTS
+    # col_123456789_21539: CRIS research articles, Aalto ARTS
+    # col_123456789_72: Research reports, Aalto ARTS
+    aalto_sets = ("col_123456789_54", "col_123456789_11251", "col_123456789_21539", "col_123456789_72")
+    for s in aalto_sets:
+        token = None
+        for _ in range(15):
+            oai_url = (
+                f"https://aaltodoc.aalto.fi/server/oai/request?verb=ListRecords&resumptionToken={quote(token)}"
+                if token else
+                f"https://aaltodoc.aalto.fi/server/oai/request?verb=ListRecords&metadataPrefix=oai_dc&set={s}"
+            )
+            try:
+                xml_bytes = http_get(oai_url, accept="application/xml,text/xml,*/*", timeout=35)
+                root = ET.fromstring(xml_bytes)
+            except Exception:
+                break
+            for node in root.iter():
+                if node.tag.split("}")[-1] != "record":
                     continue
-                if tag == "identifier" and val.startswith("oai:"):
-                    oai_id = val
-                elif tag == "title":
-                    titles.append(val)
-                elif tag == "creator":
-                    creators.append(val)
-                elif tag == "date":
-                    dates.append(val)
-                elif tag == "identifier":
-                    idents.append(val)
-                elif tag == "type":
-                    types.append(val)
-                elif tag == "subject":
-                    subjects.append(val)
-            title = titles[0] if titles else ""
-            kind_blob = " ".join(types).lower()
-            if not title or "master" in kind_blob or "bachelor" in kind_blob:
-                continue
-            subj_blob = " ".join(titles + subjects)
-            if not TITLE_TERMS.search(subj_blob) or CLINICAL_NOISE.search(title):
-                continue
-            d = next(( x for raw in idents if (x := normalize_doi(raw)) ), "")
-            u = next(( ("https://" + raw[7:] if raw.startswith("http://") else raw)
-                       for raw in idents if raw.startswith(("https://", "http://urn.fi/", "http://hdl.handle.net/")) ), "")
-            ym = re.search(r"\b(19\d{2}|20\d{2})\b", " ".join(dates))
-            key_id = oai_id or d or title[:60]
-            aalto_records[key_id] = {
-                "id": key_id,
-                "title": title,
-                "authors": creators[:12],
-                "year": int(ym.group(1)) if ym else None,
-                "doi": doi_url(d),
-                "kind": types[0] if types else "article",
-                "venue": "Aaltodoc / Aalto University",
-                "url": u,
-            }
-        rt_el = next((el for el in root.iter() if el.tag.split("}")[-1] == "resumptionToken"), None)
-        token = (rt_el.text or "").strip() if rt_el is not None else ""
-        if not token:
-            break
-        time.sleep(0.2)
+                titles, creators, dates, idents, types, subjects = [], [], [], [], [], []
+                oai_id = ""
+                for el in node.iter():
+                    tag = el.tag.split("}")[-1].lower()
+                    val = (el.text or "").strip()
+                    if not val:
+                        continue
+                    if tag == "identifier" and val.startswith("oai:"):
+                        oai_id = val
+                    elif tag == "title":
+                        titles.append(val)
+                    elif tag == "creator":
+                        creators.append(val)
+                    elif tag == "date":
+                        dates.append(val)
+                    elif tag == "identifier":
+                        idents.append(val)
+                    elif tag == "type":
+                        types.append(val)
+                    elif tag == "subject":
+                        subjects.append(val)
+                title = clean_display_title(titles[0] if titles else "")
+                kind_blob = " ".join(types).lower()
+                if not title or "master" in kind_blob or "bachelor" in kind_blob or "pro gradu" in kind_blob:
+                    continue
+                subj_blob = " ".join(titles + subjects)
+                if not TITLE_TERMS.search(subj_blob) or CLINICAL_NOISE.search(title):
+                    continue
+                d = next((x for raw in idents if (x := normalize_doi(raw))), "")
+                u = next((("https://" + raw[7:] if raw.startswith("http://") else raw)
+                           for raw in idents if raw.startswith(("https://", "http://urn.fi/", "http://hdl.handle.net/"))), "")
+                ym = re.search(r"\b(19\d{2}|20\d{2})\b", " ".join(dates))
+                key_id = oai_id or d or title[:60]
+                if s == "col_123456789_54" or "doctoral" in kind_blob or "dissertation" in kind_blob:
+                    kind = "dissertation"
+                elif "article" in kind_blob:
+                    kind = "article"
+                elif "report" in kind_blob:
+                    kind = "report"
+                else:
+                    kind = types[0] if types else "article"
+                aalto_records[key_id] = {
+                    "id": key_id,
+                    "title": title,
+                    "authors": creators[:12],
+                    "year": int(ym.group(1)) if ym else None,
+                    "doi": doi_url(d),
+                    "kind": kind,
+                    "venue": "Aaltodoc / Aalto University",
+                    "url": u,
+                }
+            rt_el = next((el for el in root.iter() if el.tag.split("}")[-1] == "resumptionToken"), None)
+            token = (rt_el.text or "").strip() if rt_el is not None else ""
+            if not token:
+                break
+            time.sleep(0.2)
 
     write_json(IMPORTS_DIR / "aalto" / "aaltodoc_design.json", sorted(aalto_records.values(), key=lambda x: x["id"]))
 
