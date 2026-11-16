@@ -215,6 +215,7 @@ footer a{{display:inline-block;padding:.7rem 0}}
 <button class="nav-more-btn active" id="navMoreBtn" type="button" aria-expanded="false" aria-controls="navMore">metaanalyse &#9662;</button>
 <div class="nav-more" id="navMore">
 <a class="nav-btn" href="../utforsk/">utforsk</a>
+<a class="nav-btn" href="../funn/">funn</a>
 <a class="nav-btn" href="../#siteringar">kanon</a>
 <a class="nav-btn" href="../#kart">kart</a>
 <a class="nav-btn" href="../#analyse">analyse</a>
@@ -230,7 +231,7 @@ footer a{{display:inline-block;padding:.7rem 0}}
 <p class="ingress">Ei metaanalyse av dei 6 432 registrerte verka i nordisk designforsking, 13.11.2026. Tala er rekna maskinelt frå databasen og kvart funn er etterprøvd av ein uavhengig kontrollør som rekna det på nytt. Ingen fagfelle har lese ho. Klyngene i teksten høyrer til eit eige kart over verk med fulltekst; dei er ikkje dei same som i kartet på hovudsida eller i Utforsk.</p>
 <details class="toc"><summary>Innhald</summary><nav aria-label="Innhald"><ol>{toc}</ol></nav></details>
 {body}
-<footer>Rekna frå OpenAlex-laget og arkivlaget i dette korpuset, med fulltekst lesen lokalt og aldri publisert. Feil og spørsmål: opne ei sak på <a href="https://github.com/lukketsvane/designteori/issues">GitHub</a>.</footer>
+<footer>Rekna frå OpenAlex-laget og arkivlaget i dette korpuset, med fulltekst lesen lokalt og aldri publisert. <a href="../funn/">Funna som bilete →</a> · Feil og spørsmål: opne ei sak på <a href="https://github.com/lukketsvane/designteori/issues">GitHub</a>.</footer>
 </main>
 <script src="../meny.js?v=4"></script>
 </body>

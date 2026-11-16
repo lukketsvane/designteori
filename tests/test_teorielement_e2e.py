@@ -27,6 +27,11 @@ import unittest
 from pathlib import Path
 from typing import Any
 
+# Ensure project root is on sys.path for standalone script execution
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from designteori import (
     DOCS_DATA_DIR,
     PRIVATE_CACHE,
@@ -833,7 +838,8 @@ class Tier1FeatureCoverageTests(unittest.TestCase):
         data = json.loads(rader_path.read_text(encoding="utf8"))
         if not data.get("synthetic", True):
             for r in data.get("rows", []):
-                work_id = r["work"].get("id") or r["id"].rsplit("-", 1)[0]
+                work_obj = r.get("work", {})
+                work_id = work_obj.get("id") or work_obj.get("work_id") or r["id"].rsplit("-", 1)[0]
                 self.assertNotIn(work_id, non_cc_ids)
 
     def test_t1_f5_06_production_synthetic_flag_transition(self):
@@ -859,7 +865,9 @@ class Tier1FeatureCoverageTests(unittest.TestCase):
         )
         self.assertEqual(res.returncode, 0, f"Baseline test failure: {res.stderr}")
         combined = res.stderr + res.stdout
-        self.assertIn("Ran 25 tests", combined)
+        m = re.search(r"Ran (\d+) tests", combined)
+        self.assertIsNotNone(m, f"Test count not found in output: {combined}")
+        self.assertGreaterEqual(int(m.group(1)), 25)
         self.assertIn("OK", combined)
 
     def test_t1_f6_02_system_verify_command_pass(self):
@@ -1469,7 +1477,10 @@ class Tier4RealWorldScenarioTests(unittest.TestCase):
             timeout=60,
         )
         self.assertEqual(res.returncode, 0)
-        self.assertIn("Ran 25 tests", res.stderr + res.stdout)
+        combined = res.stderr + res.stdout
+        m = re.search(r"Ran (\d+) tests", combined)
+        self.assertIsNotNone(m, f"Test count not found in output: {combined}")
+        self.assertGreaterEqual(int(m.group(1)), 25)
 
         # 2. Verify
         res_v = subprocess.run(
@@ -1549,7 +1560,8 @@ class LiveCacheAuditTests(unittest.TestCase):
                 manifest = json.loads(manifest_path.read_text(encoding="utf8"))
                 cc_ids = set(manifest["items"].keys())
                 for row in data.get("rows", []):
-                    work_id = row.get("work", {}).get("id") or row["id"].rsplit("-", 1)[0]
+                    work_obj = row.get("work", {})
+                    work_id = work_obj.get("id") or work_obj.get("work_id") or row["id"].rsplit("-", 1)[0]
                     self.assertIn(work_id, cc_ids)
 
     def test_live_corpus_sqlite_untouched(self):

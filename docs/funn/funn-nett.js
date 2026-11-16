@@ -1,4 +1,4 @@
-/* FUNN - tette bilete på svart: nettverk (f09), samsiteringsnett (f13) og kartet (f18). Canvas, med nærmaste-prikk for verktøyhint. */
+/* FUNN - tette bilete på svart: nettverk (d09 i f06), samsiteringsnett (d13 i f08) og kartet (d18 i f11). Canvas, med nærmaste-prikk for verktøyhint. */
 (function () {
   "use strict";
   const F = window.FUNN, n0 = F.n;
@@ -30,7 +30,7 @@
     cv.addEventListener("pointerleave", () => { lastIdx = null; onMiss(); });
   }
 
-  /* ---------- f09: tre eningar, eitt stort nettverk om gongen ---------- */
+  /* ---------- d09: tre einingar, eitt stort nettverk om gongen (i f06) ---------- */
   F.del.d09 = function (m, d, ctx) {
     const st = ctx.st; st.tab = st.tab || "forfattar";
     const wide = ctx.w >= 900;
@@ -138,7 +138,7 @@
     show();
   };
 
-  /* ---------- f13: samsiteringsnett ---------- */
+  /* ---------- d13: samsiteringsnett (i f08) ---------- */
   F.del.d13 = function (m, d, ctx) {
     const mob = ctx.w < 760, gcol = F.GPAL;
     const A = F.d("div", null, m);
@@ -203,7 +203,7 @@
     F.rows(m, { w: ctx.w }, { rows, max: 50, ticks: [0, 25, 50], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1) + " %", rowH: 38, valW: 7.4, label: "Del av alle referansar", mark: "bar" });
   };
 
-  /* ---------- f18: kartet ---------- */
+  /* ---------- d18: kartet (i f11) ---------- */
   F.del.d18 = function (m, d, ctx) {
     const st = ctx.st; st.mode = st.mode || "klynge";
     const mob = ctx.w < 760;

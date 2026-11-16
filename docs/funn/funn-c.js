@@ -1,4 +1,4 @@
-/* FUNN - seksjon 5 til 9: tema, omgrep, kunnskapsformer, teorielement og dei femten spørsmåla (f19 til f26). */
+/* FUNN - seksjon 7 til 9: kunnskapsformer, teorielement og dei 24 spørsmåla (d23 til d26). */
 (function () {
   "use strict";
   const F = window.FUNN, n0 = F.n;
@@ -6,7 +6,7 @@
   const cap = (el, t, mt) => F.d("h4", { text: t, style: "font:400 11.5px/1.35 var(--mono);color:var(--dim);margin:" + (mt == null ? 0 : mt) + "px 0 6px" }, el);
   const pc = (v) => F.n(v, 1) + " %";
 
-  /* ---------- f23: kunnskapsformer ---------- */
+  /* ---------- d23: kunnskapsformer (i f16) ---------- */
   F.del.d23 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Del av 80 lesne tekstar som har forma (vekta), prosent med 95 % intervall", "Samsvar mellom markør og lesing: kappa"]);
     const cap1 = (q) => q.namn.replace(/^./, (c) => c.toUpperCase());
@@ -52,7 +52,7 @@
     F.d("p", { cls: "sm" }, sec).append(b(d.per_tekst.tre_pluss + " av " + d.per_tekst.n), " tekstar har tre eller fleire former, snitt ", b(F.n(d.per_tekst.snitt, 2)), ". Éin kodar, ukontrollert.");
   };
 
-  /* ---------- f24: datainnsamlingsmarkørar ---------- */
+  /* ---------- d24: datainnsamlingsmarkørar (i f16) ---------- */
   F.del.d24 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Over tid og før mot etter 2015", "Etter kjelde, land og endring innan kjelde"]);
     const dot = (q, group, extra) => Object.assign({ label: q.namn + " · n " + n0(q.n), v: q.pct, lo: q.lo, hi: q.hi, mark: "dot", color: "var(--fg)", vtxt: F.n(q.pct, 1), group, tip: q.namn + "|" + n0(q.k) + " av " + n0(q.n) + " tekstar (" + F.n(q.pct, 1) + " %)" + (q.lo != null ? "|95 % intervall " + F.n(q.lo, 1) + " til " + F.n(q.hi, 1) : "") }, extra || {});
@@ -65,7 +65,7 @@
     F.d("p", { cls: "sm" }, B).append("Markør for datainnsamling er ikkje kvalitet: å ha samla inn data er ikkje det same som at ein påstand er støtta av dei.");
   };
 
-  /* ---------- f25: teorielement i pilotane ---------- */
+  /* ---------- d25: teorielement i pilotane (i f17) ---------- */
   F.del.d25 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Profil: del av påstandane, prosent (95 % intervall)", "Pålitelegheit: andre lesing av same " + d.utval.lesbare + " lesbare tekstar"]);
     const iv = (label, a, group, extra) => Object.assign({ label, v: a[0], lo: a[1], hi: a[2], mark: "dot", color: "var(--fg)", vtxt: F.n(a[0], 0), group, tip: label + "|" + F.n(a[0], 0) + " % (" + F.n(a[1], 0) + " til " + F.n(a[2], 0) + ")" }, extra || {});

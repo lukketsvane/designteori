@@ -1,4 +1,4 @@
-/* FUNN - seksjon 5 og 6: svak struktur, emne og klynger, omgrep (f19 til f22). */
+/* FUNN - seksjon 5 og 6: svak struktur, emne og klynger, omgrep (d19 til d22). */
 (function () {
   "use strict";
   const F = window.FUNN, n0 = F.n;
@@ -10,7 +10,7 @@
   /* overskrift med firkanta bokstavmerke: metastudiens klynger A–J, aldri kartets runde tal 1–8 */
   const capT = (el, chip, t, mt) => { const h = cap(el, "", mt); const c = F.d("span", { cls: "bokst", text: chip, style: "width:auto;min-width:20px;padding:0 5px;margin-right:8px;vertical-align:1px" }, h); h.appendChild(document.createTextNode(t)); return h; };
 
-  /* ---------- f19: svak struktur ---------- */
+  /* ---------- d19: svak struktur (i f12) ---------- */
   F.del.d19 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
@@ -28,7 +28,7 @@
     F.rows(R, { w: R.w }, { rows: d.utval_periode.map((q, i) => e(q[0], q[1], i === 0 ? "Periode" : null)).concat(d.utval_sprak.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()) + "språklege", q[1], i === 0 ? "Språk" : null)), [e("Alle nordiskspråklege, " + d.nordisk_samla[1] + " av " + d.nordisk_samla[2], d.nordisk_samla[0], null)], d.utval_type.map((q, i) => e(q[0].replace(/^./, (c) => c.toUpperCase()), q[1], i === 0 ? "Slag" : null))), max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: pc, rowH: 32, gH: 26, label: "Kva fulltekstutvalet dekkjer" });
   };
 
-  /* ---------- f20: emne og klynger ---------- */
+  /* ---------- d20: emne og klynger (i f13) ---------- */
   F.del.d20 = function (m, d, ctx) {
     const [L, R] = F.pans(m, 2, "p2", ["", ""]);
 
@@ -45,7 +45,7 @@
     F.d("p", { cls: "sm" }, R).append("Heiltrukke linje veks, stipla fell.");
   };
 
-  /* ---------- f21: breidde og ankerdel, alle omgrep i éin figur ---------- */
+  /* ---------- d21: breidde og ankerdel, alle omgrep i éin figur (i f14) ---------- */
   F.del.d21 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 520;
     const all = {};
@@ -79,7 +79,7 @@
     F.d("p", { cls: "sm" }, m).append("– betyr ikkje kontrollert. Omgrepa er engelske uttrykk slik dei står i tekstane. Breidda for participatory design og more-than-human er frå skriptutskrifta og står ikkje i funnteksten.");
   };
 
-  /* ---------- f22: stig og fall ---------- */
+  /* ---------- d22: stig og fall (i f14) ---------- */
   F.del.d22 = function (m, d, ctx) {
     const W = ctx.w;
     cap(m, "Uttrykk (frå engelske samandrag) som stig og fell frå ein periode til neste, tal på uttrykk");

@@ -1,4 +1,4 @@
-/* FUNN - seksjon 3 og 4: kanalar og siteringar (f10 til f12, f14 til f17). */
+/* FUNN - seksjon 3 og 4: kanalar og siteringar (d10 til d12, d14 til d17). */
 (function () {
   "use strict";
   const F = window.FUNN, n0 = F.n, P = F.p;
@@ -6,7 +6,7 @@
   const chShort = (n) => (/^Architecture, Design and Conservation/.test(n) ? "KADK-serien" : /^International Conference on Engineering/.test(n) ? "EPDE" : /^VBN/.test(n) ? "VBN" : /^Lecture notes/.test(n) ? "LNCS" : n.replace(/^Proceedings of /, "").replace(/ \(.*\)$/, ""));
   const b = (t) => Object.assign(document.createElement("b"), { textContent: t });
 
-  /* ---------- f10: konsentrasjon ---------- */
+  /* ---------- d10: konsentrasjon (i f07) ---------- */
   F.del.d10 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Lorenz-kurver: kor samla verka ligg i få kanalfamiliar", "Dei ti største kanalane, verk", "Per periode"]);
     const w = A.w, h = Math.min(w, 300), pl = 32, pb = 24, pt = 8, pr = 8;
@@ -46,7 +46,7 @@
     F.d("p", { cls: "sm" }, C).append("Før 2000 er det berre ", b(n0(d.per[0].n)), " verk, og dei ti største har 67 til 70 %.");
   };
 
-  /* ---------- f11: nordiske kanalar ---------- */
+  /* ---------- d11: nordiske kanalar (i f07) ---------- */
   F.del.d11 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p21", ["Kanalklasse per periode, del av verka (prosent)", "Nordisk del per land, prosent, 2000–2026"]);
     const vals = d.per.map((q) => ({ fa: Math.max(0, q["nordisk kanal"] - q.nord_utan_fa_nordes), an: q.nord_utan_fa_nordes, int: q["internasjonal kanal"], fs: q.forlagsserie, rep: q.repositorium, uk: q.ukjend }));
@@ -59,7 +59,7 @@
     F.d("p", { cls: "sm" }, B).append(b(n0(d.fa_norsk) + " av " + n0(d.fa_n)), " FormAkademisk-verk har Noreg, og kanalen har ", b(F.p(d.fa_del_av_norske, 1)), " av alle norske verk med kanalnamn.");
   };
 
-  /* ---------- f12: siteringar etter kanal; kanalfamiliar over tid ---------- */
+  /* ---------- d12: siteringar etter kanal; kanalfamiliar over tid (i f09) ---------- */
   F.del.d12 = function (m, d, ctx) {
     const cc = { "Design Studies": "Design Studies", "CoDesign": "CoDesign", "Designing Interactive Systems": "DIS", "FormAkademisk": "FormAkademisk", "Proceedings of DRS": "DRS", "Nordes": "Nordes" };
     const sixFam = new Set(d.sit.map((q) => q.fam));
@@ -100,7 +100,7 @@
     F.d("p", { cls: "sm" }, mh).append(b(d.alle_fire + " familiar"), " har verk i alle fire periodar. ", b(n0(d.nye_2020_24.verk) + " av " + n0(d.nye_2020_24.av)), " verk 2020–24 ligg i familiar frå 2015 eller seinare.");
   };
 
-  /* ---------- f14: skeive siteringar ---------- */
+  /* ---------- d14: skeive siteringar (i f09) ---------- */
   F.del.d14 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Lorenz-kurve for mottekne siteringar, 4 694 verk", "Del usiterte verk, prosent per publiseringsår"]);
     const w = A.w, h = Math.min(w, 330), pl = 32, pb = 26, pt = 10, pr = 8;
@@ -118,7 +118,7 @@
     mark(0.99, 1 - d.topp1_pct / 100, "topp 1 % har " + F.n(d.topp1_pct, 1) + " %", -8, 4);
     F.s("text", { x: x(0.02), y: y(0.8), text: "Median " + n0(d.median) + ", snitt " + F.n(d.snitt, 1), cls: "b" }, svg);
     F.s("text", { x: x(0.02), y: y(0.8) + 14, text: n0(d.usiterte) + " verk utan sitering (" + F.n(d.usiterte_pct, 1) + " %)" }, svg);
-    F.d("p", { cls: "sm", text: "Same lesemåte som i f10: jo lenger kurva bøyer ned under diagonalen, jo meir av siteringane ligg hos få verk." }, A);
+    F.d("p", { cls: "sm", text: "Same lesemåte som i f07: jo lenger kurva bøyer ned under diagonalen, jo meir av siteringane ligg hos få verk." }, A);
     /* B: del usiterte per år, med gruppesnitt */
     const wb = B.w, hb = Math.min(wb, 330), plb = 34, prb = 4;
     const sb = F.svg(B, wb, hb, "Del usiterte verk per år");
@@ -139,7 +139,7 @@
     F.rows(B, { w: B.w }, { rows: [{ label: "Bokkapittel · " + d.kapittel_2015_19.n + " verk", v: d.kapittel_2015_19.usitert, color: "var(--k4)" }, { label: "Artiklar · " + d.artikkel_2015_19.n + " verk", v: d.artikkel_2015_19.usitert, color: "var(--k2)" }], max: 60, ticks: [0, 20, 40, 60], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1) + " %", rowH: 38, label: "Bokkapittel mot artiklar" });
   };
 
-  /* ---------- f15: referansetal og -alder ---------- */
+  /* ---------- d15: referansetal og -alder (i f10) ---------- */
   F.del.d15 = function (m, d, ctx) {
     const W = ctx.w, rows = d.periodar, pl = 4, pr = 4, rh = ctx.mob ? 92 : 96, top = 8, ph = 52;
     const H = top + rows.length * rh + 34;
@@ -170,7 +170,7 @@
     F.d("p", { cls: "sm" }, m).append("Mørke søyler er fem år eller yngre. Stipla strek er medianen. 2026 er ufullstendig (til 4. november) og kjem ikkje med i dei fire periodane funna gjeld. ", b(n0(d.verk)), " av ", b(n0(d.alle_verk)), " verk har referanseliste.");
   };
 
-  /* ---------- f16: kvar referansane går ---------- */
+  /* ---------- d16: kvar referansane går (i f10) ---------- */
   F.del.d16 = function (m, d, ctx) {
     const W = ctx.w, svg = F.svg(m, W, 80, "Kvar referansane går");
     const s = (W - 4) / d.sum;
@@ -194,7 +194,7 @@
       { label: "Til verk med delt land", v: d.delt_land_pct, vtxt: F.p(d.delt_land_pct, 1), color: "var(--fg)", tip: "Referansar til verk med minst eitt felles land|" + F.n(d.delt_land_pct, 1) + " %" }], max: 100, ticks: [0, 50, 100], tfmt: (v) => v + "", mark: "bar", rowH: 32, label: "Kven referansane peikar på" });
   };
 
-  /* ---------- f17: siteringssamfunn ---------- */
+  /* ---------- d17: siteringssamfunn (i f12) ---------- */
   F.del.d17 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Kor samanhengande er koplingsnettverket", "NMI mellom samfunn og kjelde, språk, type, land og periode"]);
     const W = A.w, svg = F.svg(A, W, 96, "Koplingsnettverket");

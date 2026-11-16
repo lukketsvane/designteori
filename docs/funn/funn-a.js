@@ -1,4 +1,4 @@
-/* FUNN - seksjon 1 og 2: materialet, vekst og samarbeid (f01 til f08). */
+/* FUNN - seksjon 1 og 2: materialet, vekst og samarbeid (d01 til d08). */
 (function () {
   "use strict";
   const F = window.FUNN, n0 = F.n, P = F.p;
@@ -6,7 +6,7 @@
   const cap = (el, t) => F.d("h4", { text: t }, el);
   const b = (t) => Object.assign(document.createElement("b"), { textContent: t });
 
-  /* ---------- f01: frå rader til verk (vertikal sankey) ---------- */
+  /* ---------- d01: frå rader til verk (vertikal sankey, i f01) ---------- */
   F.del.d01 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 560, pad = 2;
     const H = mob ? 400 : 390;
@@ -73,7 +73,7 @@
     F.s("text", { x: W - pad, y: Y[3] + ln + 15, "text-anchor": "end", text: "Utan fulltekst " + n0(ids.utan.n), cls: "halo" }, svg);
   };
 
-  /* ---------- f02: når verka kom, og kva slag dei er ---------- */
+  /* ---------- d02: når verka kom, og kva slag dei er (i f04) ---------- */
   F.del.d02 = function (m, d, ctx) {
     const W = ctx.w, mob = W < 560;
     F.legend(m, [{ c: "var(--oa)", t: "OpenAlex-laget" }, { c: "var(--ark)", t: "Arkivlaget" }]);
@@ -132,7 +132,7 @@
     F.d("p", { cls: "sm" }, m).append("Slaget avhandling i arkivlaget (", b(String(av.thesis)), ") er ", b(av.doktor + " doktor"), " og ", b(av.master + " master"), ". Slag manglar for 671 arkivverk.");
   };
 
-  /* ---------- f03: språk ---------- */
+  /* ---------- d03: språk (i f15) ---------- */
   F.del.d03 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "", ["Språkmerking, 4 694 verk", "Verk på landets eige språk, per land", "FormAkademisk: del som ikkje er engelsk, prosent per periode, med n"]);
     /* A: to stolpar med utvida del. Kategoriar i blågrøn skala (svart er reservert for observert) */
@@ -158,7 +158,7 @@
     F.d("p", { cls: "sm", text: "Totalt " + n0(d.formakademisk.ikkje_engelsk) + " av " + n0(d.formakademisk.n) + " FormAkademisk-verk. Bleike søyler: færre enn 40 verk." }, C);
   };
 
-  /* ---------- f04: fulltekst ---------- */
+  /* ---------- d04: fulltekst (i f03) ---------- */
   F.del.d04 = function (m, d, ctx) {
     const mk = (g, col, group) => ({ label: g.namn + " · " + n0(g.n), v: g.del, vtxt: F.p(g.del, 1), color: col || "var(--fg)", group, tip: g.namn + "|" + n0(g.fulltekst) + " av " + n0(g.n) + " verk med fulltekst (" + F.n(g.del, 1) + " %)" });
     const gr = d.grupper, by = (nm) => gr.find((g) => g.namn === nm);
@@ -168,7 +168,7 @@
     F.rows(m, ctx, { rows, max: 100, ticks: [0, 25, 50, 75, 100], tfmt: (v) => v + "", fmt: (v) => F.n(v, 1), refs: [{ v: d.alle.del, label: "OpenAlex-laget " + F.p(d.alle.del, 1), left: false }], label: "Del med fulltekst etter slag og siteringar", rowH: ctx.mob ? 33 : 34, gH: 26, valW: 7 });
   };
 
-  /* ---------- f05: rangering mellom land etter teljemåte, og land over tid ---------- */
+  /* ---------- d05: rangering mellom land etter teljemåte, og land over tid (i f04) ---------- */
   F.del.d05 = function (m, d, ctx) {
     const st = ctx.st; st.lag = st.lag || "oa"; st.vis = st.vis || "antal";
     const W = ctx.w, mob = W < 560;
@@ -230,7 +230,7 @@
     draw();
   };
 
-  /* ---------- f06: team og grenser ---------- */
+  /* ---------- d06: team og grenser (i f05) ---------- */
   F.del.d06 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Lagstorleik per periode, del av verka (prosent)", "Samarbeid over grenser, del av fleirforfattarverk (prosent)", "Snitt forfattarar per verk (tal)"]);
     const cats = d.periodar.map((p) => ({ label: short(p) }));
@@ -242,7 +242,7 @@
     F.d("p", { cls: "sm", text: "Artiklar og konferansebidrag er med frå 2010." }, C);
   };
 
-  /* ---------- f07: nullmodell ---------- */
+  /* ---------- d07: nullmodell (i f05) ---------- */
   F.del.d07 = function (m, d, ctx) {
     const [A, B] = F.pans(m, 2, "p2", ["Nordiske land i same verk: observert mot venta ved tilfeldig val", "Tre utanlandske par: observert mot venta"]);
     const W = A.w, H = 150;
@@ -266,7 +266,7 @@
     F.legend(B, [{ c: "var(--fg)", t: "observert", r: true }, { c: "var(--ref)", t: "venta", r: true, open: true }]);
   };
 
-  /* ---------- f08: institusjonar og forfattarar ---------- */
+  /* ---------- d08: institusjonar og forfattarar (i f05) ---------- */
   F.del.d08 = function (m, d, ctx) {
     const [A, B, C] = F.pans(m, 3, "p3", ["Aktive institusjonar per periode (tal)", "Forfattarar: del av forfattarane mot del av plassane (prosent)", "Del av eigne verk i scope per forfattar, forfattarar med minst fem verk i heile tabellen"]);
     /* A */

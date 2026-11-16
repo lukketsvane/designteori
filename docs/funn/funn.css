@@ -144,7 +144,7 @@ svg.hov .mk { opacity: .35; } svg.hov .mk.on { opacity: 1; }
 #tip b { display: block; font-weight: 500; }
 #tip span { display: block; opacity: .82; }
 
-/* ---------- spørsmåla (f26) ---------- */
+/* ---------- spørsmåla (d26 i f18) ---------- */
 .sp-linse { font: 12px/1 var(--mono); color: var(--dim); margin: 28px 0 10px; display: flex; align-items: center; gap: 10px; }
 .sp-linse::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
 .sp-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
@@ -218,7 +218,7 @@ noscript p { padding: 2rem var(--gutter); }
 .kart-nr { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex: none; border-radius: 50%; background: #000; color: #fff; border: 2px solid #a974ff; font: 500 11px/1 var(--mono); }
 .bokst { border-radius: 3px; background: var(--soft); }
 .utanfor { display: inline-block; margin-left: 8px; padding: 1px 7px; border: 1px dashed var(--dim); border-radius: 999px; font: 11px/1.5 var(--mono); color: var(--dim); vertical-align: 2px; white-space: nowrap; }
-/* sorterbar, lesbar kort i f26 */
+/* sorterbar, lesbar kort i d26 (f18) */
 .sp-meir { display: inline-flex; align-items: center; min-height: 40px; margin: 2px 0 0; padding: 0 12px; font: 12px/1 var(--mono); color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
 .sp-meir:hover, .sp-meir:focus-visible { border-color: var(--fg); }
 .sp.fokus { animation: fokus 1.4s ease-out; }

@@ -178,7 +178,7 @@ def cmd_bench_search(_args: argparse.Namespace) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="designteori",
-        description="DESIGNTEORI — Open research corpus for Nordic design theory & research (1900–2026).",
+        description="DESIGNTEORI — Open research corpus for Nordic design theory & research (1983–2026).",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

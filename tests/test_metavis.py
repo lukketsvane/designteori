@@ -642,6 +642,13 @@ class TestRunde2(unittest.TestCase):
         self.assertNotIn("—", html)
         # black is the stage for networks and maps only: the figures on black are f06, f08 and f11
         self.assertEqual(re.findall(r'class="fig svart" id="(f\d\d)"', html), ["f06", "f08", "f11"])
+        # navigation and cross-links between pages
+        self.assertIn('<a href="../">← designteori</a>', html[:html.index("</nav>")])
+        meta_html = (DOCS_DATA_DIR.parent / "metaanalyse" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('<a class="nav-btn" href="../funn/">funn</a>', meta_html)
+        funn_b = (DOCS_DATA_DIR.parent / "funn" / "funn-b.js").read_text(encoding="utf-8")
+        self.assertIn("som i f07:", funn_b)
+        self.assertNotIn("som i f10", funn_b)
 
     def test_one_colour_one_meaning(self):
         """The cluster colours keep clear of the hues of the countries and the layers."""

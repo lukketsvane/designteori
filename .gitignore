@@ -15,4 +15,5 @@ doi_liste.csv
 # Exclude local cached PDFs from git tracking while preserving repository manifest
 pdf/*
 !pdf/manifest.json
+.claude/
 
