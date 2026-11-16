@@ -1,0 +1,597 @@
+{
+ "seed": 20261113,
+ "per_rute": 50,
+ "populasjon_n": 26425,
+ "arkiv_utelatne_dublettar": 125,
+ "trekk_n": 400,
+ "celler": [
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 58,
+   "n": 5
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 129,
+   "n": 11
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 100,
+   "n": 9
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 26,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 111,
+   "n": 9
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 93,
+   "n": 8
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 15,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 36,
+   "n": 3
+  },
+  {
+   "side": "inne",
+   "route": "OA emne og tittel",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 18,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 2,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 626,
+   "n": 13
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 471,
+   "n": 9
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 4,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 494,
+   "n": 10
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 550,
+   "n": 11
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 2,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 113,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "OA tidsskriftliste",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 124,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 114,
+   "n": 3
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 353,
+   "n": 10
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 271,
+   "n": 8
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 141,
+   "n": 4
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 343,
+   "n": 10
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 332,
+   "n": 10
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 29,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 78,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "OA tittelord",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 61,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 322,
+   "n": 10
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 62,
+   "n": 2
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 287,
+   "n": 9
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 366,
+   "n": 11
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 113,
+   "n": 4
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 169,
+   "n": 5
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 116,
+   "n": 4
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 33,
+   "n": 1
+  },
+  {
+   "side": "inne",
+   "route": "arkivlaget (utan moglege dublettar)",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 145,
+   "n": 4
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 489,
+   "n": 2
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 2106,
+   "n": 9
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 998,
+   "n": 4
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 683,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 2671,
+   "n": 12
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 1069,
+   "n": 5
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 408,
+   "n": 2
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 1892,
+   "n": 9
+  },
+  {
+   "side": "ute",
+   "route": "ute: anna fagfelt",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 801,
+   "n": 4
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 96,
+   "n": 2
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 546,
+   "n": 10
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 170,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 273,
+   "n": 5
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 723,
+   "n": 14
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 139,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 45,
+   "n": 1
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 416,
+   "n": 8
+  },
+  {
+   "side": "ute",
+   "route": "ute: domene- eller metodeord",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 231,
+   "n": 4
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 71,
+   "n": 5
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 162,
+   "n": 12
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 34,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 85,
+   "n": 7
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 175,
+   "n": 13
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 40,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 9,
+   "n": 1
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 61,
+   "n": 5
+  },
+  {
+   "side": "ute",
+   "route": "ute: under semantisk terskel",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 17,
+   "n": 1
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2010-2019",
+   "slag": "anna eller ukjend",
+   "N": 289,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2010-2019",
+   "slag": "artikkel",
+   "N": 1262,
+   "n": 11
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2010-2019",
+   "slag": "konferanse",
+   "N": 692,
+   "n": 6
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2020 og seinare",
+   "slag": "anna eller ukjend",
+   "N": 560,
+   "n": 5
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2020 og seinare",
+   "slag": "artikkel",
+   "N": 1408,
+   "n": 12
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "2020 og seinare",
+   "slag": "konferanse",
+   "N": 849,
+   "n": 7
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "før 2010",
+   "slag": "anna eller ukjend",
+   "N": 63,
+   "n": 1
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "før 2010",
+   "slag": "artikkel",
+   "N": 338,
+   "n": 3
+  },
+  {
+   "side": "ute",
+   "route": "ute: utanfor tittelord",
+   "periode": "før 2010",
+   "slag": "konferanse",
+   "N": 247,
+   "n": 2
+  }
+ ],
+ "utan_lenkje": 0,
+ "utan_kanalnamn": 29,
+ "rute_N": {
+  "OA emne og tittel": 586,
+  "OA tidsskriftliste": 2386,
+  "OA tittelord": 1722,
+  "arkivlaget (utan moglege dublettar)": 1613,
+  "ute: anna fagfelt": 11117,
+  "ute: domene- eller metodeord": 2639,
+  "ute: under semantisk terskel": 654,
+  "ute: utanfor tittelord": 5708
+ }
+}

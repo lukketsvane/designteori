@@ -1,0 +1,878 @@
+{
+ "coders_b": [
+  "modell",
+  "A",
+  "B"
+ ],
+ "coders_a": [
+  "modell",
+  "A",
+  "B"
+ ],
+ "draws": 1000,
+ "part_b": {
+  "fields": {
+   "is_claim": {
+    "n_units": 52,
+    "alpha": -0.02,
+    "alpha_ci": [
+     -0.045,
+     0.0
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": null,
+      "kappa_ci": null
+     },
+     "modell–B": {
+      "n": 52,
+      "pct": 0.923,
+      "kappa": 0.0,
+      "kappa_ci": [
+       0.0,
+       0.0
+      ]
+     },
+     "A–B": {
+      "n": 52,
+      "pct": 0.923,
+      "kappa": 0.0,
+      "kappa_ci": [
+       0.0,
+       0.0
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "1": 52
+     },
+     "A": {
+      "1": 52
+     },
+     "B": {
+      "1": 48,
+      "0": 4
+     }
+    }
+   },
+   "is_headline": {
+    "n_units": 52,
+    "alpha": -0.079,
+    "alpha_ci": [
+     -0.128,
+     -0.037
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": null,
+      "kappa_ci": null
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.75,
+      "kappa": 0.0,
+      "kappa_ci": [
+       0.0,
+       0.0
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.75,
+      "kappa": 0.0,
+      "kappa_ci": [
+       0.0,
+       0.0
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "1": 52
+     },
+     "A": {
+      "1": 52
+     },
+     "B": {
+      "1": 36,
+      "0": 12
+     }
+    }
+   },
+   "claim_location": {
+    "n_units": 52,
+    "alpha": 0.813,
+    "alpha_ci": [
+     0.696,
+     0.912
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.812,
+      "kappa": 0.703,
+      "kappa_ci": [
+       0.515,
+       0.854
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.812,
+      "kappa": 0.703,
+      "kappa_ci": [
+       0.519,
+       0.864
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "conclusion": 24,
+      "abstract": 16,
+      "introduction": 12
+     },
+     "A": {
+      "conclusion": 24,
+      "abstract": 16,
+      "introduction": 12
+     },
+     "B": {
+      "conclusion": 26,
+      "abstract": 12,
+      "introduction": 10
+     }
+    }
+   },
+   "attribution": {
+    "n_units": 52,
+    "alpha": 0.223,
+    "alpha_ci": [
+     -0.085,
+     0.481
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.729,
+      "kappa": 0.066,
+      "kappa_ci": [
+       -0.11,
+       0.314
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.729,
+      "kappa": 0.066,
+      "kappa_ci": [
+       -0.104,
+       0.287
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "own": 49,
+      "adopted": 3
+     },
+     "A": {
+      "own": 49,
+      "adopted": 3
+     },
+     "B": {
+      "own": 35,
+      "adopted": 13
+     }
+    }
+   },
+   "relation_kind": {
+    "n_units": 52,
+    "alpha": 0.865,
+    "alpha_ci": [
+     0.765,
+     0.941
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.854,
+      "kappa": 0.792,
+      "kappa_ci": [
+       0.649,
+       0.912
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.854,
+      "kappa": 0.792,
+      "kappa_ci": [
+       0.657,
+       0.907
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "causes_or_enables": 29,
+      "associated_with": 9,
+      "differs_from": 3,
+      "has_property": 3,
+      "other": 2,
+      "part_of": 2,
+      "kind_of": 2,
+      "prescribes": 1,
+      "requires": 1
+     },
+     "A": {
+      "causes_or_enables": 29,
+      "associated_with": 9,
+      "differs_from": 3,
+      "has_property": 3,
+      "other": 2,
+      "part_of": 2,
+      "kind_of": 2,
+      "prescribes": 1,
+      "requires": 1
+     },
+     "B": {
+      "causes_or_enables": 23,
+      "associated_with": 6,
+      "differs_from": 4,
+      "has_property": 4,
+      "part_of": 3,
+      "kind_of": 2,
+      "defined_as": 2,
+      "requires": 2,
+      "other": 1,
+      "prescribes": 1
+     }
+    }
+   },
+   "support_status": {
+    "n_units": 52,
+    "alpha": 0.778,
+    "alpha_ci": [
+     0.608,
+     0.905
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.833,
+      "kappa": 0.662,
+      "kappa_ci": [
+       0.43,
+       0.862
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.833,
+      "kappa": 0.662,
+      "kappa_ci": [
+       0.392,
+       0.85
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "not_stated": 37,
+      "reported": 14,
+      "stated_untested": 1
+     },
+     "A": {
+      "not_stated": 37,
+      "reported": 14,
+      "stated_untested": 1
+     },
+     "B": {
+      "not_stated": 28,
+      "reported": 14,
+      "stated_untested": 6
+     }
+    }
+   },
+   "scope": {
+    "n_units": 52,
+    "alpha": 0.518,
+    "alpha_ci": [
+     0.15,
+     0.783
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.812,
+      "kappa": 0.407,
+      "kappa_ci": [
+       0.116,
+       0.711
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.812,
+      "kappa": 0.407,
+      "kappa_ci": [
+       0.108,
+       0.697
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "not_stated": 48,
+      "stated": 4
+     },
+     "A": {
+      "not_stated": 48,
+      "stated": 4
+     },
+     "B": {
+      "not_stated": 35,
+      "stated": 9,
+      "stated_none_exists": 4
+     }
+    }
+   },
+   "explanation": {
+    "n_units": 52,
+    "alpha": 0.363,
+    "alpha_ci": [
+     0.128,
+     0.533
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.604,
+      "kappa": 0.169,
+      "kappa_ci": [
+       -0.005,
+       0.362
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.604,
+      "kappa": 0.169,
+      "kappa_ci": [
+       0.0,
+       0.354
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "not_stated": 44,
+      "stated": 8
+     },
+     "A": {
+      "not_stated": 44,
+      "stated": 8
+     },
+     "B": {
+      "not_stated": 27,
+      "stated": 12,
+      "stated_none_exists": 9
+     }
+    }
+   },
+   "prediction": {
+    "n_units": 52,
+    "alpha": 0.158,
+    "alpha_ci": [
+     -0.079,
+     0.426
+    ],
+    "pairs": {
+     "modell–A": {
+      "n": 52,
+      "pct": 1.0,
+      "kappa": 1.0,
+      "kappa_ci": [
+       1.0,
+       1.0
+      ]
+     },
+     "modell–B": {
+      "n": 48,
+      "pct": 0.771,
+      "kappa": 0.126,
+      "kappa_ci": [
+       0.0,
+       0.33
+      ]
+     },
+     "A–B": {
+      "n": 48,
+      "pct": 0.771,
+      "kappa": 0.126,
+      "kappa_ci": [
+       0.0,
+       0.336
+      ]
+     }
+    },
+    "dist": {
+     "modell": {
+      "not_stated": 51,
+      "stated": 1
+     },
+     "A": {
+      "not_stated": 51,
+      "stated": 1
+     },
+     "B": {
+      "not_stated": 36,
+      "stated": 8,
+      "stated_none_exists": 4
+     }
+    }
+   }
+  },
+  "concepts": {
+   "modell–A": {
+    "n_items": 52,
+    "jaccard": 1.0,
+    "role": {
+     "n": 114,
+     "pct": 1.0,
+     "kappa": 1.0,
+     "dist": [
+      {
+       "from": 54,
+       "to": 51,
+       "other": 6,
+       "condition": 3
+      },
+      {
+       "from": 54,
+       "to": 51,
+       "other": 6,
+       "condition": 3
+      }
+     ]
+    },
+    "definition_status": {
+     "n": 114,
+     "pct": 1.0,
+     "kappa": 1.0,
+     "dist": [
+      {
+       "not_stated": 98,
+       "defined": 10,
+       "stated_none_exists": 3,
+       "defined_by_citation": 3
+      },
+      {
+       "not_stated": 98,
+       "defined": 10,
+       "stated_none_exists": 3,
+       "defined_by_citation": 3
+      }
+     ]
+    },
+    "definition_excerpt": {
+     "n": 16,
+     "share_overlap": 1.0
+    }
+   },
+   "modell–B": {
+    "n_items": 47,
+    "jaccard": 0.926,
+    "role": {
+     "n": 96,
+     "pct": 0.74,
+     "kappa": 0.597,
+     "dist": [
+      {
+       "to": 45,
+       "from": 43,
+       "other": 5,
+       "condition": 3
+      },
+      {
+       "to": 36,
+       "from": 36,
+       "condition": 13,
+       "other": 11
+      }
+     ]
+    },
+    "definition_status": {
+     "n": 96,
+     "pct": 0.802,
+     "kappa": 0.47,
+     "dist": [
+      {
+       "not_stated": 83,
+       "defined": 9,
+       "stated_none_exists": 1,
+       "defined_by_citation": 3
+      },
+      {
+       "not_stated": 68,
+       "stated_none_exists": 10,
+       "defined": 11,
+       "defined_by_citation": 7
+      }
+     ]
+    },
+    "definition_excerpt": {
+     "n": 13,
+     "share_overlap": 1.0
+    }
+   },
+   "A–B": {
+    "n_items": 47,
+    "jaccard": 0.926,
+    "role": {
+     "n": 96,
+     "pct": 0.74,
+     "kappa": 0.597,
+     "dist": [
+      {
+       "to": 45,
+       "from": 43,
+       "other": 5,
+       "condition": 3
+      },
+      {
+       "to": 36,
+       "from": 36,
+       "condition": 13,
+       "other": 11
+      }
+     ]
+    },
+    "definition_status": {
+     "n": 96,
+     "pct": 0.802,
+     "kappa": 0.47,
+     "dist": [
+      {
+       "not_stated": 83,
+       "defined": 9,
+       "stated_none_exists": 1,
+       "defined_by_citation": 3
+      },
+      {
+       "not_stated": 68,
+       "stated_none_exists": 10,
+       "defined": 11,
+       "defined_by_citation": 7
+      }
+     ]
+    },
+    "definition_excerpt": {
+     "n": 13,
+     "share_overlap": 1.0
+    }
+   }
+  },
+  "support_forms": {
+   "modell–A": {
+    "n_items": 52,
+    "n_with_form": 14,
+    "jaccard": 1.0,
+    "kappa_per_form": {
+     "argument": 1.0,
+     "case": 1.0,
+     "data_collection": 1.0,
+     "literature": 1.0
+    }
+   },
+   "modell–B": {
+    "n_items": 48,
+    "n_with_form": 11,
+    "jaccard": 0.818,
+    "kappa_per_form": {
+     "argument": 1.0,
+     "case": 0.897,
+     "data_collection": 1.0,
+     "literature": 0.789
+    }
+   },
+   "A–B": {
+    "n_items": 48,
+    "n_with_form": 11,
+    "jaccard": 0.818,
+    "kappa_per_form": {
+     "argument": 1.0,
+     "case": 0.897,
+     "data_collection": 1.0,
+     "literature": 0.789
+    }
+   }
+  },
+  "excerpts": {
+   "modell–A": {
+    "relation_expression": {
+     "n": 52,
+     "share_overlap": 1.0
+    },
+    "scope_utdrag": {
+     "n": 4,
+     "share_overlap": 1.0
+    },
+    "explanation_utdrag": {
+     "n": 8,
+     "share_overlap": 1.0
+    },
+    "prediction_utdrag": {
+     "n": 1,
+     "share_overlap": 1.0
+    }
+   },
+   "modell–B": {
+    "relation_expression": {
+     "n": 48,
+     "share_overlap": 1.0
+    },
+    "scope_utdrag": {
+     "n": 4,
+     "share_overlap": 1.0
+    },
+    "explanation_utdrag": {
+     "n": 6,
+     "share_overlap": 1.0
+    },
+    "prediction_utdrag": {
+     "n": 1,
+     "share_overlap": 1.0
+    }
+   },
+   "A–B": {
+    "relation_expression": {
+     "n": 48,
+     "share_overlap": 1.0
+    },
+    "scope_utdrag": {
+     "n": 4,
+     "share_overlap": 1.0
+    },
+    "explanation_utdrag": {
+     "n": 6,
+     "share_overlap": 1.0
+    },
+    "prediction_utdrag": {
+     "n": 1,
+     "share_overlap": 1.0
+    }
+   }
+  },
+  "theories": {
+   "modell–A": {
+    "n_texts": 20,
+    "jaccard": 1.0
+   },
+   "modell–B": {
+    "n_texts": 20,
+    "jaccard": 1.0
+   },
+   "A–B": {
+    "n_texts": 20,
+    "jaccard": 1.0
+   }
+  }
+ },
+ "part_a": {
+  "modell–A": {
+   "matched": 12,
+   "n_first": 12,
+   "n_second": 12,
+   "share_of_first": 1.0,
+   "share_of_second": 1.0,
+   "f1": 1.0,
+   "f1_ci": [
+    1.0,
+    1.0
+   ],
+   "per_text": {
+    "h05": [
+     2,
+     2,
+     2
+    ],
+    "h08": [
+     2,
+     2,
+     2
+    ],
+    "h09": [
+     1,
+     1,
+     1
+    ],
+    "h14": [
+     2,
+     2,
+     2
+    ],
+    "h18": [
+     3,
+     3,
+     3
+    ],
+    "h23": [
+     2,
+     2,
+     2
+    ]
+   }
+  },
+  "modell–B": {
+   "matched": 9,
+   "n_first": 12,
+   "n_second": 9,
+   "share_of_first": 0.75,
+   "share_of_second": 1.0,
+   "f1": 0.857,
+   "f1_ci": [
+    0.737,
+    0.957
+   ],
+   "per_text": {
+    "h05": [
+     1,
+     2,
+     1
+    ],
+    "h08": [
+     2,
+     2,
+     2
+    ],
+    "h09": [
+     1,
+     1,
+     1
+    ],
+    "h14": [
+     1,
+     2,
+     1
+    ],
+    "h18": [
+     2,
+     3,
+     2
+    ],
+    "h23": [
+     2,
+     2,
+     2
+    ]
+   }
+  },
+  "A–B": {
+   "matched": 9,
+   "n_first": 12,
+   "n_second": 9,
+   "share_of_first": 0.75,
+   "share_of_second": 1.0,
+   "f1": 0.857,
+   "f1_ci": [
+    0.737,
+    0.957
+   ],
+   "per_text": {
+    "h05": [
+     1,
+     2,
+     1
+    ],
+    "h08": [
+     2,
+     2,
+     2
+    ],
+    "h09": [
+     1,
+     1,
+     1
+    ],
+    "h14": [
+     1,
+     2,
+     1
+    ],
+    "h18": [
+     2,
+     3,
+     2
+    ],
+    "h23": [
+     2,
+     2,
+     2
+    ]
+   }
+  }
+ },
+ "n_items": 52,
+ "n_texts": 21
+}
