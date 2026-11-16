@@ -124,7 +124,8 @@ def generer_grensekodeark(out_dir: pathlib.Path = OUT_DIR) -> dict:
         )
     c.close()
 
-    add = json.load(open(ADD, encoding="utf-8"))
+    with open(ADD, encoding="utf-8") as fh:
+        add = json.load(fh)
     n_dup_arkiv = 0
     for a in add:
         if a.get("duplicate_status") != "new-candidate":
@@ -261,8 +262,9 @@ def generer_grensekodeark(out_dir: pathlib.Path = OUT_DIR) -> dict:
         "rute_N": {r: sum(1 for p in pop if p["route"] == r) for _, r in routes},
     }
 
-    json.dump(summary, open(out_dir / "ut" / "g02.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    json.dump(summary, open(out_dir / "g02.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    for out_path in (out_dir / "ut" / "g02.json", out_dir / "g02.json"):
+        with open(out_path, "w", encoding="utf-8") as fh:
+            json.dump(summary, fh, ensure_ascii=False, indent=1)
 
     return summary
 

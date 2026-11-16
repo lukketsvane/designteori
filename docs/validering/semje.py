@@ -61,7 +61,9 @@ def rows_of(ws):
 
 def load_machine(path):
     items, theories = {}, {}
-    for r in json.load(open(path, encoding='utf-8'))['rows']:
+    with open(path, encoding='utf-8') as fh:
+        rows = json.load(fh)['rows']
+    for r in rows:
         st = lambda k: (r.get(k) or {}).get('status'); ex = lambda k: (r.get(k) or {}).get('excerpt')
         items[r['id']] = dict(
             is_claim='1', is_headline='1', claim_location=r.get('claim_location'), attribution=r.get('attribution'), relation_kind=r.get('relation_kind'),
@@ -322,7 +324,9 @@ def main():
     ap.add_argument('--sjolvtest', action='store_true'); ap.add_argument('--mal-a'); ap.add_argument('--mal-b')
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-    machine = load_machine(args.maskin); utval = json.load(open(args.utval, encoding='utf-8'))
+    machine = load_machine(args.maskin)
+    with open(args.utval, encoding='utf-8') as fh:
+        utval = json.load(fh)
     labels = {t['label']: t['text_id'] for t in utval['part_a']['texts']}
     keep = {i['item'] for i in utval['part_b']['items']}; machine['items'] = {k: v for k, v in machine['items'].items() if k in keep}
     if args.sjolvtest: sys.exit(0 if selftest(args, machine, labels) else 1)
@@ -331,7 +335,9 @@ def main():
     for s in args.a: n, p = s.split('=', 1); A[n] = load_a(p, labels)
     res = analyse(B if len(B) > 1 else {}, A if len(A) > 1 else {}, draws=args.trekk)
     report(res, 'SAMSVAR')
-    if args.ut: json.dump(res, open(args.ut, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    if args.ut:
+        with open(args.ut, 'w', encoding='utf-8') as fh:
+            json.dump(res, fh, ensure_ascii=False, indent=1)
 
 if __name__ == '__main__':
     main()

@@ -24,7 +24,8 @@ def bygg_arbeidsboker():
     mal_b = VALIDERING_DIR / "kodeark-del-b.xlsx"
 
     machine = semje.load_machine(str(maskin_fil))
-    utval = json.load(open(utval_fil, encoding="utf-8"))
+    with open(utval_fil, encoding="utf-8") as fh:
+        utval = json.load(fh)
     labels = {t["label"]: t["text_id"] for t in utval["part_a"]["texts"]}
     keep = {i["item"] for i in utval["part_b"]["items"]}
     machine["items"] = {k: v for k, v in machine["items"].items() if k in keep}
