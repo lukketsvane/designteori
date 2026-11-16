@@ -175,6 +175,32 @@ def cmd_bench_search(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rerun_nordic(args: argparse.Namespace) -> int:
+    from designteori.collect import rerun_failed_nordic_openalex
+
+    _print(
+        rerun_failed_nordic_openalex(
+            pages_nordic=args.pages_nordic,
+            end_year=args.end_year,
+            delay=args.delay,
+        )
+    )
+    return 0
+
+
+def cmd_audit_nva(args: argparse.Namespace) -> int:
+    from scripts.audit_nva_urls import run_audit
+
+    report = run_audit(
+        limit=args.limit,
+        workers=args.workers,
+        delay=args.delay,
+        resume=not args.no_resume,
+    )
+    _print(report.get("summary", {}))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="designteori",
@@ -257,6 +283,19 @@ def main(argv: list[str] | None = None) -> int:
 
     p_bn = sub.add_parser("bench-search", help="Recompute the search quality (recall@10) from the published search files")
     p_bn.set_defaults(func=cmd_bench_search)
+
+    p_rn = sub.add_parser("rerun-nordic", help="Clear quota errors and rerun the 18 Nordic-keyword OpenAlex queries")
+    p_rn.add_argument("--pages-nordic", type=int, default=5)
+    p_rn.add_argument("--end-year", type=int, default=2026)
+    p_rn.add_argument("--delay", type=float, default=0.25)
+    p_rn.set_defaults(func=cmd_rerun_nordic)
+
+    p_an = sub.add_parser("audit-nva", help="Audit unresolved hdl.handle.net NVA URLs via the NVA API")
+    p_an.add_argument("--limit", type=int, default=0, help="Audit up to N items (0 = all)")
+    p_an.add_argument("--workers", type=int, default=8)
+    p_an.add_argument("--delay", type=float, default=0.25)
+    p_an.add_argument("--no-resume", action="store_true")
+    p_an.set_defaults(func=cmd_audit_nva)
 
     parsed = parser.parse_args(argv)
     return parsed.func(parsed)

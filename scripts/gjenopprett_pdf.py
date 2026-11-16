@@ -184,69 +184,71 @@ def main() -> None:
     args = ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(f"file:{PRIVATE_CORPUS_DB}?mode=ro", uri=True, timeout=60)
+    try:
+        if args.link_work_ids:
+            print(json.dumps({"link_work_ids": link_work_ids(db)}, ensure_ascii=False), flush=True)
 
-    if args.link_work_ids:
-        print(json.dumps({"link_work_ids": link_work_ids(db)}, ensure_ascii=False), flush=True)
+        doc_pages = {r[0]: int(r[1] or 0) for r in db.execute("select sha256, pages from documents")}
+        urls: dict[str, list[str]] = defaultdict(list)
+        for sha, url in db.execute("select sha256, original_url from work_documents where original_url is not null and original_url<>''"):
+            if url not in urls[sha]:
+                urls[sha].append(url)
+        # Fallback URL-ar frå katalogen og progress.json viss original_url manglar eller feilar
+        cat_file = ROOT / "docs/data/pdf_katalog.json"
+        if cat_file.is_file():
+            for item in json.loads(cat_file.read_text(encoding="utf8")).get("items", []):
+                s = item.get("document_sha256")
+                if s:
+                    for key in ("oa_location_unverified", "public_pdf_url"):
+                        u = item.get(key)
+                        if u and u not in urls[s]:
+                            urls[s].append(u)
 
-    doc_pages = {r[0]: int(r[1] or 0) for r in db.execute("select sha256, pages from documents")}
-    urls: dict[str, list[str]] = defaultdict(list)
-    for sha, url in db.execute("select sha256, original_url from work_documents where original_url is not null and original_url<>''"):
-        if url not in urls[sha]:
-            urls[sha].append(url)
-    # Fallback URL-ar frå katalogen og progress.json viss original_url manglar eller feilar
-    cat_file = ROOT / "docs/data/pdf_katalog.json"
-    if cat_file.is_file():
-        for item in json.loads(cat_file.read_text(encoding="utf8")).get("items", []):
-            s = item.get("document_sha256")
-            if s:
-                for key in ("oa_location_unverified", "public_pdf_url"):
-                    u = item.get(key)
-                    if u and u not in urls[s]:
-                        urls[s].append(u)
+        present = have_hashes(db)
+        todo = sorted(s for s in doc_pages if s not in present)
+        print(json.dumps({"documents_in_db": len(doc_pages), "on_disk": len(set(doc_pages) & present),
+                          "missing": len(todo), "missing_with_url": sum(1 for s in todo if urls.get(s))}), flush=True)
+        if args.dry_run or not todo:
+            return
+        if args.limit:
+            todo = todo[: args.limit]
 
-    present = have_hashes(db)
-    todo = sorted(s for s in doc_pages if s not in present)
-    print(json.dumps({"documents_in_db": len(doc_pages), "on_disk": len(set(doc_pages) & present),
-                      "missing": len(todo), "missing_with_url": sum(1 for s in todo if urls.get(s))}), flush=True)
-    if args.dry_run or not todo:
-        return
-    if args.limit:
-        todo = todo[: args.limit]
+        sample_pages: dict[str, dict[int, str]] = {}
+        if args.verify_text:
+            for s in todo:
+                n = doc_pages[s]
+                picks = sorted({1, min(2, n), max(1, n // 2)})
+                sample_pages[s] = {
+                    p: t for p, t in db.execute(
+                        f"select page, text from pages where sha256=? and page in ({','.join('?'*len(picks))})",
+                        (s, *picks),
+                    )
+                }
 
-    sample_pages: dict[str, dict[int, str]] = {}
-    if args.verify_text:
-        for s in todo:
-            n = doc_pages[s]
-            picks = sorted({1, min(2, n), max(1, n // 2)})
-            sample_pages[s] = {
-                p: t for p, t in db.execute(
-                    f"select page, text from pages where sha256=? and page in ({','.join('?'*len(picks))})",
-                    (s, *picks),
-                )
-            }
-
-    verified_file = PRIVATE_CACHE / "gjenopprett_verified.json"
-    verified_list = set(json.loads(verified_file.read_text(encoding="utf8"))) if verified_file.is_file() else set()
-    done = ok = 0
-    t0 = time.time()
-    with ThreadPoolExecutor(max_workers=args.workers) as ex, open(LOG, "a", encoding="utf8") as log:
-        futs = [ex.submit(work, s, urls.get(s, []), doc_pages[s], sample_pages.get(s, {}), args.verify_text) for s in todo]
-        for fut in as_completed(futs):
-            res = fut.result()
-            done += 1
-            if res["ok"]:
-                ok += 1
-                if str(res.get("reason", "")).startswith("text-ok"):
-                    verified_list.add(res["sha256"])
-            with _lock:
-                log.write(json.dumps(res, ensure_ascii=False) + "\n")
-                log.flush()
-            if done % 50 == 0:
-                print(json.dumps({"done": done, "ok": ok, "of": len(todo), "min": round((time.time() - t0) / 60, 1)}), flush=True)
-    verified_file.write_text(json.dumps(sorted(verified_list)), encoding="utf8")
-    if args.link_work_ids:
-        print(json.dumps({"link_work_ids_after": link_work_ids(db)}, ensure_ascii=False), flush=True)
-    print(json.dumps({"finished": True, "done": done, "restored": ok, "failed": done - ok}), flush=True)
+        verified_file = PRIVATE_CACHE / "gjenopprett_verified.json"
+        verified_list = set(json.loads(verified_file.read_text(encoding="utf8"))) if verified_file.is_file() else set()
+        done = ok = 0
+        t0 = time.time()
+        with ThreadPoolExecutor(max_workers=args.workers) as ex, open(LOG, "a", encoding="utf8") as log:
+            futs = [ex.submit(work, s, urls.get(s, []), doc_pages[s], sample_pages.get(s, {}), args.verify_text) for s in todo]
+            for fut in as_completed(futs):
+                res = fut.result()
+                done += 1
+                if res["ok"]:
+                    ok += 1
+                    if str(res.get("reason", "")).startswith("text-ok"):
+                        verified_list.add(res["sha256"])
+                with _lock:
+                    log.write(json.dumps(res, ensure_ascii=False) + "\n")
+                    log.flush()
+                if done % 50 == 0:
+                    print(json.dumps({"done": done, "ok": ok, "of": len(todo), "min": round((time.time() - t0) / 60, 1)}), flush=True)
+        verified_file.write_text(json.dumps(sorted(verified_list)), encoding="utf8")
+        if args.link_work_ids:
+            print(json.dumps({"link_work_ids_after": link_work_ids(db)}, ensure_ascii=False), flush=True)
+        print(json.dumps({"finished": True, "done": done, "restored": ok, "failed": done - ok}), flush=True)
+    finally:
+        db.close()
 
 
 if __name__ == "__main__":

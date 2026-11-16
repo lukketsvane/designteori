@@ -4,12 +4,21 @@
 <style>
 :root{color-scheme:light dark}
 body{font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;max-width:46rem;margin:0 auto;padding:1.2rem 1rem 4rem}
+nav.topp{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;margin-bottom:1rem;opacity:.8}
+nav.topp a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+nav.topp a:hover{text-decoration:underline;opacity:1}
 h1{font-size:1.5rem;line-height:1.25} h2{font-size:1.15rem;margin-top:2.2rem}
 .tw{overflow-x:auto} table{border-collapse:collapse;width:100%;font-size:.9rem}
 td,th{border:1px solid rgba(127,127,127,.4);padding:.35rem .5rem;vertical-align:top;text-align:left}
 code{font-size:.9em} .box{border:1px solid rgba(127,127,127,.5);padding:.2rem .9rem;border-radius:6px}
 li{margin:.3rem 0}
 </style></head><body>
+<nav class="topp" aria-label="Meny">
+  <a href="../">← designteori</a>
+  <a href="../utforsk/">utforsk</a>
+  <a href="../funn/">funn</a>
+  <a href="../metaanalyse/">metaanalyse</a>
+</nav>
 <h1>Validering av teorielementbasen</h1>
 <p>Rettleiing for kodarar, 12.11.2026.</p>
 <p>Teorielementbasen registrerer hovudpåstandane i nordisk designforsking: kva omgrep ein påstand bind saman, korleis teksten definerer omgrepa, kva samanheng han påstår, og korleis teksten seier at påstanden er støtta. Radene som ligg ute, er koda av ein språkmodell. Du kodar eit utval av dei same tekstane utan å sjå kodinga til modellen eller til den andre kodaren. Etterpå reknar me ut samsvaret for kvart felt.</p>
@@ -87,6 +96,15 @@ li{margin:.3rem 0}
 <li>Del B, felt med éin verdi: prosent samsvar, Cohen's κ for kvart par, Krippendorff's α for alle kodarane og fordelinga av verdiar. Konfidensintervalla kjem frå bootstrap over tekstar.</li>
 <li>Del B, omgrep og støtteformer: Jaccard-likskap per påstand. Definisjonsstatus og rolle blir samanlikna for omgrep som begge kodarane har registrert.</li>
 <li>Utvalet står i <a href="utval.json">utval.json</a>. Skriptet er ope: <a href="semje.py">semje.py</a>.</li>
+</ul>
+<p>Filene <a href="kodeark-del-a.xlsx">kodeark-del-a.xlsx</a> og <a href="kodeark-del-b.xlsx">kodeark-del-b.xlsx</a> er blanke arbeidsbøker for menneskeleg koding. Øvingsfilene <code>kodeark-del-*-A/B.xlsx</code> og <a href="semje.json">semje.json</a> er førebels genererte som syntetisk sjølvtest av måleoppsettet (ikkje menneskeleg koding).</p>
+
+<h2>Grenseprøving av korpusavgrensinga (Grensa-utvalet)</h2>
+<p>For å teste sjølve korpusgrensa uavhengig er det trekt 400 verk frå kandidatpopulasjonen (26&#8239;425 verk i 8&nbsp;&times;&nbsp;50 strata, trekte med frø <code>20261113</code> og Hare–Niemeyer-utvalsvekting):</p>
+<ul>
+<li><a href="grensa/kodar-rettleiing.md">Rettleiing for grensekodarane</a></li>
+<li>Blinda kodeark: <a href="grensa/kodeark_kodar_A.csv">kodeark_kodar_A.csv</a> og <a href="grensa/kodeark_kodar_B.csv">kodeark_kodar_B.csv</a></li>
+<li>Trekk- og stratesamandrag: <a href="grensa/g02.json">grensa/g02.json</a></li>
 </ul>
 <p>Kva grenser som skal gjelde for å kalle eit felt validert, er ikkje avgjort.</p>
 </body></html>

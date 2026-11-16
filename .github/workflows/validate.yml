@@ -25,11 +25,11 @@ jobs:
       - name: Installer kjernepakkar for verifisering
         run: python -m pip install --upgrade pip numpy pytest
       - name: Syntakskontroll
-        run: python -m compileall -q designteori.py designteori tests
+        run: python -m compileall -q designteori.py designteori tests teorielement scripts docs/validering
       - name: Køyr einings- og integrasjonstestar
         run: python -m unittest discover -s tests -v
       - name: Køyr testane som er skrivne for pytest
-        run: python -m pytest tests/test_teorielement_prep.py -q
+        run: python -m pytest tests/test_teorielement_prep.py tests/test_teorielement_e2e.py -q
       - name: Verifiser database, sjekksummar, kjeldelag og Google-embeddingar
         run: python designteori.py verify
       - uses: actions/setup-node@v4

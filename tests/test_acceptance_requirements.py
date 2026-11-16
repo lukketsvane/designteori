@@ -1238,6 +1238,33 @@ class Tier4RealWorldScenarioTests(unittest.TestCase):
         additions = read_json(DOCS_DATA_DIR / "nordic_additions.json")
         self.assertEqual(len(additions), 1738)
 
+    def test_t4_nva_audit_doi_normalization_and_cli_subcommands(self) -> None:
+        """Verify NVA audit report separates non-DOI external URLs from real DOIs and CLI exposes rerun-nordic/audit-nva."""
+        from designteori import normalize_doi
+
+        nva_report = read_json(DOCS_DATA_DIR / "nva_audit_report.json")
+        for item in nva_report.get("items", []):
+            if item.get("doi_found"):
+                self.assertTrue(
+                    bool(normalize_doi(item["doi_found"])),
+                    f"Non-DOI value in doi_found for {item.get('id')}: {item.get('doi_found')}",
+                )
+            if item.get("doi_backfilled"):
+                self.assertTrue(
+                    bool(normalize_doi(item.get("doi_found"))),
+                    f"Invalid doi_backfilled flag for {item.get('id')}",
+                )
+
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "designteori.py"), "--help"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=True,
+        )
+        self.assertIn("rerun-nordic", proc.stdout)
+        self.assertIn("audit-nva", proc.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

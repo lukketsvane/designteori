@@ -22,6 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+from designteori import doi_url, normalize_doi  # noqa: E402
 
 DEFAULT_USER_AGENT = "Designteori/3.0 (+https://github.com/lukketsvane/designteori; mailto:designteori-research@outlook.com)"
 NVA_API_BASE = "https://api.nva.unit.no/publication"
@@ -130,6 +131,7 @@ def audit_item(item: dict, user_agent: str, limiter: RateLimiter, timeout: float
         "open_files": [],
         "doi_found": None,
         "doi_backfilled": False,
+        "external_url_found": None,
         "audited_at": now_iso(),
         "error": None,
     }
@@ -148,14 +150,17 @@ def audit_item(item: dict, user_agent: str, limiter: RateLimiter, timeout: float
         record["error"] = api_err
         return record
 
-    # Check DOI in NVA publication entityDescription
+    # Check DOI (or fallback external link) in NVA publication entityDescription
     ed = pub_data.get("entityDescription") or {}
     ref = ed.get("reference") or {}
-    doi = ref.get("doi")
-    if doi and isinstance(doi, str):
-        record["doi_found"] = doi.strip()
-        if not original_doi:
+    raw_ref = str(ref.get("doi") or "").strip() if isinstance(ref, dict) else ""
+    norm_doi = normalize_doi(raw_ref)
+    if norm_doi:
+        record["doi_found"] = doi_url(norm_doi)
+        if not normalize_doi(original_doi):
             record["doi_backfilled"] = True
+    elif raw_ref.startswith(("http://", "https://")):
+        record["external_url_found"] = raw_ref
 
     # Check associatedArtifacts for open files
     artifacts = pub_data.get("associatedArtifacts") or []
@@ -280,14 +285,20 @@ def _save_report(output_path: Path, catalog_path: Path, target_count: int, compl
         "verified_oa_pdf": sum(1 for x in all_items if x.get("resolution_status") == "verified_oa_pdf"),
         "verified_oa_artifact": sum(1 for x in all_items if x.get("resolution_status") == "verified_oa_artifact"),
         "doi_backfilled": sum(1 for x in all_items if x.get("doi_backfilled")),
+        "external_url_found": sum(1 for x in all_items if x.get("external_url_found")),
         "redirect_failed": sum(1 for x in all_items if x.get("resolution_status") == "redirect_failed"),
         "publication_not_found": sum(1 for x in all_items if x.get("resolution_status") == "publication_not_found"),
         "error": sum(1 for x in all_items if x.get("resolution_status") == "error"),
     }
 
+    try:
+        catalog_source = str(catalog_path.resolve().relative_to(ROOT.resolve())).replace("\\", "/")
+    except ValueError:
+        catalog_source = str(catalog_path).replace("\\", "/")
+
     report = {
         "audited_at": now_iso(),
-        "catalog_source": str(catalog_path.relative_to(ROOT)).replace("\\", "/"),
+        "catalog_source": catalog_source,
         "target_handle_count": target_count,
         "audited_count": len(all_items),
         "summary": summary,

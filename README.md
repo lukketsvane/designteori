@@ -4,7 +4,7 @@
 
 Nettarbeidsbenk (GitHub Pages): **https://lukketsvane.github.io/designteori/**
 
-Korpuset har 6 432 registrerte postar (om lag 6 236 ulike verk): 4 694 frå OpenAlex-laget og 1 738 frå nordiske nasjonalarkiv og konferanseseriar (NVA/Cristin, Nordes, DiVA, KGL og IRIS).
+Korpuset har 6 432 registrerte postar (om lag 6 236 ulike verk): 4 694 frå OpenAlex-laget og 1 738 frå nordiske nasjonalarkiv og konferanseseriar (NVA/Cristin, Nordes, DiVA, Aaltodoc, KGL og IRIS).
 
 ## Nettarbeidsbenken (`docs/`)
 
@@ -17,7 +17,7 @@ Alle sidene er statiske filer i `docs/`; ingen server og ingen API-nøkkel treng
 | `docs/funn/` | Biletutgåva av korpusmetaanalysen (runde 1 og 2): 18 konsoliderte figurar (`f01`–`f18`, delar `d01`–`d36`), 164 kontrollerte funn og 24 spørsmål |
 | `docs/metaanalyse/` | Fullstendig skriftleg metaanalyserapport for runde 1 og 2 |
 | `docs/#siteringar` (`kanon`), `#kart`, `#analyse`, `#teorielement` (`teori`), `#om` | Kanonoversikt, klyngekart over 8 hovudklynger og 52 underklynger, deskriptiv analyse, pilotbase over teorielement og dokumentasjon av korpus og søk |
-| `docs/validering/` | Rettleiing, kodeark (`kodeark-del-a.xlsx`, `kodeark-del-b.xlsx`) og skript for kodarsamsvar (`semje.py`) til blind validering av teorielementbasen |
+| `docs/validering/` | Rettleiing, tomme kodeark (`kodeark-del-a.xlsx`, `kodeark-del-b.xlsx`) og skript for kodarsamsvar (`semje.py`; syntetiske testfiler i `semje.json` / `*-{A,B}.xlsx`), samt grensekodeark (`grensa/`) for 400 verk |
 
 For historisk samanlikning ligg den tidlegare metavitskaplege studien av ti vitskapsteoretiske påstandar (`P1`–`P10`, 07.11.2026) i [`gransking/`](gransking/README.md).
 
@@ -57,6 +57,8 @@ Steg B treng Python 3.13 med `onnxruntime` og `tokenizers` og modellfilene i den
 - **Biletutgåva av metaanalysen (`docs/data/meta/`):** `python -u -m designteori.metavis`
 - **Metaanalysesida (`docs/metaanalyse/index.html`):** `python -m designteori.metaside <rapport.md>`
 - **Teorielement-førebuing og kodarsamsvar:** `python teorielement/prep.py` førebur private inndata i cachen frå `teorielement/kodebok.md`; `python semje.py --sjolvtest --maskin ../data/teorielement/rader.json --utval utval.json --mal-a kodeark-del-a.xlsx --mal-b kodeark-del-b.xlsx` (frå `docs/validering/`) testar samsvarsrekninga.
+- **Grensekodeark (`docs/validering/grensa/`):** `python scripts/lag_grensekodeark.py` byggjer stratifiserte blinda ark (`400` verk i `8 × 50` strata over kandidatpopulasjonen på `26 425` verk) og fasitnøkkel med Hare–Niemeyer-utvalsvekting.
+- **NVA-revisjon og OpenAlex-køyring:** `python designteori.py audit-nva` kontrollerer NVA-handle-lenkjer mot `api.nva.unit.no` (`docs/data/nva_audit_report.json`); `python designteori.py rerun-nordic` nullstiller eventuelle kvote-feil og køyrer dei 18 nordiske språkspørjingane mot OpenAlex på nytt.
 
 ## Verifisering og testar
 

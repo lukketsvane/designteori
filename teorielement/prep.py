@@ -83,47 +83,50 @@ def main() -> None:
     (WORK / "input").mkdir(parents=True, exist_ok=True)
     (WORK / "output").mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(f"file:{PRIVATE_CORPUS_DB}?mode=ro", uri=True, timeout=60)
-    docs = {r[0]: r for r in db.execute("select sha256,pages,quality from documents")}
-    index: dict[str, dict] = {}
-    skipped: list[dict] = []
-    for sha, items in sorted(by_sha.items(), key=lambda kv: kv[1][0]["id"]):
-        meta = items[0]
-        safe_id = safe_filename(meta["id"])
-        fname = f"{safe_id}.txt"
-        d = docs.get(sha)
-        if not d or d[2] != "extracted":
-            skipped.append({"id": meta["id"], "safe_id": safe_id, "sha256": sha, "reason": "needs_ocr" if d else "missing"})
-            continue
-        target_path = WORK / "input" / fname
-        if target_path.exists() and target_path.stat().st_size > 0:
-            body_chars = len(target_path.read_text(encoding="utf8"))
-        else:
-            pages = [(p, t) for p, t in db.execute("select page,text from pages where sha256=? order by page", (sha,))]
-            front = clip(pages, FRONT_CHARS)
-            front_last = (front[-1][0] - 1) if front else 0
-            end = [x for x in build_end(pages, front_last) if x[0] > (front[-1][0] if front else 0)]
-            header = (
-                f"ID: {meta['id']}\nTITTEL: {meta.get('title','')}\nÅR: {meta.get('year')}\n"
-                f"DOI: {meta.get('doi','')}\nSIDER I PDF: {d[1]}\n"
-            )
-            body = header + "\n#### DEL A: FRAMSIDE, SAMANDRAG OG INNLEIING\n" + render(front)
-            if end:
-                body += "\n\n#### DEL B: KONKLUSJON / AVSLUTNING\n" + render(end)
-            target_path.write_text(body, encoding="utf8")
-            body_chars = len(body)
-        index[safe_id] = {
-            "id": meta["id"],
-            "safe_id": safe_id,
-            "file": fname,
-            "sha256": sha,
-            "chars": body_chars,
-            "title": meta.get("title", ""),
-            "year": meta.get("year"),
-            "doi": meta.get("doi", ""),
-            "license": meta.get("license", ""),
-        }
-        if args.limit and len(index) >= args.limit:
-            break
+    try:
+        docs = {r[0]: r for r in db.execute("select sha256,pages,quality from documents")}
+        index: dict[str, dict] = {}
+        skipped: list[dict] = []
+        for sha, items in sorted(by_sha.items(), key=lambda kv: kv[1][0]["id"]):
+            meta = items[0]
+            safe_id = safe_filename(meta["id"])
+            fname = f"{safe_id}.txt"
+            d = docs.get(sha)
+            if not d or d[2] != "extracted":
+                skipped.append({"id": meta["id"], "safe_id": safe_id, "sha256": sha, "reason": "needs_ocr" if d else "missing"})
+                continue
+            target_path = WORK / "input" / fname
+            if target_path.exists() and target_path.stat().st_size > 0:
+                body_chars = len(target_path.read_text(encoding="utf8"))
+            else:
+                pages = [(p, t) for p, t in db.execute("select page,text from pages where sha256=? order by page", (sha,))]
+                front = clip(pages, FRONT_CHARS)
+                front_last = (front[-1][0] - 1) if front else 0
+                end = [x for x in build_end(pages, front_last) if x[0] > (front[-1][0] if front else 0)]
+                header = (
+                    f"ID: {meta['id']}\nTITTEL: {meta.get('title','')}\nÅR: {meta.get('year')}\n"
+                    f"DOI: {meta.get('doi','')}\nSIDER I PDF: {d[1]}\n"
+                )
+                body = header + "\n#### DEL A: FRAMSIDE, SAMANDRAG OG INNLEIING\n" + render(front)
+                if end:
+                    body += "\n\n#### DEL B: KONKLUSJON / AVSLUTNING\n" + render(end)
+                target_path.write_text(body, encoding="utf8")
+                body_chars = len(body)
+            index[safe_id] = {
+                "id": meta["id"],
+                "safe_id": safe_id,
+                "file": fname,
+                "sha256": sha,
+                "chars": body_chars,
+                "title": meta.get("title", ""),
+                "year": meta.get("year"),
+                "doi": meta.get("doi", ""),
+                "license": meta.get("license", ""),
+            }
+            if args.limit and len(index) >= args.limit:
+                break
+    finally:
+        db.close()
     (WORK / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf8")
     (WORK / "skipped.json").write_text(json.dumps(skipped, ensure_ascii=False, indent=1), encoding="utf8")
     total = sum(i["chars"] for i in index.values())
