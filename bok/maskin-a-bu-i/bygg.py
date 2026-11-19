@@ -11,7 +11,8 @@ vert tilpassa automatisk side for side:
 3. I sluttpasset finn XeLaTeX den største skriftstorleiken som får plass på kvar side
    (binærsøk), og fordeler resten av lufta mellom strofene.
 
-Bruk:   python bygg.py
+Bruk:   python bygg.py              (manus.md  -> maskin-a-bu-i.pdf)
+        python bygg.py AHO_A.md     (AHO_A.md  -> AHO_A.pdf)
 Krev:   xelatex (MiKTeX eller TeX Live) med memoir, fontspec, babel (nynorsk), xcolor
         og Libertinus-skriftene.
 Resultat: maskin-a-bu-i.pdf i same mappe. Mellomfiler hamnar i bygg/.
@@ -233,9 +234,10 @@ def tolk_manus(md: str) -> list:
     return element
 
 
-def mål_breidder(element: list) -> dict:
+def mål_breidder(element: list, namn: str) -> dict:
     """Målepass: breidda (pt ved \\fs = 10pt) på kvar verslinje, kvart prosaord og eit ordmellomrom."""
-    linjer = [r"\newwrite\maalfil", r"\begin{document}", r"\immediate\openout\maalfil=maal.dat",
+    maal = "maal" + re.sub(r"[^A-Za-z0-9]", "", namn)
+    linjer = [r"\newwrite\maalfil", r"\begin{document}", r"\immediate\openout\maalfil=%s.dat" % maal,
               r"\newcommand\maal[3]{\settowidth{\dimen0}{#2#3}\immediate\write\maalfil{#1 \the\dimen0}}"]
     for e in element:
         if e["art"] == "linje":
@@ -246,10 +248,10 @@ def mål_breidder(element: list) -> dict:
     linjer += [r"\setbox0\hbox{\kapsel\global\dimen1=\fontdimen2\font}",
                r"\immediate\write\maalfil{SPACE \the\dimen1}",
                r"\immediate\closeout\maalfil", r"\end{document}", ""]
-    (UT / "maal.tex").write_text(PREAMBEL + "\n".join(linjer), encoding="utf-8")
-    køyr("maal")
+    (UT / f"{maal}.tex").write_text(PREAMBEL + "\n".join(linjer), encoding="utf-8")
+    køyr(maal)
     mål = {}
-    for linje in (UT / "maal.dat").read_text(encoding="utf-8").splitlines():
+    for linje in (UT / f"{maal}.dat").read_text(encoding="utf-8").splitlines():
         k, v = linje.split()
         mål[k] = float(v.removesuffix("pt"))
     return mål
@@ -427,8 +429,10 @@ def køyr(namn: str):
 
 def main():
     UT.mkdir(exist_ok=True)
-    element = tolk_manus(MANUS.read_text(encoding="utf-8"))
-    mål = mål_breidder(element)
+    manus = (Path.cwd() / sys.argv[1]).resolve() if len(sys.argv) > 1 else MANUS
+    namn = manus.stem if len(sys.argv) > 1 else NAMN
+    element = tolk_manus(manus.read_text(encoding="utf-8"))
+    mål = mål_breidder(element, namn)
     sider, storleik, ordgrense = lag_sider(element, mål)
 
     kropp = [r"\begin{document}"]
@@ -436,13 +440,13 @@ def main():
         hi = min(storleik(side) * 1.3 + 1, ordgrense(side) * 0.99, 150)
         kropp.append(r"\fitside{%.2f}{%s}" % (hi, side_tex(side)))
     kropp += [r"\end{document}", ""]
-    (UT / f"{NAMN}.tex").write_text(PREAMBEL + "\n".join(kropp), encoding="utf-8")
-    logg = køyr(NAMN)
-    shutil.copy(UT / f"{NAMN}.pdf", HER / f"{NAMN}.pdf")
+    (UT / f"{namn}.tex").write_text(PREAMBEL + "\n".join(kropp), encoding="utf-8")
+    logg = køyr(namn)
+    shutil.copy(UT / f"{namn}.pdf", HER / f"{namn}.pdf")
 
     storleikar = [float(x) for x in re.findall(r"FITSIDE ([\d.]+)pt", logg)]
     m = re.search(r"Output written on .*?\((\d+)\s+pages?", logg, re.S)
-    print(f"{NAMN}.pdf: {m.group(1) if m else '?'} sider, skrift {min(storleikar):.1f}–{max(storleikar):.1f} pt "
+    print(f"{namn}.pdf: {m.group(1) if m else '?'} sider, skrift {min(storleikar):.1f}–{max(storleikar):.1f} pt "
           f"(median {sorted(storleikar)[len(storleikar) // 2]:.1f} pt)")
 
 
