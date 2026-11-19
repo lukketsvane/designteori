@@ -122,10 +122,7 @@ FRAMSIDER = r"""
 \vspace*{\fill}
 {\vanleg\footnotesize\raggedright
 MASKIN Å BU I\par\medskip
-© 2026\par\medskip
-Sett i Libertinus Serif, Libertinus Sans og Libertinus Mono.\par
-Format A5, 148 × 210 mm.\par\medskip
-Manus til Tigertrykk, november 2026.\par}
+© 2026\par}
 \clearpage
 """
 

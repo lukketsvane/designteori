@@ -1,28 +1,18 @@
 <!--
-MASKIN Å BU I — samla manus.
-Kjelde: Notion-sida «TIL TIGERTRYKK» (sju undersider + to undersider under «Cor.»), lese 19.11.2026.
+MASKIN Å BU I. Samla manus frå Notion-sida «TIL TIGERTRYKK».
 Byggjast til A5-PDF med:  python bygg.py
-
-Redaksjonelle val:
-- TRILOBITT: siste versjon (prosaversjonen med «DIT PERSONNUMMERA SØKK MOT NULL», referatet og spora på nyisen).
-  Dei to eldre utkasta med doble strofer er lagde bort.
-- HUSET HAR FÅTT POST: Notion hadde éi linje per blokk utan strofer; her delt i 18 strofer etter meiningsskifta.
-- FORSTEINA TRILOBITTAR: dei faste linjeskifta (kvar ~80. teikn) var kopieringsspor og er tekne bort; avsnitta står som prosablokker.
-- COR.: lenkjene i «han treng ikkje løyve …» er flytte til KJELDER bak i boka. «personleg modulor» er sett som utfyllingsskjema.
-- Retta: kalkspatt → kalkspat, tørrkvister → tørrkvistar, gammal → gamal, kunstnar namn → kunstnarnamn,
-  mennesker → menneske, ærlige → ærlege, «ho tar imot» → «ho tek imot», trillobitt → trilobitt.
 
 Syntaks: «# I · TITTEL» = del, «## TITTEL» = seksjon (ny side), «### …» = undertittel, «> …» = epigraf,
 «---» = skiljeteikn. Modus: <!-- vers --> (kvar linje er ei verslinje, tom linje = ny strofe),
-<!-- prosa --> (tom linje = nytt avsnitt), <!-- mono --> (vers i maskinskrift), <!-- skjema -->, <!-- kjelder -->,
-<!-- side --> = sideskift. *ord* = kursiv.
+<!-- prosa --> (tom linje = nytt avsnitt), <!-- mono --> (vers i maskinskrift), <!-- side --> = sideskift.
+*ord* = kursiv.
 -->
 
 # I · HUSET HAR FÅTT POST
 
 <!-- vers -->
 
-DET VAKS EIT POSTMOTTAK I MUNNEN MIN
+DET VOKS EIT POSTMOTTAK I MUNNEN MIN
 MEDAN EG VENTA
 EG KUNNE SMAKE FRIMERKET
 DET VAR EIT LITE LAND MED LIM PÅ BAKSIDA
@@ -47,7 +37,7 @@ HAN VISSTE KVEN EG SKULLE VENDE MEG TIL
 
 EG VENDER MEG
 EG HAR VENDT MEG SÅ MANGE GONGER
-AT DET HAR KOME GJENGER PÅ FØTENE
+AT DET HAR KOME GJENGAR PÅ FØTENE
 NO KAN DE SKRU MEG FAST I GOLVET
 OG KALLE DET TILHØYRSLE
 
@@ -101,7 +91,7 @@ OG ALLE SER OPP
 DET ER DET VANSKELEGE MED Å LAGE EI UNDERSIDE
 EIN DAG KJEM NOKON UNDER
 EIN DAG ER DU SJØLV DEN SOM LEITAR
-ETTER DEN VETLE MERKINGA
+ETTER DEN VESLE MERKINGA
 KVEN LAGA DETTE
 KVEN SA DET KUNNE BRUKAST
 KVEN HADDE DET MELLOM HENDENE SIST
@@ -111,8 +101,8 @@ DET ER VARMT DER INNE
 NOKON HAR LATE EIN MASKIN GÅ
 HEILE SOMMAREN
 HAN LAGAR FRAMLEIS DET SAME ROMMET
-EIN DØR EIN STOL EIN STUDENT
-EIN DØR EIN STOL EIN STUDENT
+EI DØR EIN STOL EIN STUDENT
+EI DØR EIN STOL EIN STUDENT
 TIL INGEN HUGSAR KVEN SOM SAT DER FØRST
 
 ME STÅR PÅ TAKET MED EIN LEIDNING KVAR
@@ -163,9 +153,9 @@ LE CORBUSIER TEIKNA IKKJE KLOAKKEN.
 INGEN TEIKNAR KLOAKKEN.
 KLOAKKEN TEIKNAR SEG SJØLV.
 KLOAKKEN ER DEN EINASTE ÆRLEGE ARKITEKTUREN:
-HO FYLGJER TYNGDEKRAFTA.
-HO FYLGJER KROPPANE.
-HO TEK IMOT ALT
+HAN FYLGJER TYNGDEKRAFTA.
+HAN FYLGJER KROPPANE.
+HAN TEK IMOT ALT
 UTAN Å KLAGE.
 
 <!-- side -->
@@ -181,15 +171,15 @@ eg syns me kan drepe han.
 
 han kalla hus
 for maskiner å bu i.
-Ingen bur
-i ei maskin.
+ingen bur
+i ein maskin.
 maskiner bur
 i seg sjølve.
 
 ---
 
 han skreiv at gata er daud.
-at den måtte døy.
+at ho måtte døy.
 at fotgjengarar var eit problem
 som kunne løysast
 med nivåskilnad.
@@ -210,7 +200,7 @@ ein klump ligg der.
 deig er ein klump.
 eit foster er ein klump.
 ein by er ein klump.
-le corbusier ville strekke
+le corbusier ville strekkje
 ut klumpen til han vart rett.
 til han vart flat.
 til han passa
@@ -242,9 +232,9 @@ mora budde der til ho var hundre.
 hundre år i seksti kvadratmeter.
 kroppen hennar krympa
 gjennom tiåra,
-ryggvirvlane søkk saman,
+ryggvirvlane sokk saman,
 og huset vart relativt større
-etterkvart som ho vart mindre.
+etter kvart som ho vart mindre.
 til slutt var det nesten romsleg.
 til slutt var ho nesten borte
 
@@ -255,13 +245,13 @@ er ein kropp som aldri vart sjuk.
 aldri hoste. aldri vondt i kneet.
 aldri oppblåst mage etter for
 mykje brød. det er ein kropp
-utan fordøying. utan sveit. utan
-naglevekst. berre proporsjonar.
+utan fordøying. utan sveitte. utan
+neglevekst. berre proporsjonar.
 berre 113 og 70 og 43 og *phi,*
 *phi, phi,* heilt ned til det minste
 rektangelet som til slutt ikkje
 svarar til nokon ting fordi
-kalkylene vert så små at dei
+kalkylane vert så små at dei
 forsvinn i avrundingsfeil.
 
 ---
@@ -271,7 +261,7 @@ for kvinner, for born,
 for dei som sat,
 for dei som mangla armen,
 for dei med ryggvirvlar
-som hadde byrja søkke.
+som hadde byrja å søkke.
 
 ingen av dei vart laga.
 det var berre éin mann i rommet
@@ -322,9 +312,9 @@ vichy, 1941.
 han søkte stilling
 som byplanleggar
 for Pétain-regimet.
-fekk den ikkje.
+fekk ho ikkje.
 søkte att.
-fekk den ikkje.
+fekk ho ikkje.
 søkte att.
 
 nokon har mykje tolmod
@@ -350,48 +340,6 @@ c.
 .
 borte.
 
-<!-- side -->
-<!-- prosa -->
-
-han treng ikkje løyve. han tek seg til rette, han sprengjer ulovleg, byggjer vollgrav gjennom terrenget, grev underjordiske gangar, reiser luksusresort, tennisbane og basseng i strandlinja, fjorden og havet fyller han med avfallet sitt, set opp straumførande gjerde, han stoppar ikkje før det sit godt ned i vasskanten og tvers gjennom fjøra, sperrar med port av stein og metall, monterer overvakingskamera med linsa retta rett mot deg, han avskyr allmenta, hånar grunnlova, skiltar og set opp statue til ære for seg sjølv. han formar om landskapet, han formar om deg, psykologisk og fysisk gjer kolonisten, slaveherren, okkupanten alt han kan for å omforme, manipulere, delegere og fjerne seg frå deg og resten av folket;
-
-og han tek imot. han tek imot varsel, pålegg om retting, tvangsmulkt, straksstans, lovbrotsgebyr, rivingsvedtak, avslag på dispensasjon, stadfesting frå statsforvaltaren, tingrettsdom, lagmannsrettsdom, politietterforsking, sikting, og til slutt dom i høgsterett. han tek imot alt saman, og ingenting skjer. når dommen kjem, ler han, og noterer seg at advokatbyrået kan overføre eigedomen til ein arving medan saka går, for det er normen, og saka byrjar på nytt med ny eigar og same gjerde. så skryt han av privatstranda han har halde i tjuefem år, til dei andre i selskapet, der grunnlovsbrot og hån mot allmenta er minstekravet for å reknast som anstendig nok å omgåast.
-
-## personleg modulor
-
-<!-- skjema -->
-
-1. total høgd
-2. augehøgd
-3. hakehøgd
-4. hovudhøgd
-5. hovudbreidd
-6. skulderhøgd venstre/høgre
-7. beinskuldre
-8. ytre skulderbreidd
-9. alboge avslappa venstre/høgre
-10. alboge ved 90° venstre/høgre
-11. handleddshøgd venstre/høgre
-12. fingertupphøgd venstre/høgre
-13. hoftekamhøgd venstre/høgre
-14. hofteleddshøgd venstre/høgre
-15. skritthøgd
-16. kneleddshøgd venstre/høgre
-17. ankelhøgd venstre/høgre
-18. overarm venstre/høgre
-19. underarm venstre/høgre
-20. handlengd venstre/høgre
-21. handspann venstre/høgre
-22. lår venstre/høgre
-23. legg venstre/høgre
-24. fotlengd venstre/høgre
-25. armspenn
-26. sitjehøgd
-27. sitjande augehøgd
-28. poplitealhøgd
-29. sete–knehas
-30. maksimal ståande rekkevidd opp
-
 
 # III · FULGURITT
 
@@ -405,7 +353,7 @@ SPENNINGAR
 SVIKANDE
 STILLINGAR
 GNISTRANDE RUNDT BAK AUGO MINE
-DEI LADDE MEG OPP GJENNOM GOLVET
+DEI LADA MEG OPP GJENNOM GOLVET
 OPP GJENNOM BETONGEN I MARIDALSVEGEN
 INN I DEN TØRRASTE VARMASTE MEST RESIRKULERTE LUFTA I HUSET
 OG EG VANDRA RUNDT I KORRIDORANE
@@ -432,7 +380,7 @@ OGSÅ KJENT SOM DET DE MÅLTE I MEDARBEIDARUNDERSØKINGA
 OG KALLA ENGASJEMENT
 OG DÅ DØRA OMSIDER GJEKK OPP
 GJEKK LYNET UT AV AUGO MINE
-RETT GJENNOM DEN ADMINISTRERANDE REKTOR
+RETT GJENNOM DEN ADMINISTRERANDE REKTOREN
 GJENNOM STRATEGI 2030
 GJENNOM ÅRSHJULET SÅ DET SLUTTA Å SNURRE
 NED I GRUNNMUREN
@@ -486,11 +434,11 @@ INNE HOS DYKK ER A ALLTID PROBLEMET OG B ALLTID LØYSINGA MEN KVAR GONG NOKON KJ
 
 REGNET OVER PARKERINGSPLASSEN ER IKKJE LENGER REGN DET ER UTREKNINGAR AV NEDBØR PER KVADRATMETER TAK OPPE I ANDRE ETASJE VERT ORDET STIFTEMASKIN NEMNT TRE GONGER FØR LUNSJ DEI STIFTAR SAMAN OKTOBER OG NOVEMBER FOR Å SLEPPE Å GÅ GJENNOM MØRKET MELLOM DEI
 
-BAK KONTEINAREN VED VEGGEN STÅR EIT OSPETRE BLADSTILKEN PÅ OSPA ER VRIDEN NITTI GRADER MOT BLADET HO SKJELV FØR VINDEN NÅR BAKKEN OG SLEPP STORMEN FORBI SEG SÅ GREINA IKKJE KNEKK
+BAK KONTEINAREN VED VEGGEN STÅR EIT OSPETRE BLADSTILKEN PÅ OSPA ER VRIDEN NITTI GRADER MOT BLADET HO SKJELV FØR VINDEN NÅR BAKKEN OG SLEPPER STORMEN FORBI SEG SÅ GREINA IKKJE KNEKK
 
 I TOPPEN SIT EI KRÅKE KVIT AV GIPSSTØV FRÅ VERKSTADEN HO SER GJENNOM TRE LAG ISOLERGLAS PÅ DEI EIDSVORNE MEDBORGARANE SOM VANDRAR FENGSLA I EIGNE SETNINGAR MEDAN DEI FLYTTAR PÅ BOKSAR I EIT SKJEMA OG ET SITT SISTE MÅLTID AV OPPSKOREN MØTEFRUKT HO HARKAR OPP EIN RUSTEN MUTTER OG SKRIK MOT GLASFASADEN HAR DE SETT NOK NO
 
-TRE METER UNDER KANTINA ER DET FRAMLEIS PREKAMBRIUM SJØLVE BÆRESØYLENE DE LENAR DYKK MOT ER BREND KALK AV MILLIONAR SMÅ SKJEL FRÅ EIT HAV UTAN SØKNADSFRISTAR
+TRE METER UNDER KANTINA ER DET FRAMLEIS PREKAMBRIUM SJØLVE BERESØYLENE DE LENAR DYKK MOT ER BREND KALK AV MILLIONAR SMÅ SKJEL FRÅ EIT HAV UTAN SØKNADSFRISTAR
 
 DER ASFALTEN SLUTTAR NED MOT ELVEBREIDDA OG BRENNESLENE TEK OVER FOR VAKTMESTAREN STYRER FORSVINNARANE I KRATTET MED TØRRKVISTAR OG SVARTE MAUR SKRIV DEI I PROTOKOLLAR AV JORD KVAR LINJE LYDER VEIT IKKJE OG DET ER DET EINASTE VEDTAKET SOM HELD MOT FROSTSPRENGING
 
@@ -518,7 +466,7 @@ I KNAUSEN VED SIDA AV OPNAR EIN LITEN MUNN SEG I GRANITTEN DRIKK AV DET SOM RENN
 
 DET VAR BERRE ME SOM SÅG DET OG ME SEIER INGENTING NO IKKJE FØR NOKON HØGG OSS UT
 
-I KJELLAREN KAN DU LEGGJE HANDFLATA MOT BETONGEN OG LESE SKOGEN SOM STOD HER FØR KRIGEN ÅRRINGANE OG KVISTANE FRÅ FORSKALINGSPLANKANE SIT ATT BAKLENGS I DEN GRÅ MASSEN SOM EIT NEGATIV AV GRANTRE SOM FOR LENGST ER BRENDE OPP DET ER SLIK HUSET HUGSAR DET RØSKAR BORT DET LEVANDE TREVERKET MED BREKKJERN SÅ SNART STØYPEN HAR STIVNA OG KALLAR TOMROMMET ARKITEKTUR HOS DET NYFØDDE MENNESKET ER SKALLEN ENNO IKKJE LUKKA MELLOM BEINPLATENE FINST MJUKE OPNINGAR KALLA FONTANELLAR SÅ HOVUDET KAN KLEMMAST GJENNOM EIN TRONG KANAL UTAN Å BRISTE SIDAN VEKS DEI TAKKETE SAUMANE SAMAN TIL SUTURAR SÅ TANKEN FÅR EIT TAK Å BU UNDER HER INNE VIL DEI HA PROSESSEN I REVERS DEI VIL AT SKALLANE VÅRE SKAL HALDE SEG MJUKE NOK TIL Å SKYVAST UNDER EI LÅST KONTORDØR SOM EIT REVIDERT BUDSJETT INNANFOR VAKTA STÅR POSTHYLLENE FRÅ GOLV TIL TAK SOM EIT ROMERSK COLUMBARIUM HUNDRE SMÅ FIRKANTA NISJAR FOR ASKE OG UOPNA SKRIV NÅR NOKON SLUTTAR VIPPAR DEI BORT NAMNESTRIMMELEN MED EIN TOMMELNEGL UNDER LIMET ER PLASTEN ALLTID LITT LYSARE EIT LITE BLEIKT REKTANGEL ETTER EIT MENNESKE SOM NETTOPP HAR BORE UT KOPPEN SIN I EIN BEREPOSE OPPE I DEI MJØLKEKVITE KUPLANE UNDER TAKET VANDRAR EI SEIN HAUSTFLUGE RUNDT OG RUNDT LANGS KANTEN SKUGGEN HENNAR FEIAR OVER MØTEBORDET SOM VISAREN PÅ EI KLOKKE UTAN TAL TIL HO LEGG SEG PÅ RYGGEN BLANT FJORÅRETS FLUGER OG VERT LIGGJANDE INNE I VENTILASJONSKANALANE ER DET ALDRI STILLE DER LIGG STØVET SOM GRÅ FILT OG MILLIONAR BLINDE STØVMIDD BEITAR FREDELEG PÅ HUDFLASSET ETTER REKTORAR OG STUDENTAR OG REINHALDARAR DET ER DEN EINASTE KOMITÉEN SOM VERKAR HER HAN ET OSS ALLE UTAN SKILNAD OG LEGG ALDRI FRAM NOKO REFERAT EIN TYSDAG I OKTOBER LYSER ADGANGSKORTET RAUDT VED GLASDØRA EG VERT STÅANDE PÅ UTSIDA I SLUDDET MEDAN SPEGELBILETET MITT GÅR VIDARE INNOVER I KORRIDOREN UTAN MEG DET NIKKAR HØFLEG TIL DEI SOM KJEM IMOT DET SKRIV UNDER PÅ ALT DET TEK IKKJE PLASS I FRAKKELOMMA HAR EG EIN SVART RUND STEIN FRÅ ELVA EIN GASTROLITT EIN SLIK STEIN UTDØYDDE KJEMPEØGLER SLUKTE FOR Å KVERNE SUND SEIGE PLANTER I MØRKRET I BUKEN FØR EG SNUR LEGG EG STEINEN PÅ SKRANKEN I RESEPSJONEN HAN HAR INGA UNDERSKRIFT HAN KJEM TIL Å LIGGJE DER LENGE ETTER AT GLASET HAR FALLE UT AV OVERLYSET I HALLEN OG REGNET RENN RETT GJENNOM BYGGET OG VASKAR UT GOLVET
+I KJELLAREN KAN DU LEGGJE HANDFLATA MOT BETONGEN OG LESE SKOGEN SOM STOD HER FØR KRIGEN ÅRRINGANE OG KVISTANE FRÅ FORSKALINGSPLANKANE SIT ATT BAKLENGS I DEN GRÅ MASSEN SOM EIT NEGATIV AV GRANTRE SOM FOR LENGST ER BRENDE OPP DET ER SLIK HUSET HUGSAR DET RØSKAR BORT DET LEVANDE TREVERKET MED BREKKJERN SÅ SNART STØYPEN HAR STIVNA OG KALLAR TOMROMMET ARKITEKTUR HOS DET NYFØDDE MENNESKET ER SKALLEN ENNO IKKJE LUKKA MELLOM BEINPLATENE FINST MJUKE OPNINGAR KALLA FONTANELLAR SÅ HOVUDET KAN KLEMMAST GJENNOM EIN TRONG KANAL UTAN Å BRISTE SIDAN VEKS DEI TAKKETE SAUMANE SAMAN TIL SUTURAR SÅ TANKEN FÅR EIT TAK Å BU UNDER HER INNE VIL DEI HA PROSESSEN I REVERS DEI VIL AT SKALLANE VÅRE SKAL HALDE SEG MJUKE NOK TIL Å SKYVAST UNDER EI LÅST KONTORDØR SOM EIT REVIDERT BUDSJETT INNANFOR VAKTA STÅR POSTHYLLENE FRÅ GOLV TIL TAK SOM EIT ROMERSK COLUMBARIUM HUNDRE SMÅ FIRKANTA NISJAR FOR ASKE OG UOPNA SKRIV NÅR NOKON SLUTTAR VIPPAR DEI BORT NAMNESTRIMMELEN MED EIN TOMMELNEGL UNDER LIMET ER PLASTEN ALLTID LITT LYSARE EIT LITE BLEIKT REKTANGEL ETTER EIT MENNESKE SOM NETTOPP HAR BORE UT KOPPEN SIN I EIN BEREPOSE OPPE I DEI MJØLKEKVITE KUPLANE UNDER TAKET VANDRAR EI SEIN HAUSTFLUGE RUNDT OG RUNDT LANGS KANTEN SKUGGEN HENNAR FEIAR OVER MØTEBORDET SOM VISAREN PÅ EI KLOKKE UTAN TAL TIL HO LEGG SEG PÅ RYGGEN BLANT FJORÅRETS FLUGER OG VERT LIGGJANDE INNE I VENTILASJONSKANALANE ER DET ALDRI STILLE DER LIGG STØVET SOM GRÅ FILT OG MILLIONAR BLINDE STØVMIDDAR BEITAR FREDELEG PÅ HUDFLASSET ETTER REKTORAR OG STUDENTAR OG REINHALDARAR DET ER DEN EINASTE KOMITÉEN SOM VERKAR HER HAN ET OSS ALLE UTAN SKILNAD OG LEGG ALDRI FRAM NOKO REFERAT EIN TYSDAG I OKTOBER LYSER TILGANGSKORTET RAUDT VED GLASDØRA EG VERT STÅANDE PÅ UTSIDA I SLUDDET MEDAN SPEGELBILETET MITT GÅR VIDARE INNOVER I KORRIDOREN UTAN MEG DET NIKKAR HØFLEG TIL DEI SOM KJEM IMOT DET SKRIV UNDER PÅ ALT DET TEK IKKJE PLASS I FRAKKELOMMA HAR EG EIN SVART RUND STEIN FRÅ ELVA EIN GASTROLITT EIN SLIK STEIN UTDØYDDE KJEMPEØGLER SLUKTE FOR Å KVERNE SUND SEIGE PLANTER I MØRKRET I BUKEN FØR EG SNUR LEGG EG STEINEN PÅ SKRANKEN I RESEPSJONEN HAN HAR INGA UNDERSKRIFT HAN KJEM TIL Å LIGGJE DER LENGE ETTER AT GLASET HAR FALLE UT AV OVERLYSET I HALLEN OG REGNET RENN RETT GJENNOM BYGGET OG VASKAR UT GOLVET
 
 ## EIGENFREKVENS
 
@@ -548,11 +496,11 @@ SÅ LENGE SKIFEREN FÅR LIGGJE I MØRKRET TEIER HAN MEN BORAR DE I HAN SLEPPER D
 
 INGEN HØYRER DET MELLOM ÅTTE OG FIRE DET ER VERDAS LANGSAMASTE OPPRØR OG GJENNOM HÅRFINE RISS I KJELLAREN SIV RADON EI USYNLEG DOTTER AV URAN SOM SET SEG VED BORDET I ROM DER INGEN OPNAR VINDAUGO
 
-UTE I BAKGARDEN SMELTAR SNØEN I SVARTE RINGAR RUNDT TRESTAMMENE RINGANE VIDAR SEG UT FRÅ DAG TIL DAG TIL DEI MØTEST OVER DEN VÅTE GRUSEN EI JENTE FRÅ FØRSTE KULL KJEM UT PORTEN MED GIPSSTØV I AUGNEVIPPENE OG LEIRE UNDER NEGLENE SOM VEKS EIN TIANDEDELS MILLIMETER I DØGNET ENTEN DET STÅR I PLANEN ELLER IKKJE
+UTE I BAKGARDEN SMELTAR SNØEN I SVARTE RINGAR RUNDT TRESTAMMANE RINGANE VIDAR SEG UT FRÅ DAG TIL DAG TIL DEI MØTEST OVER DEN VÅTE GRUSEN EI JENTE FRÅ FØRSTE KULL KJEM UT PORTEN MED GIPSSTØV I AUGNEVIPPENE OG LEIRE UNDER NEGLANE SOM VEKS EIN TIANDEDELS MILLIMETER I DØGNET ENTEN DET STÅR I PLANEN ELLER IKKJE
 
-ME SER PÅ KVARANDRE UTAN Å SEIE NOKO SLIK TO FRAMANDE SER PÅ KVARANDRE GJENNOM VÅTE BUSSGLAS I EIT LYSKRYSS FØR DET SKIFTER TIL GRØNT HER FINST EI ANNA VERD IKKJE OPPE I ARKIVET MEN NEDE I SØLA DER AVTRYKKA ETTER SKOSÅLANE VÅRE FYLLEST LANGSAMT MED VATN OG SPEGLAR HIMMELEN OPP NED
+ME SER PÅ KVARANDRE UTAN Å SEIE NOKO SLIK TO FRAMANDE SER PÅ KVARANDRE GJENNOM VÅTE BUSSGLAS I EIT LYSKRYSS FØR DET SKIFTAR TIL GRØNT HER FINST EI ANNA VERD IKKJE OPPE I ARKIVET MEN NEDE I SØLA DER AVTRYKKA ETTER SKOSÅLANE VÅRE FYLLEST LANGSAMT MED VATN OG SPEGLAR HIMMELEN OPP NED
 
-EG SKRUR FØTENE LAUS FRÅ GOLVET OMDREIING FOR OMDREIING TIL GJENGENE ER SLITNE NED TIL GLATT HUD ATT NEDANFOR RENN ELVA FORBI UTAN SAKSNUMMER HO TEK MED SEG KVISTAR OG SKUM OG ALT SOM IKKJE LET SEG BRETTE
+EG SKRUR FØTENE LAUS FRÅ GOLVET OMDREIING FOR OMDREIING TIL GJENGANE ER SLITNE NED TIL GLATT HUD ATT NEDANFOR RENN ELVA FORBI UTAN SAKSNUMMER HO TEK MED SEG KVISTAR OG SKUM OG ALT SOM IKKJE LET SEG BRETTE
 
 
 # V · TRILOBITT
@@ -567,11 +515,11 @@ NÅR DEI KOM MED SKJEMA OG BAD OM DIALOG DROG DU HAKA INN OG RULLA DEG SAMAN LED
 
 AUGO DINE STIVNA FØRST DEI VART TIL REIN KALKSPAT SEKSTI SMÅ PRISME I KVART BLIKK DEI FØRSTE AUGO PÅ JORDA VAR AV STEIN OG SÅG GJENNOM GRUMS DU SAT HEILT URØRLEG GJENNOM ALLMØTET OG SÅG GJENNOM KALK GJENNOM VEGGEN GJENNOM ÅRSHJULET SOM ALT HADDE STANSA RETT INN I MINERALRIKET
 
-I OKTOBER FANN DEI PLASSEN DIN TOM DET LÅG BERRE EIN TØRR RYGGSKJOLD ATT PÅ STOLEN SPROKKEN OPP LANGS SAUMEN OVER KINNET SLIK HAN GJER NÅR FORMA VERT FOR TRONG DEI FØRTE DEG OPP SOM FRÅFALL MEN DU HADDE BERRE SKIFTA SKAL OG GÅTT NED GJENNOM SLUKET I KJELLAREN MJUK OG UTAN ETTERNAMN DIT PERSONNUMMERA SØKK MOT NULL
+I OKTOBER FANN DEI PLASSEN DIN TOM DET LÅG BERRE EIT TØRT RYGGSKJOLD ATT PÅ STOLEN SPROKKE OPP LANGS SAUMEN OVER KINNET SLIK DET GJER NÅR FORMA VERT FOR TRONG DEI FØRTE DEG OPP SOM FRÅFALL MEN DU HADDE BERRE SKIFTA SKAL OG GÅTT NED GJENNOM SLUKET I KJELLAREN MJUK OG UTAN ETTERNAMN DIT PERSONNUMMERA SØKK MOT NULL
 
 HER OPPE SNAKKAR DEI FRAMLEIS OM DANNING DEI HAR SETT NED EI ARBEIDSGRUPPE FOR DET DU SKREIV MED TØRRKVISTAR I DET SVARTE SLAMMET AT FORSVINNING ER DANNING OG LA DEG TIL RO PÅ BOTNEN DET ER INGEN SOM STRYK I URTIDA DET ER BERRE VENTETID FRÅ LEIRE TIL SKIFER
 
-EG VART ATT PÅ UTSIDA DER AKERSELVA RENN SVART OG TUNG LANGS MUREN EG GÅR IKKJE PÅ GANGVEGEN LENGER EG FLYT OG UNDER YTA HAR DET VAKSE SVART HUD MELLOM TÆRNE MINE EG SKYVER FRÅ MOT STRAUMEN UTAN AT NOKON SER ARBEIDET
+EG VART ATT PÅ UTSIDA DER AKERSELVA RENN SVART OG TUNG LANGS MUREN EG GÅR IKKJE PÅ GANGVEGEN LENGER EG FLYT OG UNDER YTA HAR DET VAKSE SVART HUD MELLOM TÆRNE MINE EG SKYV FRÅ MOT STRAUMEN UTAN AT NOKON SER ARBEIDET
 
 HALSEN MIN HAR VORTE SÅ LANG I HAUST AT EG KAN BØYE HAN I EIN KVIT BOGE NED GJENNOM SPEGELBILETET AV BYGNINGEN HEILT NED TIL STEINANE DER DU LIGG EG LEITAR MED MUNNEN I GRUSEN ETTER PUNKTSKRIFT PÅ KNUDRETE STEIN EIT DØDT SPRÅK ME BEGGE FORSTÅR NO NÅR INGEN AV OSS HAR STUDIERETT LENGER
 
@@ -588,39 +536,3 @@ EG SNUR MEG MOT VINDEN OG STREKKJER ARMANE UT TO METER FRÅ SPISS TIL SPISS DET 
 EG ER FOR TUNG TIL Å LETTE FRÅ STADEN EG MÅ SPRINGE PÅ VATNET FØRST TUNGE STEG MOT DEN SVARTE HINNA EITT TO TRE FØR LUFTA TEK IMOT UNDER MEG OG HEILE KVARTALET KRYMPAR TIL EIT KVITT FORSVINNINGSPUNKT BAK SENKA AUGELOK
 
 I MORGON TIDLEG SKAL NOKON GÅ LANGS ELVA MED TERMOSKOPPEN I HANDA OG STUSSE OVER SPORA I SØRPA PÅ NYISEN BREIE AVTRYKK MED HUD MELLOM TÆRNE SOM TOK FART LANGS BYGNINGEN MED STADIG LENGRE MELLOMROM FØR DEI SLUTTA MIDT UTE PÅ DJUPET UTAN Å KOME NED ATT
-
-
-# KJELDER
-
-### til «han treng ikkje løyve …» i COR.
-
-<!-- kjelder -->
-
-sprengjer ulovleg | https://www.finansavisen.no/bolig/2025/08/22/8287712/sveitsmilliardaer-christian-sindings-hytte-hadde-ulovlig-kjeller
-vollgrav gjennom terrenget | https://naturvernforbundet.no/content/uploads/sites/11/2024/01/339_64-Statsforvalterens-vedtak-i-klagesak-kommunens-vedtak-av-181122-opprettholdes.pdf
-tennisbane og basseng i strandlinja | https://faerder.kommune.no/_f/p1/i4646e0e5-bff6-4f15-9dd9-87d9439f8420/presentasjon-pagaende-rettssaker-hptm.pdf
-fjorden og havet fyller han med avfallet sitt | https://www.baerum.kommune.no/innsyn/postliste/wfinnsyn.ashx?response=journalpost_detaljer&journalpostid=2019166882&visallefratil=true
-straumførande gjerde | https://www.vg.no/nyheter/i/PbgdR/roekke-satte-opp-ulovlig-stroemgjerde
-tvers gjennom fjøra | https://www.finansavisen.no/nyheter/bolig/2020/09/08/7564748/spetalen-ma-avslutte-strandbygging-umiddelbart
-port av stein og metall | https://www.finansavisen.no/nyheter/eiendom/2018/07/ringnes-maa-fjerne-sperringer-paa-egen-bygdoey-strand
-overvakingskamera med linsa retta rett mot deg | https://rettspraksis.no/wiki/HR-2005-989-A_-_Rt-2005-805
-avskyr allmenta | https://rettspraksis.no/wiki/HR-2012-1183-A_-_Rt-2012-882
-hånar grunnlova | https://snl.no/Grunnlovens_milj%C3%B8paragraf
-set opp statue til ære for seg sjølv | https://www.vartoslo.no/anbefalt-atle-jan-larsen-bydel-frogner/villaeier-plasserte-egen-statue-i-strandkanten-pa-bygdoy-statuen-bidrar-til-a-oke-den-ugne-folelsen-av-at-man-ikke-er-velkommen/770292
-kolonisten | https://www.arkivverket.no/utforsk-arkivene/eldre-historie--1814/de-vestindiske-oyer-og-den-dansk-norske-slavehandel
-slaveherren | https://snl.no/dansk-norsk_slavehandel
-okkupanten | https://snl.no/Svanviken_arbeidskoloni
-varsel | https://www.hvaler.kommune.no/globalassets/postlister-pdf/2023-11-16.pdf
-pålegg om retting | https://naturvernforbundet.no/content/uploads/sites/11/2024/01/339_64-Statsforvalterens-vedtak-i-klagesak-kommunens-vedtak-av-181122-opprettholdes.pdf
-tvangsmulkt | https://www.vg.no/rampelys/i/vrAJnp/bettan-anker-i-hyttestriden-med-asker-kommune
-straksstans | https://www.finansavisen.no/nyheter/bolig/2020/09/08/7564748/spetalen-ma-avslutte-strandbygging-umiddelbart
-lovbrotsgebyr | https://www.hvaler.kommune.no/globalassets/postlister-pdf/2022-02-17.pdf
-rivingsvedtak | https://e24.no/naeringsliv/i/9vr6gd/maa-rive-brygge
-avslag på dispensasjon | https://www.sivilombudet.no/uttalelser/dispensasjon-fra-byggeforbudet-i-strandsonen-og-kommuneplanens-lnf-formal-for-oppforing-av-badehus/
-stadfesting frå statsforvaltaren | https://prep.statsforvalteren.no/contentassets/6846f2e2584549be92668313ee6d44d5/klage---gbnr-244-41-moveien-104--mostranda-camping---farder-.pdf
-tingrettsdom | https://www.finansavisen.no/jus/2026/05/21/8351006/tapte-rettssak-om-brygge-pa-tjome
-lagmannsrettsdom | https://www.finansavisen.no/bolig/2023/03/06/7991225/nakholmen-platting-avvist-av-hoyesterett
-politietterforsking | https://www.politiet.no/nyheter-og-presse/ost/nyhet/2026-05-04/oppdatering-etterforskning-av-brudd-pa-plan-og-bygningsloven
-dom i høgsterett | https://www.domstol.no/globalassets/upload/hret/avgjorelser/2026/mars/hr-2026-730-a.pdf
-overføre eigedomen til ein arving | https://e24.no/boers-og-finans/i/9pqMQ5/andresen-kan-beholde-bygdoey-bryggen
-grunnlovsbrot | https://snl.no/Grunnlovens_milj%C3%B8paragraf
