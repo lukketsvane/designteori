@@ -5,9 +5,6 @@ Bruk:   python bygg.py
 Krev:   xelatex (MiKTeX eller TeX Live) med memoir, fontspec, babel (nynorsk), xurl
         og Libertinus-skriftene (følgjer med i begge distribusjonane).
 Resultat: maskin-a-bu-i.pdf i same mappe. Mellomfiler hamnar i bygg/.
-
-Sidetalet vert runda opp til næraste fireartal med tomme sider til slutt,
-slik at boka kan falsast og heftast.
 """
 import re
 import shutil
@@ -19,9 +16,6 @@ HER = Path(__file__).resolve().parent
 MANUS = HER / "manus.md"
 UT = HER / "bygg"
 NAMN = "maskin-a-bu-i"
-
-# Skriv namnet til forfattaren her om det skal stå på tittelsida.
-FORFATTAR = ""
 
 PREAMBEL = r"""
 \documentclass[10pt,twoside,openright]{memoir}
@@ -108,16 +102,6 @@ FRAMSIDER = r"""
 \vspace*{48mm}
 {\centering\tittelfamilie\fontsize{9}{13}\selectfont MASKIN Å BU I\par}
 \clearpage
-\thispagestyle{empty}\null\clearpage
-\thispagestyle{empty}
-\vspace*{34mm}
-{\centering\tittelfamilie\fontsize{17}{26}\selectfont MASKIN\par Å BU I\par}
-\vspace{8mm}
-{\centering\vanleg\itshape dikt\par}
-\vfill
-{\centering\sffamily\footnotesize FORFATTAR\par}
-\vspace*{6mm}
-\clearpage
 \thispagestyle{empty}
 \vspace*{\fill}
 {\vanleg\footnotesize\raggedright
@@ -154,7 +138,7 @@ def er_kapitalar(s: str) -> bool:
     return bool(bokstavar) and all(c.isupper() for c in bokstavar)
 
 
-def lag_tex(md: str, pad: int = 0) -> str:
+def lag_tex(md: str) -> str:
     kropp, innhald = [], []
     modus, blokk, epi = "vers", [], []
     treng_skil = False
@@ -283,15 +267,7 @@ def lag_tex(md: str, pad: int = 0) -> str:
     tøm()
     tøm_epigraf()
 
-    inn = [r"\bakdel{INNHALD}{innhald}"]
-    for nivå, nr, tittel, merke in innhald:
-        if nivå == 1:
-            inn.append(r"\innhaldsdel{%s}{%s}{%s}" % (nr, inline(tittel), merke))
-        else:
-            inn.append(r"\innhaldsseksjon{%s}{%s}" % (inline(tittel), merke))
-
-    framsider = FRAMSIDER.replace("FORFATTAR", tex(FORFATTAR))
-    return "\n".join([PREAMBEL, framsider, *kropp, *inn, r"\padsider{%d}" % pad, r"\end{document}", ""])
+    return "\n".join([PREAMBEL, FRAMSIDER, *kropp, r"\end{document}", ""])
 
 
 def kompiler() -> int:
@@ -306,22 +282,17 @@ def kompiler() -> int:
     return int(m.group(1)) if m else 0
 
 
-def bygg(pad: int):
+def bygg():
     UT.mkdir(exist_ok=True)
-    (UT / f"{NAMN}.tex").write_text(lag_tex(MANUS.read_text(encoding="utf-8"), pad), encoding="utf-8")
+    (UT / f"{NAMN}.tex").write_text(lag_tex(MANUS.read_text(encoding="utf-8")), encoding="utf-8")
 
 
 def main():
-    bygg(0)
+    bygg()
     kompiler()
     sider = kompiler()
-    pad = (-sider) % 4
-    if pad:
-        bygg(pad)
-        kompiler()
-        sider = kompiler()
     shutil.copy(UT / f"{NAMN}.pdf", HER / f"{NAMN}.pdf")
-    print(f"{NAMN}.pdf: {sider} sider ({pad} tomme sider lagde til for fireartal)")
+    print(f"{NAMN}.pdf: {sider} sider")
 
 
 if __name__ == "__main__":
