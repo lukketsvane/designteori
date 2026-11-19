@@ -1,6 +1,6 @@
 <!--
 MASKIN Å BU I. Samla manus frå Notion-sida «TIL TIGERTRYKK».
-Byggjast til A5-PDF med:  python bygg.py
+Byggjast til PDF med:  python bygg.py
 
 Syntaks: «# I · TITTEL» = del, «## TITTEL» = seksjon (ny side), «### …» = undertittel, «> …» = epigraf,
 «---» = skiljeteikn. Modus: <!-- vers --> (kvar linje er ei verslinje, tom linje = ny strofe),

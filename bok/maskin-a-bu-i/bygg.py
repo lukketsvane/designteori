@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Byggjer «Maskin å bu i» frå manus.md til ein A5-PDF klar for trykk.
+"""Byggjer «Maskin å bu i» frå manus.md til ein kvadratisk PDF (148 x 148 mm, kvit tekst på svart) klar for trykk.
 
 Bruk:   python bygg.py
 Krev:   xelatex (MiKTeX eller TeX Live) med memoir, fontspec, babel (nynorsk), xurl
@@ -19,13 +19,24 @@ NAMN = "maskin-a-bu-i"
 
 PREAMBEL = r"""
 \documentclass[10pt,twoside,openright]{memoir}
-\setstocksize{210mm}{148mm}
-\settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{160mm}{100mm}{*}
+% Kvadratisk bok: 148 x 148 mm ferdig skoren, med 3 mm utfallande kant rundt (PDF-sida er 154 x 154 mm).
+\setstocksize{154mm}{154mm}
+\settrimmedsize{148mm}{148mm}{*}
+\settrims{3mm}{3mm}
+\settypeblocksize{110mm}{100mm}{*}
 \setlrmargins{20mm}{*}{*}
-\setulmargins{20mm}{*}{*}
-\setheadfoot{\onelineskip}{12mm}
+\setulmargins{16mm}{*}{*}
+\setheadfoot{\onelineskip}{11mm}
 \checkandfixthelayout
+
+% Skjerekant og utfallande kant for trykkeriet (i PostScript-punkt).
+\AddToHook{shipout/background}{\special{pdf:put @thispage
+  <</TrimBox [8.504 8.504 428.031 428.031] /BleedBox [0 0 436.535 436.535]>>}}
+
+% 100 % svart på alle sider (DeviceGray 0, som trykkjer som K = 100), kvit tekst.
+\usepackage{xcolor}
+\pagecolor{black}
+\color{white}
 
 \usepackage{fontspec}
 \usepackage[nynorsk]{babel}
@@ -68,14 +79,14 @@ PREAMBEL = r"""
 \newenvironment{epigraf}[1]{\par\begin{flushright}#1}{\end{flushright}\par\vspace{2\baselineskip}}
 
 \newcommand\del[3]{\cleardoublepage\thispagestyle{empty}%
-  \vspace*{26mm}%
+  \vspace*{4mm}%
   {\sffamily\footnotesize #1\par}\vspace{4mm}%
   {\raggedright\tittelfamilie\fontsize{11}{17}\selectfont #2\par}%
-  \label{#3}\vspace{14mm}}
+  \label{#3}\vspace{12mm}}
 \newcommand\undertittel[1]{\vspace{-10mm}{\vanleg\itshape #1\par}\vspace{10mm}}
 \newcommand\bakdel[2]{\clearpage\thispagestyle{empty}\vspace*{14mm}%
   {\raggedright\tittelfamilie\fontsize{9}{13}\selectfont #1\par}\label{#2}\vspace{12mm}}
-\newcommand\seksjon[2]{\clearpage\vspace*{10mm}%
+\newcommand\seksjon[2]{\clearpage\vspace*{4mm}%
   {\raggedright\tittelfamilie\fontsize{8.5}{13}\selectfont #1\par}\label{#2}\vspace{9mm}}
 
 % Personleg modulor: eit skjema lesaren fyller ut sjølv.
@@ -99,7 +110,7 @@ FRAMSIDER = r"""
 \begin{document}
 \pagestyle{bok}
 \thispagestyle{empty}
-\vspace*{48mm}
+\vspace*{50mm}
 {\centering\tittelfamilie\fontsize{9}{13}\selectfont MASKIN Å BU I\par}
 \clearpage
 \thispagestyle{empty}
