@@ -59,23 +59,29 @@ PREAMBEL = r"""
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\raggedbottom
+% «Space between»: sida er fylt frå topp til botn, og luft vert fordelt mellom strofene.
+\flushbottom
+\frenchspacing
 \widowpenalty=10000
 \clubpenalty=10000
 \tolerance=1200
 \emergencystretch=3em
 
 % Tre stemmer: kapitalar (letterspatiert), vanleg sats, maskinskrift.
-\newcommand\kapsel{\kapselfamilie\fontsize{9}{13.5}\selectfont}
-\newcommand\vanleg{\rmfamily\fontsize{10}{14}\selectfont}
-\newcommand\maskin{\ttfamily\fontsize{8.6}{13.5}\selectfont}
+% Linjeavstanden kan strekkje seg litt, så sider utan strofeskil òg vert fylte.
+\newcommand\kapsel{\kapselfamilie\fontsize{9}{13.5}\selectfont\setlength\baselineskip{13.5pt plus 0.6pt}}
+\newcommand\vanleg{\rmfamily\fontsize{10}{14}\selectfont\setlength\baselineskip{14pt plus 0.6pt}}
+\newcommand\maskin{\ttfamily\fontsize{8.6}{13.5}\selectfont\setlength\baselineskip{13.5pt plus 0.6pt}}
 
-% Vers: kvar linje er eit eige avsnitt med hengjande innrykk for lange linjer.
-\newcommand\vl[2]{{#1\noindent\hangindent=2em\hangafter=1\relax #2\par}}
-\newenvironment{strofe}{\par\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax}{\par}
-\newcommand\strofeskil{\par\vspace{1\baselineskip plus 2pt minus 1pt}}
-\newcommand\prosa[2]{{#1\noindent #2\par}}
-\newcommand\skilje{\par\vspace{1.4\baselineskip}{\centering\vanleg ·\par}\nobreak\vspace{1.4\baselineskip}}
+% Justert: kvar linje går frå kant til kant, òg den siste i avsnittet.
+% Vers: kvar linje er eit eige avsnitt; mellomromma deler lufta likt.
+\newcommand\vl[2]{{#1\noindent\hangindent=2em\hangafter=1\relax
+  \spaceskip=\fontdimen2\font plus 2em minus 0.3\fontdimen2\font\relax\parfillskip=0pt\relax #2\par}}
+\newenvironment{strofe}{\par\hyphenpenalty=10000\exhyphenpenalty=10000\relax}{\par}
+\newcommand\strofeskil{\par\vspace{1\baselineskip plus 1.5\baselineskip minus 1pt}}
+\newcommand\prosa[2]{{#1\noindent\parfillskip=0pt\relax #2\par}}
+\newcommand\skilje{\par\vspace{1.4\baselineskip plus 1\baselineskip}{\centering\vanleg ·\par}\nobreak
+  \vspace{1.4\baselineskip plus 1\baselineskip}}
 \newenvironment{epigraf}[1]{\par\begin{flushright}#1}{\end{flushright}\par\vspace{2\baselineskip}}
 
 \newcommand\del[3]{\cleardoublepage\thispagestyle{empty}%
@@ -108,17 +114,7 @@ PREAMBEL = r"""
 
 FRAMSIDER = r"""
 \begin{document}
-\pagestyle{bok}
-\thispagestyle{empty}
-\vspace*{50mm}
-{\centering\tittelfamilie\fontsize{9}{13}\selectfont MASKIN Å BU I\par}
-\clearpage
-\thispagestyle{empty}
-\vspace*{\fill}
-{\vanleg\footnotesize\raggedright
-MASKIN Å BU I\par\medskip
-© 2026\par}
-\clearpage
+\pagestyle{empty}
 """
 
 TEX_TEIKN = {
