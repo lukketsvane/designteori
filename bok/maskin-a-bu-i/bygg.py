@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
 """Byggjer «Maskin å bu i» frå manus.md til ein kvadratisk PDF (148 x 148 mm, kvit tekst på svart) klar for trykk.
 
+Kvar side vert fylt maksimalt med tekst. Margen er lik på alle fire kantar, og skriftstorleiken
+vert tilpassa automatisk side for side:
+
+1. Eit målepass i XeLaTeX måler breidda på kvar verslinje og kvart prosaord.
+2. Python deler diktet i sider. Vers fyller sida i den storleiken der den lengste linja går
+   kant til kant (og bryt helst ved eit strofeskil). Prosa står éin blokk per side; lange
+   avsnitt vert delte så skrifta ikkje går under MIN_PROSA.
+3. I sluttpasset finn XeLaTeX den største skriftstorleiken som får plass på kvar side
+   (binærsøk), og fordeler resten av lufta mellom strofene.
+
 Bruk:   python bygg.py
-Krev:   xelatex (MiKTeX eller TeX Live) med memoir, fontspec, babel (nynorsk), xurl
-        og Libertinus-skriftene (følgjer med i begge distribusjonane).
+Krev:   xelatex (MiKTeX eller TeX Live) med memoir, fontspec, babel (nynorsk), xcolor
+        og Libertinus-skriftene.
 Resultat: maskin-a-bu-i.pdf i same mappe. Mellomfiler hamnar i bygg/.
 """
 import re
@@ -17,16 +27,23 @@ MANUS = HER / "manus.md"
 UT = HER / "bygg"
 NAMN = "maskin-a-bu-i"
 
+SATS = 340.16      # tekstflata: 120 x 120 mm i punkt
+LINJE = 1.5        # linjeavstand i forhold til skriftstorleiken
+MIN_PROSA = 12.0   # lange prosaavsnitt vert delte så skrifta ikkje går under dette (pt)
+LANG_LINJE = 54    # verslinjer med fleire teikn enn dette får bryte over to linjer
+KORT_STROFE = 8    # strofer med så mange linjer eller færre vert aldri delte over to sider
+
 PREAMBEL = r"""
-\documentclass[10pt,twoside,openright]{memoir}
-% Kvadratisk bok: 148 x 148 mm ferdig skoren, med 3 mm utfallande kant rundt (PDF-sida er 154 x 154 mm).
+\documentclass[10pt,twoside]{memoir}
+% Kvadratisk bok: 148 x 148 mm ferdig skoren, 3 mm utfallande kant (PDF-sida er 154 x 154 mm).
+% Lik marg på alle fire kantar: 14 mm. Tekstflata er 120 x 120 mm.
 \setstocksize{154mm}{154mm}
 \settrimmedsize{148mm}{148mm}{*}
 \settrims{3mm}{3mm}
-\settypeblocksize{110mm}{100mm}{*}
-\setlrmargins{20mm}{*}{*}
-\setulmargins{16mm}{*}{*}
-\setheadfoot{\onelineskip}{11mm}
+\settypeblocksize{120mm}{120mm}{*}
+\setlrmargins{14mm}{*}{*}
+\setulmargins{14mm}{*}{*}
+\setheadfoot{\onelineskip}{\onelineskip}
 \checkandfixthelayout
 
 % Skjerekant og utfallande kant for trykkeriet (i PostScript-punkt).
@@ -42,79 +59,68 @@ PREAMBEL = r"""
 \usepackage[nynorsk]{babel}
 \setmainfont{LibertinusSerif}[Extension=.otf, UprightFont=*-Regular, ItalicFont=*-Italic,
   BoldFont=*-Semibold, BoldItalicFont=*-SemiboldItalic]
-\setsansfont{LibertinusSans}[Extension=.otf, UprightFont=*-Regular, ItalicFont=*-Italic, BoldFont=*-Bold]
 \setmonofont{LibertinusMono}[Extension=.otf, UprightFont=*-Regular]
-\newfontfamily\kapselfamilie{LibertinusSerif}[Extension=.otf, UprightFont=*-Regular,
-  ItalicFont=*-Italic, LetterSpace=4.0]
-\newfontfamily\tittelfamilie{LibertinusSans}[Extension=.otf, UprightFont=*-Regular, LetterSpace=16.0]
+% Kapitalane er ikkje sperra: XeTeX reknar breidda feil med LetterSpace, og linjene stakk ut i margen.
+\newfontfamily\kapselfamilie{LibertinusSerif}[Extension=.otf, UprightFont=*-Regular, ItalicFont=*-Italic]
 \usepackage[protrusion=true,expansion=false]{microtype}
-\usepackage[hidelinks]{hyperref}
-\usepackage{xurl}
-\urlstyle{tt}
 
-\makepagestyle{bok}
-\makeevenfoot{bok}{}{\footnotesize\sffamily\thepage}{}
-\makeoddfoot{bok}{}{\footnotesize\sffamily\thepage}{}
-\aliaspagestyle{cleared}{empty}
-
+\pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-% «Space between»: sida er fylt frå topp til botn, og luft vert fordelt mellom strofene.
-\flushbottom
 \frenchspacing
-\widowpenalty=10000
-\clubpenalty=10000
 \tolerance=1200
 \emergencystretch=3em
+\vbadness=10000
+\hbadness=10000
 
-% Tre stemmer: kapitalar (letterspatiert), vanleg sats, maskinskrift.
-% Linjeavstanden kan strekkje seg litt, så sider utan strofeskil òg vert fylte.
-\newcommand\kapsel{\kapselfamilie\fontsize{9}{13.5}\selectfont\setlength\baselineskip{13.5pt plus 0.6pt}}
-\newcommand\vanleg{\rmfamily\fontsize{10}{14}\selectfont\setlength\baselineskip{14pt plus 0.6pt}}
-\newcommand\maskin{\ttfamily\fontsize{8.6}{13.5}\selectfont\setlength\baselineskip{13.5pt plus 0.6pt}}
+% Skriftstorleiken \fs vert sett side for side. Tre stemmer, same linjeavstand.
+\newdimen\fs \fs=10pt
+\newcommand\kapsel{\kapselfamilie\fontsize{\the\fs}{\the\dimexpr1.5\fs\relax}\selectfont
+  \baselineskip=1.5\fs plus 0.25\fs\relax}
+\newcommand\vanleg{\rmfamily\fontsize{\the\dimexpr1.1\fs\relax}{\the\dimexpr1.5\fs\relax}\selectfont
+  \baselineskip=1.5\fs plus 0.25\fs\relax}
+\newcommand\maskin{\ttfamily\fontsize{\the\dimexpr0.95\fs\relax}{\the\dimexpr1.5\fs\relax}\selectfont
+  \baselineskip=1.5\fs plus 0.25\fs\relax}
+\newcommand\kursiv[1]{{\rmfamily\itshape\fontsize{\the\dimexpr1.2\fs\relax}{\the\dimexpr1.5\fs\relax}\selectfont #1}}
 
-% Justert: kvar linje går frå kant til kant, òg den siste i avsnittet.
-% Vers: kvar linje er eit eige avsnitt; mellomromma deler lufta likt.
-\newcommand\vl[2]{{#1\noindent\hangindent=2em\hangafter=1\relax
-  \spaceskip=\fontdimen2\font plus 2em minus 0.3\fontdimen2\font\relax\parfillskip=0pt\relax #2\par}}
-\newenvironment{strofe}{\par\hyphenpenalty=10000\exhyphenpenalty=10000\relax}{\par}
-\newcommand\strofeskil{\par\vspace{1\baselineskip plus 1.5\baselineskip minus 1pt}}
-\newcommand\prosa[2]{{#1\noindent\parfillskip=0pt\relax #2\par}}
-\newcommand\skilje{\par\vspace{1.4\baselineskip plus 1\baselineskip}{\centering\vanleg ·\par}\nobreak
-  \vspace{1.4\baselineskip plus 1\baselineskip}}
-\newenvironment{epigraf}[1]{\par\begin{flushright}#1}{\end{flushright}\par\vspace{2\baselineskip}}
+% Justert kant til kant. Verslinja er eit eige avsnitt; mellomromma deler lufta likt.
+% \vl tel linjer som bryt (då er skrifta for stor); \vlb er ei lang linje som får bryte.
+\newcount\fitbrot
+\newbox\fittest
+\newcommand\versrom{\spaceskip=\fontdimen2\font plus 2em minus 0.3\fontdimen2\font\relax}
+\newcommand\versoppsett{\hyphenpenalty=10000\exhyphenpenalty=10000\noindent
+  \hangindent=2em\hangafter=1\relax\versrom\parfillskip=0pt\relax}
+% Ei verslinje som ikkje får plass i breidda (overfull) eller bryt, gjer storleiken for stor.
+\newcommand\vl[2]{{#1\setbox\fittest=\hbox to \hsize{\versrom #2}%
+  \ifnum\badness>10000 \global\advance\fitbrot by 1 \fi
+  \versoppsett #2\par\ifnum\prevgraf>1 \global\advance\fitbrot by 1 \fi}}
+\newcommand\vlb[2]{{#1\versoppsett #2\par}}
+% Prosa: strekk heller mellomromma enn å la linjer stikke ut i margen, men ikkje så langt
+% at eitt ord (eller ein orddel) blir ståande åleine på ei linje.
+\newcommand\prosa[2]{{#1\noindent\tolerance=9999\emergencystretch=0.6\hsize\parfillskip=0pt\relax #2\par}}
+\newcommand\strofeskil{\par\vspace{1.5\fs plus 1.5\fs}}
+\newcommand\skilje{\par\vspace{1.5\fs plus 1\fs}{\centering\vanleg ·\par}\vspace{1.5\fs plus 1\fs}}
 
-\newcommand\del[3]{\cleardoublepage\thispagestyle{empty}%
-  \vspace*{4mm}%
-  {\sffamily\footnotesize #1\par}\vspace{4mm}%
-  {\raggedright\tittelfamilie\fontsize{11}{17}\selectfont #2\par}%
-  \label{#3}\vspace{12mm}}
-\newcommand\undertittel[1]{\vspace{-10mm}{\vanleg\itshape #1\par}\vspace{10mm}}
-\newcommand\bakdel[2]{\clearpage\thispagestyle{empty}\vspace*{14mm}%
-  {\raggedright\tittelfamilie\fontsize{9}{13}\selectfont #1\par}\label{#2}\vspace{12mm}}
-\newcommand\seksjon[2]{\clearpage\vspace*{4mm}%
-  {\raggedright\tittelfamilie\fontsize{8.5}{13}\selectfont #1\par}\label{#2}\vspace{9mm}}
-
-% Personleg modulor: eit skjema lesaren fyller ut sjølv.
-\newcommand\felt{\rule[-1pt]{5.6em}{0.4pt}\,cm}
-\newcommand\feltvh{v\,\rule[-1pt]{3.4em}{0.4pt}\enspace h\,\rule[-1pt]{3.4em}{0.4pt}\,cm}
-\newcommand\skjemarad[3]{{\maskin\noindent\makebox[1.6em][r]{#1}\hspace{0.7em}#2\hfill#3\par}\vspace{2.6mm}}
-
-\newcommand\kjeldefrase[1]{{\vanleg\itshape\small #1\par}\nobreak}
-\newenvironment{kjelder}{\par\raggedright\ttfamily\fontsize{6.8}{9.5}\selectfont}{\par}
-
-\newcommand\innhaldsdel[3]{\par\vspace{2.4mm}{\sffamily\footnotesize\noindent
-  \makebox[2.4em][l]{#1}#2\dotfill\pageref{#3}\par}}
-\newcommand\innhaldsseksjon[2]{{\sffamily\footnotesize\noindent\hspace*{2.4em}#1\dotfill\pageref{#2}\par}}
-
-\newcount\padtal
-\newcommand\padsider[1]{\clearpage\padtal=#1\relax
-  \loop\ifnum\padtal>0 \thispagestyle{empty}\null\clearpage\advance\padtal by -1 \repeat}
-"""
-
-FRAMSIDER = r"""
-\begin{document}
-\pagestyle{empty}
+% Kvar side: finn største \fs der innhaldet får plass i tekstflata utan brotne verslinjer.
+\newbox\fitboks
+\newdimen\fitlo \newdimen\fithi \newdimen\fitmid
+\newcount\fitsteg
+\newcommand\fitmaal{\global\fitbrot=0 \setbox\fitboks=\vbox{\hfuzz=\maxdimen\hsize=\textwidth\fitinnhald}}
+\newcommand\fitside[2]{%
+  \def\fitinnhald{#2}%
+  \fitlo=3pt \fithi=#1pt \fitsteg=0
+  \loop
+    \fitmid=\dimexpr(\fitlo+\fithi)/2\relax
+    \fs=\fitmid \fitmaal
+    \ifdim\dimexpr\ht\fitboks+\dp\fitboks\relax>\textheight \fithi=\fitmid
+    \else\ifnum\fitbrot>0 \fithi=\fitmid \else \fitlo=\fitmid \fi\fi
+    \advance\fitsteg by 1
+  \ifnum\fitsteg<14 \repeat
+  \fs=\fitlo \fitmaal
+  \typeout{FITSIDE \the\fs}%
+  % \kern0pt held djupna til siste linja inne i boksen (djupn 0), så sida aldri vert for høg.
+  \vbox to \textheight{\hsize=\textwidth\fitinnhald\kern0pt}%
+  \clearpage}
 """
 
 TEX_TEIKN = {
@@ -132,9 +138,7 @@ def inline(s: str, mono: bool = False) -> str:
     ut = []
     for bit in re.split(r"(\*[^*]+\*)", s):
         if len(bit) > 2 and bit.startswith("*") and bit.endswith("*"):
-            indre = tex(bit[1:-1])
-            ut.append(r"{\rmfamily\itshape\fontsize{10.4}{13.5}\selectfont " + indre + "}" if mono
-                      else r"\textit{" + indre + "}")
+            ut.append((r"\kursiv{%s}" if mono else r"\textit{%s}") % tex(bit[1:-1]))
         else:
             ut.append(tex(bit))
     return "".join(ut)
@@ -145,83 +149,39 @@ def er_kapitalar(s: str) -> bool:
     return bool(bokstavar) and all(c.isupper() for c in bokstavar)
 
 
-def lag_tex(md: str) -> str:
-    kropp, innhald = [], []
-    modus, blokk, epi = "vers", [], []
-    treng_skil = False
-    i_kommentar = False
-    teljar = 0
+def tolk_manus(md: str) -> list:
+    """Gjer manus.md om til ei flat rekkje: linje, prosa, rom (strofeskil) og skilje (·)."""
+    element, blokk = [], []
+    modus, i_kommentar = "vers", False
 
-    def nytt_merke() -> str:
-        nonlocal teljar
-        teljar += 1
-        return f"m{teljar}"
-
-    def skrift(tekst: str) -> str:
-        if modus == "mono":
-            return r"\maskin"
-        return r"\kapsel" if er_kapitalar(tekst) else r"\vanleg"
-
-    def tøm_epigraf():
-        nonlocal epi, treng_skil
-        if not epi:
+    def skil(art):
+        if not element:
             return
-        if modus == "mono":
-            f = r"\maskin"
-        elif all(er_kapitalar(x) for x in epi):
-            f = r"\kapsel"
+        if element[-1]["art"] in ("rom", "skilje"):
+            if art == "skilje":
+                element[-1] = {"art": "skilje"}
         else:
-            f = r"\vanleg\itshape"
-        linjer = r"\\".join(inline(x, modus == "mono") for x in epi)
-        kropp.append(r"\begin{epigraf}{" + f + "}" + linjer + r"\end{epigraf}")
-        epi = []
-        treng_skil = False
+            element.append({"art": art})
 
     def tøm():
-        nonlocal blokk, treng_skil
+        nonlocal blokk
         if not blokk:
             return
-        mono = modus == "mono"
-        if modus in ("vers", "mono"):
-            if treng_skil:
-                kropp.append(r"\strofeskil")
-            kropp.append(r"\begin{strofe}")
-            n = len(blokk)
-            for i, linje in enumerate(blokk):
-                kropp.append(r"\vl{%s}{%s}" % (skrift(linje), inline(linje, mono)))
-                if i < n - 1:
-                    # Lite lyst til sideskift inne i ei strofe, aldri etter første eller før siste linje.
-                    kropp.append(r"\penalty%d" % (3000 if i in (0, n - 2) else 150))
-            kropp.append(r"\end{strofe}")
-        elif modus == "prosa":
-            if treng_skil:
-                kropp.append(r"\strofeskil")
-            tekst = " ".join(blokk)
-            kropp.append(r"\prosa{%s}{%s}" % (skrift(tekst), inline(tekst)))
-        elif modus == "skjema":
+        skil("rom")
+        if modus == "prosa":
+            element.append({"art": "prosa", "tekst": " ".join(blokk)})
+        else:
             for linje in blokk:
-                m = re.match(r"(\d+)\.\s+(.*)", linje)
-                nr, mål = m.group(1), m.group(2)
-                felt = r"\felt"
-                if "venstre/høgre" in mål:
-                    mål, felt = mål.replace("venstre/høgre", "").strip(), r"\feltvh"
-                kropp.append(r"\skjemarad{%s}{%s}{%s}" % (nr, tex(mål), felt))
-        elif modus == "kjelder":
-            kropp.append(r"\begin{kjelder}")
-            for linje in blokk:
-                frase, url = (x.strip() for x in linje.split("|", 1))
-                kropp.append(r"\kjeldefrase{%s}" % inline(frase))
-                # \url må stå på toppnivå (ikkje som argument) for at % og & skal lesast rett.
-                kropp.append(r"\url{%s}\par\vspace{2.2mm}" % url)
-            kropp.append(r"\end{kjelder}")
+                mono = modus == "mono"
+                skrift = r"\maskin" if mono else (r"\kapsel" if er_kapitalar(linje) else r"\vanleg")
+                element.append({"art": "linje", "tekst": linje, "mono": mono, "skrift": skrift,
+                                "lang": len(linje) > LANG_LINJE})
         blokk = []
-        treng_skil = True
 
     for rå in md.splitlines():
         s = rå.strip()
         if i_kommentar:
-            if s == "-->":
-                i_kommentar = False
+            i_kommentar = s != "-->"
             continue
         if s == "<!--":
             i_kommentar = True
@@ -229,77 +189,241 @@ def lag_tex(md: str) -> str:
         d = re.fullmatch(r"<!--\s*(.*?)\s*-->", s)
         if d:
             tøm()
-            tøm_epigraf()
-            verdi = d.group(1)
-            if verdi in ("vers", "prosa", "mono", "skjema", "kjelder"):
-                modus = verdi
-            elif verdi == "side":
-                kropp.append(r"\clearpage")
-                treng_skil = False
-            continue
-        if s.startswith(">"):
-            tøm()
-            epi.append(s[1:].strip())
-            continue
-        tøm_epigraf()
-        if s.startswith("### "):
-            tøm()
-            kropp.append(r"\undertittel{%s}" % inline(s[4:]))
-            treng_skil = False
-        elif s.startswith("## "):
-            tøm()
-            tittel, merke = s[3:], nytt_merke()
-            kropp.append(r"\seksjon{%s}{%s}" % (inline(tittel), merke))
-            innhald.append((2, "", tittel, merke))
-            treng_skil = False
-        elif s.startswith("# "):
-            tøm()
-            tittel, merke = s[2:], nytt_merke()
-            if " · " in tittel:
-                nr, tittel = tittel.split(" · ", 1)
-                kropp.append(r"\del{%s}{%s}{%s}" % (nr, inline(tittel), merke))
-            else:
-                nr = ""
-                kropp.append(r"\bakdel{%s}{%s}" % (inline(tittel), merke))
-            innhald.append((1, nr, tittel, merke))
-            treng_skil = False
+            if d.group(1) in ("vers", "prosa", "mono"):
+                modus = d.group(1)
         elif s == "---":
             tøm()
-            kropp.append(r"\skilje")
-            treng_skil = False
+            skil("skilje")
         elif not s:
             tøm()
         else:
             blokk.append(s)
     tøm()
-    tøm_epigraf()
 
-    return "\n".join([PREAMBEL, FRAMSIDER, *kropp, r"\end{document}", ""])
+    # Nøklar til målepasset
+    nl = nw = 0
+    for e in element:
+        if e["art"] == "linje":
+            e["nøkkel"] = f"L{nl}"
+            nl += 1
+        elif e["art"] == "prosa":
+            e["ord"] = e["tekst"].split()
+            e["nøklar"] = [f"W{nw + i}" for i in range(len(e["ord"]))]
+            nw += len(e["ord"])
+    return element
 
 
-def kompiler() -> int:
+def mål_breidder(element: list) -> dict:
+    """Målepass: breidda (pt ved \\fs = 10pt) på kvar verslinje, kvart prosaord og eit ordmellomrom."""
+    linjer = [r"\newwrite\maalfil", r"\begin{document}", r"\immediate\openout\maalfil=maal.dat",
+              r"\newcommand\maal[3]{\settowidth{\dimen0}{#2#3}\immediate\write\maalfil{#1 \the\dimen0}}"]
+    for e in element:
+        if e["art"] == "linje":
+            linjer.append(r"\maal{%s}{%s}{%s}" % (e["nøkkel"], e["skrift"], inline(e["tekst"], e["mono"])))
+        elif e["art"] == "prosa":
+            for k, o in zip(e["nøklar"], e["ord"]):
+                linjer.append(r"\maal{%s}{\kapsel}{%s}" % (k, tex(o)))
+    linjer += [r"\setbox0\hbox{\kapsel\global\dimen1=\fontdimen2\font}",
+               r"\immediate\write\maalfil{SPACE \the\dimen1}",
+               r"\immediate\closeout\maalfil", r"\end{document}", ""]
+    (UT / "maal.tex").write_text(PREAMBEL + "\n".join(linjer), encoding="utf-8")
+    køyr("maal")
+    mål = {}
+    for linje in (UT / "maal.dat").read_text(encoding="utf-8").splitlines():
+        k, v = linje.split()
+        mål[k] = float(v.removesuffix("pt"))
+    return mål
+
+
+def lag_sider(element: list, mål: dict):
+    rom = mål["SPACE"]
+
+    def breidd(e, s):
+        return mål[e["nøkkel"]] * s / 10
+
+    def prosalinjer(e, s):
+        linjer, cur, mellom = 1, 0.0, rom * s / 10 * 0.8
+        for k in e["nøklar"]:
+            w = mål[k] * s / 10
+            if cur == 0:
+                cur = w
+            elif cur + mellom + w <= SATS:
+                cur += mellom + w
+            else:
+                linjer, cur = linjer + 1, w
+        return linjer
+
+    def høgd(side, s):
+        n = rom_ = skil = 0
+        for e in side:
+            a = e["art"]
+            if a == "linje":
+                n += 2 if e["lang"] and breidd(e, s) > SATS * 0.97 else 1
+            elif a == "prosa":
+                n += prosalinjer(e, s)
+            elif a == "rom":
+                rom_ += 1
+            else:
+                skil += 1
+        return LINJE * s * (n - 1) + 0.75 * s + rom_ * LINJE * s + skil * 3 * LINJE * s
+
+    def ordgrense(side):
+        g = [SATS * 10 / max(mål[k] for k in e["nøklar"]) for e in side if e["art"] == "prosa"]
+        return min(g) if g else float("inf")
+
+    def breiddgrense(side):
+        g = [SATS * 0.97 * 10 / mål[e["nøkkel"]] for e in side if e["art"] == "linje" and not e["lang"]]
+        return min(g) if g else float("inf")
+
+    def storleik(side):
+        lo, hi = 2.0, min(150.0, breiddgrense(side), ordgrense(side))
+        for _ in range(30):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if høgd(side, mid) <= SATS else (lo, mid)
+        return lo
+
+    def fyll(side):
+        return høgd(side, storleik(side)) / SATS if side else 0.0
+
+    def rydd(side):
+        while side and side[0]["art"] in ("rom", "skilje"):
+            side = side[1:]
+        while side and side[-1]["art"] in ("rom", "skilje"):
+            side = side[:-1]
+        return side
+
+    def del_prosa(e):
+        par = list(zip(e["ord"], e["nøklar"]))
+        total = sum(mål[n] for _, n in par)
+        for k in range(2, 60):
+            bitar, o_, n_, acc = [], [], [], 0.0
+            for o, n in par:
+                o_.append(o)
+                n_.append(n)
+                acc += mål[n]
+                if acc >= total / k * (len(bitar) + 1) and len(bitar) < k - 1:
+                    bitar.append({"art": "prosa", "tekst": " ".join(o_), "ord": o_, "nøklar": n_})
+                    o_, n_ = [], []
+            if o_:
+                bitar.append({"art": "prosa", "tekst": " ".join(o_), "ord": o_, "nøklar": n_})
+            if all(storleik([b]) >= MIN_PROSA for b in bitar):
+                return bitar
+        return bitar
+
+    sider, cur = [], []
+
+    def ut(side):
+        side = rydd(side)
+        if side:
+            sider.append(side)
+
+    for idx, e in enumerate(element):
+        a = e["art"]
+        if a in ("rom", "skilje"):
+            if cur:
+                cur.append(e)
+        elif a == "linje":
+            prøve = rydd(cur + [e])
+            if not cur or høgd(prøve, breiddgrense(prøve)) <= SATS:
+                cur.append(e)   # sida er framleis bunden av breidda: meir tekst gjev betre fylling
+                continue
+            # Sida er full. Korte strofer (KORT_STROFE linjer eller færre) vert aldri delte:
+            # byrjar strofa lenger nede, flyttar ho til neste side; står ho øvst, får ho bli heil.
+            s0 = len(cur)
+            while s0 > 0 and cur[s0 - 1]["art"] == "linje":
+                s0 -= 1
+            k = len(cur) - s0
+            rest = 0
+            for x in element[idx:]:
+                if x["art"] != "linje":
+                    break
+                rest += 1
+            if k + rest <= KORT_STROFE:
+                if s0 > 0:
+                    ut(cur[:s0])
+                    cur = cur[s0:] + [e]
+                else:
+                    cur.append(e)
+                continue
+            brot = None         # lang strofe: bryt helst ved eit strofeskil
+            for i in range(len(cur) - 1, 0, -1):
+                if cur[i]["art"] in ("rom", "skilje") and fyll(rydd(cur[:i])) >= 0.75:
+                    brot = i
+                    break
+            if brot is None:
+                # Inga strofe skal delast med éi linje åleine på nokon av sidene.
+                if (rest == 1 and k >= 3) or (k == 1 and len(cur) > 1):
+                    ut(cur[:-1])
+                    cur = [cur[-1], e]
+                else:
+                    ut(cur)
+                    cur = [e]
+            else:
+                ut(cur[:brot])
+                cur = rydd(cur[brot + 1:]) + [e]
+        else:  # prosa
+            førre = rydd(cur)
+            if førre and fyll(førre) < 0.5:
+                saman = førre + [{"art": "rom"}, e]
+                if storleik(saman) >= 0.85 * storleik(førre):
+                    ut(saman)
+                    cur = []
+                    continue
+            ut(cur)
+            cur = []
+            if storleik([e]) >= MIN_PROSA:
+                sider.append([e])
+            else:
+                sider.extend([b] for b in del_prosa(e))
+    ut(cur)
+    return sider, storleik, ordgrense
+
+
+def side_tex(side) -> str:
+    deler = []
+    for e in side:
+        a = e["art"]
+        if a == "linje":
+            deler.append(r"\%s{%s}{%s}" % ("vlb" if e["lang"] else "vl", e["skrift"], inline(e["tekst"], e["mono"])))
+        elif a == "prosa":
+            deler.append(r"\prosa{\kapsel}{%s}" % inline(e["tekst"]))
+        elif a == "rom":
+            deler.append(r"\strofeskil")
+        else:
+            deler.append(r"\skilje")
+    return "\n".join(deler)
+
+
+def køyr(namn: str):
     r = subprocess.run(
-        ["xelatex", "-interaction=nonstopmode", "-halt-on-error", f"{NAMN}.tex"],
+        ["xelatex", "-interaction=nonstopmode", "-halt-on-error", f"{namn}.tex"],
         cwd=UT, capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     if r.returncode != 0:
         print(r.stdout[-4000:])
-        sys.exit("xelatex feila; sjå bygg/%s.log" % NAMN)
-    m = re.search(r"Output written on .*?\((\d+)\s+pages?", r.stdout, re.S)
-    return int(m.group(1)) if m else 0
-
-
-def bygg():
-    UT.mkdir(exist_ok=True)
-    (UT / f"{NAMN}.tex").write_text(lag_tex(MANUS.read_text(encoding="utf-8")), encoding="utf-8")
+        sys.exit(f"xelatex feila; sjå bygg/{namn}.log")
+    return r.stdout
 
 
 def main():
-    bygg()
-    kompiler()
-    sider = kompiler()
+    UT.mkdir(exist_ok=True)
+    element = tolk_manus(MANUS.read_text(encoding="utf-8"))
+    mål = mål_breidder(element)
+    sider, storleik, ordgrense = lag_sider(element, mål)
+
+    kropp = [r"\begin{document}"]
+    for side in sider:
+        hi = min(storleik(side) * 1.3 + 1, ordgrense(side) * 0.99, 150)
+        kropp.append(r"\fitside{%.2f}{%s}" % (hi, side_tex(side)))
+    kropp += [r"\end{document}", ""]
+    (UT / f"{NAMN}.tex").write_text(PREAMBEL + "\n".join(kropp), encoding="utf-8")
+    logg = køyr(NAMN)
     shutil.copy(UT / f"{NAMN}.pdf", HER / f"{NAMN}.pdf")
-    print(f"{NAMN}.pdf: {sider} sider")
+
+    storleikar = [float(x) for x in re.findall(r"FITSIDE ([\d.]+)pt", logg)]
+    m = re.search(r"Output written on .*?\((\d+)\s+pages?", logg, re.S)
+    print(f"{NAMN}.pdf: {m.group(1) if m else '?'} sider, skrift {min(storleikar):.1f}–{max(storleikar):.1f} pt "
+          f"(median {sorted(storleikar)[len(storleikar) // 2]:.1f} pt)")
 
 
 if __name__ == "__main__":
