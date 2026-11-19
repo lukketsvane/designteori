@@ -3,14 +3,16 @@
 
 Førebiletet er «cor.» (Cardo, éi strofe per side, stor skrift som fyller sida). Systemet:
 - Cardo, ei aldinsk antikva (etter Bembo), i store bokstavar med litt sperring, slik versalar skal ha.
-- Éi strofe per side. Linjene i verset vert haldne; ei linje som er for lang, held fram på neste
-  linje med innrykk (Bringhurst-konvensjonen for vers), og dei to siste orda heng alltid saman, så
-  ingen påfølgjande linje vert ståande med eitt ord.
+- Éi strofe per side. Linjene i verset vert haldne: ei verslinje på KORT_LINJE ord eller færre vert
+  aldri broten; ei lengre linje kan halde fram på éi linje til med innrykk (Bringhurst-konvensjonen
+  for vers), delt jamt så ingen rest vert ståande med eitt ord.
 - Kvar side får sin eigen skriftstorleik: skriptet set strofa i mange storleikar og vel den største
   der strofa fyller sida frå toppmargen til botnmargen, med linjeavstand innanfor LINJE_MIN til
-  LINJE_MAKS og helst nær LINJE.
+  LINJE_MAKS og helst nær LINJE. Ei strofe som ikkje kan fylle høgda, står midt på sida.
 - Lik marg på alle fire kantar (MARG, om lag 6 % av sida som i førebiletet). Første linje står med
   toppen sin mot toppmargen, siste grunnlinje på botnmargen. Aldri orddeling, aldri tankestrek.
+- Manuset bør skrivast med linjer som passar sida (AHO_E): korte, brotne verslinjer gjev full side
+  utan at satsen må bryte nokon linje.
 
 Bruk:   python bygg_strofe.py AHO_D.md      (AHO_D.md -> AHO_D.pdf)
 Krev:   lualatex med memoir, fontspec, babel, xcolor, microtype. Cardo (OFL) vert henta frå
@@ -32,10 +34,13 @@ SIDE_MM, MARG_MM = 148.0, 9.0
 PT_PER_MM = 72.27 / 25.4
 SATS = (SIDE_MM - 2 * MARG_MM) * PT_PER_MM      # tekstflata i TeX-punkt (130 x 130 mm)
 LINJE = 1.14                                    # ønskt linjeavstand i forhold til skriftstorleiken
-LINJE_MIN, LINJE_MAKS = 1.10, 1.36              # Cardo: Å-ringen når 0,97 em, så under 1,10 rører han linja over
+LINJE_MIN, LINJE_MAKS = 1.10, 1.24             # Cardo: Å-ringen når 0,97 em, så under 1,10 rører han linja over
 SPERRING = 6                                    # sperring av versalane, i tusendelar av em x 10 (fontspec LetterSpace)
 INNRYKK = 1.5                                   # innrykk for framhald av lange linjer, i em
-RAG, FILL = 0.50, 0.05                         # strekk i høgremargen (alle linjer / i tillegg på siste), del av satsbreidda
+KORT_LINJE = 8                                 # verslinjer med så få ord vert aldri brotne
+MAKS_RADER = 2                                  # lengre verslinjer kan fordelast på høgst så mange rader
+FRAMHALD_STRAFF = 0.04                        # kor mykje kvar framhaldslinje kostar i poeng (del av storleiken)
+RAG, FILL = 0.50, 0.05                        # strekk i høgremargen (alle linjer / i tillegg på siste), del av satsbreidda
 GROV = [round(8 + 0.25 * i, 2) for i in range(int((90 - 8) / 0.25) + 1)]
 
 
@@ -84,7 +89,10 @@ def preambel(skrift: str) -> str:
 \raggedbottom
 \newdimen\fs \fs=20pt
 \newcommand\storleik{\fontsize{\the\fs}{\the\fs}\selectfont}
-\newcommand\vl[1]{\hangindent=%(innrykk).2fem\hangafter=1 \noindent #1\par}
+\newcount\brot
+%% \vl{maks rader}{verslinje}: tel linjer som vert brotne i fleire rader enn tillate.
+\newcommand\vl[2]{\hangindent=%(innrykk).2fem\hangafter=1 \noindent #2\par
+  \ifnum\prevgraf>#1 \global\advance\brot by 1 \fi}
 %% Rag med endeleg strekk: ei lang verslinje vert delt i to jamne delar heller enn ei full linje og
 %% eitt einsleg ord; ordmellomromma strekkjer seg ikkje.
 \newcommand\strofeoppsett{\storleik\leftskip=0pt\rightskip=0pt plus %(rag).2f\hsize
@@ -92,17 +100,20 @@ def preambel(skrift: str) -> str:
 """ % {"blokk": blokk, "marg": marg, "skrift": skrift, "innrykk": INNRYKK, "rag": RAG, "fill": FILL}
 
 
-def lag_strofer(einingar: list) -> list[str]:
+def lag_strofer(einingar: list) -> tuple[list[str], list[int]]:
     """Kvar strofe som TeX: éin \\vl per verslinje. Eittbokstavsord (I, Å) heng saman med ordet etter,
-    så dei aldri står åleine ytst på ei linje."""
-    strofer = []
+    så dei aldri står åleine ytst på ei linje. Ei verslinje på tre ord eller færre skal aldri brytast;
+    lengre linjer kan halde fram på éi linje til (MAKS_RADER), så verslinjene held seg lesbare."""
+    strofer, verstal = [], []
     for e in einingar:
         linjer = []
         for linje in e["linjer"]:
             t = re.sub(r"(?<!\S)(\S) ", r"\1~", bygg.tex(linje))
-            linjer.append(r"\vl{%s}" % t)
+            maks = 1 if len(linje.split()) <= KORT_LINJE else MAKS_RADER
+            linjer.append(r"\vl{%d}{%s}" % (maks, t))
         strofer.append("".join(linjer))
-    return strofer
+        verstal.append(len(e["linjer"]))
+    return strofer, verstal
 
 
 def skann(strofer: list[str], storleikar: dict[int, list[float]], skrift: str, namn: str) -> dict:
@@ -112,12 +123,12 @@ def skann(strofer: list[str], storleikar: dict[int, list[float]], skrift: str, n
         r"\begin{document}",
         r"\newwrite\ut \immediate\openout\ut=%s.dat" % aux,
         r"\newcount\linjetal \newcount\over \newdimen\fyrst",
-        r"\newcommand\proev[3]{\fs=#2pt"
+        r"\newcommand\proev[3]{\fs=#2pt\global\brot=0 "
         r"\setbox0=\vbox{\hsize=\textwidth\strofeoppsett #3"
         r"\global\linjetal=0 \global\over=0 \global\fyrst=0pt"
         r"\loop\unskip\unpenalty\unskip\unpenalty\unskip\unpenalty\unskip\setbox2=\lastbox\ifvoid2\else\global\advance\linjetal by 1 "
         r"\global\fyrst=\ht2 \setbox4=\hbox{\unhcopy2}\ifdim\wd4>\dimexpr\wd2+0.3pt\relax\global\advance\over by 1 \fi\repeat}"
-        r"\immediate\write\ut{#1 #2 \the\linjetal\space\the\fyrst\space\the\over}}",
+        r"\immediate\write\ut{#1 #2 \the\linjetal\space\the\fyrst\space\the\over\space\the\brot}}",
     ]
     for i, s_liste in storleikar.items():
         kropp.append(r"\long\def\S{%s}" % strofer[i])
@@ -127,25 +138,30 @@ def skann(strofer: list[str], storleikar: dict[int, list[float]], skrift: str, n
     bygg.køyr(aux)
     ut: dict = {}
     for linje in (UT / f"{aux}.dat").read_text(encoding="utf-8").splitlines():
-        i, s, n, h, over = linje.split()
-        ut.setdefault(int(i), []).append((float(s), int(n), float(h.removesuffix("pt")), int(over)))
+        i, s, n, h, over, brot = linje.split()
+        ut.setdefault(int(i), []).append(
+            (float(s), int(n), float(h.removesuffix("pt")), int(over), int(brot)))
     return ut
 
 
-def vel(målingar: list) -> tuple:
-    """Største storleik som fyller sida, justert for linjeavstand nær LINJE. Gjev (poeng, s, n, topp, lead)."""
+def vel(målingar: list, vers: int) -> tuple:
+    """Største storleik som fyller sida utan å bryte verslinjene for hardt, med linjeavstand nær LINJE.
+    Gjev (poeng, s, n, topp, lead)."""
     beste = None
-    for s, n, topp, over in målingar:
-        if over or n < 1:
-            continue
-        lead = (SATS - topp) / (n - 1) if n > 1 else LINJE * s
-        if lead < LINJE_MIN * s:
-            continue                       # strofa er for høg for sida
-        lead = min(lead, LINJE_MAKS * s)
-        fyll = (topp + (n - 1) * lead) / SATS
-        poeng = s * fyll * (1 - 0.6 * abs(lead / s - LINJE))
-        if beste is None or poeng > beste[0]:
-            beste = (poeng, s, n, topp, lead)
+    for streng in (True, False):           # utan for harde brot først; berre om det er umogleg, med
+        for s, n, topp, over, brot in målingar:
+            if over or n < 1 or (streng and brot):
+                continue
+            lead = (SATS - topp) / (n - 1) if n > 1 else LINJE * s
+            if lead < LINJE_MIN * s:
+                continue                   # strofa er for høg for sida
+            lead = min(lead, LINJE_MAKS * s)
+            fyll = (topp + (n - 1) * lead) / SATS
+            poeng = s * fyll * (1 - 0.6 * abs(lead / s - LINJE)) * (1 - FRAMHALD_STRAFF * (n - vers))
+            if beste is None or poeng > beste[0]:
+                beste = (poeng, s, n, topp, lead)
+        if beste:
+            return beste
     return beste
 
 
@@ -154,24 +170,26 @@ def main():
     manus = (Path.cwd() / sys.argv[1]).resolve()
     namn = manus.stem
     skrift, skriftnamn = skriftoppsett()
-    strofer = lag_strofer(bygg.tolk_manus(manus.read_text(encoding="utf-8")))
+    strofer, verstal = lag_strofer(bygg.tolk_manus(manus.read_text(encoding="utf-8")))
 
     # Grovt søk over alle storleikar, så fint søk rundt det beste for kvar strofe.
     grov = skann(strofer, {i: GROV for i in range(len(strofer))}, skrift, namn)
     fin_storleikar = {}
     for i in range(len(strofer)):
-        s0 = vel(grov[i])[1]
+        s0 = vel(grov[i], verstal[i])[1]
         fin_storleikar[i] = [round(s0 - 0.3 + 0.01 * k, 2) for k in range(61)]
     fin = skann(strofer, fin_storleikar, skrift, namn + "fin")
 
     kropp = [r"\begin{document}"]
     rapport = []
     for i, strofe in enumerate(strofer):
-        _, s, n, topp, lead = vel(fin[i] + grov[i])
+        _, s, n, topp, lead = vel(fin[i] + grov[i], verstal[i])
         lead -= 0.002 * (n > 1)
+        # Blokka står midt i tekstflata; fyller ho flata, går toppen til toppmargen og siste
+        # grunnlinje til botnmargen (\kern-\prevdepth tek bort djupna under siste linje).
         kropp.append(
-            r"\fs=%.2fpt\topskip=%.3fpt\setlength\maxdepth{%.3fpt}"
-            r"{\strofeoppsett\baselineskip=%.4fpt\relax %s}\vfill\newpage" % (s, topp, 0.5 * s, lead, strofe)
+            r"\fs=%.2fpt\vbox to\textheight{\vss{\strofeoppsett\baselineskip=%.4fpt\relax %s}"
+            r"\kern-\prevdepth\vss}\newpage" % (s, lead, strofe)
         )
         rapport.append((s, n, lead / s))
     kropp += [r"\end{document}", ""]
