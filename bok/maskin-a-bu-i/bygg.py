@@ -68,10 +68,14 @@ PREAMBEL = r"""
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 \frenchspacing
+% Aldri orddeling.
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \tolerance=1200
 \emergencystretch=3em
 \vbadness=10000
 \hbadness=10000
+\hfuzz=1.5pt   % XeTeX kan rekne ordbreidder nokre tidels punkt feil; det synest ikkje
 
 % Skriftstorleiken \fs vert sett side for side. Tre stemmer, same linjeavstand.
 \newdimen\fs \fs=10pt
@@ -95,9 +99,24 @@ PREAMBEL = r"""
   \ifnum\badness>10000 \global\advance\fitbrot by 1 \fi
   \versoppsett #2\par\ifnum\prevgraf>1 \global\advance\fitbrot by 1 \fi}}
 \newcommand\vlb[2]{{#1\versoppsett #2\par}}
-% Prosa: strekk heller mellomromma enn å la linjer stikke ut i margen, men ikkje så langt
-% at eitt ord (eller ein orddel) blir ståande åleine på ei linje.
-\newcommand\prosa[2]{{#1\noindent\tolerance=9999\emergencystretch=0.6\hsize\parfillskip=0pt\relax #2\par}}
+% Prosa: utan orddeling må mellomromma få strekkje seg fritt, så ingen linje stikk ut i margen.
+% Under målinga vert kvar linje (utanom den siste) sjekka: står det berre eitt ord på ho,
+% kan ho ikkje justerast, og då er skrifta for stor.
+\newif\iffitmaaling
+\newbox\prosaboks
+\newcount\fitlinjer
+\newcommand\prosaoppsett{\noindent\tolerance=10000\versrom\parfillskip=0pt\relax}
+\newcommand\prosa[2]{\iffitmaaling\prosasjekk{#1}{#2}\fi{#1\prosaoppsett #2\par}}
+\newcommand\prosasjekk[2]{%
+  \setbox\prosaboks=\vbox{\hsize=\textwidth #1\prosaoppsett #2\par
+    \global\fitlinjer=0
+    \loop\unskip\unpenalty\unskip
+      \setbox2=\lastbox
+    \ifvoid2\else
+      \global\advance\fitlinjer by 1
+      \setbox4=\hbox to \wd2{\unhcopy2}%
+      \ifnum\fitlinjer>1 \ifnum\badness>9999 \global\advance\fitbrot by 1 \fi\fi
+    \repeat}}
 \newcommand\strofeskil{\par\vspace{1.5\fs plus 1.5\fs}}
 \newcommand\skilje{\par\vspace{1.5\fs plus 1\fs}{\centering\vanleg ·\par}\vspace{1.5\fs plus 1\fs}}
 
@@ -105,7 +124,8 @@ PREAMBEL = r"""
 \newbox\fitboks
 \newdimen\fitlo \newdimen\fithi \newdimen\fitmid
 \newcount\fitsteg
-\newcommand\fitmaal{\global\fitbrot=0 \setbox\fitboks=\vbox{\hfuzz=\maxdimen\hsize=\textwidth\fitinnhald}}
+\newcommand\fitmaal{\global\fitbrot=0 \fitmaalingtrue
+  \setbox\fitboks=\vbox{\hfuzz=\maxdimen\hsize=\textwidth\fitinnhald}\fitmaalingfalse}
 \newcommand\fitside[2]{%
   \def\fitinnhald{#2}%
   \fitlo=3pt \fithi=#1pt \fitsteg=0
